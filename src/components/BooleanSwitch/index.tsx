@@ -1,0 +1,108 @@
+import React from 'react'
+import styled from 'styled-components'
+import { breakpoint, palette } from '@theme'
+import { rgba } from '@lib'
+
+export interface BooleanSwitchProps {
+  children: React.ReactNode
+  name: string
+  onChange: () => void
+  required?: boolean
+  checked?: boolean
+  className?: string
+}
+
+const BooleanSwitch = ({ children, name, onChange, required, checked, className }: BooleanSwitchProps) => (
+  <Wrapper {...{ className }}>
+    <Label>{children}</Label>
+    <Input type="checkbox" {...{ name, onChange, checked }} required={!!required} />
+    <Switch {...{ checked }} />
+  </Wrapper>
+)
+
+const Wrapper = styled.label`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  padding: 16px 0;
+`
+
+const Input = styled.input`
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+`
+
+const Switch = styled.span<{ checked?: boolean }>`
+  appearance: none;
+  position: relative;
+  width: 40px;
+  height: 24px;
+  border-radius: 12px;
+
+  background-color: ${props => (props.checked ? palette.white : palette.moon)};
+  border: 1px solid ${props => (props.checked ? rgba(palette.night, 0.64) : rgba(palette.night, 0.32))};
+  @media (prefers-color-scheme: dark) {
+    background-color: ${props => (props.checked ? palette.black : palette.night)};
+    border: 1px solid ${props => (props.checked ? rgba(palette.moon, 0.64) : rgba(palette.moon, 0.32))};
+  }
+
+  transition: background-color 0.4s ease-in-out, border-color 0.4s ease-in-out;
+  will-change: background-color, border-color;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 3px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+
+    background-color: ${props => (props.checked ? rgba(palette.uiSuccess, 0.8) : rgba(palette.night, 0.24))};
+    border: 1px solid ${props => (props.checked ? rgba(palette.night, 0.32) : rgba(palette.night, 0.24))};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${props => (props.checked ? rgba(palette.uiSuccess, 0.8) : rgba(palette.moon, 0.24))};
+      border: 1px solid ${props => (props.checked ? rgba(palette.moon, 0.32) : rgba(palette.moon, 0.24))};
+    }
+
+    transform: translateX(${props => (props.checked ? 19 : 4)}px);
+    transition: background-color 0.25s ease-in-out, transform 0.4s ease-in;
+    will-change: background-color, transform;
+  }
+
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    ${Wrapper}:hover & {
+      border-color: ${rgba(palette.night, 0.64)};
+      @media (prefers-color-scheme: dark) {
+        border-color: ${rgba(palette.moon, 0.64)};
+      }
+      &:after {
+        background-color: ${props => (props.checked ? rgba(palette.uiSuccess, 1) : rgba(palette.night, 0.4))};
+        @media (prefers-color-scheme: dark) {
+          background-color: ${props => (props.checked ? rgba(palette.uiSuccess, 1) : rgba(palette.moon, 0.4))};
+        }
+      }
+    }
+  }
+`
+
+const Label = styled.span`
+  display: block;
+  max-width: 280px;
+
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    max-width: 300px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    max-width: 320px;
+  }
+`
+
+export default BooleanSwitch

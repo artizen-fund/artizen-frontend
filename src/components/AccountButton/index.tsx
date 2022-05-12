@@ -1,0 +1,164 @@
+import { useState } from 'react'
+import styled from 'styled-components'
+import { breakpoint, palette } from '@theme'
+import { rgba } from '@lib'
+import { Icon } from '@components'
+
+export interface AccountButtonProps {
+  children: React.ReactNode
+}
+
+const AccountButton = ({ children }: AccountButtonProps) => {
+  const [signedIn, setSignedIn] = useState(false)
+  return (
+    <Wrapper signedIn={signedIn} onClick={() => setSignedIn(!signedIn)}>
+      <SignInLabel signedIn={signedIn} />
+      <HamburgerIcon signedIn={signedIn} color="night" darkColor="moon">
+        hamburger
+      </HamburgerIcon>
+      <AvatarImage signedIn={signedIn}>
+        <Initials>RP</Initials>
+      </AvatarImage>
+      {children}
+    </Wrapper>
+  )
+}
+
+interface SignedInProps {
+  signedIn: boolean
+}
+
+const Wrapper = styled.div<SignedInProps>`
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 4px;
+  width: ${props => (props.signedIn ? 72 : 85)}px;
+  height: 40px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding: 6px;
+    width: ${props => (props.signedIn ? 84 : 99)}px;
+    height: 48px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding: 8px;
+    width: ${props => (props.signedIn ? 96 : 119)}px;
+    height: 56px;
+  }
+
+  border: 0.5px solid ${rgba(palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    border: 0.5px solid ${rgba(palette.barracuda)};
+  }
+  box-sizing: border-box;
+  border-radius: 9999px;
+
+  cursor: pointer;
+  transition: width 0.3s ease-in-out;
+`
+
+const SignInLabel = styled.div<SignedInProps>`
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  &:after {
+    content: 'Sign in';
+    font-family: 'Roc Grotesk', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 100%;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  opacity: ${props => (props.signedIn ? 0 : 1)};
+  transition: opacity 0.15s ease-in-out;
+  pointer-events: none;
+`
+
+const HamburgerIcon = styled(props => <Icon {...props} />)<SignedInProps>`
+  width: 32px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    width: 36px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    width: 40px;
+  }
+
+  opacity: ${props => (props.signedIn ? 1 : 0)};
+  transition: opacity 0.3s ease-in-out;
+`
+
+const AvatarImage = styled.div<SignedInProps>`
+  display: flex;
+  align-items: center;
+  border-radius: 9999px;
+
+  width: 32px;
+  height: 32px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    width: 36px;
+    height: 36px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    width: 40px;
+    height: 40px;
+  }
+
+  text-align: center;
+
+  color: ${rgba(palette.night)};
+  background-color: ${rgba(palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+    background-color: ${rgba(palette.barracuda)};
+  }
+
+  opacity: ${props => (props.signedIn ? 1 : 0)};
+  transform: scale(${props => (props.signedIn ? 1 : 0)});
+  transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
+`
+
+const Initials = styled.div`
+  width: 100%;
+  height: 19px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    height: 22px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    height: 23px;
+  }
+
+  letter-spacing: 0.5px;
+  font-family: 'Roc Grotesk', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  text-align: center;
+
+  font-size: 13px;
+  line-height: 19px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    font-size: 16px;
+    line-height: 23px;
+  }
+`
+
+export default AccountButton
