@@ -15,7 +15,7 @@ export const schema = {
     },
     nationality: {
       type: 'string',
-      enum: ['DE', 'IT', 'JP', 'US', 'RU', 'Other'],
+      enum: ['', 'DE', 'IT', 'JP', 'US', 'RU', 'Other'],
     },
     personalData: {
       type: 'object',

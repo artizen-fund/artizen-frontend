@@ -7,17 +7,18 @@ import { rgba } from '@lib'
 
 export interface BooleanSwitchProps {
   label?: string | Labels
+  required?: boolean
+
   data: any
   handleChange(path: string, value: any): void
   path: string
-  required?: boolean
 }
 
 const BooleanSwitch = ({ data, label, handleChange, path, required, ...props }: BooleanSwitchProps) => {
   return (
     <Wrapper>
       <Label>{typeof label === 'object' ? label[0] : label}</Label>
-      <Input type="checkbox" required={!!required} onClick={e => handleChange(path, !data)} {...props} />
+      <Input type="checkbox" required={!!required} onClick={e => handleChange(path, !data)} />
       <Switch checked={data} />
     </Wrapper>
   )

@@ -46,14 +46,16 @@ function App({ Component, pageProps }: AppProps) {
   const passwordMatches = isDevAndGetLocalstore || isDevAndPassedPassword || isProdClient
 
   return (
-    <IntercomProvider appId={process.env.NEXT_PUBLIC_INTERCOM!}>
-      <SessionProvider {...{ user, setUser }}>
-        <ApolloProvider client={apolloClient}>
-          {/*<Toaster />*/}
-          <Component {...pageProps} {...{ passwordMatches }} />
-        </ApolloProvider>
-      </SessionProvider>
-    </IntercomProvider>
+    <>
+      <IntercomProvider appId={process.env.NEXT_PUBLIC_INTERCOM!}>
+        <SessionProvider {...{ user, setUser }}>
+          <ApolloProvider client={apolloClient}>
+            {/* <Toaster /> */}
+            <Component {...pageProps} {...{ passwordMatches }} />
+          </ApolloProvider>
+        </SessionProvider>
+      </IntercomProvider>
+    </>
   )
 }
 
