@@ -1,24 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
+import { withJsonFormsControlProps } from '@jsonforms/react'
+import type { Labels } from '@jsonforms/core'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 export interface BooleanSwitchProps {
-  children: React.ReactNode
-  name: string
-  onChange: () => void
+  label?: string | Labels
+  data: any
+  handleChange(path: string, value: any): void
+  path: string
   required?: boolean
-  checked?: boolean
-  className?: string
 }
 
-const BooleanSwitch = ({ children, name, onChange, required, checked, className }: BooleanSwitchProps) => (
-  <Wrapper {...{ className }}>
-    <Label>{children}</Label>
-    <Input type="checkbox" {...{ name, onChange, checked }} required={!!required} />
-    <Switch {...{ checked }} />
-  </Wrapper>
-)
+const BooleanSwitch = ({ data, label, handleChange, path, required, ...props }: BooleanSwitchProps) => {
+  return (
+    <Wrapper>
+      <Label>{typeof label === 'object' ? label[0] : label}</Label>
+      <Input type="checkbox" required={!!required} onClick={e => handleChange(path, !data)} {...props} />
+      <Switch checked={data} />
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.label`
   position: relative;
@@ -105,4 +108,4 @@ const Label = styled.span`
   }
 `
 
-export default BooleanSwitch
+export default withJsonFormsControlProps(BooleanSwitch)

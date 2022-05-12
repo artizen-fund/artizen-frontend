@@ -49,7 +49,7 @@ function App({ Component, pageProps }: AppProps) {
     <IntercomProvider appId={process.env.NEXT_PUBLIC_INTERCOM!}>
       <SessionProvider {...{ user, setUser }}>
         <ApolloProvider client={apolloClient}>
-          <Toaster />
+          {/*<Toaster />*/}
           <Component {...pageProps} {...{ passwordMatches }} />
         </ApolloProvider>
       </SessionProvider>

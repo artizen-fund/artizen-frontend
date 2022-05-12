@@ -5,7 +5,7 @@ import { CreateTopUpWallet } from '@lib'
 const Home: NextPage = () => {
   return (
     <>
-      <CreateTopUpWallet />
+      {/* <CreateTopUpWallet /> */}
       <Header />
       <p>Home!</p>
     </>

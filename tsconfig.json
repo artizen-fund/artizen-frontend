@@ -17,6 +17,7 @@
     "incremental": true,
     "paths": {
       "@components": ["src/components"],
+      "@forms/*": ["src/forms/*"],
       "@gql": ["src/gql"],
       "@lib": ["src/lib"],
       "@pages": ["src/pages"],

@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import { withJsonFormsControlProps } from '@jsonforms/react'
+import type { Labels, JsonSchema } from '@jsonforms/core'
 import { Icon, Spinner } from '@components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
-export interface InputProps {
-  name?: string
-  type?: 'textarea' | 'select' | 'text' | 'email' | 'password'
+export interface SelectProps {
   icon?: string
   invalid?: boolean
-  label: string
-  className?: string
+  schema: JsonSchema
+  label: string | Labels
   disabled?: boolean
   processing?: boolean
   onChange?: (e: any) => void
@@ -24,16 +24,13 @@ export interface InputProps {
   capitalize?: boolean
 }
 
-const Input = React.forwardRef((props: InputProps) => {
+const Select = React.forwardRef((props: SelectProps) => {
   const {
-    name,
-    type,
     icon,
     label,
     options = [],
     outline = true,
     emptyFirstOption = false,
-    className,
     onChange,
     value,
     disabled = false,
@@ -41,71 +38,37 @@ const Input = React.forwardRef((props: InputProps) => {
     required = false,
     inputRef,
     autoComplete,
-    capitalize = true,
+    schema,
   } = props
   const hasIcon = !!icon
   const [valid, setValid] = React.useState(true)
-  const [focused, setFocused] = React.useState(false)
-  const [filled, setFilled] = React.useState(false)
 
   React.useEffect(() => {
-    if (!type) {
-      // If no type (input is a child element, like say a Stripe Element) manually handle focus/fill state.
-      // This might be a better way to handle "tel"
-      setValid(focused || filled)
-    } else if (type === 'select') {
-      // If a select or tel, determine based on value.
-      setValid(value !== '' && value !== undefined)
-    }
-  }, [type, value, focused, filled])
+    setValid(value !== '' && value !== undefined)
+  }, [value])
 
   return (
-    <Wrapper className={className}>
+    <Wrapper>
       {icon && <StyledIcon>{icon}</StyledIcon>}
 
       <Spinner hidden={!processing} />
 
-      <InputWrapper {...{ hasIcon, disabled, outline }}>
-        {(type === 'text' || type === 'email' || type === 'password') && (
-          <input
-            {...{ onChange, disabled, required, value, type, name, autoComplete }}
-            placeholder=" "
-            id={name}
-            ref={inputRef}
-          />
-        )}
+      <InputWrapper {...{ disabled, outline, hasIcon }}>
+        <DropdownWrapper className="dropdownWrapper">
+          <Dropdown {...{ onChange, disabled, outline, required, value }}>
+            {emptyFirstOption && !required && <option value="" />}
+            {emptyFirstOption && required && <option disabled value="" />}
+            {Array.isArray(schema.enum) &&
+              schema.enum.map((option: string) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+          </Dropdown>
+        </DropdownWrapper>
 
-        {type === 'textarea' && (
-          <textarea {...{ onChange, disabled, required, value, name }} placeholder=" " id={name} />
-        )}
-
-        {type === 'select' && options && (
-          <DropdownWrapper className="dropdownWrapper">
-            <Dropdown
-              {...{ onChange, disabled, outline, required, value, name, capitalize }}
-              className={`custom`}
-              id={name}
-            >
-              {emptyFirstOption && !required && <option value="" />}
-              {emptyFirstOption && required && <option disabled value="" />}
-              {Array.isArray(options) &&
-                options.map((option: string) => (
-                  <option value={option} key={option}>
-                    {option}
-                  </option>
-                ))}
-              {!Array.isArray(options) &&
-                Object.keys(options).map((key: string) => (
-                  <option value={key} key={key}>
-                    {options[key]}
-                  </option>
-                ))}
-            </Dropdown>
-          </DropdownWrapper>
-        )}
-
-        <Label {...{ hasIcon, type }} className={valid ? 'valid' : ''} htmlFor={name}>
-          {label}
+        <Label className={valid ? 'valid' : ''}>
+          {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </Label>
       </InputWrapper>
@@ -121,7 +84,7 @@ const Wrapper = styled.div`
   height: fit-content;
 `
 
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled(props => <Icon {...props} />)`
   z-index: 2;
   position: absolute;
   top: 0;
@@ -138,7 +101,7 @@ const StyledIcon = styled(Icon)`
   }
 `
 
-const Label = styled.label<Pick<InputProps, 'type' | 'icon'>>`
+const Label = styled.label`
   position: absolute;
   left: 16px;
   top: 0;
@@ -146,12 +109,6 @@ const Label = styled.label<Pick<InputProps, 'type' | 'icon'>>`
   align-items: center;
   height: 100%;
   width: calc(100% - 32px);
-  ${props =>
-    props.type === 'textarea' &&
-    `
-    height: auto !important;
-    padding-top: 24px;
-  `}
 
   color: ${rgba(palette.night)};
   @media (prefers-color-scheme: dark) {
@@ -180,14 +137,6 @@ const Label = styled.label<Pick<InputProps, 'type' | 'icon'>>`
     }
   }
 
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
-    ${props =>
-      props.type === 'textarea' &&
-      `
-      padding-top: 32px;
-    `}
-  }
-
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     left: 24px;
     width: calc(100% - 48px);
@@ -205,9 +154,7 @@ const InputWrapper = styled.div<{
   outline: boolean
 }>`
   position: relative;
-  input,
-  textarea,
-  select.custom {
+  select {
     position: relative;
     display: flex;
     justify-content: center;
@@ -251,8 +198,6 @@ const InputWrapper = styled.div<{
     }
   }
 
-  input:focus,
-  textarea:focus,
   select.custom:focus {
     background-color: ${rgba(palette.white)};
     ${props => (props.outline ? 'border-color:' + rgba(palette.night, 0.64) + ';' : '')}
@@ -308,7 +253,7 @@ const DropdownWrapper = styled.div`
   }
 `
 
-const Dropdown = styled.select<{ capitalize: boolean }>`
+const Dropdown = styled.select`
   display: flex;
   align-items: center;
   background-color: ${rgba(palette.night)};
@@ -318,7 +263,6 @@ const Dropdown = styled.select<{ capitalize: boolean }>`
   border-radius: 0;
   outline: none;
   appearance: none;
-  text-transform: ${props => (props.capitalize ? 'capitalize' : 'none')};
   cursor: pointer;
 
   &::-moz-focus-inner {
@@ -375,4 +319,4 @@ export const InputRow = styled.div<{ split?: boolean | 'tablet' | 'laptop' | 'de
 `}
 `
 
-export default Input
+export default withJsonFormsControlProps(Select)
