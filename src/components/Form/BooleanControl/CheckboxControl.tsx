@@ -4,16 +4,9 @@ import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
-const Checkbox = ({
-  outline = false,
-  required,
-  label,
-  data,
-  handleChange,
-  path,
-  disabled = false,
-}: BooleanControlProps) => {
-  const small = false
+const Checkbox = (props: BooleanControlProps) => {
+  const { outline = false, required, label, data, handleChange, path, disabled = false, uischema } = props
+  const small = uischema.options?.size === 'small'
   return (
     <Wrapper {...{ disabled, small }}>
       <Box {...{ small }}>
@@ -60,17 +53,20 @@ const Box = styled.div<{ small?: boolean }>`
   width: ${props => (props.small ? '16px' : '24px')};
   height: ${props => (props.small ? '16px' : '24px')};
   margin-right: ${props => (props.small ? '8px' : '16px')};
-
+  ${props =>
+    !props.small &&
+    `
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 32px;
     height: 32px;
     margin-right: 24px;
   }
-
+  
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     width: 40px;
     height: 40px;
   }
+  `}
 `
 
 const Input = styled.input`
@@ -122,20 +118,19 @@ const Checkmark = styled.span<{ outline: boolean; small?: boolean }>`
       width: 3px !important;
       height: 6px !important;
       border-width: 0 1.125px 1.125px 0 !important;
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+        left: calc(50% - 3px);
+        top: calc(50% - 7.5px);
+        width: 6px;
+        height: 12px;
+        border-width: 0 2.5px 2.5px 0;
+      }
     `}
     display: block;
     transform: rotate(45deg) scale3d(0, 0, 1);
     opacity: 0;
     content: '';
     transition: opacity 0.25s ease-in-out, transform 0.6s cubic-bezier(0.44, 1.86, 0.74, 1);
-
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      left: calc(50% - 3px);
-      top: calc(50% - 7.5px);
-      width: 6px;
-      height: 12px;
-      border-width: 0 2.5px 2.5px 0;
-    }
   }
 `
 

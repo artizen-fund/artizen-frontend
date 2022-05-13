@@ -28,6 +28,7 @@ const SelectControl = (props: EnumControlProps) => {
   const changeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     handleChange(path, e.target.value)
     ref.current?.blur()
+    // todo: make sure above doesn't malfunction in touch devices
   }
 
   return (
@@ -55,11 +56,15 @@ const SelectControl = (props: EnumControlProps) => {
 // todo: it would be nice if this could be done with a pseudo-selector in <Label />, similar to the way <Input /> works.
 const SelectWrapper = styled(props => <Wrapper {...props} />)<{ filled: boolean }>`
   ${Label} {
+    ${props =>
+      props.filled &&
+      `
     transform: translate3d(0, -12px, 0) scale3d(0.8, 0.8, 1);
     color: ${rgba(palette.night, 0.8)};
     @media (prefers-color-scheme: dark) {
       color: ${rgba(palette.moon, 0.8)};
     }
+    `}
   }
 `
 

@@ -9,6 +9,9 @@ export const schema = {
     vegetarian: {
       type: 'boolean',
     },
+    vegetarianSure: {
+      type: 'boolean',
+    },
     carnivore: {
       type: 'boolean',
     },
@@ -67,6 +70,14 @@ export const uischema = {
         {
           type: 'Control',
           scope: '#/properties/vegetarian',
+        },
+        {
+          type: 'Control',
+          scope: '#/properties/vegetarianSure',
+          options: {
+            format: 'checkbox',
+            size: 'small',
+          },
         },
         {
           type: 'Control',
@@ -129,6 +140,7 @@ export const uischema = {
 export const initialState = {
   name: undefined,
   vegetarian: undefined,
+  vegetarianSure: undefined,
   carnivore: undefined,
   birthDate: undefined,
   iceCream: undefined,

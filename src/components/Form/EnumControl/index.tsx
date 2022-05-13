@@ -22,7 +22,7 @@ export interface EnumControlProps {
 }
 
 export const EnumControl = (props: EnumControlProps) => {
-  return props.uischema.options?.format === 'switch' ? <SegmentedControl {...props} /> : <SelectControl {...props} />
+  return props.uischema.options?.format === 'segmented' ? <SegmentedControl {...props} /> : <SelectControl {...props} />
 }
 
 export const enumControlTester = rankWith(
