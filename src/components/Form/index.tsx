@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { JsonForms } from '@jsonforms/react'
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers'
@@ -6,6 +5,7 @@ import StringControl, { stringControlTester } from './StringControl'
 import NumberControl, { numberControlTester } from './NumberControl'
 import BooleanControl, { booleanControlTester } from './BooleanControl'
 import EnumControl, { enumControlTester } from './EnumControl'
+// import SectionLabel, { sectionLabelTester } from './SectionLabel'
 
 interface FormProps {
   schema: any
@@ -20,6 +20,7 @@ const Form = ({ schema, uischema, data }: FormProps) => {
     { tester: stringControlTester, renderer: StringControl },
     { tester: numberControlTester, renderer: NumberControl },
     { tester: enumControlTester, renderer: EnumControl },
+    /* { tester: sectionLabelTester, renderer: SectionLabel }, */
   ]
   return (
     <Wrapper>

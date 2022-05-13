@@ -1,4 +1,3 @@
-import React from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
@@ -21,9 +20,8 @@ export interface EnumControlProps {
   path: string
 }
 
-export const EnumControl = (props: EnumControlProps) => {
-  return props.uischema.options?.format === 'segmented' ? <SegmentedControl {...props} /> : <SelectControl {...props} />
-}
+export const EnumControl = (props: EnumControlProps) =>
+  props.uischema.options?.format === 'segmented' ? <SegmentedControl {...props} /> : <SelectControl {...props} />
 
 export const enumControlTester = rankWith(
   3,

@@ -1,4 +1,3 @@
-import React from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
@@ -12,7 +11,6 @@ export interface BooleanControlProps {
   disabled?: boolean
   onChange?: (e: any) => void
   required?: boolean
-  outline?: boolean
 
   schema: JsonSchema
   uischema: UISchemaElement

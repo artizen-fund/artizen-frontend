@@ -63,4 +63,8 @@ export default styled.div<{
       ${props => (props.outline ? 'border-color:' + rgba(palette.moon, 0.64) + ';' : '')}
     }
   }
+
+  input[type='date'] {
+    justify-content: flex-start;
+  }
 `

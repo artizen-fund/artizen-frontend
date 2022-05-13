@@ -25,6 +25,12 @@ export const schema = {
     miniBooleanCheckExample: {
       type: 'boolean',
     },
+    booleanCheckExampleTwo: {
+      type: 'boolean',
+    },
+    miniBooleanCheckExampleTwo: {
+      type: 'boolean',
+    },
     switchBooleanExample: {
       type: 'boolean',
     },
@@ -53,7 +59,6 @@ export const schema = {
       description: 'Please enter your age.',
     },
   },
-  required: ['occupation', 'nationality'],
 }
 
 export const uischema = {
@@ -75,8 +80,22 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/miniBooleanCheckExample',
       options: {
-        format: 'checkbox',
         size: 'mini',
+      },
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/booleanCheckExampleTwo',
+      options: {
+        outline: true,
+      },
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/miniBooleanCheckExampleTwo',
+      options: {
+        size: 'mini',
+        outline: true,
       },
     },
     {
@@ -144,14 +163,34 @@ export const uischema = {
             {
               type: 'Control',
               scope: '#/properties/stringExampleTwo',
+              label: 'Password',
+              options: {
+                format: 'password',
+              },
             },
             {
               type: 'Control',
               scope: '#/properties/stringExampleThree',
+              label: 'Email',
+              options: {
+                format: 'email',
+              },
             },
             {
               type: 'Control',
               scope: '#/properties/stringExampleFour',
+              label: 'URL',
+              options: {
+                format: 'url',
+              },
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/stringDateExample',
+              label: 'Date Picker',
+              options: {
+                format: 'date',
+              },
             },
           ],
         },
@@ -168,6 +207,8 @@ export const initialState = {
   stringDateExample: undefined,
   booleanCheckExample: undefined,
   miniBooleanCheckExample: undefined,
+  booleanCheckExampleTwo: undefined,
+  miniBooleanCheckExampleTwo: undefined,
   switchBooleanExample: undefined,
   switchBooleanExampleTwo: undefined,
   switchBooleanExampleThree: undefined,

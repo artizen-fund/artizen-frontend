@@ -1,12 +1,12 @@
-import React from 'react'
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
 const Checkbox = (props: BooleanControlProps) => {
-  const { outline = false, required, label, data, handleChange, path, disabled = false, uischema } = props
+  const { required, label, data, handleChange, path, disabled = false, uischema } = props
   const mini = uischema.options?.size === 'mini'
+  const outline = uischema.options?.outline
   return (
     <Wrapper {...{ disabled, mini }}>
       <Box {...{ mini }}>

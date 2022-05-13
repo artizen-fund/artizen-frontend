@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
@@ -30,7 +29,7 @@ const Wrapper = styled.div`
   height: 32px;
   border: 1px solid ${rgba(palette.night)};
   @media (prefers-color-scheme: dark) {
-    border: 1px solid ${rgba(palette.moon)};
+    border: 1px solid ${rgba(palette.moon, 0.32)};
   }
   overflow: hidden;
 
@@ -48,8 +47,8 @@ const Option = styled.label<{ selected: boolean }>`
   background-color: ${props => (!props.selected ? rgba(palette.moon) : rgba(palette.night))};
   color: ${props => (props.selected ? rgba(palette.moon) : rgba(palette.night))};
   @media (prefers-color-scheme: dark) {
-    background-color: ${props => (!props.selected ? rgba(palette.night) : rgba(palette.moon))};
-    color: ${props => (props.selected ? rgba(palette.night) : rgba(palette.moon))};
+    background-color: ${props => (!props.selected ? rgba(palette.night) : rgba(palette.moon, 0.32))};
+    color: ${rgba(palette.moon)};
   }
   text-align: center;
   cursor: pointer;

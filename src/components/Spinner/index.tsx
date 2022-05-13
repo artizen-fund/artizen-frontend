@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'

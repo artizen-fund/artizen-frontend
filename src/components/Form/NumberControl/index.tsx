@@ -1,4 +1,3 @@
-import React from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
