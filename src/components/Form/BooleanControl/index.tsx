@@ -1,0 +1,34 @@
+import React from 'react'
+import { withJsonFormsControlProps } from '@jsonforms/react'
+import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
+import { rankWith, schemaMatches } from '@jsonforms/core'
+import SwitchControl from './SwitchControl'
+import CheckboxControl from './CheckboxControl'
+
+export interface BooleanControlProps {
+  icon?: string
+  invalid?: boolean
+  label: string | Labels
+  disabled?: boolean
+  onChange?: (e: any) => void
+  required?: boolean
+  outline?: boolean
+
+  schema: JsonSchema
+  uischema: UISchemaElement
+  data: any
+  handleChange(path: string, value: any): void
+  path: string
+}
+
+export const BooleanControl = (props: BooleanControlProps) => {
+  console.log('enum', props.uischema.options)
+  return props.uischema.options?.format === 'switch' ? <SwitchControl {...props} /> : <CheckboxControl {...props} />
+}
+
+export const booleanControlTester = rankWith(
+  3, //increase rank as needed
+  schemaMatches(schema => schema.type === 'boolean'),
+)
+
+export default withJsonFormsControlProps(BooleanControl)

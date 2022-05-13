@@ -1,39 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
-import type { Labels } from '@jsonforms/core'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
-
-export interface CheckboxProps {
-  outline?: boolean
-  required?: boolean
-  small?: boolean
-  disabled?: boolean
-
-  label?: string | Labels
-  data: boolean
-  handleChange(path: string, value: any): void
-  path: string
-}
+import { BooleanControlProps } from './'
 
 const Checkbox = ({
   outline = false,
   required,
-  small,
   label,
   data,
   handleChange,
   path,
   disabled = false,
-}: CheckboxProps) => (
-  <Wrapper {...{ disabled, small }}>
-    <Box {...{ small }}>
-      <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
-      <Checkmark {...{ outline, small }} />
-    </Box>
-    <Label>{typeof label === 'object' ? label[0] : label}</Label>
-  </Wrapper>
-)
+}: BooleanControlProps) => {
+  const small = false
+  return (
+    <Wrapper {...{ disabled, small }}>
+      <Box {...{ small }}>
+        <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
+        <Checkmark {...{ outline, small }} />
+      </Box>
+      <Label>{typeof label === 'object' ? label[0] : label}</Label>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.label<{ disabled: boolean; small?: boolean }>`
   position: relative;

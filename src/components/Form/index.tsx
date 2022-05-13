@@ -3,8 +3,8 @@ import { JsonForms } from '@jsonforms/react'
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers'
 import StringControl, { stringControlTester } from './StringControl'
 import NumberControl, { numberControlTester } from './NumberControl'
-import BooleanSwitch, { booleanSwitchControlTester } from './BooleanSwitch'
-import SelectControl, { selectControlTester } from './SelectControl'
+import BooleanControl, { booleanControlTester } from './BooleanControl'
+import EnumControl, { enumControlTester } from './EnumControl'
 
 interface FormProps {
   schema: any
@@ -15,10 +15,10 @@ interface FormProps {
 const Form = ({ schema, uischema, data }: FormProps) => {
   const renderers = [
     ...vanillaRenderers,
-    { tester: booleanSwitchControlTester, renderer: BooleanSwitch },
+    { tester: booleanControlTester, renderer: BooleanControl },
     { tester: stringControlTester, renderer: StringControl },
     { tester: numberControlTester, renderer: NumberControl },
-    { tester: selectControlTester, renderer: SelectControl },
+    { tester: enumControlTester, renderer: EnumControl },
   ]
   return <JsonForms {...{ uischema, schema, data, renderers }} cells={vanillaCells} />
 }

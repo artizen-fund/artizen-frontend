@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { SelectControl, SelectControlProps } from './'
+import SelectControl from './SelectControl'
+import { EnumControlProps } from './'
 import { iconKey } from '../../Icon/Icon.enums'
 
 export default {
@@ -13,7 +14,7 @@ export default {
   },
 }
 
-export const SelectControlComponent = (props: SelectControlProps) => {
+export const SelectControlComponent = (props: EnumControlProps) => {
   const [value, setValue] = useState('')
   const schema = {
     enum: ['', 'Chocolate', 'Strawberry', 'Vanilla', 'Neapolitan'],

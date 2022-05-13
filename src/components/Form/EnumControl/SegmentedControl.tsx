@@ -1,33 +1,27 @@
 import React from 'react'
-import { withJsonFormsControlProps } from '@jsonforms/react'
-import { rankWith, schemaMatches } from '@jsonforms/core'
-import type { JsonSchema } from '@jsonforms/core'
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
+import { EnumControlProps } from './'
 
-export interface RadioSetProps {
-  data: any
-  handleChange(path: string, value: any): void
-  path: string
-  schema: JsonSchema
+const SegmentedControl = (props: EnumControlProps) => {
+  const { disabled = false, required = false, data, handleChange, path, schema } = props
+  return (
+    <Wrapper>
+      {schema?.enum?.map((option: string) => (
+        <Option key={option} selected={option === data}>
+          <input
+            type="radio"
+            value={option}
+            checked={data === option}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(path, e.target.value)}
+          />
+          <span>{option}</span>
+        </Option>
+      ))}
+    </Wrapper>
+  )
 }
-
-export const RadioSet = ({ data, handleChange, path, schema }: RadioSetProps) => (
-  <Wrapper>
-    {schema?.enum?.map((option: string) => (
-      <Option key={option} selected={option === data}>
-        <input
-          type="radio"
-          value={option}
-          checked={data === option}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(path, e.target.value)}
-        />
-        <span>{option}</span>
-      </Option>
-    ))}
-  </Wrapper>
-)
 
 const Wrapper = styled.div`
   display: flex;
@@ -72,12 +66,4 @@ const Option = styled.label<{ selected: boolean }>`
   }
 `
 
-export const radioSetControlTester = rankWith(
-  3, //increase rank as needed
-  schemaMatches(schema => {
-    console.log(schema)
-    return false
-  }),
-)
-
-export default withJsonFormsControlProps(RadioSet)
+export default SegmentedControl

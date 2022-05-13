@@ -1,30 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
+import { rankWith, schemaMatches } from '@jsonforms/core'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { Wrapper, Label, InputWrapper, InputIcon } from '../_Common'
-import { rankWith, schemaMatches } from '@jsonforms/core'
+import { EnumControlProps } from './'
 
-export interface SelectControlProps {
-  icon?: string
-  invalid?: boolean
-  label: string | Labels
-  disabled?: boolean
-  onChange?: (e: any) => void
-  required?: boolean
-  outline?: boolean
-
-  schema: JsonSchema
-  uischema: UISchemaElement
-  data: any
-  handleChange(path: string, value: any): void
-  path: string
-}
-
-export const SelectControl = (props: SelectControlProps) => {
-  console.log('design', props.uischema.options?.format)
+const SelectControl = (props: EnumControlProps) => {
   const {
     icon,
     label,
@@ -150,10 +133,4 @@ const Select = styled.select`
     height: 72px;
   }
 `
-
-export const selectControlTester = rankWith(
-  3, //increase rank as needed
-  schemaMatches(schema => schema.type === 'string' && !!schema.enum),
-)
-
-export default withJsonFormsControlProps(SelectControl)
+export default SelectControl

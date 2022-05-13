@@ -9,6 +9,9 @@ export const schema = {
     vegetarian: {
       type: 'boolean',
     },
+    carnivore: {
+      type: 'boolean',
+    },
     birthDate: {
       type: 'string',
       format: 'date',
@@ -20,10 +23,6 @@ export const schema = {
     iceCream: {
       type: 'string',
       enum: ['vanilla', 'chocolate', 'strawberry', 'neapolitan'],
-    },
-    soda: {
-      type: 'string',
-      enum: ['coke', 'pepsi', 'royal crown'],
     },
     personalData: {
       type: 'object',
@@ -71,16 +70,16 @@ export const uischema = {
         },
         {
           type: 'Control',
-          scope: '#/properties/iceCream',
+          scope: '#/properties/carnivore',
           options: {
-            format: 'radioSelect',
+            format: 'switch',
           },
         },
         {
           type: 'Control',
-          scope: '#/properties/soda',
+          scope: '#/properties/iceCream',
           options: {
-            format: 'segmentedSelect',
+            format: 'segmented',
           },
         },
         {
@@ -130,9 +129,9 @@ export const uischema = {
 export const initialState = {
   name: undefined,
   vegetarian: undefined,
+  carnivore: undefined,
   birthDate: undefined,
   iceCream: undefined,
-  soda: undefined,
   personalData: {
     age: undefined,
   },
