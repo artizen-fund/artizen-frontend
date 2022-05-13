@@ -22,7 +22,7 @@ export interface SelectControlProps {
   path: string
 }
 
-export const SelectControl = withJsonFormsControlProps((props: SelectControlProps) => {
+export const SelectControl = (props: SelectControlProps) => {
   const {
     icon,
     label,
@@ -63,7 +63,7 @@ export const SelectControl = withJsonFormsControlProps((props: SelectControlProp
       </InputWrapper>
     </Wrapper>
   )
-})
+}
 
 const DownwardArrowPlacer = styled.div`
   position: relative;
@@ -153,3 +153,5 @@ export const selectControlTester = rankWith(
   3, //increase rank as needed
   schemaMatches(schema => schema.type === 'string' && !!schema.enum),
 )
+
+export default withJsonFormsControlProps(SelectControl)

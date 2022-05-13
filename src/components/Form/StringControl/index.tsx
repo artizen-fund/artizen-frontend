@@ -16,7 +16,7 @@ export interface StringControlProps {
   autoComplete?: string
 }
 
-export const StringControl = withJsonFormsControlProps((props: StringControlProps) => {
+export const StringControl = (props: StringControlProps) => {
   const { icon, label, outline = true, onChange, value, disabled = false, required = false, autoComplete } = props
   const hasIcon = !!icon
   const valid = false
@@ -33,9 +33,11 @@ export const StringControl = withJsonFormsControlProps((props: StringControlProp
       </InputWrapper>
     </Wrapper>
   )
-})
+}
 
 export const stringControlTester = rankWith(
   3, //increase rank as needed
   schemaMatches(schema => schema.type === 'string' && !schema.enum),
 )
+
+export default withJsonFormsControlProps(StringControl)

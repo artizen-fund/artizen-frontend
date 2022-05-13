@@ -14,16 +14,12 @@ export interface BooleanSwitchProps {
   path: string
 }
 
-export const BooleanSwitch = withJsonFormsControlProps(
-  ({ data, label, handleChange, path, required }: BooleanSwitchProps) => {
-    return (
-      <Wrapper>
-        <Label>{typeof label === 'object' ? label[0] : label}</Label>
-        <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
-        <Switch checked={data} />
-      </Wrapper>
-    )
-  },
+export const BooleanSwitch = ({ data, label, handleChange, path, required }: BooleanSwitchProps) => (
+  <Wrapper>
+    <Label>{typeof label === 'object' ? label[0] : label}</Label>
+    <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
+    <Switch checked={data} />
+  </Wrapper>
 )
 
 const Wrapper = styled.label`
@@ -115,3 +111,5 @@ export const booleanSwitchControlTester = rankWith(
   3, //increase rank as needed
   schemaMatches(schema => schema.type === 'boolean'),
 )
+
+export default withJsonFormsControlProps(BooleanSwitch)

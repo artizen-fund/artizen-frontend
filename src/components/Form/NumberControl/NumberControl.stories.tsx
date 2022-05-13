@@ -1,5 +1,5 @@
-import { NumberControl } from './'
-import { Form } from '@components'
+import { useState } from 'react'
+import { NumberControl, NumberControlProps } from './'
 
 export default {
   title: 'forms/NumberControl',
@@ -7,32 +7,7 @@ export default {
   argTypes: {},
 }
 
-export const NumberControlComponent = () => {
-  // note: I haven't decided if it makes more sense to output the component in a form,
-  //       or synthesize the necessary props
-
-  const schema = {
-    type: 'object',
-    properties: {
-      sampleInput: {
-        type: 'number',
-      },
-    },
-  }
-
-  const uischema = {
-    type: 'VerticalLayout',
-    elements: [
-      {
-        type: 'Control',
-        scope: '#/properties/sampleInput',
-      },
-    ],
-  }
-
-  const data = {
-    sampleInput: undefined,
-  }
-
-  return <Form {...{ schema, data, uischema }} />
+export const NumberControlComponent = (props: NumberControlProps) => {
+  const [value, setValue] = useState<number>()
+  return <NumberControl {...{ value }} {...props} onChange={v => setValue(v)} label="How old are you?" />
 }

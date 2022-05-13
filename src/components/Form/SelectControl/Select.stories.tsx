@@ -1,5 +1,5 @@
-import { SelectControl } from './'
-import { Form } from '@components'
+import { useState } from 'react'
+import { SelectControl, SelectControlProps } from './'
 
 export default {
   title: 'forms/SelectControl',
@@ -7,33 +7,10 @@ export default {
   argTypes: {},
 }
 
-export const SelectControlComponent = () => {
-  // note: I haven't decided if it makes more sense to output the component in a form,
-  //       or synthesize the necessary props
-
+export const SelectControlComponent = (props: SelectControlProps) => {
+  const [value, setValue] = useState('')
   const schema = {
-    type: 'object',
-    properties: {
-      sampleInput: {
-        type: 'string',
-        enum: ['', 'first option', 'second option', 'third option'],
-      },
-    },
+    enum: ['', 'Chocolate', 'Strawberry', 'Vanilla', 'Neapolitan'],
   }
-
-  const uischema = {
-    type: 'VerticalLayout',
-    elements: [
-      {
-        type: 'Control',
-        scope: '#/properties/sampleInput',
-      },
-    ],
-  }
-
-  const data = {
-    sampleInput: undefined,
-  }
-
-  return <Form {...{ schema, data, uischema }} />
+  return <SelectControl {...{ value, schema }} {...props} onChange={v => setValue(v)} label="Pick one…" />
 }

@@ -12,7 +12,7 @@ export interface NumberControlProps {
   label: string | Labels
   disabled?: boolean
   onChange?: (e: any) => void
-  value?: string
+  value?: number
   required?: boolean
   options?: Array<string> | Record<string, string>
   outline?: boolean
@@ -21,7 +21,7 @@ export interface NumberControlProps {
   capitalize?: boolean
 }
 
-export const NumberControl = withJsonFormsControlProps((props: NumberControlProps) => {
+export const NumberControl = (props: NumberControlProps) => {
   const { icon, label, outline = true, onChange, value, disabled = false, required = false, autoComplete } = props
   const hasIcon = !!icon
   const valid = false
@@ -38,9 +38,11 @@ export const NumberControl = withJsonFormsControlProps((props: NumberControlProp
       </InputWrapper>
     </Wrapper>
   )
-})
+}
 
 export const numberControlTester = rankWith(
   3, //increase rank as needed
   schemaMatches(schema => schema.type === 'number' || schema.type === 'integer'),
 )
+
+export default withJsonFormsControlProps(NumberControl)

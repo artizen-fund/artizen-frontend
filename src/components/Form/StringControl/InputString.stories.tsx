@@ -1,5 +1,5 @@
-import { StringControl } from './'
-import { Form } from '@components'
+import { useState } from 'react'
+import { StringControl, StringControlProps } from './'
 
 export default {
   title: 'forms/StringControl',
@@ -7,32 +7,7 @@ export default {
   argTypes: {},
 }
 
-export const StringControlComponent = () => {
-  // note: I haven't decided if it makes more sense to output the component in a form,
-  //       or synthesize the necessary props
-
-  const schema = {
-    type: 'object',
-    properties: {
-      sampleInput: {
-        type: 'string',
-      },
-    },
-  }
-
-  const uischema = {
-    type: 'VerticalLayout',
-    elements: [
-      {
-        type: 'Control',
-        scope: '#/properties/sampleInput',
-      },
-    ],
-  }
-
-  const data = {
-    sampleInput: undefined,
-  }
-
-  return <Form {...{ schema, data, uischema }} />
+export const StringControlComponent = (props: StringControlProps) => {
+  const [value, setValue] = useState('')
+  return <StringControl {...{ value }} {...props} onChange={v => setValue(v)} label="What is your name?" />
 }
