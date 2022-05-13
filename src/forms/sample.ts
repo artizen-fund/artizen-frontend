@@ -1,57 +1,56 @@
 export const schema = {
   type: 'object',
   properties: {
-    name: {
+    stringExample: {
       type: 'string',
       minLength: 3,
       description: 'Please enter your name',
     },
-    vegetarian: {
-      type: 'boolean',
+    stringExampleTwo: {
+      type: 'string',
     },
-    vegetarianSure: {
-      type: 'boolean',
+    stringExampleThree: {
+      type: 'string',
     },
-    carnivore: {
-      type: 'boolean',
+    stringExampleFour: {
+      type: 'string',
     },
-    birthDate: {
+    stringDateExample: {
       type: 'string',
       format: 'date',
     },
-    nationality: {
+    booleanCheckExample: {
+      type: 'boolean',
+    },
+    miniBooleanCheckExample: {
+      type: 'boolean',
+    },
+    switchBooleanExample: {
+      type: 'boolean',
+    },
+    switchBooleanExampleTwo: {
+      type: 'boolean',
+    },
+    switchBooleanExampleThree: {
+      type: 'boolean',
+    },
+    switchBooleanExampleFour: {
+      type: 'boolean',
+    },
+    switchBooleanExampleFive: {
+      type: 'boolean',
+    },
+    enumExample: {
       type: 'string',
       enum: ['', 'DE', 'IT', 'JP', 'US', 'RU', 'Other'],
     },
-    iceCream: {
+    enumSegmentsExample: {
       type: 'string',
       enum: ['vanilla', 'chocolate', 'strawberry', 'neapolitan'],
     },
-    personalData: {
-      type: 'object',
-      properties: {
-        age: {
-          type: 'integer',
-          description: 'Please enter your age.',
-        },
-        height: {
-          type: 'number',
-        },
-        drivingSkill: {
-          type: 'number',
-          maximum: 10,
-          minimum: 1,
-          default: 7,
-        },
-      },
-      required: ['age', 'height'],
-    },
-    occupation: {
-      type: 'string',
-    },
-    postalCode: {
-      type: 'string',
-      maxLength: 5,
+    numberExample: {
+      type: 'integer',
+      description: 'Please enter your age.',
     },
   },
   required: ['occupation', 'nationality'],
@@ -61,75 +60,99 @@ export const uischema = {
   type: 'VerticalLayout',
   elements: [
     {
-      type: 'HorizontalLayout',
-      elements: [
-        {
-          type: 'Control',
-          scope: '#/properties/name',
-        },
-        {
-          type: 'Control',
-          scope: '#/properties/vegetarian',
-        },
-        {
-          type: 'Control',
-          scope: '#/properties/vegetarianSure',
-          options: {
-            format: 'checkbox',
-            size: 'small',
-          },
-        },
-        {
-          type: 'Control',
-          scope: '#/properties/carnivore',
-          options: {
-            format: 'switch',
-          },
-        },
-        {
-          type: 'Control',
-          scope: '#/properties/iceCream',
-          options: {
-            format: 'segmented',
-          },
-        },
-        {
-          type: 'Control',
-          scope: '#/properties/personalData/properties/age',
-        },
-        {
-          type: 'Control',
-          scope: '#/properties/birthDate',
-        },
-      ],
-    },
-    {
       type: 'Label',
-      text: 'Additional Information',
+      text: 'Section Label',
     },
+    {
+      type: 'Control',
+      scope: '#/properties/stringExample',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/booleanCheckExample',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/miniBooleanCheckExample',
+      options: {
+        format: 'checkbox',
+        size: 'mini',
+      },
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/enumExample',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/enumSegmentsExample',
+      options: {
+        format: 'segmented',
+      },
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/numberExample',
+    },
+
     {
       type: 'HorizontalLayout',
       elements: [
         {
-          type: 'Control',
-          scope: '#/properties/personalData/properties/height',
+          type: 'VerticalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/switchBooleanExample',
+              options: {
+                format: 'switch',
+              },
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/switchBooleanExampleTwo',
+              options: {
+                format: 'switch',
+              },
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/switchBooleanExampleThree',
+              options: {
+                format: 'switch',
+              },
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/switchBooleanExampleFour',
+              options: {
+                format: 'switch',
+              },
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/switchBooleanExampleFive',
+              options: {
+                format: 'switch',
+              },
+            },
+          ],
         },
         {
-          type: 'Control',
-          scope: '#/properties/nationality',
-        },
-        {
-          type: 'Control',
-          scope: '#/properties/occupation',
-          suggestion: [
-            'Accountant',
-            'Engineer',
-            'Freelancer',
-            'Journalism',
-            'Physician',
-            'Student',
-            'Teacher',
-            'Other',
+          type: 'VerticalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/stringExampleTwo',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/stringExampleThree',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/stringExampleFour',
+            },
           ],
         },
       ],
@@ -138,14 +161,19 @@ export const uischema = {
 }
 
 export const initialState = {
-  name: undefined,
-  vegetarian: undefined,
-  vegetarianSure: undefined,
-  carnivore: undefined,
-  birthDate: undefined,
-  iceCream: undefined,
-  personalData: {
-    age: undefined,
-  },
-  postalCode: undefined,
+  stringExample: undefined,
+  stringExampleTwo: undefined,
+  stringExampleThree: undefined,
+  stringExampleFour: undefined,
+  stringDateExample: undefined,
+  booleanCheckExample: undefined,
+  miniBooleanCheckExample: undefined,
+  switchBooleanExample: undefined,
+  switchBooleanExampleTwo: undefined,
+  switchBooleanExampleThree: undefined,
+  switchBooleanExampleFour: undefined,
+  switchBooleanExampleFive: undefined,
+  enumExample: undefined,
+  enumSegmentsExample: undefined,
+  numberExample: undefined,
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { JsonForms } from '@jsonforms/react'
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers'
 import StringControl, { stringControlTester } from './StringControl'
@@ -20,7 +21,29 @@ const Form = ({ schema, uischema, data }: FormProps) => {
     { tester: numberControlTester, renderer: NumberControl },
     { tester: enumControlTester, renderer: EnumControl },
   ]
-  return <JsonForms {...{ uischema, schema, data, renderers }} cells={vanillaCells} />
+  return (
+    <Wrapper>
+      <JsonForms {...{ uischema, schema, data, renderers }} cells={vanillaCells} />
+    </Wrapper>
+  )
 }
+
+const Wrapper = styled.div`
+  .vertical-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .vertical-layout-item {
+  }
+  .horizontal-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0 50px;
+  }
+  .horizontal-layout-item {
+    flex: 1;
+  }
+`
 
 export default Form

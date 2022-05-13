@@ -6,23 +6,23 @@ import { BooleanControlProps } from './'
 
 const Checkbox = (props: BooleanControlProps) => {
   const { outline = false, required, label, data, handleChange, path, disabled = false, uischema } = props
-  const small = uischema.options?.size === 'small'
+  const mini = uischema.options?.size === 'mini'
   return (
-    <Wrapper {...{ disabled, small }}>
-      <Box {...{ small }}>
+    <Wrapper {...{ disabled, mini }}>
+      <Box {...{ mini }}>
         <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
-        <Checkmark {...{ outline, small }} />
+        <Checkmark {...{ outline, mini }} />
       </Box>
       <Label>{typeof label === 'object' ? label[0] : label}</Label>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.label<{ disabled: boolean; small?: boolean }>`
+const Wrapper = styled.label<{ disabled: boolean; mini?: boolean }>`
   position: relative;
   display: flex;
-  align-items: ${props => (props.small ? 'flex-start' : 'center')};
-  padding: ${props => (props.small ? 0 : 16)}px 0;
+  align-items: ${props => (props.mini ? 'flex-start' : 'center')};
+  padding: ${props => (props.mini ? 0 : 16)}px 0;
   user-select: none;
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   opacity: ${props => (props.disabled ? 0.32 : 1)};
@@ -47,14 +47,14 @@ const Wrapper = styled.label<{ disabled: boolean; small?: boolean }>`
   }
 `
 
-const Box = styled.div<{ small?: boolean }>`
+const Box = styled.div<{ mini?: boolean }>`
   flex: 0 0 auto;
   position: relative;
-  width: ${props => (props.small ? '16px' : '24px')};
-  height: ${props => (props.small ? '16px' : '24px')};
-  margin-right: ${props => (props.small ? '8px' : '16px')};
+  width: ${props => (props.mini ? '16px' : '24px')};
+  height: ${props => (props.mini ? '16px' : '24px')};
+  margin-right: ${props => (props.mini ? '8px' : '16px')};
   ${props =>
-    !props.small &&
+    !props.mini &&
     `
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 32px;
@@ -76,7 +76,7 @@ const Input = styled.input`
   width: 0;
 `
 
-const Checkmark = styled.span<{ outline: boolean; small?: boolean }>`
+const Checkmark = styled.span<{ outline: boolean; mini?: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -104,7 +104,7 @@ const Checkmark = styled.span<{ outline: boolean; small?: boolean }>`
       border-color: ${rgba(palette.moon)};
     }
     ${props =>
-      props.small
+      !props.mini
         ? `
       left: calc(50% - 1px);
       top: calc(50% - 4px);
