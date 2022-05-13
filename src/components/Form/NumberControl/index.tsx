@@ -41,7 +41,7 @@ export const NumberControl = (props: NumberControlProps) => {
 }
 
 export const numberControlTester = rankWith(
-  3, //increase rank as needed
+  3,
   schemaMatches(schema => schema.type === 'number' || schema.type === 'integer'),
 )
 

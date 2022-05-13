@@ -21,13 +21,11 @@ export interface BooleanControlProps {
   path: string
 }
 
-export const BooleanControl = (props: BooleanControlProps) => {
-  console.log('enum', props.uischema.options)
-  return props.uischema.options?.format === 'switch' ? <SwitchControl {...props} /> : <CheckboxControl {...props} />
-}
+export const BooleanControl = (props: BooleanControlProps) =>
+  props.uischema.options?.format === 'switch' ? <SwitchControl {...props} /> : <CheckboxControl {...props} />
 
 export const booleanControlTester = rankWith(
-  3, //increase rank as needed
+  3,
   schemaMatches(schema => schema.type === 'boolean'),
 )
 

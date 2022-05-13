@@ -26,7 +26,7 @@ export const EnumControl = (props: EnumControlProps) => {
 }
 
 export const enumControlTester = rankWith(
-  3, //increase rank as needed
+  3,
   schemaMatches(schema => schema.type === 'string' && !!schema.enum),
 )
 

@@ -1,7 +1,5 @@
-import React from 'react'
+import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
-import { withJsonFormsControlProps } from '@jsonforms/react'
-import { rankWith, schemaMatches } from '@jsonforms/core'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { Wrapper, Label, InputWrapper, InputIcon } from '../_Common'
@@ -20,35 +18,50 @@ const SelectControl = (props: EnumControlProps) => {
     path,
     schema,
   } = props
-  const hasIcon = !!icon
-  const [filled, setFilled] = React.useState(true)
 
-  React.useEffect(() => setFilled(data !== '' && data !== undefined), [data])
+  const hasIcon = !!icon
+
+  const ref = useRef<HTMLSelectElement>(null)
+  const [filled, setFilled] = useState(true)
+  useEffect(() => setFilled(data !== '' && data !== undefined), [data])
+
+  const changeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleChange(path, e.target.value)
+    ref.current?.blur()
+  }
 
   return (
-    <Wrapper>
+    <SelectWrapper {...{ filled }}>
       {icon && <InputIcon>{icon}</InputIcon>}
       <InputWrapper {...{ disabled, outline, hasIcon }}>
         <DownwardArrowPlacer>
-          <Select
-            {...{ disabled, outline, required }}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleChange(path, e.target.value)}
-          >
+          <select {...{ disabled, required, ref }} onChange={changeSelect}>
             {schema?.enum?.map((option: string) => (
               <option value={option} key={option}>
                 {option}
               </option>
             ))}
-          </Select>
+          </select>
         </DownwardArrowPlacer>
-        <Label className={filled ? 'filled' : ''}>
+        <Label>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </Label>
       </InputWrapper>
-    </Wrapper>
+    </SelectWrapper>
   )
 }
+
+// todo: it would be nice if this could be done with a pseudo-selector in <Label />, similar to the way <Input /> works.
+const SelectWrapper = styled(props => <Wrapper {...props} />)<{ filled: boolean }>`
+  ${Label} {
+    transform: translate3d(0, -12px, 0) scale3d(0.8, 0.8, 1);
+    color: ${rgba(palette.night, 0.8)};
+    @media (prefers-color-scheme: dark) {
+      color: ${rgba(palette.moon, 0.8)};
+    }
+  }
+`
 
 const DownwardArrowPlacer = styled.div`
   position: relative;
@@ -93,44 +106,4 @@ const DownwardArrowPlacer = styled.div`
   }
 `
 
-const Select = styled.select`
-  display: flex;
-  align-items: center;
-  background-color: ${rgba(palette.night)};
-  width: 100%;
-  height: 56px;
-  margin: 0;
-  border-radius: 0;
-  outline: none;
-  appearance: none;
-  cursor: pointer;
-
-  &::-moz-focus-inner {
-    outline: none !important;
-  }
-  &:-moz-focusring {
-    color: inherit;
-  }
-
-  &::-ms-expand {
-    display: none;
-  }
-
-  &:hover,
-  &:focus {
-    outline: none;
-  }
-
-  & option {
-    font-weight: normal;
-  }
-
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    height: 64px;
-  }
-
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: 72px;
-  }
-`
 export default SelectControl

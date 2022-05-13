@@ -1213,10 +1213,10 @@
   resolved "https://registry.yarnpkg.com/@depay/web3-blockchains/-/web3-blockchains-4.5.0.tgz#b959b3cb57300a4d163b26ea42aee792ad89d3ce"
   integrity sha512-UhHb+uRjEnQRNC65Jdnq9dP9ANg/gzO8IE5eXx3uG6rr1rTAmq0jRmB447JtPDgestZ/BDOryhHSWUlGT6ak7Q==
 
-"@depay/web3-mock@^11.6.2":
-  version "11.7.0"
-  resolved "https://registry.yarnpkg.com/@depay/web3-mock/-/web3-mock-11.7.0.tgz#587b2ab7de4b7728360f351c9d827cf921a30270"
-  integrity sha512-MDdkiNXCZtibWTt/W9kylzdE/Ft8OnDX/W5gCzncZrA1hGZbZgX9ySlvQ2avvngWBw89I8WAlY4EUHUWn/UM0g==
+"@depay/web3-mock@^11.8.0":
+  version "11.8.0"
+  resolved "https://registry.yarnpkg.com/@depay/web3-mock/-/web3-mock-11.8.0.tgz#13b2dca961896828b9b3ff3a76131bb0f6c929e3"
+  integrity sha512-IGao9ryzMM2VTzIN4Py+5i44dHO37DhCqCR6EQOnrnDkYtYJtlXydywUctQWA/sh2LoBLFMY7GbeNgIaTecLng==
 
 "@discoveryjs/json-ext@^0.5.3":
   version "0.5.7"
@@ -3109,10 +3109,10 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-"@trycourier/client-graphql@^1.14.2":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@trycourier/client-graphql/-/client-graphql-1.14.2.tgz#2a2111b1dc3430ac7946fb1205b34c46c9d876cd"
-  integrity sha512-qtno0Po62F0IZwF/mmeZtBIQBTKL3aRN0sya5HLtFHcN9+OBtQ0djwf9ijBXx/Da0cI+sqONZtSD5DY6hcKaRA==
+"@trycourier/client-graphql@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@trycourier/client-graphql/-/client-graphql-1.15.0.tgz#4138cfc467cf5eb7f1a85f2d037c8265208fc55e"
+  integrity sha512-3p70CHlCpt9/oiIBHWtpVSEFLNbZ5oEjj96SWXfUy01FxFFe7U2AnVjNtDX1MDsPa+na4lNTB27TtgrzQust3w==
   dependencies:
     graphql "^15.5.0"
     rimraf "^3.0.2"
@@ -3125,12 +3125,12 @@
   dependencies:
     axios "^0.21.1"
 
-"@trycourier/react-provider@^1.13.1", "@trycourier/react-provider@^1.14.2":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@trycourier/react-provider/-/react-provider-1.14.2.tgz#eb0c3dd0e7c72ee5b9cea1e34b209839445867e2"
-  integrity sha512-yZZDMMIm95CSvtfrHQE+bI01K3Ik8tJquqAV8tEk+Q/les2KZEMmZu61JqSRx4+gRpbMGrIf7kFcJSDq/V3Pmw==
+"@trycourier/react-provider@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@trycourier/react-provider/-/react-provider-1.15.0.tgz#cbf9a0a02c63f2e9aa21fdb197ee2dabeac36676"
+  integrity sha512-pZvr0dqWsMzH0O1iI4rXwMEfOrkpeoonEjAs4GUFmrI6uFxDHTDPQSD29Il5tIovw0yt/Fk1cLzCNGTlawI8xw==
   dependencies:
-    "@trycourier/client-graphql" "^1.14.2"
+    "@trycourier/client-graphql" "^1.15.0"
     buffer "^6.0.3"
     graphql "^15.5.0"
     react-use "^17.2.1"
@@ -3138,12 +3138,12 @@
     rimraf "^3.0.2"
     urql "^2.0.1"
 
-"@trycourier/react-toast@^1.13.1":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@trycourier/react-toast/-/react-toast-1.14.2.tgz#60d98f408ebefbde7edc85149e982d7cafb0e251"
-  integrity sha512-H6kzfiH4mT859nZ2by1GV+LCUV6R2+DUIfbRZ4zzTSEXKovAEQqussylJCAtWr0DmM9oodfqCF0ikPDd1tL0+A==
+"@trycourier/react-toast@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@trycourier/react-toast/-/react-toast-1.15.0.tgz#f2cea259241cd3e704a89c5426a9bd88cc521cf7"
+  integrity sha512-d3jJ8gTacmQg/U+Fbc4JdqkD5vuBe0seqF9av3DZwqU8wi4kWb5KFrZ35K6WfsEy57NecfuPo+uP/FdLK+73yw==
   dependencies:
-    "@trycourier/react-provider" "^1.14.2"
+    "@trycourier/react-provider" "^1.15.0"
     deep-extend "^0.6.0"
     markdown-to-jsx "^7.1.7"
     react-toastify "^6.2.0"
@@ -3323,10 +3323,15 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@17.0.31":
+"@types/node@*":
   version "17.0.31"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.31.tgz#a5bb84ecfa27eec5e1c802c6bbf8139bdb163a5d"
   integrity sha512-AR0x5HbXGqkEx9CadRH3EBYx/VkiUgZIhP4wvPn/+5KIsgpNoyFaRlVe0Zlx9gRtg8fA06a9tskE2MSN7TcG4Q==
+
+"@types/node@17.0.33":
+  version "17.0.33"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.33.tgz#3c1879b276dc63e73030bb91165e62a4509cd506"
+  integrity sha512-miWq2m2FiQZmaHfdZNcbpp9PuXg34W5JZ5CrJ/BaS70VuhoJENBEQybeiYSaPBRNq6KQGnjfEnc/F3PN++D+XQ==
 
 "@types/node@^12.12.6":
   version "12.20.50"
@@ -3385,10 +3390,10 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
 
-"@types/react-dom@18.0.3":
-  version "18.0.3"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.3.tgz#a022ea08c75a476fe5e96b675c3e673363853831"
-  integrity sha512-1RRW9kst+67gveJRYPxGmVy8eVJ05O43hg77G2j5m76/RFJtMbcfAs2viQ2UNsvvDg8F7OfQZx8qQcl6ymygaQ==
+"@types/react-dom@18.0.4":
+  version "18.0.4"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.4.tgz#dcbcadb277bcf6c411ceff70069424c57797d375"
+  integrity sha512-FgTtbqPOCI3dzZPZoC2T/sx3L34qxy99ITWn4eoSA95qPyXDMH0ALoAqUp49ITniiJFsXUVBtalh/KffMpg21Q==
   dependencies:
     "@types/react" "*"
 
