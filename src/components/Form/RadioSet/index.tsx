@@ -1,20 +1,28 @@
 import React from 'react'
+import { withJsonFormsControlProps } from '@jsonforms/react'
+import { rankWith, schemaMatches } from '@jsonforms/core'
+import type { JsonSchema } from '@jsonforms/core'
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 export interface RadioSetProps {
-  name: string
-  options: Array<string>
-  selected: string
-  onClick: (option: string) => void
+  data: any
+  handleChange(path: string, value: any): void
+  path: string
+  schema: JsonSchema
 }
 
-const RadioSet = ({ name, options, selected, onClick }: RadioSetProps) => (
+export const RadioSet = ({ data, handleChange, path, schema }: RadioSetProps) => (
   <Wrapper>
-    {options.map((option: string) => (
-      <Option key={option} selected={option === selected}>
-        <input type="radio" name={name} value={option} checked={selected === option} onChange={() => onClick(option)} />
+    {schema?.enum?.map((option: string) => (
+      <Option key={option} selected={option === data}>
+        <input
+          type="radio"
+          value={option}
+          checked={data === option}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(path, e.target.value)}
+        />
         <span>{option}</span>
       </Option>
     ))}
@@ -64,4 +72,12 @@ const Option = styled.label<{ selected: boolean }>`
   }
 `
 
-export default RadioSet
+export const radioSetControlTester = rankWith(
+  3, //increase rank as needed
+  schemaMatches(schema => {
+    console.log(schema)
+    return false
+  }),
+)
+
+export default withJsonFormsControlProps(RadioSet)

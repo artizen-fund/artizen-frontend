@@ -1,10 +1,16 @@
 import { useState } from 'react'
 import { StringControl, StringControlProps } from './'
+import { iconKey } from '../../Icon/Icon.enums'
 
 export default {
   title: 'forms/StringControl',
   component: StringControl,
-  argTypes: {},
+  argTypes: {
+    icon: {
+      options: iconKey,
+      control: { type: 'select' },
+    },
+  },
 }
 
 export const StringControlComponent = (props: StringControlProps) => {

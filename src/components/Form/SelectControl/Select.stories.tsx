@@ -1,10 +1,16 @@
 import { useState } from 'react'
 import { SelectControl, SelectControlProps } from './'
+import { iconKey } from '../../Icon/Icon.enums'
 
 export default {
   title: 'forms/SelectControl',
   component: SelectControl,
-  argTypes: {},
+  argTypes: {
+    icon: {
+      options: iconKey,
+      control: { type: 'select' },
+    },
+  },
 }
 
 export const SelectControlComponent = (props: SelectControlProps) => {

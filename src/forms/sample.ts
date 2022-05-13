@@ -17,6 +17,14 @@ export const schema = {
       type: 'string',
       enum: ['', 'DE', 'IT', 'JP', 'US', 'RU', 'Other'],
     },
+    iceCream: {
+      type: 'string',
+      enum: ['vanilla', 'chocolate', 'strawberry', 'neapolitan'],
+    },
+    soda: {
+      type: 'string',
+      enum: ['coke', 'pepsi', 'royal crown'],
+    },
     personalData: {
       type: 'object',
       properties: {
@@ -60,6 +68,20 @@ export const uischema = {
         {
           type: 'Control',
           scope: '#/properties/vegetarian',
+        },
+        {
+          type: 'Control',
+          scope: '#/properties/iceCream',
+          options: {
+            format: 'radioSelect',
+          },
+        },
+        {
+          type: 'Control',
+          scope: '#/properties/soda',
+          options: {
+            format: 'segmentedSelect',
+          },
         },
         {
           type: 'Control',
@@ -109,6 +131,8 @@ export const initialState = {
   name: undefined,
   vegetarian: undefined,
   birthDate: undefined,
+  iceCream: undefined,
+  soda: undefined,
   personalData: {
     age: undefined,
   },

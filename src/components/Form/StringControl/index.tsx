@@ -1,8 +1,8 @@
 import React from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
+import { rankWith, schemaMatches } from '@jsonforms/core'
 import type { Labels } from '@jsonforms/core'
 import { Wrapper, Label, InputWrapper, InputIcon } from '../_Common'
-import { rankWith, schemaMatches } from '@jsonforms/core'
 
 export interface StringControlProps {
   icon?: string

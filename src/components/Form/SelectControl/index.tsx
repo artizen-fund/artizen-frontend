@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema } from '@jsonforms/core'
+import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { Wrapper, Label, InputWrapper, InputIcon } from '../_Common'
@@ -10,19 +10,21 @@ import { rankWith, schemaMatches } from '@jsonforms/core'
 export interface SelectControlProps {
   icon?: string
   invalid?: boolean
-  schema: JsonSchema
   label: string | Labels
   disabled?: boolean
   onChange?: (e: any) => void
   required?: boolean
   outline?: boolean
 
+  schema: JsonSchema
+  uischema: UISchemaElement
   data: any
   handleChange(path: string, value: any): void
   path: string
 }
 
 export const SelectControl = (props: SelectControlProps) => {
+  console.log('design', props.uischema.options?.format)
   const {
     icon,
     label,

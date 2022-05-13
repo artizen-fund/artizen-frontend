@@ -1,10 +1,16 @@
 import { useState } from 'react'
 import { NumberControl, NumberControlProps } from './'
+import { iconKey } from '../../Icon/Icon.enums'
 
 export default {
   title: 'forms/NumberControl',
   component: NumberControl,
-  argTypes: {},
+  argTypes: {
+    icon: {
+      options: iconKey,
+      control: { type: 'select' },
+    },
+  },
 }
 
 export const NumberControlComponent = (props: NumberControlProps) => {
