@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema } from '@jsonforms/core'
-import { Icon } from '@components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { Wrapper, Label, InputWrapper, InputIcon } from '../_Common'
+import { rankWith, schemaMatches } from '@jsonforms/core'
 
-export interface SelectProps {
+export interface SelectControlProps {
   icon?: string
   invalid?: boolean
   schema: JsonSchema
@@ -16,16 +16,13 @@ export interface SelectProps {
   onChange?: (e: any) => void
   required?: boolean
   outline?: boolean
-  emptyFirstOption?: boolean
-  autoComplete?: string
-  capitalize?: boolean
 
   data: any
   handleChange(path: string, value: any): void
   path: string
 }
 
-const SelectInput = (props: SelectProps) => {
+export const SelectControl = withJsonFormsControlProps((props: SelectControlProps) => {
   const {
     icon,
     label,
@@ -66,7 +63,7 @@ const SelectInput = (props: SelectProps) => {
       </InputWrapper>
     </Wrapper>
   )
-}
+})
 
 const DownwardArrowPlacer = styled.div`
   position: relative;
@@ -152,4 +149,7 @@ const Select = styled.select`
   }
 `
 
-export default withJsonFormsControlProps(SelectInput)
+export const selectControlTester = rankWith(
+  3, //increase rank as needed
+  schemaMatches(schema => schema.type === 'string' && !!schema.enum),
+)

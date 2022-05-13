@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
-export const Label = styled.label`
+export default styled.label`
   position: absolute;
   left: 16px;
   top: 0;

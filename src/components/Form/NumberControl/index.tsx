@@ -2,8 +2,11 @@ import React from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels } from '@jsonforms/core'
 import { Wrapper, Label, InputWrapper, InputIcon } from '../_Common'
+import { rankWith, schemaMatches } from '@jsonforms/core'
 
-export interface InputStringProps {
+export interface NumberControlProps {
+  name?: string
+  type?: 'textarea' | 'select' | 'text' | 'email' | 'password'
   icon?: string
   invalid?: boolean
   label: string | Labels
@@ -11,11 +14,14 @@ export interface InputStringProps {
   onChange?: (e: any) => void
   value?: string
   required?: boolean
+  options?: Array<string> | Record<string, string>
   outline?: boolean
+  emptyFirstOption?: boolean
   autoComplete?: string
+  capitalize?: boolean
 }
 
-const InputString = (props: InputStringProps) => {
+export const NumberControl = withJsonFormsControlProps((props: NumberControlProps) => {
   const { icon, label, outline = true, onChange, value, disabled = false, required = false, autoComplete } = props
   const hasIcon = !!icon
   const valid = false
@@ -24,7 +30,7 @@ const InputString = (props: InputStringProps) => {
     <Wrapper>
       {icon && <InputIcon>{icon}</InputIcon>}
       <InputWrapper {...{ hasIcon, disabled, outline }}>
-        <input {...{ onChange, disabled, required, value, autoComplete }} placeholder=" " />
+        <input {...{ onChange, disabled, required, value, autoComplete }} placeholder=" " type="number" />
         <Label {...{ hasIcon }} className={valid ? 'valid' : ''}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
@@ -32,6 +38,9 @@ const InputString = (props: InputStringProps) => {
       </InputWrapper>
     </Wrapper>
   )
-}
+})
 
-export default withJsonFormsControlProps(InputString)
+export const numberControlTester = rankWith(
+  3, //increase rank as needed
+  schemaMatches(schema => schema.type === 'number' || schema.type === 'integer'),
+)

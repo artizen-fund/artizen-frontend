@@ -1,38 +1,37 @@
 import React from 'react'
 import styled from 'styled-components'
+import type { Labels } from '@jsonforms/core'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 export interface CheckboxProps {
   outline?: boolean
-  children: React.ReactNode
-  name: string
-  onChange: (e?: any) => void
   required?: boolean
-  checked?: boolean
-  disabled?: boolean
-  className?: string
   small?: boolean
+  disabled?: boolean
+
+  label?: string | Labels
+  data: boolean
+  handleChange(path: string, value: any): void
+  path: string
 }
 
 const Checkbox = ({
   outline = false,
-  children,
-  name,
-  onChange,
   required,
-  checked,
-  disabled = false,
-  className,
   small,
-  ...props
+  label,
+  data,
+  handleChange,
+  path,
+  disabled = false,
 }: CheckboxProps) => (
-  <Wrapper {...{ className, disabled, small }}>
+  <Wrapper {...{ disabled, small }}>
     <Box {...{ small }}>
-      <Input type="checkbox" {...props} {...{ name, onChange, checked, disabled }} required={!!required} />
+      <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
       <Checkmark {...{ outline, small }} />
     </Box>
-    <Label>{children}</Label>
+    <Label>{typeof label === 'object' ? label[0] : label}</Label>
   </Wrapper>
 )
 

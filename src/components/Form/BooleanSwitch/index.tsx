@@ -1,28 +1,30 @@
 import React from 'react'
 import styled from 'styled-components'
-import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels } from '@jsonforms/core'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
+import { rankWith, schemaMatches } from '@jsonforms/core'
+import { withJsonFormsControlProps } from '@jsonforms/react'
 
 export interface BooleanSwitchProps {
-  label?: string | Labels
   required?: boolean
-
-  data: any
+  label?: string | Labels
+  data: boolean
   handleChange(path: string, value: any): void
   path: string
 }
 
-const BooleanSwitch = ({ data, label, handleChange, path, required, ...props }: BooleanSwitchProps) => {
-  return (
-    <Wrapper>
-      <Label>{typeof label === 'object' ? label[0] : label}</Label>
-      <Input type="checkbox" required={!!required} onClick={e => handleChange(path, !data)} />
-      <Switch checked={data} />
-    </Wrapper>
-  )
-}
+export const BooleanSwitch = withJsonFormsControlProps(
+  ({ data, label, handleChange, path, required }: BooleanSwitchProps) => {
+    return (
+      <Wrapper>
+        <Label>{typeof label === 'object' ? label[0] : label}</Label>
+        <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
+        <Switch checked={data} />
+      </Wrapper>
+    )
+  },
+)
 
 const Wrapper = styled.label`
   position: relative;
@@ -109,4 +111,7 @@ const Label = styled.span`
   }
 `
 
-export default withJsonFormsControlProps(BooleanSwitch)
+export const booleanSwitchControlTester = rankWith(
+  3, //increase rank as needed
+  schemaMatches(schema => schema.type === 'boolean'),
+)

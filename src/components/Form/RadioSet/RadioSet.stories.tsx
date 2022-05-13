@@ -2,7 +2,7 @@ import React from 'react'
 import RadioSet, { RadioSetProps } from './'
 
 export default {
-  title: 'components/RadioSet',
+  title: 'forms/RadioSet',
   component: RadioSet,
   argTypes: {},
 }

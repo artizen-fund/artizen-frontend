@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Icon } from '@components'
 import { breakpoint } from '@theme'
 
-export const InputIcon = styled(props => <Icon {...props} />)`
+export default styled(props => <Icon {...props} />)`
   z-index: 2;
   position: absolute;
   top: 0;

@@ -1,7 +1,7 @@
 import Checkbox, { CheckboxProps } from './'
 
 export default {
-  title: 'components/Checkbox',
+  title: 'forms/Checkbox',
   component: Checkbox,
   argTypes: {},
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
-export const InputWrapper = styled.div<{
+export default styled.div<{
   hasIcon: boolean
   disabled: boolean
   outline: boolean
