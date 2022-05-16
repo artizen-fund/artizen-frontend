@@ -12,15 +12,15 @@ export interface BooleanControlProps {
   onChange?: (e: any) => void
   required?: boolean
 
-  schema: JsonSchema
-  uischema: UISchemaElement
+  schema?: JsonSchema
+  uischema?: UISchemaElement
   data: any
   handleChange(path: string, value: any): void
   path: string
 }
 
 export const BooleanControl = (props: BooleanControlProps) =>
-  props.uischema.options?.format === 'switch' ? <SwitchControl {...props} /> : <CheckboxControl {...props} />
+  props.uischema?.options?.format === 'switch' ? <SwitchControl {...props} /> : <CheckboxControl {...props} />
 
 export const booleanControlTester = rankWith(
   3,

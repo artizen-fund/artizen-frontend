@@ -5,7 +5,7 @@ import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
 import { SessionProvider, useApollo, Toaster } from '@lib'
 
-import '@public/styles/reset.css'
+// import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
 function App({ Component, pageProps }: AppProps) {

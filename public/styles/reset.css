@@ -148,8 +148,8 @@ hr {
   margin: 0;
   appearance: none;
 }
-input[type="submit"],
-input[type="button"],
+input[type='submit'],
+input[type='button'],
 button {
   margin: 0;
   padding: 0;

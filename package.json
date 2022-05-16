@@ -24,6 +24,7 @@
     "@depay/web3-blockchains": "^4.2.0",
     "@depay/web3-mock": "^11.8.0",
     "@jsonforms/core": "^2.5.2",
+    "@jsonforms/material-renderers": "^2.5.2",
     "@jsonforms/react": "^2.5.2",
     "@jsonforms/vanilla-renderers": "^2.5.2",
     "@magic-ext/oauth": "^2.0.1",

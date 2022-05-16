@@ -13,15 +13,15 @@ export interface EnumControlProps {
   required?: boolean
   outline?: boolean
 
-  schema: JsonSchema
-  uischema: UISchemaElement
+  schema?: JsonSchema
+  uischema?: UISchemaElement
   data: any
   handleChange(path: string, value: any): void
   path: string
 }
 
 export const EnumControl = (props: EnumControlProps) =>
-  props.uischema.options?.format === 'segmented' ? <SegmentedControl {...props} /> : <SelectControl {...props} />
+  props.uischema?.options?.format === 'segmented' ? <SegmentedControl {...props} /> : <SelectControl {...props} />
 
 export const enumControlTester = rankWith(
   3,

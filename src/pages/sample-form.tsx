@@ -6,7 +6,7 @@ const SampleFormPage: NextPage = () => {
   return (
     <>
       <Header />
-      <Form {...{ schema, uischema }} data={initialState} />
+      <Form {...{ schema, uischema, initialState }} />
     </>
   )
 }

@@ -1,4 +1,5 @@
 export const schema = {
+  name: 'artizen-sample-form',
   type: 'object',
   properties: {
     stringExample: {
@@ -59,6 +60,26 @@ export const schema = {
       description: 'Please enter your age.',
     },
   },
+}
+
+export const initialState = {
+  stringExample: undefined,
+  stringExampleTwo: undefined,
+  stringExampleThree: undefined,
+  stringExampleFour: undefined,
+  stringDateExample: undefined,
+  booleanCheckExample: undefined,
+  miniBooleanCheckExample: undefined,
+  booleanCheckExampleTwo: undefined,
+  miniBooleanCheckExampleTwo: undefined,
+  switchBooleanExample: undefined,
+  switchBooleanExampleTwo: undefined,
+  switchBooleanExampleThree: undefined,
+  switchBooleanExampleFour: undefined,
+  switchBooleanExampleFive: undefined,
+  enumExample: undefined,
+  enumSegmentsExample: undefined,
+  numberExample: undefined,
 }
 
 export const uischema = {
@@ -197,24 +218,4 @@ export const uischema = {
       ],
     },
   ],
-}
-
-export const initialState = {
-  stringExample: undefined,
-  stringExampleTwo: undefined,
-  stringExampleThree: undefined,
-  stringExampleFour: undefined,
-  stringDateExample: undefined,
-  booleanCheckExample: undefined,
-  miniBooleanCheckExample: undefined,
-  booleanCheckExampleTwo: undefined,
-  miniBooleanCheckExampleTwo: undefined,
-  switchBooleanExample: undefined,
-  switchBooleanExampleTwo: undefined,
-  switchBooleanExampleThree: undefined,
-  switchBooleanExampleFour: undefined,
-  switchBooleanExampleFive: undefined,
-  enumExample: undefined,
-  enumSegmentsExample: undefined,
-  numberExample: undefined,
 }

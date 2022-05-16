@@ -1,6 +1,13 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 
-const Header = () => <Wrapper>This is a header!</Wrapper>
+const Header = () => (
+  <Wrapper>
+    <Link href="/">
+      <a>Artizen</a>
+    </Link>
+  </Wrapper>
+)
 
 const Wrapper = styled.header``
 

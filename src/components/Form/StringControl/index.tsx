@@ -15,8 +15,8 @@ export interface StringControlProps {
   outline?: boolean
   autoComplete?: string
   message?: string
-  schema: JsonSchema
-  uischema: UISchemaElement
+  schema?: JsonSchema
+  uischema?: UISchemaElement
 }
 
 export const StringControl = (props: StringControlProps) => {
@@ -41,7 +41,7 @@ export const StringControl = (props: StringControlProps) => {
         <input
           {...{ onChange, disabled, required, value, autoComplete }}
           placeholder=" "
-          type={props.uischema.options?.format || 'text'}
+          type={props.uischema?.options?.format || 'text'}
         />
         <Label {...{ hasIcon }} className={valid ? 'valid' : ''}>
           {typeof label === 'object' ? label[0] : label}
