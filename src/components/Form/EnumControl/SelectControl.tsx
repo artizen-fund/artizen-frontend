@@ -37,8 +37,8 @@ const SelectControl = (props: EnumControlProps) => {
       <InputWrapper {...{ disabled, outline, hasIcon }}>
         <DownwardArrowPlacer>
           <select {...{ disabled, required, ref }} onChange={changeSelect} defaultValue={data}>
-            {schema?.enum?.map((option: string) => (
-              <option value={option} key={option}>
+            {schema?.enum?.map((option: string, i: number) => (
+              <option value={option} key={`${path}-${i}`}>
                 {option}
               </option>
             ))}

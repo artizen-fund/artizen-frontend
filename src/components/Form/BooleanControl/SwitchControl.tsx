@@ -6,7 +6,7 @@ import { BooleanControlProps } from './'
 export const SwitchControl = ({ data, label, handleChange, path, required }: BooleanControlProps) => (
   <Wrapper>
     <Label>{typeof label === 'object' ? label[0] : label}</Label>
-    <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
+    <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} checked={data} />
     <Switch checked={data} />
   </Wrapper>
 )

@@ -7,8 +7,8 @@ const SegmentedControl = (props: EnumControlProps) => {
   const { disabled = false, required = false, data, handleChange, path, schema } = props
   return (
     <Wrapper>
-      {schema?.enum?.map((option: string) => (
-        <Option key={option} selected={option === data}>
+      {schema?.enum?.map((option: string, i: number) => (
+        <Option key={`${path}-${i}`} selected={option === data}>
           <input
             type="radio"
             value={option}

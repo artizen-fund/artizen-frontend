@@ -35,7 +35,6 @@ export const StringControl = ({
   path,
   errors,
   description,
-  ...props
 }: StringControlProps) => {
   const hasIcon = !!icon
   const [virgin, setVirgin] = useState(data === undefined)

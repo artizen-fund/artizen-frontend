@@ -38,7 +38,6 @@ export const NumberControl = ({
   path,
   errors,
   description,
-  ...props
 }: NumberControlProps) => {
   const hasIcon = !!icon
   const [virgin, setVirgin] = useState(data === undefined)
@@ -49,7 +48,6 @@ export const NumberControl = ({
     if (required && !data) splitErrors.push('* required field')
     setParsedErrors(splitErrors)
   }, [errors, required, data])
-  console.log(data, schema.type)
 
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
 

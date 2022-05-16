@@ -10,7 +10,7 @@ const Checkbox = (props: BooleanControlProps) => {
   return (
     <Wrapper {...{ disabled, mini }}>
       <Box {...{ mini }}>
-        <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} />
+        <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} checked={data} />
         <Checkmark {...{ outline, mini }} />
       </Box>
       <Label>{typeof label === 'object' ? label[0] : label}</Label>
