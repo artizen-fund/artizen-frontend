@@ -20,9 +20,13 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
   useEffect(() => {
     if (typeof localStorage === 'undefined') {
       setData(initialState)
+      return
     }
     const frozenAnswers = localStorage.getItem(schema.name)
-    if (!frozenAnswers) return
+    if (!frozenAnswers) {
+      setData(initialState)
+      return
+    }
     const thawedAnswers = JSON.parse(frozenAnswers)
     setData(thawedAnswers)
   }, [schema])
@@ -57,13 +61,11 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
 }
 
 const Wrapper = styled.div`
-  padding: 50px;
   .vertical-layout {
     display: flex;
     flex-direction: column;
   }
   .vertical-layout-item {
-    margin: 10px;
   }
   .horizontal-layout {
     display: flex;
@@ -73,7 +75,6 @@ const Wrapper = styled.div`
   }
   .horizontal-layout-item {
     flex: 1;
-    margin: 10px;
   }
 `
 

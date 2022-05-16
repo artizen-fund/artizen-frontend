@@ -1,5 +1,5 @@
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels } from '@jsonforms/core'
+import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, Label, InputWrapper, InputIcon } from '../_Common'
 
@@ -11,17 +11,18 @@ export interface NumberControlProps {
   label: string | Labels
   disabled?: boolean
   onChange?: (e: any) => void
-  value?: number
   required?: boolean
-  options?: Array<string> | Record<string, string>
   outline?: boolean
-  emptyFirstOption?: boolean
-  autoComplete?: string
-  capitalize?: boolean
+
+  schema?: JsonSchema
+  uischema?: UISchemaElement
+  data: any
+  handleChange(path: string, value: any): void
+  path: string
 }
 
 export const NumberControl = (props: NumberControlProps) => {
-  const { icon, label, outline = true, onChange, value, disabled = false, required = false, autoComplete } = props
+  const { icon, label, outline = true, disabled = false, required = false, data, handleChange, path } = props
   const hasIcon = !!icon
   const valid = false
 
@@ -29,7 +30,13 @@ export const NumberControl = (props: NumberControlProps) => {
     <Wrapper>
       {icon && <InputIcon>{icon}</InputIcon>}
       <InputWrapper {...{ hasIcon, disabled, outline }}>
-        <input {...{ onChange, disabled, required, value, autoComplete }} placeholder=" " type="number" />
+        <input
+          type="number"
+          {...{ disabled, required }}
+          defaultValue={data}
+          placeholder=" "
+          onChange={e => handleChange(path, e.target.value)}
+        />
         <Label {...{ hasIcon }} className={valid ? 'valid' : ''}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}

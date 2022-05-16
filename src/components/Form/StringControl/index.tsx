@@ -10,13 +10,15 @@ export interface StringControlProps {
   label: string | Labels
   disabled?: boolean
   onChange?: (e: any) => void
-  value?: string
   required?: boolean
   outline?: boolean
   autoComplete?: string
-  message?: string
+
   schema?: JsonSchema
   uischema?: UISchemaElement
+  data: any
+  handleChange(path: string, value: any): void
+  path: string
 }
 
 export const StringControl = (props: StringControlProps) => {
@@ -24,31 +26,32 @@ export const StringControl = (props: StringControlProps) => {
     icon,
     label,
     outline = true,
-    onChange,
-    value,
     disabled = false,
     required = false,
     autoComplete,
-    message,
+    uischema,
+    data,
+    handleChange,
+    path,
   } = props
   const hasIcon = !!icon
   const valid = false
-
   return (
     <Wrapper>
       {icon && <InputIcon>{icon}</InputIcon>}
       <InputWrapper {...{ hasIcon, disabled, outline }}>
         <input
-          {...{ onChange, disabled, required, value, autoComplete }}
+          {...{ disabled, required, autoComplete }}
+          defaultValue={data}
           placeholder=" "
-          type={props.uischema?.options?.format || 'text'}
+          type={uischema?.options?.format || 'text'}
+          onChange={e => handleChange(path, e.target.value)}
         />
         <Label {...{ hasIcon }} className={valid ? 'valid' : ''}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </Label>
       </InputWrapper>
-      {message && <Message>{message}</Message>}
     </Wrapper>
   )
 }

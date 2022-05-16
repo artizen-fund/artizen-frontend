@@ -36,7 +36,7 @@ const SelectControl = (props: EnumControlProps) => {
       {icon && <InputIcon>{icon}</InputIcon>}
       <InputWrapper {...{ disabled, outline, hasIcon }}>
         <DownwardArrowPlacer>
-          <select {...{ disabled, required, ref }} onChange={changeSelect}>
+          <select {...{ disabled, required, ref }} onChange={changeSelect} defaultValue={data}>
             {schema?.enum?.map((option: string) => (
               <option value={option} key={option}>
                 {option}
