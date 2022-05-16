@@ -4,7 +4,7 @@ import { rgba } from '@lib'
 
 export default styled.div<{
   hasIcon: boolean
-  disabled: boolean
+  disabled?: boolean
   outline: boolean
 }>`
   position: relative;

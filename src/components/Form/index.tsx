@@ -7,6 +7,7 @@ import StringControl, { stringControlTester } from './StringControl'
 import NumberControl, { numberControlTester } from './NumberControl'
 import BooleanControl, { booleanControlTester } from './BooleanControl'
 import EnumControl, { enumControlTester } from './EnumControl'
+import { Button } from '@components'
 
 interface FormProps {
   schema: any
@@ -16,6 +17,9 @@ interface FormProps {
 
 const Form = ({ schema, uischema, initialState }: FormProps) => {
   const [data, setData] = useState<any>(undefined)
+  const [errors, setErrors] = useState<any>(undefined)
+
+  useEffect(() => console.log('form errors?', errors), [errors])
 
   useEffect(() => {
     if (typeof localStorage === 'undefined') {
@@ -31,8 +35,9 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
     setData(thawedAnswers)
   }, [schema])
 
-  const freezeAndSetData = debounce((newData: any) => {
+  const freezeAndSetData = debounce((newData: any, errors: any) => {
     setData(newData)
+    setErrors(errors)
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(schema.name, JSON.stringify(newData))
     }
@@ -40,11 +45,10 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
 
   const renderers = [
     ...vanillaRenderers,
-    { tester: booleanControlTester, renderer: BooleanControl },
     { tester: stringControlTester, renderer: StringControl },
+    { tester: booleanControlTester, renderer: BooleanControl },
     { tester: numberControlTester, renderer: NumberControl },
     { tester: enumControlTester, renderer: EnumControl },
-    /* { tester: sectionLabelTester, renderer: SectionLabel }, */
   ]
 
   return (
@@ -52,15 +56,22 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
       {data && (
         <JsonForms
           {...{ uischema, schema, renderers, data }}
+          config={{
+            trim: true,
+          }}
           cells={vanillaCells}
-          onChange={({ data }) => freezeAndSetData(data)}
+          onChange={({ data, errors }) => freezeAndSetData(data, errors)}
         />
       )}
+      <Button onClick={() => console.log('saving!', data)} disabled={errors?.length > 0}>
+        Submit
+      </Button>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
+  margin: 20px;
   .vertical-layout {
     display: flex;
     flex-direction: column;

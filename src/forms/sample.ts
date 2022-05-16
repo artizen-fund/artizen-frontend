@@ -2,23 +2,15 @@ export const schema = {
   name: 'artizen-sample-form',
   type: 'object',
   properties: {
-    stringExample: {
+    '3—20 character length string': {
       type: 'string',
       minLength: 3,
-      description: 'Please enter your name',
+      maxLength: 20,
     },
-    stringExampleTwo: {
+    'email example': {
+      label: 'email address',
       type: 'string',
-    },
-    stringExampleThree: {
-      type: 'string',
-    },
-    stringExampleFour: {
-      type: 'string',
-    },
-    stringDateExample: {
-      type: 'string',
-      format: 'date',
+      format: 'email',
     },
     booleanCheckExample: {
       type: 'boolean',
@@ -55,19 +47,23 @@ export const schema = {
       type: 'string',
       enum: ['vanilla', 'chocolate', 'strawberry', 'neapolitan'],
     },
-    numberExample: {
+    integerExample: {
       type: 'integer',
       description: 'Please enter your age.',
+      minimum: 1,
+      maximum: 100,
+    },
+    numberExample: {
+      type: 'number',
+      description: 'Please enter the contents of your wallet.',
     },
   },
+  required: ['3—20 character length string'],
 }
 
 export const initialState = {
-  stringExample: undefined,
-  stringExampleTwo: undefined,
-  stringExampleThree: undefined,
-  stringExampleFour: undefined,
-  stringDateExample: undefined,
+  '3—20 character length string': undefined,
+  'email example': undefined,
   booleanCheckExample: undefined,
   miniBooleanCheckExample: undefined,
   booleanCheckExampleTwo: undefined,
@@ -80,6 +76,7 @@ export const initialState = {
   enumExample: undefined,
   enumSegmentsExample: undefined,
   numberExample: undefined,
+  integerExample: undefined,
 }
 
 export const uischema = {
@@ -91,7 +88,7 @@ export const uischema = {
     },
     {
       type: 'Control',
-      scope: '#/properties/stringExample',
+      scope: '#/properties/3—20 character length string',
     },
     {
       type: 'Control',
@@ -129,6 +126,10 @@ export const uischema = {
       options: {
         format: 'segmented',
       },
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/integerExample',
     },
     {
       type: 'Control',
@@ -183,34 +184,9 @@ export const uischema = {
           elements: [
             {
               type: 'Control',
-              scope: '#/properties/stringExampleTwo',
-              label: 'Password',
+              scope: '#/properties/email example',
               options: {
-                format: 'password',
-              },
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/stringExampleThree',
-              label: 'Email',
-              options: {
-                format: 'email',
-              },
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/stringExampleFour',
-              label: 'URL',
-              options: {
-                format: 'url',
-              },
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/stringDateExample',
-              label: 'Date Picker',
-              options: {
-                format: 'date',
+                placeholder: 'your@email.com',
               },
             },
           ],

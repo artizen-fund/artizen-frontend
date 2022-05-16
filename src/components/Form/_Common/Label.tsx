@@ -23,7 +23,8 @@ export default styled.label`
   pointer-events: none;
 
   input:focus ~ &,
-  input:not(:placeholder-shown) ~ &,
+  input:placeholder-shown ~ &,
+  input.hasData ~ &,
   input:required:valid ~ & {
     transform: translate3d(0, -12px, 0) scale3d(0.8, 0.8, 1);
     color: ${rgba(palette.night, 0.8)};
