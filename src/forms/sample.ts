@@ -1,3 +1,8 @@
+/* Note: This form is used by Storybook and Jest tests.
+ *       Do not delete.
+ *       Track any changes against Storybook and tests.
+ */
+
 export const schema = {
   name: 'artizen-sample-form',
   type: 'object',
@@ -92,6 +97,13 @@ export const uischema = {
     },
     {
       type: 'Control',
+      scope: '#/properties/switchBooleanExample',
+      options: {
+        format: 'switch',
+      },
+    },
+    {
+      type: 'Control',
       scope: '#/properties/booleanCheckExample',
     },
     {
@@ -142,13 +154,6 @@ export const uischema = {
         {
           type: 'VerticalLayout',
           elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/switchBooleanExample',
-              options: {
-                format: 'switch',
-              },
-            },
             {
               type: 'Control',
               scope: '#/properties/switchBooleanExampleTwo',

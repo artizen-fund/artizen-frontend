@@ -34,7 +34,6 @@ export const schemeColors = (
   darkSchemeColor?: keyof Palette,
   options?: SchemeColorsOptions,
 ) => {
-  console.log('!', lightSchemeColor, darkSchemeColor)
   const colorType = options?.background ? 'background-color' : 'color'
   const parsedLightColor = rgba(
     lightSchemeColor && lightSchemeColor in palette ? lightSchemeColor : [0, 0, 0],

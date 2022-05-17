@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StringControl renders StringControl unchanged 1`] = `
+<div>
+  <div
+    class="sc-c6124a9-0 bRBtnA"
+  >
+    <div
+      class="sc-cfeee558-0 fVQUUC"
+    >
+      <input
+        class="hasData"
+        type="text"
+        value="derp"
+      />
+      <label
+        class="sc-4a611b72-0 dbPFdT"
+      >
+        String test
+      </label>
+    </div>
+    <div
+      class="sc-4b5633d7-0 ctiEJY"
+    />
+  </div>
+</div>
+`;

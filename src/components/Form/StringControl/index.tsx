@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
-import { Wrapper, Label, InputWrapper, InputIcon, Message } from '../_Common'
+import { Wrapper, InputLabel, InputWrapper, InputIcon, Message } from '../_Common'
 
 export interface StringControlProps {
   icon?: string
@@ -61,10 +61,10 @@ export const StringControl = ({
           onBlur={() => setVirgin(false)}
           className={!!data ? 'hasData' : 'noData'}
         />
-        <Label {...{ hasIcon }}>
+        <InputLabel {...{ hasIcon }}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
-        </Label>
+        </InputLabel>
       </InputWrapper>
       <Message {...{ virgin }} errorCount={parsedErrors.length}>
         {parsedErrors?.[0]}

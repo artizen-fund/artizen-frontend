@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders Button link unchanged 1`] = `
+<div>
+  <a
+    class="sc-9e782674-1 LtpHB undefined "
+  >
+    button test
+  </a>
+</div>
+`;
+
+exports[`Button renders form Button unchanged 1`] = `
+<div>
+  <button
+    class="sc-9e782674-2 dOLTIK"
+  >
+    button test
+  </button>
+</div>
+`;

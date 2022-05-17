@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
-import { Wrapper, Label, InputWrapper, InputIcon, Message } from '../_Common'
+import { Wrapper, InputLabel, InputWrapper, InputIcon, Message } from '../_Common'
 
 export interface NumberControlProps {
   icon?: string
@@ -15,7 +15,6 @@ export interface NumberControlProps {
   disabled?: boolean
   onChange?: (e: any) => void
   required?: boolean
-  autoComplete?: string
   schema: JsonSchema
   uischema: UISchemaElement
   data: any
@@ -67,10 +66,10 @@ export const NumberControl = ({
           onBlur={() => setVirgin(false)}
           className={!!data ? 'hasData' : 'noData'}
         />
-        <Label {...{ hasIcon }}>
+        <InputLabel {...{ hasIcon }}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
-        </Label>
+        </InputLabel>
         <Message {...{ virgin }} errorCount={parsedErrors.length}>
           {parsedErrors?.[0]}
         </Message>

@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectControl renders SelectControl unchanged 1`] = `
+<div>
+  <div
+    class="sc-c6124a9-0 bRBtnA sc-ca0a0556-0 kgosvh"
+  >
+    <div
+      class="sc-cfeee558-0 fVQUUC"
+    >
+      <div
+        class="sc-ca0a0556-1 csQebk"
+      >
+        <select />
+      </div>
+      <label
+        class="sc-4a611b72-0 dbPFdT"
+      >
+        Segmented enum control test
+      </label>
+    </div>
+  </div>
+</div>
+`;

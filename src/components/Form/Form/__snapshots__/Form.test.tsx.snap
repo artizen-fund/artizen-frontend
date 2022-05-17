@@ -1,0 +1,465 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form renders Form unchanged 1`] = `
+<div>
+  <div
+    class="sc-43a5714e-0 hrTgOK"
+  >
+    <div
+      class="vertical-layout"
+    >
+      <div
+        class="vertical-layout-item"
+      >
+        <div>
+          Section Label
+        </div>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <div
+          class="sc-c6124a9-0 bRBtnA"
+        >
+          <div
+            class="sc-cfeee558-0 fVQUUC"
+          >
+            <input
+              class="noData"
+              maxlength="20"
+              minlength="3"
+              required=""
+              type="text"
+              value=""
+            />
+            <label
+              class="sc-4a611b72-0 dbPFdT"
+            >
+              3 20 Character Length String
+               *
+            </label>
+          </div>
+          <div
+            class="sc-4b5633d7-0 ctiEJY"
+          >
+            is a required property
+          </div>
+        </div>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <label
+          class="sc-6337173a-0 iDiBbZ"
+        >
+          <span
+            class="sc-6337173a-3 efYrPI"
+          >
+            Switch Boolean Example
+          </span>
+          <input
+            class="sc-6337173a-1 gypJCM"
+            type="checkbox"
+          />
+          <span
+            class="sc-6337173a-2 eyPPnM"
+          />
+        </label>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <label
+          class="sc-c63bc471-0 lcTima"
+        >
+          <div
+            class="sc-c63bc471-1 kBIyZx"
+          >
+            <input
+              class="sc-c63bc471-2 bohjsn"
+              type="checkbox"
+            />
+            <span
+              class="sc-c63bc471-3 BqPRW"
+            />
+          </div>
+          <span
+            class="sc-c63bc471-4 cfYZAN"
+          >
+            Boolean Check Example
+          </span>
+        </label>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <label
+          class="sc-c63bc471-0 jzFAfs"
+        >
+          <div
+            class="sc-c63bc471-1 cRRvAM"
+          >
+            <input
+              class="sc-c63bc471-2 bohjsn"
+              type="checkbox"
+            />
+            <span
+              class="sc-c63bc471-3 fZQKQw"
+            />
+          </div>
+          <span
+            class="sc-c63bc471-4 cfYZAN"
+          >
+            Mini Boolean Check Example
+          </span>
+        </label>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <label
+          class="sc-c63bc471-0 lcTima"
+        >
+          <div
+            class="sc-c63bc471-1 kBIyZx"
+          >
+            <input
+              class="sc-c63bc471-2 bohjsn"
+              type="checkbox"
+            />
+            <span
+              class="sc-c63bc471-3 glsFet"
+            />
+          </div>
+          <span
+            class="sc-c63bc471-4 cfYZAN"
+          >
+            Boolean Check Example Two
+          </span>
+        </label>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <label
+          class="sc-c63bc471-0 jzFAfs"
+        >
+          <div
+            class="sc-c63bc471-1 cRRvAM"
+          >
+            <input
+              class="sc-c63bc471-2 bohjsn"
+              type="checkbox"
+            />
+            <span
+              class="sc-c63bc471-3 jnpzxv"
+            />
+          </div>
+          <span
+            class="sc-c63bc471-4 cfYZAN"
+          >
+            Mini Boolean Check Example Two
+          </span>
+        </label>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <div
+          class="sc-c6124a9-0 bRBtnA sc-ca0a0556-0 kksCYt"
+        >
+          <div
+            class="sc-cfeee558-0 fVQUUC"
+          >
+            <div
+              class="sc-ca0a0556-1 csQebk"
+            >
+              <select>
+                <option
+                  value=""
+                />
+                <option
+                  value="DE"
+                >
+                  DE
+                </option>
+                <option
+                  value="IT"
+                >
+                  IT
+                </option>
+                <option
+                  value="JP"
+                >
+                  JP
+                </option>
+                <option
+                  value="US"
+                >
+                  US
+                </option>
+                <option
+                  value="RU"
+                >
+                  RU
+                </option>
+                <option
+                  value="Other"
+                >
+                  Other
+                </option>
+              </select>
+            </div>
+            <label
+              class="sc-4a611b72-0 dbPFdT"
+            >
+              Enum Example
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <div
+          class="sc-5526d2b4-0 jiauSz"
+        >
+          <label
+            class="sc-5526d2b4-1 hoeohA"
+          >
+            <input
+              type="radio"
+              value="vanilla"
+            />
+            <span>
+              vanilla
+            </span>
+          </label>
+          <label
+            class="sc-5526d2b4-1 hoeohA"
+          >
+            <input
+              type="radio"
+              value="chocolate"
+            />
+            <span>
+              chocolate
+            </span>
+          </label>
+          <label
+            class="sc-5526d2b4-1 hoeohA"
+          >
+            <input
+              type="radio"
+              value="strawberry"
+            />
+            <span>
+              strawberry
+            </span>
+          </label>
+          <label
+            class="sc-5526d2b4-1 hoeohA"
+          >
+            <input
+              type="radio"
+              value="neapolitan"
+            />
+            <span>
+              neapolitan
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <div
+          class="sc-c6124a9-0 bRBtnA"
+        >
+          <div
+            class="sc-cfeee558-0 fVQUUC"
+          >
+            <input
+              class="noData"
+              maxlength="100"
+              minlength="1"
+              step="1"
+              type="number"
+              value=""
+            />
+            <label
+              class="sc-4a611b72-0 dbPFdT"
+            >
+              Integer Example
+            </label>
+            <div
+              class="sc-4b5633d7-0 ctiEJY"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <div
+          class="sc-c6124a9-0 bRBtnA"
+        >
+          <div
+            class="sc-cfeee558-0 fVQUUC"
+          >
+            <input
+              class="noData"
+              step="any"
+              type="number"
+              value=""
+            />
+            <label
+              class="sc-4a611b72-0 dbPFdT"
+            >
+              Number Example
+            </label>
+            <div
+              class="sc-4b5633d7-0 ctiEJY"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="vertical-layout-item"
+      >
+        <div
+          class="horizontal-layout"
+        >
+          <div
+            class="horizontal-layout-item horizontal-layout-2"
+          >
+            <div
+              class="vertical-layout"
+            >
+              <div
+                class="vertical-layout-item"
+              >
+                <label
+                  class="sc-6337173a-0 iDiBbZ"
+                >
+                  <span
+                    class="sc-6337173a-3 efYrPI"
+                  >
+                    Switch Boolean Example Two
+                  </span>
+                  <input
+                    class="sc-6337173a-1 gypJCM"
+                    type="checkbox"
+                  />
+                  <span
+                    class="sc-6337173a-2 eyPPnM"
+                  />
+                </label>
+              </div>
+              <div
+                class="vertical-layout-item"
+              >
+                <label
+                  class="sc-6337173a-0 iDiBbZ"
+                >
+                  <span
+                    class="sc-6337173a-3 efYrPI"
+                  >
+                    Switch Boolean Example Three
+                  </span>
+                  <input
+                    class="sc-6337173a-1 gypJCM"
+                    type="checkbox"
+                  />
+                  <span
+                    class="sc-6337173a-2 eyPPnM"
+                  />
+                </label>
+              </div>
+              <div
+                class="vertical-layout-item"
+              >
+                <label
+                  class="sc-6337173a-0 iDiBbZ"
+                >
+                  <span
+                    class="sc-6337173a-3 efYrPI"
+                  >
+                    Switch Boolean Example Four
+                  </span>
+                  <input
+                    class="sc-6337173a-1 gypJCM"
+                    type="checkbox"
+                  />
+                  <span
+                    class="sc-6337173a-2 eyPPnM"
+                  />
+                </label>
+              </div>
+              <div
+                class="vertical-layout-item"
+              >
+                <label
+                  class="sc-6337173a-0 iDiBbZ"
+                >
+                  <span
+                    class="sc-6337173a-3 efYrPI"
+                  >
+                    Switch Boolean Example Five
+                  </span>
+                  <input
+                    class="sc-6337173a-1 gypJCM"
+                    type="checkbox"
+                  />
+                  <span
+                    class="sc-6337173a-2 eyPPnM"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="horizontal-layout-item horizontal-layout-2"
+          >
+            <div
+              class="vertical-layout"
+            >
+              <div
+                class="vertical-layout-item"
+              >
+                <div
+                  class="sc-c6124a9-0 bRBtnA"
+                >
+                  <div
+                    class="sc-cfeee558-0 fVQUUC"
+                  >
+                    <input
+                      class="noData"
+                      placeholder="your@email.com"
+                      type="text"
+                      value=""
+                    />
+                    <label
+                      class="sc-4a611b72-0 dbPFdT"
+                    >
+                      Email Example
+                    </label>
+                  </div>
+                  <div
+                    class="sc-4b5633d7-0 ctiEJY"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      class="sc-9e782674-2 dOLTIK"
+    >
+      Submit
+    </button>
+  </div>
+</div>
+`;

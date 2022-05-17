@@ -14,7 +14,7 @@ const customNodeOptions = {
 }
 
 // Create client-side Magic instance
-const createMagic = (key: string, network: EthNetworkConfiguration) => {
+export const createMagic = (key: string, network: EthNetworkConfiguration) => {
   if (typeof window === 'undefined') return
   return new Magic(key, {
     network,
@@ -22,4 +22,5 @@ const createMagic = (key: string, network: EthNetworkConfiguration) => {
   })
 }
 
-export const magic = createMagic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY!, customNodeOptions)
+// IMPORTANT TODO: exporting this way creates a magic instance whether it's even being called or not!!
+// export const magic = createMagic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY!, customNodeOptions)

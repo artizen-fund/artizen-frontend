@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import { JsonForms } from '@jsonforms/react'
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers'
 import { debounce } from 'lodash'
-import StringControl, { stringControlTester } from './StringControl'
-import NumberControl, { numberControlTester } from './NumberControl'
-import BooleanControl, { booleanControlTester } from './BooleanControl'
-import EnumControl, { enumControlTester } from './EnumControl'
-import Label, { labelTester } from './Label'
-// import Categorization, { categorizationTester } from './Categorization'
+import StringControl, { stringControlTester } from '../StringControl'
+import NumberControl, { numberControlTester } from '../NumberControl'
+import BooleanControl, { booleanControlTester } from '../BooleanControl'
+import EnumControl, { enumControlTester } from '../EnumControl'
+import FormLabel, { formLabelTester } from '../FormLabel'
+// import Categorization, { categorizationTester } from '../Categorization'
 import { Button } from '@components'
 
 interface FormProps {
@@ -49,7 +49,7 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
     { tester: booleanControlTester, renderer: BooleanControl },
     { tester: numberControlTester, renderer: NumberControl },
     { tester: enumControlTester, renderer: EnumControl },
-    { tester: labelTester, renderer: Label },
+    { tester: formLabelTester, renderer: FormLabel },
   ]
 
   return (

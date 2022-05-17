@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SwitchControl renders SelectControl unchanged 1`] = `
+<div>
+  <label
+    class="sc-6337173a-0 iDiBbZ"
+  >
+    <span
+      class="sc-6337173a-3 efYrPI"
+    >
+      Switch control test
+    </span>
+    <input
+      checked=""
+      class="sc-6337173a-1 gypJCM"
+      type="checkbox"
+    />
+    <span
+      class="sc-6337173a-2 jLxQwG"
+    />
+  </label>
+</div>
+`;

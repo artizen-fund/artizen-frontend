@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentedControl renders SegmentedControl unchanged 1`] = `
+<div>
+  <div
+    class="sc-5526d2b4-0 jiauSz"
+  />
+</div>
+`;

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders AccountButton unchanged 1`] = `
+<div>
+  <div
+    class="sc-b5b39f9f-0 iDsGUR"
+  >
+    <div
+      class="sc-b5b39f9f-1 EKUUN"
+    />
+    <div
+      class="sc-9eacb1b9-0 cosqRt sc-b5b39f9f-2 ecnCog"
+      color="night"
+    >
+      hamburger
+    </div>
+    <div
+      class="sc-b5b39f9f-3 igHwPU"
+    >
+      <div
+        class="sc-b5b39f9f-4 hinYpI"
+      >
+        RP
+      </div>
+    </div>
+    AZ
+  </div>
+</div>
+`;

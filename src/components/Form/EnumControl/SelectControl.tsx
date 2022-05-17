@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
-import { Wrapper, Label, InputWrapper, InputIcon } from '../_Common'
+import { Wrapper, InputLabel, InputWrapper, InputIcon } from '../_Common'
 import { EnumControlProps } from './'
 
 const SelectControl = (props: EnumControlProps) => {
@@ -44,10 +44,10 @@ const SelectControl = (props: EnumControlProps) => {
             ))}
           </select>
         </DownwardArrowPlacer>
-        <Label>
+        <InputLabel>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
-        </Label>
+        </InputLabel>
       </InputWrapper>
     </SelectWrapper>
   )
@@ -55,7 +55,7 @@ const SelectControl = (props: EnumControlProps) => {
 
 // todo: it would be nice if this could be done with a pseudo-selector in <Label />, similar to the way <Input /> works.
 const SelectWrapper = styled(props => <Wrapper {...props} />)<{ filled: boolean }>`
-  ${Label} {
+  ${InputLabel} {
     ${props =>
       props.filled &&
       `
