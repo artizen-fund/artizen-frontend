@@ -54,6 +54,15 @@ export default styled.div<{
     }
   }
 
+  input::placeholder {
+    color: ${rgba(palette.barracuda, 0)};
+    transition: color 0.15s ease-in-out;
+  }
+
+  input:focus::placeholder {
+    color: ${rgba(palette.barracuda, 1)};
+  }
+
   select:focus,
   input:focus {
     background-color: ${rgba(palette.white)};
