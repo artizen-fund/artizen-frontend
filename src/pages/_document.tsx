@@ -19,6 +19,7 @@ export default class DocumentWithStyledComponents extends Document {
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
+            <link rel="stylesheet" href="https://use.typekit.net/wwx1oja.css" />
           </>,
         ],
       }
