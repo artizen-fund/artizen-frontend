@@ -80,16 +80,6 @@ export default styled.div<{
     color: ${rgba(palette.barracuda, 1)};
   }
 
-  select:focus,
-  input:focus {
-    background-color: ${rgba(palette.white)};
-    ${props => (props.outline ? 'border-color:' + rgba(palette.night, 0.64) + ';' : '')}
-    @media (prefers-color-scheme: dark) {
-      background-color: ${rgba(palette.black)};
-      ${props => (props.outline ? 'border-color:' + rgba(palette.moon, 0.64) + ';' : '')}
-    }
-  }
-
   input[type='date'] {
     justify-content: flex-start;
   }

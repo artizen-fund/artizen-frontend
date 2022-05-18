@@ -13,10 +13,11 @@ export const iconKey: IconKey = {
   trend: 'trend',
 }
 
-export type IconSize = Record<string, string>
+export type IconSize = Record<string | number, string | number>
 
 export const iconSize: IconSize = {
-  small: 'small',
-  medium: 'medium',
-  large: 'large',
+  12: 12,
+  16: 16,
+  20: 20,
+  24: 24,
 }

@@ -3,6 +3,7 @@ import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message } from '../_Common'
+import { IconKey } from '../../Icon/Icon.enums'
 
 /* Todo: Trying to decide if schema and uischema should be optional.
  *       Boils down to whether we will ever use these outside of jsonforms.
@@ -54,6 +55,13 @@ export const StringControl = ({
       setVisibleError(parsedErrors[0])
     }
   }, [parsedErrors])
+
+  // This effect is for all right-hand-side icons.
+  // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
+  const [statusIcon, setStatusIcon] = useState<keyof IconKey>()
+  useEffect(() => {
+    setStatusIcon(disabled ? 'lock' : undefined)
+  }, [disabled])
 
   return (
     <Wrapper {...{ disabled }} hasMessage={!!errors}>

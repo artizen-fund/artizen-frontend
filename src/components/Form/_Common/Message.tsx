@@ -8,7 +8,7 @@ import { rgba } from '@lib'
 
 const Message = styled.div<{ virgin: boolean }>`
   position: absolute;
-  padding-top: 10px;
+  padding-top: 5px;
 
   top: 56px;
   left: 16px;

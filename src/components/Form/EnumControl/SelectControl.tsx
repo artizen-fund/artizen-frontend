@@ -77,9 +77,12 @@ const SelectControl = ({
 }
 
 const DownwardArrowPlacer = styled.div`
-  position: relative;
+  position: absolute;
+  right: 0;
+  top: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  pointer-events: none;
 
   &:focus-within::after {
     transform: rotate3d(0, 0, 1, 180deg);

@@ -26,8 +26,8 @@ const Icon = styled.div<IconProps>`
     !!props.size
       ? /* if size is strictly specified, one rule for all sizes: */ `
         mask-image: url("/icons/${props.children}/${props.size}/${props.solid ? 'solid' : 'outline'}.svg");
-        width: ${props.size === 'small' ? 12 : props.size === 'medium' ? 16 : 20}px;
-        height: ${props.size === 'small' ? 12 : props.size === 'medium' ? 16 : 20}px;
+        width: ${props.size}px;
+        height: ${props.size}px;
       `
       : /* if size not specified, follow responsive rules: */ `
         mask-image: url("/icons/${props.children}/small/${props.solid ? 'solid' : 'outline'}.svg");
