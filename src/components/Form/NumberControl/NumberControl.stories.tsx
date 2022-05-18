@@ -14,6 +14,7 @@ export default {
 }
 
 export const NumberControlComponent = (props: NumberControlProps) => {
-  const [value, setValue] = useState<number>()
-  return <NumberControl {...{ value }} {...props} onChange={v => setValue(v)} label="How old are you?" />
+  const [data, setData] = useState('')
+  const handleChange = (_: string, s: string) => setData(s)
+  return <NumberControl {...{ data, handleChange }} {...props} label="How old are you?" />
 }

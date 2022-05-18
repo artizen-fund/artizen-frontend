@@ -1,3 +1,5 @@
+/* Optional floating icon for input[type=text/email/password], textarea, and select inputs */
+
 import styled from 'styled-components'
 import { Icon } from '@components'
 import { breakpoint } from '@theme'

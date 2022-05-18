@@ -3,22 +3,22 @@
 exports[`renders AccountButton unchanged 1`] = `
 <div>
   <div
-    class="sc-b5b39f9f-0 iDsGUR"
+    class="sc-43bbadb3-0 iYnzAE"
   >
     <div
-      class="sc-b5b39f9f-1 EKUUN"
+      class="sc-43bbadb3-1 bQaaJo"
     />
     <div
-      class="sc-9eacb1b9-0 cosqRt sc-b5b39f9f-2 ecnCog"
+      class="sc-9eacb1b9-0 cosqRt sc-43bbadb3-2 gMVQOR"
       color="night"
     >
       hamburger
     </div>
     <div
-      class="sc-b5b39f9f-3 igHwPU"
+      class="sc-43bbadb3-3 IXexl"
     >
       <div
-        class="sc-b5b39f9f-4 hinYpI"
+        class="sc-43bbadb3-4 cUTgml"
       >
         RP
       </div>

@@ -11,6 +11,8 @@ export const SwitchControl = ({ data, label, handleChange, path, required }: Boo
   </Wrapper>
 )
 
+// todo: investigate whether this component should use _Common/InputWrapper
+//        _Common/InputLabel will not be suitable as this input is not animated.
 const Wrapper = styled.label`
   position: relative;
   display: flex;

@@ -3,10 +3,10 @@
 exports[`StringControl renders StringControl unchanged 1`] = `
 <div>
   <div
-    class="sc-c6124a9-0 bRBtnA"
+    class="sc-95fbcf7b-0 eTbwSC"
   >
     <div
-      class="sc-937ad71b-0 clgDIq"
+      class="sc-e8f3f789-0 jYEzXi"
     >
       <input
         class="hasData"
@@ -14,13 +14,13 @@ exports[`StringControl renders StringControl unchanged 1`] = `
         value="derp"
       />
       <label
-        class="sc-a1f30d50-0 kIdkKO"
+        class="sc-811bf69e-0 ATCA"
       >
         String test
       </label>
     </div>
     <div
-      class="sc-4b5633d7-0 ctiEJY"
+      class="sc-917c067-0 cilYzr"
     />
   </div>
 </div>

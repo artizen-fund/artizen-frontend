@@ -2,71 +2,79 @@ import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
-import { Wrapper, InputLabel, InputWrapper, InputIcon } from '../_Common'
+import { Wrapper, InputLabel, InputWrapper, Message } from '../_Common'
 import { EnumControlProps } from './'
 
-const SelectControl = (props: EnumControlProps) => {
-  const {
-    icon,
-    label,
-    outline = true,
-    disabled = false,
-    required = false,
+const SelectControl = ({
+  label,
+  disabled = false,
+  required = false,
 
-    data,
-    handleChange,
-    path,
-    schema,
-  } = props
-
-  const hasIcon = !!icon
+  data,
+  handleChange,
+  path,
+  schema,
+  errors,
+}: EnumControlProps) => {
+  const hasWidget = false
+  const hasStatusIcon = true
+  const [virgin, setVirgin] = useState(data === undefined)
 
   const ref = useRef<HTMLSelectElement>(null)
   const [filled, setFilled] = useState(true)
   useEffect(() => setFilled(data !== '' && data !== undefined), [data])
 
-  const changeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChangeThenBlur = (e: React.ChangeEvent<HTMLSelectElement>) => {
     handleChange(path, e.target.value)
     ref.current?.blur()
     // todo: make sure above doesn't malfunction in touch devices
   }
 
+  const [parsedErrors, setParsedErrors] = useState<string[]>([])
+  useEffect(() => {
+    const splitErrors = errors?.split('\n').filter(e => e !== '') || []
+    if (required && !data) splitErrors.push('* required field')
+    setParsedErrors(splitErrors)
+  }, [errors, required, data])
+
+  const [visibleError, setVisibleError] = useState<string>()
+  useEffect(() => {
+    if (visibleError && parsedErrors.length < 1) {
+      // wait a moment before disappearing the error so that it's visible during transition-out
+      setTimeout(() => setVisibleError(undefined), 1000)
+    } else {
+      setVisibleError(parsedErrors[0])
+    }
+  }, [parsedErrors])
+
   return (
-    <SelectWrapper {...{ filled }}>
-      {icon && <InputIcon>{icon}</InputIcon>}
-      <InputWrapper {...{ disabled, outline, hasIcon }}>
-        <DownwardArrowPlacer>
-          <select {...{ disabled, required, ref }} onChange={changeSelect} defaultValue={data}>
-            {schema?.enum?.map((option: string, i: number) => (
-              <option value={option} key={`${path}-${i}`}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </DownwardArrowPlacer>
-        <InputLabel>
+    <Wrapper {...{ filled, disabled, hasWidget }}>
+      <InputWrapper {...{ hasWidget, hasStatusIcon }}>
+        <select
+          {...{ disabled, required, ref }}
+          onChange={handleChangeThenBlur}
+          onBlur={() => setVirgin(false)}
+          defaultValue={data}
+          className={!!data ? 'hasData' : 'noData'}
+        >
+          {schema?.enum?.map((option: string, i: number) => (
+            <option value={option} key={`${path}-${i}`}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <DownwardArrowPlacer />
+        <InputLabel className={!!data ? 'hasData' : 'noData'}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
       </InputWrapper>
-    </SelectWrapper>
+      <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
+        {visibleError}
+      </Message>
+    </Wrapper>
   )
 }
-
-// todo: it would be nice if this could be done with a pseudo-selector in <Label />, similar to the way <Input /> works.
-const SelectWrapper = styled(props => <Wrapper {...props} />)<{ filled: boolean }>`
-  ${InputLabel} {
-    ${props =>
-      props.filled &&
-      `
-    transform: translate3d(0, -12px, 0) scale3d(0.8, 0.8, 1);
-    color: ${rgba(palette.night, 0.8)};
-    @media (prefers-color-scheme: dark) {
-      color: ${rgba(palette.moon, 0.8)};
-    }
-    `}
-  }
-`
 
 const DownwardArrowPlacer = styled.div`
   position: relative;

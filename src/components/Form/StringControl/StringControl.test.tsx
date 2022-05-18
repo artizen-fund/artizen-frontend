@@ -4,7 +4,7 @@ import { StringControl } from './'
 import { schema, uischema } from '@forms/sample'
 
 describe('StringControl', () => {
-  const INPUT_PATH = '#/properties/3—20 character length string'
+  const INPUT_PATH = '#/properties/stringExample'
 
   it('renders StringControl unchanged', () => {
     const handleChange = () => console.log('derp')

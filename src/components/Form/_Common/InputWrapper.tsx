@@ -1,13 +1,20 @@
+/* Many styles are shared between input[type=text/email/password], textarea, and select
+ * This wrapper applies those styles to child elements.
+ * An alternate approach might be to use a css`` interploation.
+ * https://styled-components.com/docs/api#css
+ */
+
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 export default styled.div<{
-  hasIcon: boolean
+  hasWidget: boolean
+  hasStatusIcon: boolean
   disabled?: boolean
-  outline: boolean
 }>`
   position: relative;
+
   input,
   textarea,
   select {
@@ -15,43 +22,53 @@ export default styled.div<{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${props => (props.outline ? rgba(palette.moon, 0.8) : 'transparent')};
-    @media (prefers-color-scheme: dark) {
-      background-color: ${props => (props.outline ? rgba(palette.night, 0.8) : 'transparent')};
-    }
     width: 100%;
     height: 56px;
-    border: ${props => (props.outline ? 1 : 0)}px solid ${rgba(palette.night, 0.32)};
-    @media (prefers-color-scheme: dark) {
-      border: ${props => (props.outline ? 1 : 0)}px solid ${rgba(palette.moon, 0.32)};
-    }
-    border-radius: 0;
-    outline: none;
-    color: ${rgba(palette.night)};
-    @media (prefers-color-scheme: dark) {
-      color: ${rgba(palette.moon)};
-    }
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    will-change: background, border;
-    pointer-events: ${props => (props.disabled ? 'none' : 'inherit')};
-    opacity: ${props => (props.disabled ? 0.5 : 1)};
-    appearance: none;
-    text-indent: 0;
-
-    padding: 18px ${props => (props.hasIcon ? 48 : 16)}px 0 16px;
-    @media only screen and (min-width: ${breakpoint.tablet}px) {
-      padding-right: ${props => (props.hasIcon ? 56 : 16)}px;
-    }
-
+    padding: 18px ${props => (props.hasStatusIcon ? 48 : 16)}px 0 16px;
     @media only screen and (min-width: ${breakpoint.laptop}px) {
       height: 64px;
-      padding: 20px ${props => (props.hasIcon ? 72 : 24)}px 0 24px;
+      padding: 20px ${props => (props.hasStatusIcon ? 72 : 24)}px 0 24px;
     }
-
     @media only screen and (min-width: ${breakpoint.desktop}px) {
       height: 72px;
-      padding: 22px ${props => (props.hasIcon ? 88 : 32)}px 0 32px;
+      padding: 22px ${props => (props.hasStatusIcon ? 88 : 32)}px 0 32px;
     }
+
+    background-color: ${rgba(palette.stone, 0.12)};
+    color: ${rgba(palette.night)};
+    border-bottom: 2px solid ${rgba(palette.stone, 0.12)};
+    @media (prefers-color-scheme: dark) {
+      color: ${rgba(palette.moon)};
+      border-color: ${rgba(palette.moon, 0.12)};
+    }
+    &:hover {
+      border-color: ${rgba(palette.barracuda, 1)};
+      @media (prefers-color-scheme: dark) {
+        border-color: ${rgba(palette.barracuda, 1)};
+      }
+    }
+    &:focus {
+      border-color: ${rgba(palette.night, 1)};
+      @media (prefers-color-scheme: dark) {
+        border-color: ${rgba(palette.night, 1)};
+      }
+    }
+    &.hasData {
+      border-color: ${rgba(palette.night, 1)};
+      @media (prefers-color-scheme: dark) {
+        border-color: ${rgba(palette.night, 1)};
+      }
+    }
+
+    appearance: none;
+    text-indent: 0;
+    font-size: 17px;
+    border-radius: 0;
+    outline: none;
+
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    will-change: background, border, color;
+    pointer-events: ${props => (props.disabled ? 'none' : 'inherit')};
   }
 
   input::placeholder {

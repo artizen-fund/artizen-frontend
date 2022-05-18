@@ -2,29 +2,28 @@ import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
-import { Wrapper, InputLabel, InputWrapper, InputIcon, Message } from '../_Common'
+import { Wrapper, InputLabel, InputWrapper, Message } from '../_Common'
 
+/* Todo: Trying to decide if schema and uischema should be optional.
+ *       Boils down to whether we will ever use these outside of jsonforms.
+ */
 export interface StringControlProps {
-  icon?: string
   label: string | Labels
   outline?: boolean
   disabled?: boolean
   onChange?: (e: any) => void
   required?: boolean
   autoComplete?: string
-  schema: JsonSchema
-  uischema: UISchemaElement
+  schema?: JsonSchema
+  uischema?: UISchemaElement
   data: any
   handleChange(path: string, value: any): void
   path: string
   errors?: string
-  description?: string
 }
 
 export const StringControl = ({
-  icon,
   label,
-  outline = true,
   disabled,
   required,
   autoComplete,
@@ -34,9 +33,9 @@ export const StringControl = ({
   handleChange,
   path,
   errors,
-  description,
 }: StringControlProps) => {
-  const hasIcon = !!icon
+  const hasWidget = false
+  const hasStatusIcon = false
   const [virgin, setVirgin] = useState(data === undefined)
 
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
@@ -46,28 +45,37 @@ export const StringControl = ({
     setParsedErrors(splitErrors)
   }, [errors, required, data])
 
+  const [visibleError, setVisibleError] = useState<string>()
+  useEffect(() => {
+    if (visibleError && parsedErrors.length < 1) {
+      // wait a moment before disappearing the error so that it's visible during transition-out
+      setTimeout(() => setVisibleError(undefined), 1000)
+    } else {
+      setVisibleError(parsedErrors[0])
+    }
+  }, [parsedErrors])
+
   return (
-    <Wrapper>
-      {icon && <InputIcon>{icon}</InputIcon>}
-      <InputWrapper {...{ hasIcon, disabled, outline }}>
+    <Wrapper {...{ disabled }} hasMessage={!!errors}>
+      <InputWrapper {...{ hasWidget, hasStatusIcon, disabled }}>
         <input
           {...{ disabled, required, autoComplete }}
-          minLength={schema.minLength}
-          maxLength={schema.maxLength}
+          minLength={schema?.minLength}
+          maxLength={schema?.maxLength}
           type={uischema?.options?.format || 'text'}
-          placeholder={uischema.options?.placeholder}
+          placeholder={uischema?.options?.placeholder}
           defaultValue={data}
           onChange={e => handleChange(path, e.target.value)}
           onBlur={() => setVirgin(false)}
           className={!!data ? 'hasData' : 'noData'}
         />
-        <InputLabel {...{ hasIcon }}>
+        <InputLabel {...{ hasWidget }}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
       </InputWrapper>
-      <Message {...{ virgin }} errorCount={parsedErrors.length}>
-        {parsedErrors?.[0]}
+      <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
+        {visibleError}
       </Message>
     </Wrapper>
   )

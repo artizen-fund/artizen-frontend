@@ -6,12 +6,10 @@ import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
-import { Wrapper, InputLabel, InputWrapper, InputIcon, Message } from '../_Common'
+import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
 
 export interface NumberControlProps {
-  icon?: string
   label: string | Labels
-  outline?: boolean
   disabled?: boolean
   onChange?: (e: any) => void
   required?: boolean
@@ -21,13 +19,10 @@ export interface NumberControlProps {
   handleChange(path: string, value: any): void
   path: string
   errors?: string
-  description?: string
 }
 
 export const NumberControl = ({
-  icon,
   label,
-  outline = true,
   disabled,
   required,
   schema,
@@ -36,9 +31,9 @@ export const NumberControl = ({
   handleChange,
   path,
   errors,
-  description,
 }: NumberControlProps) => {
-  const hasIcon = !!icon
+  const hasWidget = false
+  const hasStatusIcon = false
   const [virgin, setVirgin] = useState(data === undefined)
 
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
@@ -48,12 +43,21 @@ export const NumberControl = ({
     setParsedErrors(splitErrors)
   }, [errors, required, data])
 
+  const [visibleError, setVisibleError] = useState<string>()
+  useEffect(() => {
+    if (visibleError && parsedErrors.length < 1) {
+      // wait a moment before disappearing the error so that it's visible during transition-out
+      setTimeout(() => setVisibleError(undefined), 1000)
+    } else {
+      setVisibleError(parsedErrors[0])
+    }
+  }, [parsedErrors])
+
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
 
   return (
-    <Wrapper>
-      {icon && <InputIcon>{icon}</InputIcon>}
-      <InputWrapper {...{ hasIcon, disabled, outline }}>
+    <Wrapper {...{ disabled }} hasMessage={!!errors}>
+      <InputWrapper {...{ hasWidget, hasStatusIcon, disabled }}>
         <input
           {...{ disabled, required }}
           minLength={schema.minimum}
@@ -66,14 +70,14 @@ export const NumberControl = ({
           onBlur={() => setVirgin(false)}
           className={!!data ? 'hasData' : 'noData'}
         />
-        <InputLabel {...{ hasIcon }}>
+        <InputLabel {...{ hasWidget }}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        <Message {...{ virgin }} errorCount={parsedErrors.length}>
-          {parsedErrors?.[0]}
-        </Message>
       </InputWrapper>
+      <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
+        {visibleError}
+      </Message>
     </Wrapper>
   )
 }
