@@ -6,7 +6,7 @@ exports[`StringControl renders StringControl unchanged 1`] = `
     class="sc-f371e309-0 cvhdnt"
   >
     <div
-      class="sc-83a8f783-0 fBYaxP"
+      class="sc-b0cc0188-0 bmeNWj"
     >
       <input
         class="hasData"
@@ -20,7 +20,7 @@ exports[`StringControl renders StringControl unchanged 1`] = `
       </label>
     </div>
     <div
-      class="sc-f7dbaa03-0 ldsAZK"
+      class="sc-955ed11e-0 eSGmlb"
     />
   </div>
 </div>

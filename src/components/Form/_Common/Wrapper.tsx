@@ -3,8 +3,6 @@
  */
 
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
 
 export default styled.div<{
   disabled?: boolean

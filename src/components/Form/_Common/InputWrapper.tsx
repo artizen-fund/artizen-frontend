@@ -9,7 +9,7 @@ import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 export default styled.div<{
-  hasWidget: boolean
+  hasWidget?: boolean
   hasStatusIcon: boolean
   disabled?: boolean
 }>`
@@ -71,13 +71,14 @@ export default styled.div<{
     pointer-events: ${props => (props.disabled ? 'none' : 'inherit')};
   }
 
-  input::placeholder {
-    color: ${rgba(palette.barracuda, 0)};
-    transition: color 0.15s ease-in-out;
-  }
-
-  input:focus::placeholder {
-    color: ${rgba(palette.barracuda, 1)};
+  input {
+    &::placeholder {
+      color: ${rgba(palette.barracuda, 0)};
+      transition: color 0.15s ease-in-out;
+    }
+    &:focus::placeholder {
+      color: ${rgba(palette.barracuda, 1)};
+    }
   }
 
   input[type='date'] {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
-import { Wrapper, InputLabel, InputWrapper, Message } from '../_Common'
+import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
 import { IconKey } from '../../Icon/Icon.enums'
 
 /* Todo: Trying to decide if schema and uischema should be optional.
@@ -36,7 +36,6 @@ export const StringControl = ({
   errors,
 }: StringControlProps) => {
   const hasWidget = false
-  const hasStatusIcon = false
   const [virgin, setVirgin] = useState(data === undefined)
 
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
@@ -65,7 +64,7 @@ export const StringControl = ({
 
   return (
     <Wrapper {...{ disabled }} hasMessage={!!errors}>
-      <InputWrapper {...{ hasWidget, hasStatusIcon, disabled }}>
+      <InputWrapper {...{ hasWidget, disabled }} hasStatusIcon={!!statusIcon}>
         <input
           {...{ disabled, required, autoComplete }}
           minLength={schema?.minLength}
@@ -81,6 +80,7 @@ export const StringControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
+        {statusIcon && <InputIcon>{statusIcon}</InputIcon>}
       </InputWrapper>
       <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
         {visibleError}

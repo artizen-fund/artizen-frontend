@@ -16,8 +16,8 @@ const SelectControl = ({
   schema,
   errors,
 }: EnumControlProps) => {
-  const hasWidget = false
-  const hasStatusIcon = true
+  /* does Select ever have status icon? */
+  const hasStatusIcon = false
   const [virgin, setVirgin] = useState(data === undefined)
 
   const ref = useRef<HTMLSelectElement>(null)
@@ -48,8 +48,8 @@ const SelectControl = ({
   }, [parsedErrors])
 
   return (
-    <Wrapper {...{ filled, disabled, hasWidget }}>
-      <InputWrapper {...{ hasWidget, hasStatusIcon }}>
+    <Wrapper {...{ filled, disabled }}>
+      <InputWrapper {...{ hasStatusIcon }}>
         <select
           {...{ disabled, required, ref }}
           onChange={handleChangeThenBlur}

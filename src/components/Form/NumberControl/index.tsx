@@ -7,6 +7,7 @@ import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
+import { IconKey } from '../../Icon/Icon.enums'
 
 export interface NumberControlProps {
   label: string | Labels
@@ -32,8 +33,6 @@ export const NumberControl = ({
   path,
   errors,
 }: NumberControlProps) => {
-  const hasWidget = false
-  const hasStatusIcon = false
   const [virgin, setVirgin] = useState(data === undefined)
 
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
@@ -53,11 +52,18 @@ export const NumberControl = ({
     }
   }, [parsedErrors])
 
+  // This effect is for all right-hand-side icons.
+  // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
+  const [statusIcon, setStatusIcon] = useState<keyof IconKey>()
+  useEffect(() => {
+    setStatusIcon(disabled ? 'lock' : undefined)
+  }, [disabled])
+
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
 
   return (
     <Wrapper {...{ disabled }} hasMessage={!!errors}>
-      <InputWrapper {...{ hasWidget, hasStatusIcon, disabled }}>
+      <InputWrapper {...{ disabled }} hasStatusIcon={!!statusIcon}>
         <input
           {...{ disabled, required }}
           minLength={schema.minimum}
@@ -70,10 +76,11 @@ export const NumberControl = ({
           onBlur={() => setVirgin(false)}
           className={!!data ? 'hasData' : 'noData'}
         />
-        <InputLabel {...{ hasWidget }}>
+        <InputLabel>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
+        {statusIcon && <InputIcon>{statusIcon}</InputIcon>}
       </InputWrapper>
       <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
         {visibleError}

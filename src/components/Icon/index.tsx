@@ -30,18 +30,18 @@ const Icon = styled.div<IconProps>`
         height: ${props.size}px;
       `
       : /* if size not specified, follow responsive rules: */ `
-        mask-image: url("/icons/${props.children}/small/${props.solid ? 'solid' : 'outline'}.svg");
+        mask-image: url("/icons/${props.children}/12/${props.solid ? 'solid' : 'outline'}.svg");
         width: 12px;
         height: 12px;
         
         @media only screen and (min-width: ${breakpoint.laptop}px) {
-          mask-image: url("/icons/${props.children}/medium/${props.solid ? 'solid' : 'outline'}.svg");
+          mask-image: url("/icons/${props.children}/16/${props.solid ? 'solid' : 'outline'}.svg");
           width: 16px;
           height: 16px;
         }
         
         @media only screen and (min-width: ${breakpoint.desktop}px) {
-          mask-image: url("/icons/${props.children}/large/${props.solid ? 'solid' : 'outline'}.svg");
+          mask-image: url("/icons/${props.children}/20/${props.solid ? 'solid' : 'outline'}.svg");
           width: 20px;
           height: 20px;
         }

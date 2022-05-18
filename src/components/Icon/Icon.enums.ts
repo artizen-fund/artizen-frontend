@@ -9,6 +9,9 @@ export const iconKey: IconKey = {
   donate: 'donate',
   face: 'face',
   hamburger: 'hamburger',
+  info: 'info',
+  lock: 'lock',
+  tick: 'tick',
   token: 'token',
   trend: 'trend',
 }
