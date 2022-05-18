@@ -19,10 +19,10 @@ exports[`Form renders Form unchanged 1`] = `
         class="vertical-layout-item"
       >
         <div
-          class="sc-95fbcf7b-0 eTbwSC"
+          class="sc-f371e309-0 cvhdnt"
         >
           <div
-            class="sc-e8f3f789-0 jYEzXi"
+            class="sc-83a8f783-0 fBYaxP"
           >
             <input
               class="noData"
@@ -32,13 +32,13 @@ exports[`Form renders Form unchanged 1`] = `
               value=""
             />
             <label
-              class="sc-811bf69e-0 ATCA"
+              class="sc-62ae6059-0 bjlEKt"
             >
               3-20 Character Length String
             </label>
           </div>
           <div
-            class="sc-917c067-0 cilYzr"
+            class="sc-f7dbaa03-0 ldsAZK"
           />
         </div>
       </div>
@@ -162,56 +162,60 @@ exports[`Form renders Form unchanged 1`] = `
         class="vertical-layout-item"
       >
         <div
-          class="sc-95fbcf7b-0 eTbwSC sc-ca0a0556-0 ghUDQr"
+          class="sc-f371e309-0 cvhdnt"
         >
           <div
-            class="sc-e8f3f789-0 jYEzXi"
+            class="sc-83a8f783-0 kTiQla"
           >
-            <div
-              class="sc-ca0a0556-1 csQebk"
+            <select
+              class="noData"
             >
-              <select>
-                <option
-                  value=""
-                />
-                <option
-                  value="DE"
-                >
-                  DE
-                </option>
-                <option
-                  value="IT"
-                >
-                  IT
-                </option>
-                <option
-                  value="JP"
-                >
-                  JP
-                </option>
-                <option
-                  value="US"
-                >
-                  US
-                </option>
-                <option
-                  value="RU"
-                >
-                  RU
-                </option>
-                <option
-                  value="Other"
-                >
-                  Other
-                </option>
-              </select>
-            </div>
+              <option
+                value=""
+              />
+              <option
+                value="DE"
+              >
+                DE
+              </option>
+              <option
+                value="IT"
+              >
+                IT
+              </option>
+              <option
+                value="JP"
+              >
+                JP
+              </option>
+              <option
+                value="US"
+              >
+                US
+              </option>
+              <option
+                value="RU"
+              >
+                RU
+              </option>
+              <option
+                value="Other"
+              >
+                Other
+              </option>
+            </select>
+            <div
+              class="sc-d0e7fb02-0 mYPyA"
+            />
             <label
-              class="sc-811bf69e-0 ATCA"
+              class="sc-62ae6059-0 bjlEKt noData"
             >
               Enum Example
             </label>
           </div>
+          <div
+            class="sc-f7dbaa03-0 ldsAZK"
+          />
         </div>
       </div>
       <div
@@ -270,10 +274,10 @@ exports[`Form renders Form unchanged 1`] = `
         class="vertical-layout-item"
       >
         <div
-          class="sc-95fbcf7b-0 eTbwSC"
+          class="sc-f371e309-0 cvhdnt"
         >
           <div
-            class="sc-e8f3f789-0 jYEzXi"
+            class="sc-83a8f783-0 fBYaxP"
           >
             <input
               class="noData"
@@ -284,24 +288,24 @@ exports[`Form renders Form unchanged 1`] = `
               value=""
             />
             <label
-              class="sc-811bf69e-0 ATCA"
+              class="sc-62ae6059-0 bjlEKt"
             >
               Integer Example
             </label>
-            <div
-              class="sc-917c067-0 cilYzr"
-            />
           </div>
+          <div
+            class="sc-f7dbaa03-0 ldsAZK"
+          />
         </div>
       </div>
       <div
         class="vertical-layout-item"
       >
         <div
-          class="sc-95fbcf7b-0 eTbwSC"
+          class="sc-f371e309-0 cvhdnt"
         >
           <div
-            class="sc-e8f3f789-0 jYEzXi"
+            class="sc-83a8f783-0 fBYaxP"
           >
             <input
               class="noData"
@@ -310,14 +314,14 @@ exports[`Form renders Form unchanged 1`] = `
               value=""
             />
             <label
-              class="sc-811bf69e-0 ATCA"
+              class="sc-62ae6059-0 bjlEKt"
             >
               Number Example
             </label>
-            <div
-              class="sc-917c067-0 cilYzr"
-            />
           </div>
+          <div
+            class="sc-f7dbaa03-0 ldsAZK"
+          />
         </div>
       </div>
       <div
@@ -424,10 +428,10 @@ exports[`Form renders Form unchanged 1`] = `
                 class="vertical-layout-item"
               >
                 <div
-                  class="sc-95fbcf7b-0 eTbwSC"
+                  class="sc-f371e309-0 cvhdnt"
                 >
                   <div
-                    class="sc-e8f3f789-0 jYEzXi"
+                    class="sc-83a8f783-0 fBYaxP"
                   >
                     <input
                       class="noData"
@@ -436,13 +440,13 @@ exports[`Form renders Form unchanged 1`] = `
                       value=""
                     />
                     <label
-                      class="sc-811bf69e-0 ATCA"
+                      class="sc-62ae6059-0 bjlEKt"
                     >
                       Email Example
                     </label>
                   </div>
                   <div
-                    class="sc-917c067-0 cilYzr"
+                    class="sc-f7dbaa03-0 ldsAZK"
                   />
                 </div>
               </div>

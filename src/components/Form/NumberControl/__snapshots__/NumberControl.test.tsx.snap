@@ -3,10 +3,10 @@
 exports[`NumberControl renders NumberControl unchanged 1`] = `
 <div>
   <div
-    class="sc-95fbcf7b-0 eTbwSC"
+    class="sc-f371e309-0 cvhdnt"
   >
     <div
-      class="sc-e8f3f789-0 jYEzXi"
+      class="sc-83a8f783-0 fBYaxP"
     >
       <input
         class="hasData"
@@ -15,14 +15,14 @@ exports[`NumberControl renders NumberControl unchanged 1`] = `
         value="5"
       />
       <label
-        class="sc-811bf69e-0 ATCA"
+        class="sc-62ae6059-0 bjlEKt"
       >
         Integer test
       </label>
-      <div
-        class="sc-917c067-0 cilYzr"
-      />
     </div>
+    <div
+      class="sc-f7dbaa03-0 ldsAZK"
+    />
   </div>
 </div>
 `;
