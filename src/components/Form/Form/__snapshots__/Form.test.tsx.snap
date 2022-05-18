@@ -3,7 +3,7 @@
 exports[`Form renders Form unchanged 1`] = `
 <div>
   <div
-    class="sc-43a5714e-0 hrTgOK"
+    class="sc-3d351cf1-0 cuONLG"
   >
     <div
       class="vertical-layout"
@@ -22,7 +22,7 @@ exports[`Form renders Form unchanged 1`] = `
           class="sc-c6124a9-0 bRBtnA"
         >
           <div
-            class="sc-cfeee558-0 fVQUUC"
+            class="sc-937ad71b-0 clgDIq"
           >
             <input
               class="noData"
@@ -33,7 +33,7 @@ exports[`Form renders Form unchanged 1`] = `
               value=""
             />
             <label
-              class="sc-4a611b72-0 dbPFdT"
+              class="sc-a1f30d50-0 kIdkKO"
             >
               3 20 Character Length String
                *
@@ -166,10 +166,10 @@ exports[`Form renders Form unchanged 1`] = `
         class="vertical-layout-item"
       >
         <div
-          class="sc-c6124a9-0 bRBtnA sc-ca0a0556-0 kksCYt"
+          class="sc-c6124a9-0 bRBtnA sc-ca0a0556-0 iStikJ"
         >
           <div
-            class="sc-cfeee558-0 fVQUUC"
+            class="sc-937ad71b-0 clgDIq"
           >
             <div
               class="sc-ca0a0556-1 csQebk"
@@ -211,7 +211,7 @@ exports[`Form renders Form unchanged 1`] = `
               </select>
             </div>
             <label
-              class="sc-4a611b72-0 dbPFdT"
+              class="sc-a1f30d50-0 kIdkKO"
             >
               Enum Example
             </label>
@@ -277,7 +277,7 @@ exports[`Form renders Form unchanged 1`] = `
           class="sc-c6124a9-0 bRBtnA"
         >
           <div
-            class="sc-cfeee558-0 fVQUUC"
+            class="sc-937ad71b-0 clgDIq"
           >
             <input
               class="noData"
@@ -288,7 +288,7 @@ exports[`Form renders Form unchanged 1`] = `
               value=""
             />
             <label
-              class="sc-4a611b72-0 dbPFdT"
+              class="sc-a1f30d50-0 kIdkKO"
             >
               Integer Example
             </label>
@@ -305,7 +305,7 @@ exports[`Form renders Form unchanged 1`] = `
           class="sc-c6124a9-0 bRBtnA"
         >
           <div
-            class="sc-cfeee558-0 fVQUUC"
+            class="sc-937ad71b-0 clgDIq"
           >
             <input
               class="noData"
@@ -314,7 +314,7 @@ exports[`Form renders Form unchanged 1`] = `
               value=""
             />
             <label
-              class="sc-4a611b72-0 dbPFdT"
+              class="sc-a1f30d50-0 kIdkKO"
             >
               Number Example
             </label>
@@ -431,7 +431,7 @@ exports[`Form renders Form unchanged 1`] = `
                   class="sc-c6124a9-0 bRBtnA"
                 >
                   <div
-                    class="sc-cfeee558-0 fVQUUC"
+                    class="sc-937ad71b-0 clgDIq"
                   >
                     <input
                       class="noData"
@@ -440,7 +440,7 @@ exports[`Form renders Form unchanged 1`] = `
                       value=""
                     />
                     <label
-                      class="sc-4a611b72-0 dbPFdT"
+                      class="sc-a1f30d50-0 kIdkKO"
                     >
                       Email Example
                     </label>

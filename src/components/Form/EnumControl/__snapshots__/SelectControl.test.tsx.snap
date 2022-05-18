@@ -3,10 +3,10 @@
 exports[`SelectControl renders SelectControl unchanged 1`] = `
 <div>
   <div
-    class="sc-c6124a9-0 bRBtnA sc-ca0a0556-0 kgosvh"
+    class="sc-c6124a9-0 bRBtnA sc-ca0a0556-0 dXiXgZ"
   >
     <div
-      class="sc-cfeee558-0 fVQUUC"
+      class="sc-937ad71b-0 clgDIq"
     >
       <div
         class="sc-ca0a0556-1 csQebk"
@@ -14,7 +14,7 @@ exports[`SelectControl renders SelectControl unchanged 1`] = `
         <select />
       </div>
       <label
-        class="sc-4a611b72-0 dbPFdT"
+        class="sc-a1f30d50-0 kIdkKO"
       >
         Segmented enum control test
       </label>

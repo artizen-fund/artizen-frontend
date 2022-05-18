@@ -5,17 +5,17 @@ import { rankWith, uiTypeIs, and } from '@jsonforms/core'
 import type { Categorization } from '@jsonforms/core'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 
-export interface CategorizationProps {
+export interface FormCategorizationProps {
   uischema: Categorization
   schema: JsonSchema
   path: string
 }
 
-const Categorization = ({ uischema, schema, path, ...props }: CategorizationProps) => {
+const FormCategorization = ({ uischema, schema, path, ...props }: FormCategorizationProps) => {
   console.log('c', props, schema, uischema)
   return <div>c</div>
 }
 
-export const categorizationTester = rankWith(3, and(uiTypeIs('Categorization')))
+export const formCategorizationTester = rankWith(3, and(uiTypeIs('FormCategorization')))
 
-export default Categorization
+export default FormCategorization

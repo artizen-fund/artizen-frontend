@@ -8,7 +8,7 @@ import NumberControl, { numberControlTester } from '../NumberControl'
 import BooleanControl, { booleanControlTester } from '../BooleanControl'
 import EnumControl, { enumControlTester } from '../EnumControl'
 import FormLabel, { formLabelTester } from '../FormLabel'
-// import Categorization, { categorizationTester } from '../Categorization'
+// import FormCategorization, { formCategorizationTester } from '../FormCategorization'
 import { Button } from '@components'
 
 interface FormProps {

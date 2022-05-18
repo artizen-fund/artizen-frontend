@@ -6,7 +6,7 @@ exports[`StringControl renders StringControl unchanged 1`] = `
     class="sc-c6124a9-0 bRBtnA"
   >
     <div
-      class="sc-cfeee558-0 fVQUUC"
+      class="sc-937ad71b-0 clgDIq"
     >
       <input
         class="hasData"
@@ -14,7 +14,7 @@ exports[`StringControl renders StringControl unchanged 1`] = `
         value="derp"
       />
       <label
-        class="sc-4a611b72-0 dbPFdT"
+        class="sc-a1f30d50-0 kIdkKO"
       >
         String test
       </label>
