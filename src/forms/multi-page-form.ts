@@ -73,7 +73,7 @@ export const uischema = {
   elements: [
     {
       type: 'Category',
-      label: 'Basic Information',
+      label: 'Step 1: Basic Information',
       elements: [
         {
           type: 'HorizontalLayout',
@@ -114,7 +114,7 @@ export const uischema = {
     },
     {
       type: 'Category',
-      label: 'Address',
+      label: 'Step 2: Address',
       elements: [
         {
           type: 'HorizontalLayout',
@@ -155,7 +155,7 @@ export const uischema = {
     },
     {
       type: 'Category',
-      label: 'Additional',
+      label: 'Step 3: Additional',
       elements: [
         {
           type: 'Control',

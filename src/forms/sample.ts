@@ -7,12 +7,12 @@ export const schema = {
   name: 'artizen-sample-form',
   type: 'object',
   properties: {
-    '3—20 character length string': {
+    stringExample: {
       type: 'string',
       minLength: 3,
       maxLength: 20,
     },
-    'email example': {
+    emailExample: {
       label: 'email address',
       type: 'string',
       format: 'email',
@@ -67,8 +67,8 @@ export const schema = {
 }
 
 export const initialState = {
-  '3—20 character length string': undefined,
-  'email example': undefined,
+  stringExample: undefined,
+  emailExample: undefined,
   booleanCheckExample: undefined,
   miniBooleanCheckExample: undefined,
   booleanCheckExampleTwo: undefined,
@@ -93,7 +93,8 @@ export const uischema = {
     },
     {
       type: 'Control',
-      scope: '#/properties/3—20 character length string',
+      scope: '#/properties/stringExample',
+      label: '3-20 Character Length String',
     },
     {
       type: 'Control',
@@ -189,7 +190,7 @@ export const uischema = {
           elements: [
             {
               type: 'Control',
-              scope: '#/properties/email example',
+              scope: '#/properties/emailExample',
               options: {
                 placeholder: 'your@email.com',
               },

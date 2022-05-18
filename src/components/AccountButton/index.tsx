@@ -9,6 +9,7 @@ export interface AccountButtonProps {
 }
 
 const AccountButton = ({ children }: AccountButtonProps) => {
+  // note: this will connect to a hook that manages login state
   const [signedIn, setSignedIn] = useState(false)
   return (
     <Wrapper signedIn={signedIn} onClick={() => setSignedIn(!signedIn)}>
