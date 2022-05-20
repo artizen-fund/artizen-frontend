@@ -3,16 +3,16 @@
 exports[`SelectControl renders SelectControl unchanged 1`] = `
 <div>
   <div
-    class="sc-f371e309-0 cvhdnt"
+    class="sc-e191228e-0 bwBNFU"
   >
     <div
-      class="sc-b0cc0188-0 jLYbtK"
+      class="sc-9db10430-0 gtsrND"
     >
       <select
         class="hasData"
       />
       <div
-        class="sc-5217b76e-0 ekjRHY"
+        class="sc-c23b6b48-0 fuPGAb"
       />
       <label
         class="sc-62ae6059-0 bjlEKt hasData"

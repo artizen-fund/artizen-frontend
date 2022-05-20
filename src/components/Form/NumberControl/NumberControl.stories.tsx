@@ -13,8 +13,26 @@ export default {
   },
 }
 
-export const NumberControlComponent = (props: NumberControlProps) => {
+export const IntegerControlComponent = (props: NumberControlProps) => {
   const [data, setData] = useState('')
   const handleChange = (_: string, s: string) => setData(s)
-  return <NumberControl {...{ data, handleChange }} {...props} label="How old are you?" />
+  const schema = {
+    type: 'integer',
+  }
+  const uischema = {}
+  return <NumberControl {...{ data, handleChange, schema, uischema }} {...props} label="How old are you?" />
+}
+
+export const FloatControlComponent = (props: NumberControlProps) => {
+  const [data, setData] = useState('')
+  const handleChange = (_: string, s: string) => setData(s)
+  const schema = {
+    type: 'number',
+  }
+  const uischema = {
+    options: {
+      precision: 0.01,
+    },
+  }
+  return <NumberControl {...{ data, handleChange, schema, uischema }} {...props} label="How old are you?" />
 }

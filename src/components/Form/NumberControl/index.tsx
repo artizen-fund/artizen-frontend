@@ -1,5 +1,8 @@
 /*
-todo: this doesn't parse floats
+todo:
+- Having a bit of difficulty proofing filled/not-filled state with numbers. !!data doesn't work because 0 is a number.
+- The juggling between floats and ints is clumsy. Split into two inputs?
+- Would be nice to use onKeyUp to rule out alphas and non-numerics.
 */
 
 import { useState, useEffect } from 'react'
@@ -61,20 +64,23 @@ export const NumberControl = ({
 
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
 
+  const defaultValue = schema.type === 'integer' ? parseInt(data) : parseFloat(data)
+
+  const hasData = (data: string) => !!data.toString()
+
   return (
     <Wrapper {...{ disabled }} hasMessage={!!errors}>
       <InputWrapper {...{ disabled }} hasStatusIcon={!!statusIcon}>
         <input
-          {...{ disabled, required }}
+          {...{ disabled, required, defaultValue }}
           minLength={schema.minimum}
           maxLength={schema.maximum}
           type="number"
           step={step}
           placeholder={uischema.options?.placeholder}
-          defaultValue={data}
           onChange={e => handleChange(path, parseFloat(e.target.value))}
           onBlur={() => setVirgin(false)}
-          className={!!data ? 'hasData' : 'noData'}
+          className={hasData(data) ? 'hasData' : 'noData'}
         />
         <InputLabel>
           {typeof label === 'object' ? label[0] : label}

@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import { Header } from '@components'
-import { CreateTopUpWallet } from '@lib'
+import { CreateTopUpWallet, usePreventTabClose } from '@lib'
 
 const Home: NextPage = () => {
+  usePreventTabClose()
   return (
     <>
       <CreateTopUpWallet />
