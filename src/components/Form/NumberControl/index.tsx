@@ -66,7 +66,7 @@ export const NumberControl = ({
 
   const defaultValue = schema.type === 'integer' ? parseInt(data) : parseFloat(data)
 
-  const hasData = (data: string) => !!data.toString()
+  const hasData = (data?: string) => data && !!data.toString()
 
   return (
     <Wrapper {...{ disabled }} hasMessage={!!errors}>
