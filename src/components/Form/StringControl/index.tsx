@@ -73,7 +73,7 @@ export const StringControl = ({
           <PhoneInput
             {...{ disabled, required, autoComplete }}
             placeholder={uischema?.options?.placeholder}
-            defaultValue={data}
+            value={data}
             onChange={(e: string) => handleChange(path, e)}
             onBlur={() => setVirgin(false)}
             className={!!data ? 'hasData' : 'noData'}
