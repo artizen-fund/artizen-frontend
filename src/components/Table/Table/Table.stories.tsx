@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import Table, { TableProps } from './'
-import TableCell from './TableCell'
+import { Table, TableCell } from '@components'
+import { TableProps } from './'
 
 export default {
   title: 'tables/Table',

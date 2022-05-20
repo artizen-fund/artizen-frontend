@@ -3,14 +3,16 @@
 exports[`renders Table unchanged 1`] = `
 <div>
   <div
-    class="sc-ea94b61a-0 iAAcSu"
+    class="sc-bb05b861-0 iaAa-Dn"
   >
     <div
       class="sc-3f0f27c0-0 hXTndr"
     >
       <div
         class="sc-3f0f27c0-1 juhfDy"
-      />
+      >
+        derp
+      </div>
     </div>
   </div>
 </div>

@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Button } from '@components'
+import { Button, TableHeader } from '@components'
 import { breakpoint, palette, iconKey } from '@theme'
 import { rgba } from '@lib'
-import TableHeader from './TableHeader'
 
 export interface TableProps {
   title: string
