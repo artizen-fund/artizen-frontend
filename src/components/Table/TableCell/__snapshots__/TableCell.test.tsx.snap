@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders TableCell unchanged 1`] = `
+<div>
+  <div
+    class="sc-c0aed08d-0 hWLXnT"
+  >
+    derp
+  </div>
+</div>
+`;

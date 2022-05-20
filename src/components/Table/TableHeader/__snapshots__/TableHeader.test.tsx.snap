@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders TableHeader unchanged 1`] = `
+<div>
+  <div
+    class="sc-3f0f27c0-0 hXTndr"
+  >
+    <div
+      class="sc-3f0f27c0-1 juhfDy"
+    >
+      Derp
+    </div>
+  </div>
+</div>
+`;

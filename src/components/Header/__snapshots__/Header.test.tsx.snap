@@ -3,25 +3,25 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-587e51e-0 izvntc"
+    class="sc-2e19aae1-0 eFVtA-d"
   >
     <div
-      class="sc-587e51e-2 nRpqP"
+      class="sc-2e19aae1-2 cUuJVW"
     >
       <a
         href="/"
       >
         <div
-          class="sc-587e51e-1 hsROfC"
+          class="sc-2e19aae1-1 gbWnLQ"
         >
           Artizen
         </div>
       </a>
       <button
-        class="sc-6114fe46-2 eGFcal sc-587e51e-4 bWzVlo"
+        class="sc-a1052e44-2 frqjg sc-2e19aae1-4 bPkeJt"
       >
         <div
-          class="sc-8737affa-0 FiPTj sc-6114fe46-0 blUCRb"
+          class="sc-8737affa-0 FiPTj sc-a1052e44-0 gVeOzO"
         >
           arrow
         </div>
@@ -29,10 +29,10 @@ exports[`renders homepage unchanged 1`] = `
       </button>
     </div>
     <div
-      class="sc-587e51e-2 nRpqP"
+      class="sc-2e19aae1-2 cUuJVW"
     >
       <div
-        class="sc-587e51e-3 iTSYJK"
+        class="sc-2e19aae1-3 iGedTb"
       >
         <ul>
           <li>
@@ -52,32 +52,32 @@ exports[`renders homepage unchanged 1`] = `
         </ul>
       </div>
       <a
-        class="sc-6114fe46-1 iGFWOO undefined "
+        class="sc-a1052e44-1 ZpQCj undefined "
       >
         <div
-          class="sc-8737affa-0 bVxSDn sc-6114fe46-0 hrzagL"
+          class="sc-8737affa-0 bVxSDn sc-a1052e44-0 dJTfxG"
         >
           donate
         </div>
         Donate
       </a>
       <div
-        class="sc-13239cf-0 bGwaCQ"
+        class="sc-47dc7821-0 cdqNSn"
       >
         <div
-          class="sc-13239cf-1 cEohiw"
+          class="sc-47dc7821-1 gRBtCJ"
         />
         <div
-          class="sc-8737affa-0 lhpOEt sc-13239cf-2 geskGN"
+          class="sc-8737affa-0 lhpOEt sc-47dc7821-2 fCKxSq"
           color="night"
         >
           hamburger
         </div>
         <div
-          class="sc-13239cf-3 hQiNXx"
+          class="sc-47dc7821-3 dSWlbO"
         >
           <div
-            class="sc-13239cf-4 kNvKMW"
+            class="sc-47dc7821-4 dJYYIK"
           >
             RP
           </div>
