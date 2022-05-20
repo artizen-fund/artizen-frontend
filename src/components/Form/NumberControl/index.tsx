@@ -64,15 +64,14 @@ export const NumberControl = ({
 
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
 
-  const defaultValue = schema.type === 'integer' ? parseInt(data) : parseFloat(data)
-
-  const hasData = (data?: string) => data && !!data.toString()
+  const hasData = (data?: string) => !!data && !!data.toString()
 
   return (
     <Wrapper {...{ disabled }} hasMessage={!!errors}>
       <InputWrapper {...{ disabled }} hasStatusIcon={!!statusIcon}>
         <input
-          {...{ disabled, required, defaultValue }}
+          {...{ disabled, required }}
+          defaultValue={data}
           minLength={schema.minimum}
           maxLength={schema.maximum}
           type="number"

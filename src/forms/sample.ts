@@ -17,6 +17,9 @@ export const schema = {
       type: 'string',
       format: 'email',
     },
+    phoneExample: {
+      type: 'string',
+    },
     booleanCheckExample: {
       type: 'boolean',
     },
@@ -69,6 +72,7 @@ export const schema = {
 export const initialState = {
   stringExample: undefined,
   emailExample: undefined,
+  phoneExample: undefined,
   booleanCheckExample: undefined,
   miniBooleanCheckExample: undefined,
   booleanCheckExampleTwo: undefined,
@@ -95,6 +99,13 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/stringExample',
       label: '3-20 Character Length String',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/phoneExample',
+      options: {
+        format: 'phone',
+      },
     },
     {
       type: 'Control',

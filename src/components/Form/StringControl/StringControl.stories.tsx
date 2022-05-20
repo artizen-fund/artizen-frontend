@@ -15,7 +15,7 @@ export default {
     },
     format: {
       defaultValue: 'text',
-      options: ['text', 'email', 'url', 'password'],
+      options: ['text', 'email', 'url', 'password', 'phone'],
       control: { type: 'select' },
     },
     errors: { control: { type: 'text' } },

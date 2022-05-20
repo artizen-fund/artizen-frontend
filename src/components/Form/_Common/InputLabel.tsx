@@ -4,24 +4,23 @@ import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
-export default styled.label`
+export default styled.label<{ hasWidget?: boolean }>`
   position: absolute;
   top: 0;
   display: flex;
   align-items: center;
   height: 100%;
-
-  left: 16px;
-  width: calc(100% - 32px);
+  left: ${props => (props.hasWidget ? 72 : 16)}px;
+  width: calc(100% - 88px);
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    left: 24px;
-    width: calc(100% - 48px);
+    left: ${props => (props.hasWidget ? 76 : 16)}px;
+    width: calc(100% - 92px);
   }
 
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    left: 32px;
-    width: calc(100% - 64px);
+    left: ${props => (props.hasWidget ? 80 : 16)}px;
+    width: calc(100% - 96px);
   }
 
   color: ${rgba(palette.barracuda)};
@@ -32,6 +31,8 @@ export default styled.label`
   will-change: color, transform;
   pointer-events: none;
 
+  .PhoneInput:focus-within ~ &,
+  .PhoneInput.hasData ~ &,
   input:focus ~ &,
   input.hasData ~ &,
   input:required:valid ~ &,

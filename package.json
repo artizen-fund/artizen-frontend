@@ -33,6 +33,7 @@
     "@trycourier/courier": "^3.12.0",
     "@trycourier/react-provider": "^1.16.0",
     "@trycourier/react-toast": "^1.16.0",
+    "@types/react-phone-number-input": "^3.0.13",
     "api": "^4.5.1",
     "cookie": "^0.5.0",
     "jsonwebtoken": "^8.5.1",
@@ -41,6 +42,7 @@
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-phone-number-input": "^3.1.53",
     "react-use-intercom": "^1.5.2",
     "styled-components": "^5.3.5",
     "web3": "^1.7.3"

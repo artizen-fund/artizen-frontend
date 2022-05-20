@@ -4,6 +4,7 @@ import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
 import { IconKey } from '../../Icon/Icon.enums'
+import PhoneInput from './PhoneInput'
 
 /* Todo: Trying to decide if schema and uischema should be optional.
  *       Boils down to whether we will ever use these outside of jsonforms.
@@ -35,7 +36,6 @@ export const StringControl = ({
   path,
   errors,
 }: StringControlProps) => {
-  const hasWidget = false
   const [virgin, setVirgin] = useState(data === undefined)
 
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
@@ -62,20 +62,38 @@ export const StringControl = ({
     setStatusIcon(disabled ? 'lock' : undefined)
   }, [disabled])
 
+  // This is for all left-hand-side icons.
+  // Currently just phone.
+  const hasWidget = uischema?.options?.format === 'phone'
+
   return (
     <Wrapper {...{ disabled }} hasMessage={!!errors}>
       <InputWrapper {...{ hasWidget, disabled }} hasStatusIcon={!!statusIcon}>
-        <input
-          {...{ disabled, required, autoComplete }}
-          minLength={schema?.minLength}
-          maxLength={schema?.maxLength}
-          type={uischema?.options?.format || 'text'}
-          placeholder={uischema?.options?.placeholder}
-          defaultValue={data}
-          onChange={e => handleChange(path, e.target.value)}
-          onBlur={() => setVirgin(false)}
-          className={!!data ? 'hasData' : 'noData'}
-        />
+        {uischema?.options?.format === 'phone' ? (
+          <PhoneInput
+            {...{ disabled, required, autoComplete }}
+            placeholder={uischema?.options?.placeholder}
+            defaultValue={data}
+            onChange={(e: string) => handleChange(path, e)}
+            onBlur={() => setVirgin(false)}
+            className={!!data ? 'hasData' : 'noData'}
+            countrySelectProps={{ unicodeFlags: true }}
+            defaultCountry="US"
+            international={false}
+          />
+        ) : (
+          <input
+            {...{ disabled, required, autoComplete }}
+            minLength={schema?.minLength}
+            maxLength={schema?.maxLength}
+            type={uischema?.options?.format || 'text'}
+            placeholder={uischema?.options?.placeholder}
+            defaultValue={data}
+            onChange={e => handleChange(path, e.target.value)}
+            onBlur={() => setVirgin(false)}
+            className={!!data ? 'hasData' : 'noData'}
+          />
+        )}
         <InputLabel {...{ hasWidget }}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}

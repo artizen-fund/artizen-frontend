@@ -15,7 +15,7 @@ exports[`SelectControl renders SelectControl unchanged 1`] = `
         class="sc-c23b6b48-0 fuPGAb"
       />
       <label
-        class="sc-62ae6059-0 bjlEKt hasData"
+        class="sc-aec1a1a-0 fjKCPb hasData"
       >
         Segmented enum control test
       </label>
