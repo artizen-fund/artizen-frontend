@@ -5,7 +5,11 @@ import { BooleanControlProps } from './'
 export default {
   title: 'forms/CheckboxControl',
   component: CheckboxControl,
-  argTypes: {},
+  argTypes: {
+    disabled: {
+      control: { type: 'boolean' },
+    },
+  },
 }
 
 export const CheckboxControlComponent = (props: BooleanControlProps) => {

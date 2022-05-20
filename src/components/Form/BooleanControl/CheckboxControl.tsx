@@ -5,68 +5,40 @@ import { BooleanControlProps } from './'
 
 const Checkbox = (props: BooleanControlProps) => {
   const { required, label, data, handleChange, path, disabled = false, uischema } = props
-  const mini = uischema?.options?.size === 'mini'
-  const outline = uischema?.options?.outline
   return (
-    <Wrapper {...{ disabled, mini }}>
-      <Box {...{ mini }}>
-        <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} checked={data} />
-        <Checkmark {...{ outline, mini }} />
+    <Wrapper {...{ disabled }}>
+      <Box>
+        <Input
+          type="checkbox"
+          required={!!required}
+          onChange={_ => handleChange(path, !data)}
+          checked={data}
+          {...{ disabled }}
+        />
+        <Checkmark />
       </Box>
-      <Label>{typeof label === 'object' ? label[0] : label}</Label>
+      <Label {...{ disabled }}>{typeof label === 'object' ? label[0] : label}</Label>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.label<{ disabled: boolean; mini?: boolean }>`
-  position: relative;
-  display: flex;
-  align-items: ${props => (props.mini ? 'flex-start' : 'center')};
-  padding: ${props => (props.mini ? 0 : 16)}px 0;
-  user-select: none;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${props => (props.disabled ? 0.32 : 1)};
-
-  &:hover input ~ span {
-    ${rgba(palette.moon, 0.8)};
-    @media (prefers-color-scheme: dark) {
-      ${rgba(palette.night, 0.8)};
-    }
-  }
-
-  & input:checked ~ span {
-    background-color: ${rgba(palette.moon)};
-    @media (prefers-color-scheme: dark) {
-      background-color: ${rgba(palette.night)};
-    }
-
-    &:after {
-      transform: rotate(45deg) scale3d(1, 1, 1);
-      opacity: 1;
-    }
-  }
-`
-
-const Box = styled.div<{ mini?: boolean }>`
+const Box = styled.div`
   flex: 0 0 auto;
   position: relative;
-  width: ${props => (props.mini ? '16px' : '24px')};
-  height: ${props => (props.mini ? '16px' : '24px')};
-  margin-right: ${props => (props.mini ? '8px' : '16px')};
-  ${props =>
-    !props.mini &&
-    `
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 32px;
     height: 32px;
     margin-right: 24px;
   }
-  
+
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     width: 40px;
     height: 40px;
   }
-  `}
 `
 
 const Input = styled.input`
@@ -76,56 +48,34 @@ const Input = styled.input`
   width: 0;
 `
 
-const Checkmark = styled.span<{ outline: boolean; mini?: boolean }>`
+const Checkmark = styled.span`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: ${rgba(palette.moon, 0)};
   width: 100%;
   height: 100%;
-  border: 1px solid ${props => (props.outline ? rgba(palette.night) : rgba(palette.moon))};
+  background-color: ${rgba(palette.moon, 0)};
+  border: 1px solid ${rgba(palette.slate)};
   @media (prefers-color-scheme: dark) {
-    border: 1px solid ${props => (props.outline ? rgba(palette.moon) : rgba(palette.night))};
+    border: 1px solid ${rgba(palette.moon)};
+    background-color: ${rgba(palette.slate, 0)};
   }
   border-radius: 50%;
-  ${props =>
-    !props.outline &&
-    `
-    box-shadow: 0.5px 1px 0px rgba(0, 0, 0, 0.16);
-  `}
   appearance: none;
-  transition: background-color 0.25s ease-in-out;
+  transition: background-color 0.25s ease-in-out, box-shadow 0.15s ease-in-out;
 
   &:after {
     position: absolute;
     border-style: solid;
-    border-color: ${rgba(palette.night)};
+    border-color: ${rgba(palette.moon)};
     @media (prefers-color-scheme: dark) {
-      border-color: ${rgba(palette.moon)};
+      border-color: ${rgba(palette.slate)};
     }
-    ${props =>
-      !props.mini
-        ? `
-      left: calc(50% - 1px);
-      top: calc(50% - 4px);
-      width: 3px;
-      height: 7px;
-      border-width: 0 1.5px 1px 0;
-    `
-        : `
-      left: calc(50% - 1.5px) !important;
-      top: calc(50% - 3.75px) !important;
-      width: 3px !important;
-      height: 6px !important;
-      border-width: 0 1.125px 1.125px 0 !important;
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-        left: calc(50% - 3px);
-        top: calc(50% - 7.5px);
-        width: 6px;
-        height: 12px;
-        border-width: 0 2.5px 2.5px 0;
-      }
-    `}
+    left: calc(50% - 1px);
+    top: calc(50% - 4px);
+    width: 3px;
+    height: 7px;
+    border-width: 0 1.5px 1px 0;
     display: block;
     transform: rotate(45deg) scale3d(0, 0, 1);
     opacity: 0;
@@ -172,6 +122,38 @@ const Label = styled.span`
 
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     max-width: 320px;
+  }
+`
+
+const Wrapper = styled.label<{ disabled: boolean }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  user-select: none;
+  color: ${props => (props.disabled ? rgba(palette.stone) : rgba(palette.night))};
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  pointer-events: ${props => (props.disabled ? 'none' : 'all')};
+
+  & input:disabled ~ span {
+    background-color: ${rgba(palette.stone)};
+    border: 1px solid ${rgba(palette.stone)};
+  }
+
+  & input:checked ~ span {
+    background-color: ${rgba(palette.slate)};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.moon)};
+    }
+
+    &:after {
+      transform: rotate(45deg) scale3d(1, 1, 1);
+      opacity: 1;
+    }
+  }
+
+  &:hover ${Checkmark} {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16);
   }
 `
 

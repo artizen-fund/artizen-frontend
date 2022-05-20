@@ -23,15 +23,6 @@ export const schema = {
     booleanCheckExample: {
       type: 'boolean',
     },
-    miniBooleanCheckExample: {
-      type: 'boolean',
-    },
-    booleanCheckExampleTwo: {
-      type: 'boolean',
-    },
-    miniBooleanCheckExampleTwo: {
-      type: 'boolean',
-    },
     switchBooleanExample: {
       type: 'boolean',
     },
@@ -74,9 +65,6 @@ export const initialState = {
   emailExample: undefined,
   phoneExample: undefined,
   booleanCheckExample: undefined,
-  miniBooleanCheckExample: undefined,
-  booleanCheckExampleTwo: undefined,
-  miniBooleanCheckExampleTwo: undefined,
   switchBooleanExample: undefined,
   switchBooleanExampleTwo: undefined,
   switchBooleanExampleThree: undefined,
@@ -117,28 +105,6 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/booleanCheckExample',
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/miniBooleanCheckExample',
-      options: {
-        size: 'mini',
-      },
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/booleanCheckExampleTwo',
-      options: {
-        outline: true,
-      },
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/miniBooleanCheckExampleTwo',
-      options: {
-        size: 'mini',
-        outline: true,
-      },
     },
     {
       type: 'Control',
