@@ -9,7 +9,9 @@ const Home: NextPage = () => {
     <>
       <CreateTopUpWallet />
       <Header />
-      <Main>welcome to Artizen</Main>
+      <Main>
+        <p>welcome to Artizen</p>
+      </Main>
     </>
   )
 }

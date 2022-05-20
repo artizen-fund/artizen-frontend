@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { breakpoint } from '@theme'
 import { buttonColor } from './Button.helpers'
 import { Icon } from '@components'
-import { IconKey } from '@theme'
+import { IconKey, typeface } from '@theme'
 
 export interface ButtonProps {
   outline?: boolean
@@ -82,13 +82,16 @@ const ButtonStyle = css<Partial<ButtonProps>>`
 
   width: ${props => (props.small ? 110 : 124)}px;
   height: ${props => (props.small ? 24 : 40)}px;
+  font-size: 16px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: ${props => (props.small ? 124 : 168)}px;
     height: ${props => (props.small ? 31 : 48)}px;
+    font-size: 17px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     width: ${props => (props.small ? 138 : 166)}px;
     height: ${props => (props.small ? 40 : 56)}px;
+    font-size: 18px;
   }
 
   border-radius: 9999px;

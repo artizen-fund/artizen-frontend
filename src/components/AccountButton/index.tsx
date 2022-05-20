@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
+import { breakpoint, palette, typeface } from '@theme'
 import { rgba } from '@lib'
 import { Icon } from '@components'
 
@@ -76,13 +76,9 @@ const SignInLabel = styled.div<SignedInProps>`
 
   &:after {
     content: 'Sign in';
-    font-family: 'Roc Grotesk', sans-serif;
     font-style: normal;
-    font-weight: 700;
     font-size: 13px;
     line-height: 100%;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
   }
 
   opacity: ${props => (props.signedIn ? 0 : 1)};
@@ -136,10 +132,7 @@ const AvatarImage = styled.div<SignedInProps>`
 const Initials = styled.div`
   width: 100%;
 
-  letter-spacing: 0.5px;
-  font-family: 'Roc Grotesk', sans-serif;
   font-style: normal;
-  font-weight: 700;
   text-align: center;
 
   font-size: 13px;

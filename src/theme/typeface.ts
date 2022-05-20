@@ -1,8 +1,8 @@
 export type Typeface = Record<string, string>
 
 export const typeface: Typeface = {
-  rocGrotesk: 'rockGrotesk',
-  mackinacPro: 'mackinacPro',
+  rocGrotesk: 'roc-grotesk',
+  mackinacPro: 'p22-mackinac-pro',
 }
 
 /*

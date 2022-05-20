@@ -76,6 +76,16 @@ const Logo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  font-size: 13px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    font-size: 15px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    font-size: 16px;
+  }
+  text-transform: uppercase;
+
   &:before {
     content: ' ';
     display: block;
