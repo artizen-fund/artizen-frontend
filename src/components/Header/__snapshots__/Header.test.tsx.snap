@@ -3,13 +3,87 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-c87e8523-0"
+    class="sc-587e51e-0 izvntc"
   >
-    <a
-      href="/"
+    <div
+      class="sc-587e51e-2 nRpqP"
     >
-      Artizen
-    </a>
+      <a
+        href="/"
+      >
+        <div
+          class="sc-587e51e-1 hsROfC"
+        >
+          Artizen
+        </div>
+      </a>
+      <button
+        class="sc-6114fe46-2 eGFcal sc-587e51e-4 bWzVlo"
+      >
+        <div
+          class="sc-8737affa-0 FiPTj sc-6114fe46-0 blUCRb"
+        >
+          arrow
+        </div>
+        Menu
+      </button>
+    </div>
+    <div
+      class="sc-587e51e-2 nRpqP"
+    >
+      <div
+        class="sc-587e51e-3 iTSYJK"
+      >
+        <ul>
+          <li>
+            <a
+              href="/"
+            >
+              Leaderboard
+            </a>
+          </li>
+          <li>
+            <a
+              href="/"
+            >
+              How it Works
+            </a>
+          </li>
+        </ul>
+      </div>
+      <a
+        class="sc-6114fe46-1 iGFWOO undefined "
+      >
+        <div
+          class="sc-8737affa-0 bVxSDn sc-6114fe46-0 hrzagL"
+        >
+          donate
+        </div>
+        Donate
+      </a>
+      <div
+        class="sc-13239cf-0 bGwaCQ"
+      >
+        <div
+          class="sc-13239cf-1 cEohiw"
+        />
+        <div
+          class="sc-8737affa-0 lhpOEt sc-13239cf-2 geskGN"
+          color="night"
+        >
+          hamburger
+        </div>
+        <div
+          class="sc-13239cf-3 hQiNXx"
+        >
+          <div
+            class="sc-13239cf-4 kNvKMW"
+          >
+            RP
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 </div>
 `;

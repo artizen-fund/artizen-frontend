@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import SelectControl from './SelectControl'
 import { EnumControlProps } from './'
-import { iconKey } from '../../Icon/Icon.enums'
+import { iconKey } from '@theme'
 
 export default {
   title: 'forms/SelectControl',

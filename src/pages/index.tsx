@@ -1,24 +1,27 @@
+import styled from 'styled-components'
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import { Header } from '@components'
-import { CreateTopUpWallet, usePreventTabClose } from '@lib'
+import { CreateTopUpWallet } from '@lib'
+import { breakpoint } from '@theme'
 
 const Home: NextPage = () => {
-  usePreventTabClose()
   return (
     <>
       <CreateTopUpWallet />
       <Header />
-      <p>Home!</p>
-      <ul>
-        <li>
-          <Link href="/sample-form">
-            <a>👉 Sample Form</a>
-          </Link>
-        </li>
-      </ul>
+      <Main>welcome to Artizen</Main>
     </>
   )
 }
+
+const Main = styled.main`
+  padding-top: 64px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding-top: 72px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding-top: 88px;
+  }
+`
 
 export default Home

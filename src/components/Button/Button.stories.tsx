@@ -1,5 +1,5 @@
 import Button, { ButtonProps } from './'
-import { iconKey } from '../Icon/Icon.enums'
+import { iconKey } from '@theme'
 
 export default {
   title: 'components/Button',

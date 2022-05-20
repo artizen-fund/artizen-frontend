@@ -1343,95 +1343,23 @@ exports[`Form renders Form unchanged 1`] = `
         class="vertical-layout-item"
       >
         <label
-          class="sc-c63bc471-0 lcTima"
+          class="sc-a83d3292-4 jWszdY"
         >
           <div
-            class="sc-c63bc471-1 kBIyZx"
+            class="sc-a83d3292-0 bElFPb"
           >
             <input
-              class="sc-c63bc471-2 bohjsn"
+              class="sc-a83d3292-1 SDjjZ"
               type="checkbox"
             />
             <span
-              class="sc-c63bc471-3 BqPRW"
+              class="sc-a83d3292-2 gHUIyX"
             />
           </div>
           <span
-            class="sc-c63bc471-4 cfYZAN"
+            class="sc-a83d3292-3 gQRkgX"
           >
             Boolean Check Example
-          </span>
-        </label>
-      </div>
-      <div
-        class="vertical-layout-item"
-      >
-        <label
-          class="sc-c63bc471-0 jzFAfs"
-        >
-          <div
-            class="sc-c63bc471-1 cRRvAM"
-          >
-            <input
-              class="sc-c63bc471-2 bohjsn"
-              type="checkbox"
-            />
-            <span
-              class="sc-c63bc471-3 fZQKQw"
-            />
-          </div>
-          <span
-            class="sc-c63bc471-4 cfYZAN"
-          >
-            Mini Boolean Check Example
-          </span>
-        </label>
-      </div>
-      <div
-        class="vertical-layout-item"
-      >
-        <label
-          class="sc-c63bc471-0 lcTima"
-        >
-          <div
-            class="sc-c63bc471-1 kBIyZx"
-          >
-            <input
-              class="sc-c63bc471-2 bohjsn"
-              type="checkbox"
-            />
-            <span
-              class="sc-c63bc471-3 glsFet"
-            />
-          </div>
-          <span
-            class="sc-c63bc471-4 cfYZAN"
-          >
-            Boolean Check Example Two
-          </span>
-        </label>
-      </div>
-      <div
-        class="vertical-layout-item"
-      >
-        <label
-          class="sc-c63bc471-0 jzFAfs"
-        >
-          <div
-            class="sc-c63bc471-1 cRRvAM"
-          >
-            <input
-              class="sc-c63bc471-2 bohjsn"
-              type="checkbox"
-            />
-            <span
-              class="sc-c63bc471-3 jnpzxv"
-            />
-          </div>
-          <span
-            class="sc-c63bc471-4 cfYZAN"
-          >
-            Mini Boolean Check Example Two
           </span>
         </label>
       </div>
@@ -1733,7 +1661,7 @@ exports[`Form renders Form unchanged 1`] = `
       </div>
     </div>
     <button
-      class="sc-9e782674-2 dOLTIK"
+      class="sc-6114fe46-2 eGFcal"
     >
       Submit
     </button>

@@ -3,22 +3,22 @@
 exports[`CheckboxControl renders SelectControl unchanged 1`] = `
 <div>
   <label
-    class="sc-c63bc471-0 lcTima"
+    class="sc-a83d3292-4 jWszdY"
   >
     <div
-      class="sc-c63bc471-1 kBIyZx"
+      class="sc-a83d3292-0 bElFPb"
     >
       <input
         checked=""
-        class="sc-c63bc471-2 bohjsn"
+        class="sc-a83d3292-1 SDjjZ"
         type="checkbox"
       />
       <span
-        class="sc-c63bc471-3 BqPRW"
+        class="sc-a83d3292-2 gHUIyX"
       />
     </div>
     <span
-      class="sc-c63bc471-4 cfYZAN"
+      class="sc-a83d3292-3 gQRkgX"
     >
       Checkbox control test
     </span>

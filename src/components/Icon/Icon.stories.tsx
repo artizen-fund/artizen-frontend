@@ -1,5 +1,5 @@
 import Icon, { IconProps } from './'
-import { iconSize, iconKey } from './Icon.enums'
+import { iconSize, iconKey } from '@theme'
 import { palette } from '@theme'
 
 export default {

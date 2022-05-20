@@ -10,7 +10,7 @@ import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
-import { IconKey } from '../../Icon/Icon.enums'
+import { IconKey } from '@theme'
 
 export interface NumberControlProps {
   label: string | Labels

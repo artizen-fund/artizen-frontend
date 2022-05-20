@@ -3,7 +3,7 @@ import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
-import { IconKey } from '../../Icon/Icon.enums'
+import { IconKey } from '@theme'
 import PhoneInput from './PhoneInput'
 
 /* Todo: Trying to decide if schema and uischema should be optional.

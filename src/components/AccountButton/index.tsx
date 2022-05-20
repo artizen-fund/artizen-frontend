@@ -4,13 +4,13 @@ import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { Icon } from '@components'
 
-export interface AccountButtonProps {
-  children: React.ReactNode
-}
-
-const AccountButton = ({ children }: AccountButtonProps) => {
+const AccountButton = () => {
   // note: this will connect to a hook that manages login state
+  // note: I had previous thought to use children to display Badge, but I think that should be self-generated now.
+
+  const TEMP_INITIALS = 'RP'
   const [signedIn, setSignedIn] = useState(false)
+
   return (
     <Wrapper signedIn={signedIn} onClick={() => setSignedIn(!signedIn)}>
       <SignInLabel signedIn={signedIn} />
@@ -18,9 +18,8 @@ const AccountButton = ({ children }: AccountButtonProps) => {
         hamburger
       </HamburgerIcon>
       <AvatarImage signedIn={signedIn}>
-        <Initials>RP</Initials>
+        <Initials>{TEMP_INITIALS}</Initials>
       </AvatarImage>
-      {children}
     </Wrapper>
   )
 }
@@ -136,13 +135,6 @@ const AvatarImage = styled.div<SignedInProps>`
 
 const Initials = styled.div`
   width: 100%;
-  height: 19px;
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
-    height: 22px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: 23px;
-  }
 
   letter-spacing: 0.5px;
   font-family: 'Roc Grotesk', sans-serif;
@@ -151,14 +143,11 @@ const Initials = styled.div`
   text-align: center;
 
   font-size: 13px;
-  line-height: 19px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     font-size: 15px;
-    line-height: 22px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     font-size: 16px;
-    line-height: 23px;
   }
 `
 

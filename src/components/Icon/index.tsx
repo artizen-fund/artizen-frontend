@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { breakpoint, Palette } from '@theme'
 import { schemeColors } from '@lib'
-import { IconKey, IconSize } from './Icon.enums'
+import { IconKey, IconSize } from '@theme'
 
 export interface IconProps {
   children: keyof IconKey

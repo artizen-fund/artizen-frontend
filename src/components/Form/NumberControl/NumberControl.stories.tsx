@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NumberControl, NumberControlProps } from './'
-import { iconKey } from '../../Icon/Icon.enums'
+import { iconKey } from '@theme'
 
 export default {
   title: 'forms/NumberControl',
