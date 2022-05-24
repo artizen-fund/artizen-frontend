@@ -3,9 +3,10 @@
 exports[`Button renders Button link unchanged 1`] = `
 <div>
   <a
-    class="sc-a1052e44-1 ZpQCj undefined "
+    class="sc-a72af660-1 itdpKw undefined "
   >
     button test
+     
   </a>
 </div>
 `;
@@ -13,7 +14,7 @@ exports[`Button renders Button link unchanged 1`] = `
 exports[`Button renders form Button unchanged 1`] = `
 <div>
   <button
-    class="sc-a1052e44-2 frqjg"
+    class="sc-a72af660-2 krTSGv"
   >
     button test
   </button>

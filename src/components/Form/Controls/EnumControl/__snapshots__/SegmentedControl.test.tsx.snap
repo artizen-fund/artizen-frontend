@@ -3,7 +3,8 @@
 exports[`SegmentedControl renders SegmentedControl unchanged 1`] = `
 <div>
   <div
-    class="sc-5526d2b4-0 jiauSz"
+    class="sc-12278b37-0 bitCKL"
+    label="Segmented enum control test"
   />
 </div>
 `;

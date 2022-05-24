@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PagePadding renders PagePadding unchanged 1`] = `
+<div>
+  <div
+    class="sc-b3ed1e8f-0 ezAcVr"
+  >
+    Herp Derp
+  </div>
+</div>
+`;

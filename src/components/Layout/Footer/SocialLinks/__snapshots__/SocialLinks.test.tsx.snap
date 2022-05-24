@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SocialLinks renders Footer unchanged 1`] = `
+<div>
+  <div
+    class="sc-cbdb4d91-0 ehmDoo"
+  >
+    <a
+      class="sc-cbdb4d91-1 QVaUY"
+      href="https://twitter.com"
+    >
+      Twitter
+    </a>
+    <a
+      class="sc-cbdb4d91-1 eAzSqZ"
+      href="https://discord.com"
+    >
+      Discord
+    </a>
+    <a
+      class="sc-cbdb4d91-1 kDaYjE"
+      href="https://github.com"
+    >
+      Github
+    </a>
+    <a
+      class="sc-cbdb4d91-1 iqfkFQ"
+      href="https://telegram.com"
+    >
+      Telegram
+    </a>
+  </div>
+</div>
+`;

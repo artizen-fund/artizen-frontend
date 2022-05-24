@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout renders Layout unchanged 1`] = `
+<div>
+  <div
+    class="sc-29d73b66-0"
+  >
+    <header
+      class="sc-5ef7f0c2-0 dlRtDI"
+    >
+      <div
+        class="sc-5ef7f0c2-2 hjOGOH"
+      >
+        <a
+          href="/"
+        >
+          <div
+            class="sc-5ef7f0c2-1 hcDict"
+          >
+            Artizen
+          </div>
+        </a>
+        <button
+          class="sc-a72af660-2 krTSGv sc-5ef7f0c2-4 cgUNoA"
+        >
+          Menu
+          <div
+            class="sc-8737affa-0 FiPTj sc-a72af660-0 jvtbru"
+          >
+            arrow
+          </div>
+        </button>
+      </div>
+      <div
+        class="sc-5ef7f0c2-2 hjOGOH"
+      >
+        <div
+          class="sc-5ef7f0c2-3 iwMbRm"
+        >
+          <ul>
+            <li>
+              <a
+                href="/"
+              >
+                Leaderboard
+              </a>
+            </li>
+            <li>
+              <a
+                href="/"
+              >
+                How it Works
+              </a>
+            </li>
+          </ul>
+        </div>
+        <a
+          class="sc-a72af660-1 itdpKw undefined "
+        >
+          <div
+            class="sc-8737affa-0 bVxSDn sc-a72af660-0 jvtbru"
+          >
+            donate
+          </div>
+          Donate
+           
+        </a>
+        <div
+          class="sc-47dc7821-0 cdqNSn"
+        >
+          <div
+            class="sc-47dc7821-1 gRBtCJ"
+          />
+          <div
+            class="sc-8737affa-0 lhpOEt sc-47dc7821-2 fCKxSq"
+            color="night"
+          >
+            hamburger
+          </div>
+          <div
+            class="sc-47dc7821-3 dSWlbO"
+          >
+            <div
+              class="sc-47dc7821-4 dJYYIK"
+            >
+              RP
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main
+      class="sc-29d73b66-1 jLFOMF"
+    />
+    <div
+      class="sc-b3ed1e8f-0 SyFSF"
+    >
+      <footer
+        class="sc-77186b7a-0 deZMJj"
+      >
+        <hr
+          class="sc-77186b7a-1 kvWYbx"
+        />
+        <ul
+          class="sc-77186b7a-2 iWhbev"
+        >
+          <li>
+            Mission
+          </li>
+          <li>
+            Leaderboard
+          </li>
+          <li>
+            How it Works
+          </li>
+          <li>
+            Community
+          </li>
+        </ul>
+        <ul
+          class="sc-77186b7a-3 fSEVLL"
+        >
+          <li>
+            Contact
+          </li>
+          <li>
+            Careers
+          </li>
+          <li>
+            Press
+          </li>
+        </ul>
+        <hr
+          class="sc-77186b7a-1 fZsNBC"
+        />
+        <div
+          class="sc-77186b7a-4 ivFIpq"
+        >
+          <div
+            class="sc-77186b7a-5 hUUstO"
+          >
+            Join the mission to fund public goods.
+          </div>
+          <div
+            class="sc-77186b7a-6 lfnkI"
+          >
+            <button
+              class="sc-a72af660-2 bDNfBj"
+            >
+              Donate
+            </button>
+            <button
+              class="sc-a72af660-2 bDNfBj"
+            >
+              Sign In
+            </button>
+          </div>
+        </div>
+        <hr
+          class="sc-77186b7a-1 ehgKyj"
+        />
+        <div
+          class="sc-cbdb4d91-0 ehmDoo"
+        >
+          <a
+            class="sc-cbdb4d91-1 QVaUY"
+            href="https://twitter.com"
+          >
+            Twitter
+          </a>
+          <a
+            class="sc-cbdb4d91-1 eAzSqZ"
+            href="https://discord.com"
+          >
+            Discord
+          </a>
+          <a
+            class="sc-cbdb4d91-1 kDaYjE"
+            href="https://github.com"
+          >
+            Github
+          </a>
+          <a
+            class="sc-cbdb4d91-1 iqfkFQ"
+            href="https://telegram.com"
+          >
+            Telegram
+          </a>
+        </div>
+      </footer>
+    </div>
+    <div
+      class="sc-b3ed1e8f-0 jbZhgc sc-77186b7a-8 eBOeez"
+    >
+      <footer
+        class="sc-77186b7a-7 hRDkMk"
+      >
+        <div>
+          Open source platform made with ❤️ by a globally distributed team
+        </div>
+        <ul>
+          <li>
+            Privacy Policy
+          </li>
+          <li>
+            Terms & Conditions
+          </li>
+        </ul>
+      </footer>
+    </div>
+  </div>
+</div>
+`;

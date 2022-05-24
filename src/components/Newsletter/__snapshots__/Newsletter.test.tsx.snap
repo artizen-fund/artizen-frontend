@@ -3,17 +3,25 @@
 exports[`Newsletter renders Newsletter unchanged 1`] = `
 <div>
   <div
-    class="sc-85485da3-0 eEcuNe"
+    class="sc-b3ed1e8f-0 SyFSF"
   >
-    <p>
-      Join us in building the world's largest web3 fund for public goods
-    </p>
-    <p>
-      Sign up for our free newsletter
-    </p>
     <div
-      class="sc-3d351cf1-0 cuONLG"
+      class="sc-75259fba-0 gfzwpp"
     >
+      <div
+        class="sc-75259fba-1 fcxgHe"
+      >
+        <div
+          class="sc-75259fba-2 hDYKex"
+        >
+          Join us in building the world's largest web3 fund for public goods
+        </div>
+        <div
+          class="sc-75259fba-3 yZImm"
+        >
+          Sign up for our free newsletter
+        </div>
+      </div>
       <div
         class="vertical-layout"
       >
@@ -21,70 +29,65 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="horizontal-layout"
+            class="sc-d3d8f8dd-0 cbhGLu"
+            id="#/properties/firstName"
           >
             <div
-              class="horizontal-layout-item horizontal-layout-2"
+              class="sc-460918ac-0 cwmxlV"
             >
-              <div
-                class="sc-e191228e-0 bwBNFU"
+              <input
+                class="noData"
+                minlength="2"
+                type="text"
+                value=""
+              />
+              <label
+                class="sc-f769c06f-0 fdTyWu"
               >
-                <div
-                  class="sc-9db10430-0 gtsrND"
-                >
-                  <input
-                    class="noData"
-                    minlength="2"
-                    type="text"
-                    value=""
-                  />
-                  <label
-                    class="sc-aec1a1a-0 fjKCPb"
-                  >
-                    First Name
-                  </label>
-                </div>
-                <div
-                  class="sc-955ed11e-0 eSGmlb"
-                />
-              </div>
+                First Name
+              </label>
             </div>
             <div
-              class="horizontal-layout-item horizontal-layout-2"
-            >
-              <div
-                class="sc-e191228e-0 bwBNFU"
-              >
-                <div
-                  class="sc-9db10430-0 gtsrND"
-                >
-                  <input
-                    class="noData"
-                    minlength="2"
-                    type="text"
-                    value=""
-                  />
-                  <label
-                    class="sc-aec1a1a-0 fjKCPb"
-                  >
-                    Last Name
-                  </label>
-                </div>
-                <div
-                  class="sc-955ed11e-0 eSGmlb"
-                />
-              </div>
-            </div>
+              class="sc-955ed11e-0 eSGmlb"
+            />
           </div>
         </div>
         <div
           class="vertical-layout-item"
         >
           <div
-            class="sc-e191228e-0 gezOsv"
+            class="sc-d3d8f8dd-0 cbhGLu"
+            id="#/properties/lastName"
           >
             <div
-              class="sc-9db10430-0 gtsrND"
+              class="sc-460918ac-0 cwmxlV"
+            >
+              <input
+                class="noData"
+                minlength="2"
+                type="text"
+                value=""
+              />
+              <label
+                class="sc-f769c06f-0 fdTyWu"
+              >
+                Last Name
+              </label>
+            </div>
+            <div
+              class="sc-955ed11e-0 eSGmlb"
+            />
+          </div>
+        </div>
+        <div
+          class="vertical-layout-item"
+        >
+          <div
+            class="sc-d3d8f8dd-0 cbhGLu"
+            id="#/properties/email"
+          >
+            <div
+              class="sc-460918ac-0 cwmxlV"
             >
               <input
                 class="noData"
@@ -93,16 +96,16 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-aec1a1a-0 fjKCPb"
+                class="sc-f769c06f-0 fdTyWu"
               >
                 Email Address
                  *
               </label>
             </div>
             <div
-              class="sc-955ed11e-0 eSGmlb hasErrors"
+              class="sc-955ed11e-0 eSGmlb"
             >
-              is a required property
+              * required field
             </div>
           </div>
         </div>
@@ -110,22 +113,24 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <label
-            class="sc-94a2615b-4 vyhjA"
+            class="sc-ff21c776-4 fpxbXT"
+            id="#/properties/optIn"
           >
             <div
-              class="sc-94a2615b-0 dEeEHB"
+              class="sc-ff21c776-0 iCuvBl"
             >
               <input
-                class="sc-94a2615b-1 foJfOn"
+                class="sc-ff21c776-1 ekDnrb"
                 required=""
                 type="checkbox"
               />
               <span
-                class="sc-94a2615b-2 gZzYJ"
+                class="sc-ff21c776-2 ejxhRJ"
               />
             </div>
             <span
-              class="sc-94a2615b-3 iLipNt"
+              class="sc-ff21c776-3 fAfQul"
+              color="white"
             >
               Opt-in to receive the Artizen newsletter.
             </span>
@@ -133,7 +138,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </div>
       </div>
       <button
-        class="sc-a1052e44-2 frqjg"
+        class="sc-a72af660-2 bDNfBj sc-75259fba-4 eSIuZq"
       >
         Submit
       </button>
