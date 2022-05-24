@@ -15,6 +15,7 @@ const SelectControl = ({
   path,
   schema,
   errors,
+  ...props
 }: EnumControlProps) => {
   /* does Select ever have status icon? */
   const hasStatusIcon = false
@@ -48,7 +49,7 @@ const SelectControl = ({
   }, [parsedErrors])
 
   return (
-    <Wrapper {...{ filled, disabled }}>
+    <Wrapper {...{ filled, disabled }} {...props}>
       <InputWrapper {...{ hasStatusIcon }}>
         <select
           {...{ disabled, required, ref }}

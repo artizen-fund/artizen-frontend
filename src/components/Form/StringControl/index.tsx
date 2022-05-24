@@ -35,6 +35,7 @@ export const StringControl = ({
   handleChange,
   path,
   errors,
+  ...props
 }: StringControlProps) => {
   const [virgin, setVirgin] = useState(data === undefined)
 
@@ -67,7 +68,7 @@ export const StringControl = ({
   const hasWidget = uischema?.options?.format === 'phone'
 
   return (
-    <Wrapper {...{ disabled }} hasMessage={!!errors}>
+    <Wrapper {...{ disabled }} hasMessage={!!errors} {...props}>
       <InputWrapper {...{ hasWidget, disabled }} hasStatusIcon={!!statusIcon}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput

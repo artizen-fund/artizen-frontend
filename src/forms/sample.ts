@@ -57,7 +57,7 @@ export const schema = {
       description: 'Please enter the contents of your wallet.',
     },
   },
-  required: ['3—20 character length string'],
+  required: ['stringExample'],
 }
 
 export const initialState = {

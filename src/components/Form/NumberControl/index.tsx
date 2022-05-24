@@ -35,6 +35,7 @@ export const NumberControl = ({
   handleChange,
   path,
   errors,
+  ...props
 }: NumberControlProps) => {
   const [virgin, setVirgin] = useState(data === undefined)
 
@@ -67,7 +68,7 @@ export const NumberControl = ({
   const hasData = (data?: string) => !!data && !!data.toString()
 
   return (
-    <Wrapper {...{ disabled }} hasMessage={!!errors}>
+    <Wrapper {...{ disabled }} hasMessage={!!errors} {...props}>
       <InputWrapper {...{ disabled }} hasStatusIcon={!!statusIcon}>
         <input
           {...{ disabled, required }}

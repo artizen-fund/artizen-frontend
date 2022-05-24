@@ -49,45 +49,18 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
     { tester: booleanControlTester, renderer: BooleanControl },
     { tester: numberControlTester, renderer: NumberControl },
     { tester: enumControlTester, renderer: EnumControl },
-    { tester: formLabelTester, renderer: FormLabel },
+    /* { tester: formLabelTester, renderer: FormLabel }, */
   ]
 
   return (
-    <Wrapper>
-      {data && (
-        <JsonForms
-          {...{ uischema, schema, renderers, data }}
-          config={{
-            trim: true,
-          }}
-          cells={vanillaCells}
-          onChange={({ data, errors }) => freezeAndSetData(data, errors)}
-        />
-      )}
-      <Button onClick={() => console.log('saving!', data)} disabled={errors?.length > 0}>
-        Submit
-      </Button>
-    </Wrapper>
+    <JsonForms
+      {...{ schema, renderers, data }}
+      config={{
+        trim: true,
+      }}
+      onChange={({ data, errors }) => freezeAndSetData(data, errors)}
+    />
   )
 }
-
-const Wrapper = styled.div`
-  margin: 20px;
-  .vertical-layout {
-    display: flex;
-    flex-direction: column;
-  }
-  .vertical-layout-item {
-  }
-  .horizontal-layout {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 0 50px;
-  }
-  .horizontal-layout-item {
-    flex: 1;
-  }
-`
 
 export default Form

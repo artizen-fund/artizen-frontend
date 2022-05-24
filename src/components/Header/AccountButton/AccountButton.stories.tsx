@@ -1,7 +1,7 @@
 import AccountButton from './'
 
 export default {
-  title: 'components/AccountButton',
+  title: 'header/AccountButton',
   component: AccountButton,
   argTypes: {},
 }

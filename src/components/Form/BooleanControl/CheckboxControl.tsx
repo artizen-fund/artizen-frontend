@@ -3,10 +3,18 @@ import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
-const Checkbox = (props: BooleanControlProps) => {
-  const { required, label, data, handleChange, path, disabled = false, uischema } = props
+const Checkbox = ({
+  required,
+  label,
+  data,
+  handleChange,
+  path,
+  disabled = false,
+  uischema,
+  ...props
+}: BooleanControlProps) => {
   return (
-    <Wrapper {...{ disabled }}>
+    <Wrapper {...{ disabled }} {...props}>
       <Box>
         <Input
           type="checkbox"
@@ -86,7 +94,6 @@ const Checkmark = styled.span`
 
 const Label = styled.span`
   display: block;
-  max-width: 280px;
 
   & a {
     position: relative;
@@ -114,14 +121,6 @@ const Label = styled.span`
         transform: translate3d(0, 0, 0);
       }
     }
-  }
-
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    max-width: 300px;
-  }
-
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    max-width: 320px;
   }
 `
 

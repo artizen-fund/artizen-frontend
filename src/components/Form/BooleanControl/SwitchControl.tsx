@@ -3,8 +3,8 @@ import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
-export const SwitchControl = ({ data, label, handleChange, path, required }: BooleanControlProps) => (
-  <Wrapper>
+export const SwitchControl = ({ data, label, handleChange, path, required, ...props }: BooleanControlProps) => (
+  <Wrapper {...props}>
     <Label>{typeof label === 'object' ? label[0] : label}</Label>
     <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} checked={data} />
     <Switch checked={data} />

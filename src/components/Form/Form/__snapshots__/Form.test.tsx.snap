@@ -19,7 +19,7 @@ exports[`Form renders Form unchanged 1`] = `
         class="vertical-layout-item"
       >
         <div
-          class="sc-e191228e-0 bwBNFU"
+          class="sc-e191228e-0 gezOsv"
         >
           <div
             class="sc-9db10430-0 gtsrND"
@@ -28,6 +28,7 @@ exports[`Form renders Form unchanged 1`] = `
               class="noData"
               maxlength="20"
               minlength="3"
+              required=""
               type="text"
               value=""
             />
@@ -35,11 +36,14 @@ exports[`Form renders Form unchanged 1`] = `
               class="sc-aec1a1a-0 fjKCPb"
             >
               3-20 Character Length String
+               *
             </label>
           </div>
           <div
-            class="sc-955ed11e-0 eSGmlb"
-          />
+            class="sc-955ed11e-0 eSGmlb hasErrors"
+          >
+            is a required property
+          </div>
         </div>
       </div>
       <div
@@ -1343,21 +1347,21 @@ exports[`Form renders Form unchanged 1`] = `
         class="vertical-layout-item"
       >
         <label
-          class="sc-a83d3292-4 jWszdY"
+          class="sc-94a2615b-4 vyhjA"
         >
           <div
-            class="sc-a83d3292-0 bElFPb"
+            class="sc-94a2615b-0 dEeEHB"
           >
             <input
-              class="sc-a83d3292-1 SDjjZ"
+              class="sc-94a2615b-1 foJfOn"
               type="checkbox"
             />
             <span
-              class="sc-a83d3292-2 gHUIyX"
+              class="sc-94a2615b-2 gZzYJ"
             />
           </div>
           <span
-            class="sc-a83d3292-3 gQRkgX"
+            class="sc-94a2615b-3 iLipNt"
           >
             Boolean Check Example
           </span>

@@ -3,10 +3,17 @@ import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { EnumControlProps } from './'
 
-const SegmentedControl = (props: EnumControlProps) => {
-  const { disabled = false, required = false, data, handleChange, path, schema } = props
+const SegmentedControl = ({
+  disabled = false,
+  required = false,
+  data,
+  handleChange,
+  path,
+  schema,
+  ...props
+}: EnumControlProps) => {
   return (
-    <Wrapper>
+    <Wrapper {...props}>
       {schema?.enum?.map((option: string, i: number) => (
         <Option key={`${path}-${i}`} selected={option === data}>
           <input

@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Newsletter renders Newsletter unchanged 1`] = `
+<div>
+  <div
+    class="sc-85485da3-0 eEcuNe"
+  >
+    <p>
+      Join us in building the world's largest web3 fund for public goods
+    </p>
+    <p>
+      Sign up for our free newsletter
+    </p>
+    <div
+      class="sc-3d351cf1-0 cuONLG"
+    >
+      <div
+        class="vertical-layout"
+      >
+        <div
+          class="vertical-layout-item"
+        >
+          <div
+            class="horizontal-layout"
+          >
+            <div
+              class="horizontal-layout-item horizontal-layout-2"
+            >
+              <div
+                class="sc-e191228e-0 bwBNFU"
+              >
+                <div
+                  class="sc-9db10430-0 gtsrND"
+                >
+                  <input
+                    class="noData"
+                    minlength="2"
+                    type="text"
+                    value=""
+                  />
+                  <label
+                    class="sc-aec1a1a-0 fjKCPb"
+                  >
+                    First Name
+                  </label>
+                </div>
+                <div
+                  class="sc-955ed11e-0 eSGmlb"
+                />
+              </div>
+            </div>
+            <div
+              class="horizontal-layout-item horizontal-layout-2"
+            >
+              <div
+                class="sc-e191228e-0 bwBNFU"
+              >
+                <div
+                  class="sc-9db10430-0 gtsrND"
+                >
+                  <input
+                    class="noData"
+                    minlength="2"
+                    type="text"
+                    value=""
+                  />
+                  <label
+                    class="sc-aec1a1a-0 fjKCPb"
+                  >
+                    Last Name
+                  </label>
+                </div>
+                <div
+                  class="sc-955ed11e-0 eSGmlb"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="vertical-layout-item"
+        >
+          <div
+            class="sc-e191228e-0 gezOsv"
+          >
+            <div
+              class="sc-9db10430-0 gtsrND"
+            >
+              <input
+                class="noData"
+                required=""
+                type="text"
+                value=""
+              />
+              <label
+                class="sc-aec1a1a-0 fjKCPb"
+              >
+                Email Address
+                 *
+              </label>
+            </div>
+            <div
+              class="sc-955ed11e-0 eSGmlb hasErrors"
+            >
+              is a required property
+            </div>
+          </div>
+        </div>
+        <div
+          class="vertical-layout-item"
+        >
+          <label
+            class="sc-94a2615b-4 vyhjA"
+          >
+            <div
+              class="sc-94a2615b-0 dEeEHB"
+            >
+              <input
+                class="sc-94a2615b-1 foJfOn"
+                required=""
+                type="checkbox"
+              />
+              <span
+                class="sc-94a2615b-2 gZzYJ"
+              />
+            </div>
+            <span
+              class="sc-94a2615b-3 iLipNt"
+            >
+              Opt-in to receive the Artizen newsletter.
+            </span>
+          </label>
+        </div>
+      </div>
+      <button
+        class="sc-a1052e44-2 frqjg"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</div>
+`;

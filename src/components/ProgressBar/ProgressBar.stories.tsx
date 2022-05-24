@@ -1,5 +1,5 @@
-import ProgressBar, { ProgressBarProps } from './'
 import styled from 'styled-components'
+import ProgressBar, { ProgressBarProps } from './'
 
 export default {
   title: 'components/ProgressBar',
