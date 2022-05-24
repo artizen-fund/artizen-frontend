@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { breakpoint } from '@theme'
 import { buttonColor } from './Button.helpers'
 import { Icon } from '@components'
-import { IconKey, typeface } from '@theme'
+import { IconKey } from '@theme'
 
 export interface ButtonProps {
   outline?: boolean

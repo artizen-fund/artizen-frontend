@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { JsonForms } from '@jsonforms/react'
-import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers'
+import { vanillaRenderers } from '@jsonforms/vanilla-renderers'
 import { debounce } from 'lodash'
-import StringControl, { stringControlTester } from '../StringControl'
-import NumberControl, { numberControlTester } from '../NumberControl'
-import BooleanControl, { booleanControlTester } from '../BooleanControl'
-import EnumControl, { enumControlTester } from '../EnumControl'
-import FormLabel, { formLabelTester } from '../FormLabel'
-// import FormCategorization, { formCategorizationTester } from '../FormCategorization'
-import { Button } from '@components'
+import {
+  StringControl,
+  stringControlTester,
+  NumberControl,
+  numberControlTester,
+  BooleanControl,
+  booleanControlTester,
+  EnumControl,
+  enumControlTester,
+} from './Controls'
 
 interface FormProps {
   schema: any

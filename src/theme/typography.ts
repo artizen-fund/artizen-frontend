@@ -5,7 +5,7 @@ export const typography = {
   title: {
     l1: css`
       font-family: ${typeface.rocGrotesk};
-      font-weight: 800;
+      font-weight: 700;
       font-size: 34px;
       line-height: 34px;
       @media only screen and (min-width: ${breakpoint.tablet}px) {
@@ -23,7 +23,7 @@ export const typography = {
     `,
     l2: css`
       font-family: ${typeface.rocGrotesk};
-      font-weight: 700;
+      font-weight: 600;
       font-size: 28px;
       line-height: 30px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -37,7 +37,7 @@ export const typography = {
     `,
     l3: css`
       font-family: ${typeface.rocGrotesk};
-      font-weight: 700;
+      font-weight: 600;
       font-size: 24px;
       line-height: 26px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -51,7 +51,7 @@ export const typography = {
     `,
     l4: css`
       font-family: ${typeface.rocGrotesk};
-      font-weight: 700;
+      font-weight: 600;
       font-size: 20px;
       line-height: 22px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -111,7 +111,7 @@ export const typography = {
   label: {
     l0: css`
       font-family: ${typeface.rocGrotesk};
-      font-weight: 700;
+      font-weight: 600;
       font-size: 16px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 17px;
@@ -122,7 +122,7 @@ export const typography = {
     `,
     l1: css`
       font-family: ${typeface.rocGrotesk};
-      font-weight: 700;
+      font-weight: 600;
       font-size: 13px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 15px;
@@ -133,7 +133,7 @@ export const typography = {
     `,
     l2: css`
       font-family: ${typeface.rocGrotesk};
-      font-weight: 700;
+      font-weight: 600;
       font-size: 12px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 13px;
@@ -144,7 +144,7 @@ export const typography = {
     `,
     l3: css`
       font-family: ${typeface.rocGrotesk};
-      font-weight: 700;
+      font-weight: 600;
       font-size: 10px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 11px;
