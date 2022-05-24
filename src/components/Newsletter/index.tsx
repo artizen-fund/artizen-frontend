@@ -2,28 +2,30 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
-import { Form, Button } from '@components'
+import { Form, Button, PagePadding } from '@components'
 import { schema, uischema, initialState } from './form'
 
 const Newsletter = () => {
   const [submitted, setSubmitted] = useState(false)
   return (
-    <Wrapper className={submitted ? 'submitted' : ''}>
-      <Copy>
-        <Header>Join us in building the world's largest web3 fund for public goods</Header>
-        <Subhead>Sign up for our free newsletter</Subhead>
-      </Copy>
-      <Form {...{ schema, uischema, initialState }} />
-      <StyledButton onClick={() => setSubmitted(!submitted)} outline>
-        Submit
-      </StyledButton>
-    </Wrapper>
+    <PagePadding background="night">
+      <Wrapper className={submitted ? 'submitted' : ''}>
+        <Copy>
+          <Header>Join us in building the world's largest web3 fund for public goods</Header>
+          <Subhead>Sign up for our free newsletter</Subhead>
+        </Copy>
+        <Form {...{ schema, uischema, initialState }} />
+        <StyledButton onClick={() => setSubmitted(!submitted)} outline>
+          Submit
+        </StyledButton>
+      </Wrapper>
+    </PagePadding>
   )
 }
 
 const Wrapper = styled.div`
   display: grid;
-  gap: 0px;
+  gap: 10px;
   grid-template-areas:
     'copy copy'
     'optIn optIn'
@@ -31,10 +33,14 @@ const Wrapper = styled.div`
     'email email'
     'submit submit';
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: 12px;
     grid-template-areas:
       'copy copy firstName lastName'
       'copy copy email email'
       'optIn optIn submit submit';
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 16px;
   }
 
   .vertical-layout,
@@ -66,7 +72,6 @@ const Wrapper = styled.div`
       display: none;
     }
   }
-  background: ${rgba(palette.night)};
 `
 
 const Copy = styled.div`

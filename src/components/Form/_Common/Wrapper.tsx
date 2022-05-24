@@ -11,8 +11,6 @@ export default styled.div<{
   position: relative;
   width: 100%;
   height: fit-content;
-  margin: 10px 0;
-
   padding-bottom: ${props => (props.hasMessage ? 25 : 0)}px;
   transition: padding 0.5s ease-in-out;
 `

@@ -1,6 +1,7 @@
 export { default as Badge } from './Badge'
 export { default as Button } from './Button'
 export { default as Icon } from './Icon'
+export { default as PagePadding } from './PagePadding'
 export { default as Preloader } from './Preloader'
 export { default as ProgressBar } from './ProgressBar'
 export { default as Spinner } from './Spinner'
