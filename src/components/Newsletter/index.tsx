@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
+import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState } from './form'
@@ -9,33 +9,32 @@ const Newsletter = () => {
   const [submitted, setSubmitted] = useState(false)
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
-      <Instructions>
-        <p>Join us in building the world's largest web3 fund for public goods</p>
-        <p>Sign up for our free newsletter</p>
-      </Instructions>
+      <Copy>
+        <Header>Join us in building the world's largest web3 fund for public goods</Header>
+        <Subhead>Sign up for our free newsletter</Subhead>
+      </Copy>
       <Form {...{ schema, uischema, initialState }} />
-      <StyledButton onClick={() => setSubmitted(!submitted)}>Submit</StyledButton>
-      <Thanks>Thank you Thank you</Thanks>
+      <StyledButton onClick={() => setSubmitted(!submitted)} outline>
+        Submit
+      </StyledButton>
     </Wrapper>
   )
 }
 
-const Thanks = styled.div`
-  grid-area: g;
-`
-
 const Wrapper = styled.div`
   display: grid;
-  gap: 20px;
-  grid-template-areas: 'a a' 'b b' 'c d' 'e e' 'f f';
+  gap: 0px;
+  grid-template-areas:
+    'copy copy'
+    'optIn optIn'
+    'firstName lastName'
+    'email email'
+    'submit submit';
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-template-areas: 'a a c d' 'a a e e' 'b b f f';
-  }
-  &.submitted {
-    grid-template-areas: 'a a' 'b b' 'g g' 'g g' 'g g';
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      grid-template-areas: 'a a g g' 'a a g g' 'b b g g';
-    }
+    grid-template-areas:
+      'copy copy firstName lastName'
+      'copy copy email email'
+      'optIn optIn submit submit';
   }
 
   .vertical-layout,
@@ -44,19 +43,19 @@ const Wrapper = styled.div`
   }
 
   *[id='#/properties/email'] {
-    grid-area: e;
+    grid-area: email;
   }
 
   *[id='#/properties/firstName'] {
-    grid-area: c;
+    grid-area: firstName;
   }
 
   *[id='#/properties/lastName'] {
-    grid-area: d;
+    grid-area: lastName;
   }
 
   *[id='#/properties/optIn'] {
-    grid-area: b;
+    grid-area: optIn;
   }
 
   &.submitted {
@@ -67,14 +66,25 @@ const Wrapper = styled.div`
       display: none;
     }
   }
+  background: ${rgba(palette.night)};
 `
 
-const Instructions = styled.div`
-  grid-area: a;
+const Copy = styled.div`
+  grid-area: copy;
+`
+
+const Header = styled.div`
+  ${typography.title.l2}
+  color: ${rgba(palette.white)};
+`
+
+const Subhead = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
 `
 
 const StyledButton = styled(props => <Button {...props} />)`
-  grid-area: f;
+  grid-area: submit;
 `
 
 export default Newsletter

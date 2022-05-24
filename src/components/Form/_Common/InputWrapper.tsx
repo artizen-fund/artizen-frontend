@@ -34,30 +34,17 @@ export default styled.div<{
       padding: 22px ${props => (props.hasStatusIcon ? 88 : 32)}px 0 32px;
     }
 
-    background-color: ${rgba(palette.stone, 0.12)};
+    background-color: ${rgba(palette.white)};
     color: ${rgba(palette.night)};
     border-bottom: 2px solid ${rgba(palette.stone, 0.12)};
-    @media (prefers-color-scheme: dark) {
-      color: ${rgba(palette.moon)};
-      border-color: ${rgba(palette.moon, 0.12)};
-    }
     &:hover {
       border-color: ${rgba(palette.barracuda, 1)};
-      @media (prefers-color-scheme: dark) {
-        border-color: ${rgba(palette.barracuda, 1)};
-      }
     }
     &:focus {
       border-color: ${rgba(palette.night, 1)};
-      @media (prefers-color-scheme: dark) {
-        border-color: ${rgba(palette.night, 1)};
-      }
     }
     &.hasData {
       border-color: ${rgba(palette.night, 1)};
-      @media (prefers-color-scheme: dark) {
-        border-color: ${rgba(palette.night, 1)};
-      }
     }
 
     appearance: none;

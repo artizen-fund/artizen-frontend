@@ -14,6 +14,7 @@ const SelectControl = ({
   handleChange,
   path,
   schema,
+  uischema,
   errors,
   ...props
 }: EnumControlProps) => {

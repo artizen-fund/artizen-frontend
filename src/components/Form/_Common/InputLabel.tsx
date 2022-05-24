@@ -1,7 +1,7 @@
 /* Label for input[type=text/email/password], textarea, and select inputs */
 
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
+import { breakpoint, palette, Palette } from '@theme'
 import { rgba } from '@lib'
 
 export default styled.label<{ hasWidget?: boolean }>`
@@ -41,8 +41,5 @@ export default styled.label<{ hasWidget?: boolean }>`
   select:required:valid ~ & {
     transform: translate3d(0, -12px, 0) scale3d(0.8, 0.8, 1);
     color: ${rgba(palette.night, 0.8)};
-    @media (prefers-color-scheme: dark) {
-      color: ${rgba(palette.moon, 0.8)};
-    }
   }
 `

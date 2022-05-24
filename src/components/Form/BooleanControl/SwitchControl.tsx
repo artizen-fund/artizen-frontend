@@ -1,11 +1,19 @@
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
+import { breakpoint, palette, Palette } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
-export const SwitchControl = ({ data, label, handleChange, path, required, ...props }: BooleanControlProps) => (
+export const SwitchControl = ({
+  data,
+  label,
+  uischema,
+  handleChange,
+  path,
+  required,
+  ...props
+}: BooleanControlProps) => (
   <Wrapper {...props}>
-    <Label>{typeof label === 'object' ? label[0] : label}</Label>
+    <Label color={uischema?.options?.labelColor}>{typeof label === 'object' ? label[0] : label}</Label>
     <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} checked={data} />
     <Switch checked={data} />
   </Wrapper>
@@ -39,10 +47,6 @@ const Switch = styled.span<{ checked?: boolean }>`
 
   background-color: ${props => (props.checked ? palette.white : palette.moon)};
   border: 1px solid ${props => (props.checked ? rgba(palette.night, 0.64) : rgba(palette.night, 0.32))};
-  @media (prefers-color-scheme: dark) {
-    background-color: ${props => (props.checked ? palette.black : palette.night)};
-    border: 1px solid ${props => (props.checked ? rgba(palette.moon, 0.64) : rgba(palette.moon, 0.32))};
-  }
 
   transition: background-color 0.4s ease-in-out, border-color 0.4s ease-in-out;
   will-change: background-color, border-color;
@@ -59,10 +63,6 @@ const Switch = styled.span<{ checked?: boolean }>`
 
     background-color: ${props => (props.checked ? rgba(palette.uiSuccess, 0.8) : rgba(palette.night, 0.24))};
     border: 1px solid ${props => (props.checked ? rgba(palette.night, 0.32) : rgba(palette.night, 0.24))};
-    @media (prefers-color-scheme: dark) {
-      background-color: ${props => (props.checked ? rgba(palette.uiSuccess, 0.8) : rgba(palette.moon, 0.24))};
-      border: 1px solid ${props => (props.checked ? rgba(palette.moon, 0.32) : rgba(palette.moon, 0.24))};
-    }
 
     transform: translateX(${props => (props.checked ? 19 : 4)}px);
     transition: background-color 0.25s ease-in-out, transform 0.4s ease-in;
@@ -72,20 +72,14 @@ const Switch = styled.span<{ checked?: boolean }>`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     ${Wrapper}:hover & {
       border-color: ${rgba(palette.night, 0.64)};
-      @media (prefers-color-scheme: dark) {
-        border-color: ${rgba(palette.moon, 0.64)};
-      }
       &:after {
         background-color: ${props => (props.checked ? rgba(palette.uiSuccess, 1) : rgba(palette.night, 0.4))};
-        @media (prefers-color-scheme: dark) {
-          background-color: ${props => (props.checked ? rgba(palette.uiSuccess, 1) : rgba(palette.moon, 0.4))};
-        }
       }
     }
   }
 `
 
-const Label = styled.span`
+const Label = styled.span<{ color?: keyof Palette }>`
   display: block;
   max-width: 280px;
 
@@ -96,6 +90,8 @@ const Label = styled.span`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     max-width: 320px;
   }
+
+  color: ${props => rgba(props.color ? palette[props.color] : palette.barracuda)};
 `
 
 export default SwitchControl

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
+import { breakpoint, palette, Palette } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
@@ -25,7 +25,9 @@ const Checkbox = ({
         />
         <Checkmark />
       </Box>
-      <Label {...{ disabled }}>{typeof label === 'object' ? label[0] : label}</Label>
+      <Label {...{ disabled }} color={uischema?.options?.labelColor}>
+        {typeof label === 'object' ? label[0] : label}
+      </Label>
     </Wrapper>
   )
 }
@@ -62,12 +64,8 @@ const Checkmark = styled.span`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${rgba(palette.moon, 0)};
+  background-color: ${rgba(palette.moon)};
   border: 1px solid ${rgba(palette.slate)};
-  @media (prefers-color-scheme: dark) {
-    border: 1px solid ${rgba(palette.moon)};
-    background-color: ${rgba(palette.slate, 0)};
-  }
   border-radius: 50%;
   appearance: none;
   transition: background-color 0.25s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -76,9 +74,6 @@ const Checkmark = styled.span`
     position: absolute;
     border-style: solid;
     border-color: ${rgba(palette.moon)};
-    @media (prefers-color-scheme: dark) {
-      border-color: ${rgba(palette.slate)};
-    }
     left: calc(50% - 1px);
     top: calc(50% - 4px);
     width: 3px;
@@ -92,14 +87,14 @@ const Checkmark = styled.span`
   }
 `
 
-const Label = styled.span`
+const Label = styled.span<{ color?: keyof Palette }>`
   display: block;
+  color: ${props => rgba(props.color ? palette[props.color] : palette.barracuda)};
 
   & a {
     position: relative;
     display: inline-flex;
     margin: 0 1px;
-    color: ${rgba(palette.coral)};
     overflow: hidden;
 
     &::after {
@@ -141,9 +136,6 @@ const Wrapper = styled.label<{ disabled: boolean }>`
 
   & input:checked ~ span {
     background-color: ${rgba(palette.slate)};
-    @media (prefers-color-scheme: dark) {
-      background-color: ${rgba(palette.moon)};
-    }
 
     &:after {
       transform: rotate(45deg) scale3d(1, 1, 1);

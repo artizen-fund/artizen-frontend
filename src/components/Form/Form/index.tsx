@@ -26,20 +26,24 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
       setData(initialState)
       return
     }
-    const frozenAnswers = localStorage.getItem(schema.name)
+    {
+      /* const frozenAnswers = localStorage.getItem(schema.name)
     if (!frozenAnswers) {
       setData(initialState)
       return
     }
     const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers)
+    setData(thawedAnswers) */
+    }
   }, [schema])
 
   const freezeAndSetData = debounce((newData: any, errors: any) => {
     setData(newData)
     setErrors(errors)
-    if (typeof localStorage !== 'undefined') {
+    {
+      /* if (typeof localStorage !== 'undefined') {
       localStorage.setItem(schema.name, JSON.stringify(newData))
+    } */
     }
   }, 100)
 
@@ -54,7 +58,7 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
 
   return (
     <JsonForms
-      {...{ schema, renderers, data }}
+      {...{ schema, uischema, renderers, data }}
       config={{
         trim: true,
       }}
