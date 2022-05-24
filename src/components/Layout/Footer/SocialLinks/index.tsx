@@ -48,7 +48,7 @@ const SocialLink = styled.a<{ icon: string }>`
 
   text-indent: -1000px;
   overflow: hidden;
-  border-radius: 50%;
+  border-radius: 9999px;
   background-color: ${rgba(palette.white)};
   background-repeat: no-repeat;
   background-position: center center;

@@ -77,7 +77,7 @@ const ButtonStyle = css<Partial<ButtonProps>>`
     padding: 0 ${props => (props.size === 'l0' ? 56 : props.size === 'l1' ? 32 : 24)}px;
   }
 
-  border-radius: 50%;
+  border-radius: 9999px;
   border: 2px solid transparent;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0);
   &:hover {

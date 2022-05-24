@@ -101,7 +101,7 @@ const Logo = styled.div`
       width: 48px;
     }
     background-color: ${rgba(palette.algae)};
-    border-radius: 50%;
+    border-radius: 9999px;
     margin-right: 8px;
   }
 `

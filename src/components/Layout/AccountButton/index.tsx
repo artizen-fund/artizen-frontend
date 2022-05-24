@@ -55,7 +55,7 @@ const Wrapper = styled.div<SignedInProps>`
     border: 0.5px solid ${rgba(palette.barracuda)};
   }
   box-sizing: border-box;
-  border-radius: 50%;
+  border-radius: 9999px;
 
   cursor: pointer;
   transition: width 0.3s ease-in-out;
@@ -102,7 +102,7 @@ const HamburgerIcon = styled(props => <Icon {...props} />)<SignedInProps>`
 const AvatarImage = styled.div<SignedInProps>`
   display: flex;
   align-items: center;
-  border-radius: 50%;
+  border-radius: 9999px;
 
   width: 32px;
   height: 32px;

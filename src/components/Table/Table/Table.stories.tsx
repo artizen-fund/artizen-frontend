@@ -47,6 +47,6 @@ const Row = styled.div`
 const Avatar = styled.div`
   width: 30px;
   height: 30px;
-  border-radius: 50%;
+  border-radius: 9999px;
   background-color: red;
 `

@@ -66,7 +66,7 @@ const Checkmark = styled.span`
   height: 100%;
   background-color: ${rgba(palette.moon)};
   border: 1px solid ${rgba(palette.slate)};
-  border-radius: 50%;
+  border-radius: 9999px;
   appearance: none;
   transition: background-color 0.25s ease-in-out, box-shadow 0.15s ease-in-out;
 
