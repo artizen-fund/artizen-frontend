@@ -11,8 +11,9 @@ export default {
     disabled: {
       control: 'boolean',
     },
-    small: {
-      control: 'boolean',
+    size: {
+      options: ['l0', 'l1', 'l2'],
+      control: { type: 'select' },
     },
     icon: {
       options: { '— none —': undefined, ...iconKey },

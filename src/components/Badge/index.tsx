@@ -38,7 +38,7 @@ const Wrapper = styled.div<
   }
 
   border: ${props => (props.stroke ? 2 : 0)}px solid;
-  border-radius: 9999px;
+  border-radius: 50;
 
   border-color: ${rgba(palette.white)};
   background: ${rgba(palette.uiAlert)};

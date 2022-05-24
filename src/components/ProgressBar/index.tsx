@@ -19,7 +19,7 @@ const ProgressBar = styled.div<ProgressBarProps>`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     height: 8px;
   }
-  border-radius: 9999px;
+  border-radius: 50%;
   color: transparent;
 
   &:after {
@@ -32,7 +32,7 @@ const ProgressBar = styled.div<ProgressBarProps>`
     max-width: 100%;
 
     content: '${props => props.children}%';
-    border-radius: 9999px;
+    border-radius: 50%;
     background-color: ${rgba(palette.algae)};
     ${props =>
       !props.noSmoothing &&
