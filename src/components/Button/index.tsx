@@ -28,12 +28,12 @@ export interface ButtonProps {
   children: React.ReactNode
 }
 
-const Button = ({ children, href, icon, iconOnRight, iconOnly, size, outline, ...props }: ButtonProps) => {
+const Button = ({ children, href, icon, iconOnRight, iconOnly, size, outline, className, ...props }: ButtonProps) => {
+  const iClassName = `${className} ${props.disabled ? ' disabled' : ''}`
   if (!!href) {
-    const className = `${props.className} ${props.disabled ? ' disabled' : ''}`
     return (
       <Link {...{ href }}>
-        <ButtonLink {...props} {...{ className, size, outline, iconOnly }}>
+        <ButtonLink className={iClassName} {...{ size, outline, iconOnly }} {...props}>
           {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
           <span>{children}</span>
           {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
@@ -43,7 +43,7 @@ const Button = ({ children, href, icon, iconOnRight, iconOnly, size, outline, ..
   }
   if (!!props.onClick) {
     return (
-      <StyledButton {...props} {...{ size, outline, iconOnly }}>
+      <StyledButton className={iClassName} {...{ size, outline, iconOnly }} {...props}>
         {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
         <span>{children}</span>
         {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}

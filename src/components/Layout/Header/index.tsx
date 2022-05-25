@@ -19,7 +19,7 @@ const Header = () => {
           </a>
         </Link>
 
-        <MobileNavButton onClick={() => console.log('derp')} icon={iconKey.arrow} iconOnRight>
+        <MobileNavButton onClick={() => console.log('derp')} icon={iconKey.arrow} iconOnRight outline>
           Menu
         </MobileNavButton>
       </Items>
@@ -128,7 +128,8 @@ const Nav = styled.div`
 
 const MobileNavButton = styled(props => <Button {...props} />)`
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    display: none;
+    /* todo: why doesn't this inherit correctly? */
+    display: none !important;
   }
 `
 
