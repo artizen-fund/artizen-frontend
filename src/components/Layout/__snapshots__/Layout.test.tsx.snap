@@ -6,26 +6,28 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-5ef7f0c2-0 dlRtDI"
+      class="sc-bc8a6907-0 kcJKLC"
     >
       <div
-        class="sc-5ef7f0c2-2 hjOGOH"
+        class="sc-bc8a6907-2 gcSQJB"
       >
         <a
           href="/"
         >
           <div
-            class="sc-5ef7f0c2-1 hcDict"
+            class="sc-bc8a6907-1 lekdPP"
           >
             Artizen
           </div>
         </a>
         <button
-          class="sc-b5032cbd-2 lmEeif sc-5ef7f0c2-4 cgUNoA"
+          class="sc-643198f6-2 cVZXzd sc-bc8a6907-4 WrZaJ "
         >
-          Menu
+          <span>
+            Menu
+          </span>
           <div
-            class="sc-8737affa-0 cAKuPl sc-b5032cbd-0 OhsTK"
+            class="sc-8737affa-0 cAKuPl sc-643198f6-0 ewuPgY"
             color="white"
           >
             arrow
@@ -33,10 +35,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-5ef7f0c2-2 hjOGOH"
+        class="sc-bc8a6907-2 gcSQJB"
       >
         <div
-          class="sc-5ef7f0c2-3 iwMbRm"
+          class="sc-bc8a6907-3 dFwdeo"
         >
           <ul>
             <li>
@@ -56,15 +58,17 @@ exports[`Layout renders Layout unchanged 1`] = `
           </ul>
         </div>
         <a
-          class="sc-b5032cbd-1 grygJQ undefined "
+          class="sc-643198f6-1 hpBXVO undefined "
         >
           <div
-            class="sc-8737affa-0 cwkrOJ sc-b5032cbd-0 OhsTK"
+            class="sc-8737affa-0 cwkrOJ sc-643198f6-0 ewuPgY"
             color="white"
           >
             donate
           </div>
-          Donate
+          <span>
+            Donate
+          </span>
         </a>
         <div
           class="sc-47dc7821-0 cdqNSn"
@@ -97,13 +101,13 @@ exports[`Layout renders Layout unchanged 1`] = `
       class="sc-b3ed1e8f-0 SyFSF"
     >
       <footer
-        class="sc-77186b7a-0 deZMJj"
+        class="sc-4c54b5f-0 bLprjL"
       >
         <hr
-          class="sc-77186b7a-1 kvWYbx"
+          class="sc-4c54b5f-1 jmJRvt"
         />
         <ul
-          class="sc-77186b7a-2 iWhbev"
+          class="sc-4c54b5f-2 fANbij"
         >
           <li>
             Mission
@@ -119,7 +123,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </li>
         </ul>
         <ul
-          class="sc-77186b7a-3 fSEVLL"
+          class="sc-4c54b5f-3 fqXSAT"
         >
           <li>
             Contact
@@ -132,69 +136,77 @@ exports[`Layout renders Layout unchanged 1`] = `
           </li>
         </ul>
         <hr
-          class="sc-77186b7a-1 fZsNBC"
+          class="sc-4c54b5f-1 ckPdUC"
         />
         <div
-          class="sc-77186b7a-4 ivFIpq"
+          class="sc-4c54b5f-4 hEYmEy"
         >
           <div
-            class="sc-77186b7a-5 hUUstO"
+            class="sc-4c54b5f-5 fTNXHe"
           >
             Join the mission to fund public goods.
           </div>
           <div
-            class="sc-77186b7a-6 lfnkI"
+            class="sc-4c54b5f-6 hDzpOM"
           >
             <button
-              class="sc-b5032cbd-2 bnHEvb"
+              class="sc-643198f6-2 gMmZJn undefined "
             >
-              Donate
+              <span>
+                Donate
+              </span>
             </button>
             <button
-              class="sc-b5032cbd-2 bnHEvb"
+              class="sc-643198f6-2 gMmZJn undefined "
             >
-              Sign In
+              <span>
+                Sign In
+              </span>
             </button>
           </div>
         </div>
         <hr
-          class="sc-77186b7a-1 ehgKyj"
+          class="sc-4c54b5f-1 iEthsT"
         />
         <div
-          class="sc-cbdb4d91-0 ehmDoo"
+          class="sc-697e6c26-0 jDJVxj"
         >
           <a
-            class="sc-cbdb4d91-1 QVaUY"
-            href="https://twitter.com"
+            class="sc-697e6c26-1 jntfIb"
+            href="https://twitter.com/artizenfund"
+            target="_blank"
           >
-            Twitter
+            twitter
           </a>
           <a
-            class="sc-cbdb4d91-1 eAzSqZ"
-            href="https://discord.com"
+            class="sc-697e6c26-1 kklAya"
+            href="https://artizen.link/discord"
+            target="_blank"
           >
-            Discord
+            discord
           </a>
           <a
-            class="sc-cbdb4d91-1 kDaYjE"
-            href="https://github.com"
+            class="sc-697e6c26-1 gZtkVv"
+            href="https://github.com/artizen-fund"
+            target="_blank"
           >
-            Github
+            github
           </a>
           <a
-            class="sc-cbdb4d91-1 iqfkFQ"
-            href="https://telegram.com"
+            class="sc-697e6c26-1 bJsaYD"
+            href="https://artizen.link/telegram"
+            target="_blank"
           >
-            Telegram
+            telegram
           </a>
         </div>
       </footer>
     </div>
     <div
-      class="sc-b3ed1e8f-0 jbZhgc sc-77186b7a-8 eBOeez"
+      class="sc-b3ed1e8f-0 ezAcVr sc-4c54b5f-8 bdrARQ"
     >
       <footer
-        class="sc-77186b7a-7 hRDkMk"
+        class="sc-4c54b5f-7 jkQBFs"
       >
         <div>
           Open source platform made with ❤️ by a globally distributed team

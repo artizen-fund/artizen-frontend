@@ -138,9 +138,11 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </div>
       </div>
       <button
-        class="sc-b5032cbd-2 bnHEvb sc-75259fba-4 eSIuZq"
+        class="sc-643198f6-2 gMmZJn sc-75259fba-4 eSIuZq "
       >
-        Submit
+        <span>
+          Submit
+        </span>
       </button>
     </div>
   </div>

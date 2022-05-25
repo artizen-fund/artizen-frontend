@@ -3,31 +3,35 @@
 exports[`SocialLinks renders Footer unchanged 1`] = `
 <div>
   <div
-    class="sc-cbdb4d91-0 ehmDoo"
+    class="sc-697e6c26-0 jDJVxj"
   >
     <a
-      class="sc-cbdb4d91-1 QVaUY"
-      href="https://twitter.com"
+      class="sc-697e6c26-1 jntfIb"
+      href="https://twitter.com/artizenfund"
+      target="_blank"
     >
-      Twitter
+      twitter
     </a>
     <a
-      class="sc-cbdb4d91-1 eAzSqZ"
-      href="https://discord.com"
+      class="sc-697e6c26-1 kklAya"
+      href="https://artizen.link/discord"
+      target="_blank"
     >
-      Discord
+      discord
     </a>
     <a
-      class="sc-cbdb4d91-1 kDaYjE"
-      href="https://github.com"
+      class="sc-697e6c26-1 gZtkVv"
+      href="https://github.com/artizen-fund"
+      target="_blank"
     >
-      Github
+      github
     </a>
     <a
-      class="sc-cbdb4d91-1 iqfkFQ"
-      href="https://telegram.com"
+      class="sc-697e6c26-1 bJsaYD"
+      href="https://artizen.link/telegram"
+      target="_blank"
     >
-      Telegram
+      telegram
     </a>
   </div>
 </div>

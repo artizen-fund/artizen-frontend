@@ -3,26 +3,28 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-5ef7f0c2-0 dlRtDI"
+    class="sc-bc8a6907-0 kcJKLC"
   >
     <div
-      class="sc-5ef7f0c2-2 hjOGOH"
+      class="sc-bc8a6907-2 gcSQJB"
     >
       <a
         href="/"
       >
         <div
-          class="sc-5ef7f0c2-1 hcDict"
+          class="sc-bc8a6907-1 lekdPP"
         >
           Artizen
         </div>
       </a>
       <button
-        class="sc-b5032cbd-2 lmEeif sc-5ef7f0c2-4 cgUNoA"
+        class="sc-643198f6-2 cVZXzd sc-bc8a6907-4 WrZaJ "
       >
-        Menu
+        <span>
+          Menu
+        </span>
         <div
-          class="sc-8737affa-0 cAKuPl sc-b5032cbd-0 OhsTK"
+          class="sc-8737affa-0 cAKuPl sc-643198f6-0 ewuPgY"
           color="white"
         >
           arrow
@@ -30,10 +32,10 @@ exports[`renders homepage unchanged 1`] = `
       </button>
     </div>
     <div
-      class="sc-5ef7f0c2-2 hjOGOH"
+      class="sc-bc8a6907-2 gcSQJB"
     >
       <div
-        class="sc-5ef7f0c2-3 iwMbRm"
+        class="sc-bc8a6907-3 dFwdeo"
       >
         <ul>
           <li>
@@ -53,15 +55,17 @@ exports[`renders homepage unchanged 1`] = `
         </ul>
       </div>
       <a
-        class="sc-b5032cbd-1 grygJQ undefined "
+        class="sc-643198f6-1 hpBXVO undefined "
       >
         <div
-          class="sc-8737affa-0 cwkrOJ sc-b5032cbd-0 OhsTK"
+          class="sc-8737affa-0 cwkrOJ sc-643198f6-0 ewuPgY"
           color="white"
         >
           donate
         </div>
-        Donate
+        <span>
+          Donate
+        </span>
       </a>
       <div
         class="sc-47dc7821-0 cdqNSn"

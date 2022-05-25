@@ -38,7 +38,7 @@ const Footer = () => {
           <SocialLinks />
         </Wrapper>
       </PagePadding>
-      <StyledPagePadding background="white">
+      <StyledPagePadding>
         <Credits>
           <div>Open source platform made with ❤️ by a globally distributed team</div>
           <ul>
@@ -134,6 +134,11 @@ const Credits = styled.footer`
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   padding: 15px 0;
+  background-color: ${rgba(palette.white)};
+  @media (prefers-color-scheme: dark) {
+    background-color: ${rgba(palette.black)};
+    color: ${rgba(palette.white)};
+  }
 `
 
 export default Footer
