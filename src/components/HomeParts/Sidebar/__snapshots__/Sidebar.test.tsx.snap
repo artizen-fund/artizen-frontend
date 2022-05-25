@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar renders Sidebar unchanged 1`] = `
+<div>
+  <div
+    class="sc-b886a6f7-0 wWUAW sc-2ea107b6-0 jefrPG"
+  >
+    <h3>
+      Join our 
+      <strong>
+        May, 2022
+      </strong>
+       donation drive
+    </h3>
+    <div
+      class="sc-2ea107b6-1 hJcprJ"
+    >
+      <p>
+        $15,250 raised of $25,000 goal
+      </p>
+      <div
+        class="sc-4c853b2-0 dFZCbi"
+      >
+        55
+      </div>
+      <div
+        class="sc-2ea107b6-4 ceKUnI"
+      >
+        <div
+          class="sc-2ea107b6-2"
+        />
+        <div
+          class="sc-2ea107b6-3"
+        >
+          3.2k
+        </div>
+      </div>
+      <div
+        class="sc-2ea107b6-4 ceKUnI"
+      >
+        <button
+          class="sc-4a2ce0d6-2 dUKIhm undefined "
+        >
+          <span>
+            Donate Now
+          </span>
+        </button>
+        <button
+          class="sc-4a2ce0d6-2 REiVm undefined "
+        >
+          <span>
+            Share
+          </span>
+        </button>
+      </div>
+      <div
+        class="sc-9da134f7-0 fLBHKs"
+      >
+        <div
+          class="sc-3f0f27c0-0 hXTndr"
+        >
+          <div
+            class="sc-3f0f27c0-1 juhfDy"
+          >
+            Leaderboard
+          </div>
+        </div>
+        <div
+          class="sc-c0aed08d-0 dWVRiz"
+        >
+          <div>
+            #1
+          </div>
+          <div>
+            herp derp
+          </div>
+          <div>
+            $69,00
+          </div>
+        </div>
+        <div
+          class="sc-c0aed08d-0 dWVRiz"
+        >
+          <div>
+            #2
+          </div>
+          <div>
+            herp derp
+          </div>
+          <div>
+            $68,00
+          </div>
+        </div>
+        <div
+          class="sc-c0aed08d-0 dWVRiz"
+        >
+          <div>
+            #3
+          </div>
+          <div>
+            herp derp
+          </div>
+          <div>
+            $67,00
+          </div>
+        </div>
+      </div>
+      <div
+        class="sc-9da134f7-0 fLBHKs"
+      >
+        <div
+          class="sc-3f0f27c0-0 hXTndr"
+        >
+          <div
+            class="sc-3f0f27c0-1 juhfDy"
+          >
+            Additional Perks
+          </div>
+        </div>
+        <div
+          class="sc-c0aed08d-0 dWVRiz"
+        >
+          Membership in Artizen DAO
+        </div>
+        <div
+          class="sc-c0aed08d-0 dWVRiz"
+        >
+          0.01% of $ART tokens
+        </div>
+        <div
+          class="sc-c0aed08d-0 dWVRiz"
+        >
+          Collectable Receipt
+        </div>
+        <div
+          class="sc-c0aed08d-0 dWVRiz"
+        >
+          Custom Discord Avatar
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

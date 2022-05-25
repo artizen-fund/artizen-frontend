@@ -3,21 +3,21 @@
 exports[`Newsletter renders Newsletter unchanged 1`] = `
 <div>
   <div
-    class="sc-b3ed1e8f-0 SyFSF"
+    class="sc-9199b4ac-0 gjUYWF"
   >
     <div
-      class="sc-75259fba-0 gfzwpp"
+      class="sc-cb158733-0 jxxQfC"
     >
       <div
-        class="sc-75259fba-1 fcxgHe"
+        class="sc-cb158733-1 TSKIJ"
       >
         <div
-          class="sc-75259fba-2 hDYKex"
+          class="sc-cb158733-2 kgDsrG"
         >
           Join us in building the world's largest web3 fund for public goods
         </div>
         <div
-          class="sc-75259fba-3 yZImm"
+          class="sc-cb158733-3 bnFBJJ"
         >
           Sign up for our free newsletter
         </div>
@@ -29,11 +29,11 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="sc-d3d8f8dd-0 cbhGLu"
+            class="sc-c78f65af-0 gjayCa"
             id="#/properties/firstName"
           >
             <div
-              class="sc-460918ac-0 cwmxlV"
+              class="sc-460918ac-0 bCOVth"
             >
               <input
                 class="noData"
@@ -42,13 +42,13 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-f769c06f-0 fdTyWu"
+                class="sc-f769c06f-0 kZoseS"
               >
                 First Name
               </label>
             </div>
             <div
-              class="sc-955ed11e-0 eSGmlb"
+              class="sc-955ed11e-0 griBRj"
             />
           </div>
         </div>
@@ -56,11 +56,11 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="sc-d3d8f8dd-0 cbhGLu"
+            class="sc-c78f65af-0 kJmtfm"
             id="#/properties/lastName"
           >
             <div
-              class="sc-460918ac-0 cwmxlV"
+              class="sc-460918ac-0 bCOVth"
             >
               <input
                 class="noData"
@@ -69,13 +69,13 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-f769c06f-0 fdTyWu"
+                class="sc-f769c06f-0 kZoseS"
               >
                 Last Name
               </label>
             </div>
             <div
-              class="sc-955ed11e-0 eSGmlb"
+              class="sc-955ed11e-0 griBRj"
             />
           </div>
         </div>
@@ -83,11 +83,11 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="sc-d3d8f8dd-0 cbhGLu"
+            class="sc-c78f65af-0 jDdYJA"
             id="#/properties/email"
           >
             <div
-              class="sc-460918ac-0 cwmxlV"
+              class="sc-460918ac-0 bCOVth"
             >
               <input
                 class="noData"
@@ -96,16 +96,16 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-f769c06f-0 fdTyWu"
+                class="sc-f769c06f-0 kZoseS"
               >
                 Email Address
                  *
               </label>
             </div>
             <div
-              class="sc-955ed11e-0 eSGmlb"
+              class="sc-955ed11e-0 griBRj hasErrors"
             >
-              * required field
+              is a required property
             </div>
           </div>
         </div>
@@ -113,23 +113,24 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <label
-            class="sc-ff21c776-4 fpxbXT"
+            class="sc-6a2cf497-4 bIFvEp"
             id="#/properties/optIn"
           >
             <div
-              class="sc-ff21c776-0 iCuvBl"
+              class="sc-6a2cf497-0 fcZxBh"
             >
               <input
-                class="sc-ff21c776-1 ekDnrb"
+                checked=""
+                class="sc-6a2cf497-1 dXyKvL"
                 required=""
                 type="checkbox"
               />
               <span
-                class="sc-ff21c776-2 ejxhRJ"
+                class="sc-6a2cf497-2 ioyuXV"
               />
             </div>
             <span
-              class="sc-ff21c776-3 fAfQul"
+              class="sc-6a2cf497-3 ingQVR"
               color="white"
             >
               Opt-in to receive the Artizen newsletter.
@@ -138,7 +139,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </div>
       </div>
       <button
-        class="sc-643198f6-2 gMmZJn sc-75259fba-4 eSIuZq "
+        class="sc-4a2ce0d6-2 iDijTY sc-cb158733-4 kMOSwh "
       >
         <span>
           Submit

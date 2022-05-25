@@ -77,6 +77,9 @@ const ButtonStyle = css<Partial<ButtonProps>>`
     height: ${props => (props.size === 'l0' ? 72 : props.size === 'l1' ? 56 : 40)}px;
   }
 
+  /* todo: use StyledButton for inlines, or a prop? */
+  width: 100%;
+
   ${props =>
     props.iconOnly
       ? `

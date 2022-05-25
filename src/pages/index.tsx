@@ -1,58 +1,97 @@
 import styled from 'styled-components'
 import type { NextPage } from 'next'
-import { Layout, Newsletter, TableCell, Table, StickyCanvas, StickyContent } from '@components'
+import { Layout, Newsletter, StickyCanvas, PagePadding, HomeSidebar, FeaturedArt, TabbedInfo } from '@components'
 import { CreateTopUpWallet } from '@lib'
+import { typography, breakpoint } from '@theme'
 
 const Home: NextPage = () => {
   return (
     <Layout>
       <CreateTopUpWallet />
 
-      <StickyCanvas>
-        <DryContent>
-          <h1>dry content</h1>
-          <p>welcome to Artizen</p>
-          <p>
-            Donec sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lorem ipsum dolor
-            sit amet, consectetur adipiscing elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-            Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo.
-          </p>
-          <p>
-            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras justo odio, dapibus ac facilisis in,
-            egestas eget quam. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Cum sociis natoque penatibus et magnis dis parturient
-            montes, nascetur ridiculus mus. Donec sed odio dui. Vivamus sagittis lacus vel augue laoreet rutrum faucibus
-            dolor auctor.
-          </p>
-          <p>
-            Donec ullamcorper nulla non metus auctor fringilla. Cum sociis natoque penatibus et magnis dis parturient
-            montes, nascetur ridiculus mus. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lorem
-            ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia
-            bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-          </p>
-          <p>
-            Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-            Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit
-            aliquet. Vestibulum id ligula porta felis euismod semper. Cras mattis consectetur purus sit amet fermentum.
-          </p>
-        </DryContent>
-        <StickyContent>
-          <Table title="Leaderboard">
-            <TableCell>derp</TableCell>
-          </Table>
-          <Table title="Additional Perks">
-            <TableCell>derp</TableCell>
-          </Table>
-        </StickyContent>
-      </StickyCanvas>
+      <Header>
+        <h1>We’ve Successfully Raised $1,515,250 For Climate Action</h1>
+        <h2>
+          Join us in building the world’s largest web3 fund for public goods. 100% transparent, easy to take part in,
+          and profitable for everyone.
+        </h2>
+      </Header>
+
+      <PagePadding>
+        <StickyCanvas>
+          <DryContent>
+            <FeaturedArt />
+
+            <TabbedInfo>
+              <Tab label="About">
+                <h1>Join our May, 2022 donation drive</h1>
+                <p>
+                  Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus
+                  posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia
+                  odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue
+                  laoreet rutrum faucibus dolor auctor. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                </p>
+                <p>
+                  Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna
+                  mollis euismod.
+                </p>
+                <p>
+                  Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce
+                  dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet
+                  risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec
+                  elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
+                <p>
+                  Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus
+                  varius blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+                  Curabitur blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+                </p>
+              </Tab>
+              <Tab label="Artist">
+                <h1>So who’s this guy?</h1>
+                <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
+              </Tab>
+              <Tab label="Leaderboard">
+                <h1>Leaderboard leaderboard</h1>
+                <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
+              </Tab>
+              <Tab label="Perks">
+                <h1>Perky Perky Perks</h1>
+                <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
+              </Tab>
+            </TabbedInfo>
+          </DryContent>
+          <HomeSidebar />
+        </StickyCanvas>
+      </PagePadding>
+
       <Newsletter />
       <p>love us some Artizen</p>
     </Layout>
   )
 }
 
-const DryContent = styled.div`
-  width: 60%;
+const Header = styled(props => <PagePadding {...props} />)`
+  h1 {
+    ${typography.title.l1};
+  }
+  h2 {
+    ${typography.body.l1};
+  }
 `
+
+const DryContent = styled.div`
+  width: 100%;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    width: 520px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    width: 1020px;
+  }
+  min-height: 80vh;
+`
+
+const Tab = styled.div<{ label: string }>``
 
 export default Home

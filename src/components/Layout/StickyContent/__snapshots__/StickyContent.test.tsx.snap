@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StickyContent renders StickyContent unchanged 1`] = `
+<div>
+  <section
+    class="sc-b886a6f7-1 XQgC"
+  >
+    <div
+      class="sc-b886a6f7-0 wWUAW"
+    >
+      some content
+    </div>
+  </section>
+</div>
+`;

@@ -18,11 +18,11 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <div
-        class="sc-d3d8f8dd-0 cbhGLu"
+        class="sc-c78f65af-0 bUYtQV"
         id="#/properties/stringExample"
       >
         <div
-          class="sc-460918ac-0 cwmxlV"
+          class="sc-460918ac-0 bCOVth"
         >
           <input
             class="noData"
@@ -33,16 +33,16 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-f769c06f-0 fdTyWu"
+            class="sc-f769c06f-0 kZoseS"
           >
             3-20 Character Length String
              *
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 eSGmlb"
+          class="sc-955ed11e-0 griBRj hasErrors"
         >
-          * required field
+          is a required property
         </div>
       </div>
     </div>
@@ -50,14 +50,14 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <div
-        class="sc-d3d8f8dd-0 cbhGLu"
+        class="sc-c78f65af-0 cMEyVn"
         id="#/properties/phoneExample"
       >
         <div
-          class="sc-460918ac-0 cwmxlV"
+          class="sc-460918ac-0 bCOVth"
         >
           <div
-            class="sc-c73dbf12-0 dSfEnH noData PhoneInput"
+            class="sc-c73dbf12-0 kwgSQD noData PhoneInput"
           >
             <div
               class="PhoneInputCountry"
@@ -1314,13 +1314,13 @@ exports[`Form renders Form unchanged 1`] = `
             />
           </div>
           <label
-            class="sc-f769c06f-0 kAJobR"
+            class="sc-f769c06f-0 fBqZJR"
           >
             Phone Example
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 eSGmlb"
+          class="sc-955ed11e-0 griBRj"
         />
       </div>
     </div>
@@ -1328,20 +1328,20 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <label
-        class="sc-9f9b65f1-0 blwiMA"
+        class="sc-9dfd224b-0 gjzfMx"
         id="#/properties/switchBooleanExample"
       >
         <span
-          class="sc-9f9b65f1-3 gNiKpD"
+          class="sc-9dfd224b-3 bhOpqi"
         >
           Switch Boolean Example
         </span>
         <input
-          class="sc-9f9b65f1-1 fnGOyJ"
+          class="sc-9dfd224b-1 iJsfkc"
           type="checkbox"
         />
         <span
-          class="sc-9f9b65f1-2 juckLy"
+          class="sc-9dfd224b-2 jiCCsu"
         />
       </label>
     </div>
@@ -1349,22 +1349,22 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <label
-        class="sc-ff21c776-4 fpxbXT"
+        class="sc-6a2cf497-4 dXLYDT"
         id="#/properties/booleanCheckExample"
       >
         <div
-          class="sc-ff21c776-0 iCuvBl"
+          class="sc-6a2cf497-0 fcZxBh"
         >
           <input
-            class="sc-ff21c776-1 ekDnrb"
+            class="sc-6a2cf497-1 dXyKvL"
             type="checkbox"
           />
           <span
-            class="sc-ff21c776-2 ejxhRJ"
+            class="sc-6a2cf497-2 ioyuXV"
           />
         </div>
         <span
-          class="sc-ff21c776-3 hjWLRk"
+          class="sc-6a2cf497-3 fEGQPg"
         >
           Boolean Check Example
         </span>
@@ -1374,11 +1374,11 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <div
-        class="sc-d3d8f8dd-0 cbhGLu"
+        class="sc-c78f65af-0 iXkgDs"
         id="#/properties/enumExample"
       >
         <div
-          class="sc-460918ac-0 cwmxlV"
+          class="sc-460918ac-0 bCOVth"
         >
           <select
             class="noData"
@@ -1418,16 +1418,16 @@ exports[`Form renders Form unchanged 1`] = `
             </option>
           </select>
           <div
-            class="sc-dd1c959c-0 dbXcIT"
+            class="sc-e4ecad41-0 cwyJDA"
           />
           <label
-            class="sc-f769c06f-0 fdTyWu noData"
+            class="sc-f769c06f-0 kZoseS noData"
           >
             Enum Example
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 eSGmlb"
+          class="sc-955ed11e-0 griBRj"
         />
       </div>
     </div>
@@ -1435,12 +1435,12 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <div
-        class="sc-12278b37-0 bitCKL"
+        class="sc-1490f8e8-0 hDZEyp"
         id="#/properties/enumSegmentsExample"
         label="Enum Segments Example"
       >
         <label
-          class="sc-12278b37-1 bfhFTg"
+          class="sc-1490f8e8-1 vGKrz"
         >
           <input
             type="radio"
@@ -1451,7 +1451,7 @@ exports[`Form renders Form unchanged 1`] = `
           </span>
         </label>
         <label
-          class="sc-12278b37-1 bfhFTg"
+          class="sc-1490f8e8-1 vGKrz"
         >
           <input
             type="radio"
@@ -1462,7 +1462,7 @@ exports[`Form renders Form unchanged 1`] = `
           </span>
         </label>
         <label
-          class="sc-12278b37-1 bfhFTg"
+          class="sc-1490f8e8-1 vGKrz"
         >
           <input
             type="radio"
@@ -1473,7 +1473,7 @@ exports[`Form renders Form unchanged 1`] = `
           </span>
         </label>
         <label
-          class="sc-12278b37-1 bfhFTg"
+          class="sc-1490f8e8-1 vGKrz"
         >
           <input
             type="radio"
@@ -1489,11 +1489,11 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <div
-        class="sc-d3d8f8dd-0 cbhGLu"
+        class="sc-c78f65af-0 bhdqhx"
         id="#/properties/integerExample"
       >
         <div
-          class="sc-460918ac-0 cwmxlV"
+          class="sc-460918ac-0 bCOVth"
         >
           <input
             class="noData"
@@ -1504,13 +1504,13 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-f769c06f-0 fdTyWu"
+            class="sc-f769c06f-0 kZoseS"
           >
             Integer Example
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 eSGmlb"
+          class="sc-955ed11e-0 griBRj"
         />
       </div>
     </div>
@@ -1518,11 +1518,11 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <div
-        class="sc-d3d8f8dd-0 cbhGLu"
+        class="sc-c78f65af-0 cEhcdk"
         id="#/properties/numberExample"
       >
         <div
-          class="sc-460918ac-0 cwmxlV"
+          class="sc-460918ac-0 bCOVth"
         >
           <input
             class="noData"
@@ -1531,13 +1531,13 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-f769c06f-0 fdTyWu"
+            class="sc-f769c06f-0 kZoseS"
           >
             Number Example
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 eSGmlb"
+          class="sc-955ed11e-0 griBRj"
         />
       </div>
     </div>
@@ -1557,20 +1557,20 @@ exports[`Form renders Form unchanged 1`] = `
               class="vertical-layout-item"
             >
               <label
-                class="sc-9f9b65f1-0 blwiMA"
+                class="sc-9dfd224b-0 bjmIKJ"
                 id="#/properties/switchBooleanExampleTwo"
               >
                 <span
-                  class="sc-9f9b65f1-3 gNiKpD"
+                  class="sc-9dfd224b-3 bhOpqi"
                 >
                   Switch Boolean Example Two
                 </span>
                 <input
-                  class="sc-9f9b65f1-1 fnGOyJ"
+                  class="sc-9dfd224b-1 iJsfkc"
                   type="checkbox"
                 />
                 <span
-                  class="sc-9f9b65f1-2 juckLy"
+                  class="sc-9dfd224b-2 jiCCsu"
                 />
               </label>
             </div>
@@ -1578,20 +1578,20 @@ exports[`Form renders Form unchanged 1`] = `
               class="vertical-layout-item"
             >
               <label
-                class="sc-9f9b65f1-0 blwiMA"
+                class="sc-9dfd224b-0 llzkDn"
                 id="#/properties/switchBooleanExampleThree"
               >
                 <span
-                  class="sc-9f9b65f1-3 gNiKpD"
+                  class="sc-9dfd224b-3 bhOpqi"
                 >
                   Switch Boolean Example Three
                 </span>
                 <input
-                  class="sc-9f9b65f1-1 fnGOyJ"
+                  class="sc-9dfd224b-1 iJsfkc"
                   type="checkbox"
                 />
                 <span
-                  class="sc-9f9b65f1-2 juckLy"
+                  class="sc-9dfd224b-2 jiCCsu"
                 />
               </label>
             </div>
@@ -1599,20 +1599,20 @@ exports[`Form renders Form unchanged 1`] = `
               class="vertical-layout-item"
             >
               <label
-                class="sc-9f9b65f1-0 blwiMA"
+                class="sc-9dfd224b-0 dFBLIz"
                 id="#/properties/switchBooleanExampleFour"
               >
                 <span
-                  class="sc-9f9b65f1-3 gNiKpD"
+                  class="sc-9dfd224b-3 bhOpqi"
                 >
                   Switch Boolean Example Four
                 </span>
                 <input
-                  class="sc-9f9b65f1-1 fnGOyJ"
+                  class="sc-9dfd224b-1 iJsfkc"
                   type="checkbox"
                 />
                 <span
-                  class="sc-9f9b65f1-2 juckLy"
+                  class="sc-9dfd224b-2 jiCCsu"
                 />
               </label>
             </div>
@@ -1620,20 +1620,20 @@ exports[`Form renders Form unchanged 1`] = `
               class="vertical-layout-item"
             >
               <label
-                class="sc-9f9b65f1-0 blwiMA"
+                class="sc-9dfd224b-0 dlAodN"
                 id="#/properties/switchBooleanExampleFive"
               >
                 <span
-                  class="sc-9f9b65f1-3 gNiKpD"
+                  class="sc-9dfd224b-3 bhOpqi"
                 >
                   Switch Boolean Example Five
                 </span>
                 <input
-                  class="sc-9f9b65f1-1 fnGOyJ"
+                  class="sc-9dfd224b-1 iJsfkc"
                   type="checkbox"
                 />
                 <span
-                  class="sc-9f9b65f1-2 juckLy"
+                  class="sc-9dfd224b-2 jiCCsu"
                 />
               </label>
             </div>
@@ -1649,11 +1649,11 @@ exports[`Form renders Form unchanged 1`] = `
               class="vertical-layout-item"
             >
               <div
-                class="sc-d3d8f8dd-0 cbhGLu"
+                class="sc-c78f65af-0 dJXpgH"
                 id="#/properties/emailExample"
               >
                 <div
-                  class="sc-460918ac-0 cwmxlV"
+                  class="sc-460918ac-0 bCOVth"
                 >
                   <input
                     class="noData"
@@ -1662,13 +1662,13 @@ exports[`Form renders Form unchanged 1`] = `
                     value=""
                   />
                   <label
-                    class="sc-f769c06f-0 fdTyWu"
+                    class="sc-f769c06f-0 kZoseS"
                   >
                     Email Example
                   </label>
                 </div>
                 <div
-                  class="sc-955ed11e-0 eSGmlb"
+                  class="sc-955ed11e-0 griBRj"
                 />
               </div>
             </div>

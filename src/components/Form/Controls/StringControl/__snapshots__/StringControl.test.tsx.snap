@@ -3,10 +3,10 @@
 exports[`StringControl renders StringControl unchanged 1`] = `
 <div>
   <div
-    class="sc-d3d8f8dd-0 cbhGLu"
+    class="sc-c78f65af-0 fNBDPU"
   >
     <div
-      class="sc-460918ac-0 cwmxlV"
+      class="sc-460918ac-0 bCOVth"
     >
       <input
         class="hasData"
@@ -14,13 +14,13 @@ exports[`StringControl renders StringControl unchanged 1`] = `
         value="derp"
       />
       <label
-        class="sc-f769c06f-0 fdTyWu"
+        class="sc-f769c06f-0 kZoseS"
       >
         String test
       </label>
     </div>
     <div
-      class="sc-955ed11e-0 eSGmlb"
+      class="sc-955ed11e-0 griBRj"
     />
   </div>
 </div>
@@ -29,10 +29,10 @@ exports[`StringControl renders StringControl unchanged 1`] = `
 exports[`StringControl renders StringControl:Phone unchanged 1`] = `
 <div>
   <div
-    class="sc-d3d8f8dd-0 cbhGLu"
+    class="sc-c78f65af-0 iWZHXx"
   >
     <div
-      class="sc-460918ac-0 cwmxlV"
+      class="sc-460918ac-0 bCOVth"
     >
       <input
         class="noData"
@@ -40,13 +40,13 @@ exports[`StringControl renders StringControl:Phone unchanged 1`] = `
         value=""
       />
       <label
-        class="sc-f769c06f-0 fdTyWu"
+        class="sc-f769c06f-0 kZoseS"
       >
         String test
       </label>
     </div>
     <div
-      class="sc-955ed11e-0 eSGmlb"
+      class="sc-955ed11e-0 griBRj"
     />
   </div>
 </div>

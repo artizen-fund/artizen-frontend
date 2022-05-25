@@ -8,6 +8,7 @@ export interface ProgressBarProps {
 }
 
 const ProgressBar = styled.div<ProgressBarProps>`
+  position: relative;
   height: 4px;
   background-color: ${rgba(palette.stone, 0.24)};
   @media (prefers-color-scheme: dark) {

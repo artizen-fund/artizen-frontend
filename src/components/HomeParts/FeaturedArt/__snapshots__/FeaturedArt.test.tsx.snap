@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
+<div>
+  <section
+    class="sc-d3770b70-0"
+  >
+    <div
+      class="sc-d3770b70-1 gllUzX"
+    />
+    <h1>
+      Title of Monthly Featured Artwork
+    </h1>
+    <div
+      class="sc-d3770b70-2 hXmBiY"
+    >
+      <div>
+        Artist Name
+      </div>
+      <div>
+        Created # days ago
+      </div>
+      <div>
+        Tag Name
+      </div>
+    </div>
+  </section>
+</div>
+`;

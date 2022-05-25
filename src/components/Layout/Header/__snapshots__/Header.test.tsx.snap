@@ -3,28 +3,28 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-bc8a6907-0 kcJKLC"
+    class="sc-509e5fb6-0 iZlSNj"
   >
     <div
-      class="sc-bc8a6907-2 gcSQJB"
+      class="sc-509e5fb6-2 bAaNGj"
     >
       <a
         href="/"
       >
         <div
-          class="sc-bc8a6907-1 lekdPP"
+          class="sc-509e5fb6-1 gtaVLp"
         >
           Artizen
         </div>
       </a>
       <button
-        class="sc-643198f6-2 cVZXzd sc-bc8a6907-4 WrZaJ "
+        class="sc-4a2ce0d6-2 REiVm sc-509e5fb6-4 YYVHz "
       >
         <span>
           Menu
         </span>
         <div
-          class="sc-8737affa-0 cAKuPl sc-643198f6-0 ewuPgY"
+          class="sc-8737affa-0 gPfcJB sc-4a2ce0d6-0 bSehze"
           color="white"
         >
           arrow
@@ -32,10 +32,10 @@ exports[`renders homepage unchanged 1`] = `
       </button>
     </div>
     <div
-      class="sc-bc8a6907-2 gcSQJB"
+      class="sc-509e5fb6-2 bAaNGj"
     >
       <div
-        class="sc-bc8a6907-3 dFwdeo"
+        class="sc-509e5fb6-3 ielfDS"
       >
         <ul>
           <li>
@@ -55,10 +55,10 @@ exports[`renders homepage unchanged 1`] = `
         </ul>
       </div>
       <a
-        class="sc-643198f6-1 hpBXVO undefined "
+        class="sc-4a2ce0d6-1 gBDOAZ undefined "
       >
         <div
-          class="sc-8737affa-0 cwkrOJ sc-643198f6-0 ewuPgY"
+          class="sc-8737affa-0 kwTYSl sc-4a2ce0d6-0 bSehze"
           color="white"
         >
           donate
@@ -68,22 +68,22 @@ exports[`renders homepage unchanged 1`] = `
         </span>
       </a>
       <div
-        class="sc-47dc7821-0 cdqNSn"
+        class="sc-47dc7821-0 bERdPH"
       >
         <div
           class="sc-47dc7821-1 gRBtCJ"
         />
         <div
-          class="sc-8737affa-0 lhpOEt sc-47dc7821-2 fCKxSq"
+          class="sc-8737affa-0 bcnHmJ sc-47dc7821-2 etaqjK"
           color="night"
         >
           hamburger
         </div>
         <div
-          class="sc-47dc7821-3 dSWlbO"
+          class="sc-47dc7821-3 ksJggS"
         >
           <div
-            class="sc-47dc7821-4 dJYYIK"
+            class="sc-47dc7821-4 kGTxhi"
           >
             RP
           </div>

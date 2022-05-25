@@ -6,28 +6,28 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-bc8a6907-0 kcJKLC"
+      class="sc-509e5fb6-0 iZlSNj"
     >
       <div
-        class="sc-bc8a6907-2 gcSQJB"
+        class="sc-509e5fb6-2 bAaNGj"
       >
         <a
           href="/"
         >
           <div
-            class="sc-bc8a6907-1 lekdPP"
+            class="sc-509e5fb6-1 gtaVLp"
           >
             Artizen
           </div>
         </a>
         <button
-          class="sc-643198f6-2 cVZXzd sc-bc8a6907-4 WrZaJ "
+          class="sc-4a2ce0d6-2 REiVm sc-509e5fb6-4 YYVHz "
         >
           <span>
             Menu
           </span>
           <div
-            class="sc-8737affa-0 cAKuPl sc-643198f6-0 ewuPgY"
+            class="sc-8737affa-0 gPfcJB sc-4a2ce0d6-0 bSehze"
             color="white"
           >
             arrow
@@ -35,10 +35,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-bc8a6907-2 gcSQJB"
+        class="sc-509e5fb6-2 bAaNGj"
       >
         <div
-          class="sc-bc8a6907-3 dFwdeo"
+          class="sc-509e5fb6-3 ielfDS"
         >
           <ul>
             <li>
@@ -58,10 +58,10 @@ exports[`Layout renders Layout unchanged 1`] = `
           </ul>
         </div>
         <a
-          class="sc-643198f6-1 hpBXVO undefined "
+          class="sc-4a2ce0d6-1 gBDOAZ undefined "
         >
           <div
-            class="sc-8737affa-0 cwkrOJ sc-643198f6-0 ewuPgY"
+            class="sc-8737affa-0 kwTYSl sc-4a2ce0d6-0 bSehze"
             color="white"
           >
             donate
@@ -71,22 +71,22 @@ exports[`Layout renders Layout unchanged 1`] = `
           </span>
         </a>
         <div
-          class="sc-47dc7821-0 cdqNSn"
+          class="sc-47dc7821-0 bERdPH"
         >
           <div
             class="sc-47dc7821-1 gRBtCJ"
           />
           <div
-            class="sc-8737affa-0 lhpOEt sc-47dc7821-2 fCKxSq"
+            class="sc-8737affa-0 bcnHmJ sc-47dc7821-2 etaqjK"
             color="night"
           >
             hamburger
           </div>
           <div
-            class="sc-47dc7821-3 dSWlbO"
+            class="sc-47dc7821-3 ksJggS"
           >
             <div
-              class="sc-47dc7821-4 dJYYIK"
+              class="sc-47dc7821-4 kGTxhi"
             >
               RP
             </div>
@@ -95,19 +95,19 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </header>
     <main
-      class="sc-29d73b66-1 jLFOMF"
+      class="sc-29d73b66-1 gEpBEx"
     />
     <div
-      class="sc-b3ed1e8f-0 SyFSF"
+      class="sc-9199b4ac-0 gjUYWF"
     >
       <footer
-        class="sc-4c54b5f-0 bLprjL"
+        class="sc-f5137ace-0 hwwInd"
       >
         <hr
-          class="sc-4c54b5f-1 jmJRvt"
+          class="sc-f5137ace-1 Gzpnn"
         />
         <ul
-          class="sc-4c54b5f-2 fANbij"
+          class="sc-f5137ace-2 elBpRt"
         >
           <li>
             Mission
@@ -123,7 +123,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </li>
         </ul>
         <ul
-          class="sc-4c54b5f-3 fqXSAT"
+          class="sc-f5137ace-3 hQwgsl"
         >
           <li>
             Contact
@@ -136,28 +136,28 @@ exports[`Layout renders Layout unchanged 1`] = `
           </li>
         </ul>
         <hr
-          class="sc-4c54b5f-1 ckPdUC"
+          class="sc-f5137ace-1 ieaOSs"
         />
         <div
-          class="sc-4c54b5f-4 hEYmEy"
+          class="sc-f5137ace-4 cVmtEU"
         >
           <div
-            class="sc-4c54b5f-5 fTNXHe"
+            class="sc-f5137ace-5 yqDKo"
           >
             Join the mission to fund public goods.
           </div>
           <div
-            class="sc-4c54b5f-6 hDzpOM"
+            class="sc-f5137ace-6 gSJNRe"
           >
             <button
-              class="sc-643198f6-2 gMmZJn undefined "
+              class="sc-4a2ce0d6-2 iDijTY undefined "
             >
               <span>
                 Donate
               </span>
             </button>
             <button
-              class="sc-643198f6-2 gMmZJn undefined "
+              class="sc-4a2ce0d6-2 iDijTY undefined "
             >
               <span>
                 Sign In
@@ -166,34 +166,34 @@ exports[`Layout renders Layout unchanged 1`] = `
           </div>
         </div>
         <hr
-          class="sc-4c54b5f-1 iEthsT"
+          class="sc-f5137ace-1 bJA-dNh"
         />
         <div
-          class="sc-697e6c26-0 jDJVxj"
+          class="sc-697e6c26-0 kswkdX"
         >
           <a
-            class="sc-697e6c26-1 jntfIb"
+            class="sc-697e6c26-1 ZHgeb"
             href="https://twitter.com/artizenfund"
             target="_blank"
           >
             twitter
           </a>
           <a
-            class="sc-697e6c26-1 kklAya"
+            class="sc-697e6c26-1 jyPDCi"
             href="https://artizen.link/discord"
             target="_blank"
           >
             discord
           </a>
           <a
-            class="sc-697e6c26-1 gZtkVv"
+            class="sc-697e6c26-1 eVSbPL"
             href="https://github.com/artizen-fund"
             target="_blank"
           >
             github
           </a>
           <a
-            class="sc-697e6c26-1 bJsaYD"
+            class="sc-697e6c26-1 ddRiBr"
             href="https://artizen.link/telegram"
             target="_blank"
           >
@@ -203,10 +203,10 @@ exports[`Layout renders Layout unchanged 1`] = `
       </footer>
     </div>
     <div
-      class="sc-b3ed1e8f-0 ezAcVr sc-4c54b5f-8 bdrARQ"
+      class="sc-9199b4ac-0 brREMd sc-f5137ace-8 bjLigi"
     >
       <footer
-        class="sc-4c54b5f-7 jkQBFs"
+        class="sc-f5137ace-7 gEbPfu"
       >
         <div>
           Open source platform made with ❤️ by a globally distributed team

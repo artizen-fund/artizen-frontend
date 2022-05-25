@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabbedInfo renders ProgressBar unchanged 1`] = `
+<div>
+  <div
+    class="sc-8c8a9a6e-0"
+  >
+    <ul
+      class="sc-8c8a9a6e-1 fDOA-Da"
+    >
+      <div
+        class="sc-8c8a9a6e-2"
+      >
+        About
+      </div>
+      <div
+        class="sc-8c8a9a6e-2"
+      >
+        About
+      </div>
+    </ul>
+    <div
+      class="sc-9bd5b807-0"
+      label="About"
+    />
+  </div>
+</div>
+`;
