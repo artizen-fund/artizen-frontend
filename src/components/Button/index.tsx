@@ -20,6 +20,7 @@ export interface ButtonProps {
   /* optional icon */
   icon?: keyof IconKey
   iconOnRight?: boolean
+  iconOnly?: boolean
 
   /* label and misc */
   disabled?: boolean
@@ -27,14 +28,14 @@ export interface ButtonProps {
   children: React.ReactNode
 }
 
-const Button = ({ children, href, icon, iconOnRight, size, outline, ...props }: ButtonProps) => {
+const Button = ({ children, href, icon, iconOnRight, iconOnly, size, outline, ...props }: ButtonProps) => {
   if (!!href) {
     const className = `${props.className} ${props.disabled ? ' disabled' : ''}`
     return (
       <Link {...{ href }}>
-        <ButtonLink {...props} {...{ className, size, outline }}>
+        <ButtonLink {...props} {...{ className, size, outline, iconOnly }}>
           {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
-          {children}
+          <span>{children}</span>
           {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
         </ButtonLink>
       </Link>
@@ -42,9 +43,9 @@ const Button = ({ children, href, icon, iconOnRight, size, outline, ...props }: 
   }
   if (!!props.onClick) {
     return (
-      <StyledButton {...props} {...{ size, outline }}>
+      <StyledButton {...props} {...{ size, outline, iconOnly }}>
         {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
-        {children}
+        <span>{children}</span>
         {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
       </StyledButton>
     )
@@ -68,15 +69,36 @@ const ButtonStyle = css<Partial<ButtonProps>>`
   justify-content: center;
 
   height: ${props => (props.size === 'l0' ? 56 : props.size === 'l1' ? 40 : 24)}px;
-  padding: 0 ${props => (props.size === 'l0' ? 40 : props.size === 'l1' ? 20 : 16)}px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     height: ${props => (props.size === 'l0' ? 64 : props.size === 'l1' ? 48 : 31)}px;
-    padding: 0 ${props => (props.size === 'l0' ? 48 : props.size === 'l1' ? 24 : 20)}px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     height: ${props => (props.size === 'l0' ? 72 : props.size === 'l1' ? 56 : 40)}px;
-    padding: 0 ${props => (props.size === 'l0' ? 56 : props.size === 'l1' ? 32 : 24)}px;
   }
+
+  ${props =>
+    props.iconOnly
+      ? `
+      width: ${props.size === 'l0' ? 56 : props.size === 'l1' ? 40 : 24}px;
+      @media only screen and (min-width: ${breakpoint.laptop}px) {
+        width: ${props.size === 'l0' ? 64 : props.size === 'l1' ? 48 : 31}px;
+      }
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
+        width: ${props.size === 'l0' ? 72 : props.size === 'l1' ? 56 : 40}px;
+      }
+      span {
+        display: none;
+      }
+      `
+      : `
+      padding: 0 ${props.size === 'l0' ? 40 : props.size === 'l1' ? 20 : 16}px;
+      @media only screen and (min-width: ${breakpoint.laptop}px) {
+        padding: 0 ${props.size === 'l0' ? 48 : props.size === 'l1' ? 24 : 20}px;
+      }
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
+        padding: 0 ${props.size === 'l0' ? 56 : props.size === 'l1' ? 32 : 24}px;
+      }
+  `}
 
   border-radius: 9999px;
   border: 2px solid transparent;
