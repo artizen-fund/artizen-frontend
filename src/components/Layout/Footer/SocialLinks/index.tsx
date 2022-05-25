@@ -1,26 +1,25 @@
 import styled from 'styled-components'
-import Link from 'next/link'
-import { breakpoint, palette, typography } from '@theme'
+import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 const SocialLinks = () => {
+  const networks: Record<string, string> = {
+    twitter: 'https://twitter.com/artizenfund',
+    discord: 'https://artizen.link/discord',
+    github: 'https://github.com/artizen-fund',
+    telegram: 'https://artizen.link/telegram',
+  }
   return (
     <Wrapper>
-      <SocialLink href="https://twitter.com" icon="twitter">
-        Twitter
-      </SocialLink>
-      <SocialLink href="https://discord.com" icon="discord">
-        Discord
-      </SocialLink>
-      <SocialLink href="https://github.com" icon="github">
-        Github
-      </SocialLink>
-      <SocialLink href="https://telegram.com" icon="telegram">
-        Telegram
-      </SocialLink>
+      {Object.keys(networks).map(network => (
+        <SocialLink href={networks[network]} icon={network} target="_blank" key={`social-link-${network}`}>
+          {network}
+        </SocialLink>
+      ))}
     </Wrapper>
   )
 }
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;

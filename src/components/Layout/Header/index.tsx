@@ -126,9 +126,6 @@ const Nav = styled.div`
   }
 `
 
-/* todo: why doesn't this inherit correctly?
- * theory: the css`` interpolation is taking precedence
-  n*/
 const MobileNavButton = styled(props => <Button {...props} />)`
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     display: none !important;
