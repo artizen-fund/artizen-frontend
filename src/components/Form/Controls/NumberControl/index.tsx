@@ -68,7 +68,7 @@ export const NumberControl = ({
   const hasData = (data?: string) => !!data && !!data.toString()
 
   return (
-    <Wrapper {...{ disabled }} hasMessage={!!errors} {...props}>
+    <Wrapper gridArea={path} {...{ disabled }} hasMessage={!!errors} {...props}>
       <InputWrapper {...{ disabled }} hasStatusIcon={!!statusIcon}>
         <input
           {...{ disabled, required }}

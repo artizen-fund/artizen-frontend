@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { JsonForms } from '@jsonforms/react'
 import { vanillaRenderers } from '@jsonforms/vanilla-renderers'
 import { debounce } from 'lodash'
@@ -23,29 +23,25 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
   const [data, setData] = useState<any>(undefined)
   const [errors, setErrors] = useState<any>(undefined)
 
-  useEffect(() => {
+  useMemo(() => {
     if (typeof localStorage === 'undefined') {
       setData(initialState)
       return
     }
-    {
-      /* const frozenAnswers = localStorage.getItem(schema.name)
+    const frozenAnswers = localStorage.getItem(schema.name)
     if (!frozenAnswers) {
       setData(initialState)
       return
     }
     const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers) */
-    }
+    setData(thawedAnswers)
   }, [schema])
 
   const freezeAndSetData = debounce((newData: any, errors: any) => {
     setData(newData)
     setErrors(errors)
-    {
-      /* if (typeof localStorage !== 'undefined') {
+    if (typeof localStorage !== 'undefined' && !!newData) {
       localStorage.setItem(schema.name, JSON.stringify(newData))
-    } */
     }
   }, 100)
 
@@ -57,6 +53,8 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
     { tester: enumControlTester, renderer: EnumControl },
     /* { tester: formLabelTester, renderer: FormLabel }, */
   ]
+
+  if (!data) return <></>
 
   return (
     <JsonForms

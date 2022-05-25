@@ -14,7 +14,7 @@ const Checkbox = ({
   ...props
 }: BooleanControlProps) => {
   return (
-    <Wrapper {...{ disabled }} {...props}>
+    <Wrapper gridArea={path} {...{ disabled }} {...props}>
       <Box>
         <Input
           type="checkbox"
@@ -119,8 +119,9 @@ const Label = styled.span<{ color?: keyof Palette }>`
   }
 `
 
-const Wrapper = styled.label<{ disabled: boolean }>`
+const Wrapper = styled.label<{ disabled: boolean; gridArea?: string }>`
   position: relative;
+  ${props => props.gridArea && `grid-area: ${props.gridArea};`}
   display: flex;
   align-items: center;
   padding: 16px 0;

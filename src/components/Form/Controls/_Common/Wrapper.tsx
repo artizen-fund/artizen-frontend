@@ -7,8 +7,10 @@ import styled from 'styled-components'
 export default styled.div<{
   disabled?: boolean
   hasMessage?: boolean
+  gridArea?: string
 }>`
   position: relative;
+  ${props => props.gridArea && `grid-area: ${props.gridArea};`}
   width: 100%;
   height: fit-content;
   padding-bottom: ${props => (props.hasMessage ? 25 : 0)}px;

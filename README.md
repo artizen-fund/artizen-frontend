@@ -13,6 +13,11 @@ Coming soon…
 - Jest testing 🤪
 - react-jsonschema-forms 📝
 
+## Installation
+
+- requires Node 16.10.0+
+- npx storybook init
+
 ## Getting Started
 
 Run the development server:

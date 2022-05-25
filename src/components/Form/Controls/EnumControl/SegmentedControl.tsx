@@ -13,7 +13,7 @@ const SegmentedControl = ({
   ...props
 }: EnumControlProps) => {
   return (
-    <Wrapper {...props}>
+    <Wrapper gridArea={path} {...props}>
       {schema?.enum?.map((option: string, i: number) => (
         <Option key={`${path}-${i}`} selected={option === data}>
           <input
@@ -29,7 +29,8 @@ const SegmentedControl = ({
   )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ gridArea?: string }>`
+  ${props => props.gridArea && `grid-area: ${props.gridArea};`}
   display: flex;
   justify-content: center;
   align-items: stretch;

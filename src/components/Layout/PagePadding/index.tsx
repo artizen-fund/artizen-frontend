@@ -1,17 +1,20 @@
 import styled from 'styled-components'
-import { breakpoint, palette, Palette } from '@theme'
+import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 interface PagePaddingProps {
-  background?: keyof Palette
+  black?: boolean
 }
 
 const PagePadding = styled.div<PagePaddingProps>`
   padding: 40px 0;
   ${props =>
-    props.background &&
+    props.black &&
     `
-    background: ${rgba(palette[props.background])};
+    background: ${rgba(palette.night)};
+    @media (prefers-color-scheme: dark) {
+      background: ${rgba(palette.slate)};
+    }
   `}
 
   @media only screen and (min-width: ${breakpoint.tablet}px) {

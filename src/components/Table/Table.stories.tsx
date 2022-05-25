@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import { Table, TableCell } from '@components'
+import Table from './'
+import TableHeader from './TableHeader'
+import TableCell from './TableCell'
 import { TableProps } from './'
 
 export default {

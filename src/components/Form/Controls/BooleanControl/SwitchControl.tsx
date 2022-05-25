@@ -12,7 +12,7 @@ export const SwitchControl = ({
   required,
   ...props
 }: BooleanControlProps) => (
-  <Wrapper {...props}>
+  <Wrapper gridArea={path} {...props}>
     <Label color={uischema?.options?.labelColor}>{typeof label === 'object' ? label[0] : label}</Label>
     <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} checked={data} />
     <Switch checked={data} />
@@ -21,8 +21,9 @@ export const SwitchControl = ({
 
 // todo: investigate whether this component should use _Common/InputWrapper
 //        _Common/InputLabel will not be suitable as this input is not animated.
-const Wrapper = styled.label`
+const Wrapper = styled.label<{ gridArea?: string }>`
   position: relative;
+  ${props => props.gridArea && `grid-area: ${props.gridArea};`}
   display: flex;
   justify-content: space-between;
   align-items: center;

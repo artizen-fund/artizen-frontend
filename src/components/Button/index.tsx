@@ -7,6 +7,7 @@ import { IconKey, typography } from '@theme'
 
 export interface ButtonProps {
   outline?: boolean
+  inverted?: boolean
   size?: 'l0' | 'l1' | 'l2'
 
   /* actions for Button */
@@ -102,10 +103,6 @@ const ButtonStyle = css<Partial<ButtonProps>>`
 
   border-radius: 9999px;
   border: 2px solid transparent;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0);
-  &:hover {
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16);
-  }
 
   cursor: pointer;
   &:disabled,
@@ -143,6 +140,17 @@ const ButtonPalette = css<Partial<ButtonProps>>`
       color: ${props => buttonColor('dark', 'foreground', { ...props })};
       background-color: ${props => buttonColor('dark', 'background', { ...props })};
       border-color: ${props => buttonColor('dark', 'border', { ...props })};
+    }
+  }
+
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  &:hover {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16);
+  }
+  @media (prefers-color-scheme: dark) {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+    &:hover {
+      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.48);
     }
   }
 `

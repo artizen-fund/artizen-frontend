@@ -27,10 +27,7 @@ export const schema = {
 }
 
 export const initialState = {
-  firstname: undefined,
-  lastname: undefined,
-  email: undefined,
-  optIn: undefined,
+  optIn: true,
 }
 
 export const uischema = {

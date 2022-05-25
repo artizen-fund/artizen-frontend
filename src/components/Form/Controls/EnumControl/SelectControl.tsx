@@ -50,7 +50,7 @@ const SelectControl = ({
   }, [parsedErrors])
 
   return (
-    <Wrapper {...{ filled, disabled }} {...props}>
+    <Wrapper gridArea={path} {...{ filled, disabled }} {...props}>
       <InputWrapper {...{ hasStatusIcon }}>
         <select
           {...{ disabled, required, ref }}

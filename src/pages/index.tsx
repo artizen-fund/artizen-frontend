@@ -1,14 +1,14 @@
-import styled from 'styled-components'
 import type { NextPage } from 'next'
-import { Layout } from '@components'
+import { Layout, Newsletter } from '@components'
 import { CreateTopUpWallet } from '@lib'
-import { breakpoint } from '@theme'
 
 const Home: NextPage = () => {
   return (
     <Layout>
       <CreateTopUpWallet />
       <p>welcome to Artizen</p>
+      <Newsletter />
+      <p>love us some Artizen</p>
     </Layout>
   )
 }

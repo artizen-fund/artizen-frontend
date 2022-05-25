@@ -8,7 +8,7 @@ import SocialLinks from './SocialLinks'
 const Footer = () => {
   return (
     <>
-      <PagePadding background="night">
+      <PagePadding black>
         <Wrapper>
           <Rule gridSpace="rule1" />
           <BigLinks>

@@ -1,7 +1,7 @@
 import PagePadding from './'
 
 export default {
-  title: 'components/PagePadding',
+  title: 'layout/PagePadding',
   component: PagePadding,
   argTypes: {},
 }

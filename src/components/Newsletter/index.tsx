@@ -8,7 +8,7 @@ import { schema, uischema, initialState } from './form'
 const Newsletter = () => {
   const [submitted, setSubmitted] = useState(false)
   return (
-    <PagePadding background="night">
+    <PagePadding black>
       <Wrapper className={submitted ? 'submitted' : ''}>
         <Copy>
           <Header>Join us in building the world's largest web3 fund for public goods</Header>
