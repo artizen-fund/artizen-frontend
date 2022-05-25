@@ -18,11 +18,12 @@ exports[`renders homepage unchanged 1`] = `
         </div>
       </a>
       <button
-        class="sc-a72af660-2 krTSGv sc-5ef7f0c2-4 cgUNoA"
+        class="sc-b5032cbd-2 lmEeif sc-5ef7f0c2-4 cgUNoA"
       >
         Menu
         <div
-          class="sc-8737affa-0 FiPTj sc-a72af660-0 jvtbru"
+          class="sc-8737affa-0 cAKuPl sc-b5032cbd-0 OhsTK"
+          color="white"
         >
           arrow
         </div>
@@ -52,15 +53,15 @@ exports[`renders homepage unchanged 1`] = `
         </ul>
       </div>
       <a
-        class="sc-a72af660-1 itdpKw undefined "
+        class="sc-b5032cbd-1 grygJQ undefined "
       >
         <div
-          class="sc-8737affa-0 bVxSDn sc-a72af660-0 jvtbru"
+          class="sc-8737affa-0 cwkrOJ sc-b5032cbd-0 OhsTK"
+          color="white"
         >
           donate
         </div>
         Donate
-         
       </a>
       <div
         class="sc-47dc7821-0 cdqNSn"

@@ -33,8 +33,9 @@ const Button = ({ children, href, icon, iconOnRight, size, outline, ...props }: 
     return (
       <Link {...{ href }}>
         <ButtonLink {...props} {...{ className, size, outline }}>
-          {icon && <StyledIcon {...{ iconOnRight }}>{icon}</StyledIcon>}
-          {children} {size}
+          {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
+          {children}
+          {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
         </ButtonLink>
       </Link>
     )
@@ -42,9 +43,9 @@ const Button = ({ children, href, icon, iconOnRight, size, outline, ...props }: 
   if (!!props.onClick) {
     return (
       <StyledButton {...props} {...{ size, outline }}>
-        {icon && !iconOnRight && <StyledIcon>{icon}</StyledIcon>}
+        {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
         {children}
-        {icon && !!iconOnRight && <StyledIcon>{icon}</StyledIcon>}
+        {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
       </StyledButton>
     )
   }
