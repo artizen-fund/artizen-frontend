@@ -3,6 +3,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { Button } from '@components'
 import TableHeader from './TableHeader'
+import TableCell from './TableCell'
 import { breakpoint, palette, iconKey } from '@theme'
 import { rgba } from '@lib'
 
@@ -27,4 +28,4 @@ const Wrapper = styled.div`
   gap: 4px;
 `
 
-export default Table
+export { Table, TableCell, TableHeader }
