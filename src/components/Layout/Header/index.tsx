@@ -19,7 +19,7 @@ const Header = () => {
           </a>
         </Link>
 
-        <MobileNavButton onClick={() => console.log('derp')} icon={iconKey.arrow} iconOnRight outline>
+        <MobileNavButton onClick={() => console.log('derp')} icon={iconKey.arrow} iconOnRight outline size="l1">
           Menu
         </MobileNavButton>
       </Items>
@@ -34,7 +34,7 @@ const Header = () => {
             </li>
           </ul>
         </Nav>
-        <Button href="/" icon={iconKey.donate}>
+        <Button href="/" icon={iconKey.donate} size="l1">
           Donate
         </Button>
         <AccountButton />
@@ -126,9 +126,11 @@ const Nav = styled.div`
   }
 `
 
+/* todo: why doesn't this inherit correctly?
+ * theory: the css`` interpolation is taking precedence
+  n*/
 const MobileNavButton = styled(props => <Button {...props} />)`
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    /* todo: why doesn't this inherit correctly? */
     display: none !important;
   }
 `
