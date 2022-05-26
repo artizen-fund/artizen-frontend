@@ -25,22 +25,24 @@ const Sidebar = () => {
         Join our <strong>{FUND_DATE}</strong> donation drive
       </Header>
       <Content>
-        <AmountRaised>
-          <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString('en-US')} goal
-        </AmountRaised>
-        <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
+        <FundBlock>
+          <AmountRaised>
+            <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString('en-US')} goal
+          </AmountRaised>
+          <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
+          <Row>
+            <Countdown date={FUND_DEADLINE} />
+            <DonationCount>
+              <Icon>trend</Icon>
+              <span>{FUND_COUNT}k donations</span>
+            </DonationCount>
+          </Row>
+        </FundBlock>
         <Row>
-          <Countdown date={FUND_DEADLINE} />
-          <DonationCount>
-            <Icon>trend</Icon>
-            <span>{FUND_COUNT}k donations</span>
-          </DonationCount>
-        </Row>
-        <Row>
-          <Button onClick={() => console.log('donate!')} size="l1">
+          <Button onClick={() => console.log('donate!')} size="l1" stretch>
             Donate Now
           </Button>
-          <Button onClick={() => console.log('share!')} size="l1" outline>
+          <Button onClick={() => console.log('share!')} size="l1" stretch outline>
             Share
           </Button>
         </Row>
@@ -80,6 +82,19 @@ const Content = styled.div`
   @media only screen and (min-width: ${breakpoint.desktop}) {
     padding: 32px 40px 40px 40px;
     gap: 40px;
+  }
+  > * {
+    width: 100%;
+  }
+`
+
+const FundBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  @media only screen and (min-width: ${breakpoint.desktop}) {
+    gap: 24px;
   }
   > * {
     width: 100%;

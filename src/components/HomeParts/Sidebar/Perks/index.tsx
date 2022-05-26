@@ -1,32 +1,39 @@
 import styled from 'styled-components'
-import { Table, TableCell, Icon } from '@components'
+import { Button, Table, TableCell, Icon } from '@components'
 import { rgba } from '@lib'
 import { palette, breakpoint } from '@theme'
 
-const Perks = () => (
-  <Table title="Additional Perks">
-    <TableCell>
-      <div>
-        <StyledIcon>badge</StyledIcon>Membership in Artizen DAO
-      </div>
-    </TableCell>
-    <TableCell>
-      <div>
-        <StyledIcon>token</StyledIcon>0.01% of $ART tokens
-      </div>
-    </TableCell>
-    <TableCell>
-      <div>
-        <StyledIcon>certificate</StyledIcon>Collectable Receipt
-      </div>
-    </TableCell>
-    <TableCell>
-      <div>
-        <StyledIcon>face</StyledIcon>Custom Discord Avatar
-      </div>
-    </TableCell>
-  </Table>
-)
+const Perks = () => {
+  const sideItem = (
+    <Button href="/" outline size="l2">
+      Learn More
+    </Button>
+  )
+  return (
+    <Table title="Additional Perks" {...{ sideItem }}>
+      <TableCell>
+        <div>
+          <StyledIcon>badge</StyledIcon>Membership in Artizen DAO
+        </div>
+      </TableCell>
+      <TableCell>
+        <div>
+          <StyledIcon>token</StyledIcon>0.01% of $ART tokens
+        </div>
+      </TableCell>
+      <TableCell>
+        <div>
+          <StyledIcon>certificate</StyledIcon>Collectable Receipt
+        </div>
+      </TableCell>
+      <TableCell>
+        <div>
+          <StyledIcon>face</StyledIcon>Custom Discord Avatar
+        </div>
+      </TableCell>
+    </Table>
+  )
+}
 
 const StyledIcon = (props: any) => (
   <Wrapper>

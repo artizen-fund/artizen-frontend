@@ -2,11 +2,7 @@ import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
-export interface TableCellProps {
-  children: React.ReactNode
-}
-
-const TableCell = styled.div<TableCellProps>`
+const TableCell = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

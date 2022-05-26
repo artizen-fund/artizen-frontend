@@ -4,30 +4,17 @@ import { Button } from '@components'
 export default {
   title: 'tables/TableHeader',
   component: TableHeader,
-  argTypes: {
-    children: {
-      defaultValue: 'sample table',
-      control: { type: 'text' },
-    },
-    ancillaryText: {
-      defaultValue: 'more',
-      control: { type: 'text' },
-    },
-  },
-}
-
-interface TableHeaderPropsWithAncillary extends TableHeaderProps {
-  ancillaryText?: string
+  argTypes: {},
 }
 
 export const TableHeaderComponent = (props: TableHeaderProps) => <TableHeader {...props} />
 
-export const TableHeaderWithButton = ({ ancillaryText, ...props }: TableHeaderPropsWithAncillary) => {
-  const ancillary = <Button href="/">{ancillaryText}</Button>
-  return <TableHeader {...props} {...{ ancillary }} />
+export const TableHeaderWithButton = (props: TableHeaderProps) => {
+  const sideItem = <Button href="/">Button</Button>
+  return <TableHeader {...props} {...{ sideItem }} />
 }
 
-export const TableHeaderWithSideLabel = ({ ancillaryText, ...props }: TableHeaderPropsWithAncillary) => {
-  const ancillary = <Label>{ancillaryText}</Label>
-  return <TableHeader {...props} {...{ ancillary }} />
+export const TableHeaderWithSideLabel = (props: TableHeaderProps) => {
+  const sideItem = <Label>Label</Label>
+  return <TableHeader {...props} {...{ sideItem }} />
 }

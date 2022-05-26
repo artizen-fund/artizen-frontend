@@ -1,4 +1,4 @@
-import TableCell, { TableCellProps } from './'
+import TableCell from './'
 
 export default {
   title: 'tables/TableCell',
@@ -6,4 +6,4 @@ export default {
   argTypes: {},
 }
 
-export const TableCellComponent = (props: TableCellProps) => <TableCell {...props}>derp</TableCell>
+export const TableCellComponent = (props: any) => <TableCell {...props}>derp</TableCell>

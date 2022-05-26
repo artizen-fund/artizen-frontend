@@ -9,14 +9,15 @@ import { rgba } from '@lib'
 
 export interface TableProps {
   title: string
+  sideItem?: React.ReactNode
   children?: React.ReactNode
   ancillary?: React.ReactNode
 }
 
-const Table = ({ title, children, ...props }: TableProps) => {
+const Table = ({ title, sideItem, children, ...props }: TableProps) => {
   return (
     <Wrapper {...props}>
-      <TableHeader>{title}</TableHeader>
+      <TableHeader {...{ title, sideItem }} />
       {children}
     </Wrapper>
   )

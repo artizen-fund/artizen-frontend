@@ -9,6 +9,7 @@ export interface ButtonProps {
   outline?: boolean
   inverted?: boolean
   size?: 'l0' | 'l1' | 'l2'
+  stretch?: boolean
 
   /* actions for Button */
   onClick?: () => void
@@ -29,12 +30,23 @@ export interface ButtonProps {
   children: React.ReactNode
 }
 
-const Button = ({ children, href, icon, iconOnRight, iconOnly, size, outline, className, ...props }: ButtonProps) => {
+const Button = ({
+  children,
+  href,
+  icon,
+  iconOnRight,
+  iconOnly,
+  size,
+  outline,
+  stretch,
+  className,
+  ...props
+}: ButtonProps) => {
   const iClassName = `${className} ${props.disabled ? ' disabled' : ''}`
   if (!!href) {
     return (
       <Link {...{ href }}>
-        <ButtonLink className={iClassName} {...{ size, outline, iconOnly }} {...props}>
+        <ButtonLink className={iClassName} {...{ size, outline, iconOnly, stretch }} {...props}>
           {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
           <span>{children}</span>
           {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
@@ -44,7 +56,7 @@ const Button = ({ children, href, icon, iconOnRight, iconOnly, size, outline, cl
   }
   if (!!props.onClick) {
     return (
-      <StyledButton className={iClassName} {...{ size, outline, iconOnly }} {...props}>
+      <StyledButton className={iClassName} {...{ size, outline, iconOnly, stretch }} {...props}>
         {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
         <span>{children}</span>
         {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
@@ -77,8 +89,7 @@ const ButtonStyle = css<Partial<ButtonProps>>`
     height: ${props => (props.size === 'l0' ? 72 : props.size === 'l1' ? 56 : 40)}px;
   }
 
-  /* todo: use StyledButton for inlines, or a prop? */
-  width: 100%;
+  ${props => props.stretch && `width: 100%;`}
 
   ${props =>
     props.iconOnly
@@ -105,7 +116,7 @@ const ButtonStyle = css<Partial<ButtonProps>>`
   `}
 
   border-radius: 9999px;
-  border: 2px solid transparent;
+  border: ${props => (props.size === 'l2' ? 0.5 : 2)}px solid transparent;
 
   cursor: pointer;
   &:disabled,
