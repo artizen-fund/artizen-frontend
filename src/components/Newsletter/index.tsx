@@ -15,7 +15,7 @@ const Newsletter = () => {
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
         <Form {...{ schema, uischema, initialState }} />
-        <StyledButton onClick={() => setSubmitted(!submitted)} outline>
+        <StyledButton onClick={() => setSubmitted(!submitted)} outline size="l0">
           Submit
         </StyledButton>
       </Wrapper>

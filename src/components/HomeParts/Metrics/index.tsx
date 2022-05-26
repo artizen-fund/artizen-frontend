@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { StickyContent, PagePadding, ProgressBar, Button, Table, TableCell } from '@components'
+import { PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 

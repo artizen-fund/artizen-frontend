@@ -1,19 +1,29 @@
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { default as ReactCountdown } from 'react-countdown'
 import { Icon } from '@components'
-import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
+import { isServer } from '@lib'
 
 export interface CountdownProps {
   date: string
 }
 
-const Countdown = ({ date }: CountdownProps) => (
-  <Wrapper>
-    <Icon>countdown</Icon>
-    <ReactCountdown {...{ date }} />
-  </Wrapper>
-)
+const Countdown = ({ date }: CountdownProps) => {
+  /* note: This component causes obvious hydration errors.
+   *       Utilizing useEffect to make sure the SSR and initial render are identical. */
+
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
+    if (isServer()) return
+    setLoaded(true)
+  }, [])
+  return (
+    <Wrapper>
+      <Icon>countdown</Icon>
+      {loaded && <ReactCountdown {...{ date }} />}
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.div`
   display: flex;

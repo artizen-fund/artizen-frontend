@@ -39,11 +39,11 @@ const Sidebar = () => {
           </Row>
         </FundBlock>
         <Row>
-          <Button onClick={() => console.log('donate!')} size="l1" stretch>
-            Donate Now
+          <Button onClick={() => console.log('donate!')} size="l1" stretch icon="donate">
+            Donate
           </Button>
           <Button onClick={() => console.log('share!')} size="l1" stretch outline>
-            Share
+            Share Now
           </Button>
         </Row>
         <Leaderboard {...{ leaderboard }} />
