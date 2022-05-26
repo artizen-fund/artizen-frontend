@@ -157,7 +157,7 @@ const ButtonPalette = css<Partial<ButtonProps>>`
     }
   }
 
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, ${props => (props.outline ? 0 : 0.12)});
   &:hover {
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16);
   }

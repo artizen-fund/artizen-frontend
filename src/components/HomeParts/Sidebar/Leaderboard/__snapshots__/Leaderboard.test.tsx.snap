@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Leaderboard renders Leaderboard unchanged 1`] = `
+<div>
+  <div
+    class="sc-caa8facc-0 gtLRgT"
+  >
+    <div
+      class="sc-c6d4a71-0 iFQvvL"
+    >
+      <div
+        class="sc-c6d4a71-1 hmYVNc"
+      >
+        Leaderboard
+      </div>
+      <button
+        class="sc-21c50e09-2 edScAa undefined "
+      >
+        <span>
+          See All
+        </span>
+      </button>
+    </div>
+    <div
+      class="sc-6f3689f8-0 dSxtRv"
+    >
+      <div>
+        <div>
+          #
+          0
+        </div>
+        <div
+          class="sc-de2f6359-0 cdtqOE"
+        >
+          herp derp
+        </div>
+      </div>
+      <div>
+        $
+        69
+      </div>
+    </div>
+    <div
+      class="sc-6f3689f8-0 dSxtRv"
+    >
+      <div>
+        <div>
+          #
+          1
+        </div>
+        <div
+          class="sc-de2f6359-0 Nmld"
+        >
+          dorp donk
+        </div>
+      </div>
+      <div>
+        $
+        68
+      </div>
+    </div>
+    <div
+      class="sc-6f3689f8-0 dSxtRv"
+    >
+      <div>
+        <div>
+          #
+          2
+        </div>
+        <div
+          class="sc-de2f6359-0 Nmld"
+        >
+          hoop doop
+        </div>
+      </div>
+      <div>
+        $
+        67
+      </div>
+    </div>
+  </div>
+</div>
+`;

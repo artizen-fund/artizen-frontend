@@ -4,7 +4,12 @@ import Leaderboard from './'
 
 describe('Leaderboard', () => {
   it('renders Leaderboard unchanged', () => {
-    const { container } = render(<Leaderboard />)
+    const leaderboard = [
+      { name: 'herp derp', amount: 69 },
+      { name: 'dorp donk', amount: 68 },
+      { name: 'hoop doop', amount: 67 },
+    ]
+    const { container } = render(<Leaderboard {...{ leaderboard }} />)
     expect(container).toMatchSnapshot()
   })
 })
