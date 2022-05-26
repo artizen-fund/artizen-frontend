@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import type { NextPage } from 'next'
-import { Layout, Newsletter, StickyCanvas, PagePadding, HomeSidebar, FeaturedArt, TabbedInfo } from '@components'
+import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, StickyCanvas, TabbedInfo } from '@components'
 import { CreateTopUpWallet } from '@lib'
 import { typography, breakpoint } from '@theme'
 
@@ -62,12 +62,12 @@ const Home: NextPage = () => {
               </Tab>
             </TabbedInfo>
           </DryContent>
-          <HomeSidebar />
+          <Sidebar />
         </StickyCanvas>
       </PagePadding>
 
       <Newsletter />
-      <p>love us some Artizen</p>
+      <Metrics />
     </Layout>
   )
 }

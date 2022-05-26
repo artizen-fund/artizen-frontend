@@ -27,7 +27,7 @@ const Sidebar = () => {
       <Content>
         <FundBlock>
           <AmountRaised>
-            <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString('en-US')} goal
+            <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
           </AmountRaised>
           <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
           <Row>

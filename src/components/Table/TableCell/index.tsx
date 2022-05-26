@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
+import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
 const TableCell = styled.div`
@@ -24,6 +24,8 @@ const TableCell = styled.div`
   @media (prefers-color-scheme: dark) {
     background-color: ${rgba(palette.barracuda, 0.24)};
   }
+
+  ${typography.label.l1}
 
   div {
     display: flex;

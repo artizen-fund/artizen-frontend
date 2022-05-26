@@ -13,11 +13,11 @@ exports[`Countdown renders Countdown unchanged 1`] = `
     <span>
       34
       :
-      11
-      :
       09
       :
-      05
+      33
+      :
+      36
     </span>
   </div>
 </div>

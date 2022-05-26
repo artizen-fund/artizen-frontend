@@ -3,22 +3,22 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-3d3423c2-0 spKTh"
+    class="sc-7269da1e-0 eLuHAH"
   >
     <div
-      class="sc-3d3423c2-2 hVsTkp"
+      class="sc-7269da1e-2 cdKRIe"
     >
       <a
         href="/"
       >
         <div
-          class="sc-3d3423c2-1 gtrDXz"
+          class="sc-7269da1e-1 iWwNrc"
         >
           Artizen
         </div>
       </a>
       <button
-        class="sc-21c50e09-2 fySYKP sc-3d3423c2-4 fIspEB "
+        class="sc-21c50e09-2 fySYKP sc-7269da1e-4 fvIPOO "
       >
         <span>
           Menu
@@ -32,10 +32,10 @@ exports[`renders homepage unchanged 1`] = `
       </button>
     </div>
     <div
-      class="sc-3d3423c2-2 hVsTkp"
+      class="sc-7269da1e-2 cdKRIe"
     >
       <div
-        class="sc-3d3423c2-3 jNfbAw"
+        class="sc-7269da1e-3 dCvHZP"
       >
         <ul>
           <li>
