@@ -1,54 +1,59 @@
 import styled from 'styled-components'
-import { StickyContent, ProgressBar, Button, Table, TableCell } from '@components'
-import { breakpoint, palette } from '@theme'
+import Countdown from './Countdown'
+import Leaderboard from './Leaderboard'
+import { Icon, ProgressBar, Button, StickyContent, Table, TableCell } from '@components'
+import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
-const Sidebar = () => (
-  <Wrapper>
-    <h3>
-      Join our <strong>May, 2022</strong> donation drive
-    </h3>
-    <Content>
-      <p>$15,250 raised of $25,000 goal</p>
-      <ProgressBar>{55}</ProgressBar>
-      <Row>
-        <CountdownClock />
-        <DonationCount>3.2k</DonationCount>
-      </Row>
-      <Row>
-        <Button onClick={() => console.log('donate!')} size="l1">
-          Donate Now
-        </Button>
-        <Button onClick={() => console.log('share!')} size="l1" outline>
-          Share
-        </Button>
-      </Row>
-      <Table title="Leaderboard">
-        <TableCell>
-          <div>#1</div>
-          <div>herp derp</div>
-          <div>$69,00</div>
-        </TableCell>
-        <TableCell>
-          <div>#2</div>
-          <div>herp derp</div>
-          <div>$68,00</div>
-        </TableCell>
-        <TableCell>
-          <div>#3</div>
-          <div>herp derp</div>
-          <div>$67,00</div>
-        </TableCell>
-      </Table>
-      <Table title="Additional Perks">
-        <TableCell>Membership in Artizen DAO</TableCell>
-        <TableCell>0.01% of $ART tokens</TableCell>
-        <TableCell>Collectable Receipt</TableCell>
-        <TableCell>Custom Discord Avatar</TableCell>
-      </Table>
-    </Content>
-  </Wrapper>
-)
+const Sidebar = () => {
+  // note: this is just some placeholder nonsense, not final var names
+  const FUND_COUNT = 3.2
+  const FUND_AMOUNT = 15250
+  const FUND_GOAL = 25000
+  const FUND_DATE = `May, 2022`
+  const FUND_DEADLINE = '2022-06-30T00:00:00'
+  const leaderboard = [
+    { name: 'herp derp', amount: 69 },
+    { name: 'dorp donk', amount: 68 },
+    { name: 'hoop doop', amount: 67 },
+  ]
+
+  return (
+    <Wrapper>
+      <Header>
+        Join our <strong>{FUND_DATE}</strong> donation drive
+      </Header>
+      <Content>
+        <p>
+          ${FUND_AMOUNT} raised of ${FUND_GOAL} goal
+        </p>
+        <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
+        <Row>
+          <Countdown date={FUND_DEADLINE} />
+          <DonationCount>
+            <Icon>trend</Icon>
+            <span>{FUND_COUNT}k donations</span>
+          </DonationCount>
+        </Row>
+        <Row>
+          <Button onClick={() => console.log('donate!')} size="l1">
+            Donate Now
+          </Button>
+          <Button onClick={() => console.log('share!')} size="l1" outline>
+            Share
+          </Button>
+        </Row>
+        <Leaderboard {...{ leaderboard }} />
+        <Table title="Additional Perks">
+          <TableCell>Membership in Artizen DAO</TableCell>
+          <TableCell>0.01% of $ART tokens</TableCell>
+          <TableCell>Collectable Receipt</TableCell>
+          <TableCell>Custom Discord Avatar</TableCell>
+        </Table>
+      </Content>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled(props => <StickyContent {...props} />)`
   background-color: ${rgba(palette.white)};
@@ -74,21 +79,44 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 22px 32px 32px;
+  padding: 22px 32px 32px 32px;
   gap: 32px;
+  @media only screen and (min-width: ${breakpoint.desktop}) {
+    padding: 32px 40px 40px 40px;
+    gap: 40px;
+  }
   > * {
     width: 100%;
   }
 `
 
-const CountdownClock = styled.div``
-
-const DonationCount = styled.div``
+const DonationCount = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+`
 
 const Row = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 12px;
+  @media only screen and (min-width: ${breakpoint.desktop}) {
+    gap: 16px;
+  }
+`
+
+const Header = styled.h3`
+  padding: 19px 32px 0px 32px;
+  @media only screen and (min-width: ${breakpoint.desktop}) {
+    padding: 26px 40px 0px 40px;
+  }
+  ${typography.label.l1}
+  font-weight: 500;
+  strong {
+    font-weight: 600;
+  }
 `
 
 export default Sidebar

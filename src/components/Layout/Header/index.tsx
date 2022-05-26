@@ -18,7 +18,6 @@ const Header = () => {
             <Logo>Artizen</Logo>
           </a>
         </Link>
-
         <MobileNavButton onClick={() => console.log('derp')} icon={iconKey.arrow} iconOnRight outline size="l1">
           Menu
         </MobileNavButton>
@@ -124,6 +123,7 @@ const Nav = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 20px;
+    white-space: nowrap;
   }
 `
 

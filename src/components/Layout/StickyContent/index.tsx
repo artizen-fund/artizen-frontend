@@ -16,7 +16,6 @@ If you desire a bit of space, you'll need to override those styles at all respon
 
 const StickyContent = styled.div`
   position: sticky;
-  min-width: 30%;
   left: 0;
   top: 64px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {

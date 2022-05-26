@@ -28,6 +28,13 @@ const TableCell = styled.div<TableCellProps>`
   @media (prefers-color-scheme: dark) {
     background-color: ${rgba(palette.barracuda, 0.24)};
   }
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
 `
 
 export default TableCell

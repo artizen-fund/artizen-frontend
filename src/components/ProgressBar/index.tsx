@@ -29,10 +29,10 @@ const ProgressBar = styled.div<ProgressBarProps>`
     left: 0;
     top: 0;
     height: 100%;
-    width: ${props => props.children}%;
+    width: ${props => props.children * 100}%;
     max-width: 100%;
 
-    content: '${props => props.children}%';
+    content: '${props => props.children * 100}%';
     border-radius: 9999px;
     background-color: ${rgba(palette.algae)};
     ${props =>
