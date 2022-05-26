@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Sidebar from './'
 
 export default {
-  title: 'homeParts/Sidebar',
+  title: 'page/home/Sidebar',
   component: Sidebar,
   argTypes: {},
 }

@@ -1,7 +1,7 @@
 import Leaderboard, { LeaderboardProps } from './'
 
 export default {
-  title: 'homeParts/Leaderboard',
+  title: 'page/home/Leaderboard',
   component: Leaderboard,
   argTypes: {},
 }

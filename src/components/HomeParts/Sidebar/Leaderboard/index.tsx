@@ -13,7 +13,7 @@ const Leaderboard = ({ leaderboard }: LeaderboardProps) => (
           <div>#{i}</div>
           <Name king={i === 0}>{benefactor.name}</Name>
         </div>
-        <div>${benefactor.amount}</div>
+        <div>${benefactor.amount.toLocaleString()}</div>
       </TableCell>
     ))}
   </Table>

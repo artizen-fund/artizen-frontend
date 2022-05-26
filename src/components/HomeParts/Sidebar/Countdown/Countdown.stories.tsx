@@ -1,7 +1,7 @@
 import Countdown, { CountdownProps } from './'
 
 export default {
-  title: 'homeParts/Countdown',
+  title: 'page/home/Countdown',
   component: Countdown,
   argTypes: {},
 }

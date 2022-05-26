@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import Countdown from './Countdown'
 import Leaderboard from './Leaderboard'
-import { Icon, ProgressBar, Button, StickyContent, Table, TableCell } from '@components'
+import Perks from './Perks'
+import { Icon, ProgressBar, Button, StickyContent } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
@@ -24,9 +25,9 @@ const Sidebar = () => {
         Join our <strong>{FUND_DATE}</strong> donation drive
       </Header>
       <Content>
-        <p>
-          ${FUND_AMOUNT} raised of ${FUND_GOAL} goal
-        </p>
+        <AmountRaised>
+          <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString('en-US')} goal
+        </AmountRaised>
         <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
         <Row>
           <Countdown date={FUND_DEADLINE} />
@@ -44,12 +45,7 @@ const Sidebar = () => {
           </Button>
         </Row>
         <Leaderboard {...{ leaderboard }} />
-        <Table title="Additional Perks">
-          <TableCell>Membership in Artizen DAO</TableCell>
-          <TableCell>0.01% of $ART tokens</TableCell>
-          <TableCell>Collectable Receipt</TableCell>
-          <TableCell>Custom Discord Avatar</TableCell>
-        </Table>
+        <Perks />
       </Content>
     </Wrapper>
   )
@@ -59,7 +55,7 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
   background-color: ${rgba(palette.white)};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   @media (prefers-color-scheme: dark) {
-    background-color: ${rgba(palette.barracuda)};
+    background-color: ${rgba(palette.slate)};
     border-bottom: 1px solid rgba(114, 124, 140, 0.12);
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
   }
@@ -87,6 +83,18 @@ const Content = styled.div`
   }
   > * {
     width: 100%;
+  }
+`
+
+const AmountRaised = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+  span {
+    ${typography.title.l3}
+    color: ${rgba(palette.night)};
+    @media (prefers-color-scheme: dark) {
+      color: ${rgba(palette.moon)};
+    }
   }
 `
 

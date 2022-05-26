@@ -1,7 +1,7 @@
 import FeaturedArt from './'
 
 export default {
-  title: 'homeParts/FeaturedArt',
+  title: 'page/home/FeaturedArt',
   component: FeaturedArt,
   argTypes: {},
 }
