@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import type { NextPage } from 'next'
 import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, StickyCanvas, TabbedInfo } from '@components'
-import { CreateTopUpWallet } from '@lib'
-import { typography, breakpoint } from '@theme'
+import { CreateTopUpWallet, rgba } from '@lib'
+import { typography, breakpoint, palette } from '@theme'
 
 const Home: NextPage = () => {
   // note: obviously this is going to come from CMS data
@@ -65,21 +65,19 @@ const Home: NextPage = () => {
         </h2>
       </Header>
 
-      <PagePadding>
-        <StickyCanvas>
-          <DryContent>
-            <FeaturedArt />
-            <TabbedInfo>
-              {Object.keys(tabbedInfo).map(key => (
-                <Tab key={`tab-${key}`} label={key}>
-                  {tabbedInfo[key]}
-                </Tab>
-              ))}
-            </TabbedInfo>
-          </DryContent>
+      <StyledPagePadding>
+        <Wrapper>
+          <FeaturedArt />
+          <TabbedInfo>
+            {Object.keys(tabbedInfo).map(key => (
+              <Tab key={`tab-${key}`} label={key}>
+                {tabbedInfo[key]}
+              </Tab>
+            ))}
+          </TabbedInfo>
           <Sidebar />
-        </StickyCanvas>
-      </PagePadding>
+        </Wrapper>
+      </StyledPagePadding>
 
       <Newsletter />
       <Metrics />
@@ -96,16 +94,47 @@ const Header = styled(props => <PagePadding {...props} />)`
   }
 `
 
-const DryContent = styled.div`
-  width: 100%;
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  position: relative;
+  padding: 0;
+  &:before {
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    top: 65px;
+    height: 425px;
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      top: 80px;
+      height: 525px;
+    }
+    background-color: ${rgba(palette.moon)};
+  }
+`
+
+const Wrapper = styled.section`
+  position: relative;
+  display: grid;
+  grid-template-areas: 'featuredArt' 'sidebar' 'tabbedInfo';
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    width: 520px;
+    grid-template-areas: 'featuredArt sidebar' 'tabbedInfo sidebar';
+    grid-gap: 0px 30px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 1020px;
+    grid-gap: 0px 80px;
   }
-  min-height: 80vh;
 `
+
+/*
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+  display: block;
+  width: 390px;
+}
+@media only screen and (min-width: ${breakpoint.desktop}px) {
+  width: 500px;
+}
+
+*/
 
 const Tab = styled.div<{ label: string }>``
 

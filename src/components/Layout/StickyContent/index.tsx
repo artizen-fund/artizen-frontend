@@ -12,13 +12,14 @@ Consider all the styles here to be default parameters.
 
 Note that the default top figures in StickyContent will place the content directly under the <Header />.
 If you desire a bit of space, you'll need to override those styles at all responsive sized.
+
+This design expects that sticky content will not be used on sub-laptop sizes; that could be inaccurate.
  */
 
 const StickyContent = styled.div`
-  position: sticky;
-  left: 0;
-  top: 64px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    position: sticky;
+    left: 0;
     top: 72px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
@@ -28,10 +29,12 @@ const StickyContent = styled.div`
 
 const StickyCanvas = styled.section`
   position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 `
 
 export { StickyContent, StickyCanvas }

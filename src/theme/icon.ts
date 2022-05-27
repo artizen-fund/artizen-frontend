@@ -3,6 +3,7 @@ export type IconKey = Record<string, string>
 export const iconKey: IconKey = {
   arrow: 'arrow',
   badge: 'badge',
+  calendar: 'calendar',
   certificate: 'certificate',
   countdown: 'countdown',
   cross: 'cross',
@@ -11,6 +12,8 @@ export const iconKey: IconKey = {
   hamburger: 'hamburger',
   info: 'info',
   lock: 'lock',
+  plane: 'plane',
+  tag: 'tag',
   tick: 'tick',
   token: 'token',
   trend: 'trend',

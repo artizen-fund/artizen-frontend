@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Countdown from './Countdown'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
-import { Icon, ProgressBar, Button, StickyContent } from '@components'
+import { Icon, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
@@ -20,38 +20,46 @@ const Sidebar = () => {
   ]
 
   return (
-    <Wrapper>
-      <Header>
-        Join our <strong>{FUND_DATE}</strong> donation drive
-      </Header>
-      <Content>
-        <FundBlock>
-          <AmountRaised>
-            <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
-          </AmountRaised>
-          <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
+    <StyledStickyCanvas>
+      <Wrapper>
+        <Header>
+          Join our <strong>{FUND_DATE}</strong> donation drive
+        </Header>
+        <Content>
+          <FundBlock>
+            <AmountRaised>
+              <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
+            </AmountRaised>
+            <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
+            <Row>
+              <Countdown date={FUND_DEADLINE} />
+              <DonationCount>
+                <Icon>trend</Icon>
+                <span>{FUND_COUNT}k donations</span>
+              </DonationCount>
+            </Row>
+          </FundBlock>
           <Row>
-            <Countdown date={FUND_DEADLINE} />
-            <DonationCount>
-              <Icon>trend</Icon>
-              <span>{FUND_COUNT}k donations</span>
-            </DonationCount>
+            <Button onClick={() => console.log('donate!')} size="l1" stretch icon="donate">
+              Donate
+            </Button>
+            <Button onClick={() => console.log('share!')} size="l1" stretch outline>
+              Share Now
+            </Button>
           </Row>
-        </FundBlock>
-        <Row>
-          <Button onClick={() => console.log('donate!')} size="l1" stretch icon="donate">
-            Donate
-          </Button>
-          <Button onClick={() => console.log('share!')} size="l1" stretch outline>
-            Share Now
-          </Button>
-        </Row>
-        <Leaderboard {...{ leaderboard }} />
-        <Perks />
-      </Content>
-    </Wrapper>
+          <LargeScreensOnly>
+            <Leaderboard {...{ leaderboard }} />
+            <Perks />
+          </LargeScreensOnly>
+        </Content>
+      </Wrapper>
+    </StyledStickyCanvas>
   )
 }
+
+const StyledStickyCanvas = styled(props => <StickyCanvas {...props} />)`
+  grid-area: sidebar;
+`
 
 const Wrapper = styled(props => <StickyContent {...props} />)`
   background-color: ${rgba(palette.white)};
@@ -61,15 +69,9 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
     border-bottom: 1px solid rgba(114, 124, 140, 0.12);
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
   }
-  border-radius: 16px;
-
-  display: none;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    display: block;
-    width: 390px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 500px;
+  border-radius: 0px 0px 16px 16px;
+  @media only screen and (min-width: ${breakpoint.laptop}) {
+    border-radius: 16px;
   }
 `
 
@@ -139,6 +141,13 @@ const Header = styled.h3`
   font-weight: 500;
   strong {
     font-weight: 600;
+  }
+`
+
+const LargeScreensOnly = styled.div`
+  display: none;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    display: block;
   }
 `
 

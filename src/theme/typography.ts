@@ -8,6 +8,7 @@ export const typography = {
       font-weight: 700;
       font-size: 34px;
       line-height: 34px;
+      letter-spacing: -1px;
       @media only screen and (min-width: ${breakpoint.tablet}px) {
         font-size: 44px;
         line-height: 44px;
@@ -16,7 +17,7 @@ export const typography = {
         font-size: 64px;
         line-height: 64px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 80px;
         line-height: 80px;
       }
@@ -26,11 +27,12 @@ export const typography = {
       font-weight: 600;
       font-size: 28px;
       line-height: 30px;
+      letter-spacing: -1px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 36px;
         line-height: 36px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 40px;
         line-height: 40px;
       }
@@ -40,11 +42,12 @@ export const typography = {
       font-weight: 600;
       font-size: 24px;
       line-height: 26px;
+      letter-spacing: -1px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 28px;
         line-height: 30px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 32px;
         line-height: 34px;
       }
@@ -54,11 +57,12 @@ export const typography = {
       font-weight: 600;
       font-size: 20px;
       line-height: 22px;
+      letter-spacing: -1px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 22px;
         line-height: 24px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 24px;
         line-height: 26px;
       }
@@ -74,7 +78,7 @@ export const typography = {
         font-size: 18px;
         line-height: 28px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 20px;
         line-height: 32px;
       }
@@ -88,7 +92,7 @@ export const typography = {
         font-size: 16px;
         line-height: 24px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 18px;
         line-height: 28px;
       }
@@ -102,7 +106,7 @@ export const typography = {
         font-size: 14px;
         line-height: 20px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 16px;
         line-height: 24px;
       }
@@ -113,10 +117,11 @@ export const typography = {
       font-family: ${typeface.rocGrotesk};
       font-weight: 600;
       font-size: 16px;
+      letter-spacing: 0.5px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 17px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 18px;
       }
     `,
@@ -124,10 +129,11 @@ export const typography = {
       font-family: ${typeface.rocGrotesk};
       font-weight: 600;
       font-size: 13px;
+      letter-spacing: 0.5px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 15px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 16px;
       }
     `,
@@ -135,10 +141,11 @@ export const typography = {
       font-family: ${typeface.rocGrotesk};
       font-weight: 600;
       font-size: 12px;
+      letter-spacing: 0.5px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 13px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 14px;
       }
     `,
@@ -146,10 +153,11 @@ export const typography = {
       font-family: ${typeface.rocGrotesk};
       font-weight: 600;
       font-size: 10px;
+      letter-spacing: 0.5px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
         font-size: 11px;
       }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
         font-size: 12px;
       }
     `,
