@@ -10,13 +10,22 @@ const FeaturedArt = () => (
       <Title>Title of Monthly Featured Artwork</Title>
       <Metadata>
         <Metadatum>
-          <Icon>face</Icon>Artist Name
+          <IconWrapper>
+            <Icon color="slate">face</Icon>
+          </IconWrapper>
+          Artist Name
         </Metadatum>
         <Metadatum>
-          <Icon>calendar</Icon>Created # days ago
+          <IconWrapper>
+            <Icon color="slate">calendar</Icon>
+          </IconWrapper>
+          Created # days ago
         </Metadatum>
         <Metadatum>
-          <Icon>tag</Icon>Tag Name
+          <IconWrapper>
+            <Icon color="slate">tag</Icon>
+          </IconWrapper>
+          Tag Name
         </Metadatum>
       </Metadata>
     </Copy>
@@ -37,6 +46,9 @@ const FeaturedArtworkImage = styled.div`
   width: 100%;
   height: 400px;
   background: blue;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    border-radius: 16px;
+  }
 `
 
 const Copy = styled.div`
@@ -51,13 +63,14 @@ const Copy = styled.div`
 
 const Title = styled.div`
   ${typography.title.l4}
+  margin: 1em 0;
 `
 
 const Metadata = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  flex-gap: 50px;
+  gap: 15px;
   > div {
     min-width: 45%;
   }
@@ -68,6 +81,20 @@ const Metadatum = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
 `
-
+const IconWrapper = styled.div`
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid ${rgba(palette.slate)};
+  border-radius: 9999px;
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    height: 48px;
+    width: 48px;
+  }
+`
 export default FeaturedArt

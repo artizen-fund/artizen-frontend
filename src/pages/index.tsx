@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import type { NextPage } from 'next'
-import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, StickyCanvas, TabbedInfo } from '@components'
+import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedInfo } from '@components'
 import { CreateTopUpWallet, rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 
@@ -124,17 +124,6 @@ const Wrapper = styled.section`
     grid-gap: 0px 80px;
   }
 `
-
-/*
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-  display: block;
-  width: 390px;
-}
-@media only screen and (min-width: ${breakpoint.desktop}px) {
-  width: 500px;
-}
-
-*/
 
 const Tab = styled.div<{ label: string }>``
 
