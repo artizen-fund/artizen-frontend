@@ -1,0 +1,26 @@
+name: Debloy to AWS EBS for Staging
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Init Eb
+        uses: hmanzur/actions-aws-eb@v1.0.0
+        with:
+          command: 'init lab --region us-east-1 --platform node.js-14'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'us-east-1'
+      - name: Deploy to AWS Elastic Beanstalk
+        uses: hmanzur/actions-aws-eb@v1.0.0
+        with:
+          command: 'deploy Lab-env'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'us-east-1'
