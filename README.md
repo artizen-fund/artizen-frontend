@@ -20,19 +20,25 @@ Coming soon…
 
 ## Getting Started
 
-Run the development server:
+### Run the development server:
 
 ```bash
 yarn dev
 ```
 
-Run storybooks:
+### Create a new component:
+
+```bash
+yarn generate
+```
+
+### Run storybooks:
 
 ```bash
 yarn storybook
 ```
 
-Run Cypress tests:
+### Run Cypress tests:
 
 - make sure sure dev server is running, then…
 

@@ -12,7 +12,7 @@ export interface IconProps {
 }
 
 const Icon = styled.div<IconProps>`
-  mask-size: contain;
+  position: relative;
   mask-repeat: no-repeat;
   mask-position: center;
   text-indent: -1000px;
@@ -26,22 +26,26 @@ const Icon = styled.div<IconProps>`
     !!props.size
       ? /* if size is strictly specified, one rule for all sizes: */ `
         mask-image: url("/icons/${props.children}/${props.size}/${props.solid ? 'solid' : 'outline'}.svg");
+        mask-size: ${props.size}px ${props.size}px;
         width: ${props.size}px;
         height: ${props.size}px;
       `
       : /* if size not specified, follow responsive rules: */ `
         mask-image: url("/icons/${props.children}/12/${props.solid ? 'solid' : 'outline'}.svg");
+        mask-size: 12px 12px;
         width: 12px;
         height: 12px;
         
         @media only screen and (min-width: ${breakpoint.laptop}px) {
           mask-image: url("/icons/${props.children}/16/${props.solid ? 'solid' : 'outline'}.svg");
+          mask-size: 16px 16px;
           width: 16px;
           height: 16px;
         }
         
         @media only screen and (min-width: ${breakpoint.desktop}px) {
           mask-image: url("/icons/${props.children}/20/${props.solid ? 'solid' : 'outline'}.svg");
+          mask-size: 20px 20px;
           width: 20px;
           height: 20px;
         }

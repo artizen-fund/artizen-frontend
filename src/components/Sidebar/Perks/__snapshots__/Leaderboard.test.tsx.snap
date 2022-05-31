@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Perks renders Perks unchanged 1`] = `
+<div>
+  <div
+    class="sc-caa8facc-0 gtLRgT"
+  >
+    <div
+      class="sc-c6d4a71-0 iFQvvL"
+    >
+      <div
+        class="sc-c6d4a71-1 hmYVNc"
+      >
+        Additional Perks
+      </div>
+      <a
+        class="sc-21c50e09-1 bgUzSl undefined "
+      >
+        <span>
+          Learn More
+        </span>
+      </a>
+    </div>
+    <div
+      class="sc-92fd0fad-0 fHOWlb"
+    >
+      <div>
+        <div
+          class="sc-62acfa07-0 jSiTeQ"
+        >
+          <div
+            class="sc-8737affa-0 bEWlxB"
+            color="night"
+          >
+            badge
+          </div>
+        </div>
+        Membership in Artizen DAO
+      </div>
+    </div>
+    <div
+      class="sc-92fd0fad-0 fHOWlb"
+    >
+      <div>
+        <div
+          class="sc-62acfa07-0 jSiTeQ"
+        >
+          <div
+            class="sc-8737affa-0 XkLAr"
+            color="night"
+          >
+            token
+          </div>
+        </div>
+        0.01% of $ART tokens
+      </div>
+    </div>
+    <div
+      class="sc-92fd0fad-0 fHOWlb"
+    >
+      <div>
+        <div
+          class="sc-62acfa07-0 jSiTeQ"
+        >
+          <div
+            class="sc-8737affa-0 cJBwrt"
+            color="night"
+          >
+            certificate
+          </div>
+        </div>
+        Collectable Receipt
+      </div>
+    </div>
+    <div
+      class="sc-92fd0fad-0 fHOWlb"
+    >
+      <div>
+        <div
+          class="sc-62acfa07-0 jSiTeQ"
+        >
+          <div
+            class="sc-8737affa-0 cXQEat"
+            color="night"
+          >
+            face
+          </div>
+        </div>
+        Custom Discord Avatar
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -26,10 +26,10 @@ const Footer = () => {
           <CTA>
             <Copy>Join the mission to fund public goods.</Copy>
             <Buttons>
-              <Button onClick={() => alert('coming soon')} outline>
+              <Button onClick={() => alert('coming soon')} outline size="l1">
                 Donate
               </Button>
-              <Button onClick={() => alert('coming soon')} outline>
+              <Button onClick={() => alert('coming soon')} outline size="l1">
                 Sign In
               </Button>
             </Buttons>
@@ -111,6 +111,7 @@ const Buttons = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: flex;
     flex-direction: row;
+    gap: 10px;
   }
 `
 

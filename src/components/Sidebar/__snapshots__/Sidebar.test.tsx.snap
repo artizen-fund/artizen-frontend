@@ -1,0 +1,261 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar renders Sidebar unchanged 1`] = `
+<div>
+  <div
+    class="sc-f578f1d4-0 fsmEyD sc-5c1a844a-0 ifUfXn"
+  >
+    <h3
+      class="sc-5c1a844a-6 egPZzE"
+    >
+      Join our 
+      <strong>
+        May, 2022
+      </strong>
+       donation drive
+    </h3>
+    <div
+      class="sc-5c1a844a-1 iChFCS"
+    >
+      <div
+        class="sc-5c1a844a-2 jcVjep"
+      >
+        <div
+          class="sc-5c1a844a-3 dABrpt"
+        >
+          <span>
+            $
+            15,250
+          </span>
+           raised of $
+          25,000
+           goal
+        </div>
+        <div
+          class="sc-2e76876c-0 enIdsX"
+        >
+          0.61
+        </div>
+        <div
+          class="sc-5c1a844a-5 hOlVpt"
+        >
+          <div
+            class="sc-71eb32ea-0 jPQagQ"
+          >
+            <div
+              class="sc-8737affa-0 JmeHP"
+            >
+              countdown
+            </div>
+            <span>
+              34
+              :
+              09
+              :
+              33
+              :
+              36
+            </span>
+          </div>
+          <div
+            class="sc-5c1a844a-4 gTDDxb"
+          >
+            <div
+              class="sc-8737affa-0 eFgeSv"
+            >
+              trend
+            </div>
+            <span>
+              3.2
+              k donations
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="sc-5c1a844a-5 hOlVpt"
+      >
+        <button
+          class="sc-21c50e09-2 jlWYQF undefined "
+        >
+          <span>
+            Donate Now
+          </span>
+        </button>
+        <button
+          class="sc-21c50e09-2 dvbvHM undefined "
+        >
+          <span>
+            Share
+          </span>
+        </button>
+      </div>
+      <div
+        class="sc-caa8facc-0 gtLRgT"
+      >
+        <div
+          class="sc-c6d4a71-0 iFQvvL"
+        >
+          <div
+            class="sc-c6d4a71-1 hmYVNc"
+          >
+            Leaderboard
+          </div>
+          <button
+            class="sc-21c50e09-2 edScAa undefined "
+          >
+            <span>
+              See All
+            </span>
+          </button>
+        </div>
+        <div
+          class="sc-92fd0fad-0 fHOWlb"
+        >
+          <div>
+            <div>
+              #
+              0
+            </div>
+            <div
+              class="sc-de2f6359-0 cdtqOE"
+            >
+              herp derp
+            </div>
+          </div>
+          <div>
+            $
+            69
+          </div>
+        </div>
+        <div
+          class="sc-92fd0fad-0 fHOWlb"
+        >
+          <div>
+            <div>
+              #
+              1
+            </div>
+            <div
+              class="sc-de2f6359-0 Nmld"
+            >
+              dorp donk
+            </div>
+          </div>
+          <div>
+            $
+            68
+          </div>
+        </div>
+        <div
+          class="sc-92fd0fad-0 fHOWlb"
+        >
+          <div>
+            <div>
+              #
+              2
+            </div>
+            <div
+              class="sc-de2f6359-0 Nmld"
+            >
+              hoop doop
+            </div>
+          </div>
+          <div>
+            $
+            67
+          </div>
+        </div>
+      </div>
+      <div
+        class="sc-caa8facc-0 gtLRgT"
+      >
+        <div
+          class="sc-c6d4a71-0 iFQvvL"
+        >
+          <div
+            class="sc-c6d4a71-1 hmYVNc"
+          >
+            Additional Perks
+          </div>
+          <a
+            class="sc-21c50e09-1 bgUzSl undefined "
+          >
+            <span>
+              Learn More
+            </span>
+          </a>
+        </div>
+        <div
+          class="sc-92fd0fad-0 fHOWlb"
+        >
+          <div>
+            <div
+              class="sc-62acfa07-0 jSiTeQ"
+            >
+              <div
+                class="sc-8737affa-0 bEWlxB"
+                color="night"
+              >
+                badge
+              </div>
+            </div>
+            Membership in Artizen DAO
+          </div>
+        </div>
+        <div
+          class="sc-92fd0fad-0 fHOWlb"
+        >
+          <div>
+            <div
+              class="sc-62acfa07-0 jSiTeQ"
+            >
+              <div
+                class="sc-8737affa-0 XkLAr"
+                color="night"
+              >
+                token
+              </div>
+            </div>
+            0.01% of $ART tokens
+          </div>
+        </div>
+        <div
+          class="sc-92fd0fad-0 fHOWlb"
+        >
+          <div>
+            <div
+              class="sc-62acfa07-0 jSiTeQ"
+            >
+              <div
+                class="sc-8737affa-0 cJBwrt"
+                color="night"
+              >
+                certificate
+              </div>
+            </div>
+            Collectable Receipt
+          </div>
+        </div>
+        <div
+          class="sc-92fd0fad-0 fHOWlb"
+        >
+          <div>
+            <div
+              class="sc-62acfa07-0 jSiTeQ"
+            >
+              <div
+                class="sc-8737affa-0 cXQEat"
+                color="night"
+              >
+                face
+              </div>
+            </div>
+            Custom Discord Avatar
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

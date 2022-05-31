@@ -1,10 +1,58 @@
 import styled from 'styled-components'
 import type { NextPage } from 'next'
-import { Layout, Newsletter, StickyCanvas, PagePadding, HomeSidebar, FeaturedArt, TabbedInfo } from '@components'
-import { CreateTopUpWallet } from '@lib'
-import { typography, breakpoint } from '@theme'
+import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedInfo } from '@components'
+import { CreateTopUpWallet, rgba } from '@lib'
+import { typography, breakpoint, palette } from '@theme'
 
 const Home: NextPage = () => {
+  // note: obviously this is going to come from CMS data
+  const tabbedInfo: Record<string, any> = {
+    About: (
+      <>
+        <h1>Join our May, 2022 donation drive</h1>
+        <p>
+          Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere
+          velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec
+          elit. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus
+          dolor auctor. Nullam id dolor id nibh ultricies vehicula ut id elit.
+        </p>
+        <p>
+          Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent
+          commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna mollis euismod.
+        </p>
+        <p>
+          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce
+          dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Lorem ipsum
+          dolor sit amet, consectetur adipiscing elit.
+        </p>
+        <p>
+          Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius
+          blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Curabitur
+          blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+        </p>
+      </>
+    ),
+    Artist: (
+      <>
+        <h1>So who’s this guy?</h1>
+        <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
+      </>
+    ),
+    Leaderboard: (
+      <>
+        <h1>Leaderboard leaderboard</h1>
+        <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
+      </>
+    ),
+    Perks: (
+      <>
+        <h1>Perky Perky Perks</h1>
+        <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
+      </>
+    ),
+  }
+
   return (
     <Layout>
       <CreateTopUpWallet />
@@ -17,57 +65,22 @@ const Home: NextPage = () => {
         </h2>
       </Header>
 
-      <PagePadding>
-        <StickyCanvas>
-          <DryContent>
-            <FeaturedArt />
-
-            <TabbedInfo>
-              <Tab label="About">
-                <h1>Join our May, 2022 donation drive</h1>
-                <p>
-                  Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus
-                  posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia
-                  odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue
-                  laoreet rutrum faucibus dolor auctor. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                </p>
-                <p>
-                  Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna
-                  mollis euismod.
-                </p>
-                <p>
-                  Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce
-                  dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet
-                  risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec
-                  elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-                <p>
-                  Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus
-                  varius blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                  Curabitur blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                </p>
+      <StyledPagePadding>
+        <Wrapper>
+          <FeaturedArt />
+          <TabbedInfo>
+            {Object.keys(tabbedInfo).map(key => (
+              <Tab key={`tab-${key}`} label={key}>
+                {tabbedInfo[key]}
               </Tab>
-              <Tab label="Artist">
-                <h1>So who’s this guy?</h1>
-                <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
-              </Tab>
-              <Tab label="Leaderboard">
-                <h1>Leaderboard leaderboard</h1>
-                <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
-              </Tab>
-              <Tab label="Perks">
-                <h1>Perky Perky Perks</h1>
-                <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
-              </Tab>
-            </TabbedInfo>
-          </DryContent>
-          <HomeSidebar />
-        </StickyCanvas>
-      </PagePadding>
+            ))}
+          </TabbedInfo>
+          <Sidebar />
+        </Wrapper>
+      </StyledPagePadding>
 
       <Newsletter />
-      <p>love us some Artizen</p>
+      <Metrics />
     </Layout>
   )
 }
@@ -81,15 +94,35 @@ const Header = styled(props => <PagePadding {...props} />)`
   }
 `
 
-const DryContent = styled.div`
-  width: 100%;
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  position: relative;
+  padding: 0;
+  &:before {
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    top: 65px;
+    height: 425px;
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      top: 80px;
+      height: 525px;
+    }
+    background-color: ${rgba(palette.moon)};
+  }
+`
+
+const Wrapper = styled.section`
+  position: relative;
+  display: grid;
+  grid-template-areas: 'featuredArt' 'sidebar' 'tabbedInfo';
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    width: 520px;
+    grid-template-areas: 'featuredArt sidebar' 'tabbedInfo sidebar';
+    grid-gap: 0px 30px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 1020px;
+    grid-gap: 0px 80px;
   }
-  min-height: 80vh;
 `
 
 const Tab = styled.div<{ label: string }>``

@@ -67,8 +67,9 @@ const Wrapper = styled.header<{ scrolled: boolean }>`
   @media (prefers-color-scheme: dark) {
     background: ${props => rgba(palette.slate, props.scrolled ? 0.92 : 1)};
   }
-
-  filter: drop-shadow(0px 4px 16px rgba(0, 0, 0, ${props => (props.scrolled ? 0.48 : 0)}));
+  filter: drop-shadow(
+    ${props => (props.scrolled ? `0px 4px 16px rgba(0, 0, 0, 0.48)` : `0px 0.5px 0px rgba(217, 219, 224, 1)`)}
+  );
   backdrop-filter: blur(${props => (props.scrolled ? 16 : 0)}px);
   transition: background-color 0.3s ease-in-out, filter 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
 `
