@@ -50,7 +50,7 @@ export default styled.div<{
     appearance: none;
     text-indent: 0;
     font-size: 17px;
-    border-radius: 0;
+    border-radius: 8px;
     outline: none;
 
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
