@@ -9,7 +9,6 @@ const SelectControl = ({
   label,
   disabled = false,
   required = false,
-
   data,
   handleChange,
   path,

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { breakpoint, palette, Palette } from '@theme'
+import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
@@ -13,23 +13,21 @@ const Checkbox = ({
   disabled = false,
   uischema,
   ...props
-}: BooleanControlProps) => {
-  return (
-    <Wrapper gridArea={path} {...{ disabled, inverted }} {...props}>
-      <Box>
-        <Input
-          type="checkbox"
-          required={!!required}
-          onChange={_ => handleChange(path, !data)}
-          checked={data}
-          {...{ disabled }}
-        />
-        <Checkmark {...{ inverted }} />
-      </Box>
-      <Label {...{ disabled, inverted }}>{typeof label === 'object' ? label[0] : label}</Label>
-    </Wrapper>
-  )
-}
+}: BooleanControlProps) => (
+  <Wrapper gridArea={path} {...{ disabled, inverted }} {...props}>
+    <Box>
+      <Input
+        type="checkbox"
+        required={!!required}
+        onChange={_ => handleChange(path, !data)}
+        checked={data}
+        {...{ disabled }}
+      />
+      <Checkmark {...{ inverted }} />
+    </Box>
+    <Label {...{ disabled, inverted }}>{typeof label === 'object' ? label[0] : label}</Label>
+  </Wrapper>
+)
 
 const Box = styled.div`
   flex: 0 0 auto;

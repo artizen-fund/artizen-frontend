@@ -10,7 +10,6 @@ export interface EnumControlProps {
   disabled?: boolean
   onChange?: (e: any) => void
   required?: boolean
-
   schema?: JsonSchema
   uischema?: UISchemaElement
   data: any

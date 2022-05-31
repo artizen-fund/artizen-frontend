@@ -5,7 +5,6 @@
 import styled from 'styled-components'
 
 export default styled.div<{
-  disabled?: boolean
   hasMessage?: boolean
   gridArea?: string
 }>`

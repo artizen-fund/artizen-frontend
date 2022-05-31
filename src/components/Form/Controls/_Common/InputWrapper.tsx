@@ -18,6 +18,9 @@ export default styled.div<{
   input,
   textarea,
   select {
+    appearance: none;
+    outline: none;
+
     position: relative;
     display: flex;
     justify-content: center;
@@ -34,24 +37,38 @@ export default styled.div<{
       padding: 22px ${props => (props.hasStatusIcon ? 88 : 32)}px 0 32px;
     }
 
+    border-width: 1px 1px 4px 1px;
+    border-style: solid;
+    border-radius: 8px;
+
     background-color: ${rgba(palette.white)};
     color: ${rgba(palette.night)};
-    border-bottom: 2px solid ${rgba(palette.stone, 0.12)};
+    border-color: ${rgba(palette.stone)};
     &:hover {
-      border-color: ${rgba(palette.barracuda, 1)};
+      border-color: ${rgba(palette.barracuda)};
     }
-    &:focus {
-      border-color: ${rgba(palette.night, 1)};
-    }
+    &:focus,
     &.hasData {
-      border-color: ${rgba(palette.night, 1)};
+      border-color: ${rgba(palette.night)};
     }
 
-    appearance: none;
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.moon)};
+      color: ${rgba(palette.night)};
+      border-color: ${rgba(palette.moon)};
+      &:hover {
+        border-color: ${rgba(palette.barracuda)};
+      }
+      &:focus,
+      &.hasData {
+        background-color: ${rgba(palette.white)};
+        border-color: ${rgba(palette.barracuda)};
+      }
+    }
+
     text-indent: 0;
     font-size: 17px;
-    border-radius: 8px;
-    outline: none;
+    font-family: 'roc-grotesk', verdana, sans-serif;
 
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
     will-change: background, border, color;
@@ -70,5 +87,10 @@ export default styled.div<{
 
   input[type='date'] {
     justify-content: flex-start;
+  }
+
+  input:disabled {
+    background-color: ${rgba(palette.stone)};
+    border-color: ${rgba(palette.stone)};
   }
 `

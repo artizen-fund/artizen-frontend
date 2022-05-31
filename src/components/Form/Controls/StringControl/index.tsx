@@ -11,7 +11,6 @@ import PhoneInput from './PhoneInput'
  */
 export interface StringControlProps {
   label: string | Labels
-  outline?: boolean
   disabled?: boolean
   onChange?: (e: any) => void
   required?: boolean
@@ -99,7 +98,7 @@ export const StringControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusIcon && <InputIcon>{statusIcon}</InputIcon>}
+        {statusIcon && <InputIcon color="night">{statusIcon}</InputIcon>}
       </InputWrapper>
       <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
         {visibleError}
