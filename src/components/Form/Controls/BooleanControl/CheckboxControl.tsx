@@ -68,7 +68,7 @@ const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
   appearance: none;
   transition: background-color 0.25s ease-in-out, box-shadow 0.15s ease-in-out;
 
-  background-color: ${props => rgba(props.inverted ? palette.white : palette.night)};
+  background-color: ${props => rgba(props.inverted ? palette.night : palette.white)};
   border: 1px solid ${props => rgba(props.inverted ? palette.white : palette.slate)};
   @media (prefers-color-scheme: dark) {
     background-color: ${rgba(palette.slate)};
@@ -100,38 +100,11 @@ const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
   }
 `
 
-const Label = styled.span<Pick<BooleanControlProps, 'inverted'>>`
+const Label = styled.span<Pick<BooleanControlProps, 'disabled' | 'inverted'>>`
   display: block;
-  color: ${props => rgba(props.inverted ? palette.white : palette.night)};
+  color: ${props => rgba(props.disabled ? palette.barracuda : props.inverted ? palette.white : palette.night)};
   @media (prefers-color-scheme: dark) {
-    color: ${rgba(palette.moon)};
-  }
-
-  & a {
-    position: relative;
-    display: inline-flex;
-    margin: 0 1px;
-    overflow: hidden;
-
-    &::after {
-      z-index: 2;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      background-color: ${rgba(palette.coral, 0.64)};
-      width: 100%;
-      height: 1px;
-      transform: translate3d(-100%, 0, 0);
-      transition: color 0.25s ease-in-out, transform 0.35s ease-in-out;
-      content: '';
-      pointer-events: none;
-    }
-
-    &:hover {
-      &::after {
-        transform: translate3d(0, 0, 0);
-      }
-    }
+    color: ${props => rgba(props.disabled ? palette.barracuda : palette.white)};
   }
 `
 
@@ -146,15 +119,6 @@ const Wrapper = styled.label<Pick<BooleanControlProps, 'disabled' | 'inverted'> 
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   pointer-events: ${props => (props.disabled ? 'none' : 'all')};
 
-  & input:disabled ~ span {
-    background-color: ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
-    border: 1px solid ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
-    @media (prefers-color-scheme: dark) {
-      background-color: ${rgba(palette.barracuda, 0.4)};
-      border: 1px solid ${rgba(palette.barracuda, 0.4)};
-    }
-  }
-
   & input:checked ~ span {
     background-color: ${props => rgba(props.inverted ? palette.white : palette.slate)};
     @media (prefers-color-scheme: dark) {
@@ -164,6 +128,26 @@ const Wrapper = styled.label<Pick<BooleanControlProps, 'disabled' | 'inverted'> 
     &:after {
       transform: rotate(45deg) scale3d(1, 1, 1);
       opacity: 1;
+    }
+  }
+
+  & input:checked:disabled ~ span,
+  & input:disabled ~ span {
+    background-color: ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
+    border: 1px solid ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
+    &::after {
+      border-color: ${rgba(palette.barracuda)};
+      transform: rotate(45deg) scale3d(1, 1, 1);
+      opacity: 1;
+    }
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.barracuda, 0.4)};
+      border: 1px solid ${rgba(palette.barracuda, 0.4)};
+      &::after {
+        border-color: ${rgba(palette.barracuda)};
+        transform: rotate(45deg) scale3d(1, 1, 1);
+        opacity: 1;
+      }
     }
   }
 
