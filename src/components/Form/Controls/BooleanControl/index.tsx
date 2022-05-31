@@ -5,7 +5,7 @@ import SwitchControl from './SwitchControl'
 import CheckboxControl from './CheckboxControl'
 
 export interface BooleanControlProps {
-  icon?: string
+  inverted?: boolean
   invalid?: boolean
   label: string | Labels
   disabled?: boolean

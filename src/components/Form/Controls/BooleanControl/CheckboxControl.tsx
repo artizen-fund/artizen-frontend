@@ -6,6 +6,7 @@ import { BooleanControlProps } from './'
 const Checkbox = ({
   required,
   label,
+  inverted,
   data,
   handleChange,
   path,
@@ -14,7 +15,7 @@ const Checkbox = ({
   ...props
 }: BooleanControlProps) => {
   return (
-    <Wrapper gridArea={path} {...{ disabled }} {...props}>
+    <Wrapper gridArea={path} {...{ disabled, inverted }} {...props}>
       <Box>
         <Input
           type="checkbox"
@@ -23,11 +24,9 @@ const Checkbox = ({
           checked={data}
           {...{ disabled }}
         />
-        <Checkmark />
+        <Checkmark {...{ inverted }} />
       </Box>
-      <Label {...{ disabled }} color={uischema?.options?.labelColor}>
-        {typeof label === 'object' ? label[0] : label}
-      </Label>
+      <Label {...{ disabled, inverted }}>{typeof label === 'object' ? label[0] : label}</Label>
     </Wrapper>
   )
 }
@@ -58,22 +57,36 @@ const Input = styled.input`
   width: 0;
 `
 
-const Checkmark = styled.span`
+const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${rgba(palette.moon)};
-  border: 1px solid ${rgba(palette.slate)};
+
   border-radius: 9999px;
   appearance: none;
   transition: background-color 0.25s ease-in-out, box-shadow 0.15s ease-in-out;
 
+  background-color: ${props => rgba(props.inverted ? palette.white : palette.night)};
+  border: 1px solid ${props => rgba(props.inverted ? palette.white : palette.slate)};
+  @media (prefers-color-scheme: dark) {
+    background-color: ${rgba(palette.slate)};
+    border-color ${rgba(palette.moon)};
+  }
+  /* see [Wrapper -> & input ~ span] for state style changes */
+  
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi) {
+    border-width: 0.5px;
+  }
+
   &:after {
     position: absolute;
     border-style: solid;
-    border-color: ${rgba(palette.moon)};
+    border-color: ${props => rgba(props.inverted ? palette.night : palette.white)};
+    @media (prefers-color-scheme: dark) {
+      border-color ${rgba(palette.night)};
+    }
     left: calc(50% - 1px);
     top: calc(50% - 4px);
     width: 3px;
@@ -87,9 +100,12 @@ const Checkmark = styled.span`
   }
 `
 
-const Label = styled.span<{ color?: keyof Palette }>`
+const Label = styled.span<Pick<BooleanControlProps, 'inverted'>>`
   display: block;
-  color: ${props => rgba(props.color ? palette[props.color] : palette.barracuda)};
+  color: ${props => rgba(props.inverted ? palette.white : palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
 
   & a {
     position: relative;
@@ -119,24 +135,31 @@ const Label = styled.span<{ color?: keyof Palette }>`
   }
 `
 
-const Wrapper = styled.label<{ disabled: boolean; gridArea?: string }>`
+const Wrapper = styled.label<Pick<BooleanControlProps, 'disabled' | 'inverted'> & { gridArea?: string }>`
   position: relative;
   ${props => props.gridArea && `grid-area: ${props.gridArea};`}
   display: flex;
   align-items: center;
   padding: 16px 0;
   user-select: none;
-  color: ${props => (props.disabled ? rgba(palette.stone) : rgba(palette.night))};
+
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   pointer-events: ${props => (props.disabled ? 'none' : 'all')};
 
   & input:disabled ~ span {
-    background-color: ${rgba(palette.stone)};
-    border: 1px solid ${rgba(palette.stone)};
+    background-color: ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
+    border: 1px solid ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.barracuda, 0.4)};
+      border: 1px solid ${rgba(palette.barracuda, 0.4)};
+    }
   }
 
   & input:checked ~ span {
-    background-color: ${rgba(palette.slate)};
+    background-color: ${props => rgba(props.inverted ? palette.white : palette.slate)};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.moon)};
+    }
 
     &:after {
       transform: rotate(45deg) scale3d(1, 1, 1);

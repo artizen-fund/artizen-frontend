@@ -9,6 +9,9 @@ export default {
     disabled: {
       control: { type: 'boolean' },
     },
+    inverted: {
+      control: { type: 'boolean' },
+    },
   },
 }
 

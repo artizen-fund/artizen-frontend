@@ -50,9 +50,6 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/optIn',
       label: 'Opt-in to receive the Artizen newsletter.',
-      options: {
-        labelColor: 'white',
-      },
     },
   ],
 }
