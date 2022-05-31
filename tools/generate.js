@@ -9,7 +9,7 @@ generateTemplateFiles([
     entry: {
       folderPath: './tools/templates/component/',
     },
-    stringReplacers: ['__name__'],
+    stringReplacers: [{ question: 'Component name (ex.SomeCoolComponent)', slot: '__name__' }],
     output: {
       path: './src/components/__name__(pascalCase)',
       pathAndFileNameDefaultCase: '(pascalCase)',
