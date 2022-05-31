@@ -20,7 +20,11 @@ export interface BooleanControlProps {
 }
 
 export const BooleanControl = (props: BooleanControlProps) =>
-  props.uischema?.options?.format === 'switch' ? <SwitchControl {...props} /> : <CheckboxControl {...props} />
+  props.uischema?.options?.format === 'switch' ? (
+    <SwitchControl {...props} />
+  ) : (
+    <CheckboxControl {...props} inverted={props.uischema?.options?.inverted} />
+  )
 
 export const booleanControlTester = rankWith(
   3,
