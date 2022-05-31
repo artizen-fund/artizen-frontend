@@ -8,6 +8,7 @@ import { IconKey, typography } from '@theme'
 export interface ButtonProps {
   outline?: boolean
   inverted?: boolean
+  disabled?: boolean
   size?: 'l0' | 'l1' | 'l2'
   stretch?: boolean
 
@@ -24,8 +25,6 @@ export interface ButtonProps {
   iconOnRight?: boolean
   iconOnly?: boolean
 
-  /* label and misc */
-  disabled?: boolean
   className?: string
   children: React.ReactNode
 }
