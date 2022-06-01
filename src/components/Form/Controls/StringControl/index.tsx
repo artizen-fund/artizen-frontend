@@ -68,7 +68,7 @@ export const StringControl = ({
   // This is for all left-hand-side icons.
   // Currently just phone.
   const hasWidget = uischema?.options?.format === 'phone'
-  console.log(data, !!data ? 'hasData' : 'noData')
+
   return (
     <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
       <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusIcon={!!statusIcon}>
