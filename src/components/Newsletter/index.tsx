@@ -1,11 +1,29 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import styled from 'styled-components'
+import MailchimpSubscribe from 'react-mailchimp-subscribe'
+import type { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 import { Form, Button, PagePadding } from '@components'
 import { schema, uischema, initialState } from './form'
 
-const Newsletter = () => {
+const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultFormFields>) => {
+  const [data, setData] = useState<any>(undefined)
+  useMemo(() => {
+    setData(initialState)
+    if (typeof localStorage === 'undefined') {
+      setData(initialState)
+      return
+    }
+    const frozenAnswers = localStorage.getItem(schema.name)
+    if (!frozenAnswers) {
+      setData(initialState)
+      return
+    }
+    const thawedAnswers = JSON.parse(frozenAnswers)
+    setData(thawedAnswers)
+  }, [schema])
+
   const [submitted, setSubmitted] = useState(false)
   return (
     <PagePadding black>
@@ -14,14 +32,20 @@ const Newsletter = () => {
           <Header>Join us in building the world's largest web3 fund for public goods</Header>
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
-        <Form {...{ schema, uischema, initialState }} />
-        <StyledButton onClick={() => setSubmitted(!submitted)} outline size="l0">
-          Submit
-        </StyledButton>
+        <Form {...{ schema, uischema, initialState, data, setData }} processing={true}>
+          <StyledButton onClick={() => subscribe(data)} outline size="l0">
+            Submit
+          </StyledButton>
+        </Form>
       </Wrapper>
     </PagePadding>
   )
 }
+/*
+              status={status}
+message={message}
+onSubmitted={(formData) => subscribe(formData)}
+*/
 
 const Wrapper = styled.div`
   display: grid;
@@ -48,27 +72,27 @@ const Wrapper = styled.div`
     display: contents;
   }
 
-  *[id='#/properties/email'] {
+  *[id='#/properties/EMAIL'] {
     grid-area: email;
   }
 
-  *[id='#/properties/firstName'] {
+  *[id='#/properties/FIRSTNAME'] {
     grid-area: firstName;
   }
 
-  *[id='#/properties/lastName'] {
+  *[id='#/properties/LASTNAME'] {
     grid-area: lastName;
   }
 
-  *[id='#/properties/optIn'] {
+  *[id='#/properties/OPTIN'] {
     grid-area: optIn;
   }
 
   &.submitted {
-    *[id='#/properties/email'],
-    *[id='#/properties/firstName'],
-    *[id='#/properties/lastName'],
-    *[id='#/properties/optIn'] {
+    *[id='#/properties/EMAIL'],
+    *[id='#/properties/FIRSTNAME'],
+    *[id='#/properties/LASTNAME'],
+    *[id='#/properties/OPTIN'] {
       display: none;
     }
   }
@@ -92,4 +116,9 @@ const StyledButton = styled(props => <Button {...props} />)`
   grid-area: submit;
 `
 
-export default Newsletter
+export default () => (
+  <MailchimpSubscribe
+    url={process.env.NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL!}
+    render={props => <Newsletter {...props} />}
+  />
+)

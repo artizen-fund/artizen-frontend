@@ -7,7 +7,7 @@ todo:
 
 import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
+import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
 import { IconKey } from '@theme'
@@ -15,10 +15,11 @@ import { IconKey } from '@theme'
 export interface NumberControlProps {
   label: string | Labels
   disabled?: boolean
+  processing?: boolean
   onChange?: (e: any) => void
   required?: boolean
   schema: JsonSchema
-  uischema: UISchemaElement
+  uischema: ControlElement
   data: any
   handleChange(path: string, value: any): void
   path: string
@@ -28,6 +29,7 @@ export interface NumberControlProps {
 export const NumberControl = ({
   label,
   disabled,
+  processing,
   required,
   schema,
   uischema,
@@ -68,10 +70,11 @@ export const NumberControl = ({
   const hasData = (data?: string) => !!data && !!data.toString()
 
   return (
-    <Wrapper gridArea={path} {...{ disabled }} hasMessage={!!errors} {...props}>
-      <InputWrapper {...{ disabled }} hasStatusIcon={!!statusIcon}>
+    <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
+      <InputWrapper disabled={disabled || processing} hasStatusIcon={!!statusIcon}>
         <input
           {...{ disabled, required }}
+          disabled={disabled || processing}
           defaultValue={data}
           minLength={schema.minimum}
           maxLength={schema.maximum}

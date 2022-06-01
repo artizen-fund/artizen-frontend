@@ -1,5 +1,5 @@
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
+import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import SegmentedControl from './SegmentedControl'
 import SelectControl from './SelectControl'
@@ -8,10 +8,11 @@ export interface EnumControlProps {
   invalid?: boolean
   label: string | Labels
   disabled?: boolean
+  processing?: boolean
   onChange?: (e: any) => void
   required?: boolean
   schema?: JsonSchema
-  uischema?: UISchemaElement
+  uischema?: ControlElement
   data: any
   handleChange(path: string, value: any): void
   path: string

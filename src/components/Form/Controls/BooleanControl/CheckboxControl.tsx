@@ -14,7 +14,7 @@ const Checkbox = ({
   uischema,
   ...props
 }: BooleanControlProps) => (
-  <Wrapper gridArea={path} {...{ disabled, inverted }} {...props}>
+  <Wrapper gridArea={path} {...{ disabled, inverted }} {...props} id={uischema?.scope}>
     <Box>
       <Input
         type="checkbox"

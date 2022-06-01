@@ -8,6 +8,7 @@ import { EnumControlProps } from './'
 const SelectControl = ({
   label,
   disabled = false,
+  processing = false,
   required = false,
   data,
   handleChange,
@@ -49,10 +50,11 @@ const SelectControl = ({
   }, [parsedErrors])
 
   return (
-    <Wrapper gridArea={path} {...{ filled, disabled }} {...props}>
+    <Wrapper gridArea={path} {...{ filled }} {...props} id={uischema?.scope}>
       <InputWrapper {...{ hasStatusIcon }}>
         <select
-          {...{ disabled, required, ref }}
+          {...{ required, ref }}
+          disabled={disabled || processing}
           onChange={handleChangeThenBlur}
           onBlur={() => setVirgin(false)}
           defaultValue={data}

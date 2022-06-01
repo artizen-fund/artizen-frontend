@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
+import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
 import { IconKey } from '@theme'
@@ -9,14 +9,17 @@ import PhoneInput from './PhoneInput'
 /* Todo: Trying to decide if schema and uischema should be optional.
  *       Boils down to whether we will ever use these outside of jsonforms.
  */
+
+//todo: haha it's enabled not disabled
 export interface StringControlProps {
   label: string | Labels
   disabled?: boolean
+  processing?: boolean
   onChange?: (e: any) => void
   required?: boolean
   autoComplete?: string
   schema?: JsonSchema
-  uischema?: UISchemaElement
+  uischema?: ControlElement
   data: any
   handleChange(path: string, value: any): void
   path: string
@@ -26,6 +29,7 @@ export interface StringControlProps {
 export const StringControl = ({
   label,
   disabled,
+  processing,
   required,
   autoComplete,
   schema,
@@ -67,8 +71,8 @@ export const StringControl = ({
   const hasWidget = uischema?.options?.format === 'phone'
 
   return (
-    <Wrapper gridArea={path} {...{ disabled }} hasMessage={!!errors} {...props}>
-      <InputWrapper {...{ hasWidget, disabled }} hasStatusIcon={!!statusIcon}>
+    <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
+      <InputWrapper {...{ hasWidget }} disabled={disabled || processing} hasStatusIcon={!!statusIcon}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
             {...{ disabled, required, autoComplete }}
@@ -83,7 +87,8 @@ export const StringControl = ({
           />
         ) : (
           <input
-            {...{ disabled, required, autoComplete }}
+            {...{ required, autoComplete }}
+            disabled={disabled || processing}
             minLength={schema?.minLength}
             maxLength={schema?.maxLength}
             type={uischema?.options?.format || 'text'}

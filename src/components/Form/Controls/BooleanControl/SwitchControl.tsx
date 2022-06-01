@@ -12,7 +12,7 @@ export const SwitchControl = ({
   required,
   ...props
 }: BooleanControlProps) => (
-  <Wrapper gridArea={path} {...props}>
+  <Wrapper gridArea={path} {...props} id={uischema?.scope}>
     <Label color={uischema?.options?.labelColor}>{typeof label === 'object' ? label[0] : label}</Label>
     <Input type="checkbox" required={!!required} onChange={_ => handleChange(path, !data)} checked={data} />
     <Switch checked={data} />
