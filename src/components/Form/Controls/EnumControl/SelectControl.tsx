@@ -7,7 +7,7 @@ import { EnumControlProps } from './'
 
 const SelectControl = ({
   label,
-  disabled = false,
+  enabled = true,
   processing = false,
   required = false,
   data,
@@ -54,10 +54,11 @@ const SelectControl = ({
       <InputWrapper {...{ hasStatusIcon }}>
         <select
           {...{ required, ref }}
-          disabled={disabled || processing}
+          disabled={!enabled || processing}
           onChange={handleChangeThenBlur}
           onBlur={() => setVirgin(false)}
           defaultValue={data}
+          placeholder={uischema?.options?.placeholder || ' '}
           className={!!data ? 'hasData' : 'noData'}
         >
           {schema?.enum?.map((option: string, i: number) => (

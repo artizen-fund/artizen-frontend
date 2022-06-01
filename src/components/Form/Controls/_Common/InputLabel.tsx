@@ -35,10 +35,10 @@ export default styled.label<{ hasWidget?: boolean }>`
   .PhoneInput:focus-within ~ &,
   .PhoneInput.hasData ~ &,
   input:focus ~ &,
-  input.hasData ~ &,
+  input:not(:placeholder-shown) ~ &,
   input:required:valid ~ &,
-  select:focus ~ &,
   select.hasData ~ &,
+  select:focus ~ &,
   select:required:valid ~ & {
     transform: translate3d(0, -12px, 0) scale3d(0.8, 0.8, 1);
   }

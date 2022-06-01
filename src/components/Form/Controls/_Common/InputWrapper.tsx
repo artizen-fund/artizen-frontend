@@ -21,7 +21,9 @@ const InputPalette = css`
   }
 
   &:focus,
-  &.hasData {
+  &.hasData,
+  &:not([value='']),
+  &:not(:placeholder-shown) {
     border-color: ${rgba(palette.night)};
   }
 
@@ -49,7 +51,9 @@ const InputPalette = css`
     }
 
     &:focus,
-    &.hasData {
+    &:not([value='']),
+    &.hasData,
+    &:not(:placeholder-shown) {
       background-color: ${rgba(palette.white)};
       border-color: ${rgba(palette.barracuda)};
     }
