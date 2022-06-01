@@ -7,7 +7,7 @@ import SelectControl from './SelectControl'
 export interface EnumControlProps {
   invalid?: boolean
   label: string | Labels
-  disabled?: boolean
+  enabled?: boolean
   processing?: boolean
   onChange?: (e: any) => void
   required?: boolean

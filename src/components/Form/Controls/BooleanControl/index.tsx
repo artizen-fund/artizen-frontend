@@ -8,7 +8,7 @@ export interface BooleanControlProps {
   inverted?: boolean
   invalid?: boolean
   label: string | Labels
-  disabled?: boolean
+  enabled?: boolean
   onChange?: (e: any) => void
   required?: boolean
 

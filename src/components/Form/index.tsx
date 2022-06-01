@@ -18,13 +18,12 @@ interface FormProps {
   uischema: any
   data: any
   setData: any
+  readonly: boolean
   children: React.ReactElement
-  processing?: boolean
 }
 
-const Form = ({ schema, uischema, data, setData, processing, children }: FormProps) => {
+const Form = ({ schema, uischema, data, setData, readonly, children }: FormProps) => {
   const [errors, setErrors] = useState<any>(undefined)
-  const submitted = false
 
   const freezeAndSetData = debounce((newData: any, errors: any) => {
     setData(newData)
@@ -49,12 +48,11 @@ const Form = ({ schema, uischema, data, setData, processing, children }: FormPro
   return (
     <>
       <JsonForms
-        {...{ schema, uischema, renderers, data }}
+        {...{ schema, uischema, renderers, data, readonly }}
         config={{
           trim: true,
         }}
         onChange={({ data, errors }) => freezeAndSetData(data, errors)}
-        readonly={processing || submitted}
       />
       {children}
     </>

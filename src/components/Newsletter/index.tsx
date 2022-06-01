@@ -24,6 +24,8 @@ const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultF
     setData(thawedAnswers)
   }, [schema])
 
+  const readonly = false
+
   const [submitted, setSubmitted] = useState(false)
   return (
     <PagePadding black>
@@ -32,7 +34,7 @@ const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultF
           <Header>Join us in building the world's largest web3 fund for public goods</Header>
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
-        <Form {...{ schema, uischema, initialState, data, setData }} processing={true}>
+        <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
           <StyledButton onClick={() => subscribe(data)} outline size="l0">
             Submit
           </StyledButton>

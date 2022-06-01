@@ -10,10 +10,9 @@ import PhoneInput from './PhoneInput'
  *       Boils down to whether we will ever use these outside of jsonforms.
  */
 
-//todo: haha it's enabled not disabled
 export interface StringControlProps {
   label: string | Labels
-  disabled?: boolean
+  enabled?: boolean
   processing?: boolean
   onChange?: (e: any) => void
   required?: boolean
@@ -28,7 +27,7 @@ export interface StringControlProps {
 
 export const StringControl = ({
   label,
-  disabled,
+  enabled,
   processing,
   required,
   autoComplete,
@@ -63,8 +62,8 @@ export const StringControl = ({
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
   const [statusIcon, setStatusIcon] = useState<keyof IconKey>()
   useEffect(() => {
-    setStatusIcon(disabled ? 'lock' : undefined)
-  }, [disabled])
+    setStatusIcon(enabled ? undefined : 'lock')
+  }, [enabled])
 
   // This is for all left-hand-side icons.
   // Currently just phone.
@@ -72,10 +71,11 @@ export const StringControl = ({
 
   return (
     <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
-      <InputWrapper {...{ hasWidget }} disabled={disabled || processing} hasStatusIcon={!!statusIcon}>
+      <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusIcon={!!statusIcon}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
-            {...{ disabled, required, autoComplete }}
+            {...{ required, autoComplete }}
+            disabled={!enabled}
             placeholder={uischema?.options?.placeholder}
             value={data}
             onChange={(e: string) => handleChange(path, e)}
@@ -88,7 +88,7 @@ export const StringControl = ({
         ) : (
           <input
             {...{ required, autoComplete }}
-            disabled={disabled || processing}
+            disabled={!enabled || processing}
             minLength={schema?.minLength}
             maxLength={schema?.maxLength}
             type={uischema?.options?.format || 'text'}

@@ -14,7 +14,7 @@ import { IconKey } from '@theme'
 
 export interface NumberControlProps {
   label: string | Labels
-  disabled?: boolean
+  enabled?: boolean
   processing?: boolean
   onChange?: (e: any) => void
   required?: boolean
@@ -28,7 +28,7 @@ export interface NumberControlProps {
 
 export const NumberControl = ({
   label,
-  disabled,
+  enabled,
   processing,
   required,
   schema,
@@ -62,8 +62,8 @@ export const NumberControl = ({
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
   const [statusIcon, setStatusIcon] = useState<keyof IconKey>()
   useEffect(() => {
-    setStatusIcon(disabled ? 'lock' : undefined)
-  }, [disabled])
+    setStatusIcon(enabled ? undefined : 'lock')
+  }, [enabled])
 
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
 
@@ -71,10 +71,10 @@ export const NumberControl = ({
 
   return (
     <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
-      <InputWrapper disabled={disabled || processing} hasStatusIcon={!!statusIcon}>
+      <InputWrapper disabled={!enabled || processing} hasStatusIcon={!!statusIcon}>
         <input
-          {...{ disabled, required }}
-          disabled={disabled || processing}
+          {...{ required }}
+          disabled={!enabled || processing}
           defaultValue={data}
           minLength={schema.minimum}
           maxLength={schema.maximum}
