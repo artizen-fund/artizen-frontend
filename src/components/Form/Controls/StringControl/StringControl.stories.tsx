@@ -18,6 +18,9 @@ export default {
       options: ['text', 'email', 'url', 'password', 'phone'],
       control: { type: 'select' },
     },
+    disabled: {
+      control: { type: 'boolean' },
+    },
     errors: { control: { type: 'text' } },
   },
 }

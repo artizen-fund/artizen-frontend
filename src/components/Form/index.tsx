@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { JsonForms } from '@jsonforms/react'
 import { vanillaRenderers } from '@jsonforms/vanilla-renderers'
 import { debounce } from 'lodash'
@@ -16,26 +16,14 @@ import {
 interface FormProps {
   schema: any
   uischema: any
-  initialState: any
+  data: any
+  setData: any
+  readonly: boolean
+  children: React.ReactElement
 }
 
-const Form = ({ schema, uischema, initialState }: FormProps) => {
-  const [data, setData] = useState<any>(undefined)
+const Form = ({ schema, uischema, data, setData, readonly, children }: FormProps) => {
   const [errors, setErrors] = useState<any>(undefined)
-
-  useMemo(() => {
-    if (typeof localStorage === 'undefined') {
-      setData(initialState)
-      return
-    }
-    const frozenAnswers = localStorage.getItem(schema.name)
-    if (!frozenAnswers) {
-      setData(initialState)
-      return
-    }
-    const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers)
-  }, [schema])
 
   const freezeAndSetData = debounce((newData: any, errors: any) => {
     setData(newData)
@@ -54,16 +42,20 @@ const Form = ({ schema, uischema, initialState }: FormProps) => {
     /* { tester: formLabelTester, renderer: FormLabel }, */
   ]
 
-  if (!data) return <></>
+  // if (!data) return <></>
+  // todo: does removing this break anything?
 
   return (
-    <JsonForms
-      {...{ schema, uischema, renderers, data }}
-      config={{
-        trim: true,
-      }}
-      onChange={({ data, errors }) => freezeAndSetData(data, errors)}
-    />
+    <>
+      <JsonForms
+        {...{ schema, uischema, renderers, data, readonly }}
+        config={{
+          trim: true,
+        }}
+        onChange={({ data, errors }) => freezeAndSetData(data, errors)}
+      />
+      {children}
+    </>
   )
 }
 

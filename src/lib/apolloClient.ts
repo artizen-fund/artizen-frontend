@@ -104,7 +104,6 @@ export function addApolloState(client: ApolloClient<NormalizedCacheObject>, page
 export function useApollo(pageProps: any, user?: ArtizenUser) {
   // Const [token, setToken] = useState({loading: true, token: null, error: null})
 
-  console.log('user   ', user)
   // Const state = pageProps[APOLLO_STATE_PROP_NAME]
   // Const store = useMemo(() => !loading && initializeApollo(state, user), [loading || state])
   const state = pageProps[APOLLO_STATE_PROP_NAME]

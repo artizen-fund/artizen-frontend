@@ -1,36 +1,33 @@
 import styled from 'styled-components'
-import { breakpoint, palette, Palette } from '@theme'
+import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
 const Checkbox = ({
   required,
   label,
+  inverted,
   data,
   handleChange,
   path,
   disabled = false,
   uischema,
   ...props
-}: BooleanControlProps) => {
-  return (
-    <Wrapper gridArea={path} {...{ disabled }} {...props}>
-      <Box>
-        <Input
-          type="checkbox"
-          required={!!required}
-          onChange={_ => handleChange(path, !data)}
-          checked={data}
-          {...{ disabled }}
-        />
-        <Checkmark />
-      </Box>
-      <Label {...{ disabled }} color={uischema?.options?.labelColor}>
-        {typeof label === 'object' ? label[0] : label}
-      </Label>
-    </Wrapper>
-  )
-}
+}: BooleanControlProps) => (
+  <Wrapper gridArea={path} {...{ disabled, inverted }} {...props} id={uischema?.scope}>
+    <Box>
+      <Input
+        type="checkbox"
+        required={!!required}
+        onChange={_ => handleChange(path, !data)}
+        checked={data}
+        {...{ disabled }}
+      />
+      <Checkmark {...{ inverted }} />
+    </Box>
+    <Label {...{ disabled, inverted }}>{typeof label === 'object' ? label[0] : label}</Label>
+  </Wrapper>
+)
 
 const Box = styled.div`
   flex: 0 0 auto;
@@ -58,22 +55,36 @@ const Input = styled.input`
   width: 0;
 `
 
-const Checkmark = styled.span`
+const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${rgba(palette.moon)};
-  border: 1px solid ${rgba(palette.slate)};
+
   border-radius: 9999px;
   appearance: none;
   transition: background-color 0.25s ease-in-out, box-shadow 0.15s ease-in-out;
 
+  background-color: ${props => rgba(props.inverted ? palette.night : palette.white)};
+  border: 1px solid ${props => rgba(props.inverted ? palette.white : palette.slate)};
+  @media (prefers-color-scheme: dark) {
+    background-color: ${rgba(palette.slate)};
+    border-color ${rgba(palette.moon)};
+  }
+  /* see [Wrapper -> & input ~ span] for state style changes */
+  
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi) {
+    border-width: 0.5px;
+  }
+
   &:after {
     position: absolute;
     border-style: solid;
-    border-color: ${rgba(palette.moon)};
+    border-color: ${props => rgba(props.inverted ? palette.night : palette.white)};
+    @media (prefers-color-scheme: dark) {
+      border-color ${rgba(palette.night)};
+    }
     left: calc(50% - 1px);
     top: calc(50% - 4px);
     width: 3px;
@@ -87,60 +98,54 @@ const Checkmark = styled.span`
   }
 `
 
-const Label = styled.span<{ color?: keyof Palette }>`
+const Label = styled.span<Pick<BooleanControlProps, 'disabled' | 'inverted'>>`
   display: block;
-  color: ${props => rgba(props.color ? palette[props.color] : palette.barracuda)};
-
-  & a {
-    position: relative;
-    display: inline-flex;
-    margin: 0 1px;
-    overflow: hidden;
-
-    &::after {
-      z-index: 2;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      background-color: ${rgba(palette.coral, 0.64)};
-      width: 100%;
-      height: 1px;
-      transform: translate3d(-100%, 0, 0);
-      transition: color 0.25s ease-in-out, transform 0.35s ease-in-out;
-      content: '';
-      pointer-events: none;
-    }
-
-    &:hover {
-      &::after {
-        transform: translate3d(0, 0, 0);
-      }
-    }
+  color: ${props => rgba(props.disabled ? palette.barracuda : props.inverted ? palette.white : palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${props => rgba(props.disabled ? palette.barracuda : palette.white)};
   }
 `
 
-const Wrapper = styled.label<{ disabled: boolean; gridArea?: string }>`
+const Wrapper = styled.label<Pick<BooleanControlProps, 'disabled' | 'inverted'> & { gridArea?: string }>`
   position: relative;
   ${props => props.gridArea && `grid-area: ${props.gridArea};`}
   display: flex;
   align-items: center;
   padding: 16px 0;
   user-select: none;
-  color: ${props => (props.disabled ? rgba(palette.stone) : rgba(palette.night))};
+
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   pointer-events: ${props => (props.disabled ? 'none' : 'all')};
 
-  & input:disabled ~ span {
-    background-color: ${rgba(palette.stone)};
-    border: 1px solid ${rgba(palette.stone)};
-  }
-
   & input:checked ~ span {
-    background-color: ${rgba(palette.slate)};
+    background-color: ${props => rgba(props.inverted ? palette.white : palette.slate)};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.moon)};
+    }
 
     &:after {
       transform: rotate(45deg) scale3d(1, 1, 1);
       opacity: 1;
+    }
+  }
+
+  & input:checked:disabled ~ span,
+  & input:disabled ~ span {
+    background-color: ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
+    border: 1px solid ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
+    &::after {
+      border-color: ${rgba(palette.barracuda)};
+      transform: rotate(45deg) scale3d(1, 1, 1);
+      opacity: 1;
+    }
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.barracuda, 0.4)};
+      border: 1px solid ${rgba(palette.barracuda, 0.4)};
+      &::after {
+        border-color: ${rgba(palette.barracuda)};
+        transform: rotate(45deg) scale3d(1, 1, 1);
+        opacity: 1;
+      }
     }
   }
 

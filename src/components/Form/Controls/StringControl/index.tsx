@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
+import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
 import { IconKey } from '@theme'
@@ -9,15 +9,16 @@ import PhoneInput from './PhoneInput'
 /* Todo: Trying to decide if schema and uischema should be optional.
  *       Boils down to whether we will ever use these outside of jsonforms.
  */
+
 export interface StringControlProps {
   label: string | Labels
-  outline?: boolean
-  disabled?: boolean
+  enabled?: boolean
+  processing?: boolean
   onChange?: (e: any) => void
   required?: boolean
   autoComplete?: string
   schema?: JsonSchema
-  uischema?: UISchemaElement
+  uischema?: ControlElement
   data: any
   handleChange(path: string, value: any): void
   path: string
@@ -26,7 +27,8 @@ export interface StringControlProps {
 
 export const StringControl = ({
   label,
-  disabled,
+  enabled,
+  processing,
   required,
   autoComplete,
   schema,
@@ -60,19 +62,20 @@ export const StringControl = ({
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
   const [statusIcon, setStatusIcon] = useState<keyof IconKey>()
   useEffect(() => {
-    setStatusIcon(disabled ? 'lock' : undefined)
-  }, [disabled])
+    setStatusIcon(enabled ? undefined : 'lock')
+  }, [enabled])
 
   // This is for all left-hand-side icons.
   // Currently just phone.
   const hasWidget = uischema?.options?.format === 'phone'
 
   return (
-    <Wrapper gridArea={path} {...{ disabled }} hasMessage={!!errors} {...props}>
-      <InputWrapper {...{ hasWidget, disabled }} hasStatusIcon={!!statusIcon}>
+    <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
+      <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusIcon={!!statusIcon}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
-            {...{ disabled, required, autoComplete }}
+            {...{ required, autoComplete }}
+            disabled={!enabled}
             placeholder={uischema?.options?.placeholder}
             value={data}
             onChange={(e: string) => handleChange(path, e)}
@@ -84,7 +87,8 @@ export const StringControl = ({
           />
         ) : (
           <input
-            {...{ disabled, required, autoComplete }}
+            {...{ required, autoComplete }}
+            disabled={!enabled || processing}
             minLength={schema?.minLength}
             maxLength={schema?.maxLength}
             type={uischema?.options?.format || 'text'}
@@ -99,7 +103,7 @@ export const StringControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusIcon && <InputIcon>{statusIcon}</InputIcon>}
+        {statusIcon && <InputIcon color="night">{statusIcon}</InputIcon>}
       </InputWrapper>
       <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
         {visibleError}

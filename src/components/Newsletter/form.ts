@@ -7,23 +7,23 @@ export const schema = {
   name: 'newsletter',
   type: 'object',
   properties: {
-    firstName: {
+    FIRSTNAME: {
       type: 'string',
       minLength: 2,
     },
-    lastName: {
+    LASTNAME: {
       type: 'string',
       minLength: 2,
     },
-    email: {
+    EMAIL: {
       type: 'string',
       format: 'email',
     },
-    optIn: {
+    OPTIN: {
       type: 'boolean',
     },
   },
-  required: ['email', 'optIn'],
+  required: ['EMAIL', 'OPTIN'],
 }
 
 export const initialState = {
@@ -35,23 +35,25 @@ export const uischema = {
   elements: [
     {
       type: 'Control',
-      scope: '#/properties/firstName',
+      scope: '#/properties/FIRSTNAME',
+      label: 'First Name',
     },
     {
       type: 'Control',
-      scope: '#/properties/lastName',
+      scope: '#/properties/LASTNAME',
+      label: 'Last Name',
     },
     {
       type: 'Control',
-      scope: '#/properties/email',
+      scope: '#/properties/EMAIL',
       label: 'Email Address',
     },
     {
       type: 'Control',
-      scope: '#/properties/optIn',
+      scope: '#/properties/OPTIN',
       label: 'Opt-in to receive the Artizen newsletter.',
       options: {
-        labelColor: 'white',
+        inverted: true,
       },
     },
   ],

@@ -24,6 +24,7 @@ export default styled.label<{ hasWidget?: boolean }>`
   }
 
   color: ${rgba(palette.barracuda)};
+  letter-spacing: 0.5px;
 
   transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   transform-origin: center left;
@@ -40,6 +41,5 @@ export default styled.label<{ hasWidget?: boolean }>`
   select.hasData ~ &,
   select:required:valid ~ & {
     transform: translate3d(0, -12px, 0) scale3d(0.8, 0.8, 1);
-    color: ${rgba(palette.night, 0.8)};
   }
 `

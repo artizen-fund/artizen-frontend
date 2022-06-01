@@ -7,18 +7,19 @@ todo:
 
 import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, UISchemaElement } from '@jsonforms/core'
+import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
 import { IconKey } from '@theme'
 
 export interface NumberControlProps {
   label: string | Labels
-  disabled?: boolean
+  enabled?: boolean
+  processing?: boolean
   onChange?: (e: any) => void
   required?: boolean
   schema: JsonSchema
-  uischema: UISchemaElement
+  uischema: ControlElement
   data: any
   handleChange(path: string, value: any): void
   path: string
@@ -27,7 +28,8 @@ export interface NumberControlProps {
 
 export const NumberControl = ({
   label,
-  disabled,
+  enabled,
+  processing,
   required,
   schema,
   uischema,
@@ -60,18 +62,19 @@ export const NumberControl = ({
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
   const [statusIcon, setStatusIcon] = useState<keyof IconKey>()
   useEffect(() => {
-    setStatusIcon(disabled ? 'lock' : undefined)
-  }, [disabled])
+    setStatusIcon(enabled ? undefined : 'lock')
+  }, [enabled])
 
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
 
   const hasData = (data?: string) => !!data && !!data.toString()
 
   return (
-    <Wrapper gridArea={path} {...{ disabled }} hasMessage={!!errors} {...props}>
-      <InputWrapper {...{ disabled }} hasStatusIcon={!!statusIcon}>
+    <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
+      <InputWrapper disabled={!enabled || processing} hasStatusIcon={!!statusIcon}>
         <input
-          {...{ disabled, required }}
+          {...{ required }}
+          disabled={!enabled || processing}
           defaultValue={data}
           minLength={schema.minimum}
           maxLength={schema.maximum}
