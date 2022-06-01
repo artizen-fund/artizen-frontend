@@ -115,7 +115,10 @@ const ButtonStyle = css<Partial<ButtonProps>>`
   `}
 
   border-radius: 9999px;
-  border: ${props => (props.size === 'l2' ? 0.5 : 2)}px solid transparent;
+  border: ${props => (props.size === 'l2' ? 1 : 2)}px solid transparent;
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi) {
+    border-width: ${props => (props.size === 'l2' ? 0.5 : 2)}px;
+  }
 
   cursor: pointer;
   &:disabled,
