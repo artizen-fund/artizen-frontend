@@ -3,25 +3,67 @@
 exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
 <div>
   <section
-    class="sc-d3770b70-0"
+    class="sc-53f1d815-0 jgUOtj"
   >
     <div
-      class="sc-d3770b70-1 gllUzX"
+      class="sc-53f1d815-1 bymRZK"
     />
-    <h1>
-      Title of Monthly Featured Artwork
-    </h1>
     <div
-      class="sc-d3770b70-2 hXmBiY"
+      class="sc-53f1d815-2 hzrThw"
     >
-      <div>
-        Artist Name
+      <div
+        class="sc-53f1d815-3 jimaiY"
+      >
+        Title of Monthly Featured Artwork
       </div>
-      <div>
-        Created # days ago
-      </div>
-      <div>
-        Tag Name
+      <div
+        class="sc-53f1d815-4 qQVth"
+      >
+        <div
+          class="sc-53f1d815-5 kPbguQ"
+        >
+          <div
+            class="sc-53f1d815-6 hOsBPm"
+          >
+            <div
+              class="sc-662bd339-0 gchHyC"
+              color="slate"
+            >
+              face
+            </div>
+          </div>
+          Artist Name
+        </div>
+        <div
+          class="sc-53f1d815-5 kPbguQ"
+        >
+          <div
+            class="sc-53f1d815-6 hOsBPm"
+          >
+            <div
+              class="sc-662bd339-0 bPCjqV"
+              color="slate"
+            >
+              calendar
+            </div>
+          </div>
+          Created # days ago
+        </div>
+        <div
+          class="sc-53f1d815-5 kPbguQ"
+        >
+          <div
+            class="sc-53f1d815-6 hOsBPm"
+          >
+            <div
+              class="sc-662bd339-0 LZUoh"
+              color="slate"
+            >
+              tag
+            </div>
+          </div>
+          Tag Name
+        </div>
       </div>
     </div>
   </section>

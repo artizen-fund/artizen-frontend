@@ -3,20 +3,20 @@
 exports[`SwitchControl renders SelectControl unchanged 1`] = `
 <div>
   <label
-    class="sc-9dfd224b-0 fBtUpr"
+    class="sc-accf1c1-0 fbDaeG"
   >
     <span
-      class="sc-9dfd224b-3 bhOpqi"
+      class="sc-accf1c1-3 bLaMtz"
     >
       Switch control test
     </span>
     <input
       checked=""
-      class="sc-9dfd224b-1 iJsfkc"
+      class="sc-accf1c1-1 fxPrqN"
       type="checkbox"
     />
     <span
-      class="sc-9dfd224b-2 gzDVCi"
+      class="sc-accf1c1-2 bOZKyO"
     />
   </label>
 </div>
