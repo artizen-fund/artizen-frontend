@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`__name__ renders correctly 1`] = `
+<div
+  className="sc-b3b4b33c-0 dsvurp"
+>
+  <h1>
+    design __name__(sentenceCase) here
+  </h1>
+  <div
+    className="sc-662bd339-0 fSsakv"
+  >
+    face
+  </div>
+</div>
+`;

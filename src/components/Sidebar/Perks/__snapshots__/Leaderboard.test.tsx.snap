@@ -14,7 +14,7 @@ exports[`Perks renders Perks unchanged 1`] = `
         Additional Perks
       </div>
       <a
-        class="sc-21c50e09-1 bgUzSl undefined "
+        class="sc-a45d3998-1 cdPvWx undefined "
       >
         <span>
           Learn More
@@ -22,14 +22,14 @@ exports[`Perks renders Perks unchanged 1`] = `
       </a>
     </div>
     <div
-      class="sc-92fd0fad-0 fHOWlb"
+      class="sc-92fd0fad-0 glZoEZ"
     >
       <div>
         <div
           class="sc-62acfa07-0 jSiTeQ"
         >
           <div
-            class="sc-8737affa-0 bEWlxB"
+            class="sc-662bd339-0 upfzd"
             color="night"
           >
             badge
@@ -39,14 +39,14 @@ exports[`Perks renders Perks unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-92fd0fad-0 fHOWlb"
+      class="sc-92fd0fad-0 glZoEZ"
     >
       <div>
         <div
           class="sc-62acfa07-0 jSiTeQ"
         >
           <div
-            class="sc-8737affa-0 XkLAr"
+            class="sc-662bd339-0 dPeJbv"
             color="night"
           >
             token
@@ -56,14 +56,14 @@ exports[`Perks renders Perks unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-92fd0fad-0 fHOWlb"
+      class="sc-92fd0fad-0 glZoEZ"
     >
       <div>
         <div
           class="sc-62acfa07-0 jSiTeQ"
         >
           <div
-            class="sc-8737affa-0 cJBwrt"
+            class="sc-662bd339-0 ideozd"
             color="night"
           >
             certificate
@@ -73,14 +73,14 @@ exports[`Perks renders Perks unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-92fd0fad-0 fHOWlb"
+      class="sc-92fd0fad-0 glZoEZ"
     >
       <div>
         <div
           class="sc-62acfa07-0 jSiTeQ"
         >
           <div
-            class="sc-8737affa-0 cXQEat"
+            class="sc-662bd339-0 dRvNyZ"
             color="night"
           >
             face

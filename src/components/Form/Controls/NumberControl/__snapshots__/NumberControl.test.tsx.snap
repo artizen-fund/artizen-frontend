@@ -3,22 +3,30 @@
 exports[`NumberControl renders NumberControl unchanged 1`] = `
 <div>
   <div
-    class="sc-c78f65af-0 eqqcQz"
+    class="sc-2f9d5146-0 fXWYaa"
   >
     <div
-      class="sc-460918ac-0 bCOVth"
+      class="sc-233fee17-0 bfoGJf"
+      disabled=""
     >
       <input
         class="hasData"
+        disabled=""
+        placeholder=" "
         step="any"
         type="number"
         value="5"
       />
       <label
-        class="sc-f769c06f-0 kZoseS"
+        class="sc-840480c4-0 jepABy"
       >
         Integer test
       </label>
+      <div
+        class="sc-662bd339-0 gflfRl sc-991d2e2e-0 OfZNn"
+      >
+        lock
+      </div>
     </div>
     <div
       class="sc-955ed11e-0 griBRj"

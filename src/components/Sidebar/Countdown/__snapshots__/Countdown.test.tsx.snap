@@ -3,21 +3,21 @@
 exports[`Countdown renders Countdown unchanged 1`] = `
 <div>
   <div
-    class="sc-71eb32ea-0 jPQagQ"
+    class="sc-39826d64-0 ibsXOM"
   >
     <div
-      class="sc-8737affa-0 JmeHP"
+      class="sc-662bd339-0 eHfkgv"
     >
       countdown
     </div>
     <span>
-      34
+      27
       :
-      09
+      13
       :
-      33
+      05
       :
-      36
+      17
     </span>
   </div>
 </div>
