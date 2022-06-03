@@ -36,9 +36,15 @@ const Wrapper = styled.section`
 const FeaturedArtworkImage = styled.div`
   width: 100%;
   height: 400px;
-  background: blue;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('/images/sample-art.jpg');
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     border-radius: 16px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    height: 600px;
   }
 `
 
@@ -61,10 +67,7 @@ const Metadata = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 15px;
-  > div {
-    min-width: 45%;
-  }
+  gap: 30px;
   ${typography.label.l1}
 `
 

@@ -14,10 +14,10 @@ const StyledPhoneInput = styled(props => <PhoneInput {...props} />)`
     justify-content: center;
     height: 100%;
     width: 72px;
-    @media only screen and (min-width: ${breakpoint.laptop}) {
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
       width: 76px;
     }
-    @media only screen and (min-width: ${breakpoint.desktop}) {
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
       width: 80px;
     }
 
@@ -48,10 +48,10 @@ const StyledPhoneInput = styled(props => <PhoneInput {...props} />)`
   input.PhoneInputInput {
     padding-left: 72px;
 
-    @media only screen and (min-width: ${breakpoint.laptop}) {
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
       padding-left: 76px;
     }
-    @media only screen and (min-width: ${breakpoint.desktop}) {
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
       padding-left: 80px;
     }
   }
