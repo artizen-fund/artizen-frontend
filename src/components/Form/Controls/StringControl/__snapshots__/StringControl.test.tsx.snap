@@ -21,10 +21,10 @@ exports[`StringControl renders StringControl unchanged 1`] = `
         String test
       </label>
       <div
-        class="sc-cf411747-2 cnUxdA"
+        class="sc-8c7bf1ae-2 jOAuUM"
       >
         <div
-          class="sc-cf411747-0 hPyuHh"
+          class="sc-8c7bf1ae-0 gTUyet"
           color="white"
         >
           <div
@@ -62,10 +62,10 @@ exports[`StringControl renders StringControl:Phone unchanged 1`] = `
         String test
       </label>
       <div
-        class="sc-cf411747-2 cnUxdA"
+        class="sc-8c7bf1ae-2 jOAuUM"
       >
         <div
-          class="sc-cf411747-0 hPyuHh"
+          class="sc-8c7bf1ae-0 gTUyet"
           color="white"
         >
           <div

@@ -3,7 +3,7 @@
 exports[`Perks renders Perks unchanged 1`] = `
 <div>
   <div
-    class="sc-8fd18655-0 bELACC"
+    class="sc-ecff4829-0 fMTZxv"
   >
     <div
       class="sc-c6d4a71-0 iFQvvL"
@@ -14,7 +14,7 @@ exports[`Perks renders Perks unchanged 1`] = `
         Additional Perks
       </div>
       <a
-        class="sc-b4940b6a-1 cCzZmY undefined "
+        class="sc-b4940b6a-1 hMYgyA undefined "
       >
         <span>
           Learn More
@@ -26,21 +26,11 @@ exports[`Perks renders Perks unchanged 1`] = `
     >
       <div>
         <div
-          class="sc-f9af55cb-0 iQutVz"
+          class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-cf411747-2 cnUxdA"
-          >
-            <div
-              class="sc-cf411747-0 hPyuHh"
-              color="white"
-            >
-              <div
-                class="sc-9eb58f28-0 gvNxsL"
-                color="white"
-              />
-            </div>
-          </div>
+            class="sc-9eb58f28-0 fZooDs"
+          />
         </div>
         Membership in Artizen DAO
       </div>
@@ -50,21 +40,11 @@ exports[`Perks renders Perks unchanged 1`] = `
     >
       <div>
         <div
-          class="sc-f9af55cb-0 iQutVz"
+          class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-cf411747-2 cnUxdA"
-          >
-            <div
-              class="sc-cf411747-0 hPyuHh"
-              color="white"
-            >
-              <div
-                class="sc-9eb58f28-0 gvNxsL"
-                color="white"
-              />
-            </div>
-          </div>
+            class="sc-9eb58f28-0 guGTIq"
+          />
         </div>
         0.01% of $ART tokens
       </div>
@@ -74,21 +54,11 @@ exports[`Perks renders Perks unchanged 1`] = `
     >
       <div>
         <div
-          class="sc-f9af55cb-0 iQutVz"
+          class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-cf411747-2 cnUxdA"
-          >
-            <div
-              class="sc-cf411747-0 hPyuHh"
-              color="white"
-            >
-              <div
-                class="sc-9eb58f28-0 gvNxsL"
-                color="white"
-              />
-            </div>
-          </div>
+            class="sc-9eb58f28-0 kJcPPI"
+          />
         </div>
         Collectable Receipt
       </div>
@@ -98,21 +68,11 @@ exports[`Perks renders Perks unchanged 1`] = `
     >
       <div>
         <div
-          class="sc-f9af55cb-0 iQutVz"
+          class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-cf411747-2 cnUxdA"
-          >
-            <div
-              class="sc-cf411747-0 hPyuHh"
-              color="white"
-            >
-              <div
-                class="sc-9eb58f28-0 gvNxsL"
-                color="white"
-              />
-            </div>
-          </div>
+            class="sc-9eb58f28-0 hKCRJg"
+          />
         </div>
         Custom Discord Avatar
       </div>

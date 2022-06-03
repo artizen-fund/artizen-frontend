@@ -3,22 +3,22 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-5a359472-0 btKugG"
+    class="sc-8ef0492a-0 kiRjAF"
   >
     <div
-      class="sc-5a359472-2 snHCD"
+      class="sc-8ef0492a-2 gsMAck"
     >
       <a
         href="/"
       >
         <div
-          class="sc-5a359472-1 cNqzAp"
+          class="sc-8ef0492a-1 jKmsbu"
         >
           Artizen
         </div>
       </a>
       <button
-        class="sc-b4940b6a-2 gyaHl sc-5a359472-4 qNzwr "
+        class="sc-b4940b6a-2 gyaHl sc-8ef0492a-4 ggjchk "
       >
         <span>
           Menu
@@ -26,10 +26,10 @@ exports[`renders homepage unchanged 1`] = `
       </button>
     </div>
     <div
-      class="sc-5a359472-2 snHCD"
+      class="sc-8ef0492a-2 gsMAck"
     >
       <div
-        class="sc-5a359472-3 kZmyQm"
+        class="sc-8ef0492a-3 iLOAzN"
       >
         <ul>
           <li>
@@ -49,36 +49,30 @@ exports[`renders homepage unchanged 1`] = `
         </ul>
       </div>
       <a
-        class="sc-b4940b6a-1 doArMP undefined "
+        class="sc-b4940b6a-1 eEXIDI undefined "
       >
+        <div
+          class="sc-9eb58f28-0 iglxpF sc-b4940b6a-0 cuZhbr"
+        />
         <span>
           Donate
         </span>
       </a>
       <div
-        class="sc-47dc7821-0 bERdPH"
+        class="sc-c9ad08a7-0 bmdPNW"
       >
         <div
-          class="sc-47dc7821-1 gRBtCJ"
+          class="sc-c9ad08a7-1 exDNIY"
         />
         <div
-          class="sc-cf411747-2 cnUxdA"
-        >
-          <div
-            class="sc-cf411747-0 hPyuHh"
-            color="white"
-          >
-            <div
-              class="sc-9eb58f28-0 gvNxsL"
-              color="white"
-            />
-          </div>
-        </div>
+          class="sc-9eb58f28-0 htauXl sc-c9ad08a7-2 clzIyX"
+          color="night"
+        />
         <div
-          class="sc-47dc7821-3 ksJggS"
+          class="sc-c9ad08a7-3 zyGfP"
         >
           <div
-            class="sc-47dc7821-4 kGTxhi"
+            class="sc-c9ad08a7-4 fdnGin"
           >
             RP
           </div>
