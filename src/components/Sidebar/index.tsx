@@ -34,7 +34,7 @@ const Sidebar = () => {
             <Row>
               <Countdown date={FUND_DEADLINE} />
               <DonationCount>
-                <Glyph glyph="trend" />"<span>{FUND_COUNT}k donations</span>
+                <Glyph glyph="trend" /> <span>{FUND_COUNT}k donations</span>
               </DonationCount>
             </Row>
           </FundBlock>

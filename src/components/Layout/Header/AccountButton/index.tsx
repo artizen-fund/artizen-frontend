@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import { Glyph } from '@components'
 import { breakpoint, palette, typeface } from '@theme'
 import { rgba } from '@lib'
-import { Icon } from '@components'
 
 const AccountButton = () => {
   // note: this will connect to a hook that manages login state
@@ -14,9 +14,7 @@ const AccountButton = () => {
   return (
     <Wrapper signedIn={signedIn} onClick={() => setSignedIn(!signedIn)}>
       <SignInLabel signedIn={signedIn} />
-      <HamburgerIcon signedIn={signedIn} color="night" darkColor="moon">
-        hamburger
-      </HamburgerIcon>
+      <HamburgerGlyph signedIn={signedIn} color="night" darkColor="moon" glyph="hamburger" />
       <AvatarImage signedIn={signedIn}>
         <Initials>{TEMP_INITIALS}</Initials>
       </AvatarImage>
@@ -86,7 +84,7 @@ const SignInLabel = styled.div<SignedInProps>`
   pointer-events: none;
 `
 
-const HamburgerIcon = styled(props => <Icon {...props} />)<SignedInProps>`
+const HamburgerGlyph = styled(props => <Glyph {...props} />)<SignedInProps>`
   width: 32px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 36px;

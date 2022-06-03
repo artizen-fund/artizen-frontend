@@ -10,22 +10,13 @@ const FeaturedArt = () => (
       <Title>Title of Monthly Featured Artwork</Title>
       <Metadata>
         <Metadatum>
-          <IconWrapper>
-            <Icon color="slate">face</Icon>
-          </IconWrapper>
-          Artist Name
+          <Icon glyph="face" level={1} outline label="Artist Name" />
         </Metadatum>
         <Metadatum>
-          <IconWrapper>
-            <Icon color="slate">calendar</Icon>
-          </IconWrapper>
-          Created # days ago
+          <Icon glyph="calendar" level={1} outline label="Created # days ago" />
         </Metadatum>
         <Metadatum>
-          <IconWrapper>
-            <Icon color="slate">tag</Icon>
-          </IconWrapper>
-          Tag Name
+          <Icon glyph="tag" level={1} outline label="Tag Name" />
         </Metadatum>
       </Metadata>
     </Copy>
@@ -84,17 +75,5 @@ const Metadatum = styled.div`
   align-items: center;
   gap: 10px;
 `
-const IconWrapper = styled.div`
-  height: 40px;
-  width: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid ${rgba(palette.slate)};
-  border-radius: 9999px;
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: 48px;
-    width: 48px;
-  }
-`
+
 export default FeaturedArt

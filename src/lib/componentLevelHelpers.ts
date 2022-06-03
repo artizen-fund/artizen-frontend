@@ -17,7 +17,7 @@ export const sizeForLevel = (responsiveSize: ResponsiveSize, level?: keyof Level
     laptop: {
       0: 64,
       1: 48,
-      2: 18,
+      2: 32,
     },
     tablet: {
       0: 56,

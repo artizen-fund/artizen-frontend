@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { default as ReactCountdown } from 'react-countdown'
-import { Icon } from '@components'
+import { Glyph } from '@components'
 import { isServer } from '@lib'
 
 export interface CountdownProps {
@@ -19,7 +19,7 @@ const Countdown = ({ date }: CountdownProps) => {
   }, [])
   return (
     <Wrapper>
-      <Icon>countdown</Icon>
+      <Glyph glyph="countdown" />
       {loaded && <ReactCountdown {...{ date }} />}
     </Wrapper>
   )

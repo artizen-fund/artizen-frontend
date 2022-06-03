@@ -33,7 +33,7 @@ const Header = () => {
             </li>
           </ul>
         </Nav>
-        <Button href="/" icon={glyphKey.donate} size="l1">
+        <Button href="/" glyph={glyphKey.donate} level={1}>
           Donate
         </Button>
         <AccountButton />
