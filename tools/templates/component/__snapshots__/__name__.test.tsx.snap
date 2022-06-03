@@ -8,9 +8,17 @@ exports[`__name__ renders correctly 1`] = `
     design __name__(sentenceCase) here
   </h1>
   <div
-    className="sc-662bd339-0 fSsakv"
+    className="sc-cf411747-2 cnUxdA"
   >
-    face
+    <div
+      className="sc-cf411747-0 hPyuHh"
+      color="white"
+    >
+      <div
+        className="sc-9eb58f28-0 gvNxsL"
+        color="white"
+      />
+    </div>
   </div>
 </div>
 `;

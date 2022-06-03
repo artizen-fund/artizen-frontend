@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Glyph renders correctly 1`] = `
+<div
+  className="sc-9eb58f28-0 koFoue"
+>
+  calendar
+</div>
+`;

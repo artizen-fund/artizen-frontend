@@ -6,18 +6,26 @@ exports[`Countdown renders Countdown unchanged 1`] = `
     class="sc-39826d64-0 ibsXOM"
   >
     <div
-      class="sc-662bd339-0 eHfkgv"
+      class="sc-cf411747-2 cnUxdA"
     >
-      countdown
+      <div
+        class="sc-cf411747-0 hPyuHh"
+        color="white"
+      >
+        <div
+          class="sc-9eb58f28-0 gvNxsL"
+          color="white"
+        />
+      </div>
     </div>
     <span>
-      27
+      26
       :
-      13
+      12
       :
-      05
+      03
       :
-      17
+      23
     </span>
   </div>
 </div>

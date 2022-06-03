@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { NumberControl, NumberControlProps } from './'
-import { iconKey } from '@theme'
+import { glyphKey } from '@theme'
 
 export default {
   title: 'forms/NumberControl',
   component: NumberControl,
   argTypes: {
     icon: {
-      options: iconKey,
+      options: glyphKey,
       control: { type: 'select' },
     },
   },

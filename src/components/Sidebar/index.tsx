@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Countdown from './Countdown'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
-import { Icon, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
+import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
@@ -34,16 +34,15 @@ const Sidebar = () => {
             <Row>
               <Countdown date={FUND_DEADLINE} />
               <DonationCount>
-                <Icon>trend</Icon>
-                <span>{FUND_COUNT}k donations</span>
+                <Glyph glyph="trend" />"<span>{FUND_COUNT}k donations</span>
               </DonationCount>
             </Row>
           </FundBlock>
           <Row>
-            <Button onClick={() => console.log('donate!')} size="l1" stretch icon="donate">
+            <Button onClick={() => console.log('donate!')} level={1} stretch glyph="donate">
               Donate
             </Button>
-            <Button onClick={() => console.log('share!')} size="l1" stretch outline>
+            <Button onClick={() => console.log('share!')} level={1} stretch outline>
               Share Now
             </Button>
           </Row>

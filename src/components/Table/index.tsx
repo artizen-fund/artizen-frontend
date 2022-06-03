@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Button } from '@components'
 import TableHeader from './TableHeader'
 import TableCell from './TableCell'
-import { breakpoint, palette, iconKey } from '@theme'
+import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba } from '@lib'
 
 export interface TableProps {

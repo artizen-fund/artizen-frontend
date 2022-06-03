@@ -5,7 +5,7 @@ import { palette, breakpoint } from '@theme'
 
 const Perks = () => {
   const sideItem = (
-    <Button href="/" outline size="l2">
+    <Button href="/" outline level={2}>
       Learn More
     </Button>
   )

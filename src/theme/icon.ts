@@ -1,6 +1,6 @@
-export type IconKey = Record<string, string>
+export type GlyphKey = Record<string, string>
 
-export const iconKey: IconKey = {
+export const glyphKey: GlyphKey = {
   arrow: 'arrow',
   badge: 'badge',
   calendar: 'calendar',
@@ -19,11 +19,10 @@ export const iconKey: IconKey = {
   trend: 'trend',
 }
 
-export type IconSize = Record<string | number, string | number>
+export type Level = Record<number, string>
 
-export const iconSize: IconSize = {
-  12: 12,
-  16: 16,
-  20: 20,
-  24: 24,
+export const level: Level = {
+  0: '0',
+  1: '1',
+  2: '2',
 }

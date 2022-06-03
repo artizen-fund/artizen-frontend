@@ -26,10 +26,10 @@ const Footer = () => {
           <CTA>
             <Copy>Join the mission to fund public goods.</Copy>
             <Buttons>
-              <Button onClick={() => alert('coming soon')} outline size="l1">
+              <Button onClick={() => alert('coming soon')} outline level={1}>
                 Donate
               </Button>
-              <Button onClick={() => alert('coming soon')} outline size="l1">
+              <Button onClick={() => alert('coming soon')} outline level={1}>
                 Sign In
               </Button>
             </Buttons>

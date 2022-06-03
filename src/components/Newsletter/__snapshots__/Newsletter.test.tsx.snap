@@ -6,18 +6,18 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
     class="sc-9199b4ac-0 gjUYWF"
   >
     <div
-      class="sc-3ad86976-2 fGWvWb"
+      class="sc-208de4fb-2 gWzBlo"
     >
       <div
-        class="sc-3ad86976-3 hCxwrp"
+        class="sc-208de4fb-3 bqJBtC"
       >
         <div
-          class="sc-3ad86976-4 gNFTGP"
+          class="sc-208de4fb-4 kzTtKY"
         >
           Join us in building the world's largest web3 fund for public goods
         </div>
         <div
-          class="sc-3ad86976-5 cjlLEn"
+          class="sc-208de4fb-5 hTmWIw"
         >
           Sign up for our free newsletter
         </div>
@@ -137,7 +137,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </div>
       </div>
       <button
-        class="sc-a45d3998-2 RvzlA sc-3ad86976-0 dqAMuH  disabled"
+        class="sc-b4940b6a-2 bhBma-d sc-208de4fb-0 ihHzSA  disabled"
         disabled=""
       >
         <span>
@@ -145,7 +145,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </span>
       </button>
       <div
-        class="sc-3ad86976-1 bscIxL"
+        class="sc-208de4fb-1 cPsxWk"
       >
         <div>
           Congrats, confirmation sent!

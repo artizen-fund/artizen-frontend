@@ -1,6 +1,7 @@
 export { default as Badge } from './Badge'
 export { default as Button } from './Button'
 export { default as Form } from './Form'
+export { default as Glyph } from './Glyph'
 export { default as Icon } from './Icon'
 export { default as Layout } from './Layout'
 export { default as Newsletter } from './Newsletter'

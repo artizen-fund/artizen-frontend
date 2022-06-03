@@ -1,55 +1,89 @@
 import styled from 'styled-components'
-import { breakpoint, Palette } from '@theme'
-import { schemeColors } from '@lib'
-import { IconKey, IconSize } from '@theme'
+import { Glyph } from '@components'
+import { rgba, sizeForLevel } from '@lib'
+import { breakpoint, palette, Palette, GlyphKey, Level, typography } from '@theme'
+import { gapForLevel } from './Icon.helpers'
 
 export interface IconProps {
-  children: keyof IconKey
-  size?: keyof IconSize
-  color?: keyof Palette
-  darkColor?: keyof Palette
-  solid?: boolean
+  glyph: keyof GlyphKey
+  level?: keyof Level
+  outline?: boolean
+  inverted?: boolean
+  label?: string
 }
 
-const Icon = styled.div<IconProps>`
-  position: relative;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  text-indent: -1000px;
-  overflow: hidden;
-  transition: background 0.35s ease-in-out;
+const Icon = ({ glyph, level, outline, inverted, label }: IconProps) => {
+  const color = (!outline && !inverted) || (outline && inverted) ? 'white' : 'night'
+  const darkColor = outline ? 'moon' : 'night'
+  return (
+    <Wrapper {...{ level }}>
+      <Circle {...{ outline, level, inverted, color, darkColor }}>
+        <Glyph {...{ glyph, level, color, darkColor }} />
+      </Circle>
+      {label && <Label color={inverted ? 'white' : 'night'}>{label}</Label>}
+    </Wrapper>
+  )
+}
+
+type CircleProps = Pick<IconProps, 'level' | 'outline' | 'inverted'> & {
+  color: keyof Palette
+  darkColor: keyof Palette
+}
+
+const Circle = styled.div<CircleProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${props => sizeForLevel('mobile', props.level || 0)}px;
+  height: ${props => sizeForLevel('mobile', props.level || 0)}px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    width: ${props => sizeForLevel('laptop', props.level || 0)}px;
+    height: ${props => sizeForLevel('laptop', props.level || 0)}px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    width: ${props => sizeForLevel('desktop', props.level || 0)}px;
+    height: ${props => sizeForLevel('desktop', props.level || 0)}px;
+  }
+
+  border: 2px solid;
+  border-radius: 9999px;
+
+  border-color: ${props => rgba(props.inverted ? palette.white : palette[props.color])};
   ${props =>
-    schemeColors(props.color, props.darkColor, {
-      background: true,
-    })}
-  ${props =>
-    !!props.size
-      ? /* if size is strictly specified, one rule for all sizes: */ `
-        mask-image: url("/icons/${props.children}/${props.size}/${props.solid ? 'solid' : 'outline'}.svg");
-        mask-size: ${props.size}px ${props.size}px;
-        width: ${props.size}px;
-        height: ${props.size}px;
+    !props.outline &&
+    `
+    background: ${props.inverted ? rgba(palette.white) : rgba(palette.night)};
+  `}
+  @media (prefers-color-scheme: dark) {
+    border-color: ${props => rgba(palette[props.darkColor])};
+    ${props =>
+      !props.outline &&
       `
-      : /* if size not specified, follow responsive rules: */ `
-        mask-image: url("/icons/${props.children}/12/${props.solid ? 'solid' : 'outline'}.svg");
-        mask-size: 12px 12px;
-        width: 12px;
-        height: 12px;
-        
-        @media only screen and (min-width: ${breakpoint.laptop}px) {
-          mask-image: url("/icons/${props.children}/16/${props.solid ? 'solid' : 'outline'}.svg");
-          mask-size: 16px 16px;
-          width: 16px;
-          height: 16px;
-        }
-        
-        @media only screen and (min-width: ${breakpoint.desktop}px) {
-          mask-image: url("/icons/${props.children}/20/${props.solid ? 'solid' : 'outline'}.svg");
-          mask-size: 20px 20px;
-          width: 20px;
-          height: 20px;
-        }
-      `}
+      background: ${rgba(palette.moon)};
+    `}
+  }
+`
+
+const Label = styled.div<{ color: keyof Palette }>`
+  ${typography.label.l2}
+  color: ${props => rgba(palette[props.color])};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
+`
+
+const Wrapper = styled.div<Pick<IconProps, 'level'>>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: ${props => gapForLevel('mobile', props.level)}px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: ${props => gapForLevel('laptop', props.level)}px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: ${props => gapForLevel('desktop', props.level)}px;
+  }
 `
 
 export default Icon

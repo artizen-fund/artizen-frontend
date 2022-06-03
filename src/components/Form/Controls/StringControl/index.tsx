@@ -3,7 +3,7 @@ import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
-import { IconKey } from '@theme'
+import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
 
 /* Todo: Trying to decide if schema and uischema should be optional.
@@ -60,7 +60,7 @@ export const StringControl = ({
 
   // This effect is for all right-hand-side icons.
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
-  const [statusIcon, setStatusIcon] = useState<keyof IconKey>()
+  const [statusIcon, setStatusIcon] = useState<keyof GlyphKey>()
   useEffect(() => {
     setStatusIcon(enabled ? undefined : 'lock')
   }, [enabled])
