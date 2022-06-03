@@ -1,6 +1,8 @@
 /* Icons and Buttons have levels — 0, 1, 2 — to denote size classes.
  * Each level has different responsive window sizes.
  * This tool translates levels into the correct responsive pixel dimensions.
+ *
+ * Similar issue with gaps between glyphs and labels in Icons and Buttons.
  */
 
 import { ResponsiveSize, Level } from '@theme'

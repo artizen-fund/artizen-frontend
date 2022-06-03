@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import { Glyph } from '@components'
-import { rgba, sizeForLevel } from '@lib'
 import { breakpoint, palette, Palette, GlyphKey, Level, typography } from '@theme'
-import { gapForLevel } from './Icon.helpers'
+import { rgba, gapForLevel, sizeForLevel } from '@lib'
 
 export interface IconProps {
   glyph: keyof GlyphKey
