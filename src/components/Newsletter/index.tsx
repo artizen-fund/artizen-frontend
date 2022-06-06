@@ -1,18 +1,16 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import MailchimpSubscribe from 'react-mailchimp-subscribe'
 import type { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
-import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 import { Form, Button, PagePadding } from '@components'
+import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState } from './form'
 
 const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultFormFields>) => {
-  const [data, setData] = useState<any>(undefined)
+  const [data, setData] = useState<any>(initialState)
   useMemo(() => {
-    setData(initialState)
     if (typeof localStorage === 'undefined') {
-      setData(initialState)
       return
     }
     const frozenAnswers = localStorage.getItem(schema.name)
@@ -24,9 +22,26 @@ const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultF
     setData(thawedAnswers)
   }, [schema])
 
-  const readonly = false
-
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string>()
+  const [readonly, setReadonly] = useState(true)
+
+  useEffect(() => {
+    switch (status) {
+      case 'sending':
+        setReadonly(true)
+        setError(undefined)
+        break
+      case 'success':
+        setSubmitted(true)
+        break
+      case 'error':
+        setError(error)
+      default:
+        setReadonly(false)
+    }
+  }, [status, error])
+
   return (
     <PagePadding black>
       <Wrapper className={submitted ? 'submitted' : ''}>
@@ -35,19 +50,39 @@ const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultF
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
         <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
-          <StyledButton onClick={() => subscribe(data)} outline size="l0">
+          <StyledButton onClick={() => subscribe(data)} inverted size="l0" disabled={!data.EMAIL || !data.OPTIN}>
             Submit
           </StyledButton>
+          <Confirmation>
+            <div>Congrats, confirmation sent!</div>
+            <p>Check your email and follow the steps to confirm your subscription.</p>
+          </Confirmation>
         </Form>
       </Wrapper>
     </PagePadding>
   )
 }
-/*
-              status={status}
-message={message}
-onSubmitted={(formData) => subscribe(formData)}
-*/
+
+const StyledButton = styled(props => <Button {...props} />)`
+  grid-area: submit;
+`
+
+const Confirmation = styled.div`
+  display: none;
+  grid-area: confirmation;
+  flex-direction: column;
+  justify-content: center;
+  div {
+    ${typography.title.l4}
+    color: ${rgba(palette.moon)};
+    margin-bottom: 0.25em;
+  }
+  p {
+    ${typography.label.l1}
+    color: ${rgba(palette.barracuda)};
+  }
+  text-align: center;
+`
 
 const Wrapper = styled.div`
   display: grid;
@@ -58,12 +93,24 @@ const Wrapper = styled.div`
     'firstName lastName'
     'email email'
     'submit submit';
+  &.submitted {
+    grid-template-areas:
+      'copy'
+      'optIn'
+      'confirmation';
+  }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 12px;
     grid-template-areas:
       'copy copy firstName lastName'
       'copy copy email email'
       'optIn optIn submit submit';
+    &.submitted {
+      grid-template-areas:
+        'copy copy confirmation confirmation'
+        'copy copy confirmation confirmation'
+        'optIn optIn confirmation confirmation';
+    }
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
@@ -94,8 +141,11 @@ const Wrapper = styled.div`
     *[id='#/properties/EMAIL'],
     *[id='#/properties/FIRSTNAME'],
     *[id='#/properties/LASTNAME'],
-    *[id='#/properties/OPTIN'] {
+    ${StyledButton} {
       display: none;
+    }
+    ${Confirmation} {
+      display: flex;
     }
   }
 `
@@ -112,10 +162,6 @@ const Header = styled.div`
 const Subhead = styled.div`
   ${typography.label.l1}
   color: ${rgba(palette.barracuda)};
-`
-
-const StyledButton = styled(props => <Button {...props} />)`
-  grid-area: submit;
 `
 
 export default () => (

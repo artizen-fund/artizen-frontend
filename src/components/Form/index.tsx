@@ -19,7 +19,7 @@ interface FormProps {
   data: any
   setData: any
   readonly: boolean
-  children: React.ReactElement
+  children: React.ReactNode
 }
 
 const Form = ({ schema, uischema, data, setData, readonly, children }: FormProps) => {

@@ -76,11 +76,10 @@ export const StringControl = ({
           <PhoneInput
             {...{ required, autoComplete }}
             disabled={!enabled}
-            placeholder={uischema?.options?.placeholder}
+            placeholder={uischema?.options?.placeholder || ' '}
             value={data}
             onChange={(e: string) => handleChange(path, e)}
             onBlur={() => setVirgin(false)}
-            className={!!data ? 'hasData' : 'noData'}
             countrySelectProps={{ unicodeFlags: true }}
             defaultCountry="US"
             international={false}
@@ -92,11 +91,10 @@ export const StringControl = ({
             minLength={schema?.minLength}
             maxLength={schema?.maxLength}
             type={uischema?.options?.format || 'text'}
-            placeholder={uischema?.options?.placeholder}
+            placeholder={uischema?.options?.placeholder || ' '}
             defaultValue={data}
             onChange={e => handleChange(path, e.target.value)}
             onBlur={() => setVirgin(false)}
-            className={!!data ? 'hasData' : 'noData'}
           />
         )}
         <InputLabel {...{ hasWidget }}>

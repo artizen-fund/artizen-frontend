@@ -21,13 +21,13 @@ exports[`Layout renders Layout unchanged 1`] = `
           </div>
         </a>
         <button
-          class="sc-21c50e09-2 fySYKP sc-7269da1e-4 fvIPOO "
+          class="sc-a45d3998-2 kTcvJQ sc-7269da1e-4 fvIPOO "
         >
           <span>
             Menu
           </span>
           <div
-            class="sc-8737affa-0 gPfcJB sc-21c50e09-0 gQPwQA"
+            class="sc-662bd339-0 bRCypB sc-a45d3998-0 frscMm"
             color="white"
           >
             arrow
@@ -58,10 +58,10 @@ exports[`Layout renders Layout unchanged 1`] = `
           </ul>
         </div>
         <a
-          class="sc-21c50e09-1 irfFLJ undefined "
+          class="sc-a45d3998-1 ePyhLe undefined "
         >
           <div
-            class="sc-8737affa-0 kwTYSl sc-21c50e09-0 gQPwQA"
+            class="sc-662bd339-0 gPKjpV sc-a45d3998-0 frscMm"
             color="white"
           >
             donate
@@ -77,7 +77,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             class="sc-47dc7821-1 gRBtCJ"
           />
           <div
-            class="sc-8737affa-0 bcnHmJ sc-47dc7821-2 etaqjK"
+            class="sc-662bd339-0 cIZfQB sc-47dc7821-2 etaqjK"
             color="night"
           >
             hamburger
@@ -101,13 +101,13 @@ exports[`Layout renders Layout unchanged 1`] = `
       class="sc-9199b4ac-0 gjUYWF"
     >
       <footer
-        class="sc-f5137ace-0 hwwInd"
+        class="sc-c1b16ee7-0 ensBoE"
       >
         <hr
-          class="sc-f5137ace-1 Gzpnn"
+          class="sc-c1b16ee7-1 jHrrSa"
         />
         <ul
-          class="sc-f5137ace-2 elBpRt"
+          class="sc-c1b16ee7-2 jLlHDl"
         >
           <li>
             Mission
@@ -123,7 +123,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </li>
         </ul>
         <ul
-          class="sc-f5137ace-3 hQwgsl"
+          class="sc-c1b16ee7-3 bAungC"
         >
           <li>
             Contact
@@ -136,28 +136,28 @@ exports[`Layout renders Layout unchanged 1`] = `
           </li>
         </ul>
         <hr
-          class="sc-f5137ace-1 ieaOSs"
+          class="sc-c1b16ee7-1 dCvKd"
         />
         <div
-          class="sc-f5137ace-4 cVmtEU"
+          class="sc-c1b16ee7-4 bYHplR"
         >
           <div
-            class="sc-f5137ace-5 yqDKo"
+            class="sc-c1b16ee7-5 liEnVY"
           >
             Join the mission to fund public goods.
           </div>
           <div
-            class="sc-f5137ace-6 gSJNRe"
+            class="sc-c1b16ee7-6 eqjNzH"
           >
             <button
-              class="sc-21c50e09-2 bbXbsp undefined "
+              class="sc-a45d3998-2 kTcvJQ undefined "
             >
               <span>
                 Donate
               </span>
             </button>
             <button
-              class="sc-21c50e09-2 bbXbsp undefined "
+              class="sc-a45d3998-2 kTcvJQ undefined "
             >
               <span>
                 Sign In
@@ -166,7 +166,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </div>
         </div>
         <hr
-          class="sc-f5137ace-1 bJA-dNh"
+          class="sc-c1b16ee7-1 gydgPo"
         />
         <div
           class="sc-697e6c26-0 kswkdX"
@@ -203,10 +203,10 @@ exports[`Layout renders Layout unchanged 1`] = `
       </footer>
     </div>
     <div
-      class="sc-9199b4ac-0 brREMd sc-f5137ace-8 bjLigi"
+      class="sc-9199b4ac-0 brREMd sc-c1b16ee7-8 gbxVmH"
     >
       <footer
-        class="sc-f5137ace-7 gEbPfu"
+        class="sc-c1b16ee7-7 bmUaPR"
       >
         <div>
           Open source platform made with ❤️ by a globally distributed team

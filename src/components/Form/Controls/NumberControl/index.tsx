@@ -80,7 +80,7 @@ export const NumberControl = ({
           maxLength={schema.maximum}
           type="number"
           step={step}
-          placeholder={uischema.options?.placeholder}
+          placeholder={uischema.options?.placeholder || ' '}
           onChange={e => handleChange(path, parseFloat(e.target.value))}
           onBlur={() => setVirgin(false)}
           className={hasData(data) ? 'hasData' : 'noData'}

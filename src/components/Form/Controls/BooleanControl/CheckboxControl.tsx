@@ -10,22 +10,24 @@ const Checkbox = ({
   data,
   handleChange,
   path,
-  disabled = false,
+  enabled = true,
   uischema,
   ...props
 }: BooleanControlProps) => (
-  <Wrapper gridArea={path} {...{ disabled, inverted }} {...props} id={uischema?.scope}>
+  <Wrapper gridArea={path} {...{ inverted }} {...props} id={uischema?.scope} disabled={!enabled}>
     <Box>
       <Input
         type="checkbox"
         required={!!required}
         onChange={_ => handleChange(path, !data)}
         checked={data}
-        {...{ disabled }}
+        disabled={!enabled}
       />
       <Checkmark {...{ inverted }} />
     </Box>
-    <Label {...{ disabled, inverted }}>{typeof label === 'object' ? label[0] : label}</Label>
+    <Label {...{ inverted }} disabled={!enabled}>
+      {typeof label === 'object' ? label[0] : label}
+    </Label>
   </Wrapper>
 )
 
