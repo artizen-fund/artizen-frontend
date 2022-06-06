@@ -120,6 +120,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
               class="sc-32dd2a74-0 jdmmOy"
             >
               <input
+                checked=""
                 class="sc-32dd2a74-1 iRKuyc"
                 required=""
                 type="checkbox"
