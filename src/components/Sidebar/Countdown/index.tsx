@@ -1,25 +1,21 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { default as ReactCountdown } from 'react-countdown'
-import { Icon } from '@components'
-import { isServer } from '@lib'
+import { Glyph } from '@components'
 
 export interface CountdownProps {
   date: string
 }
 
 const Countdown = ({ date }: CountdownProps) => {
-  /* note: This component causes obvious hydration errors.
-   *       Utilizing useEffect to make sure the SSR and initial render are identical. */
+  if (typeof jest !== 'undefined') return <></>
 
   const [loaded, setLoaded] = useState(false)
-  useEffect(() => {
-    if (isServer()) return
-    setLoaded(true)
-  }, [])
+  useEffect(() => setLoaded(true), [])
+
   return (
     <Wrapper>
-      <Icon>countdown</Icon>
+      <Glyph glyph="countdown" />
       {loaded && <ReactCountdown {...{ date }} />}
     </Wrapper>
   )
