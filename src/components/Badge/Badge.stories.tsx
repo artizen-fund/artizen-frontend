@@ -1,18 +1,15 @@
 import Badge, { BadgeProps } from './'
 import styled from 'styled-components'
 
-export default {
+const story = {
   title: 'components/Badge',
   component: Badge,
   argTypes: {
-    num: {
-      control: 'number',
-    },
-    stroke: {
-      control: 'boolean',
-    },
+    num: { control: 'number' },
+    stroke: { control: 'boolean' },
   },
 }
+export default story
 
 // note: this is just here so the badge isn't lost in the right corner
 const Wrapper = styled.div`

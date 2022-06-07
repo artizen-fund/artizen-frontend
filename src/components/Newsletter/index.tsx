@@ -1,13 +1,12 @@
 import { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
-import MailchimpSubscribe from 'react-mailchimp-subscribe'
-import type { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
+import MailchimpSubscribe, { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
 import { rgba } from '@lib'
 import { Form, Button, PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState } from './form'
 
-const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultFormFields>) => {
+const Newsletter = ({ subscribe, status, message }: FormHooks<DefaultFormFields>) => {
   const [data, setData] = useState<any>(initialState)
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
@@ -25,6 +24,7 @@ const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultF
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string>()
   const [readonly, setReadonly] = useState(true)
+  const herp = `derp`
 
   useEffect(() => {
     switch (status) {

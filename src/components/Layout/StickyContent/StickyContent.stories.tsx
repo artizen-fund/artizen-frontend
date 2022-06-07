@@ -2,11 +2,12 @@ import styled from 'styled-components'
 import { StickyContent, StickyCanvas } from './'
 import { breakpoint } from '@theme'
 
-export default {
+const story = {
   title: 'layout/StickyContent',
   component: StickyContent,
   argTypes: {},
 }
+export default story
 
 const MockSubContent = styled.div`
   min-height: 150vh;

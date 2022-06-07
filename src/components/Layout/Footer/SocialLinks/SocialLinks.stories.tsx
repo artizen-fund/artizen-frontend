@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 import SocialLinks from './'
 
-export default {
+const story = {
   title: 'layout/SocialLinks',
   component: SocialLinks,
 }
+export default story
 
 const Wrapper = styled.div`
   padding: 20px;

@@ -12,7 +12,7 @@ export const rgba = (color: keyof Palette | Array<number> | 'transparent', alpha
   let rgb = ''
   switch (true) {
     case color === 'transparent':
-      return `rgba(0, 0, 0, 0)`
+      return 'rgba(0, 0, 0, 0)'
     case typeof color === 'object' && color.length === 3:
       rgb = (color as Array<number>).join(',')
       break

@@ -1,10 +1,7 @@
 import styled from 'styled-components'
-import Table from './'
-import TableHeader from './TableHeader'
-import TableCell from './TableCell'
-import { TableProps } from './'
+import { Table, TableCell, TableProps } from './'
 
-export default {
+const story = {
   title: 'tables/Table',
   component: Table,
   argTypes: {
@@ -14,16 +11,17 @@ export default {
     },
   },
 }
+export default story
 
 export const TableComponent = (props: TableProps) => {
   const data = ['herp', 'derp', 'doop', 'dorp', 'donk', 'bonk']
   return (
     <Wrapper>
       <Table {...props}>
-        {data.map((datum, i) => (
-          <TableCell key={i}>
+        {data.map((datum, index) => (
+          <TableCell key={index}>
             <Row>
-              <span>#{i}</span>
+              <span>#{index}</span>
               <Avatar />
             </Row>
             <div>{datum}</div>

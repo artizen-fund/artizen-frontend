@@ -47,7 +47,7 @@ const SelectControl = ({
     } else {
       setVisibleError(parsedErrors[0])
     }
-  }, [parsedErrors])
+  }, [visibleError, parsedErrors])
 
   return (
     <Wrapper gridArea={path} {...{ filled }} {...props} id={uischema?.scope}>

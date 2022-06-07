@@ -3,7 +3,7 @@ import SelectControl from './SelectControl'
 import { EnumControlProps } from './'
 import { glyphKey } from '@theme'
 
-export default {
+const story = {
   title: 'forms/SelectControl',
   component: SelectControl,
   argTypes: {
@@ -13,12 +13,11 @@ export default {
     },
   },
 }
+export default story
 
 export const SelectControlComponent = (props: EnumControlProps) => {
   const [data, setData] = useState('')
   const handleChange = (_: string, s: string) => setData(s)
-  const schema = {
-    enum: ['', 'Chocolate', 'Strawberry', 'Vanilla', 'Neapolitan'],
-  }
+  const schema = { enum: ['', 'Chocolate', 'Strawberry', 'Vanilla', 'Neapolitan'] }
   return <SelectControl {...{ data, handleChange, schema }} {...props} label="Pick one…" />
 }

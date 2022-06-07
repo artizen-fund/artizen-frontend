@@ -17,15 +17,9 @@ export const schema = {
       type: 'string',
       format: 'email',
     },
-    phoneExample: {
-      type: 'string',
-    },
-    booleanCheckExample: {
-      type: 'boolean',
-    },
-    switchBooleanExample: {
-      type: 'boolean',
-    },
+    phoneExample: { type: 'string' },
+    booleanCheckExample: { type: 'boolean' },
+    switchBooleanExample: { type: 'boolean' },
     enumExample: {
       type: 'string',
       enum: ['', 'DE', 'IT', 'JP', 'US', 'RU', 'Other'],
@@ -75,16 +69,12 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/phoneExample',
-      options: {
-        format: 'phone',
-      },
+      options: { format: 'phone' },
     },
     {
       type: 'Control',
       scope: '#/properties/switchBooleanExample',
-      options: {
-        format: 'switch',
-      },
+      options: { format: 'switch' },
     },
     {
       type: 'Control',
@@ -97,9 +87,7 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/enumSegmentsExample',
-      options: {
-        format: 'segmented',
-      },
+      options: { format: 'segmented' },
     },
     {
       type: 'Control',
@@ -113,9 +101,7 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/emailExample',
-      options: {
-        placeholder: 'your@email.com',
-      },
+      options: { placeholder: 'your@email.com' },
     },
   ],
 }

@@ -1,16 +1,12 @@
 import Button, { ButtonProps } from './'
 import { glyphKey } from '@theme'
 
-export default {
+const story = {
   title: 'components/Button',
   component: Button,
   argTypes: {
-    outline: {
-      control: 'boolean',
-    },
-    disabled: {
-      control: 'boolean',
-    },
+    outline: { control: 'boolean' },
+    disabled: { control: 'boolean' },
     level: {
       options: [0, 1, 2],
       control: { type: 'select' },
@@ -21,6 +17,7 @@ export default {
     },
   },
 }
+export default story
 
 export const ButtonComponent = (props: ButtonProps) => (
   <Button onClick={() => alert('derp')} {...props}>

@@ -1,9 +1,10 @@
 import Header from './'
 
-export default {
+const story = {
   title: 'layout/Header',
   component: Header,
   argTypes: {},
 }
+export default story
 
 export const HeaderComponent = () => <Header />

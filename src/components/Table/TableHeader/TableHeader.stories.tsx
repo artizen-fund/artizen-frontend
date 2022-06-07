@@ -1,11 +1,12 @@
 import TableHeader, { TableHeaderProps, Label } from './'
 import { Button } from '@components'
 
-export default {
+const story = {
   title: 'tables/TableHeader',
   component: TableHeader,
   argTypes: {},
 }
+export default story
 
 export const TableHeaderComponent = (props: TableHeaderProps) => <TableHeader {...props} />
 

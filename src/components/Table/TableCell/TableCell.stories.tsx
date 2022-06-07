@@ -1,9 +1,10 @@
 import TableCell from './'
 
-export default {
+const story = {
   title: 'tables/TableCell',
   component: TableCell,
   argTypes: {},
 }
+export default story
 
 export const TableCellComponent = (props: any) => <TableCell {...props}>derp</TableCell>

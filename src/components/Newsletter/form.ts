@@ -19,16 +19,12 @@ export const schema = {
       type: 'string',
       format: 'email',
     },
-    OPTIN: {
-      type: 'boolean',
-    },
+    OPTIN: { type: 'boolean' },
   },
   required: ['EMAIL', 'OPTIN'],
 }
 
-export const initialState = {
-  OPTIN: true,
-}
+export const initialState = { OPTIN: true }
 
 export const uischema = {
   type: 'VerticalLayout',
@@ -52,9 +48,7 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/OPTIN',
       label: 'Opt-in to receive the Artizen newsletter.',
-      options: {
-        inverted: true,
-      },
+      options: { inverted: true },
     },
   ],
 }

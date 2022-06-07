@@ -1,15 +1,16 @@
 import styled from 'styled-components'
-import TabbedInfo, { TabbedInfoProps } from './'
+import TabbedInfo from './'
 
-export default {
+const story = {
   title: 'components/TabbedInfo',
   component: TabbedInfo,
   argTypes: {},
 }
+export default story
 
 const Tab = styled.div<{ label: string }>``
 
-export const ProgressBarComponent = (props: TabbedInfoProps) => {
+export const ProgressBarComponent = () => {
   return (
     <TabbedInfo>
       <Tab label="First Tab">

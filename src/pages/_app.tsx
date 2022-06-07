@@ -3,12 +3,12 @@ import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
-import { SessionProvider, useApollo, Toaster } from '@lib'
+import { SessionProvider, useApollo } from '@lib'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
-function App({ Component, pageProps }: AppProps) {
+function App ({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<ArtizenUser>()
   const { apolloClient } = useApollo(pageProps, user)
 

@@ -3,8 +3,8 @@ import { Toast } from '@trycourier/react-toast'
 import { useSession, getUSDCBalance, isServer } from '@lib'
 
 export const Toaster = () => {
-  if (isServer()) return <></>
   const user = useSession()
+  if (isServer()) return <></>
 
   const handleBalance = async () => {
     if (user?.publicAddress) {

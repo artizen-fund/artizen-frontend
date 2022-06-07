@@ -11,7 +11,7 @@ const Sidebar = () => {
   const FUND_COUNT = 3.2
   const FUND_AMOUNT = 15250
   const FUND_GOAL = 25000
-  const FUND_DATE = `May, 2022`
+  const FUND_DATE = 'May, 2022'
   const FUND_DEADLINE = '2022-06-30T00:00:00'
   const leaderboard = [
     { name: 'herp derp', amount: 69 },

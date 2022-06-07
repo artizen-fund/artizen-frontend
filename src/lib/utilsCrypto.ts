@@ -1,8 +1,7 @@
-import { magic, contracts } from '@lib'
+import { magic, contracts, isServer } from '@lib'
 import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
 import { provider } from 'web3-core'
-import { isServer } from '@lib'
 
 export const getUSDCBalance = async (address: string) => {
   if (isServer()) return
