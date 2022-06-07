@@ -82,7 +82,7 @@
     /* whitespace */
     "comma-style": ["error", "last"],
     "comma-dangle": ["error", "always-multiline"],
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
 
     /* semicolons */
     "semi": ["error", "never"],

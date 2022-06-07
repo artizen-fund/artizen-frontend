@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import MailchimpSubscribe, { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
-import { rgba } from '@lib'
+import { rgba, envString } from '@lib'
 import { Form, Button, PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState } from './form'
@@ -24,7 +24,6 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<DefaultFormFields>
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string>()
   const [readonly, setReadonly] = useState(true)
-  const herp = `derp`
 
   useEffect(() => {
     switch (status) {
@@ -46,7 +45,7 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<DefaultFormFields>
     <PagePadding black>
       <Wrapper className={submitted ? 'submitted' : ''}>
         <Copy>
-          <Header>Join us in building the world's largest web3 fund for public goods</Header>
+          <Header>Join us in building the world&apos;s largest web3 fund for public goods</Header>
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
         <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
@@ -164,9 +163,11 @@ const Subhead = styled.div`
   color: ${rgba(palette.barracuda)};
 `
 
-export default () => (
+const MailChimpForm = () => (
   <MailchimpSubscribe
-    url={process.env.NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL!}
+    url={envString('NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL')}
     render={props => <Newsletter {...props} />}
   />
 )
+
+export default MailChimpForm

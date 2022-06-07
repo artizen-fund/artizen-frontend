@@ -1,11 +1,11 @@
-import { magic, contracts, isServer } from '@lib'
+import { magic, contracts, isServer, envString } from '@lib'
 import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
 import { provider } from 'web3-core'
 
 export const getUSDCBalance = async (address: string) => {
   if (isServer()) return
-  const contractAddress = process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS
+  const contractAddress = envString('NEXT_PUBLIC_USDC_CONTRACT_ADDRESS')
   const maticWeb3 = new Web3(magic?.rpcProvider as provider)
   const contract = new maticWeb3.eth.Contract(contracts.USDC as AbiItem[], contractAddress)
   // console.log('contract', contract.methods.balanceOf(address).call())

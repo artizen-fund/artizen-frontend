@@ -2,7 +2,7 @@ export const isClient = () => typeof window !== 'undefined'
 
 export const isServer = () => typeof window === 'undefined'
 
-export function extractEnvString ( key: keyof NodeJS.ProcessEnv ): string {
+export function envString ( key: keyof NodeJS.ProcessEnv ): string {
   const value = process.env[key]
   if (value === undefined) {
     throw new Error(`The environment variable "${key}" cannot be undefined.`)
@@ -10,8 +10,8 @@ export function extractEnvString ( key: keyof NodeJS.ProcessEnv ): string {
   return value
 }
 
-export function extractEnvNumber ( key: keyof NodeJS.ProcessEnv ): number {
-  const stringValue = extractEnvString(key)
+export function envNumber ( key: keyof NodeJS.ProcessEnv ): number {
+  const stringValue = envString(key)
   const numberValue = parseFloat(stringValue)
   if ( Number.isNaN( numberValue ) ) {
     throw new Error(`The environment variable "${key}" has to hold a stringified number value - not ${stringValue}`)
@@ -19,8 +19,8 @@ export function extractEnvNumber ( key: keyof NodeJS.ProcessEnv ): number {
   return numberValue
 }
 
-export function extractEnvInteger ( key: keyof NodeJS.ProcessEnv ): number {
-  const stringValue = extractEnvString(key)
+export function envInt ( key: keyof NodeJS.ProcessEnv ): number {
+  const stringValue = envString(key)
   const numberValue = parseInt(stringValue, 10)
   if ( Number.isNaN( numberValue ) ) {
     throw new Error(`The environment variable "${key}" has to hold a stringified integer value - not ${stringValue}`)
@@ -28,7 +28,7 @@ export function extractEnvInteger ( key: keyof NodeJS.ProcessEnv ): number {
   return numberValue
 }
 
-export function extractBooleanEnvVar ( key: keyof NodeJS.ProcessEnv ): boolean {
-  const value = extractEnvInteger(key)
+export function envBool ( key: keyof NodeJS.ProcessEnv ): boolean {
+  const value = envInt(key)
   return Boolean(value)
 }

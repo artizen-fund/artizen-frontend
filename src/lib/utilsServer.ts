@@ -4,7 +4,7 @@
 */
 
 import jwt from 'jsonwebtoken'
-import { isServer } from '@lib'
+import { isServer, envNumber, envString } from '@lib'
 
 export const createNewToken = ({ issuer, publicAddress, email }: ArtizenUser) => {
   if (isServer()) return
@@ -14,14 +14,14 @@ export const createNewToken = ({ issuer, publicAddress, email }: ArtizenUser) =>
       issuer,
       publicAddress,
       email,
-      exp: exp * parseInt(process.env.SESSION_LENGTH_IN_DAYS!),
+      exp: exp * envNumber('SESSION_LENGTH_IN_DAYS'),
       'https://hasura.io/jwt/claims': {
         'x-hasura-allowed-roles': ['user', 'user_from_8base'],
         'x-hasura-default-role': 'user',
         'x-hasura-user-id': issuer,
       },
     },
-    process.env.JWT_SECRET!,
+    envString('JWT_SECRET'),
   )
 }
 
@@ -98,12 +98,12 @@ export const createNewUser = async ({ issuer, publicAddress, email }: ArtizenUse
 
 const queryOldData = async (query: any) => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_8BASE_URL!, {
+    const res = await fetch(envString('NEXT_PUBLIC_8BASE_URL'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_8BASE_GUEST_ACCESS_ID_TOKEN}`,
+        Authorization: `Bearer ${envString('NEXT_PUBLIC_8BASE_GUEST_ACCESS_ID_TOKEN')}`,
       },
       body: JSON.stringify(query),
     })
@@ -121,7 +121,7 @@ const queryOldData = async (query: any) => {
 
 export const queryHasura = async (query: any, token: string) => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL!, {
+    const res = await fetch(envString('NEXT_PUBLIC_HASURA_GRAPHQL_URL'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -144,8 +144,8 @@ export const queryHasura = async (query: any, token: string) => {
 
 export const queryHasuraAsAdmin = async (
   query: any,
-  adminSecret = process.env.HASURA_ADMIN_SECRET,
-  uri = process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL!,
+  adminSecret = envString('HASURA_ADMIN_SECRET'),
+  uri = envString('NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
 ) => {
   try {
     const headers = new Headers()

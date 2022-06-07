@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
-import { setTokenCookie } from '@lib'
+import { setTokenCookie, envString } from '@lib'
 import { createNewToken, getUserDataFromDataBase } from '../../lib/utilsServer'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const user = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (!req.cookies.token) {
       console.log('Error: Token not found in cookies.')
@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const { token } = req.cookies
-    const jwtUser = jwt.verify(token, process.env.JWT_SECRET!) as ArtizenUser
+    const jwtUser = jwt.verify(token, envString('JWT_SECRET')) as ArtizenUser
     if (!jwtUser.issuer) throw 'Bad JWT payload.'
 
     // Refresh the JWT for the user each time they send a request to /user so they only get logged out after SESSION_LENGTH_IN_DAYS of inactivity
@@ -96,3 +96,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 //     return error
 //   }
 // }
+
+export default user

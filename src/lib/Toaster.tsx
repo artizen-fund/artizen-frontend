@@ -1,6 +1,6 @@
 import { CourierProvider, ICourierMessage } from '@trycourier/react-provider'
 import { Toast } from '@trycourier/react-toast'
-import { useSession, getUSDCBalance, isServer } from '@lib'
+import { useSession, getUSDCBalance, isServer, envString } from '@lib'
 
 export const Toaster = () => {
   const user = useSession()
@@ -17,16 +17,20 @@ export const Toaster = () => {
     handleBalance()
     return message
   }
-
+  
+  /* note: this chokes on props.children, investigate later 
   return (
-    /* note: this chokes on props.children, investigate later */
-    /* @ts-ignore */
     <CourierProvider
       userId={user?.id}
-      clientKey={process.env.NEXT_PUBLIC_COURIER_CLIENT_KEY}
+      clientKey={envString('NEXT_PUBLIC_COURIER_CLIENT_KEY')}
       onMessage={handleOnMessage}
     >
       <Toast />
     </CourierProvider>
+  )
+  */
+
+  return (
+    <></>
   )
 }
