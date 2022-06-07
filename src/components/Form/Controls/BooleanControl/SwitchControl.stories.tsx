@@ -15,7 +15,7 @@ export const SwitchControlComponent = (props: BooleanControlProps) => {
     <SwitchControl
       {...{ value }}
       {...props}
-      handleChange={(_, v: boolean) => setValue(v)}
+      handleChange={(_, newValue: boolean) => setValue(newValue)}
       label="Are you on, or off?"
     />
   )

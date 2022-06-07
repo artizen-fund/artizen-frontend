@@ -7,8 +7,7 @@ todo:
 
 import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
-import { rankWith, schemaMatches } from '@jsonforms/core'
+import { Labels, JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
 import { GlyphKey } from '@theme'
 

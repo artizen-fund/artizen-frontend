@@ -5,11 +5,9 @@ const SignOut = () => {
   const router = useRouter()
   useEffect(() => {
     const logoutAction = async () => {
-      const response = await fetch('/api/logout', {
-        method: 'POST',
-      })
+      const response = await fetch('/api/logout', { method: 'POST' })
       if (response.status === 200) {
-        router.push(`/`)
+        router.push('/')
       }
     }
     logoutAction()

@@ -3,7 +3,7 @@ import { magicAdmin, removeTokenCookie, envString } from '@lib'
 import jwt from 'jsonwebtoken'
 import type { MagicUserMetadata } from 'magic-sdk'
 
-export default async function logout (req: NextApiRequest, res: NextApiResponse) {
+const logout = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
     const { token } = req.cookies
@@ -23,3 +23,5 @@ export default async function logout (req: NextApiRequest, res: NextApiResponse)
     res.status(401).json({ message: 'User is not logged in' })
   }
 }
+
+export default logout

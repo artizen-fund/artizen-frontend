@@ -18,7 +18,7 @@ export const CheckboxControlComponent = (props: BooleanControlProps) => {
     <CheckboxControl
       {...{ value }}
       {...props}
-      handleChange={(_, v: boolean) => setValue(v)}
+      handleChange={(_, newValue: boolean) => setValue(newValue)}
       label="Are you on, or off?"
     />
   )

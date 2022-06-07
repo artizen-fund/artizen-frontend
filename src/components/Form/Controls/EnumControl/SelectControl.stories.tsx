@@ -17,7 +17,7 @@ export default story
 
 export const SelectControlComponent = (props: EnumControlProps) => {
   const [data, setData] = useState('')
-  const handleChange = (_: string, s: string) => setData(s)
+  const handleChange = (_: string, str: string) => setData(str)
   const schema = { enum: ['', 'Chocolate', 'Strawberry', 'Vanilla', 'Neapolitan'] }
   return <SelectControl {...{ data, handleChange, schema }} {...props} label="Pick one…" />
 }

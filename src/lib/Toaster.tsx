@@ -1,6 +1,11 @@
 import { CourierProvider, ICourierMessage } from '@trycourier/react-provider'
 import { Toast } from '@trycourier/react-toast'
-import { useSession, getUSDCBalance, isServer, envString } from '@lib'
+import {
+  useSession,
+  getUSDCBalance,
+  isServer,
+  envString,
+} from '@lib'
 
 export const Toaster = () => {
   const user = useSession()

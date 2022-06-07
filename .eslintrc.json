@@ -11,7 +11,7 @@
   ],
   "rules": {
     "json/*": ["error", { "allowComments": true }],
-    
+
     /* references */
     "prefer-const": "error",
     "no-var": "error",
@@ -51,7 +51,7 @@
     "id-denylist": ["error", "arguments"],
     "prefer-rest-params": "error",
     "default-param-last": ["error"],
-    "space-before-function-paren": "error",
+    "space-before-function-paren": ["error", { "anonymous": "always", "named": "never" }],
     "space-before-blocks": "error",
     "no-param-reassign": "error",
 
@@ -82,7 +82,6 @@
     /* whitespace */
     "comma-style": ["error", "last"],
     "comma-dangle": ["error", "always-multiline"],
-    "indent": ["error", 2, { "SwitchCase": 1 }],
 
     /* semicolons */
     "semi": ["error", "never"],

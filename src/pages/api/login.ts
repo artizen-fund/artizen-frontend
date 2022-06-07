@@ -7,7 +7,7 @@ import {
   createNewUser,
 } from '../../lib/utilsServer'
 
-export default async function login(req: NextApiRequest, res: NextApiResponse) {
+const login = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     console.log('get to login api')
     const didToken = req?.headers?.authorization?.substr(7)
@@ -41,3 +41,5 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     res.status(500).end()
   }
 }
+
+export default login

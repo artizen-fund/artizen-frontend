@@ -5,7 +5,7 @@ import { envString } from '@lib'
 const sdk = api('@wyre-hub/v4#fxprd1kl2b0beym')
 sdk.auth(envString('SENDWYRE_SECRET'))
 
-export default async function handler (req: NextApiRequest, res: NextApiResponse) {
+const authorizationHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
   try {
     const authorization = await sdk.GetAuthorization({ orderId: req.query.orderId })
@@ -15,3 +15,5 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     res.status(500).json({ error })
   }
 }
+
+export default authorizationHandler

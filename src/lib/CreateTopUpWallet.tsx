@@ -8,22 +8,17 @@ import { CREATE_TOP_UP_WALLET } from '@gql'
 import { useSession, isServer } from '@lib'
 
 export const CreateTopUpWallet = () => {
-  if (isServer()) return <></>
   const router = useRouter()
   const user = useSession()
 
-  const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
-    onError: error => console.log('updatePost resultado', error),
-  })
+  const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, { onError: error => console.log('updatePost resultado', error) })
 
   useEffect(() => {
     const checkOnRampReturn = async () => {
       const { transferId } = router.query
       if (transferId) {
         try {
-          const response = await fetch(`/api/onramp/status?transferId=${transferId}`, {
-            method: 'GET',
-          })
+          const response = await fetch(`/api/onramp/status?transferId=${transferId}`, { method: 'GET' })
           const status = await response.json()
           createTopUpWallet({
             variables: {
@@ -44,5 +39,6 @@ export const CreateTopUpWallet = () => {
     }
     checkOnRampReturn()
   }, [createTopUpWallet, router, router.query, user])
+
   return <></>
 }

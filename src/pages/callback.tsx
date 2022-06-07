@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { magic } from '@lib'
+// import { magicLink } from '@lib'
 // import Loading from '../components/loading'
 
-function Callback() {
+const Callback = () => {
+  {
+    /*
   const {
     query: { magic_credential, provider },
     push,
@@ -28,13 +30,13 @@ function Callback() {
     }
 
     const finishSocialLogin = async () => {
-      magic?.oauth.getRedirectResult().then(result => authenticateWithServer(result.magic.idToken))
+      magicLink?.oauth.getRedirectResult().then(result => authenticateWithServer(result.magic.idToken))
     }
 
     // `loginWithCredential()` returns a didToken for the user logging in
     const finishEmailRedirectLogin = () => {
       if (magic_credential) {
-        magic?.auth.loginWithCredential().then(didToken => authenticateWithServer(didToken!))
+        magicLink?.auth.loginWithCredential().then(didToken => authenticateWithServer(didToken!))
       }
     }
 
@@ -44,6 +46,8 @@ function Callback() {
   // `getRedirectResult()` returns an object with user data from Magic and the social provider
 
   return 'loading'
+  */
+  }
 }
 
 export default Callback

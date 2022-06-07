@@ -49,9 +49,7 @@ const Form = ({ schema, uischema, data, setData, readonly, children }: FormProps
     <>
       <JsonForms
         {...{ schema, uischema, renderers, data, readonly }}
-        config={{
-          trim: true,
-        }}
+        config={{ trim: true }}
         onChange={({ data, errors }) => freezeAndSetData(data, errors)}
       />
       {children}
