@@ -1,27 +1,30 @@
 import styled from 'styled-components'
-import { Icon } from '@components'
+import { Icon, Slideshow } from '@components'
 import { palette, breakpoint, typography } from '@theme'
 import { rgba } from '@lib'
 
-const FeaturedArt = () => (
-  <Wrapper>
-    <FeaturedArtworkImage />
-    <Copy>
-      <Title>Title of Monthly Featured Artwork</Title>
-      <Metadata>
-        <Metadatum>
-          <Icon glyph="face" level={1} outline label="Artist Name" />
-        </Metadatum>
-        <Metadatum>
-          <Icon glyph="calendar" level={1} outline label="Created # days ago" />
-        </Metadatum>
-        <Metadatum>
-          <Icon glyph="tag" level={1} outline label="Tag Name" />
-        </Metadatum>
-      </Metadata>
-    </Copy>
-  </Wrapper>
-)
+const FeaturedArt = () => {
+  const sampleSlides = ['/images/sample-art-1.jpg', '/images/sample-art-2.jpg', '/images/sample-art-3.jpg']
+  return (
+    <Wrapper>
+      <Slideshow slides={sampleSlides} />
+      <Copy>
+        <Title>Title of Monthly Featured Artwork</Title>
+        <Metadata>
+          <Metadatum>
+            <Icon glyph="face" level={1} outline label="Artist Name" />
+          </Metadatum>
+          <Metadatum>
+            <Icon glyph="calendar" level={1} outline label="Created # days ago" />
+          </Metadatum>
+          <Metadatum>
+            <Icon glyph="tag" level={1} outline label="Tag Name" />
+          </Metadatum>
+        </Metadata>
+      </Copy>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.section`
   position: relative;
@@ -30,21 +33,6 @@ const Wrapper = styled.section`
     border-radius: 16px 16px 0px 0px;
     overflow: hidden;
     color: ${rgba(palette.white)};
-  }
-`
-
-const FeaturedArtworkImage = styled.div`
-  width: 100%;
-  height: 400px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url('/images/sample-art.jpg');
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    border-radius: 16px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: 600px;
   }
 `
 

@@ -13570,6 +13570,11 @@ react-use@^17.2.1:
     ts-easing "^0.2.0"
     tslib "^2.1.0"
 
+react-useinterval@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-useinterval/-/react-useinterval-1.0.2.tgz#d9537b7e1a823422c70cb3dc226d07835ff15569"
+  integrity sha512-aC0ATWbm1HaQjp7ILQzn6qge0K70cAgVzIhdUtDXPo9ho7W84MJ7/KOJIKMoi1hFwMp8lQDMYuVUDDk/3mn6sw==
+
 react@18.1.0:
   version "18.1.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.1.0.tgz#6f8620382decb17fdc5cc223a115e2adbf104890"
