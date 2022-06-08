@@ -9,7 +9,7 @@ const __name__ = () => {
   return (
     <Wrapper>
       <h1>design __name__(sentenceCase) here</h1>
-      <Icon>face</Icon>
+      <Icon glyph="face" />
     </Wrapper>
   )
 }
