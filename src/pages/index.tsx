@@ -103,10 +103,10 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
     width: 100%;
     z-index: 0;
     top: 65px;
-    height: 425px;
+    height: 475px;
     @media only screen and (min-width: ${breakpoint.desktop}px) {
       top: 80px;
-      height: 525px;
+      height: 675px;
     }
     background-color: ${rgba(palette.moon)};
   }

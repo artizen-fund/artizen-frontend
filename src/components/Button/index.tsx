@@ -2,14 +2,15 @@ import styled, { css } from 'styled-components'
 import Link from 'next/link'
 import { breakpoint } from '@theme'
 import { buttonColor } from './Button.helpers'
-import { Icon } from '@components'
-import { IconKey, typography } from '@theme'
+import { Glyph } from '@components'
+import { GlyphKey, typography, Level } from '@theme'
+import { gapForLevel, sizeForLevel } from '@lib'
 
 export interface ButtonProps {
   outline?: boolean
   inverted?: boolean
   disabled?: boolean
-  size?: 'l0' | 'l1' | 'l2'
+  level?: keyof Level
   stretch?: boolean
 
   /* actions for Button */
@@ -20,10 +21,10 @@ export interface ButtonProps {
   alt?: string
   target?: string
 
-  /* optional icon */
-  icon?: keyof IconKey
-  iconOnRight?: boolean
-  iconOnly?: boolean
+  /* optional glyph */
+  glyph?: keyof GlyphKey
+  glyphOnRight?: boolean
+  glyphOnly?: boolean
 
   className?: string
   children: React.ReactNode
@@ -32,10 +33,10 @@ export interface ButtonProps {
 const Button = ({
   children,
   href,
-  icon,
-  iconOnRight,
-  iconOnly,
-  size,
+  glyph,
+  glyphOnRight,
+  glyphOnly,
+  level,
   outline,
   stretch,
   className,
@@ -45,27 +46,25 @@ const Button = ({
   if (!!href) {
     return (
       <Link {...{ href }}>
-        <ButtonLink className={iClassName} {...{ size, outline, iconOnly, stretch }} {...props}>
-          {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
+        <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
+          {glyph && <StyledGlyph {...{ glyph }} />}
           <span>{children}</span>
-          {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
         </ButtonLink>
       </Link>
     )
   }
   if (!!props.onClick) {
     return (
-      <StyledButton className={iClassName} {...{ size, outline, iconOnly, stretch }} {...props}>
-        {icon && !iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
+      <StyledButton className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
+        {glyph && <StyledGlyph {...{ glyph }} />}
         <span>{children}</span>
-        {icon && !!iconOnRight && <StyledIcon color="white">{icon}</StyledIcon>}
       </StyledButton>
     )
   }
   throw 'Error: requires link or button action.'
 }
 
-const StyledIcon = styled(props => <Icon {...props} />)<Pick<ButtonProps, 'iconOnRight'>>`
+const StyledGlyph = styled(props => <Glyph {...props} />)<Pick<ButtonProps, 'glyphOnRight'>>`
   height: 100% !important;
 `
 
@@ -76,48 +75,51 @@ const ButtonStyle = css<Partial<ButtonProps>>`
   position: relative;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: ${props => (props.glyphOnRight ? 'row-reverse' : 'row')};
   align-items: center;
   justify-content: center;
 
-  height: ${props => (props.size === 'l0' ? 56 : props.size === 'l1' ? 40 : 24)}px;
+  height: ${props => sizeForLevel('mobile', props.level || 0)}px;
+  gap: ${props => gapForLevel('mobile', props.level)}px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    height: ${props => (props.size === 'l0' ? 64 : props.size === 'l1' ? 48 : 31)}px;
+    height: ${props => sizeForLevel('laptop', props.level || 0)}px;
+    gap: ${props => gapForLevel('laptop', props.level)}px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: ${props => (props.size === 'l0' ? 72 : props.size === 'l1' ? 56 : 40)}px;
+    height: ${props => sizeForLevel('desktop', props.level || 0)}px;
+    gap: ${props => gapForLevel('desktop', props.level)}px;
   }
 
   ${props => props.stretch && `width: 100%;`}
 
   ${props =>
-    props.iconOnly
+    props.glyphOnly
       ? `
-      width: ${props.size === 'l0' ? 56 : props.size === 'l1' ? 40 : 24}px;
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
-        width: ${props.size === 'l0' ? 64 : props.size === 'l1' ? 48 : 31}px;
-      }
-      @media only screen and (min-width: ${breakpoint.desktop}px) {
-        width: ${props.size === 'l0' ? 72 : props.size === 'l1' ? 56 : 40}px;
-      }
-      span {
-        display: none;
-      }
+        width: ${sizeForLevel('mobile', props.level || 0)}px;
+        @media only screen and (min-width: ${breakpoint.laptop}px) {
+          width: ${sizeForLevel('laptop', props.level || 0)}px;
+        }
+        @media only screen and (min-width: ${breakpoint.desktop}px) {
+          width: ${sizeForLevel('desktop', props.level || 0)}px;
+        }
+        span {
+          display: none;
+        }
       `
       : `
-      padding: 0 ${props.size === 'l0' ? 40 : props.size === 'l1' ? 20 : 16}px;
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
-        padding: 0 ${props.size === 'l0' ? 48 : props.size === 'l1' ? 24 : 20}px;
-      }
-      @media only screen and (min-width: ${breakpoint.desktop}px) {
-        padding: 0 ${props.size === 'l0' ? 56 : props.size === 'l1' ? 32 : 24}px;
-      }
-  `}
+        padding: 0 ${props.level === 0 ? 40 : props.level === 1 ? 20 : 16}px;
+        @media only screen and (min-width: ${breakpoint.laptop}px) {
+          padding: 0 ${props.level === 0 ? 48 : props.level === 1 ? 24 : 20}px;
+        }
+        @media only screen and (min-width: ${breakpoint.desktop}px) {
+          padding: 0 ${props.level === 0 ? 56 : props.level === 1 ? 32 : 24}px;
+        }
+    `}
 
   border-radius: 9999px;
-  border: ${props => (props.size === 'l2' ? 1 : 2)}px solid transparent;
+  border: ${props => (props.level === 2 ? 1 : 2)}px solid transparent;
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi) {
-    border-width: ${props => (props.size === 'l2' ? 0.5 : 2)}px;
+    border-width: ${props => (props.level === 2 ? 0.5 : 2)}px;
   }
 
   cursor: pointer;
@@ -134,7 +136,7 @@ const ButtonPalette = css<Partial<ButtonProps>>`
   color: ${props => buttonColor('light', 'foreground', { ...props })};
   background-color: ${props => buttonColor('light', 'background', { ...props })};
   border-color: ${props => buttonColor('light', 'border', { ...props })};
-  ${StyledIcon} {
+  ${StyledGlyph} {
     background-color: ${props => buttonColor('light', 'foreground', { ...props })};
   }
   &:disabled,
@@ -148,7 +150,7 @@ const ButtonPalette = css<Partial<ButtonProps>>`
     color: ${props => buttonColor('dark', 'foreground', { ...props })};
     background-color: ${props => buttonColor('dark', 'background', { ...props })};
     border-color: ${props => buttonColor('dark', 'border', { ...props })};
-    ${StyledIcon} {
+    ${StyledGlyph} {
       background-color: ${props => buttonColor('dark', 'foreground', { ...props })};
     }
     &:disabled,
@@ -177,7 +179,7 @@ const ButtonTypography = css<Partial<ButtonProps>>`
   text-align: center;
   letter-spacing: 0.5px;
 
-  ${props => typography.label[props.size!]};
+  ${props => typography.label[props.level === 0 ? 'l0' : props.level === 1 ? 'l1' : 'l2']};
 `
 
 const ButtonLink = styled.a`

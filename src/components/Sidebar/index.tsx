@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Countdown from './Countdown'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
-import { Icon, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
+import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
@@ -34,16 +34,15 @@ const Sidebar = () => {
             <Row>
               <Countdown date={FUND_DEADLINE} />
               <DonationCount>
-                <Icon>trend</Icon>
-                <span>{FUND_COUNT}k donations</span>
+                <Glyph glyph="trend" /> <span>{FUND_COUNT}k donations</span>
               </DonationCount>
             </Row>
           </FundBlock>
           <Row>
-            <Button onClick={() => console.log('donate!')} size="l1" stretch icon="donate">
+            <Button onClick={() => console.log('donate!')} level={1} stretch glyph="donate">
               Donate
             </Button>
-            <Button onClick={() => console.log('share!')} size="l1" stretch outline>
+            <Button onClick={() => console.log('share!')} level={1} stretch outline>
               Share Now
             </Button>
           </Row>
@@ -70,8 +69,12 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
   }
   border-radius: 0px 0px 16px 16px;
-  @media only screen and (min-width: ${breakpoint.laptop}) {
-    border-radius: 16px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    border-radius: 16px 16px 16px 16px;
+    top: 92px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    top: 108px;
   }
 `
 
@@ -81,7 +84,7 @@ const Content = styled.div`
   align-items: flex-start;
   padding: 22px 32px 32px 32px;
   gap: 32px;
-  @media only screen and (min-width: ${breakpoint.desktop}) {
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
     padding: 32px 40px 40px 40px;
     gap: 40px;
   }
@@ -95,7 +98,7 @@ const FundBlock = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-  @media only screen and (min-width: ${breakpoint.desktop}) {
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 24px;
   }
   > * {
@@ -127,14 +130,14 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: space-between;
   gap: 12px;
-  @media only screen and (min-width: ${breakpoint.desktop}) {
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
   }
 `
 
 const Header = styled.h3`
   padding: 19px 32px 0px 32px;
-  @media only screen and (min-width: ${breakpoint.desktop}) {
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
     padding: 26px 40px 0px 40px;
   }
   ${typography.label.l1}
@@ -147,7 +150,7 @@ const Header = styled.h3`
 const LargeScreensOnly = styled.div`
   display: none;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    display: block;
+    display: contents;
   }
 `
 

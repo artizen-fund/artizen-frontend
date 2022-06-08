@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { Button } from '@components'
 import AccountButton from './AccountButton'
-import { breakpoint, palette, iconKey } from '@theme'
+import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba } from '@lib'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
@@ -18,7 +18,7 @@ const Header = () => {
             <Logo>Artizen</Logo>
           </a>
         </Link>
-        <MobileNavButton onClick={() => console.log('derp')} icon={iconKey.arrow} iconOnRight outline size="l1">
+        <MobileNavButton onClick={() => console.log('derp')} icon={glyphKey.arrow} iconOnRight outline size="l1">
           Menu
         </MobileNavButton>
       </Items>
@@ -33,7 +33,7 @@ const Header = () => {
             </li>
           </ul>
         </Nav>
-        <Button href="/" icon={iconKey.donate} size="l1">
+        <Button href="/" glyph={glyphKey.donate} level={1}>
           Donate
         </Button>
         <AccountButton />

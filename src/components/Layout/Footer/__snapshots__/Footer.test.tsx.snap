@@ -6,13 +6,13 @@ exports[`Footer renders Footer unchanged 1`] = `
     class="sc-9199b4ac-0 gjUYWF"
   >
     <footer
-      class="sc-c1b16ee7-0 ensBoE"
+      class="sc-e5aa8865-0 scUXH"
     >
       <hr
-        class="sc-c1b16ee7-1 jHrrSa"
+        class="sc-e5aa8865-1 iujsWZ"
       />
       <ul
-        class="sc-c1b16ee7-2 jLlHDl"
+        class="sc-e5aa8865-2 facUha"
       >
         <li>
           Mission
@@ -28,7 +28,7 @@ exports[`Footer renders Footer unchanged 1`] = `
         </li>
       </ul>
       <ul
-        class="sc-c1b16ee7-3 bAungC"
+        class="sc-e5aa8865-3 bSPibJ"
       >
         <li>
           Contact
@@ -41,28 +41,28 @@ exports[`Footer renders Footer unchanged 1`] = `
         </li>
       </ul>
       <hr
-        class="sc-c1b16ee7-1 dCvKd"
+        class="sc-e5aa8865-1 bsoFwi"
       />
       <div
-        class="sc-c1b16ee7-4 bYHplR"
+        class="sc-e5aa8865-4 dTDGUS"
       >
         <div
-          class="sc-c1b16ee7-5 liEnVY"
+          class="sc-e5aa8865-5 dRUFfP"
         >
           Join the mission to fund public goods.
         </div>
         <div
-          class="sc-c1b16ee7-6 eqjNzH"
+          class="sc-e5aa8865-6 iKvjEo"
         >
           <button
-            class="sc-a45d3998-2 kTcvJQ undefined "
+            class="sc-b4940b6a-2 MnuBm undefined "
           >
             <span>
               Donate
             </span>
           </button>
           <button
-            class="sc-a45d3998-2 kTcvJQ undefined "
+            class="sc-b4940b6a-2 MnuBm undefined "
           >
             <span>
               Sign In
@@ -71,7 +71,7 @@ exports[`Footer renders Footer unchanged 1`] = `
         </div>
       </div>
       <hr
-        class="sc-c1b16ee7-1 gydgPo"
+        class="sc-e5aa8865-1 hLSIUz"
       />
       <div
         class="sc-697e6c26-0 kswkdX"
@@ -108,10 +108,10 @@ exports[`Footer renders Footer unchanged 1`] = `
     </footer>
   </div>
   <div
-    class="sc-9199b4ac-0 brREMd sc-c1b16ee7-8 gbxVmH"
+    class="sc-9199b4ac-0 brREMd sc-e5aa8865-8 kglVqc"
   >
     <footer
-      class="sc-c1b16ee7-7 bmUaPR"
+      class="sc-e5aa8865-7 cUEcfi"
     >
       <div>
         Open source platform made with ❤️ by a globally distributed team

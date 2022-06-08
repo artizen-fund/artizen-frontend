@@ -57,7 +57,7 @@ exports[`Form renders Form unchanged 1`] = `
           class="sc-233fee17-0 kLNnFl"
         >
           <div
-            class="sc-c73dbf12-0 kwgSQD PhoneInput"
+            class="sc-f5b34ffa-0 iLecjc PhoneInput"
           >
             <div
               class="PhoneInputCountry"
@@ -1549,134 +1549,26 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <div
-        class="horizontal-layout"
+        class="sc-2f9d5146-0 liLUtm"
+        id="#/properties/emailExample"
       >
         <div
-          class="horizontal-layout-item horizontal-layout-2"
+          class="sc-233fee17-0 kLNnFl"
         >
-          <div
-            class="vertical-layout"
+          <input
+            placeholder="your@email.com"
+            type="text"
+            value=""
+          />
+          <label
+            class="sc-840480c4-0 jepABy"
           >
-            <div
-              class="vertical-layout-item"
-            >
-              <label
-                class="sc-accf1c1-0 jJLYpY"
-                id="#/properties/switchBooleanExampleTwo"
-              >
-                <span
-                  class="sc-accf1c1-3 bLaMtz"
-                >
-                  Switch Boolean Example Two
-                </span>
-                <input
-                  class="sc-accf1c1-1 fxPrqN"
-                  type="checkbox"
-                />
-                <span
-                  class="sc-accf1c1-2 jDOa-Dy"
-                />
-              </label>
-            </div>
-            <div
-              class="vertical-layout-item"
-            >
-              <label
-                class="sc-accf1c1-0 cVszqm"
-                id="#/properties/switchBooleanExampleThree"
-              >
-                <span
-                  class="sc-accf1c1-3 bLaMtz"
-                >
-                  Switch Boolean Example Three
-                </span>
-                <input
-                  class="sc-accf1c1-1 fxPrqN"
-                  type="checkbox"
-                />
-                <span
-                  class="sc-accf1c1-2 jDOa-Dy"
-                />
-              </label>
-            </div>
-            <div
-              class="vertical-layout-item"
-            >
-              <label
-                class="sc-accf1c1-0 eIuobO"
-                id="#/properties/switchBooleanExampleFour"
-              >
-                <span
-                  class="sc-accf1c1-3 bLaMtz"
-                >
-                  Switch Boolean Example Four
-                </span>
-                <input
-                  class="sc-accf1c1-1 fxPrqN"
-                  type="checkbox"
-                />
-                <span
-                  class="sc-accf1c1-2 jDOa-Dy"
-                />
-              </label>
-            </div>
-            <div
-              class="vertical-layout-item"
-            >
-              <label
-                class="sc-accf1c1-0 dyVBVs"
-                id="#/properties/switchBooleanExampleFive"
-              >
-                <span
-                  class="sc-accf1c1-3 bLaMtz"
-                >
-                  Switch Boolean Example Five
-                </span>
-                <input
-                  class="sc-accf1c1-1 fxPrqN"
-                  type="checkbox"
-                />
-                <span
-                  class="sc-accf1c1-2 jDOa-Dy"
-                />
-              </label>
-            </div>
-          </div>
+            Email Example
+          </label>
         </div>
         <div
-          class="horizontal-layout-item horizontal-layout-2"
-        >
-          <div
-            class="vertical-layout"
-          >
-            <div
-              class="vertical-layout-item"
-            >
-              <div
-                class="sc-2f9d5146-0 liLUtm"
-                id="#/properties/emailExample"
-              >
-                <div
-                  class="sc-233fee17-0 kLNnFl"
-                >
-                  <input
-                    placeholder="your@email.com"
-                    type="text"
-                    value=""
-                  />
-                  <label
-                    class="sc-840480c4-0 jepABy"
-                  >
-                    Email Example
-                  </label>
-                </div>
-                <div
-                  class="sc-955ed11e-0 griBRj"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+          class="sc-955ed11e-0 griBRj"
+        />
       </div>
     </div>
   </div>

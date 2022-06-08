@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import { Button, Table, TableCell, Icon } from '@components'
+import { Button, Table, TableCell, Glyph } from '@components'
 import { rgba } from '@lib'
 import { palette, breakpoint } from '@theme'
 
 const Perks = () => {
   const sideItem = (
-    <Button href="/" outline size="l2">
+    <Button href="/" outline level={2}>
       Learn More
     </Button>
   )
@@ -13,31 +13,35 @@ const Perks = () => {
     <Table title="Additional Perks" {...{ sideItem }}>
       <TableCell>
         <div>
-          <StyledIcon>badge</StyledIcon>Membership in Artizen DAO
+          <StyledGlyph glyph="badge" outline />
+          Membership in Artizen DAO
         </div>
       </TableCell>
       <TableCell>
         <div>
-          <StyledIcon>token</StyledIcon>0.01% of $ART tokens
+          <StyledGlyph glyph="token" outline />
+          0.01% of $ART tokens
         </div>
       </TableCell>
       <TableCell>
         <div>
-          <StyledIcon>certificate</StyledIcon>Collectable Receipt
+          <StyledGlyph glyph="certificate" outline />
+          Collectable Receipt
         </div>
       </TableCell>
       <TableCell>
         <div>
-          <StyledIcon>face</StyledIcon>Custom Discord Avatar
+          <StyledGlyph glyph="face" outline />
+          Custom Discord Avatar
         </div>
       </TableCell>
     </Table>
   )
 }
 
-const StyledIcon = (props: any) => (
+const StyledGlyph = (props: any) => (
   <Wrapper>
-    <Icon color="night" darkColor="moon" {...props} />
+    <Glyph {...props} />
   </Wrapper>
 )
 

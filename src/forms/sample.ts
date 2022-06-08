@@ -26,18 +26,6 @@ export const schema = {
     switchBooleanExample: {
       type: 'boolean',
     },
-    switchBooleanExampleTwo: {
-      type: 'boolean',
-    },
-    switchBooleanExampleThree: {
-      type: 'boolean',
-    },
-    switchBooleanExampleFour: {
-      type: 'boolean',
-    },
-    switchBooleanExampleFive: {
-      type: 'boolean',
-    },
     enumExample: {
       type: 'string',
       enum: ['', 'DE', 'IT', 'JP', 'US', 'RU', 'Other'],
@@ -66,10 +54,6 @@ export const initialState = {
   phoneExample: undefined,
   booleanCheckExample: undefined,
   switchBooleanExample: undefined,
-  switchBooleanExampleTwo: undefined,
-  switchBooleanExampleThree: undefined,
-  switchBooleanExampleFour: undefined,
-  switchBooleanExampleFive: undefined,
   enumExample: undefined,
   enumSegmentsExample: undefined,
   numberExample: undefined,
@@ -127,54 +111,11 @@ export const uischema = {
     },
 
     {
-      type: 'HorizontalLayout',
-      elements: [
-        {
-          type: 'VerticalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/switchBooleanExampleTwo',
-              options: {
-                format: 'switch',
-              },
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/switchBooleanExampleThree',
-              options: {
-                format: 'switch',
-              },
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/switchBooleanExampleFour',
-              options: {
-                format: 'switch',
-              },
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/switchBooleanExampleFive',
-              options: {
-                format: 'switch',
-              },
-            },
-          ],
-        },
-        {
-          type: 'VerticalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/emailExample',
-              options: {
-                placeholder: 'your@email.com',
-              },
-            },
-          ],
-        },
-      ],
+      type: 'Control',
+      scope: '#/properties/emailExample',
+      options: {
+        placeholder: 'your@email.com',
+      },
     },
   ],
 }

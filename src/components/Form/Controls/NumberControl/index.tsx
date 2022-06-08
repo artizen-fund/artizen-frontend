@@ -10,7 +10,7 @@ import { withJsonFormsControlProps } from '@jsonforms/react'
 import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
-import { IconKey } from '@theme'
+import { GlyphKey } from '@theme'
 
 export interface NumberControlProps {
   label: string | Labels
@@ -60,7 +60,7 @@ export const NumberControl = ({
 
   // This effect is for all right-hand-side icons.
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
-  const [statusIcon, setStatusIcon] = useState<keyof IconKey>()
+  const [statusIcon, setStatusIcon] = useState<keyof GlyphKey>()
   useEffect(() => {
     setStatusIcon(enabled ? undefined : 'lock')
   }, [enabled])

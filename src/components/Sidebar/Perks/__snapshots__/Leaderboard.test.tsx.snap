@@ -3,7 +3,7 @@
 exports[`Perks renders Perks unchanged 1`] = `
 <div>
   <div
-    class="sc-caa8facc-0 gtLRgT"
+    class="sc-ecff4829-0 fMTZxv"
   >
     <div
       class="sc-c6d4a71-0 iFQvvL"
@@ -14,7 +14,7 @@ exports[`Perks renders Perks unchanged 1`] = `
         Additional Perks
       </div>
       <a
-        class="sc-a45d3998-1 cdPvWx undefined "
+        class="sc-b4940b6a-1 hMYgyA undefined "
       >
         <span>
           Learn More
@@ -26,14 +26,11 @@ exports[`Perks renders Perks unchanged 1`] = `
     >
       <div>
         <div
-          class="sc-62acfa07-0 jSiTeQ"
+          class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-662bd339-0 upfzd"
-            color="night"
-          >
-            badge
-          </div>
+            class="sc-9eb58f28-0 fZooDs"
+          />
         </div>
         Membership in Artizen DAO
       </div>
@@ -43,14 +40,11 @@ exports[`Perks renders Perks unchanged 1`] = `
     >
       <div>
         <div
-          class="sc-62acfa07-0 jSiTeQ"
+          class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-662bd339-0 dPeJbv"
-            color="night"
-          >
-            token
-          </div>
+            class="sc-9eb58f28-0 guGTIq"
+          />
         </div>
         0.01% of $ART tokens
       </div>
@@ -60,14 +54,11 @@ exports[`Perks renders Perks unchanged 1`] = `
     >
       <div>
         <div
-          class="sc-62acfa07-0 jSiTeQ"
+          class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-662bd339-0 ideozd"
-            color="night"
-          >
-            certificate
-          </div>
+            class="sc-9eb58f28-0 kJcPPI"
+          />
         </div>
         Collectable Receipt
       </div>
@@ -77,14 +68,11 @@ exports[`Perks renders Perks unchanged 1`] = `
     >
       <div>
         <div
-          class="sc-62acfa07-0 jSiTeQ"
+          class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-662bd339-0 dRvNyZ"
-            color="night"
-          >
-            face
-          </div>
+            class="sc-9eb58f28-0 hKCRJg"
+          />
         </div>
         Custom Discord Avatar
       </div>

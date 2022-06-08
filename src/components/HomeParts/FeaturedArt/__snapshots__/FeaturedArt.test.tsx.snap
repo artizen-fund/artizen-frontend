@@ -3,66 +3,90 @@
 exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
 <div>
   <section
-    class="sc-53f1d815-0 jgUOtj"
+    class="sc-d28cd83f-0 eXLDAq"
   >
     <div
-      class="sc-53f1d815-1 bymRZK"
+      class="sc-d28cd83f-1 jljDUp"
     />
     <div
-      class="sc-53f1d815-2 hzrThw"
+      class="sc-d28cd83f-2 jTyxKF"
     >
       <div
-        class="sc-53f1d815-3 jimaiY"
+        class="sc-d28cd83f-3 hHzerR"
       >
         Title of Monthly Featured Artwork
       </div>
       <div
-        class="sc-53f1d815-4 qQVth"
+        class="sc-d28cd83f-4 kEEkXa"
       >
         <div
-          class="sc-53f1d815-5 kPbguQ"
+          class="sc-d28cd83f-5 lkTQUF"
         >
           <div
-            class="sc-53f1d815-6 hOsBPm"
+            class="sc-8c7bf1ae-2 huxvCL"
           >
             <div
-              class="sc-662bd339-0 gchHyC"
-              color="slate"
+              class="sc-8c7bf1ae-0 bhoRgU"
+              color="night"
             >
-              face
+              <div
+                class="sc-9eb58f28-0 eduRIx"
+                color="night"
+              />
+            </div>
+            <div
+              class="sc-8c7bf1ae-1 ckGAST"
+              color="night"
+            >
+              Artist Name
             </div>
           </div>
-          Artist Name
         </div>
         <div
-          class="sc-53f1d815-5 kPbguQ"
+          class="sc-d28cd83f-5 lkTQUF"
         >
           <div
-            class="sc-53f1d815-6 hOsBPm"
+            class="sc-8c7bf1ae-2 huxvCL"
           >
             <div
-              class="sc-662bd339-0 bPCjqV"
-              color="slate"
+              class="sc-8c7bf1ae-0 bhoRgU"
+              color="night"
             >
-              calendar
+              <div
+                class="sc-9eb58f28-0 hZXkji"
+                color="night"
+              />
+            </div>
+            <div
+              class="sc-8c7bf1ae-1 ckGAST"
+              color="night"
+            >
+              Created # days ago
             </div>
           </div>
-          Created # days ago
         </div>
         <div
-          class="sc-53f1d815-5 kPbguQ"
+          class="sc-d28cd83f-5 lkTQUF"
         >
           <div
-            class="sc-53f1d815-6 hOsBPm"
+            class="sc-8c7bf1ae-2 huxvCL"
           >
             <div
-              class="sc-662bd339-0 LZUoh"
-              color="slate"
+              class="sc-8c7bf1ae-0 bhoRgU"
+              color="night"
             >
-              tag
+              <div
+                class="sc-9eb58f28-0 ccFrgu"
+                color="night"
+              />
+            </div>
+            <div
+              class="sc-8c7bf1ae-1 ckGAST"
+              color="night"
+            >
+              Tag Name
             </div>
           </div>
-          Tag Name
         </div>
       </div>
     </div>

@@ -1,11 +1,6 @@
-import { useState } from 'react'
-import Link from 'next/link'
 import styled from 'styled-components'
-import { Button } from '@components'
 import TableHeader from './TableHeader'
 import TableCell from './TableCell'
-import { breakpoint, palette, iconKey } from '@theme'
-import { rgba } from '@lib'
 
 export interface TableProps {
   title: string
@@ -27,6 +22,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  width: 100%;
 `
 
 export { Table, TableCell, TableHeader }

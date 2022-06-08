@@ -1,4 +1,6 @@
-export type BreakPoint = Record<string, number>
+export type ResponsiveSize = 'mobile' | 'tablet' | 'laptop' | 'desktop'
+
+type BreakPoint = Record<ResponsiveSize, number>
 
 export const breakpoint: BreakPoint = {
   desktop: 1680,

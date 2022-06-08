@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import SelectControl from './SelectControl'
 import { EnumControlProps } from './'
-import { iconKey } from '@theme'
+import { glyphKey } from '@theme'
 
 export default {
   title: 'forms/SelectControl',
   component: SelectControl,
   argTypes: {
     icon: {
-      options: iconKey,
+      options: glyphKey,
       control: { type: 'select' },
     },
   },

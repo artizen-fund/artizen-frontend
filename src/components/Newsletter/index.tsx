@@ -50,7 +50,7 @@ const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultF
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
         <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
-          <StyledButton onClick={() => subscribe(data)} inverted size="l0" disabled={!data.EMAIL || !data.OPTIN}>
+          <StyledButton onClick={() => subscribe(data)} inverted level={0} disabled={!data.EMAIL || !data.OPTIN}>
             Submit
           </StyledButton>
           <Confirmation>

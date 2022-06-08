@@ -1,5 +1,5 @@
 import Button, { ButtonProps } from './'
-import { iconKey } from '@theme'
+import { glyphKey } from '@theme'
 
 export default {
   title: 'components/Button',
@@ -11,12 +11,12 @@ export default {
     disabled: {
       control: 'boolean',
     },
-    size: {
-      options: ['l0', 'l1', 'l2'],
+    level: {
+      options: [0, 1, 2],
       control: { type: 'select' },
     },
-    icon: {
-      options: { '— none —': undefined, ...iconKey },
+    glyph: {
+      options: { '— none —': undefined, ...glyphKey },
       control: { type: 'select' },
     },
   },

@@ -1,24 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Countdown renders Countdown unchanged 1`] = `
-<div>
-  <div
-    class="sc-39826d64-0 ibsXOM"
-  >
-    <div
-      class="sc-662bd339-0 eHfkgv"
-    >
-      countdown
-    </div>
-    <span>
-      27
-      :
-      13
-      :
-      05
-      :
-      17
-    </span>
-  </div>
-</div>
-`;
+exports[`Countdown renders Countdown unchanged 1`] = `<div />`;

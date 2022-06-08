@@ -27,7 +27,7 @@ export const schema = {
 }
 
 export const initialState = {
-  optIn: true,
+  OPTIN: true,
 }
 
 export const uischema = {

@@ -7,7 +7,7 @@ export interface LeaderboardProps {
 
 const Leaderboard = ({ leaderboard }: LeaderboardProps) => {
   const sideItem = (
-    <Button onClick={() => console.log('do something')} outline size="l2">
+    <Button onClick={() => console.log('do something')} outline level={2}>
       See All
     </Button>
   )
