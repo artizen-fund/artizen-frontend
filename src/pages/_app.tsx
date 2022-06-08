@@ -3,12 +3,14 @@ import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
-import { SessionProvider, useApollo, envString, envBool } from '@lib'
+import { assert, SessionProvider, useApollo } from '@lib'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
 function App({ Component, pageProps }: AppProps) {
+  const NEXT_PUBLIC_INTERCOM = assert(process.env.NEXT_PUBLIC_INTERCOM, 'NEXT_PUBLIC_INTERCOM')
+
   const [user, setUser] = useState<ArtizenUser>()
   const { apolloClient } = useApollo(pageProps, user)
 
@@ -28,30 +30,13 @@ function App({ Component, pageProps }: AppProps) {
       })
   }, [])
 
-  const { query } = useRouter()
-  if (query && query.pass && query.pass === envString('NEXT_PUBLIC_DEV_PASSWORD')) {
-    localStorage.setItem('pass', envString('NEXT_PUBLIC_DEV_PASSWORD'))
-  }
-
-  const isProd = envBool('NEXT_PUBLIC_PROD')
-
-  const isDevAndPassedPassword =
-    typeof window !== 'undefined' && !isProd && query.pass === envString('NEXT_PUBLIC_DEV_PASSWORD')
-
-  const isDevAndGetLocalstore =
-    typeof window !== 'undefined' && !isProd && localStorage.getItem('pass') === envString('NEXT_PUBLIC_DEV_PASSWORD')
-
-  const isProdClient = typeof window !== 'undefined' && isProd
-
-  const passwordMatches = isDevAndGetLocalstore || isDevAndPassedPassword || isProdClient
-
   return (
     <>
-      <IntercomProvider appId={envString('NEXT_PUBLIC_INTERCOM')}>
+      <IntercomProvider appId={NEXT_PUBLIC_INTERCOM}>
         <SessionProvider {...{ user, setUser }}>
           <ApolloProvider client={apolloClient}>
             {/* <Toaster /> */}
-            <Component {...pageProps} {...{ passwordMatches }} />
+            <Component {...pageProps} />
           </ApolloProvider>
         </SessionProvider>
       </IntercomProvider>

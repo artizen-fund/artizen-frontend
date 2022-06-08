@@ -1,17 +1,19 @@
 import jwt from 'jsonwebtoken'
-import { setTokenCookie, envString } from '@lib'
+import { setTokenCookie, assert } from '@lib'
 import { createNewToken, getUserDataFromDataBase } from '../../lib/utilsServer'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const user = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const JWT_SECRET = assert(process.env.JWT_SECRET, 'JWT_SECRET')
+
     if (!req.cookies.token) {
       console.log('Error: Token not found in cookies.')
       return res.json({})
     }
 
     const { token } = req.cookies
-    const jwtUser = jwt.verify(token, envString('JWT_SECRET')) as ArtizenUser
+    const jwtUser = jwt.verify(token, JWT_SECRET) as ArtizenUser
     if (!jwtUser.issuer) throw 'Bad JWT payload.'
 
     // Refresh the JWT for the user each time they send a request to /user so they only get logged out after SESSION_LENGTH_IN_DAYS of inactivity
@@ -40,6 +42,7 @@ const user = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 // async function queryHasura(query, token) {
+//   const NEXT_PUBLIC_HASURA_GRAPHQL_URL = assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL')
 //   console.log('token     ', JSON.stringify(query))
 //   console.log('token   ', token)
 //   try {

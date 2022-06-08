@@ -1,4 +1,5 @@
 export * from './apolloClient'
+export * from './assert'
 export * from './cookies'
 export * from './CreateTopUpWallet'
 export * from './envHelpers'

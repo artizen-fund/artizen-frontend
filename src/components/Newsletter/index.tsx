@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import MailchimpSubscribe, { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
-import { rgba, envString } from '@lib'
+import { rgba, assert } from '@lib'
 import { Form, Button, PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState } from './form'
@@ -163,11 +163,12 @@ const Subhead = styled.div`
   color: ${rgba(palette.barracuda)};
 `
 
-const MailChimpForm = () => (
-  <MailchimpSubscribe
-    url={envString('NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL')}
-    render={props => <Newsletter {...props} />}
-  />
-)
+const MailChimpForm = () => {
+  const NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL = assert(
+    process.env.NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL,
+    'NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL',
+  )
+  return <MailchimpSubscribe url={NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL} render={props => <Newsletter {...props} />} />
+}
 
 export default MailChimpForm
