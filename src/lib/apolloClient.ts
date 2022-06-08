@@ -2,17 +2,21 @@ import { useMemo } from 'react'
 import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
-import { isServer, envString } from '@lib'
+import { assert, isServer } from '@lib'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 const createApolloClient = (user?: ArtizenUser) => {
+  const NEXT_PUBLIC_HASURA_GRAPHQL_URL = assert(
+    process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL,
+    'NEXT_PUBLIC_HASURA_GRAPHQL_URL',
+  )
   return new ApolloClient({
     ssrMode: isServer(),
     link: new HttpLink({
-      uri: envString('NEXT_PUBLIC_HASURA_GRAPHQL_URL'), // Server URL (must be absolute)
+      uri: NEXT_PUBLIC_HASURA_GRAPHQL_URL, // Server URL (must be absolute)
       ...(user && { headers: { Authorization: `Bearer ${user.token}` } }),
       credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
     }),
