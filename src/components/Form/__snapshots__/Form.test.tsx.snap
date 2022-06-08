@@ -33,7 +33,7 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-840480c4-0 jepABy"
+            class="sc-ffdb2e6c-0 eexGRl"
           >
             3-20 Character Length String
              *
@@ -1315,7 +1315,7 @@ exports[`Form renders Form unchanged 1`] = `
             />
           </div>
           <label
-            class="sc-840480c4-0 gPuLbB"
+            class="sc-ffdb2e6c-0 bixQNG"
           >
             Phone Example
           </label>
@@ -1420,10 +1420,10 @@ exports[`Form renders Form unchanged 1`] = `
             </option>
           </select>
           <div
-            class="sc-cd8f7b2e-0 dtVPFM"
+            class="sc-b0af9a1b-0 dENUF"
           />
           <label
-            class="sc-840480c4-0 jepABy noData"
+            class="sc-ffdb2e6c-0 eexGRl noData"
           >
             Enum Example
           </label>
@@ -1507,7 +1507,7 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-840480c4-0 jepABy"
+            class="sc-ffdb2e6c-0 eexGRl"
           >
             Integer Example
           </label>
@@ -1535,7 +1535,7 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-840480c4-0 jepABy"
+            class="sc-ffdb2e6c-0 eexGRl"
           >
             Number Example
           </label>
@@ -1561,7 +1561,7 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-840480c4-0 jepABy"
+            class="sc-ffdb2e6c-0 eexGRl"
           >
             Email Example
           </label>

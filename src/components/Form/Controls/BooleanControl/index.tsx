@@ -1,6 +1,5 @@
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
-import { rankWith, schemaMatches } from '@jsonforms/core'
+import { Labels, JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
 import SwitchControl from './SwitchControl'
 import CheckboxControl from './CheckboxControl'
 

@@ -1,10 +1,15 @@
 import { CourierProvider, ICourierMessage } from '@trycourier/react-provider'
-import { Toast } from '@trycourier/react-toast'
-import { useSession, getUSDCBalance, isServer } from '@lib'
+// import { Toast } from '@trycourier/react-toast'
+import { useSession, getUSDCBalance, isServer, assert } from '@lib'
 
 export const Toaster = () => {
-  if (isServer()) return <></>
+  const NEXT_PUBLIC_COURIER_CLIENT_KEY = assert(
+    process.env.NEXT_PUBLIC_COURIER_CLIENT_KEY,
+    'NEXT_PUBLIC_COURIER_CLIENT_KEY',
+  )
+
   const user = useSession()
+  if (isServer()) return <></>
 
   const handleBalance = async () => {
     if (user?.publicAddress) {
@@ -18,15 +23,16 @@ export const Toaster = () => {
     return message
   }
 
+  /* todo: Typescript is bugging out when <CourierProvider /> has children.
+    <Toast />
+  */
   return (
-    /* note: this chokes on props.children, investigate later */
-    /* @ts-ignore */
     <CourierProvider
       userId={user?.id}
-      clientKey={process.env.NEXT_PUBLIC_COURIER_CLIENT_KEY}
+      clientKey={NEXT_PUBLIC_COURIER_CLIENT_KEY}
       onMessage={handleOnMessage}
-    >
-      <Toast />
-    </CourierProvider>
+    ></CourierProvider>
   )
+
+  return <></>
 }

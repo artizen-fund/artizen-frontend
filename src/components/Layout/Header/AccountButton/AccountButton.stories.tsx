@@ -1,9 +1,10 @@
 import AccountButton from './'
 
-export default {
+const story = {
   title: 'layout/AccountButton',
   component: AccountButton,
   argTypes: {},
 }
+export default story
 
 export const AccountButtonComponent = (props: any) => <AccountButton {...props} />

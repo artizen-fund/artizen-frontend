@@ -6,8 +6,8 @@ import { rgba } from '@lib'
 const Metrics = () => (
   <PagePadding>
     <Wrapper>
-      {[0, 1, 2, 3].map(i => (
-        <Metric key={`metric-${i}`}>
+      {[0, 1, 2, 3].map(index => (
+        <Metric key={`metric-${index}`}>
           <Illustration />
           <Amount>
             <span>$</span>99,999

@@ -1,10 +1,8 @@
-const LEGACY_DOMAIN = 'https://legacy.artizen.fund'
+// const LEGACY_DOMAIN = 'https://legacy.artizen.fund'
 
 module.exports = {
   reactStrictMode: true,
-  compiler: {
-    styledComponents: true,
-  },
+  compiler: { styledComponents: true },
   // images: {
   //   domains: ['res.cloudinary.com'],
   // },

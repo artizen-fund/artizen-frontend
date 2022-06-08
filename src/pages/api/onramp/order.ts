@@ -1,11 +1,13 @@
 import api from 'api'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { assert } from '@lib'
 
-const sdk = api('@wyre-hub/v4#fxprd1kl2b0beym')
-sdk.auth(process.env.SENDWYRE_SECRET)
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+const orderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
+  const SENDWYRE_ACCOUNT = assert(process.env.SENDWYRE_ACCOUNT, 'SENDWYRE_ACCOUNT')
+  const SENDWYRE_SECRET = assert(process.env.SENDWYRE_SECRET, 'SENDWYRE_SECRET')
+  const sdk = api('@wyre-hub/v4#fxprd1kl2b0beym')
+  sdk.auth(SENDWYRE_SECRET)
 
   const {
     amount,
@@ -30,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       sourceCurrency: 'USD',
       destCurrency: 'MUSDC',
       dest: `ethereum:${walletAddress}`,
-      referrerAccountId: process.env.SENDWYRE_ACCOUNT,
+      referrerAccountId: SENDWYRE_ACCOUNT,
       givenName,
       familyName,
       email,
@@ -46,3 +48,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(500).json({ error })
   }
 }
+
+export default orderHandler

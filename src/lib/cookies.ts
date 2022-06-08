@@ -1,10 +1,15 @@
 import { serialize } from 'cookie'
 import type { NextApiResponse } from 'next'
+import { assertInt } from '@lib'
 
 const TOKEN_NAME = 'token'
-const MAX_AGE = 60 * 60 * 24 * parseInt(process.env.SESSION_LENGTH_IN_DAYS!)
 
 export const setTokenCookie = (res: NextApiResponse, token: string) => {
+  const NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS = assertInt(
+    process.env.NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS,
+    'NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS',
+  )
+  const MAX_AGE = 60 * 60 * 24 * NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS
   const cookie = serialize(TOKEN_NAME, token, {
     maxAge: MAX_AGE,
     expires: new Date(Date.now() + MAX_AGE * 1000),

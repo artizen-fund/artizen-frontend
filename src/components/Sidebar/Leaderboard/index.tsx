@@ -13,11 +13,11 @@ const Leaderboard = ({ leaderboard }: LeaderboardProps) => {
   )
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
-      {leaderboard.map((benefactor, i) => (
-        <TableCell key={`benefactor-${i}`}>
+      {leaderboard.map((benefactor, index) => (
+        <TableCell key={`benefactor-${index}`}>
           <div>
-            <div>#{i}</div>
-            <Name king={i === 0}>{benefactor.name}</Name>
+            <div>#{index}</div>
+            <Name king={index === 0}>{benefactor.name}</Name>
           </div>
           <div>${benefactor.amount.toLocaleString()}</div>
         </TableCell>

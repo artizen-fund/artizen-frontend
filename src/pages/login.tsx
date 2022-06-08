@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Router from 'next/router'
-import { useSession, magic } from '@lib'
-import { Header } from '@components'
+import { useSession } from '@lib'
 
-function Login() {
+const Login = () => {
   const [disabled, setDisabled] = useState(false)
   const [email, setEmail] = useState('')
   const user = useSession()
@@ -13,8 +12,10 @@ function Login() {
     user && user.email && Router.push('/verifyEmail')
   }, [user])
 
-  async function handleLoginWithEmail() {
+  const handleLoginWithEmail = async () => {
     try {
+      {
+        /*
       console.log('handleLoginWithEmail  ')
       // Disable login button to prevent multiple emails from being triggered
       setDisabled(true)
@@ -39,7 +40,9 @@ function Login() {
         },
       })
 
-      res.status === 200 && Router.reload()
+      res.status === 200 && Router.reload() 
+      */
+      }
     } catch (error) {
       setDisabled(false) // Re-enable login button - user may have requested to edit their email
       console.log('it goes here', error)
@@ -48,7 +51,6 @@ function Login() {
 
   return (
     <div>
-      <Header />
       <input
         type="text"
         value={email}

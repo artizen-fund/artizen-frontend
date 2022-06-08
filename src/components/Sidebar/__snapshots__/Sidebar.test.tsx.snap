@@ -3,13 +3,13 @@
 exports[`Sidebar renders Sidebar unchanged 1`] = `
 <div>
   <section
-    class="sc-f67c5638-1 cQDgcH sc-73801891-0 fKRlrE"
+    class="sc-f67c5638-1 cQDgcH sc-2668456d-0 dEgWEE"
   >
     <div
-      class="sc-f67c5638-0 fqyVoy sc-73801891-1 KIiLN"
+      class="sc-f67c5638-0 fqyVoy sc-2668456d-1 hCYQrl"
     >
       <h3
-        class="sc-73801891-7 gpJRoN"
+        class="sc-2668456d-7 eQrzEZ"
       >
         Join our 
         <strong>
@@ -18,13 +18,13 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
          donation drive
       </h3>
       <div
-        class="sc-73801891-2 jdRcDX"
+        class="sc-2668456d-2 bPAllv"
       >
         <div
-          class="sc-73801891-3 hQVrhy"
+          class="sc-2668456d-3 gFpYCq"
         >
           <div
-            class="sc-73801891-4 hzSQkf"
+            class="sc-2668456d-4 cZNOHL"
           >
             <span>
               $
@@ -40,10 +40,10 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
             0.61
           </div>
           <div
-            class="sc-73801891-6 gPzGpk"
+            class="sc-2668456d-6 fzjdPE"
           >
             <div
-              class="sc-73801891-5 klDaQg"
+              class="sc-2668456d-5 jhzrpE"
             >
               <div
                 class="sc-9eb58f28-0 feoVcp"
@@ -57,20 +57,20 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-73801891-6 gPzGpk"
+          class="sc-2668456d-6 fzjdPE"
         >
           <button
-            class="sc-b4940b6a-2 bnGCTs undefined "
+            class="sc-1137dc9b-2 cUuCkz undefined "
           >
             <div
-              class="sc-9eb58f28-0 iglxpF sc-b4940b6a-0 cuZhbr"
+              class="sc-9eb58f28-0 iglxpF sc-1137dc9b-0 iYcpje"
             />
             <span>
               Donate
             </span>
           </button>
           <button
-            class="sc-b4940b6a-2 jeWNDh undefined "
+            class="sc-1137dc9b-2 fwqoAe undefined "
           >
             <span>
               Share Now
@@ -78,10 +78,10 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </button>
         </div>
         <div
-          class="sc-73801891-8 fVoQoI"
+          class="sc-2668456d-8 YwkJY"
         >
           <div
-            class="sc-ecff4829-0 fMTZxv"
+            class="sc-bdd02fd6-0 fJPhsS"
           >
             <div
               class="sc-c6d4a71-0 iFQvvL"
@@ -92,7 +92,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Leaderboard
               </div>
               <button
-                class="sc-b4940b6a-2 iCvOxT undefined "
+                class="sc-1137dc9b-2 hhppYD undefined "
               >
                 <span>
                   See All
@@ -108,7 +108,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   0
                 </div>
                 <div
-                  class="sc-faf80e3d-0 eGNFUr"
+                  class="sc-43c0e226-0 dtsHbH"
                 >
                   herp derp
                 </div>
@@ -127,7 +127,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   1
                 </div>
                 <div
-                  class="sc-faf80e3d-0 bfCdMW"
+                  class="sc-43c0e226-0 cQtfKe"
                 >
                   dorp donk
                 </div>
@@ -146,7 +146,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   2
                 </div>
                 <div
-                  class="sc-faf80e3d-0 bfCdMW"
+                  class="sc-43c0e226-0 cQtfKe"
                 >
                   hoop doop
                 </div>
@@ -158,7 +158,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-ecff4829-0 fMTZxv"
+            class="sc-bdd02fd6-0 fJPhsS"
           >
             <div
               class="sc-c6d4a71-0 iFQvvL"
@@ -169,7 +169,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Additional Perks
               </div>
               <a
-                class="sc-b4940b6a-1 hMYgyA undefined "
+                class="sc-1137dc9b-1 khnPfI undefined "
               >
                 <span>
                   Learn More

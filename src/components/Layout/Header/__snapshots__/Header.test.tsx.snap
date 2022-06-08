@@ -3,22 +3,22 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-8ef0492a-0 kiRjAF"
+    class="sc-e34d4562-0 Oxmab"
   >
     <div
-      class="sc-8ef0492a-2 gsMAck"
+      class="sc-e34d4562-2 iTHnHG"
     >
       <a
         href="/"
       >
         <div
-          class="sc-8ef0492a-1 jKmsbu"
+          class="sc-e34d4562-1 tERcg"
         >
           Artizen
         </div>
       </a>
       <button
-        class="sc-b4940b6a-2 gyaHl sc-8ef0492a-4 ggjchk "
+        class="sc-1137dc9b-2 bbtqSJ sc-e34d4562-4 kNaVCa "
       >
         <span>
           Menu
@@ -26,10 +26,10 @@ exports[`renders homepage unchanged 1`] = `
       </button>
     </div>
     <div
-      class="sc-8ef0492a-2 gsMAck"
+      class="sc-e34d4562-2 iTHnHG"
     >
       <div
-        class="sc-8ef0492a-3 iLOAzN"
+        class="sc-e34d4562-3 hVhDbP"
       >
         <ul>
           <li>
@@ -49,10 +49,10 @@ exports[`renders homepage unchanged 1`] = `
         </ul>
       </div>
       <a
-        class="sc-b4940b6a-1 eEXIDI undefined "
+        class="sc-1137dc9b-1 ldkQTM undefined "
       >
         <div
-          class="sc-9eb58f28-0 iglxpF sc-b4940b6a-0 cuZhbr"
+          class="sc-9eb58f28-0 iglxpF sc-1137dc9b-0 iYcpje"
         />
         <span>
           Donate

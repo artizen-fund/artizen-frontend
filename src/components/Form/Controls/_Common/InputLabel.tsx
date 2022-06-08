@@ -1,7 +1,7 @@
 /* Label for input[type=text/email/password], textarea, and select inputs */
 
 import styled from 'styled-components'
-import { breakpoint, palette, Palette } from '@theme'
+import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 export default styled.label<{ hasWidget?: boolean }>`

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import type { Labels, JsonSchema, ControlElement } from '@jsonforms/core'
-import { rankWith, schemaMatches } from '@jsonforms/core'
+import { rankWith, schemaMatches, Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
@@ -56,7 +55,7 @@ export const StringControl = ({
     } else {
       setVisibleError(parsedErrors[0])
     }
-  }, [parsedErrors])
+  }, [visibleError, parsedErrors])
 
   // This effect is for all right-hand-side icons.
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?

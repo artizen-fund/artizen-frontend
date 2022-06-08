@@ -1,10 +1,11 @@
 import Leaderboard, { LeaderboardProps } from './'
 
-export default {
+const story = {
   title: 'page/home/Leaderboard',
   component: Leaderboard,
   argTypes: {},
 }
+export default story
 
 export const LeaderboardComponent = (props: LeaderboardProps) => {
   const leaderboard = [

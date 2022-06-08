@@ -2,22 +2,22 @@ import { useMemo } from 'react'
 import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
-import { isServer } from '@lib'
+import { assert, isServer } from '@lib'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 const createApolloClient = (user?: ArtizenUser) => {
+  const NEXT_PUBLIC_HASURA_GRAPHQL_URL = assert(
+    process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL,
+    'NEXT_PUBLIC_HASURA_GRAPHQL_URL',
+  )
   return new ApolloClient({
     ssrMode: isServer(),
     link: new HttpLink({
-      uri: process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, // Server URL (must be absolute)
-      ...(user && {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }),
+      uri: NEXT_PUBLIC_HASURA_GRAPHQL_URL, // Server URL (must be absolute)
+      ...(user && { headers: { Authorization: `Bearer ${user.token}` } }),
       credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache({
@@ -31,9 +31,12 @@ const createApolloClient = (user?: ArtizenUser) => {
               keyArgs: false,
               // Concatenate the incoming list items with
               // the existing list items.
-              merge(existing = [], incoming) {
+              merge(incoming, existing = []) {
                 // return [...existing, ...incoming]
-                return [...existing, ...incoming.filter((d: any) => existing.every((s: any) => !isEqual(d, s)))]
+                return [
+                  ...existing,
+                  ...incoming.filter((data: any) => existing.every((str: any) => !isEqual(data, str))),
+                ]
               },
             },
             User: {
@@ -43,7 +46,7 @@ const createApolloClient = (user?: ArtizenUser) => {
               keyArgs: ['where'],
               // Concatenate the incoming list items with
               // the existing list items.
-              merge(existing = [], incoming) {
+              merge(incoming, existing = []) {
                 return [...existing, ...incoming]
                 // return [
                 //   ...existing,
@@ -60,37 +63,37 @@ const createApolloClient = (user?: ArtizenUser) => {
   })
 }
 
-export function initializeApollo(initialState = null, user?: ArtizenUser) {
-  const _apolloClient = createApolloClient(user)
+export function initializeApollo(initialState?: any, user?: ArtizenUser) {
+  const newApolloClient = createApolloClient(user)
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // Gets hydrated here
   if (initialState) {
     // Get existing cache, loaded during client side data fetching
-    const existingCache = _apolloClient.extract()
+    const existingCache = newApolloClient.extract()
 
     // Merge the existing cache into data passed from getStaticProps/getServerSideProps
     const data = merge(initialState, existingCache, {
       // Combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
-        ...destinationArray.filter(d => sourceArray.every(s => !isEqual(d, s))),
+        ...destinationArray.filter(data => sourceArray.every(str => !isEqual(data, str))),
       ],
     })
 
     // Restore the cache with the merged data
-    _apolloClient.cache.restore(data)
+    newApolloClient.cache.restore(data)
   }
   // For SSG and SSR always create a new Apollo Client
   if (isServer()) {
-    return _apolloClient
+    return newApolloClient
   }
   // Create the Apollo Client once in the client
   if (!apolloClient) {
-    apolloClient = _apolloClient
+    apolloClient = newApolloClient
   }
 
-  return _apolloClient
+  return newApolloClient
 }
 
 export function addApolloState(client: ApolloClient<NormalizedCacheObject>, pageProps: any) {

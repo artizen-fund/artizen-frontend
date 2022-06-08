@@ -6,18 +6,18 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
     class="sc-9199b4ac-0 gjUYWF"
   >
     <div
-      class="sc-208de4fb-2 gWzBlo"
+      class="sc-d2dbe6c1-2 fzuCjS"
     >
       <div
-        class="sc-208de4fb-3 bqJBtC"
+        class="sc-d2dbe6c1-3 gpsOyY"
       >
         <div
-          class="sc-208de4fb-4 kzTtKY"
+          class="sc-d2dbe6c1-4 blRJSO"
         >
           Join us in building the world's largest web3 fund for public goods
         </div>
         <div
-          class="sc-208de4fb-5 hTmWIw"
+          class="sc-d2dbe6c1-5 GoBKe"
         >
           Sign up for our free newsletter
         </div>
@@ -42,7 +42,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-840480c4-0 jepABy"
+                class="sc-ffdb2e6c-0 eexGRl"
               >
                 First Name
               </label>
@@ -69,7 +69,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-840480c4-0 jepABy"
+                class="sc-ffdb2e6c-0 eexGRl"
               >
                 Last Name
               </label>
@@ -96,7 +96,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-840480c4-0 jepABy"
+                class="sc-ffdb2e6c-0 eexGRl"
               >
                 Email Address
                  *
@@ -138,7 +138,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </div>
       </div>
       <button
-        class="sc-b4940b6a-2 bhBma-d sc-208de4fb-0 ihHzSA  disabled"
+        class="sc-1137dc9b-2 ifwZLB sc-d2dbe6c1-0 dMXAzS  disabled"
         disabled=""
       >
         <span>
@@ -146,7 +146,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </span>
       </button>
       <div
-        class="sc-208de4fb-1 cPsxWk"
+        class="sc-d2dbe6c1-1 gOJWPS"
       >
         <div>
           Congrats, confirmation sent!

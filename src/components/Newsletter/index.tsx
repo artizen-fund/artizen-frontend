@@ -1,13 +1,12 @@
 import { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
-import MailchimpSubscribe from 'react-mailchimp-subscribe'
-import type { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
-import { rgba } from '@lib'
+import MailchimpSubscribe, { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
+import { rgba, assert } from '@lib'
 import { Form, Button, PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState } from './form'
 
-const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultFormFields>) => {
+const Newsletter = ({ subscribe, status, message }: FormHooks<DefaultFormFields>) => {
   const [data, setData] = useState<any>(initialState)
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
@@ -46,7 +45,7 @@ const Newsletter = ({ subscribe, status, message, ...props }: FormHooks<DefaultF
     <PagePadding black>
       <Wrapper className={submitted ? 'submitted' : ''}>
         <Copy>
-          <Header>Join us in building the world's largest web3 fund for public goods</Header>
+          <Header>Join us in building the world&apos;s largest web3 fund for public goods</Header>
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
         <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
@@ -164,9 +163,12 @@ const Subhead = styled.div`
   color: ${rgba(palette.barracuda)};
 `
 
-export default () => (
-  <MailchimpSubscribe
-    url={process.env.NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL!}
-    render={props => <Newsletter {...props} />}
-  />
-)
+const MailChimpForm = () => {
+  const NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL = assert(
+    process.env.NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL,
+    'NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL',
+  )
+  return <MailchimpSubscribe url={NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL} render={props => <Newsletter {...props} />} />
+}
+
+export default MailChimpForm

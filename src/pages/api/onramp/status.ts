@@ -1,18 +1,20 @@
 import api from 'api'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { assert } from '@lib'
 
-const sdk = api('@wyre-hub/v4#fxprd1kl2b0beym')
-sdk.auth(process.env.SENDWYRE_SECRET)
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+const statusHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const SENDWYRE_SECRET = assert(process.env.SENDWYRE_SECRET, 'SENDWYRE_SECRET')
+  const sdk = api('@wyre-hub/v4#fxprd1kl2b0beym')
+  // todo: what's that? ^ why is it hard coded?
+  sdk.auth(SENDWYRE_SECRET)
   if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
   try {
-    const status = await sdk.TrackWidgetOrder({
-      transferId: req.query.transferId,
-    })
+    const status = await sdk.TrackWidgetOrder({ transferId: req.query.transferId })
     res.status(200).json(status)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error })
   }
 }
+
+export default statusHandler

@@ -1,8 +1,7 @@
 import Glyph, { GlyphProps } from './'
-import { glyphKey } from '@theme'
-import { palette } from '@theme'
+import { glyphKey, palette } from '@theme'
 
-export default {
+const story = {
   title: 'components/Glyph',
   component: Glyph,
   argTypes: {
@@ -28,5 +27,6 @@ export default {
     },
   },
 }
+export default story
 
 export const GlyphComponent = (props: GlyphProps) => <Glyph {...props} />

@@ -1,11 +1,13 @@
 import crypto from 'crypto'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { assert } from '@lib'
 
-export default async function initNotifications(req: NextApiRequest, res: NextApiResponse) {
+const initNotifications = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const NOTIFICATIONS_API = assert(process.env.NOTIFICATIONS_API, 'NOTIFICATIONS_API')
     const { userId } = JSON.parse(req.body)
 
-    const computedUserHmac = crypto.createHmac('sha256', process.env.NOTIFICATIONS_API!).update(userId).digest('hex')
+    const computedUserHmac = crypto.createHmac('sha256', NOTIFICATIONS_API).update(userId).digest('hex')
 
     // const didToken = req.headers.authorization.substr(7)
 
@@ -22,3 +24,5 @@ export default async function initNotifications(req: NextApiRequest, res: NextAp
     res.status(500).end()
   }
 }
+
+export default initNotifications

@@ -3,7 +3,7 @@
 exports[`Leaderboard renders Leaderboard unchanged 1`] = `
 <div>
   <div
-    class="sc-ecff4829-0 fMTZxv"
+    class="sc-bdd02fd6-0 fJPhsS"
   >
     <div
       class="sc-c6d4a71-0 iFQvvL"
@@ -14,7 +14,7 @@ exports[`Leaderboard renders Leaderboard unchanged 1`] = `
         Leaderboard
       </div>
       <button
-        class="sc-b4940b6a-2 iCvOxT undefined "
+        class="sc-1137dc9b-2 hhppYD undefined "
       >
         <span>
           See All
@@ -30,7 +30,7 @@ exports[`Leaderboard renders Leaderboard unchanged 1`] = `
           0
         </div>
         <div
-          class="sc-faf80e3d-0 eGNFUr"
+          class="sc-43c0e226-0 dtsHbH"
         >
           herp derp
         </div>
@@ -49,7 +49,7 @@ exports[`Leaderboard renders Leaderboard unchanged 1`] = `
           1
         </div>
         <div
-          class="sc-faf80e3d-0 bfCdMW"
+          class="sc-43c0e226-0 cQtfKe"
         >
           dorp donk
         </div>
@@ -68,7 +68,7 @@ exports[`Leaderboard renders Leaderboard unchanged 1`] = `
           2
         </div>
         <div
-          class="sc-faf80e3d-0 bfCdMW"
+          class="sc-43c0e226-0 cQtfKe"
         >
           hoop doop
         </div>

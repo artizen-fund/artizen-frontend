@@ -11,7 +11,7 @@ describe('CheckboxControl', () => {
     const { container } = render(
       <CheckboxControl
         data="vanilla"
-        path={uischema.elements.find(e => e.scope === INPUT_PATH)?.scope!}
+        path={uischema.elements.find(e => e.scope === INPUT_PATH)?.scope || 'some-made-up-scope'}
         {...{ handleChange, schema, uischema }}
         label="Checkbox control test"
       />,

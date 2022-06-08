@@ -18,7 +18,7 @@ exports[`NumberControl renders NumberControl unchanged 1`] = `
         value="5"
       />
       <label
-        class="sc-840480c4-0 jepABy"
+        class="sc-ffdb2e6c-0 eexGRl"
       >
         Integer test
       </label>

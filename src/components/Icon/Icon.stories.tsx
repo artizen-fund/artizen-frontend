@@ -1,8 +1,7 @@
 import Icon, { IconProps } from './'
 import { glyphKey } from '@theme'
-import { palette } from '@theme'
 
-export default {
+const story = {
   title: 'components/Icon',
   component: Icon,
   argTypes: {
@@ -16,5 +15,6 @@ export default {
     },
   },
 }
+export default story
 
 export const IconComponent = (props: IconProps) => <Icon {...props} />

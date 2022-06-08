@@ -17,10 +17,11 @@ export const buttonColor = (
     inverted?: boolean | undefined
     disabled?: boolean | undefined
   },
-) =>
-  buttonPalette[scheme === 'dark' ? 'dark' : options.inverted ? 'inverted' : 'light'][
+) => {
+  return buttonPalette[scheme === 'dark' ? 'dark' : options.inverted ? 'inverted' : 'light'][
     options.outline ? 'outline' : 'fill'
   ][options.disabled ? 'disabled' : 'enabled'][key]
+}
 
 const buttonPalette = {
   light: {

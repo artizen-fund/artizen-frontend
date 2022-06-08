@@ -1,4 +1,4 @@
-export default [
+const usdcabiContract = [
   {
     anonymous: false,
     inputs: [
@@ -100,7 +100,12 @@ export default [
     name: 'MetaTransactionExecuted',
     type: 'event',
   },
-  { anonymous: false, inputs: [], name: 'Pause', type: 'event' },
+  {
+    anonymous: false,
+    inputs: [],
+    name: 'Pause',
+    type: 'event',
+  },
   {
     anonymous: false,
     inputs: [
@@ -117,7 +122,12 @@ export default [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
       {
         indexed: true,
         internalType: 'bytes32',
@@ -137,7 +147,12 @@ export default [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
       {
         indexed: true,
         internalType: 'address',
@@ -157,7 +172,12 @@ export default [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
       {
         indexed: true,
         internalType: 'address',
@@ -177,8 +197,18 @@ export default [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
       {
         indexed: false,
         internalType: 'uint256',
@@ -202,7 +232,12 @@ export default [
     name: 'UnBlacklisted',
     type: 'event',
   },
-  { anonymous: false, inputs: [], name: 'Unpause', type: 'event' },
+  {
+    anonymous: false,
+    inputs: [],
+    name: 'Unpause',
+    type: 'event',
+  },
   {
     inputs: [],
     name: 'APPROVE_WITH_AUTHORIZATION_TYPEHASH',
@@ -741,3 +776,5 @@ export default [
     type: 'function',
   },
 ]
+
+export default usdcabiContract

@@ -1,13 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { magicAdmin, removeTokenCookie } from '@lib'
+import { magicAdmin, removeTokenCookie, assert } from '@lib'
 import jwt from 'jsonwebtoken'
 import type { MagicUserMetadata } from 'magic-sdk'
 
-export default async function logout(req: NextApiRequest, res: NextApiResponse) {
+const logout = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
-    let token = req.cookies.token
-    let user = jwt.verify(token, process.env.JWT_SECRET!) as MagicUserMetadata
+    const JWT_SECRET = assert(process.env.JWT_SECRET, 'JWT_SECRET')
+    const { token } = req.cookies
+    const user = jwt.verify(token, JWT_SECRET) as MagicUserMetadata
     removeTokenCookie(res)
 
     // Add the try/catch because a user's session may have already expired with Magic (expired 7 days after login)
@@ -23,3 +24,5 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
     res.status(401).json({ message: 'User is not logged in' })
   }
 }
+
+export default logout

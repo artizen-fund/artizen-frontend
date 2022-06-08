@@ -2,7 +2,7 @@
 
 exports[`__name__ renders correctly 1`] = `
 <div
-  className="sc-b3b4b33c-0 dsvurp"
+  className="sc-e641f1e6-0 bTRRSx"
 >
   <h1>
     design __name__(sentenceCase) here
@@ -15,7 +15,7 @@ exports[`__name__ renders correctly 1`] = `
       color="white"
     >
       <div
-        className="sc-9eb58f28-0 gvNxsL"
+        className="sc-9eb58f28-0 eFuJIU"
         color="white"
       />
     </div>

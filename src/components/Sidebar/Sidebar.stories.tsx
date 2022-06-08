@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 import Sidebar from './'
 
-export default {
+const story = {
   title: 'page/home/Sidebar',
   component: Sidebar,
   argTypes: {},
 }
+export default story
 
 const Wrapper = styled.div`
   @media only screen and (max-width: 1199px) {

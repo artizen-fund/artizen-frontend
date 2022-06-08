@@ -17,8 +17,8 @@ const TabbedInfo = ({ children }: TabbedInfoProps) => {
   return (
     <Wrapper>
       <Tabs>
-        {children.map((child, i) => (
-          <Tab key={`tab-${i}`} onClick={() => setActiveTab(i)} active={i === activeTab}>
+        {children.map((child, index) => (
+          <Tab key={`tab-${index}`} onClick={() => setActiveTab(index)} active={index === activeTab}>
             {child.props.label}
           </Tab>
         ))}
