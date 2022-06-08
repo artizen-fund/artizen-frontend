@@ -13,10 +13,10 @@ exports[`SelectControl renders SelectControl unchanged 1`] = `
         placeholder=" "
       />
       <div
-        class="sc-cd8f7b2e-0 dtVPFM"
+        class="sc-b0af9a1b-0 dENUF"
       />
       <label
-        class="sc-840480c4-0 jepABy hasData"
+        class="sc-ffdb2e6c-0 eexGRl hasData"
       >
         Segmented enum control test
       </label>

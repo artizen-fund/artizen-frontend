@@ -6,16 +6,16 @@ exports[`Metrics renders Metrics unchanged 1`] = `
     class="sc-9199b4ac-0 brREMd"
   >
     <section
-      class="sc-c635ba32-0 dLVKiU"
+      class="sc-b1f8280d-0 cjVeDi"
     >
       <div
-        class="sc-c635ba32-1 eVUTvn"
+        class="sc-b1f8280d-1 gerqCt"
       >
         <div
-          class="sc-c635ba32-2 cXdXmd"
+          class="sc-b1f8280d-2 jqabwz"
         />
         <div
-          class="sc-c635ba32-3 bfNsRz"
+          class="sc-b1f8280d-3 hohUoF"
         >
           <span>
             $
@@ -23,19 +23,19 @@ exports[`Metrics renders Metrics unchanged 1`] = `
           99,999
         </div>
         <div
-          class="sc-c635ba32-4 bQNllG"
+          class="sc-b1f8280d-4 gKKOAM"
         >
           Description
         </div>
       </div>
       <div
-        class="sc-c635ba32-1 eVUTvn"
+        class="sc-b1f8280d-1 gerqCt"
       >
         <div
-          class="sc-c635ba32-2 cXdXmd"
+          class="sc-b1f8280d-2 jqabwz"
         />
         <div
-          class="sc-c635ba32-3 bfNsRz"
+          class="sc-b1f8280d-3 hohUoF"
         >
           <span>
             $
@@ -43,19 +43,19 @@ exports[`Metrics renders Metrics unchanged 1`] = `
           99,999
         </div>
         <div
-          class="sc-c635ba32-4 bQNllG"
+          class="sc-b1f8280d-4 gKKOAM"
         >
           Description
         </div>
       </div>
       <div
-        class="sc-c635ba32-1 eVUTvn"
+        class="sc-b1f8280d-1 gerqCt"
       >
         <div
-          class="sc-c635ba32-2 cXdXmd"
+          class="sc-b1f8280d-2 jqabwz"
         />
         <div
-          class="sc-c635ba32-3 bfNsRz"
+          class="sc-b1f8280d-3 hohUoF"
         >
           <span>
             $
@@ -63,19 +63,19 @@ exports[`Metrics renders Metrics unchanged 1`] = `
           99,999
         </div>
         <div
-          class="sc-c635ba32-4 bQNllG"
+          class="sc-b1f8280d-4 gKKOAM"
         >
           Description
         </div>
       </div>
       <div
-        class="sc-c635ba32-1 eVUTvn"
+        class="sc-b1f8280d-1 gerqCt"
       >
         <div
-          class="sc-c635ba32-2 cXdXmd"
+          class="sc-b1f8280d-2 jqabwz"
         />
         <div
-          class="sc-c635ba32-3 bfNsRz"
+          class="sc-b1f8280d-3 hohUoF"
         >
           <span>
             $
@@ -83,7 +83,7 @@ exports[`Metrics renders Metrics unchanged 1`] = `
           99,999
         </div>
         <div
-          class="sc-c635ba32-4 bQNllG"
+          class="sc-b1f8280d-4 gKKOAM"
         >
           Description
         </div>
