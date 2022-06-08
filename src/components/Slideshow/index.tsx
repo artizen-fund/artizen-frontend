@@ -19,7 +19,7 @@ const Slideshow = ({ slides }: ISlideshow) => {
   return (
     <Wrapper>
       {slides.map((image: string, index: number) => (
-        <Slide {...{ image }} className={index === activeProjectIndex ? 'active' : 'inactive'} />
+        <Slide key={`slide_${index}`} {...{ image }} className={index === activeProjectIndex ? 'active' : 'inactive'} />
       ))}
     </Wrapper>
   )
