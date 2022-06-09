@@ -1,10 +1,12 @@
 import styled from 'styled-components'
-import type { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedInfo } from '@components'
-import { CreateTopUpWallet, rgba } from '@lib'
+import { CreateTopUpWallet, rgba, initializeApollo, addApolloState, assert } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
+import GET_HOME_PAGE_DONATORS from '@gql/homeDonations.graphql'
 
-const Home: NextPage = () => {
+const Home: NextPage = props => {
+  console.log(props)
   // note: obviously this is going to come from CMS data
   const tabbedInfo: Record<string, any> = {
     About: (
@@ -126,5 +128,15 @@ const Wrapper = styled.section`
 `
 
 const Tab = styled.div<{ label: string }>``
+
+export async function getStaticProps() {
+  const apolloClient = initializeApollo()
+  await apolloClient.query({ query: GET_HOME_PAGE_DONATORS })
+
+  return addApolloState(apolloClient, {
+    props: {},
+    revalidate: 1,
+  })
+}
 
 export default Home

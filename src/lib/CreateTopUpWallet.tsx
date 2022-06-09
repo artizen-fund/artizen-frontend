@@ -4,14 +4,16 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/client'
-import { CREATE_TOP_UP_WALLET } from '@gql'
+import CREATE_TOP_UP_WALLET from '@gql/wallet.graphql'
 import { useSession, isServer } from '@lib'
 
 export const CreateTopUpWallet = () => {
   const router = useRouter()
   const user = useSession()
 
-  const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, { onError: error => console.log('updatePost resultado', error) })
+  const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
+    onError: error => console.log('updatePost resultado', error),
+  })
 
   useEffect(() => {
     const checkOnRampReturn = async () => {

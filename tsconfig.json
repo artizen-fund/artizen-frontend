@@ -18,13 +18,13 @@
     "paths": {
       "@components": ["src/components"],
       "@forms/*": ["src/forms/*"],
-      "@gql": ["src/gql"],
+      "@gql/*": ["src/gql/*"],
       "@lib": ["src/lib"],
       "@pages": ["src/pages"],
       "@public/*": ["public/*"],
       "@theme": ["src/theme"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.graphql"],
   "exclude": ["node_modules"]
 }

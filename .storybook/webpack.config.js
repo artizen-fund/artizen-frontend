@@ -9,7 +9,7 @@ module.exports = ({ config }) => {
     '@pages': path.resolve(__dirname, '..', 'src', 'pages', '*'),
     '@public': path.resolve(__dirname, '..', 'public', '*'),
     '@theme': path.resolve(__dirname, '..', 'src', 'theme'),
-    '@gql': path.resolve(__dirname, '..', 'src', 'gql'),
+    '@gql': path.resolve(__dirname, '..', 'src', 'gql', '*'),
     '@lib': path.resolve(__dirname, '..', 'src', 'lib'),
   }
 
