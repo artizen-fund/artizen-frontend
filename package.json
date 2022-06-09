@@ -47,6 +47,7 @@
     "lodash": "^4.17.21",
     "magic-sdk": "^8.1.0",
     "next": "12.1.6",
+    "next-plugin-graphql": "^0.0.2",
     "react": "18.1.0",
     "react-countdown": "^2.3.2",
     "react-dom": "18.1.0",
