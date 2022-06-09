@@ -61,7 +61,6 @@
 
     /* modules */
     "no-duplicate-imports": "error",
-    "object-curly-newline": ["error", { "multiline": true }],
     "import/no-unresolved": "error",
 
     /* iterators and generators */
