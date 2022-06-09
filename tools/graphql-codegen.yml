@@ -1,0 +1,22 @@
+overwrite: true
+schema:
+  - ${NEXT_PUBLIC_HASURA_GRAPHQL_URL}:
+      headers:
+        'x-hasura-admin-secret': ${HASURA_ADMIN_SECRET}
+documents: 'src/gql/*.graphql'
+generates:
+  src/generated/HasuraTypes.ts:
+    plugins:
+      - typescript
+      - 'typescript-operations'
+      - 'typed-document-node'
+    config:
+      typesPrefix: I
+      enumPrefix: false
+      wrapFieldDefinitions: true
+      fieldWrapperValue: Partial<T>
+      namingConvention:
+        enumValues: keep
+hooks:
+  afterAllFileWrite:
+    - prettier --write

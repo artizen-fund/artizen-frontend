@@ -18,7 +18,7 @@
     "test:jest": "jest --watch",
     "test:headless": "cypress run",
     "e2e:headless": "PORT=3000 start-server-and-test start http://localhost:3000 cypress:headless",
-    "codegen": "graphql-codegen --config ./tools/codegen.js -r dotenv/config",
+    "codegen": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
