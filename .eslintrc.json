@@ -109,7 +109,7 @@
       // or whatever matches stories specified in .storybook/main.js
       "files": ["*.test.@(ts|tsx|js|jsx|mjs|cjs)"],
       "rules": {
-        "no-console": "allow"
+        "no-console": 0
       }
     }
   ],
