@@ -1,12 +1,10 @@
-import { lazy, Suspense } from 'react'
 import styled from 'styled-components'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
+import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
-
-const Countdown = lazy(() => import('./Countdown'))
 
 const Sidebar = () => {
   // note: this is just some placeholder nonsense, not final var names
@@ -34,9 +32,7 @@ const Sidebar = () => {
             </AmountRaised>
             <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
             <Row>
-              <Suspense fallback="loading…">
-                <Countdown date={FUND_DEADLINE} />
-              </Suspense>
+              <Countdown date={FUND_DEADLINE} />
               <DonationCount>
                 <Glyph glyph="trend" /> <span>{FUND_COUNT}k donations</span>
               </DonationCount>
