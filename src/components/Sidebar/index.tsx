@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Countdown from './Countdown'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
+import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { default as ReactCountdown } from 'react-countdown'
 import { Glyph } from '@components'
@@ -7,12 +8,12 @@ export interface CountdownProps {
 }
 
 const Countdown = ({ date }: CountdownProps) => {
-  if (typeof jest !== 'undefined') return <></>
-
+  const [hasMounted, setHasMounted] = useState(false)
+  useEffect(() => setHasMounted(typeof jest === 'undefined'), [])
   return (
     <Wrapper>
       <Glyph glyph="countdown" />
-      <ReactCountdown {...{ date }} />
+      {hasMounted && <ReactCountdown {...{ date }} />}
     </Wrapper>
   )
 }
