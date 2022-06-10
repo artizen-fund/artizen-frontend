@@ -44,7 +44,7 @@ const Login = () => {
       }
     } catch (error) {
       setDisabled(false) // Re-enable login button - user may have requested to edit their email
-      console.log('it goes here', error)
+      console.error('it goes here', error)
     }
   }
 
