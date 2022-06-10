@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedInfo } from '@components'
 import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import GET_SIDEBAR_DONATORS from '@gql/sidebarDonators.graphql'
+import { SIDEBAR_DONATORS } from '@gql'
 
 interface IHome {
   apolloData: {
@@ -10,9 +10,13 @@ interface IHome {
   }
 }
 
-const Home = (props: IHome) => {
+const Home = ({
+  apolloData: {
+    ROOT_QUERY: { Donations },
+  },
+}: IHome) => {
   // note: obviously this is going to come from CMS data
-  const tabbedInfo: Record<string, any> = {
+  const tabbedInfo: Record<string, React.ReactNode> = {
     About: (
       <>
         <h1>Join our May, 2022 donation drive</h1>
@@ -81,7 +85,7 @@ const Home = (props: IHome) => {
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar />
+          <Sidebar {...{ Donations }} />
         </Wrapper>
       </StyledPagePadding>
 
@@ -135,7 +139,7 @@ const Tab = styled.div<{ label: string }>``
 
 export async function getStaticProps() {
   const apolloClient = initializeApollo()
-  await apolloClient.query({ query: GET_SIDEBAR_DONATORS })
+  await apolloClient.query({ query: SIDEBAR_DONATORS })
   return addApolloState(apolloClient, {
     props: {},
     revalidate: 1,
