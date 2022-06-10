@@ -9,7 +9,6 @@ import {
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    console.log('get to login api')
     const didToken = req?.headers?.authorization?.substr(7)
     if (!didToken) throw 'Token not found.'
 
@@ -37,7 +36,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
     setTokenCookie(res, token)
     res.status(200).send({ done: true })
   } catch (error) {
-    console.log('error from api login ')
+    console.error('error from api login ')
     res.status(500).end()
   }
 }

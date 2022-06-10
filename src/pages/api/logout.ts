@@ -16,7 +16,7 @@ const logout = async (req: NextApiRequest, res: NextApiResponse) => {
       if (!user.issuer) throw 'Bad JWT payload.'
       await magicAdmin.users.logoutByIssuer(user.issuer)
     } catch (error) {
-      console.log('Users session with Magic already expired')
+      console.error('Users session with Magic already expired')
     }
     res.writeHead(302, { Location: '/grants/featured/upcoming' })
     res.end()

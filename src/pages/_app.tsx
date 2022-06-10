@@ -20,7 +20,6 @@ function App({ Component, pageProps }: AppProps) {
       .then(res => res.json())
       .then(async data => {
         if (data.id) {
-          console.log('user data', data)
           setUser(data)
           // const balance = await getBalance(data.publicAddress)
           // console.log('user balance  ', balance)

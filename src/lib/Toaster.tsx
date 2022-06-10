@@ -14,7 +14,7 @@ export const Toaster = () => {
   const handleBalance = async () => {
     if (user?.publicAddress) {
       const balance = await getUSDCBalance(user.publicAddress)
-      console.log('user balance', balance)
+      // todo: do somehitng with this
     }
   }
 

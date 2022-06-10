@@ -8,7 +8,6 @@ const Login = () => {
   const user = useSession()
 
   useEffect(() => {
-    console.log('user  useEffect    ', user)
     user && user.email && Router.push('/verifyEmail')
   }, [user])
 

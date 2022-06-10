@@ -10,6 +10,7 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 const Header = () => {
   const [scrolled, setScrolled] = useState(false)
   useScrollPosition(({ currPos }) => setScrolled(currPos.y > 0), [], undefined, true, 50)
+  const [navVisible, setNavVisible] = useState(false)
   return (
     <Wrapper {...{ scrolled }}>
       <Items>
@@ -18,7 +19,7 @@ const Header = () => {
             <Logo>Artizen</Logo>
           </a>
         </Link>
-        <MobileNavButton onClick={() => console.log('derp')} icon={glyphKey.arrow} iconOnRight outline size="l1">
+        <MobileNavButton onClick={() => setNavVisible(!navVisible)} icon={glyphKey.arrow} iconOnRight outline size="l1">
           Menu
         </MobileNavButton>
       </Items>

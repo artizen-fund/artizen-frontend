@@ -24,7 +24,6 @@ const reservationHandler = async (req: NextApiRequest, res: NextApiResponse) => 
       referrerAccountId: SENDWYRE_ACCOUNT,
       lockFields: ['destCurrency', 'paymentMethod', 'dest'],
     })
-    console.log('Reservation', reservation)
     res.status(200).json(reservation)
   } catch (error) {
     console.error(error)

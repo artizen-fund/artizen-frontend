@@ -12,7 +12,7 @@ export const CreateTopUpWallet = () => {
   const user = useSession()
 
   const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
-    onError: error => console.log('updatePost resultado', error),
+    onError: error => console.error('updatePost resultado', error),
   })
 
   useEffect(() => {
