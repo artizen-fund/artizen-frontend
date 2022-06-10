@@ -1,0 +1,10 @@
+query SidebarDonators {
+  Donations(limit: 5, order_by: { amount: desc }) {
+    User {
+      firstName
+      lastName
+      profileImage
+    }
+    amount
+  }
+}
