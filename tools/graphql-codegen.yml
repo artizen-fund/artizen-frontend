@@ -5,13 +5,12 @@ schema:
         'x-hasura-admin-secret': ${HASURA_ADMIN_SECRET}
 documents: 'src/gql/*.graphql'
 generates:
-  src/types/global.d.ts:
+  src/types/generated.ts:
     plugins:
       - typescript
       - 'typescript-operations'
       - 'typed-document-node'
     config:
-      noExport: true
       typesPrefix: I
       enumPrefix: false
       wrapFieldDefinitions: true

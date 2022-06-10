@@ -22,8 +22,10 @@
       "@lib": ["src/lib"],
       "@pages": ["src/pages"],
       "@public/*": ["public/*"],
-      "@theme": ["src/theme"]
-    }
+      "@theme": ["src/theme"],
+      "@types": ["src/types"]
+    },
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.graphql"],
   "exclude": ["node_modules"]

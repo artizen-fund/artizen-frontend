@@ -4,16 +4,9 @@ import Leaderboard from './Leaderboard'
 import Perks from './Perks'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba, initializeApollo, addApolloState } from '@lib'
-import GET_SIDEBAR_DONATORS from '@gql/sidebarDonators.graphql'
+import { rgba } from '@lib'
 
-interface ISidebar {
-  apolloData: {
-    ROOT_QUERY: ISidebarDonatorsQuery
-  }
-}
-
-const Sidebar = (props: ISidebar) => {
+const Sidebar = () => {
   // note: this is just some placeholder nonsense, not final var names
   const FUND_COUNT = 3.2
   const FUND_AMOUNT = 15250
@@ -25,9 +18,6 @@ const Sidebar = (props: ISidebar) => {
     { name: 'dorp donk', amount: 68 },
     { name: 'hoop doop', amount: 67 },
   ]
-
-  console.log(props)
-
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -162,14 +152,5 @@ const LargeScreensOnly = styled.div`
     display: contents;
   }
 `
-
-export async function getStaticProps() {
-  const apolloClient = initializeApollo()
-  await apolloClient.query({ query: GET_SIDEBAR_DONATORS })
-  return addApolloState(apolloClient, {
-    props: {},
-    revalidate: 1,
-  })
-}
 
 export default Sidebar
