@@ -9,7 +9,7 @@ type ILeaderboard = Pick<ISidebarDonatorsQuery, 'Donations'>
 
 const Leaderboard = ({ Donations }: ILeaderboard) => {
   const sideItem = (
-    <Button onClick={() => console.log('do something')} outline level={2}>
+    <Button onClick={() => alert('do something')} outline level={2}>
       See All
     </Button>
   )

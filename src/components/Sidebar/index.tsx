@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Countdown from './Countdown'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
+import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
@@ -36,10 +36,10 @@ const Sidebar = ({ Donations }: ISidebar) => {
             </Row>
           </FundBlock>
           <Row>
-            <Button onClick={() => console.log('donate!')} level={1} stretch glyph="donate">
+            <Button onClick={() => alert('todo: implement this')} level={1} stretch glyph="donate">
               Donate
             </Button>
-            <Button onClick={() => console.log('share!')} level={1} stretch outline>
+            <Button onClick={() => alert('todo: implement this')} level={1} stretch outline>
               Share Now
             </Button>
           </Row>
