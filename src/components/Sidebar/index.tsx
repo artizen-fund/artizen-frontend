@@ -6,18 +6,16 @@ import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@compon
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
-const Sidebar = () => {
+type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'>
+
+const Sidebar = ({ Donations }: ISidebar) => {
   // note: this is just some placeholder nonsense, not final var names
   const FUND_COUNT = 3.2
   const FUND_AMOUNT = 15250
   const FUND_GOAL = 25000
   const FUND_DATE = 'May, 2022'
   const FUND_DEADLINE = '2022-06-30T00:00:00'
-  const leaderboard = [
-    { name: 'herp derp', amount: 69 },
-    { name: 'dorp donk', amount: 68 },
-    { name: 'hoop doop', amount: 67 },
-  ]
+
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -46,7 +44,7 @@ const Sidebar = () => {
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ leaderboard }} />
+            <Leaderboard {...{ Donations }} />
             <Perks />
           </LargeScreensOnly>
         </Content>
@@ -69,10 +67,12 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
   }
   border-radius: 0px 0px 16px 16px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    border-radius: 16px 16px 16px 16px;
+    max-width: 388px;
     top: 92px;
+    border-radius: 16px 16px 16px 16px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
+    max-width: 498px;
     top: 108px;
   }
 `

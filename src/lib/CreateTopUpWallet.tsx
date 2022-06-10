@@ -4,7 +4,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/client'
-import CREATE_TOP_UP_WALLET from '@gql/wallet.graphql'
+import { CREATE_TOP_UP_WALLET } from '@gql'
 import { useSession, isServer } from '@lib'
 
 export const CreateTopUpWallet = () => {
