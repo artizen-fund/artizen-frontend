@@ -1,9 +1,17 @@
 import styled from 'styled-components'
 import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedInfo } from '@components'
-import { CreateTopUpWallet, rgba } from '@lib'
+import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
+import GET_SIDEBAR_DONATORS from '@gql/sidebarDonators.graphql'
+import { ISidebarDonatorsQuery } from '@types'
 
-const Home = () => {
+interface IHome {
+  apolloData: {
+    ROOT_QUERY: ISidebarDonatorsQuery
+  }
+}
+
+const Home = (props: IHome) => {
   // note: obviously this is going to come from CMS data
   const tabbedInfo: Record<string, any> = {
     About: (
@@ -125,5 +133,14 @@ const Wrapper = styled.section`
 `
 
 const Tab = styled.div<{ label: string }>``
+
+export async function getStaticProps() {
+  const apolloClient = initializeApollo()
+  await apolloClient.query({ query: GET_SIDEBAR_DONATORS })
+  return addApolloState(apolloClient, {
+    props: {},
+    revalidate: 1,
+  })
+}
 
 export default Home

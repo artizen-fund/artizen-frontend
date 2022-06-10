@@ -11,6 +11,7 @@ module.exports = ({ config }) => {
     '@theme': path.resolve(__dirname, '..', 'src', 'theme'),
     '@gql': path.resolve(__dirname, '..', 'src', 'gql', '*'),
     '@lib': path.resolve(__dirname, '..', 'src', 'lib'),
+    '@types': path.resolve(__dirname, '..', 'src', 'types'),
   }
 
   // We're using several that don't play nicely with Webpack5.
