@@ -54,7 +54,7 @@ export const checkTypeOfUser = async (email: string, token: string) => {
         (!userOldData?.user && userNewData?.User.length === 0 && 'NEW_USER'),
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -79,7 +79,7 @@ export const updateUserCreatedPro = async ({ email, issuer, publicAddress }: Art
   try {
     await queryHasura(query, token)
   } catch (error) {
-    console.log('error updateUserCreatedPro      ', error)
+    console.error('error updateUserCreatedPro', error)
   }
 }
 
@@ -94,7 +94,7 @@ export const createNewUser = async ({ issuer, publicAddress, email }: ArtizenUse
   try {
     await queryHasura(query, token)
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -120,9 +120,7 @@ const queryOldData = async (query: any) => {
     }
     return data
   } catch (error) {
-    console.log('queryHasura::: ')
-    console.log(error)
-    console.log('queryHasura-------- ')
+    console.error('queryOldData error', error)
   }
 }
 
@@ -147,9 +145,7 @@ export const queryHasura = async (query: any, token: string) => {
     }
     return data
   } catch (error) {
-    console.log('queryHasura::: ')
-    console.log(error)
-    console.log('queryHasura-------- ')
+    console.error('queraHasura error', error)
   }
 }
 
@@ -173,9 +169,7 @@ export const queryHasuraAsAdmin = async (query: any, adminSecret?: string, uri?:
     }
     return data
   } catch (error) {
-    console.log('queryHasura::: ')
-    console.log(error)
-    console.log('queryHasura-------- ')
+    console.log('queryHasuraAsAdmin error', error)
   }
 }
 
@@ -202,7 +196,7 @@ export const getUserDataFromDataBase = async (issuer: string, token: string) => 
     const data = await queryHasura(query, token)
     return data?.User[0]
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return error
   }
 }

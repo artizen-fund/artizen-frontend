@@ -91,15 +91,26 @@
     "camelcase": "error",
     "no-underscore-dangle": "error",
 
+    /* react */
     "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
     "react/jsx-first-prop-new-line": [2, "multiline"],
-    "react/jsx-max-props-per-line": [2, { "maximum": 5 }]
+    "react/jsx-max-props-per-line": [2, { "maximum": 5 }],
+
+    /* misc */
+    "no-console": ["error", { "allow": ["warn", "error"] }]
   },
   "overrides": [
     {
       // or whatever matches stories specified in .storybook/main.js
       "files": ["*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
       "rules": { "max-len": 0 }
+    },
+    {
+      // or whatever matches stories specified in .storybook/main.js
+      "files": ["*.test.@(ts|tsx|js|jsx|mjs|cjs)"],
+      "rules": {
+        "no-console": 0
+      }
     }
   ],
 

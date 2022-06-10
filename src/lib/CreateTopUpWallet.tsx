@@ -11,7 +11,9 @@ export const CreateTopUpWallet = () => {
   const router = useRouter()
   const user = useSession()
 
-  const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, { onError: error => console.log('updatePost resultado', error) })
+  const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
+    onError: error => console.error('updatePost resultado', error),
+  })
 
   useEffect(() => {
     const checkOnRampReturn = async () => {
