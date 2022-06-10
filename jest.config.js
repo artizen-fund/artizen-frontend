@@ -2,6 +2,8 @@ const tsconfig = require('./tsconfig.json')
 const moduleNameMapper = require('tsconfig-paths-jest')(tsconfig)
 const nextJest = require('next/jest')
 
+require('dotenv').config()
+
 const createJestConfig = nextJest({
   dir: './',
 })
