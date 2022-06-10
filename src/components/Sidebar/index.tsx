@@ -1,14 +1,19 @@
-import { lazy, Suspense } from 'react'
 import styled from 'styled-components'
+import Countdown from './Countdown'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba } from '@lib'
+import { rgba, initializeApollo, addApolloState } from '@lib'
+import GET_SIDEBAR_DONATORS from '@gql/sidebarDonators.graphql'
 
-const Countdown = lazy(() => import('./Countdown'))
+interface ISidebar {
+  apolloData: {
+    ROOT_QUERY: ISidebarDonatorsQuery
+  }
+}
 
-const Sidebar = () => {
+const Sidebar = (props: ISidebar) => {
   // note: this is just some placeholder nonsense, not final var names
   const FUND_COUNT = 3.2
   const FUND_AMOUNT = 15250
@@ -20,6 +25,8 @@ const Sidebar = () => {
     { name: 'dorp donk', amount: 68 },
     { name: 'hoop doop', amount: 67 },
   ]
+
+  console.log(props)
 
   return (
     <StyledStickyCanvas>
@@ -34,9 +41,7 @@ const Sidebar = () => {
             </AmountRaised>
             <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
             <Row>
-              <Suspense fallback="loading…">
-                <Countdown date={FUND_DEADLINE} />
-              </Suspense>
+              <Countdown date={FUND_DEADLINE} />
               <DonationCount>
                 <Glyph glyph="trend" /> <span>{FUND_COUNT}k donations</span>
               </DonationCount>
@@ -157,5 +162,14 @@ const LargeScreensOnly = styled.div`
     display: contents;
   }
 `
+
+export async function getStaticProps() {
+  const apolloClient = initializeApollo()
+  await apolloClient.query({ query: GET_SIDEBAR_DONATORS })
+  return addApolloState(apolloClient, {
+    props: {},
+    revalidate: 1,
+  })
+}
 
 export default Sidebar
