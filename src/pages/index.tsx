@@ -3,7 +3,6 @@ import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedI
 import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import GET_SIDEBAR_DONATORS from '@gql/sidebarDonators.graphql'
-import { ISidebarDonatorsQuery } from '@types'
 
 interface IHome {
   apolloData: {
