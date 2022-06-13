@@ -5,8 +5,6 @@ import { rgba } from '@lib'
 
 type ILeaderboard = Pick<ISidebarDonatorsQuery, 'Donations'>
 
-//    User: { __typename?: 'User'; firstName?: string | null; lastName?: string | null; profileImage?: string | null }
-
 const Leaderboard = ({ Donations }: ILeaderboard) => {
   const sideItem = (
     <Button onClick={() => alert('do something')} outline level={2}>
