@@ -1,13 +1,13 @@
 import { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
-import MailchimpSubscribe, { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
+import MailchimpSubscribe, { FormHooks, NameFormFields } from 'react-mailchimp-subscribe'
 import { rgba, assert } from '@lib'
 import { Form, Button, PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { schema, uischema, initialState } from './form'
+import { schema, uischema, initialState, FormState } from './form'
 
-const Newsletter = ({ subscribe, status, message }: FormHooks<DefaultFormFields>) => {
-  const [data, setData] = useState<any>(initialState)
+const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) => {
+  const [data, setData] = useState<FormState>(initialState)
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
       return
@@ -49,7 +49,12 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<DefaultFormFields>
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
         <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
-          <StyledButton onClick={() => subscribe(data)} inverted level={0} disabled={!data.EMAIL || !data.OPTIN}>
+          <StyledButton
+            onClick={() => subscribe(data as NameFormFields)}
+            inverted
+            level={0}
+            disabled={!data.EMAIL || !data.OPTIN}
+          >
             Submit
           </StyledButton>
           <Confirmation>
@@ -124,11 +129,11 @@ const Wrapper = styled.div`
     grid-area: email;
   }
 
-  *[id='#/properties/FIRSTNAME'] {
+  *[id='#/properties/FNAME'] {
     grid-area: firstName;
   }
 
-  *[id='#/properties/LASTNAME'] {
+  *[id='#/properties/LNAME'] {
     grid-area: lastName;
   }
 
@@ -138,8 +143,8 @@ const Wrapper = styled.div`
 
   &.submitted {
     *[id='#/properties/EMAIL'],
-    *[id='#/properties/FIRSTNAME'],
-    *[id='#/properties/LASTNAME'],
+    *[id='#/properties/FNAME'],
+    *[id='#/properties/LNAME'],
     ${StyledButton} {
       display: none;
     }
