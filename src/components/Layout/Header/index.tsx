@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import { Button } from '@components'
 import AccountButton from './AccountButton'
 import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba } from '@lib'
-import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false)

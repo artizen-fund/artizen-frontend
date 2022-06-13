@@ -16,6 +16,12 @@ const Home = ({
   },
 }: IHome) => {
   // note: obviously this is going to come from CMS data
+  const FUND_COUNT = 3.2
+  const FUND_AMOUNT = 15250
+  const FUND_GOAL = 25000
+  const FUND_DATE = 'May, 2022'
+  const FUND_DEADLINE = '2022-06-30T00:00:00'
+
   const tabbedInfo: Record<string, React.ReactNode> = {
     About: (
       <>
@@ -85,7 +91,7 @@ const Home = ({
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar {...{ Donations }} />
+          <Sidebar {...{ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
         </Wrapper>
       </StyledPagePadding>
 

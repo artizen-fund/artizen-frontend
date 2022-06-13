@@ -6,16 +6,15 @@ import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@compon
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
-type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'>
+type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'> & {
+  FUND_COUNT: number
+  FUND_AMOUNT: number
+  FUND_GOAL: number
+  FUND_DATE: string
+  FUND_DEADLINE: string
+}
 
-const Sidebar = ({ Donations }: ISidebar) => {
-  // note: this is just some placeholder nonsense, not final var names
-  const FUND_COUNT = 3.2
-  const FUND_AMOUNT = 15250
-  const FUND_GOAL = 25000
-  const FUND_DATE = 'May, 2022'
-  const FUND_DEADLINE = '2022-06-30T00:00:00'
-
+const Sidebar = ({ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
   return (
     <StyledStickyCanvas>
       <Wrapper>
