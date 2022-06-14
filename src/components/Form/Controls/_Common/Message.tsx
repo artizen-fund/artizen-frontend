@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
-const Message = styled.div<{ virgin: boolean }>`
+const Message = styled.div`
   position: absolute;
   padding-top: 5px;
 

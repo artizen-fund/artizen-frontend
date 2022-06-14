@@ -35,7 +35,7 @@ exports[`StringControl renders StringControl unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-955ed11e-0 griBRj"
+      class="sc-93ba83c0-0 bAVzHI"
     />
   </div>
 </div>
@@ -76,7 +76,7 @@ exports[`StringControl renders StringControl:Phone unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-955ed11e-0 griBRj"
+      class="sc-93ba83c0-0 bAVzHI"
     />
   </div>
 </div>

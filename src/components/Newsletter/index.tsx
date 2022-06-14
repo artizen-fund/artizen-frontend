@@ -7,19 +7,21 @@ import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
 const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) => {
+  const LOCALSTORAGE_KEY = 'newsletter'
+
   const [data, setData] = useState<FormState>(initialState)
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
       return
     }
-    const frozenAnswers = localStorage.getItem(schema.name)
+    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
     if (!frozenAnswers) {
       setData(initialState)
       return
     }
     const thawedAnswers = JSON.parse(frozenAnswers)
     setData(thawedAnswers)
-  }, [schema])
+  }, [])
 
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string>()
@@ -48,7 +50,7 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) =
           <Header>Join us in building the world&apos;s largest web3 fund for public goods</Header>
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
-        <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
+        <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
           <StyledButton
             onClick={() => subscribe(data as NameFormFields)}
             inverted
