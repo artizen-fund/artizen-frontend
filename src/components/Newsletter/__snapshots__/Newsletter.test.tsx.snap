@@ -6,18 +6,18 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
     class="sc-9199b4ac-0 gjUYWF"
   >
     <div
-      class="sc-d2dbe6c1-2 fzuCjS"
+      class="sc-e052cc57-2 kzhQlf"
     >
       <div
-        class="sc-d2dbe6c1-3 gpsOyY"
+        class="sc-e052cc57-3 ekWlwl"
       >
         <div
-          class="sc-d2dbe6c1-4 blRJSO"
+          class="sc-e052cc57-4 bXgnMH"
         >
           Join us in building the world's largest web3 fund for public goods
         </div>
         <div
-          class="sc-d2dbe6c1-5 GoBKe"
+          class="sc-e052cc57-5 iHMvsT"
         >
           Sign up for our free newsletter
         </div>
@@ -29,8 +29,8 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="sc-2f9d5146-0 jfefUP"
-            id="#/properties/FIRSTNAME"
+            class="sc-2f9d5146-0 cmhLgf"
+            id="#/properties/FNAME"
           >
             <div
               class="sc-233fee17-0 kLNnFl"
@@ -48,7 +48,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
               </label>
             </div>
             <div
-              class="sc-955ed11e-0 griBRj"
+              class="sc-93ba83c0-0 bAVzHI"
             />
           </div>
         </div>
@@ -56,8 +56,8 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="sc-2f9d5146-0 fTQpmb"
-            id="#/properties/LASTNAME"
+            class="sc-2f9d5146-0 ldCYfJ"
+            id="#/properties/LNAME"
           >
             <div
               class="sc-233fee17-0 kLNnFl"
@@ -75,7 +75,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
               </label>
             </div>
             <div
-              class="sc-955ed11e-0 griBRj"
+              class="sc-93ba83c0-0 bAVzHI"
             />
           </div>
         </div>
@@ -103,7 +103,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
               </label>
             </div>
             <div
-              class="sc-955ed11e-0 griBRj hasErrors"
+              class="sc-93ba83c0-0 bAVzHI"
             >
               is a required property
             </div>
@@ -138,7 +138,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </div>
       </div>
       <button
-        class="sc-a6b3add2-2 flWfZN sc-d2dbe6c1-0 dMXAzS  disabled"
+        class="sc-a6b3add2-2 flWfZN sc-e052cc57-0 ragrT  disabled"
         disabled=""
       >
         <span>
@@ -146,7 +146,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </span>
       </button>
       <div
-        class="sc-d2dbe6c1-1 gOJWPS"
+        class="sc-e052cc57-1 kRvjmH"
       >
         <div>
           Congrats, confirmation sent!

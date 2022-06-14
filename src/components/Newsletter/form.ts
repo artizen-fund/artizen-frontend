@@ -1,10 +1,6 @@
-/* Note: This form is used by Storybook and Jest tests.
- *       Do not delete.
- *       Track any changes against Storybook and tests.
- */
+import { JsonSchema } from '@jsonforms/core'
 
-export const schema = {
-  name: 'newsletter',
+export const schema: JsonSchema = {
   type: 'object',
   properties: {
     FNAME: {

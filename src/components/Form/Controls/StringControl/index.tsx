@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import { rankWith, schemaMatches, Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
@@ -13,13 +13,13 @@ export interface StringControlProps {
   label: string | Labels
   enabled?: boolean
   processing?: boolean
-  onChange?: (e: any) => void
+  onChange?: FormEventHandler<HTMLDivElement>
   required?: boolean
   autoComplete?: string
   schema?: JsonSchema
   uischema?: ControlElement
-  data: any
-  handleChange(path: string, value: any): void
+  data: string
+  handleChange(path: string, value: string): void
   path: string
   errors?: string
 }
@@ -102,9 +102,7 @@ export const StringControl = ({
         </InputLabel>
         {statusIcon && <InputIcon color="night">{statusIcon}</InputIcon>}
       </InputWrapper>
-      <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
-        {visibleError}
-      </Message>
+      <Message className={!virgin && !!errors ? 'hasErrors' : ''}>{visibleError}</Message>
     </Wrapper>
   )
 }
