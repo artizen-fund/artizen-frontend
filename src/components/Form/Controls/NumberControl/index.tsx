@@ -1,10 +1,3 @@
-/*
-todo:
-- Having a bit of difficulty proofing filled/not-filled state with numbers. !!data doesn't work because 0 is a number.
-- The juggling between floats and ints is clumsy. Split into two inputs?
-- Would be nice to use onKeyUp to rule out alphas and non-numerics.
-*/
-
 import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import { Labels, JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
