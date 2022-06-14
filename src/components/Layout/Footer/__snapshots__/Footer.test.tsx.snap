@@ -55,14 +55,14 @@ exports[`Footer renders Footer unchanged 1`] = `
           class="sc-aae777ba-6 fsaJbW"
         >
           <button
-            class="sc-1137dc9b-2 eWpCnG undefined "
+            class="sc-a6b3add2-2 UcTca undefined "
           >
             <span>
               Donate
             </span>
           </button>
           <button
-            class="sc-1137dc9b-2 eWpCnG undefined "
+            class="sc-a6b3add2-2 UcTca undefined "
           >
             <span>
               Sign In

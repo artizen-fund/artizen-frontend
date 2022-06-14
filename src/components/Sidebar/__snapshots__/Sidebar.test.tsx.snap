@@ -3,13 +3,13 @@
 exports[`Sidebar renders Sidebar unchanged 1`] = `
 <div>
   <section
-    class="sc-f67c5638-1 cQDgcH sc-2668456d-0 dEgWEE"
+    class="sc-f67c5638-1 cQDgcH sc-c8d278d2-0 dHOkSR"
   >
     <div
-      class="sc-f67c5638-0 fqyVoy sc-2668456d-1 hCYQrl"
+      class="sc-f67c5638-0 fqyVoy sc-c8d278d2-1 gKYlRg"
     >
       <h3
-        class="sc-2668456d-7 eQrzEZ"
+        class="sc-c8d278d2-7 jyPaYo"
       >
         Join our 
         <strong>
@@ -18,13 +18,13 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
          donation drive
       </h3>
       <div
-        class="sc-2668456d-2 bPAllv"
+        class="sc-c8d278d2-2 kqEaZW"
       >
         <div
-          class="sc-2668456d-3 gFpYCq"
+          class="sc-c8d278d2-3 MNjvz"
         >
           <div
-            class="sc-2668456d-4 cZNOHL"
+            class="sc-c8d278d2-4 jjWkja"
           >
             <span>
               $
@@ -40,10 +40,17 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
             0.61
           </div>
           <div
-            class="sc-2668456d-6 fzjdPE"
+            class="sc-c8d278d2-6 dmQwAN"
           >
             <div
-              class="sc-2668456d-5 jhzrpE"
+              class="sc-ba3887ec-0 jyWTDZ"
+            >
+              <div
+                class="sc-9eb58f28-0 ivFNcN"
+              />
+            </div>
+            <div
+              class="sc-c8d278d2-5 zWIDZ"
             >
               <div
                 class="sc-9eb58f28-0 feoVcp"
@@ -57,20 +64,20 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-2668456d-6 fzjdPE"
+          class="sc-c8d278d2-6 dmQwAN"
         >
           <button
-            class="sc-1137dc9b-2 cUuCkz undefined "
+            class="sc-a6b3add2-2 eOvyKw undefined "
           >
             <div
-              class="sc-9eb58f28-0 iglxpF sc-1137dc9b-0 iYcpje"
+              class="sc-9eb58f28-0 iglxpF sc-a6b3add2-0 fCwpyU"
             />
             <span>
               Donate
             </span>
           </button>
           <button
-            class="sc-1137dc9b-2 fwqoAe undefined "
+            class="sc-a6b3add2-2 erODIt undefined "
           >
             <span>
               Share Now
@@ -78,7 +85,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </button>
         </div>
         <div
-          class="sc-2668456d-8 YwkJY"
+          class="sc-c8d278d2-8 ckcsSZ"
         >
           <div
             class="sc-bdd02fd6-0 fJPhsS"
@@ -92,7 +99,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Leaderboard
               </div>
               <button
-                class="sc-1137dc9b-2 hhppYD undefined "
+                class="sc-a6b3add2-2 iJUNCj undefined "
               >
                 <span>
                   See All
@@ -108,7 +115,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   0
                 </div>
                 <div
-                  class="sc-43c0e226-0 dtsHbH"
+                  class="sc-acda1633-0 iChLWs"
                 >
                   herp derp
                 </div>
@@ -127,7 +134,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   1
                 </div>
                 <div
-                  class="sc-43c0e226-0 cQtfKe"
+                  class="sc-acda1633-0 cPuyrV"
                 >
                   dorp donk
                 </div>
@@ -146,7 +153,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   2
                 </div>
                 <div
-                  class="sc-43c0e226-0 cQtfKe"
+                  class="sc-acda1633-0 cPuyrV"
                 >
                   hoop doop
                 </div>
@@ -169,7 +176,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Additional Perks
               </div>
               <a
-                class="sc-1137dc9b-1 khnPfI undefined "
+                class="sc-a6b3add2-1 jdXTho undefined "
               >
                 <span>
                   Learn More
