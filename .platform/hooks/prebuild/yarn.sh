@@ -1,5 +1,3 @@
-# place in .platform/hooks/prebuild/yarn.sh
-
 #!/bin/bash
 
 # need to install node first to be able to install yarn (as at prebuild no node is present yet)
