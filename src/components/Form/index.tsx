@@ -13,17 +13,17 @@ import {
   enumControlTester,
 } from './Controls'
 
-interface FormProps<FormState> {
+interface FormProps<TStateInterface> {
   localStorageKey?: string
   schema: JsonSchema
   uischema: Layout
-  data: FormState
-  setData: (input: FormState) => void
+  data: TStateInterface
+  setData: (input: TStateInterface) => void
   readonly: boolean
   children: React.ReactNode
 }
 
-const Form = <FormState,>({
+const Form = <TStateInterface,>({
   localStorageKey,
   schema,
   uischema,
@@ -31,8 +31,8 @@ const Form = <FormState,>({
   setData,
   readonly,
   children,
-}: FormProps<FormState>) => {
-  const freezeAndSetData = debounce((newData: FormState) => {
+}: FormProps<TStateInterface>) => {
+  const freezeAndSetData = debounce((newData: TStateInterface) => {
     setData(newData)
     if (localStorageKey && typeof localStorage !== 'undefined' && !!newData) {
       localStorage.setItem(localStorageKey, JSON.stringify(newData))
