@@ -6,22 +6,22 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-e34d4562-0 Oxmab"
+      class="sc-8d8cf31b-0 exoMbV"
     >
       <div
-        class="sc-e34d4562-2 iTHnHG"
+        class="sc-8d8cf31b-2 cIfwE"
       >
         <a
           href="/"
         >
           <div
-            class="sc-e34d4562-1 tERcg"
+            class="sc-8d8cf31b-1 hgnaem"
           >
             Artizen
           </div>
         </a>
         <button
-          class="sc-1137dc9b-2 bbtqSJ sc-e34d4562-4 kNaVCa "
+          class="sc-a6b3add2-2 bTccxJ sc-8d8cf31b-4 gheJck "
         >
           <span>
             Menu
@@ -29,10 +29,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-e34d4562-2 iTHnHG"
+        class="sc-8d8cf31b-2 cIfwE"
       >
         <div
-          class="sc-e34d4562-3 hVhDbP"
+          class="sc-8d8cf31b-3 hWUpcx"
         >
           <ul>
             <li>
@@ -52,10 +52,10 @@ exports[`Layout renders Layout unchanged 1`] = `
           </ul>
         </div>
         <a
-          class="sc-1137dc9b-1 ldkQTM undefined "
+          class="sc-a6b3add2-1 hCOHDc undefined "
         >
           <div
-            class="sc-9eb58f28-0 iglxpF sc-1137dc9b-0 iYcpje"
+            class="sc-9eb58f28-0 iglxpF sc-a6b3add2-0 fCwpyU"
           />
           <span>
             Donate
@@ -139,14 +139,14 @@ exports[`Layout renders Layout unchanged 1`] = `
             class="sc-aae777ba-6 fsaJbW"
           >
             <button
-              class="sc-1137dc9b-2 eWpCnG undefined "
+              class="sc-a6b3add2-2 UcTca undefined "
             >
               <span>
                 Donate
               </span>
             </button>
             <button
-              class="sc-1137dc9b-2 eWpCnG undefined "
+              class="sc-a6b3add2-2 UcTca undefined "
             >
               <span>
                 Sign In
