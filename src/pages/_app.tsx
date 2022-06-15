@@ -8,7 +8,7 @@ import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
 function App({ Component, pageProps }: AppProps) {
-  const NEXT_PUBLIC_INTERCOM_APP_ID = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM')
+  const NEXT_PUBLIC_INTERCOM_APP_ID = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
   const [user, setUser] = useState<ArtizenUser>()
   const { apolloClient } = useApollo(pageProps, user)
@@ -34,6 +34,7 @@ function App({ Component, pageProps }: AppProps) {
         <SessionProvider {...{ user, setUser }}>
           <ApolloProvider client={apolloClient}>
             {/* <Toaster /> */}
+
             <Component {...pageProps} />
           </ApolloProvider>
         </SessionProvider>
