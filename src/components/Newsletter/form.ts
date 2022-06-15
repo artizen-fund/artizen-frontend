@@ -1,17 +1,13 @@
-/* Note: This form is used by Storybook and Jest tests.
- *       Do not delete.
- *       Track any changes against Storybook and tests.
- */
+import { JsonSchema } from '@jsonforms/core'
 
-export const schema = {
-  name: 'newsletter',
+export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    FIRSTNAME: {
+    FNAME: {
       type: 'string',
       minLength: 2,
     },
-    LASTNAME: {
+    LNAME: {
       type: 'string',
       minLength: 2,
     },
@@ -24,19 +20,26 @@ export const schema = {
   required: ['EMAIL', 'OPTIN'],
 }
 
-export const initialState = { OPTIN: true }
+export interface FormState {
+  FNAME?: string
+  LNAME?: string
+  EMAIL?: string
+  OPTIN?: boolean
+}
+
+export const initialState: FormState = { OPTIN: true }
 
 export const uischema = {
   type: 'VerticalLayout',
   elements: [
     {
       type: 'Control',
-      scope: '#/properties/FIRSTNAME',
+      scope: '#/properties/FNAME',
       label: 'First Name',
     },
     {
       type: 'Control',
-      scope: '#/properties/LASTNAME',
+      scope: '#/properties/LNAME',
       label: 'Last Name',
     },
     {

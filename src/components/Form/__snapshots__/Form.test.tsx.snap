@@ -40,7 +40,7 @@ exports[`Form renders Form unchanged 1`] = `
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 griBRj"
+          class="sc-93ba83c0-0 bAVzHI"
         >
           * required field
         </div>
@@ -1321,7 +1321,7 @@ exports[`Form renders Form unchanged 1`] = `
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 griBRj"
+          class="sc-93ba83c0-0 bAVzHI"
         />
       </div>
     </div>
@@ -1429,7 +1429,7 @@ exports[`Form renders Form unchanged 1`] = `
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 griBRj"
+          class="sc-93ba83c0-0 bAVzHI"
         />
       </div>
     </div>
@@ -1513,7 +1513,7 @@ exports[`Form renders Form unchanged 1`] = `
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 griBRj"
+          class="sc-93ba83c0-0 bAVzHI"
         />
       </div>
     </div>
@@ -1541,7 +1541,7 @@ exports[`Form renders Form unchanged 1`] = `
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 griBRj"
+          class="sc-93ba83c0-0 bAVzHI"
         />
       </div>
     </div>
@@ -1567,7 +1567,7 @@ exports[`Form renders Form unchanged 1`] = `
           </label>
         </div>
         <div
-          class="sc-955ed11e-0 griBRj"
+          class="sc-93ba83c0-0 bAVzHI"
         />
       </div>
     </div>

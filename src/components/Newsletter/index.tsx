@@ -1,25 +1,27 @@
 import { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
-import MailchimpSubscribe, { FormHooks, DefaultFormFields } from 'react-mailchimp-subscribe'
+import MailchimpSubscribe, { FormHooks, NameFormFields } from 'react-mailchimp-subscribe'
 import { rgba, assert } from '@lib'
 import { Form, Button, PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { schema, uischema, initialState } from './form'
+import { schema, uischema, initialState, FormState } from './form'
 
-const Newsletter = ({ subscribe, status, message }: FormHooks<DefaultFormFields>) => {
-  const [data, setData] = useState<any>(initialState)
+const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) => {
+  const LOCALSTORAGE_KEY = 'newsletter'
+
+  const [data, setData] = useState<FormState>(initialState)
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
       return
     }
-    const frozenAnswers = localStorage.getItem(schema.name)
+    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
     if (!frozenAnswers) {
       setData(initialState)
       return
     }
     const thawedAnswers = JSON.parse(frozenAnswers)
     setData(thawedAnswers)
-  }, [schema])
+  }, [])
 
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string>()
@@ -48,8 +50,13 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<DefaultFormFields>
           <Header>Join us in building the world&apos;s largest web3 fund for public goods</Header>
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
-        <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
-          <StyledButton onClick={() => subscribe(data)} inverted level={0} disabled={!data.EMAIL || !data.OPTIN}>
+        <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
+          <StyledButton
+            onClick={() => subscribe(data as NameFormFields)}
+            inverted
+            level={0}
+            disabled={!data.EMAIL || !data.OPTIN}
+          >
             Submit
           </StyledButton>
           <Confirmation>
@@ -124,11 +131,11 @@ const Wrapper = styled.div`
     grid-area: email;
   }
 
-  *[id='#/properties/FIRSTNAME'] {
+  *[id='#/properties/FNAME'] {
     grid-area: firstName;
   }
 
-  *[id='#/properties/LASTNAME'] {
+  *[id='#/properties/LNAME'] {
     grid-area: lastName;
   }
 
@@ -138,8 +145,8 @@ const Wrapper = styled.div`
 
   &.submitted {
     *[id='#/properties/EMAIL'],
-    *[id='#/properties/FIRSTNAME'],
-    *[id='#/properties/LASTNAME'],
+    *[id='#/properties/FNAME'],
+    *[id='#/properties/LNAME'],
     ${StyledButton} {
       display: none;
     }

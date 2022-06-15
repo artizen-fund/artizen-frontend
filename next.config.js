@@ -1,4 +1,5 @@
 const { withSentryConfig } = require('@sentry/nextjs')
+const withGraphql = require('next-plugin-graphql')
 
 const moduleExports = {
   reactStrictMode: true,
@@ -17,4 +18,4 @@ const sentryWebpackPluginOptions = {
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 }
 
-module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)
+module.exports = withGraphql(withSentryConfig(moduleExports, sentryWebpackPluginOptions))
