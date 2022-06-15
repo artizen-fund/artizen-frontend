@@ -1,11 +1,4 @@
-/*
-todo:
-- Having a bit of difficulty proofing filled/not-filled state with numbers. !!data doesn't work because 0 is a number.
-- The juggling between floats and ints is clumsy. Split into two inputs?
-- Would be nice to use onKeyUp to rule out alphas and non-numerics.
-*/
-
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import { Labels, JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
@@ -15,12 +8,12 @@ export interface NumberControlProps {
   label: string | Labels
   enabled?: boolean
   processing?: boolean
-  onChange?: (e: any) => void
+  onChange?: FormEventHandler<HTMLDivElement>
   required?: boolean
   schema: JsonSchema
   uischema: ControlElement
-  data: any
-  handleChange(path: string, value: any): void
+  data: number
+  handleChange(path: string, value: number): void
   path: string
   errors?: string
 }
@@ -55,7 +48,7 @@ export const NumberControl = ({
     } else {
       setVisibleError(parsedErrors[0])
     }
-  }, [parsedErrors])
+  }, [visibleError, parsedErrors])
 
   // This effect is for all right-hand-side icons.
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
@@ -66,7 +59,7 @@ export const NumberControl = ({
 
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
 
-  const hasData = (data?: string) => !!data && !!data.toString()
+  const hasData = (data?: number) => !!data
 
   return (
     <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>

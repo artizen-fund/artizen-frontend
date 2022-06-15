@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
 import { JsonForms } from '@jsonforms/react'
+import { JsonSchema, Layout } from '@jsonforms/core'
 import { vanillaRenderers } from '@jsonforms/vanilla-renderers'
 import { debounce } from 'lodash'
 import {
@@ -13,23 +13,29 @@ import {
   enumControlTester,
 } from './Controls'
 
-interface FormProps {
-  schema: any
-  uischema: any
-  data: any
-  setData: any
+interface FormProps<TStateInterface> {
+  localStorageKey?: string
+  schema: JsonSchema
+  uischema: Layout
+  data: TStateInterface
+  setData: (input: TStateInterface) => void
   readonly: boolean
   children: React.ReactNode
 }
 
-const Form = ({ schema, uischema, data, setData, readonly, children }: FormProps) => {
-  const [errors, setErrors] = useState<any>(undefined)
-
-  const freezeAndSetData = debounce((newData: any, errors: any) => {
+const Form = <TStateInterface,>({
+  localStorageKey,
+  schema,
+  uischema,
+  data,
+  setData,
+  readonly,
+  children,
+}: FormProps<TStateInterface>) => {
+  const freezeAndSetData = debounce((newData: TStateInterface) => {
     setData(newData)
-    setErrors(errors)
-    if (typeof localStorage !== 'undefined' && !!newData) {
-      localStorage.setItem(schema.name, JSON.stringify(newData))
+    if (localStorageKey && typeof localStorage !== 'undefined' && !!newData) {
+      localStorage.setItem(localStorageKey, JSON.stringify(newData))
     }
   }, 100)
 
@@ -39,18 +45,14 @@ const Form = ({ schema, uischema, data, setData, readonly, children }: FormProps
     { tester: booleanControlTester, renderer: BooleanControl },
     { tester: numberControlTester, renderer: NumberControl },
     { tester: enumControlTester, renderer: EnumControl },
-    /* { tester: formLabelTester, renderer: FormLabel }, */
   ]
-
-  // if (!data) return <></>
-  // todo: does removing this break anything?
 
   return (
     <>
       <JsonForms
         {...{ schema, uischema, renderers, data, readonly }}
         config={{ trim: true }}
-        onChange={({ data, errors }) => freezeAndSetData(data, errors)}
+        onChange={({ data }) => freezeAndSetData(data)}
       />
       {children}
     </>

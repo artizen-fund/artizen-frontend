@@ -1,15 +1,35 @@
 import styled from 'styled-components'
-import type { NextPage } from 'next'
 import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedInfo } from '@components'
-import { CreateTopUpWallet, rgba } from '@lib'
+import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
+import { SIDEBAR_DONATORS } from '@gql'
 
+<<<<<<< HEAD
 const Home: NextPage = () => {
 
 
 
+=======
+interface IHome {
+  apolloData: {
+    ROOT_QUERY: ISidebarDonatorsQuery
+  }
+}
+
+const Home = ({
+  apolloData: {
+    ROOT_QUERY: { Donations },
+  },
+}: IHome) => {
+>>>>>>> efae758440920a035d28bc9bb993a4ecd5772724
   // note: obviously this is going to come from CMS data
-  const tabbedInfo: Record<string, any> = {
+  const FUND_COUNT = 3.2
+  const FUND_AMOUNT = 15250
+  const FUND_GOAL = 25000
+  const FUND_DATE = 'May, 2022'
+  const FUND_DEADLINE = '2022-06-30T00:00:00'
+
+  const tabbedInfo: Record<string, React.ReactNode> = {
     About: (
       <>
         <h1>Join our May, 2022 donation drive</h1>
@@ -78,7 +98,7 @@ const Home: NextPage = () => {
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar />
+          <Sidebar {...{ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
         </Wrapper>
       </StyledPagePadding>
 
@@ -129,5 +149,14 @@ const Wrapper = styled.section`
 `
 
 const Tab = styled.div<{ label: string }>``
+
+export async function getStaticProps() {
+  const apolloClient = initializeApollo()
+  await apolloClient.query({ query: SIDEBAR_DONATORS })
+  return addApolloState(apolloClient, {
+    props: {},
+    revalidate: 1,
+  })
+}
 
 export default Home
