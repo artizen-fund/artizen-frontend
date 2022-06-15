@@ -21,63 +21,6 @@ exports[`Leaderboard renders Leaderboard unchanged 1`] = `
         </span>
       </button>
     </div>
-    <div
-      class="sc-92fd0fad-0 glZoEZ"
-    >
-      <div>
-        <div>
-          #
-          0
-        </div>
-        <div
-          class="sc-acda1633-0 iChLWs"
-        >
-          herp derp
-        </div>
-      </div>
-      <div>
-        $
-        69
-      </div>
-    </div>
-    <div
-      class="sc-92fd0fad-0 glZoEZ"
-    >
-      <div>
-        <div>
-          #
-          1
-        </div>
-        <div
-          class="sc-acda1633-0 cPuyrV"
-        >
-          dorp donk
-        </div>
-      </div>
-      <div>
-        $
-        68
-      </div>
-    </div>
-    <div
-      class="sc-92fd0fad-0 glZoEZ"
-    >
-      <div>
-        <div>
-          #
-          2
-        </div>
-        <div
-          class="sc-acda1633-0 cPuyrV"
-        >
-          hoop doop
-        </div>
-      </div>
-      <div>
-        $
-        67
-      </div>
-    </div>
   </div>
 </div>
 `;

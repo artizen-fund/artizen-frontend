@@ -2,7 +2,7 @@ import { Biconomy } from '@biconomy/mexa'
 import { Web3Provider } from '@ethersproject/providers'
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { magicProvider } from './magicLink'
+import { magicProvider, assertInt } from '@lib'
 
 export const useMetaContract = () => {
   const [biconomy, setBiconomy] = useState()
@@ -71,12 +71,13 @@ export const useMetaContract = () => {
     const contractInterface = new ethers.utils.Interface(contractAbi)
 
     const name = await contract?.methods.name().call()
+    const NEXT_PUBLIC_CHAIN_ID = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
     const domainData = {
       name,
       version: '1',
       verifyingContract: contractAddress,
       // converts Number to bytes32. pass your chainId instead of 42 if network is not Kovan
-      salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(process.env.NEXT_PUBLIC_CHAIN_ID).toHexString(), 32),
+      salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(NEXT_PUBLIC_CHAIN_ID).toHexString(), 32),
     }
 
     const nonce = await contract.getNonce(userAddress)
