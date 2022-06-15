@@ -1,12 +1,13 @@
+import { useState } from 'react'
 import type { NextPage } from 'next'
-import { Form, Header } from '@components'
-import { schema, uischema, initialState } from '@forms/sample'
+import { Form } from '@components'
+import { schema, uischema, initialState, FormState } from '@forms/sample'
 
 const SampleFormPage: NextPage = () => {
+  const [data, setData] = useState<FormState>()
   return (
     <>
-      <Header />
-      <Form {...{ schema, uischema, initialState }} />
+      <Form {...{ schema, uischema, initialState, data, setData }} />
     </>
   )
 }

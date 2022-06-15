@@ -14,7 +14,7 @@ const Checkbox = ({
   uischema,
   ...props
 }: BooleanControlProps) => (
-  <Wrapper gridArea={path} {...{ inverted }} {...props} id={uischema?.scope} disabled={!enabled}>
+  <Wrapper gridArea={path} {...{ inverted, enabled }} {...props} id={uischema?.scope}>
     <Box>
       <Input
         type="checkbox"
@@ -25,9 +25,7 @@ const Checkbox = ({
       />
       <Checkmark {...{ inverted }} />
     </Box>
-    <Label {...{ inverted }} disabled={!enabled}>
-      {typeof label === 'object' ? label[0] : label}
-    </Label>
+    <Label {...{ inverted, enabled }}>{typeof label === 'object' ? label[0] : label}</Label>
   </Wrapper>
 )
 
@@ -98,18 +96,17 @@ const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
     content: '';
     transition: opacity 0.25s ease-in-out, transform 0.6s cubic-bezier(0.44, 1.86, 0.74, 1);
   }
-`//TODO: Check with Eric
-// @ts-ignore: Unreachable code error
-const Label = styled.span<Pick<BooleanControlProps, 'disabled' | 'inverted'>>`
+`
+
+const Label = styled.span<Pick<BooleanControlProps, 'enabled' | 'inverted'>>`
   display: block;
-  color: ${props => rgba(props.disabled ? palette.barracuda : props.inverted ? palette.white : palette.night)};
+  color: ${props => rgba(!props.enabled ? palette.barracuda : props.inverted ? palette.white : palette.night)};
   @media (prefers-color-scheme: dark) {
-    color: ${props => rgba(props.disabled ? palette.barracuda : palette.white)};
+    color: ${props => rgba(!props.enabled ? palette.barracuda : palette.white)};
   }
 `
 
-// @ts-ignore: Unreachable code error
-const Wrapper = styled.label<Pick<BooleanControlProps, 'disabled' | 'inverted'> & { gridArea?: string }>`
+const Wrapper = styled.label<Pick<BooleanControlProps, 'enabled' | 'inverted'> & { gridArea?: string }>`
   position: relative;
   ${props => props.gridArea && `grid-area: ${props.gridArea};`}
   display: flex;
@@ -117,8 +114,8 @@ const Wrapper = styled.label<Pick<BooleanControlProps, 'disabled' | 'inverted'> 
   padding: 16px 0;
   user-select: none;
 
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  pointer-events: ${props => (props.disabled ? 'none' : 'all')};
+  cursor: ${props => (!props.enabled ? 'not-allowed' : 'pointer')};
+  pointer-events: ${props => (!props.enabled ? 'none' : 'all')};
 
   & input:checked ~ span {
     background-color: ${props => rgba(props.inverted ? palette.white : palette.slate)};
