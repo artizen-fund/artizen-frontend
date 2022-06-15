@@ -6,16 +6,13 @@ Featuring…
 - Typescript 🧑‍💻
 - styled-components 💅🏻
 - Cypress testing 🧑‍🏫
-- Component Storybooks 🖼
-
-Coming soon…
-
 - Jest testing 🤪
+- Component Storybooks 🖼
 - react-jsonschema-forms 📝
 
 ## Installation
 
-- requires Node 16.10.0+
+- requires Node 16.14.2+
 - npx storybook init
 
 ## Getting Started
@@ -24,6 +21,12 @@ Coming soon…
 
 ```bash
 yarn dev
+```
+
+### Graphql codegen:
+
+```bash
+yarn codegen
 ```
 
 ### Create a new component:
@@ -44,4 +47,10 @@ yarn storybook
 
 ```bash
 yarn test
+```
+
+## Run Jest tests:
+
+```bash
+yarn test:jest
 ```
