@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import type { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
 import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
 import { assert, SessionProvider, useApollo } from '@lib'
@@ -9,7 +8,7 @@ import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
 function App({ Component, pageProps }: AppProps) {
-  const NEXT_PUBLIC_INTERCOM = assert(process.env.NEXT_PUBLIC_INTERCOM, 'NEXT_PUBLIC_INTERCOM')
+  const NEXT_PUBLIC_INTERCOM_APP_ID = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
   const [user, setUser] = useState<ArtizenUser>()
   const { apolloClient } = useApollo(pageProps, user)
@@ -31,10 +30,11 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <IntercomProvider appId={NEXT_PUBLIC_INTERCOM}>
+      <IntercomProvider appId={NEXT_PUBLIC_INTERCOM_APP_ID}>
         <SessionProvider {...{ user, setUser }}>
           <ApolloProvider client={apolloClient}>
             {/* <Toaster /> */}
+
             <Component {...pageProps} />
           </ApolloProvider>
         </SessionProvider>
