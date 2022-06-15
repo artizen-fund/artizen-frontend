@@ -2,8 +2,9 @@ import styled from 'styled-components'
 import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
+import { ISidebarDonatorsQuery } from '@types'
 
-type ILeaderboard = Pick<ISidebarDonatorsQuery, 'Donations'>
+export type ILeaderboard = Pick<ISidebarDonatorsQuery, 'Donations'>
 
 const Leaderboard = ({ Donations }: ILeaderboard) => {
   const sideItem = (

@@ -1,4 +1,4 @@
-import Leaderboard, { LeaderboardProps } from './'
+import Leaderboard, { ILeaderboard } from './'
 
 const story = {
   title: 'page/home/Leaderboard',
@@ -7,7 +7,7 @@ const story = {
 }
 export default story
 
-export const LeaderboardComponent = (props: LeaderboardProps) => {
+export const LeaderboardComponent = (props: ILeaderboard) => {
   const leaderboard = [
     { name: 'herp derp', amount: 69 },
     { name: 'dorp donk', amount: 68 },

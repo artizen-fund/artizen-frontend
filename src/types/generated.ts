@@ -1,16 +1,19 @@
-type Maybe<T> = T | null
-type InputMaybe<T> = Maybe<T>
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
-type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
-type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
-type FieldWrapper<T> = Partial<T>
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core'
+export type Maybe<T> = T | null
+export type InputMaybe<T> = Maybe<T>
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
+export type FieldWrapper<T> = Partial<T>
 /** All built-in and custom scalars, mapped to their actual values */
-type Scalars = {
+export type Scalars = {
   ID: string
   String: string
   Boolean: boolean
   Int: number
   Float: number
+  BigInt: any
+  Bytes: any
   bigint: any
   float8: any
   json: any
@@ -19,8 +22,18 @@ type Scalars = {
   uuid: any
 }
 
+export type IBlockChangedFilter = {
+  number_gte: Scalars['Int']
+}
+
+export type IBlock_Height = {
+  hash?: InputMaybe<Scalars['Bytes']>
+  number?: InputMaybe<Scalars['Int']>
+  number_gte?: InputMaybe<Scalars['Int']>
+}
+
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
-type IBoolean_Comparison_Exp = {
+export type IBoolean_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Boolean']>
   _gt?: InputMaybe<Scalars['Boolean']>
   _gte?: InputMaybe<Scalars['Boolean']>
@@ -33,7 +46,7 @@ type IBoolean_Comparison_Exp = {
 }
 
 /** columns and relationships of "Donations" */
-type IDonations = {
+export type IDonations = {
   __typename?: 'Donations'
   /** An object relationship */
   User: FieldWrapper<IUser>
@@ -48,14 +61,14 @@ type IDonations = {
 }
 
 /** aggregated selection of "Donations" */
-type IDonations_Aggregate = {
+export type IDonations_Aggregate = {
   __typename?: 'Donations_aggregate'
   aggregate?: Maybe<FieldWrapper<IDonations_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IDonations>>
 }
 
 /** aggregate fields of "Donations" */
-type IDonations_Aggregate_Fields = {
+export type IDonations_Aggregate_Fields = {
   __typename?: 'Donations_aggregate_fields'
   avg?: Maybe<FieldWrapper<IDonations_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -71,13 +84,13 @@ type IDonations_Aggregate_Fields = {
 }
 
 /** aggregate fields of "Donations" */
-type IDonations_Aggregate_FieldsCountArgs = {
+export type IDonations_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Donations_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "Donations" */
-type IDonations_Aggregate_Order_By = {
+export type IDonations_Aggregate_Order_By = {
   avg?: InputMaybe<IDonations_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IDonations_Max_Order_By>
@@ -92,27 +105,27 @@ type IDonations_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "Donations" */
-type IDonations_Arr_Rel_Insert_Input = {
+export type IDonations_Arr_Rel_Insert_Input = {
   data: Array<IDonations_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IDonations_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type IDonations_Avg_Fields = {
+export type IDonations_Avg_Fields = {
   __typename?: 'Donations_avg_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by avg() on columns of table "Donations" */
-type IDonations_Avg_Order_By = {
+export type IDonations_Avg_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "Donations". All fields are combined with a logical 'AND'. */
-type IDonations_Bool_Exp = {
+export type IDonations_Bool_Exp = {
   User?: InputMaybe<IUser_Bool_Exp>
   _and?: InputMaybe<Array<IDonations_Bool_Exp>>
   _not?: InputMaybe<IDonations_Bool_Exp>
@@ -128,19 +141,19 @@ type IDonations_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "Donations" */
-enum Donations_Constraint {
+export enum Donations_Constraint {
   /** unique or primary key constraint */
   Donations_pkey = 'Donations_pkey',
 }
 
 /** input type for incrementing numeric columns in table "Donations" */
-type IDonations_Inc_Input = {
+export type IDonations_Inc_Input = {
   amount?: InputMaybe<Scalars['numeric']>
   fee?: InputMaybe<Scalars['numeric']>
 }
 
 /** input type for inserting data into table "Donations" */
-type IDonations_Insert_Input = {
+export type IDonations_Insert_Input = {
   User?: InputMaybe<IUser_Obj_Rel_Insert_Input>
   amount?: InputMaybe<Scalars['numeric']>
   fee?: InputMaybe<Scalars['numeric']>
@@ -153,7 +166,7 @@ type IDonations_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IDonations_Max_Fields = {
+export type IDonations_Max_Fields = {
   __typename?: 'Donations_max_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
   fee?: Maybe<FieldWrapper<Scalars['numeric']>>
@@ -166,7 +179,7 @@ type IDonations_Max_Fields = {
 }
 
 /** order by max() on columns of table "Donations" */
-type IDonations_Max_Order_By = {
+export type IDonations_Max_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -178,7 +191,7 @@ type IDonations_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IDonations_Min_Fields = {
+export type IDonations_Min_Fields = {
   __typename?: 'Donations_min_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
   fee?: Maybe<FieldWrapper<Scalars['numeric']>>
@@ -191,7 +204,7 @@ type IDonations_Min_Fields = {
 }
 
 /** order by min() on columns of table "Donations" */
-type IDonations_Min_Order_By = {
+export type IDonations_Min_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -203,7 +216,7 @@ type IDonations_Min_Order_By = {
 }
 
 /** response of any mutation on the table "Donations" */
-type IDonations_Mutation_Response = {
+export type IDonations_Mutation_Response = {
   __typename?: 'Donations_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -212,14 +225,14 @@ type IDonations_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "Donations" */
-type IDonations_On_Conflict = {
+export type IDonations_On_Conflict = {
   constraint: Donations_Constraint
   update_columns?: Array<Donations_Update_Column>
   where?: InputMaybe<IDonations_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "Donations". */
-type IDonations_Order_By = {
+export type IDonations_Order_By = {
   User?: InputMaybe<IUser_Order_By>
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
@@ -232,12 +245,12 @@ type IDonations_Order_By = {
 }
 
 /** primary key columns input for table: Donations */
-type IDonations_Pk_Columns_Input = {
+export type IDonations_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "Donations" */
-enum Donations_Select_Column {
+export enum Donations_Select_Column {
   /** column name */
   amount = 'amount',
   /** column name */
@@ -257,7 +270,7 @@ enum Donations_Select_Column {
 }
 
 /** input type for updating data in table "Donations" */
-type IDonations_Set_Input = {
+export type IDonations_Set_Input = {
   amount?: InputMaybe<Scalars['numeric']>
   fee?: InputMaybe<Scalars['numeric']>
   id?: InputMaybe<Scalars['uuid']>
@@ -269,59 +282,59 @@ type IDonations_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type IDonations_Stddev_Fields = {
+export type IDonations_Stddev_Fields = {
   __typename?: 'Donations_stddev_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev() on columns of table "Donations" */
-type IDonations_Stddev_Order_By = {
+export type IDonations_Stddev_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_pop on columns */
-type IDonations_Stddev_Pop_Fields = {
+export type IDonations_Stddev_Pop_Fields = {
   __typename?: 'Donations_stddev_pop_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_pop() on columns of table "Donations" */
-type IDonations_Stddev_Pop_Order_By = {
+export type IDonations_Stddev_Pop_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
-type IDonations_Stddev_Samp_Fields = {
+export type IDonations_Stddev_Samp_Fields = {
   __typename?: 'Donations_stddev_samp_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_samp() on columns of table "Donations" */
-type IDonations_Stddev_Samp_Order_By = {
+export type IDonations_Stddev_Samp_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
 }
 
 /** aggregate sum on columns */
-type IDonations_Sum_Fields = {
+export type IDonations_Sum_Fields = {
   __typename?: 'Donations_sum_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
   fee?: Maybe<FieldWrapper<Scalars['numeric']>>
 }
 
 /** order by sum() on columns of table "Donations" */
-type IDonations_Sum_Order_By = {
+export type IDonations_Sum_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
 }
 
 /** update columns of table "Donations" */
-enum Donations_Update_Column {
+export enum Donations_Update_Column {
   /** column name */
   amount = 'amount',
   /** column name */
@@ -341,46 +354,97 @@ enum Donations_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type IDonations_Var_Pop_Fields = {
+export type IDonations_Var_Pop_Fields = {
   __typename?: 'Donations_var_pop_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_pop() on columns of table "Donations" */
-type IDonations_Var_Pop_Order_By = {
+export type IDonations_Var_Pop_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
 }
 
 /** aggregate var_samp on columns */
-type IDonations_Var_Samp_Fields = {
+export type IDonations_Var_Samp_Fields = {
   __typename?: 'Donations_var_samp_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_samp() on columns of table "Donations" */
-type IDonations_Var_Samp_Order_By = {
+export type IDonations_Var_Samp_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
 }
 
 /** aggregate variance on columns */
-type IDonations_Variance_Fields = {
+export type IDonations_Variance_Fields = {
   __typename?: 'Donations_variance_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by variance() on columns of table "Donations" */
-type IDonations_Variance_Order_By = {
+export type IDonations_Variance_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
 }
 
+export type IExampleEntity = {
+  __typename?: 'ExampleEntity'
+  OnChainUser?: Maybe<FieldWrapper<IUser>>
+  count: FieldWrapper<Scalars['BigInt']>
+  donation_amount: FieldWrapper<Scalars['BigInt']>
+  donation_donor: FieldWrapper<Scalars['Bytes']>
+  id: FieldWrapper<Scalars['ID']>
+}
+
+export type IExampleEntity_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<IBlockChangedFilter>
+  count?: InputMaybe<Scalars['BigInt']>
+  count_gt?: InputMaybe<Scalars['BigInt']>
+  count_gte?: InputMaybe<Scalars['BigInt']>
+  count_in?: InputMaybe<Array<Scalars['BigInt']>>
+  count_lt?: InputMaybe<Scalars['BigInt']>
+  count_lte?: InputMaybe<Scalars['BigInt']>
+  count_not?: InputMaybe<Scalars['BigInt']>
+  count_not_in?: InputMaybe<Array<Scalars['BigInt']>>
+  donation_amount?: InputMaybe<Scalars['BigInt']>
+  donation_amount_gt?: InputMaybe<Scalars['BigInt']>
+  donation_amount_gte?: InputMaybe<Scalars['BigInt']>
+  donation_amount_in?: InputMaybe<Array<Scalars['BigInt']>>
+  donation_amount_lt?: InputMaybe<Scalars['BigInt']>
+  donation_amount_lte?: InputMaybe<Scalars['BigInt']>
+  donation_amount_not?: InputMaybe<Scalars['BigInt']>
+  donation_amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>
+  donation_donor?: InputMaybe<Scalars['Bytes']>
+  donation_donor_contains?: InputMaybe<Scalars['Bytes']>
+  donation_donor_in?: InputMaybe<Array<Scalars['Bytes']>>
+  donation_donor_not?: InputMaybe<Scalars['Bytes']>
+  donation_donor_not_contains?: InputMaybe<Scalars['Bytes']>
+  donation_donor_not_in?: InputMaybe<Array<Scalars['Bytes']>>
+  id?: InputMaybe<Scalars['ID']>
+  id_gt?: InputMaybe<Scalars['ID']>
+  id_gte?: InputMaybe<Scalars['ID']>
+  id_in?: InputMaybe<Array<Scalars['ID']>>
+  id_lt?: InputMaybe<Scalars['ID']>
+  id_lte?: InputMaybe<Scalars['ID']>
+  id_not?: InputMaybe<Scalars['ID']>
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>
+}
+
+export enum ExampleEntity_OrderBy {
+  count = 'count',
+  donation_amount = 'donation_amount',
+  donation_donor = 'donation_donor',
+  id = 'id',
+}
+
 /** columns and relationships of "Follows" */
-type IFollows = {
+export type IFollows = {
   __typename?: 'Follows'
   /** An object relationship */
   grant: FieldWrapper<IGrants>
@@ -393,14 +457,14 @@ type IFollows = {
 }
 
 /** aggregated selection of "Follows" */
-type IFollows_Aggregate = {
+export type IFollows_Aggregate = {
   __typename?: 'Follows_aggregate'
   aggregate?: Maybe<FieldWrapper<IFollows_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IFollows>>
 }
 
 /** aggregate fields of "Follows" */
-type IFollows_Aggregate_Fields = {
+export type IFollows_Aggregate_Fields = {
   __typename?: 'Follows_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IFollows_Max_Fields>>
@@ -408,27 +472,27 @@ type IFollows_Aggregate_Fields = {
 }
 
 /** aggregate fields of "Follows" */
-type IFollows_Aggregate_FieldsCountArgs = {
+export type IFollows_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Follows_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "Follows" */
-type IFollows_Aggregate_Order_By = {
+export type IFollows_Aggregate_Order_By = {
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IFollows_Max_Order_By>
   min?: InputMaybe<IFollows_Min_Order_By>
 }
 
 /** input type for inserting array relation for remote table "Follows" */
-type IFollows_Arr_Rel_Insert_Input = {
+export type IFollows_Arr_Rel_Insert_Input = {
   data: Array<IFollows_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IFollows_On_Conflict>
 }
 
 /** Boolean expression to filter rows from the table "Follows". All fields are combined with a logical 'AND'. */
-type IFollows_Bool_Exp = {
+export type IFollows_Bool_Exp = {
   _and?: InputMaybe<Array<IFollows_Bool_Exp>>
   _not?: InputMaybe<IFollows_Bool_Exp>
   _or?: InputMaybe<Array<IFollows_Bool_Exp>>
@@ -441,13 +505,13 @@ type IFollows_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "Follows" */
-enum Follows_Constraint {
+export enum Follows_Constraint {
   /** unique or primary key constraint */
   Follows_pkey = 'Follows_pkey',
 }
 
 /** input type for inserting data into table "Follows" */
-type IFollows_Insert_Input = {
+export type IFollows_Insert_Input = {
   grant?: InputMaybe<IGrants_Obj_Rel_Insert_Input>
   grantId?: InputMaybe<Scalars['uuid']>
   id?: InputMaybe<Scalars['uuid']>
@@ -457,7 +521,7 @@ type IFollows_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IFollows_Max_Fields = {
+export type IFollows_Max_Fields = {
   __typename?: 'Follows_max_fields'
   grantId?: Maybe<FieldWrapper<Scalars['uuid']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -466,7 +530,7 @@ type IFollows_Max_Fields = {
 }
 
 /** order by max() on columns of table "Follows" */
-type IFollows_Max_Order_By = {
+export type IFollows_Max_Order_By = {
   grantId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   type?: InputMaybe<Order_By>
@@ -474,7 +538,7 @@ type IFollows_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IFollows_Min_Fields = {
+export type IFollows_Min_Fields = {
   __typename?: 'Follows_min_fields'
   grantId?: Maybe<FieldWrapper<Scalars['uuid']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -483,7 +547,7 @@ type IFollows_Min_Fields = {
 }
 
 /** order by min() on columns of table "Follows" */
-type IFollows_Min_Order_By = {
+export type IFollows_Min_Order_By = {
   grantId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   type?: InputMaybe<Order_By>
@@ -491,7 +555,7 @@ type IFollows_Min_Order_By = {
 }
 
 /** response of any mutation on the table "Follows" */
-type IFollows_Mutation_Response = {
+export type IFollows_Mutation_Response = {
   __typename?: 'Follows_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -500,14 +564,14 @@ type IFollows_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "Follows" */
-type IFollows_On_Conflict = {
+export type IFollows_On_Conflict = {
   constraint: Follows_Constraint
   update_columns?: Array<Follows_Update_Column>
   where?: InputMaybe<IFollows_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "Follows". */
-type IFollows_Order_By = {
+export type IFollows_Order_By = {
   grant?: InputMaybe<IGrants_Order_By>
   grantId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -517,12 +581,12 @@ type IFollows_Order_By = {
 }
 
 /** primary key columns input for table: Follows */
-type IFollows_Pk_Columns_Input = {
+export type IFollows_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "Follows" */
-enum Follows_Select_Column {
+export enum Follows_Select_Column {
   /** column name */
   grantId = 'grantId',
   /** column name */
@@ -534,7 +598,7 @@ enum Follows_Select_Column {
 }
 
 /** input type for updating data in table "Follows" */
-type IFollows_Set_Input = {
+export type IFollows_Set_Input = {
   grantId?: InputMaybe<Scalars['uuid']>
   id?: InputMaybe<Scalars['uuid']>
   type?: InputMaybe<Scalars['String']>
@@ -542,7 +606,7 @@ type IFollows_Set_Input = {
 }
 
 /** update columns of table "Follows" */
-enum Follows_Update_Column {
+export enum Follows_Update_Column {
   /** column name */
   grantId = 'grantId',
   /** column name */
@@ -554,7 +618,7 @@ enum Follows_Update_Column {
 }
 
 /** columns and relationships of "GrantCategories" */
-type IGrantCategories = {
+export type IGrantCategories = {
   __typename?: 'GrantCategories'
   /** An array relationship */
   bridgeWithGrant: Array<FieldWrapper<IGrantCategoriesBridge>>
@@ -566,7 +630,7 @@ type IGrantCategories = {
 }
 
 /** columns and relationships of "GrantCategories" */
-type IGrantCategoriesBridgeWithGrantArgs = {
+export type IGrantCategoriesBridgeWithGrantArgs = {
   distinct_on?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -575,7 +639,7 @@ type IGrantCategoriesBridgeWithGrantArgs = {
 }
 
 /** columns and relationships of "GrantCategories" */
-type IGrantCategoriesBridgeWithGrant_AggregateArgs = {
+export type IGrantCategoriesBridgeWithGrant_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -584,7 +648,7 @@ type IGrantCategoriesBridgeWithGrant_AggregateArgs = {
 }
 
 /** columns and relationships of "GrantCategoriesBridge" */
-type IGrantCategoriesBridge = {
+export type IGrantCategoriesBridge = {
   __typename?: 'GrantCategoriesBridge'
   /** An object relationship */
   category: FieldWrapper<IGrantCategories>
@@ -596,14 +660,14 @@ type IGrantCategoriesBridge = {
 }
 
 /** aggregated selection of "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Aggregate = {
+export type IGrantCategoriesBridge_Aggregate = {
   __typename?: 'GrantCategoriesBridge_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantCategoriesBridge_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantCategoriesBridge>>
 }
 
 /** aggregate fields of "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Aggregate_Fields = {
+export type IGrantCategoriesBridge_Aggregate_Fields = {
   __typename?: 'GrantCategoriesBridge_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IGrantCategoriesBridge_Max_Fields>>
@@ -611,27 +675,27 @@ type IGrantCategoriesBridge_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Aggregate_FieldsCountArgs = {
+export type IGrantCategoriesBridge_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Aggregate_Order_By = {
+export type IGrantCategoriesBridge_Aggregate_Order_By = {
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IGrantCategoriesBridge_Max_Order_By>
   min?: InputMaybe<IGrantCategoriesBridge_Min_Order_By>
 }
 
 /** input type for inserting array relation for remote table "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Arr_Rel_Insert_Input = {
+export type IGrantCategoriesBridge_Arr_Rel_Insert_Input = {
   data: Array<IGrantCategoriesBridge_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantCategoriesBridge_On_Conflict>
 }
 
 /** Boolean expression to filter rows from the table "GrantCategoriesBridge". All fields are combined with a logical 'AND'. */
-type IGrantCategoriesBridge_Bool_Exp = {
+export type IGrantCategoriesBridge_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantCategoriesBridge_Bool_Exp>>
   _not?: InputMaybe<IGrantCategoriesBridge_Bool_Exp>
   _or?: InputMaybe<Array<IGrantCategoriesBridge_Bool_Exp>>
@@ -643,13 +707,13 @@ type IGrantCategoriesBridge_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantCategoriesBridge" */
-enum GrantCategoriesBridge_Constraint {
+export enum GrantCategoriesBridge_Constraint {
   /** unique or primary key constraint */
   GrantCategoriesBridge_pkey = 'GrantCategoriesBridge_pkey',
 }
 
 /** input type for inserting data into table "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Insert_Input = {
+export type IGrantCategoriesBridge_Insert_Input = {
   category?: InputMaybe<IGrantCategories_Obj_Rel_Insert_Input>
   categoryId?: InputMaybe<Scalars['uuid']>
   grant?: InputMaybe<IGrants_Obj_Rel_Insert_Input>
@@ -658,7 +722,7 @@ type IGrantCategoriesBridge_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantCategoriesBridge_Max_Fields = {
+export type IGrantCategoriesBridge_Max_Fields = {
   __typename?: 'GrantCategoriesBridge_max_fields'
   categoryId?: Maybe<FieldWrapper<Scalars['uuid']>>
   grantId?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -666,14 +730,14 @@ type IGrantCategoriesBridge_Max_Fields = {
 }
 
 /** order by max() on columns of table "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Max_Order_By = {
+export type IGrantCategoriesBridge_Max_Order_By = {
   categoryId?: InputMaybe<Order_By>
   grantId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
 }
 
 /** aggregate min on columns */
-type IGrantCategoriesBridge_Min_Fields = {
+export type IGrantCategoriesBridge_Min_Fields = {
   __typename?: 'GrantCategoriesBridge_min_fields'
   categoryId?: Maybe<FieldWrapper<Scalars['uuid']>>
   grantId?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -681,14 +745,14 @@ type IGrantCategoriesBridge_Min_Fields = {
 }
 
 /** order by min() on columns of table "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Min_Order_By = {
+export type IGrantCategoriesBridge_Min_Order_By = {
   categoryId?: InputMaybe<Order_By>
   grantId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
 }
 
 /** response of any mutation on the table "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Mutation_Response = {
+export type IGrantCategoriesBridge_Mutation_Response = {
   __typename?: 'GrantCategoriesBridge_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -697,14 +761,14 @@ type IGrantCategoriesBridge_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_On_Conflict = {
+export type IGrantCategoriesBridge_On_Conflict = {
   constraint: GrantCategoriesBridge_Constraint
   update_columns?: Array<GrantCategoriesBridge_Update_Column>
   where?: InputMaybe<IGrantCategoriesBridge_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantCategoriesBridge". */
-type IGrantCategoriesBridge_Order_By = {
+export type IGrantCategoriesBridge_Order_By = {
   category?: InputMaybe<IGrantCategories_Order_By>
   categoryId?: InputMaybe<Order_By>
   grant?: InputMaybe<IGrants_Order_By>
@@ -713,12 +777,12 @@ type IGrantCategoriesBridge_Order_By = {
 }
 
 /** primary key columns input for table: GrantCategoriesBridge */
-type IGrantCategoriesBridge_Pk_Columns_Input = {
+export type IGrantCategoriesBridge_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantCategoriesBridge" */
-enum GrantCategoriesBridge_Select_Column {
+export enum GrantCategoriesBridge_Select_Column {
   /** column name */
   categoryId = 'categoryId',
   /** column name */
@@ -728,14 +792,14 @@ enum GrantCategoriesBridge_Select_Column {
 }
 
 /** input type for updating data in table "GrantCategoriesBridge" */
-type IGrantCategoriesBridge_Set_Input = {
+export type IGrantCategoriesBridge_Set_Input = {
   categoryId?: InputMaybe<Scalars['uuid']>
   grantId?: InputMaybe<Scalars['uuid']>
   id?: InputMaybe<Scalars['uuid']>
 }
 
 /** update columns of table "GrantCategoriesBridge" */
-enum GrantCategoriesBridge_Update_Column {
+export enum GrantCategoriesBridge_Update_Column {
   /** column name */
   categoryId = 'categoryId',
   /** column name */
@@ -745,14 +809,14 @@ enum GrantCategoriesBridge_Update_Column {
 }
 
 /** aggregated selection of "GrantCategories" */
-type IGrantCategories_Aggregate = {
+export type IGrantCategories_Aggregate = {
   __typename?: 'GrantCategories_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantCategories_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantCategories>>
 }
 
 /** aggregate fields of "GrantCategories" */
-type IGrantCategories_Aggregate_Fields = {
+export type IGrantCategories_Aggregate_Fields = {
   __typename?: 'GrantCategories_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IGrantCategories_Max_Fields>>
@@ -760,13 +824,13 @@ type IGrantCategories_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantCategories" */
-type IGrantCategories_Aggregate_FieldsCountArgs = {
+export type IGrantCategories_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantCategories_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** Boolean expression to filter rows from the table "GrantCategories". All fields are combined with a logical 'AND'. */
-type IGrantCategories_Bool_Exp = {
+export type IGrantCategories_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantCategories_Bool_Exp>>
   _not?: InputMaybe<IGrantCategories_Bool_Exp>
   _or?: InputMaybe<Array<IGrantCategories_Bool_Exp>>
@@ -777,7 +841,7 @@ type IGrantCategories_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantCategories" */
-enum GrantCategories_Constraint {
+export enum GrantCategories_Constraint {
   /** unique or primary key constraint */
   GrantCategories_pkey = 'GrantCategories_pkey',
   /** unique or primary key constraint */
@@ -785,7 +849,7 @@ enum GrantCategories_Constraint {
 }
 
 /** input type for inserting data into table "GrantCategories" */
-type IGrantCategories_Insert_Input = {
+export type IGrantCategories_Insert_Input = {
   bridgeWithGrant?: InputMaybe<IGrantCategoriesBridge_Arr_Rel_Insert_Input>
   id?: InputMaybe<Scalars['uuid']>
   label?: InputMaybe<Scalars['String']>
@@ -793,7 +857,7 @@ type IGrantCategories_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantCategories_Max_Fields = {
+export type IGrantCategories_Max_Fields = {
   __typename?: 'GrantCategories_max_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   label?: Maybe<FieldWrapper<Scalars['String']>>
@@ -801,7 +865,7 @@ type IGrantCategories_Max_Fields = {
 }
 
 /** aggregate min on columns */
-type IGrantCategories_Min_Fields = {
+export type IGrantCategories_Min_Fields = {
   __typename?: 'GrantCategories_min_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   label?: Maybe<FieldWrapper<Scalars['String']>>
@@ -809,7 +873,7 @@ type IGrantCategories_Min_Fields = {
 }
 
 /** response of any mutation on the table "GrantCategories" */
-type IGrantCategories_Mutation_Response = {
+export type IGrantCategories_Mutation_Response = {
   __typename?: 'GrantCategories_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -818,21 +882,21 @@ type IGrantCategories_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "GrantCategories" */
-type IGrantCategories_Obj_Rel_Insert_Input = {
+export type IGrantCategories_Obj_Rel_Insert_Input = {
   data: IGrantCategories_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantCategories_On_Conflict>
 }
 
 /** on_conflict condition type for table "GrantCategories" */
-type IGrantCategories_On_Conflict = {
+export type IGrantCategories_On_Conflict = {
   constraint: GrantCategories_Constraint
   update_columns?: Array<GrantCategories_Update_Column>
   where?: InputMaybe<IGrantCategories_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantCategories". */
-type IGrantCategories_Order_By = {
+export type IGrantCategories_Order_By = {
   bridgeWithGrant_aggregate?: InputMaybe<IGrantCategoriesBridge_Aggregate_Order_By>
   id?: InputMaybe<Order_By>
   label?: InputMaybe<Order_By>
@@ -840,12 +904,12 @@ type IGrantCategories_Order_By = {
 }
 
 /** primary key columns input for table: GrantCategories */
-type IGrantCategories_Pk_Columns_Input = {
+export type IGrantCategories_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantCategories" */
-enum GrantCategories_Select_Column {
+export enum GrantCategories_Select_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -855,14 +919,14 @@ enum GrantCategories_Select_Column {
 }
 
 /** input type for updating data in table "GrantCategories" */
-type IGrantCategories_Set_Input = {
+export type IGrantCategories_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>
   label?: InputMaybe<Scalars['String']>
   value?: InputMaybe<Scalars['String']>
 }
 
 /** update columns of table "GrantCategories" */
-enum GrantCategories_Update_Column {
+export enum GrantCategories_Update_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -872,7 +936,7 @@ enum GrantCategories_Update_Column {
 }
 
 /** columns and relationships of "GrantCycles" */
-type IGrantCycles = {
+export type IGrantCycles = {
   __typename?: 'GrantCycles'
   awardDate?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
@@ -896,12 +960,12 @@ type IGrantCycles = {
 }
 
 /** columns and relationships of "GrantCycles" */
-type IGrantCyclesStageArgs = {
+export type IGrantCyclesStageArgs = {
   path?: InputMaybe<Scalars['String']>
 }
 
 /** columns and relationships of "GrantCycles" */
-type IGrantCyclesSubmissionsArgs = {
+export type IGrantCyclesSubmissionsArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -910,7 +974,7 @@ type IGrantCyclesSubmissionsArgs = {
 }
 
 /** columns and relationships of "GrantCycles" */
-type IGrantCyclesSubmissions_AggregateArgs = {
+export type IGrantCyclesSubmissions_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -919,14 +983,14 @@ type IGrantCyclesSubmissions_AggregateArgs = {
 }
 
 /** aggregated selection of "GrantCycles" */
-type IGrantCycles_Aggregate = {
+export type IGrantCycles_Aggregate = {
   __typename?: 'GrantCycles_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantCycles_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantCycles>>
 }
 
 /** aggregate fields of "GrantCycles" */
-type IGrantCycles_Aggregate_Fields = {
+export type IGrantCycles_Aggregate_Fields = {
   __typename?: 'GrantCycles_aggregate_fields'
   avg?: Maybe<FieldWrapper<IGrantCycles_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -942,13 +1006,13 @@ type IGrantCycles_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantCycles" */
-type IGrantCycles_Aggregate_FieldsCountArgs = {
+export type IGrantCycles_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantCycles_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "GrantCycles" */
-type IGrantCycles_Aggregate_Order_By = {
+export type IGrantCycles_Aggregate_Order_By = {
   avg?: InputMaybe<IGrantCycles_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IGrantCycles_Max_Order_By>
@@ -963,14 +1027,14 @@ type IGrantCycles_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "GrantCycles" */
-type IGrantCycles_Arr_Rel_Insert_Input = {
+export type IGrantCycles_Arr_Rel_Insert_Input = {
   data: Array<IGrantCycles_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantCycles_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type IGrantCycles_Avg_Fields = {
+export type IGrantCycles_Avg_Fields = {
   __typename?: 'GrantCycles_avg_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   goalInvested?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -979,7 +1043,7 @@ type IGrantCycles_Avg_Fields = {
 }
 
 /** order by avg() on columns of table "GrantCycles" */
-type IGrantCycles_Avg_Order_By = {
+export type IGrantCycles_Avg_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   goalInvested?: InputMaybe<Order_By>
   numberOfFinalists?: InputMaybe<Order_By>
@@ -987,7 +1051,7 @@ type IGrantCycles_Avg_Order_By = {
 }
 
 /** Boolean expression to filter rows from the table "GrantCycles". All fields are combined with a logical 'AND'. */
-type IGrantCycles_Bool_Exp = {
+export type IGrantCycles_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantCycles_Bool_Exp>>
   _not?: InputMaybe<IGrantCycles_Bool_Exp>
   _or?: InputMaybe<Array<IGrantCycles_Bool_Exp>>
@@ -1009,13 +1073,13 @@ type IGrantCycles_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantCycles" */
-enum GrantCycles_Constraint {
+export enum GrantCycles_Constraint {
   /** unique or primary key constraint */
   GrantCycles_pkey = 'GrantCycles_pkey',
 }
 
 /** input type for incrementing numeric columns in table "GrantCycles" */
-type IGrantCycles_Inc_Input = {
+export type IGrantCycles_Inc_Input = {
   currentInvested?: InputMaybe<Scalars['Int']>
   goalInvested?: InputMaybe<Scalars['Int']>
   numberOfFinalists?: InputMaybe<Scalars['Int']>
@@ -1023,7 +1087,7 @@ type IGrantCycles_Inc_Input = {
 }
 
 /** input type for inserting data into table "GrantCycles" */
-type IGrantCycles_Insert_Input = {
+export type IGrantCycles_Insert_Input = {
   awardDate?: InputMaybe<Scalars['timestamptz']>
   created_at?: InputMaybe<Scalars['timestamptz']>
   currentInvested?: InputMaybe<Scalars['Int']>
@@ -1042,7 +1106,7 @@ type IGrantCycles_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantCycles_Max_Fields = {
+export type IGrantCycles_Max_Fields = {
   __typename?: 'GrantCycles_max_fields'
   awardDate?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
@@ -1059,7 +1123,7 @@ type IGrantCycles_Max_Fields = {
 }
 
 /** order by max() on columns of table "GrantCycles" */
-type IGrantCycles_Max_Order_By = {
+export type IGrantCycles_Max_Order_By = {
   awardDate?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   currentInvested?: InputMaybe<Order_By>
@@ -1075,7 +1139,7 @@ type IGrantCycles_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IGrantCycles_Min_Fields = {
+export type IGrantCycles_Min_Fields = {
   __typename?: 'GrantCycles_min_fields'
   awardDate?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
@@ -1092,7 +1156,7 @@ type IGrantCycles_Min_Fields = {
 }
 
 /** order by min() on columns of table "GrantCycles" */
-type IGrantCycles_Min_Order_By = {
+export type IGrantCycles_Min_Order_By = {
   awardDate?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   currentInvested?: InputMaybe<Order_By>
@@ -1108,7 +1172,7 @@ type IGrantCycles_Min_Order_By = {
 }
 
 /** response of any mutation on the table "GrantCycles" */
-type IGrantCycles_Mutation_Response = {
+export type IGrantCycles_Mutation_Response = {
   __typename?: 'GrantCycles_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -1117,21 +1181,21 @@ type IGrantCycles_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "GrantCycles" */
-type IGrantCycles_Obj_Rel_Insert_Input = {
+export type IGrantCycles_Obj_Rel_Insert_Input = {
   data: IGrantCycles_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantCycles_On_Conflict>
 }
 
 /** on_conflict condition type for table "GrantCycles" */
-type IGrantCycles_On_Conflict = {
+export type IGrantCycles_On_Conflict = {
   constraint: GrantCycles_Constraint
   update_columns?: Array<GrantCycles_Update_Column>
   where?: InputMaybe<IGrantCycles_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantCycles". */
-type IGrantCycles_Order_By = {
+export type IGrantCycles_Order_By = {
   awardDate?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   currentInvested?: InputMaybe<Order_By>
@@ -1150,12 +1214,12 @@ type IGrantCycles_Order_By = {
 }
 
 /** primary key columns input for table: GrantCycles */
-type IGrantCycles_Pk_Columns_Input = {
+export type IGrantCycles_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantCycles" */
-enum GrantCycles_Select_Column {
+export enum GrantCycles_Select_Column {
   /** column name */
   awardDate = 'awardDate',
   /** column name */
@@ -1185,7 +1249,7 @@ enum GrantCycles_Select_Column {
 }
 
 /** input type for updating data in table "GrantCycles" */
-type IGrantCycles_Set_Input = {
+export type IGrantCycles_Set_Input = {
   awardDate?: InputMaybe<Scalars['timestamptz']>
   created_at?: InputMaybe<Scalars['timestamptz']>
   currentInvested?: InputMaybe<Scalars['Int']>
@@ -1202,7 +1266,7 @@ type IGrantCycles_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type IGrantCycles_Stddev_Fields = {
+export type IGrantCycles_Stddev_Fields = {
   __typename?: 'GrantCycles_stddev_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   goalInvested?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -1211,7 +1275,7 @@ type IGrantCycles_Stddev_Fields = {
 }
 
 /** order by stddev() on columns of table "GrantCycles" */
-type IGrantCycles_Stddev_Order_By = {
+export type IGrantCycles_Stddev_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   goalInvested?: InputMaybe<Order_By>
   numberOfFinalists?: InputMaybe<Order_By>
@@ -1219,7 +1283,7 @@ type IGrantCycles_Stddev_Order_By = {
 }
 
 /** aggregate stddev_pop on columns */
-type IGrantCycles_Stddev_Pop_Fields = {
+export type IGrantCycles_Stddev_Pop_Fields = {
   __typename?: 'GrantCycles_stddev_pop_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   goalInvested?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -1228,7 +1292,7 @@ type IGrantCycles_Stddev_Pop_Fields = {
 }
 
 /** order by stddev_pop() on columns of table "GrantCycles" */
-type IGrantCycles_Stddev_Pop_Order_By = {
+export type IGrantCycles_Stddev_Pop_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   goalInvested?: InputMaybe<Order_By>
   numberOfFinalists?: InputMaybe<Order_By>
@@ -1236,7 +1300,7 @@ type IGrantCycles_Stddev_Pop_Order_By = {
 }
 
 /** aggregate stddev_samp on columns */
-type IGrantCycles_Stddev_Samp_Fields = {
+export type IGrantCycles_Stddev_Samp_Fields = {
   __typename?: 'GrantCycles_stddev_samp_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   goalInvested?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -1245,7 +1309,7 @@ type IGrantCycles_Stddev_Samp_Fields = {
 }
 
 /** order by stddev_samp() on columns of table "GrantCycles" */
-type IGrantCycles_Stddev_Samp_Order_By = {
+export type IGrantCycles_Stddev_Samp_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   goalInvested?: InputMaybe<Order_By>
   numberOfFinalists?: InputMaybe<Order_By>
@@ -1253,7 +1317,7 @@ type IGrantCycles_Stddev_Samp_Order_By = {
 }
 
 /** aggregate sum on columns */
-type IGrantCycles_Sum_Fields = {
+export type IGrantCycles_Sum_Fields = {
   __typename?: 'GrantCycles_sum_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Int']>>
   goalInvested?: Maybe<FieldWrapper<Scalars['Int']>>
@@ -1262,7 +1326,7 @@ type IGrantCycles_Sum_Fields = {
 }
 
 /** order by sum() on columns of table "GrantCycles" */
-type IGrantCycles_Sum_Order_By = {
+export type IGrantCycles_Sum_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   goalInvested?: InputMaybe<Order_By>
   numberOfFinalists?: InputMaybe<Order_By>
@@ -1270,7 +1334,7 @@ type IGrantCycles_Sum_Order_By = {
 }
 
 /** update columns of table "GrantCycles" */
-enum GrantCycles_Update_Column {
+export enum GrantCycles_Update_Column {
   /** column name */
   awardDate = 'awardDate',
   /** column name */
@@ -1300,7 +1364,7 @@ enum GrantCycles_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type IGrantCycles_Var_Pop_Fields = {
+export type IGrantCycles_Var_Pop_Fields = {
   __typename?: 'GrantCycles_var_pop_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   goalInvested?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -1309,7 +1373,7 @@ type IGrantCycles_Var_Pop_Fields = {
 }
 
 /** order by var_pop() on columns of table "GrantCycles" */
-type IGrantCycles_Var_Pop_Order_By = {
+export type IGrantCycles_Var_Pop_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   goalInvested?: InputMaybe<Order_By>
   numberOfFinalists?: InputMaybe<Order_By>
@@ -1317,7 +1381,7 @@ type IGrantCycles_Var_Pop_Order_By = {
 }
 
 /** aggregate var_samp on columns */
-type IGrantCycles_Var_Samp_Fields = {
+export type IGrantCycles_Var_Samp_Fields = {
   __typename?: 'GrantCycles_var_samp_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   goalInvested?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -1326,7 +1390,7 @@ type IGrantCycles_Var_Samp_Fields = {
 }
 
 /** order by var_samp() on columns of table "GrantCycles" */
-type IGrantCycles_Var_Samp_Order_By = {
+export type IGrantCycles_Var_Samp_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   goalInvested?: InputMaybe<Order_By>
   numberOfFinalists?: InputMaybe<Order_By>
@@ -1334,7 +1398,7 @@ type IGrantCycles_Var_Samp_Order_By = {
 }
 
 /** aggregate variance on columns */
-type IGrantCycles_Variance_Fields = {
+export type IGrantCycles_Variance_Fields = {
   __typename?: 'GrantCycles_variance_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   goalInvested?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -1343,7 +1407,7 @@ type IGrantCycles_Variance_Fields = {
 }
 
 /** order by variance() on columns of table "GrantCycles" */
-type IGrantCycles_Variance_Order_By = {
+export type IGrantCycles_Variance_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   goalInvested?: InputMaybe<Order_By>
   numberOfFinalists?: InputMaybe<Order_By>
@@ -1351,7 +1415,7 @@ type IGrantCycles_Variance_Order_By = {
 }
 
 /** columns and relationships of "GrantOwners" */
-type IGrantOwners = {
+export type IGrantOwners = {
   __typename?: 'GrantOwners'
   availableVotes: FieldWrapper<Scalars['numeric']>
   id: FieldWrapper<Scalars['uuid']>
@@ -1364,7 +1428,7 @@ type IGrantOwners = {
 }
 
 /** columns and relationships of "GrantOwnersTiers" */
-type IGrantOwnersTiers = {
+export type IGrantOwnersTiers = {
   __typename?: 'GrantOwnersTiers'
   administrationRights?: Maybe<FieldWrapper<Scalars['Boolean']>>
   curationVotes: FieldWrapper<Scalars['numeric']>
@@ -1382,12 +1446,12 @@ type IGrantOwnersTiers = {
 }
 
 /** columns and relationships of "GrantOwnersTiers" */
-type IGrantOwnersTiersExtraFeaturesArgs = {
+export type IGrantOwnersTiersExtraFeaturesArgs = {
   path?: InputMaybe<Scalars['String']>
 }
 
 /** columns and relationships of "GrantOwnersTiers" */
-type IGrantOwnersTiersOwnersArgs = {
+export type IGrantOwnersTiersOwnersArgs = {
   distinct_on?: InputMaybe<Array<GrantOwners_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -1396,7 +1460,7 @@ type IGrantOwnersTiersOwnersArgs = {
 }
 
 /** columns and relationships of "GrantOwnersTiers" */
-type IGrantOwnersTiersOwners_AggregateArgs = {
+export type IGrantOwnersTiersOwners_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantOwners_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -1405,14 +1469,14 @@ type IGrantOwnersTiersOwners_AggregateArgs = {
 }
 
 /** aggregated selection of "GrantOwnersTiers" */
-type IGrantOwnersTiers_Aggregate = {
+export type IGrantOwnersTiers_Aggregate = {
   __typename?: 'GrantOwnersTiers_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantOwnersTiers_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantOwnersTiers>>
 }
 
 /** aggregate fields of "GrantOwnersTiers" */
-type IGrantOwnersTiers_Aggregate_Fields = {
+export type IGrantOwnersTiers_Aggregate_Fields = {
   __typename?: 'GrantOwnersTiers_aggregate_fields'
   avg?: Maybe<FieldWrapper<IGrantOwnersTiers_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -1428,13 +1492,13 @@ type IGrantOwnersTiers_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantOwnersTiers" */
-type IGrantOwnersTiers_Aggregate_FieldsCountArgs = {
+export type IGrantOwnersTiers_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantOwnersTiers_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Aggregate_Order_By = {
+export type IGrantOwnersTiers_Aggregate_Order_By = {
   avg?: InputMaybe<IGrantOwnersTiers_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IGrantOwnersTiers_Max_Order_By>
@@ -1449,25 +1513,25 @@ type IGrantOwnersTiers_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Arr_Rel_Insert_Input = {
+export type IGrantOwnersTiers_Arr_Rel_Insert_Input = {
   data: Array<IGrantOwnersTiers_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantOwnersTiers_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type IGrantOwnersTiers_Avg_Fields = {
+export type IGrantOwnersTiers_Avg_Fields = {
   __typename?: 'GrantOwnersTiers_avg_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by avg() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Avg_Order_By = {
+export type IGrantOwnersTiers_Avg_Order_By = {
   curationVotes?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "GrantOwnersTiers". All fields are combined with a logical 'AND'. */
-type IGrantOwnersTiers_Bool_Exp = {
+export type IGrantOwnersTiers_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantOwnersTiers_Bool_Exp>>
   _not?: InputMaybe<IGrantOwnersTiers_Bool_Exp>
   _or?: InputMaybe<Array<IGrantOwnersTiers_Bool_Exp>>
@@ -1483,18 +1547,18 @@ type IGrantOwnersTiers_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantOwnersTiers" */
-enum GrantOwnersTiers_Constraint {
+export enum GrantOwnersTiers_Constraint {
   /** unique or primary key constraint */
   GrantOwnersTiers_pkey = 'GrantOwnersTiers_pkey',
 }
 
 /** input type for incrementing numeric columns in table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Inc_Input = {
+export type IGrantOwnersTiers_Inc_Input = {
   curationVotes?: InputMaybe<Scalars['numeric']>
 }
 
 /** input type for inserting data into table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Insert_Input = {
+export type IGrantOwnersTiers_Insert_Input = {
   administrationRights?: InputMaybe<Scalars['Boolean']>
   curationVotes?: InputMaybe<Scalars['numeric']>
   description?: InputMaybe<Scalars['String']>
@@ -1507,7 +1571,7 @@ type IGrantOwnersTiers_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantOwnersTiers_Max_Fields = {
+export type IGrantOwnersTiers_Max_Fields = {
   __typename?: 'GrantOwnersTiers_max_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['numeric']>>
   description?: Maybe<FieldWrapper<Scalars['String']>>
@@ -1517,7 +1581,7 @@ type IGrantOwnersTiers_Max_Fields = {
 }
 
 /** order by max() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Max_Order_By = {
+export type IGrantOwnersTiers_Max_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   description?: InputMaybe<Order_By>
   grantId?: InputMaybe<Order_By>
@@ -1526,7 +1590,7 @@ type IGrantOwnersTiers_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IGrantOwnersTiers_Min_Fields = {
+export type IGrantOwnersTiers_Min_Fields = {
   __typename?: 'GrantOwnersTiers_min_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['numeric']>>
   description?: Maybe<FieldWrapper<Scalars['String']>>
@@ -1536,7 +1600,7 @@ type IGrantOwnersTiers_Min_Fields = {
 }
 
 /** order by min() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Min_Order_By = {
+export type IGrantOwnersTiers_Min_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   description?: InputMaybe<Order_By>
   grantId?: InputMaybe<Order_By>
@@ -1545,7 +1609,7 @@ type IGrantOwnersTiers_Min_Order_By = {
 }
 
 /** response of any mutation on the table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Mutation_Response = {
+export type IGrantOwnersTiers_Mutation_Response = {
   __typename?: 'GrantOwnersTiers_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -1554,21 +1618,21 @@ type IGrantOwnersTiers_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Obj_Rel_Insert_Input = {
+export type IGrantOwnersTiers_Obj_Rel_Insert_Input = {
   data: IGrantOwnersTiers_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantOwnersTiers_On_Conflict>
 }
 
 /** on_conflict condition type for table "GrantOwnersTiers" */
-type IGrantOwnersTiers_On_Conflict = {
+export type IGrantOwnersTiers_On_Conflict = {
   constraint: GrantOwnersTiers_Constraint
   update_columns?: Array<GrantOwnersTiers_Update_Column>
   where?: InputMaybe<IGrantOwnersTiers_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantOwnersTiers". */
-type IGrantOwnersTiers_Order_By = {
+export type IGrantOwnersTiers_Order_By = {
   administrationRights?: InputMaybe<Order_By>
   curationVotes?: InputMaybe<Order_By>
   description?: InputMaybe<Order_By>
@@ -1581,12 +1645,12 @@ type IGrantOwnersTiers_Order_By = {
 }
 
 /** primary key columns input for table: GrantOwnersTiers */
-type IGrantOwnersTiers_Pk_Columns_Input = {
+export type IGrantOwnersTiers_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantOwnersTiers" */
-enum GrantOwnersTiers_Select_Column {
+export enum GrantOwnersTiers_Select_Column {
   /** column name */
   administrationRights = 'administrationRights',
   /** column name */
@@ -1604,7 +1668,7 @@ enum GrantOwnersTiers_Select_Column {
 }
 
 /** input type for updating data in table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Set_Input = {
+export type IGrantOwnersTiers_Set_Input = {
   administrationRights?: InputMaybe<Scalars['Boolean']>
   curationVotes?: InputMaybe<Scalars['numeric']>
   description?: InputMaybe<Scalars['String']>
@@ -1615,51 +1679,51 @@ type IGrantOwnersTiers_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type IGrantOwnersTiers_Stddev_Fields = {
+export type IGrantOwnersTiers_Stddev_Fields = {
   __typename?: 'GrantOwnersTiers_stddev_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Stddev_Order_By = {
+export type IGrantOwnersTiers_Stddev_Order_By = {
   curationVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_pop on columns */
-type IGrantOwnersTiers_Stddev_Pop_Fields = {
+export type IGrantOwnersTiers_Stddev_Pop_Fields = {
   __typename?: 'GrantOwnersTiers_stddev_pop_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_pop() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Stddev_Pop_Order_By = {
+export type IGrantOwnersTiers_Stddev_Pop_Order_By = {
   curationVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
-type IGrantOwnersTiers_Stddev_Samp_Fields = {
+export type IGrantOwnersTiers_Stddev_Samp_Fields = {
   __typename?: 'GrantOwnersTiers_stddev_samp_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_samp() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Stddev_Samp_Order_By = {
+export type IGrantOwnersTiers_Stddev_Samp_Order_By = {
   curationVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate sum on columns */
-type IGrantOwnersTiers_Sum_Fields = {
+export type IGrantOwnersTiers_Sum_Fields = {
   __typename?: 'GrantOwnersTiers_sum_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['numeric']>>
 }
 
 /** order by sum() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Sum_Order_By = {
+export type IGrantOwnersTiers_Sum_Order_By = {
   curationVotes?: InputMaybe<Order_By>
 }
 
 /** update columns of table "GrantOwnersTiers" */
-enum GrantOwnersTiers_Update_Column {
+export enum GrantOwnersTiers_Update_Column {
   /** column name */
   administrationRights = 'administrationRights',
   /** column name */
@@ -1677,47 +1741,47 @@ enum GrantOwnersTiers_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type IGrantOwnersTiers_Var_Pop_Fields = {
+export type IGrantOwnersTiers_Var_Pop_Fields = {
   __typename?: 'GrantOwnersTiers_var_pop_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_pop() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Var_Pop_Order_By = {
+export type IGrantOwnersTiers_Var_Pop_Order_By = {
   curationVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate var_samp on columns */
-type IGrantOwnersTiers_Var_Samp_Fields = {
+export type IGrantOwnersTiers_Var_Samp_Fields = {
   __typename?: 'GrantOwnersTiers_var_samp_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_samp() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Var_Samp_Order_By = {
+export type IGrantOwnersTiers_Var_Samp_Order_By = {
   curationVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate variance on columns */
-type IGrantOwnersTiers_Variance_Fields = {
+export type IGrantOwnersTiers_Variance_Fields = {
   __typename?: 'GrantOwnersTiers_variance_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by variance() on columns of table "GrantOwnersTiers" */
-type IGrantOwnersTiers_Variance_Order_By = {
+export type IGrantOwnersTiers_Variance_Order_By = {
   curationVotes?: InputMaybe<Order_By>
 }
 
 /** aggregated selection of "GrantOwners" */
-type IGrantOwners_Aggregate = {
+export type IGrantOwners_Aggregate = {
   __typename?: 'GrantOwners_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantOwners_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantOwners>>
 }
 
 /** aggregate fields of "GrantOwners" */
-type IGrantOwners_Aggregate_Fields = {
+export type IGrantOwners_Aggregate_Fields = {
   __typename?: 'GrantOwners_aggregate_fields'
   avg?: Maybe<FieldWrapper<IGrantOwners_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -1733,13 +1797,13 @@ type IGrantOwners_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantOwners" */
-type IGrantOwners_Aggregate_FieldsCountArgs = {
+export type IGrantOwners_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantOwners_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "GrantOwners" */
-type IGrantOwners_Aggregate_Order_By = {
+export type IGrantOwners_Aggregate_Order_By = {
   avg?: InputMaybe<IGrantOwners_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IGrantOwners_Max_Order_By>
@@ -1754,25 +1818,25 @@ type IGrantOwners_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "GrantOwners" */
-type IGrantOwners_Arr_Rel_Insert_Input = {
+export type IGrantOwners_Arr_Rel_Insert_Input = {
   data: Array<IGrantOwners_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantOwners_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type IGrantOwners_Avg_Fields = {
+export type IGrantOwners_Avg_Fields = {
   __typename?: 'GrantOwners_avg_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by avg() on columns of table "GrantOwners" */
-type IGrantOwners_Avg_Order_By = {
+export type IGrantOwners_Avg_Order_By = {
   availableVotes?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "GrantOwners". All fields are combined with a logical 'AND'. */
-type IGrantOwners_Bool_Exp = {
+export type IGrantOwners_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantOwners_Bool_Exp>>
   _not?: InputMaybe<IGrantOwners_Bool_Exp>
   _or?: InputMaybe<Array<IGrantOwners_Bool_Exp>>
@@ -1785,18 +1849,18 @@ type IGrantOwners_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantOwners" */
-enum GrantOwners_Constraint {
+export enum GrantOwners_Constraint {
   /** unique or primary key constraint */
   GrantOwners_pkey = 'GrantOwners_pkey',
 }
 
 /** input type for incrementing numeric columns in table "GrantOwners" */
-type IGrantOwners_Inc_Input = {
+export type IGrantOwners_Inc_Input = {
   availableVotes?: InputMaybe<Scalars['numeric']>
 }
 
 /** input type for inserting data into table "GrantOwners" */
-type IGrantOwners_Insert_Input = {
+export type IGrantOwners_Insert_Input = {
   availableVotes?: InputMaybe<Scalars['numeric']>
   id?: InputMaybe<Scalars['uuid']>
   tier?: InputMaybe<IGrantOwnersTiers_Obj_Rel_Insert_Input>
@@ -1806,7 +1870,7 @@ type IGrantOwners_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantOwners_Max_Fields = {
+export type IGrantOwners_Max_Fields = {
   __typename?: 'GrantOwners_max_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['numeric']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -1815,7 +1879,7 @@ type IGrantOwners_Max_Fields = {
 }
 
 /** order by max() on columns of table "GrantOwners" */
-type IGrantOwners_Max_Order_By = {
+export type IGrantOwners_Max_Order_By = {
   availableVotes?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   tierId?: InputMaybe<Order_By>
@@ -1823,7 +1887,7 @@ type IGrantOwners_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IGrantOwners_Min_Fields = {
+export type IGrantOwners_Min_Fields = {
   __typename?: 'GrantOwners_min_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['numeric']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -1832,7 +1896,7 @@ type IGrantOwners_Min_Fields = {
 }
 
 /** order by min() on columns of table "GrantOwners" */
-type IGrantOwners_Min_Order_By = {
+export type IGrantOwners_Min_Order_By = {
   availableVotes?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   tierId?: InputMaybe<Order_By>
@@ -1840,7 +1904,7 @@ type IGrantOwners_Min_Order_By = {
 }
 
 /** response of any mutation on the table "GrantOwners" */
-type IGrantOwners_Mutation_Response = {
+export type IGrantOwners_Mutation_Response = {
   __typename?: 'GrantOwners_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -1849,14 +1913,14 @@ type IGrantOwners_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "GrantOwners" */
-type IGrantOwners_On_Conflict = {
+export type IGrantOwners_On_Conflict = {
   constraint: GrantOwners_Constraint
   update_columns?: Array<GrantOwners_Update_Column>
   where?: InputMaybe<IGrantOwners_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantOwners". */
-type IGrantOwners_Order_By = {
+export type IGrantOwners_Order_By = {
   availableVotes?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   tier?: InputMaybe<IGrantOwnersTiers_Order_By>
@@ -1866,12 +1930,12 @@ type IGrantOwners_Order_By = {
 }
 
 /** primary key columns input for table: GrantOwners */
-type IGrantOwners_Pk_Columns_Input = {
+export type IGrantOwners_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantOwners" */
-enum GrantOwners_Select_Column {
+export enum GrantOwners_Select_Column {
   /** column name */
   availableVotes = 'availableVotes',
   /** column name */
@@ -1883,7 +1947,7 @@ enum GrantOwners_Select_Column {
 }
 
 /** input type for updating data in table "GrantOwners" */
-type IGrantOwners_Set_Input = {
+export type IGrantOwners_Set_Input = {
   availableVotes?: InputMaybe<Scalars['numeric']>
   id?: InputMaybe<Scalars['uuid']>
   tierId?: InputMaybe<Scalars['uuid']>
@@ -1891,51 +1955,51 @@ type IGrantOwners_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type IGrantOwners_Stddev_Fields = {
+export type IGrantOwners_Stddev_Fields = {
   __typename?: 'GrantOwners_stddev_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev() on columns of table "GrantOwners" */
-type IGrantOwners_Stddev_Order_By = {
+export type IGrantOwners_Stddev_Order_By = {
   availableVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_pop on columns */
-type IGrantOwners_Stddev_Pop_Fields = {
+export type IGrantOwners_Stddev_Pop_Fields = {
   __typename?: 'GrantOwners_stddev_pop_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_pop() on columns of table "GrantOwners" */
-type IGrantOwners_Stddev_Pop_Order_By = {
+export type IGrantOwners_Stddev_Pop_Order_By = {
   availableVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
-type IGrantOwners_Stddev_Samp_Fields = {
+export type IGrantOwners_Stddev_Samp_Fields = {
   __typename?: 'GrantOwners_stddev_samp_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_samp() on columns of table "GrantOwners" */
-type IGrantOwners_Stddev_Samp_Order_By = {
+export type IGrantOwners_Stddev_Samp_Order_By = {
   availableVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate sum on columns */
-type IGrantOwners_Sum_Fields = {
+export type IGrantOwners_Sum_Fields = {
   __typename?: 'GrantOwners_sum_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['numeric']>>
 }
 
 /** order by sum() on columns of table "GrantOwners" */
-type IGrantOwners_Sum_Order_By = {
+export type IGrantOwners_Sum_Order_By = {
   availableVotes?: InputMaybe<Order_By>
 }
 
 /** update columns of table "GrantOwners" */
-enum GrantOwners_Update_Column {
+export enum GrantOwners_Update_Column {
   /** column name */
   availableVotes = 'availableVotes',
   /** column name */
@@ -1947,40 +2011,40 @@ enum GrantOwners_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type IGrantOwners_Var_Pop_Fields = {
+export type IGrantOwners_Var_Pop_Fields = {
   __typename?: 'GrantOwners_var_pop_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_pop() on columns of table "GrantOwners" */
-type IGrantOwners_Var_Pop_Order_By = {
+export type IGrantOwners_Var_Pop_Order_By = {
   availableVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate var_samp on columns */
-type IGrantOwners_Var_Samp_Fields = {
+export type IGrantOwners_Var_Samp_Fields = {
   __typename?: 'GrantOwners_var_samp_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_samp() on columns of table "GrantOwners" */
-type IGrantOwners_Var_Samp_Order_By = {
+export type IGrantOwners_Var_Samp_Order_By = {
   availableVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate variance on columns */
-type IGrantOwners_Variance_Fields = {
+export type IGrantOwners_Variance_Fields = {
   __typename?: 'GrantOwners_variance_fields'
   availableVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by variance() on columns of table "GrantOwners" */
-type IGrantOwners_Variance_Order_By = {
+export type IGrantOwners_Variance_Order_By = {
   availableVotes?: InputMaybe<Order_By>
 }
 
 /** columns and relationships of "GrantSubmissionReview" */
-type IGrantSubmissionReview = {
+export type IGrantSubmissionReview = {
   __typename?: 'GrantSubmissionReview'
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   curationVotes?: Maybe<FieldWrapper<Scalars['float8']>>
@@ -1997,14 +2061,14 @@ type IGrantSubmissionReview = {
 }
 
 /** aggregated selection of "GrantSubmissionReview" */
-type IGrantSubmissionReview_Aggregate = {
+export type IGrantSubmissionReview_Aggregate = {
   __typename?: 'GrantSubmissionReview_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantSubmissionReview_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantSubmissionReview>>
 }
 
 /** aggregate fields of "GrantSubmissionReview" */
-type IGrantSubmissionReview_Aggregate_Fields = {
+export type IGrantSubmissionReview_Aggregate_Fields = {
   __typename?: 'GrantSubmissionReview_aggregate_fields'
   avg?: Maybe<FieldWrapper<IGrantSubmissionReview_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -2020,13 +2084,13 @@ type IGrantSubmissionReview_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantSubmissionReview" */
-type IGrantSubmissionReview_Aggregate_FieldsCountArgs = {
+export type IGrantSubmissionReview_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Aggregate_Order_By = {
+export type IGrantSubmissionReview_Aggregate_Order_By = {
   avg?: InputMaybe<IGrantSubmissionReview_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IGrantSubmissionReview_Max_Order_By>
@@ -2041,27 +2105,27 @@ type IGrantSubmissionReview_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Arr_Rel_Insert_Input = {
+export type IGrantSubmissionReview_Arr_Rel_Insert_Input = {
   data: Array<IGrantSubmissionReview_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantSubmissionReview_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type IGrantSubmissionReview_Avg_Fields = {
+export type IGrantSubmissionReview_Avg_Fields = {
   __typename?: 'GrantSubmissionReview_avg_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
   reviewVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by avg() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Avg_Order_By = {
+export type IGrantSubmissionReview_Avg_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   reviewVotes?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "GrantSubmissionReview". All fields are combined with a logical 'AND'. */
-type IGrantSubmissionReview_Bool_Exp = {
+export type IGrantSubmissionReview_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantSubmissionReview_Bool_Exp>>
   _not?: InputMaybe<IGrantSubmissionReview_Bool_Exp>
   _or?: InputMaybe<Array<IGrantSubmissionReview_Bool_Exp>>
@@ -2078,19 +2142,19 @@ type IGrantSubmissionReview_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantSubmissionReview" */
-enum GrantSubmissionReview_Constraint {
+export enum GrantSubmissionReview_Constraint {
   /** unique or primary key constraint */
   GrantSubmissionReview_pkey = 'GrantSubmissionReview_pkey',
 }
 
 /** input type for incrementing numeric columns in table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Inc_Input = {
+export type IGrantSubmissionReview_Inc_Input = {
   curationVotes?: InputMaybe<Scalars['float8']>
   reviewVotes?: InputMaybe<Scalars['Int']>
 }
 
 /** input type for inserting data into table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Insert_Input = {
+export type IGrantSubmissionReview_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>
   curationVotes?: InputMaybe<Scalars['float8']>
   feedback?: InputMaybe<Scalars['String']>
@@ -2104,7 +2168,7 @@ type IGrantSubmissionReview_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantSubmissionReview_Max_Fields = {
+export type IGrantSubmissionReview_Max_Fields = {
   __typename?: 'GrantSubmissionReview_max_fields'
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   curationVotes?: Maybe<FieldWrapper<Scalars['float8']>>
@@ -2117,7 +2181,7 @@ type IGrantSubmissionReview_Max_Fields = {
 }
 
 /** order by max() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Max_Order_By = {
+export type IGrantSubmissionReview_Max_Order_By = {
   created_at?: InputMaybe<Order_By>
   curationVotes?: InputMaybe<Order_By>
   feedback?: InputMaybe<Order_By>
@@ -2129,7 +2193,7 @@ type IGrantSubmissionReview_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IGrantSubmissionReview_Min_Fields = {
+export type IGrantSubmissionReview_Min_Fields = {
   __typename?: 'GrantSubmissionReview_min_fields'
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   curationVotes?: Maybe<FieldWrapper<Scalars['float8']>>
@@ -2142,7 +2206,7 @@ type IGrantSubmissionReview_Min_Fields = {
 }
 
 /** order by min() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Min_Order_By = {
+export type IGrantSubmissionReview_Min_Order_By = {
   created_at?: InputMaybe<Order_By>
   curationVotes?: InputMaybe<Order_By>
   feedback?: InputMaybe<Order_By>
@@ -2154,7 +2218,7 @@ type IGrantSubmissionReview_Min_Order_By = {
 }
 
 /** response of any mutation on the table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Mutation_Response = {
+export type IGrantSubmissionReview_Mutation_Response = {
   __typename?: 'GrantSubmissionReview_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -2163,14 +2227,14 @@ type IGrantSubmissionReview_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "GrantSubmissionReview" */
-type IGrantSubmissionReview_On_Conflict = {
+export type IGrantSubmissionReview_On_Conflict = {
   constraint: GrantSubmissionReview_Constraint
   update_columns?: Array<GrantSubmissionReview_Update_Column>
   where?: InputMaybe<IGrantSubmissionReview_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantSubmissionReview". */
-type IGrantSubmissionReview_Order_By = {
+export type IGrantSubmissionReview_Order_By = {
   created_at?: InputMaybe<Order_By>
   curationVotes?: InputMaybe<Order_By>
   feedback?: InputMaybe<Order_By>
@@ -2184,12 +2248,12 @@ type IGrantSubmissionReview_Order_By = {
 }
 
 /** primary key columns input for table: GrantSubmissionReview */
-type IGrantSubmissionReview_Pk_Columns_Input = {
+export type IGrantSubmissionReview_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantSubmissionReview" */
-enum GrantSubmissionReview_Select_Column {
+export enum GrantSubmissionReview_Select_Column {
   /** column name */
   created_at = 'created_at',
   /** column name */
@@ -2209,7 +2273,7 @@ enum GrantSubmissionReview_Select_Column {
 }
 
 /** input type for updating data in table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Set_Input = {
+export type IGrantSubmissionReview_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>
   curationVotes?: InputMaybe<Scalars['float8']>
   feedback?: InputMaybe<Scalars['String']>
@@ -2221,59 +2285,59 @@ type IGrantSubmissionReview_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type IGrantSubmissionReview_Stddev_Fields = {
+export type IGrantSubmissionReview_Stddev_Fields = {
   __typename?: 'GrantSubmissionReview_stddev_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
   reviewVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Stddev_Order_By = {
+export type IGrantSubmissionReview_Stddev_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   reviewVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_pop on columns */
-type IGrantSubmissionReview_Stddev_Pop_Fields = {
+export type IGrantSubmissionReview_Stddev_Pop_Fields = {
   __typename?: 'GrantSubmissionReview_stddev_pop_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
   reviewVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_pop() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Stddev_Pop_Order_By = {
+export type IGrantSubmissionReview_Stddev_Pop_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   reviewVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
-type IGrantSubmissionReview_Stddev_Samp_Fields = {
+export type IGrantSubmissionReview_Stddev_Samp_Fields = {
   __typename?: 'GrantSubmissionReview_stddev_samp_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
   reviewVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_samp() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Stddev_Samp_Order_By = {
+export type IGrantSubmissionReview_Stddev_Samp_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   reviewVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate sum on columns */
-type IGrantSubmissionReview_Sum_Fields = {
+export type IGrantSubmissionReview_Sum_Fields = {
   __typename?: 'GrantSubmissionReview_sum_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['float8']>>
   reviewVotes?: Maybe<FieldWrapper<Scalars['Int']>>
 }
 
 /** order by sum() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Sum_Order_By = {
+export type IGrantSubmissionReview_Sum_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   reviewVotes?: InputMaybe<Order_By>
 }
 
 /** update columns of table "GrantSubmissionReview" */
-enum GrantSubmissionReview_Update_Column {
+export enum GrantSubmissionReview_Update_Column {
   /** column name */
   created_at = 'created_at',
   /** column name */
@@ -2293,46 +2357,46 @@ enum GrantSubmissionReview_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type IGrantSubmissionReview_Var_Pop_Fields = {
+export type IGrantSubmissionReview_Var_Pop_Fields = {
   __typename?: 'GrantSubmissionReview_var_pop_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
   reviewVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_pop() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Var_Pop_Order_By = {
+export type IGrantSubmissionReview_Var_Pop_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   reviewVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate var_samp on columns */
-type IGrantSubmissionReview_Var_Samp_Fields = {
+export type IGrantSubmissionReview_Var_Samp_Fields = {
   __typename?: 'GrantSubmissionReview_var_samp_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
   reviewVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_samp() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Var_Samp_Order_By = {
+export type IGrantSubmissionReview_Var_Samp_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   reviewVotes?: InputMaybe<Order_By>
 }
 
 /** aggregate variance on columns */
-type IGrantSubmissionReview_Variance_Fields = {
+export type IGrantSubmissionReview_Variance_Fields = {
   __typename?: 'GrantSubmissionReview_variance_fields'
   curationVotes?: Maybe<FieldWrapper<Scalars['Float']>>
   reviewVotes?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by variance() on columns of table "GrantSubmissionReview" */
-type IGrantSubmissionReview_Variance_Order_By = {
+export type IGrantSubmissionReview_Variance_Order_By = {
   curationVotes?: InputMaybe<Order_By>
   reviewVotes?: InputMaybe<Order_By>
 }
 
 /** columns and relationships of "GrantSubmissions" */
-type IGrantSubmissions = {
+export type IGrantSubmissions = {
   __typename?: 'GrantSubmissions'
   created_at: FieldWrapper<Scalars['timestamptz']>
   extraData?: Maybe<FieldWrapper<Scalars['json']>>
@@ -2355,12 +2419,12 @@ type IGrantSubmissions = {
 }
 
 /** columns and relationships of "GrantSubmissions" */
-type IGrantSubmissionsExtraDataArgs = {
+export type IGrantSubmissionsExtraDataArgs = {
   path?: InputMaybe<Scalars['String']>
 }
 
 /** columns and relationships of "GrantSubmissions" */
-type IGrantSubmissionsReviewsArgs = {
+export type IGrantSubmissionsReviewsArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -2369,7 +2433,7 @@ type IGrantSubmissionsReviewsArgs = {
 }
 
 /** columns and relationships of "GrantSubmissions" */
-type IGrantSubmissionsReviews_AggregateArgs = {
+export type IGrantSubmissionsReviews_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -2378,14 +2442,14 @@ type IGrantSubmissionsReviews_AggregateArgs = {
 }
 
 /** aggregated selection of "GrantSubmissions" */
-type IGrantSubmissions_Aggregate = {
+export type IGrantSubmissions_Aggregate = {
   __typename?: 'GrantSubmissions_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantSubmissions_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantSubmissions>>
 }
 
 /** aggregate fields of "GrantSubmissions" */
-type IGrantSubmissions_Aggregate_Fields = {
+export type IGrantSubmissions_Aggregate_Fields = {
   __typename?: 'GrantSubmissions_aggregate_fields'
   avg?: Maybe<FieldWrapper<IGrantSubmissions_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -2401,13 +2465,13 @@ type IGrantSubmissions_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantSubmissions" */
-type IGrantSubmissions_Aggregate_FieldsCountArgs = {
+export type IGrantSubmissions_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "GrantSubmissions" */
-type IGrantSubmissions_Aggregate_Order_By = {
+export type IGrantSubmissions_Aggregate_Order_By = {
   avg?: InputMaybe<IGrantSubmissions_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IGrantSubmissions_Max_Order_By>
@@ -2422,25 +2486,25 @@ type IGrantSubmissions_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "GrantSubmissions" */
-type IGrantSubmissions_Arr_Rel_Insert_Input = {
+export type IGrantSubmissions_Arr_Rel_Insert_Input = {
   data: Array<IGrantSubmissions_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantSubmissions_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type IGrantSubmissions_Avg_Fields = {
+export type IGrantSubmissions_Avg_Fields = {
   __typename?: 'GrantSubmissions_avg_fields'
   reviewState?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by avg() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Avg_Order_By = {
+export type IGrantSubmissions_Avg_Order_By = {
   reviewState?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "GrantSubmissions". All fields are combined with a logical 'AND'. */
-type IGrantSubmissions_Bool_Exp = {
+export type IGrantSubmissions_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantSubmissions_Bool_Exp>>
   _not?: InputMaybe<IGrantSubmissions_Bool_Exp>
   _or?: InputMaybe<Array<IGrantSubmissions_Bool_Exp>>
@@ -2459,18 +2523,18 @@ type IGrantSubmissions_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantSubmissions" */
-enum GrantSubmissions_Constraint {
+export enum GrantSubmissions_Constraint {
   /** unique or primary key constraint */
   GrantSubmitions_pkey = 'GrantSubmitions_pkey',
 }
 
 /** input type for incrementing numeric columns in table "GrantSubmissions" */
-type IGrantSubmissions_Inc_Input = {
+export type IGrantSubmissions_Inc_Input = {
   reviewState?: InputMaybe<Scalars['Int']>
 }
 
 /** input type for inserting data into table "GrantSubmissions" */
-type IGrantSubmissions_Insert_Input = {
+export type IGrantSubmissions_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>
   extraData?: InputMaybe<Scalars['json']>
   grantCycle?: InputMaybe<IGrantCycles_Obj_Rel_Insert_Input>
@@ -2486,7 +2550,7 @@ type IGrantSubmissions_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantSubmissions_Max_Fields = {
+export type IGrantSubmissions_Max_Fields = {
   __typename?: 'GrantSubmissions_max_fields'
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   grantCycleId?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -2498,7 +2562,7 @@ type IGrantSubmissions_Max_Fields = {
 }
 
 /** order by max() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Max_Order_By = {
+export type IGrantSubmissions_Max_Order_By = {
   created_at?: InputMaybe<Order_By>
   grantCycleId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -2509,7 +2573,7 @@ type IGrantSubmissions_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IGrantSubmissions_Min_Fields = {
+export type IGrantSubmissions_Min_Fields = {
   __typename?: 'GrantSubmissions_min_fields'
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   grantCycleId?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -2521,7 +2585,7 @@ type IGrantSubmissions_Min_Fields = {
 }
 
 /** order by min() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Min_Order_By = {
+export type IGrantSubmissions_Min_Order_By = {
   created_at?: InputMaybe<Order_By>
   grantCycleId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -2532,7 +2596,7 @@ type IGrantSubmissions_Min_Order_By = {
 }
 
 /** response of any mutation on the table "GrantSubmissions" */
-type IGrantSubmissions_Mutation_Response = {
+export type IGrantSubmissions_Mutation_Response = {
   __typename?: 'GrantSubmissions_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -2541,21 +2605,21 @@ type IGrantSubmissions_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "GrantSubmissions" */
-type IGrantSubmissions_Obj_Rel_Insert_Input = {
+export type IGrantSubmissions_Obj_Rel_Insert_Input = {
   data: IGrantSubmissions_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantSubmissions_On_Conflict>
 }
 
 /** on_conflict condition type for table "GrantSubmissions" */
-type IGrantSubmissions_On_Conflict = {
+export type IGrantSubmissions_On_Conflict = {
   constraint: GrantSubmissions_Constraint
   update_columns?: Array<GrantSubmissions_Update_Column>
   where?: InputMaybe<IGrantSubmissions_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantSubmissions". */
-type IGrantSubmissions_Order_By = {
+export type IGrantSubmissions_Order_By = {
   created_at?: InputMaybe<Order_By>
   extraData?: InputMaybe<Order_By>
   grantCycle?: InputMaybe<IGrantCycles_Order_By>
@@ -2571,12 +2635,12 @@ type IGrantSubmissions_Order_By = {
 }
 
 /** primary key columns input for table: GrantSubmissions */
-type IGrantSubmissions_Pk_Columns_Input = {
+export type IGrantSubmissions_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantSubmissions" */
-enum GrantSubmissions_Select_Column {
+export enum GrantSubmissions_Select_Column {
   /** column name */
   created_at = 'created_at',
   /** column name */
@@ -2596,7 +2660,7 @@ enum GrantSubmissions_Select_Column {
 }
 
 /** input type for updating data in table "GrantSubmissions" */
-type IGrantSubmissions_Set_Input = {
+export type IGrantSubmissions_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>
   extraData?: InputMaybe<Scalars['json']>
   grantCycleId?: InputMaybe<Scalars['uuid']>
@@ -2608,51 +2672,51 @@ type IGrantSubmissions_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type IGrantSubmissions_Stddev_Fields = {
+export type IGrantSubmissions_Stddev_Fields = {
   __typename?: 'GrantSubmissions_stddev_fields'
   reviewState?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Stddev_Order_By = {
+export type IGrantSubmissions_Stddev_Order_By = {
   reviewState?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_pop on columns */
-type IGrantSubmissions_Stddev_Pop_Fields = {
+export type IGrantSubmissions_Stddev_Pop_Fields = {
   __typename?: 'GrantSubmissions_stddev_pop_fields'
   reviewState?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_pop() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Stddev_Pop_Order_By = {
+export type IGrantSubmissions_Stddev_Pop_Order_By = {
   reviewState?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
-type IGrantSubmissions_Stddev_Samp_Fields = {
+export type IGrantSubmissions_Stddev_Samp_Fields = {
   __typename?: 'GrantSubmissions_stddev_samp_fields'
   reviewState?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_samp() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Stddev_Samp_Order_By = {
+export type IGrantSubmissions_Stddev_Samp_Order_By = {
   reviewState?: InputMaybe<Order_By>
 }
 
 /** aggregate sum on columns */
-type IGrantSubmissions_Sum_Fields = {
+export type IGrantSubmissions_Sum_Fields = {
   __typename?: 'GrantSubmissions_sum_fields'
   reviewState?: Maybe<FieldWrapper<Scalars['Int']>>
 }
 
 /** order by sum() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Sum_Order_By = {
+export type IGrantSubmissions_Sum_Order_By = {
   reviewState?: InputMaybe<Order_By>
 }
 
 /** update columns of table "GrantSubmissions" */
-enum GrantSubmissions_Update_Column {
+export enum GrantSubmissions_Update_Column {
   /** column name */
   created_at = 'created_at',
   /** column name */
@@ -2672,40 +2736,40 @@ enum GrantSubmissions_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type IGrantSubmissions_Var_Pop_Fields = {
+export type IGrantSubmissions_Var_Pop_Fields = {
   __typename?: 'GrantSubmissions_var_pop_fields'
   reviewState?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_pop() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Var_Pop_Order_By = {
+export type IGrantSubmissions_Var_Pop_Order_By = {
   reviewState?: InputMaybe<Order_By>
 }
 
 /** aggregate var_samp on columns */
-type IGrantSubmissions_Var_Samp_Fields = {
+export type IGrantSubmissions_Var_Samp_Fields = {
   __typename?: 'GrantSubmissions_var_samp_fields'
   reviewState?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_samp() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Var_Samp_Order_By = {
+export type IGrantSubmissions_Var_Samp_Order_By = {
   reviewState?: InputMaybe<Order_By>
 }
 
 /** aggregate variance on columns */
-type IGrantSubmissions_Variance_Fields = {
+export type IGrantSubmissions_Variance_Fields = {
   __typename?: 'GrantSubmissions_variance_fields'
   reviewState?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by variance() on columns of table "GrantSubmissions" */
-type IGrantSubmissions_Variance_Order_By = {
+export type IGrantSubmissions_Variance_Order_By = {
   reviewState?: InputMaybe<Order_By>
 }
 
 /** columns and relationships of "GrantTags" */
-type IGrantTags = {
+export type IGrantTags = {
   __typename?: 'GrantTags'
   /** An array relationship */
   bridgeWithGrant: Array<FieldWrapper<IGrantTagsBridge>>
@@ -2717,7 +2781,7 @@ type IGrantTags = {
 }
 
 /** columns and relationships of "GrantTags" */
-type IGrantTagsBridgeWithGrantArgs = {
+export type IGrantTagsBridgeWithGrantArgs = {
   distinct_on?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -2726,7 +2790,7 @@ type IGrantTagsBridgeWithGrantArgs = {
 }
 
 /** columns and relationships of "GrantTags" */
-type IGrantTagsBridgeWithGrant_AggregateArgs = {
+export type IGrantTagsBridgeWithGrant_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -2735,7 +2799,7 @@ type IGrantTagsBridgeWithGrant_AggregateArgs = {
 }
 
 /** columns and relationships of "GrantTagsBridge" */
-type IGrantTagsBridge = {
+export type IGrantTagsBridge = {
   __typename?: 'GrantTagsBridge'
   /** An object relationship */
   grant: FieldWrapper<IGrants>
@@ -2747,14 +2811,14 @@ type IGrantTagsBridge = {
 }
 
 /** aggregated selection of "GrantTagsBridge" */
-type IGrantTagsBridge_Aggregate = {
+export type IGrantTagsBridge_Aggregate = {
   __typename?: 'GrantTagsBridge_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantTagsBridge_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantTagsBridge>>
 }
 
 /** aggregate fields of "GrantTagsBridge" */
-type IGrantTagsBridge_Aggregate_Fields = {
+export type IGrantTagsBridge_Aggregate_Fields = {
   __typename?: 'GrantTagsBridge_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IGrantTagsBridge_Max_Fields>>
@@ -2762,27 +2826,27 @@ type IGrantTagsBridge_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantTagsBridge" */
-type IGrantTagsBridge_Aggregate_FieldsCountArgs = {
+export type IGrantTagsBridge_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "GrantTagsBridge" */
-type IGrantTagsBridge_Aggregate_Order_By = {
+export type IGrantTagsBridge_Aggregate_Order_By = {
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IGrantTagsBridge_Max_Order_By>
   min?: InputMaybe<IGrantTagsBridge_Min_Order_By>
 }
 
 /** input type for inserting array relation for remote table "GrantTagsBridge" */
-type IGrantTagsBridge_Arr_Rel_Insert_Input = {
+export type IGrantTagsBridge_Arr_Rel_Insert_Input = {
   data: Array<IGrantTagsBridge_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantTagsBridge_On_Conflict>
 }
 
 /** Boolean expression to filter rows from the table "GrantTagsBridge". All fields are combined with a logical 'AND'. */
-type IGrantTagsBridge_Bool_Exp = {
+export type IGrantTagsBridge_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantTagsBridge_Bool_Exp>>
   _not?: InputMaybe<IGrantTagsBridge_Bool_Exp>
   _or?: InputMaybe<Array<IGrantTagsBridge_Bool_Exp>>
@@ -2794,13 +2858,13 @@ type IGrantTagsBridge_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantTagsBridge" */
-enum GrantTagsBridge_Constraint {
+export enum GrantTagsBridge_Constraint {
   /** unique or primary key constraint */
   GrantTagsBridge_pkey = 'GrantTagsBridge_pkey',
 }
 
 /** input type for inserting data into table "GrantTagsBridge" */
-type IGrantTagsBridge_Insert_Input = {
+export type IGrantTagsBridge_Insert_Input = {
   grant?: InputMaybe<IGrants_Obj_Rel_Insert_Input>
   grantId?: InputMaybe<Scalars['uuid']>
   id?: InputMaybe<Scalars['uuid']>
@@ -2809,7 +2873,7 @@ type IGrantTagsBridge_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantTagsBridge_Max_Fields = {
+export type IGrantTagsBridge_Max_Fields = {
   __typename?: 'GrantTagsBridge_max_fields'
   grantId?: Maybe<FieldWrapper<Scalars['uuid']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -2817,14 +2881,14 @@ type IGrantTagsBridge_Max_Fields = {
 }
 
 /** order by max() on columns of table "GrantTagsBridge" */
-type IGrantTagsBridge_Max_Order_By = {
+export type IGrantTagsBridge_Max_Order_By = {
   grantId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   tagId?: InputMaybe<Order_By>
 }
 
 /** aggregate min on columns */
-type IGrantTagsBridge_Min_Fields = {
+export type IGrantTagsBridge_Min_Fields = {
   __typename?: 'GrantTagsBridge_min_fields'
   grantId?: Maybe<FieldWrapper<Scalars['uuid']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -2832,14 +2896,14 @@ type IGrantTagsBridge_Min_Fields = {
 }
 
 /** order by min() on columns of table "GrantTagsBridge" */
-type IGrantTagsBridge_Min_Order_By = {
+export type IGrantTagsBridge_Min_Order_By = {
   grantId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   tagId?: InputMaybe<Order_By>
 }
 
 /** response of any mutation on the table "GrantTagsBridge" */
-type IGrantTagsBridge_Mutation_Response = {
+export type IGrantTagsBridge_Mutation_Response = {
   __typename?: 'GrantTagsBridge_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -2848,14 +2912,14 @@ type IGrantTagsBridge_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "GrantTagsBridge" */
-type IGrantTagsBridge_On_Conflict = {
+export type IGrantTagsBridge_On_Conflict = {
   constraint: GrantTagsBridge_Constraint
   update_columns?: Array<GrantTagsBridge_Update_Column>
   where?: InputMaybe<IGrantTagsBridge_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantTagsBridge". */
-type IGrantTagsBridge_Order_By = {
+export type IGrantTagsBridge_Order_By = {
   grant?: InputMaybe<IGrants_Order_By>
   grantId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -2864,12 +2928,12 @@ type IGrantTagsBridge_Order_By = {
 }
 
 /** primary key columns input for table: GrantTagsBridge */
-type IGrantTagsBridge_Pk_Columns_Input = {
+export type IGrantTagsBridge_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantTagsBridge" */
-enum GrantTagsBridge_Select_Column {
+export enum GrantTagsBridge_Select_Column {
   /** column name */
   grantId = 'grantId',
   /** column name */
@@ -2879,14 +2943,14 @@ enum GrantTagsBridge_Select_Column {
 }
 
 /** input type for updating data in table "GrantTagsBridge" */
-type IGrantTagsBridge_Set_Input = {
+export type IGrantTagsBridge_Set_Input = {
   grantId?: InputMaybe<Scalars['uuid']>
   id?: InputMaybe<Scalars['uuid']>
   tagId?: InputMaybe<Scalars['uuid']>
 }
 
 /** update columns of table "GrantTagsBridge" */
-enum GrantTagsBridge_Update_Column {
+export enum GrantTagsBridge_Update_Column {
   /** column name */
   grantId = 'grantId',
   /** column name */
@@ -2896,14 +2960,14 @@ enum GrantTagsBridge_Update_Column {
 }
 
 /** aggregated selection of "GrantTags" */
-type IGrantTags_Aggregate = {
+export type IGrantTags_Aggregate = {
   __typename?: 'GrantTags_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrantTags_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrantTags>>
 }
 
 /** aggregate fields of "GrantTags" */
-type IGrantTags_Aggregate_Fields = {
+export type IGrantTags_Aggregate_Fields = {
   __typename?: 'GrantTags_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IGrantTags_Max_Fields>>
@@ -2911,13 +2975,13 @@ type IGrantTags_Aggregate_Fields = {
 }
 
 /** aggregate fields of "GrantTags" */
-type IGrantTags_Aggregate_FieldsCountArgs = {
+export type IGrantTags_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<GrantTags_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** Boolean expression to filter rows from the table "GrantTags". All fields are combined with a logical 'AND'. */
-type IGrantTags_Bool_Exp = {
+export type IGrantTags_Bool_Exp = {
   _and?: InputMaybe<Array<IGrantTags_Bool_Exp>>
   _not?: InputMaybe<IGrantTags_Bool_Exp>
   _or?: InputMaybe<Array<IGrantTags_Bool_Exp>>
@@ -2928,7 +2992,7 @@ type IGrantTags_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "GrantTags" */
-enum GrantTags_Constraint {
+export enum GrantTags_Constraint {
   /** unique or primary key constraint */
   GrantTags_pkey = 'GrantTags_pkey',
   /** unique or primary key constraint */
@@ -2936,7 +3000,7 @@ enum GrantTags_Constraint {
 }
 
 /** input type for inserting data into table "GrantTags" */
-type IGrantTags_Insert_Input = {
+export type IGrantTags_Insert_Input = {
   bridgeWithGrant?: InputMaybe<IGrantTagsBridge_Arr_Rel_Insert_Input>
   id?: InputMaybe<Scalars['uuid']>
   label?: InputMaybe<Scalars['String']>
@@ -2944,7 +3008,7 @@ type IGrantTags_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrantTags_Max_Fields = {
+export type IGrantTags_Max_Fields = {
   __typename?: 'GrantTags_max_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   label?: Maybe<FieldWrapper<Scalars['String']>>
@@ -2952,7 +3016,7 @@ type IGrantTags_Max_Fields = {
 }
 
 /** aggregate min on columns */
-type IGrantTags_Min_Fields = {
+export type IGrantTags_Min_Fields = {
   __typename?: 'GrantTags_min_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   label?: Maybe<FieldWrapper<Scalars['String']>>
@@ -2960,7 +3024,7 @@ type IGrantTags_Min_Fields = {
 }
 
 /** response of any mutation on the table "GrantTags" */
-type IGrantTags_Mutation_Response = {
+export type IGrantTags_Mutation_Response = {
   __typename?: 'GrantTags_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -2969,21 +3033,21 @@ type IGrantTags_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "GrantTags" */
-type IGrantTags_Obj_Rel_Insert_Input = {
+export type IGrantTags_Obj_Rel_Insert_Input = {
   data: IGrantTags_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IGrantTags_On_Conflict>
 }
 
 /** on_conflict condition type for table "GrantTags" */
-type IGrantTags_On_Conflict = {
+export type IGrantTags_On_Conflict = {
   constraint: GrantTags_Constraint
   update_columns?: Array<GrantTags_Update_Column>
   where?: InputMaybe<IGrantTags_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "GrantTags". */
-type IGrantTags_Order_By = {
+export type IGrantTags_Order_By = {
   bridgeWithGrant_aggregate?: InputMaybe<IGrantTagsBridge_Aggregate_Order_By>
   id?: InputMaybe<Order_By>
   label?: InputMaybe<Order_By>
@@ -2991,12 +3055,12 @@ type IGrantTags_Order_By = {
 }
 
 /** primary key columns input for table: GrantTags */
-type IGrantTags_Pk_Columns_Input = {
+export type IGrantTags_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "GrantTags" */
-enum GrantTags_Select_Column {
+export enum GrantTags_Select_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -3006,14 +3070,14 @@ enum GrantTags_Select_Column {
 }
 
 /** input type for updating data in table "GrantTags" */
-type IGrantTags_Set_Input = {
+export type IGrantTags_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>
   label?: InputMaybe<Scalars['String']>
   value?: InputMaybe<Scalars['String']>
 }
 
 /** update columns of table "GrantTags" */
-enum GrantTags_Update_Column {
+export enum GrantTags_Update_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -3023,7 +3087,7 @@ enum GrantTags_Update_Column {
 }
 
 /** columns and relationships of "Grants" */
-type IGrants = {
+export type IGrants = {
   __typename?: 'Grants'
   /** An array relationship */
   Likes: Array<FieldWrapper<ILikes>>
@@ -3072,7 +3136,7 @@ type IGrants = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsLikesArgs = {
+export type IGrantsLikesArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3081,7 +3145,7 @@ type IGrantsLikesArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsLikes_AggregateArgs = {
+export type IGrantsLikes_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3090,7 +3154,7 @@ type IGrantsLikes_AggregateArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsCategoriesArgs = {
+export type IGrantsCategoriesArgs = {
   distinct_on?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3099,7 +3163,7 @@ type IGrantsCategoriesArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsCategories_AggregateArgs = {
+export type IGrantsCategories_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3108,12 +3172,12 @@ type IGrantsCategories_AggregateArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsDescriptiveTextFieldsArgs = {
+export type IGrantsDescriptiveTextFieldsArgs = {
   path?: InputMaybe<Scalars['String']>
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsFollowsArgs = {
+export type IGrantsFollowsArgs = {
   distinct_on?: InputMaybe<Array<Follows_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3122,7 +3186,7 @@ type IGrantsFollowsArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsFollows_AggregateArgs = {
+export type IGrantsFollows_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Follows_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3131,7 +3195,7 @@ type IGrantsFollows_AggregateArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsGrantCyclesArgs = {
+export type IGrantsGrantCyclesArgs = {
   distinct_on?: InputMaybe<Array<GrantCycles_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3140,7 +3204,7 @@ type IGrantsGrantCyclesArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsGrantCycles_AggregateArgs = {
+export type IGrantsGrantCycles_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCycles_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3149,7 +3213,7 @@ type IGrantsGrantCycles_AggregateArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsOwnersTiersArgs = {
+export type IGrantsOwnersTiersArgs = {
   distinct_on?: InputMaybe<Array<GrantOwnersTiers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3158,7 +3222,7 @@ type IGrantsOwnersTiersArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsOwnersTiers_AggregateArgs = {
+export type IGrantsOwnersTiers_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantOwnersTiers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3167,17 +3231,17 @@ type IGrantsOwnersTiers_AggregateArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsSettingsArgs = {
+export type IGrantsSettingsArgs = {
   path?: InputMaybe<Scalars['String']>
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsSponsorsArgs = {
+export type IGrantsSponsorsArgs = {
   path?: InputMaybe<Scalars['String']>
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsTagsArgs = {
+export type IGrantsTagsArgs = {
   distinct_on?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3186,7 +3250,7 @@ type IGrantsTagsArgs = {
 }
 
 /** columns and relationships of "Grants" */
-type IGrantsTags_AggregateArgs = {
+export type IGrantsTags_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3195,14 +3259,14 @@ type IGrantsTags_AggregateArgs = {
 }
 
 /** aggregated selection of "Grants" */
-type IGrants_Aggregate = {
+export type IGrants_Aggregate = {
   __typename?: 'Grants_aggregate'
   aggregate?: Maybe<FieldWrapper<IGrants_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IGrants>>
 }
 
 /** aggregate fields of "Grants" */
-type IGrants_Aggregate_Fields = {
+export type IGrants_Aggregate_Fields = {
   __typename?: 'Grants_aggregate_fields'
   avg?: Maybe<FieldWrapper<IGrants_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -3218,13 +3282,13 @@ type IGrants_Aggregate_Fields = {
 }
 
 /** aggregate fields of "Grants" */
-type IGrants_Aggregate_FieldsCountArgs = {
+export type IGrants_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Grants_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "Grants" */
-type IGrants_Aggregate_Order_By = {
+export type IGrants_Aggregate_Order_By = {
   avg?: InputMaybe<IGrants_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IGrants_Max_Order_By>
@@ -3239,25 +3303,25 @@ type IGrants_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "Grants" */
-type IGrants_Arr_Rel_Insert_Input = {
+export type IGrants_Arr_Rel_Insert_Input = {
   data: Array<IGrants_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IGrants_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type IGrants_Avg_Fields = {
+export type IGrants_Avg_Fields = {
   __typename?: 'Grants_avg_fields'
   length?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by avg() on columns of table "Grants" */
-type IGrants_Avg_Order_By = {
+export type IGrants_Avg_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "Grants". All fields are combined with a logical 'AND'. */
-type IGrants_Bool_Exp = {
+export type IGrants_Bool_Exp = {
   Likes?: InputMaybe<ILikes_Bool_Exp>
   _and?: InputMaybe<Array<IGrants_Bool_Exp>>
   _not?: InputMaybe<IGrants_Bool_Exp>
@@ -3289,7 +3353,7 @@ type IGrants_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "Grants" */
-enum Grants_Constraint {
+export enum Grants_Constraint {
   /** unique or primary key constraint */
   grant_pkey = 'grant_pkey',
   /** unique or primary key constraint */
@@ -3299,12 +3363,12 @@ enum Grants_Constraint {
 }
 
 /** input type for incrementing numeric columns in table "Grants" */
-type IGrants_Inc_Input = {
+export type IGrants_Inc_Input = {
   length?: InputMaybe<Scalars['numeric']>
 }
 
 /** input type for inserting data into table "Grants" */
-type IGrants_Insert_Input = {
+export type IGrants_Insert_Input = {
   Likes?: InputMaybe<ILikes_Arr_Rel_Insert_Input>
   allowDonations?: InputMaybe<Scalars['Boolean']>
   author?: InputMaybe<IUser_Obj_Rel_Insert_Input>
@@ -3333,7 +3397,7 @@ type IGrants_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IGrants_Max_Fields = {
+export type IGrants_Max_Fields = {
   __typename?: 'Grants_max_fields'
   authorId?: Maybe<FieldWrapper<Scalars['uuid']>>
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
@@ -3351,7 +3415,7 @@ type IGrants_Max_Fields = {
 }
 
 /** order by max() on columns of table "Grants" */
-type IGrants_Max_Order_By = {
+export type IGrants_Max_Order_By = {
   authorId?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   externalLink?: InputMaybe<Order_By>
@@ -3368,7 +3432,7 @@ type IGrants_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IGrants_Min_Fields = {
+export type IGrants_Min_Fields = {
   __typename?: 'Grants_min_fields'
   authorId?: Maybe<FieldWrapper<Scalars['uuid']>>
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
@@ -3386,7 +3450,7 @@ type IGrants_Min_Fields = {
 }
 
 /** order by min() on columns of table "Grants" */
-type IGrants_Min_Order_By = {
+export type IGrants_Min_Order_By = {
   authorId?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   externalLink?: InputMaybe<Order_By>
@@ -3403,7 +3467,7 @@ type IGrants_Min_Order_By = {
 }
 
 /** response of any mutation on the table "Grants" */
-type IGrants_Mutation_Response = {
+export type IGrants_Mutation_Response = {
   __typename?: 'Grants_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -3412,21 +3476,21 @@ type IGrants_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "Grants" */
-type IGrants_Obj_Rel_Insert_Input = {
+export type IGrants_Obj_Rel_Insert_Input = {
   data: IGrants_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IGrants_On_Conflict>
 }
 
 /** on_conflict condition type for table "Grants" */
-type IGrants_On_Conflict = {
+export type IGrants_On_Conflict = {
   constraint: Grants_Constraint
   update_columns?: Array<Grants_Update_Column>
   where?: InputMaybe<IGrants_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "Grants". */
-type IGrants_Order_By = {
+export type IGrants_Order_By = {
   Likes_aggregate?: InputMaybe<ILikes_Aggregate_Order_By>
   allowDonations?: InputMaybe<Order_By>
   author?: InputMaybe<IUser_Order_By>
@@ -3455,12 +3519,12 @@ type IGrants_Order_By = {
 }
 
 /** primary key columns input for table: Grants */
-type IGrants_Pk_Columns_Input = {
+export type IGrants_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "Grants" */
-enum Grants_Select_Column {
+export enum Grants_Select_Column {
   /** column name */
   allowDonations = 'allowDonations',
   /** column name */
@@ -3500,7 +3564,7 @@ enum Grants_Select_Column {
 }
 
 /** input type for updating data in table "Grants" */
-type IGrants_Set_Input = {
+export type IGrants_Set_Input = {
   allowDonations?: InputMaybe<Scalars['Boolean']>
   authorId?: InputMaybe<Scalars['uuid']>
   created_at?: InputMaybe<Scalars['timestamptz']>
@@ -3522,51 +3586,51 @@ type IGrants_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type IGrants_Stddev_Fields = {
+export type IGrants_Stddev_Fields = {
   __typename?: 'Grants_stddev_fields'
   length?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev() on columns of table "Grants" */
-type IGrants_Stddev_Order_By = {
+export type IGrants_Stddev_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_pop on columns */
-type IGrants_Stddev_Pop_Fields = {
+export type IGrants_Stddev_Pop_Fields = {
   __typename?: 'Grants_stddev_pop_fields'
   length?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_pop() on columns of table "Grants" */
-type IGrants_Stddev_Pop_Order_By = {
+export type IGrants_Stddev_Pop_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
-type IGrants_Stddev_Samp_Fields = {
+export type IGrants_Stddev_Samp_Fields = {
   __typename?: 'Grants_stddev_samp_fields'
   length?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by stddev_samp() on columns of table "Grants" */
-type IGrants_Stddev_Samp_Order_By = {
+export type IGrants_Stddev_Samp_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
 /** aggregate sum on columns */
-type IGrants_Sum_Fields = {
+export type IGrants_Sum_Fields = {
   __typename?: 'Grants_sum_fields'
   length?: Maybe<FieldWrapper<Scalars['numeric']>>
 }
 
 /** order by sum() on columns of table "Grants" */
-type IGrants_Sum_Order_By = {
+export type IGrants_Sum_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
 /** update columns of table "Grants" */
-enum Grants_Update_Column {
+export enum Grants_Update_Column {
   /** column name */
   allowDonations = 'allowDonations',
   /** column name */
@@ -3606,40 +3670,40 @@ enum Grants_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type IGrants_Var_Pop_Fields = {
+export type IGrants_Var_Pop_Fields = {
   __typename?: 'Grants_var_pop_fields'
   length?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_pop() on columns of table "Grants" */
-type IGrants_Var_Pop_Order_By = {
+export type IGrants_Var_Pop_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
 /** aggregate var_samp on columns */
-type IGrants_Var_Samp_Fields = {
+export type IGrants_Var_Samp_Fields = {
   __typename?: 'Grants_var_samp_fields'
   length?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by var_samp() on columns of table "Grants" */
-type IGrants_Var_Samp_Order_By = {
+export type IGrants_Var_Samp_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
 /** aggregate variance on columns */
-type IGrants_Variance_Fields = {
+export type IGrants_Variance_Fields = {
   __typename?: 'Grants_variance_fields'
   length?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** order by variance() on columns of table "Grants" */
-type IGrants_Variance_Order_By = {
+export type IGrants_Variance_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
-type IInt_Comparison_Exp = {
+export type IInt_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Int']>
   _gt?: InputMaybe<Scalars['Int']>
   _gte?: InputMaybe<Scalars['Int']>
@@ -3652,7 +3716,7 @@ type IInt_Comparison_Exp = {
 }
 
 /** columns and relationships of "Likes" */
-type ILikes = {
+export type ILikes = {
   __typename?: 'Likes'
   /** An object relationship */
   Grant?: Maybe<FieldWrapper<IGrants>>
@@ -3671,14 +3735,14 @@ type ILikes = {
 }
 
 /** aggregated selection of "Likes" */
-type ILikes_Aggregate = {
+export type ILikes_Aggregate = {
   __typename?: 'Likes_aggregate'
   aggregate?: Maybe<FieldWrapper<ILikes_Aggregate_Fields>>
   nodes: Array<FieldWrapper<ILikes>>
 }
 
 /** aggregate fields of "Likes" */
-type ILikes_Aggregate_Fields = {
+export type ILikes_Aggregate_Fields = {
   __typename?: 'Likes_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<ILikes_Max_Fields>>
@@ -3686,27 +3750,27 @@ type ILikes_Aggregate_Fields = {
 }
 
 /** aggregate fields of "Likes" */
-type ILikes_Aggregate_FieldsCountArgs = {
+export type ILikes_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Likes_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "Likes" */
-type ILikes_Aggregate_Order_By = {
+export type ILikes_Aggregate_Order_By = {
   count?: InputMaybe<Order_By>
   max?: InputMaybe<ILikes_Max_Order_By>
   min?: InputMaybe<ILikes_Min_Order_By>
 }
 
 /** input type for inserting array relation for remote table "Likes" */
-type ILikes_Arr_Rel_Insert_Input = {
+export type ILikes_Arr_Rel_Insert_Input = {
   data: Array<ILikes_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<ILikes_On_Conflict>
 }
 
 /** Boolean expression to filter rows from the table "Likes". All fields are combined with a logical 'AND'. */
-type ILikes_Bool_Exp = {
+export type ILikes_Bool_Exp = {
   Grant?: InputMaybe<IGrants_Bool_Exp>
   Project?: InputMaybe<IProject_Bool_Exp>
   User?: InputMaybe<IUser_Bool_Exp>
@@ -3723,13 +3787,13 @@ type ILikes_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "Likes" */
-enum Likes_Constraint {
+export enum Likes_Constraint {
   /** unique or primary key constraint */
   Likes_pkey = 'Likes_pkey',
 }
 
 /** input type for inserting data into table "Likes" */
-type ILikes_Insert_Input = {
+export type ILikes_Insert_Input = {
   Grant?: InputMaybe<IGrants_Obj_Rel_Insert_Input>
   Project?: InputMaybe<IProject_Obj_Rel_Insert_Input>
   User?: InputMaybe<IUser_Obj_Rel_Insert_Input>
@@ -3743,7 +3807,7 @@ type ILikes_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type ILikes_Max_Fields = {
+export type ILikes_Max_Fields = {
   __typename?: 'Likes_max_fields'
   fromUserId?: Maybe<FieldWrapper<Scalars['uuid']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -3754,7 +3818,7 @@ type ILikes_Max_Fields = {
 }
 
 /** order by max() on columns of table "Likes" */
-type ILikes_Max_Order_By = {
+export type ILikes_Max_Order_By = {
   fromUserId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   toGrantId?: InputMaybe<Order_By>
@@ -3764,7 +3828,7 @@ type ILikes_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type ILikes_Min_Fields = {
+export type ILikes_Min_Fields = {
   __typename?: 'Likes_min_fields'
   fromUserId?: Maybe<FieldWrapper<Scalars['uuid']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -3775,7 +3839,7 @@ type ILikes_Min_Fields = {
 }
 
 /** order by min() on columns of table "Likes" */
-type ILikes_Min_Order_By = {
+export type ILikes_Min_Order_By = {
   fromUserId?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   toGrantId?: InputMaybe<Order_By>
@@ -3785,7 +3849,7 @@ type ILikes_Min_Order_By = {
 }
 
 /** response of any mutation on the table "Likes" */
-type ILikes_Mutation_Response = {
+export type ILikes_Mutation_Response = {
   __typename?: 'Likes_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -3794,14 +3858,14 @@ type ILikes_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "Likes" */
-type ILikes_On_Conflict = {
+export type ILikes_On_Conflict = {
   constraint: Likes_Constraint
   update_columns?: Array<Likes_Update_Column>
   where?: InputMaybe<ILikes_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "Likes". */
-type ILikes_Order_By = {
+export type ILikes_Order_By = {
   Grant?: InputMaybe<IGrants_Order_By>
   Project?: InputMaybe<IProject_Order_By>
   User?: InputMaybe<IUser_Order_By>
@@ -3815,12 +3879,12 @@ type ILikes_Order_By = {
 }
 
 /** primary key columns input for table: Likes */
-type ILikes_Pk_Columns_Input = {
+export type ILikes_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "Likes" */
-enum Likes_Select_Column {
+export enum Likes_Select_Column {
   /** column name */
   fromUserId = 'fromUserId',
   /** column name */
@@ -3836,7 +3900,7 @@ enum Likes_Select_Column {
 }
 
 /** input type for updating data in table "Likes" */
-type ILikes_Set_Input = {
+export type ILikes_Set_Input = {
   fromUserId?: InputMaybe<Scalars['uuid']>
   id?: InputMaybe<Scalars['uuid']>
   toGrantId?: InputMaybe<Scalars['uuid']>
@@ -3846,7 +3910,7 @@ type ILikes_Set_Input = {
 }
 
 /** update columns of table "Likes" */
-enum Likes_Update_Column {
+export enum Likes_Update_Column {
   /** column name */
   fromUserId = 'fromUserId',
   /** column name */
@@ -3861,8 +3925,14 @@ enum Likes_Update_Column {
   type = 'type',
 }
 
+/** Defines the order direction, either ascending or descending */
+export enum OrderDirection {
+  asc = 'asc',
+  desc = 'desc',
+}
+
 /** columns and relationships of "Project" */
-type IProject = {
+export type IProject = {
   __typename?: 'Project'
   /** An array relationship */
   GrantSubmitions: Array<FieldWrapper<IGrantSubmissions>>
@@ -3913,7 +3983,7 @@ type IProject = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectGrantSubmitionsArgs = {
+export type IProjectGrantSubmitionsArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3922,7 +3992,7 @@ type IProjectGrantSubmitionsArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectGrantSubmitions_AggregateArgs = {
+export type IProjectGrantSubmitions_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3931,7 +4001,7 @@ type IProjectGrantSubmitions_AggregateArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectLikesArgs = {
+export type IProjectLikesArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3940,7 +4010,7 @@ type IProjectLikesArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectLikes_AggregateArgs = {
+export type IProjectLikes_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3949,12 +4019,12 @@ type IProjectLikes_AggregateArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectGalleryArgs = {
+export type IProjectGalleryArgs = {
   path?: InputMaybe<Scalars['String']>
 }
 
 /** columns and relationships of "Project" */
-type IProjectMembersArgs = {
+export type IProjectMembersArgs = {
   distinct_on?: InputMaybe<Array<ProjectMembers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3963,7 +4033,7 @@ type IProjectMembersArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectMembers_AggregateArgs = {
+export type IProjectMembers_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectMembers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3972,7 +4042,7 @@ type IProjectMembers_AggregateArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectProjectTagsArgs = {
+export type IProjectProjectTagsArgs = {
   distinct_on?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3981,7 +4051,7 @@ type IProjectProjectTagsArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectProjectTags_AggregateArgs = {
+export type IProjectProjectTags_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3990,7 +4060,7 @@ type IProjectProjectTags_AggregateArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectProjectTypesArgs = {
+export type IProjectProjectTypesArgs = {
   distinct_on?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -3999,7 +4069,7 @@ type IProjectProjectTypesArgs = {
 }
 
 /** columns and relationships of "Project" */
-type IProjectProjectTypes_AggregateArgs = {
+export type IProjectProjectTypes_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -4008,7 +4078,7 @@ type IProjectProjectTypes_AggregateArgs = {
 }
 
 /** columns and relationships of "ProjectMembers" */
-type IProjectMembers = {
+export type IProjectMembers = {
   __typename?: 'ProjectMembers'
   admin: FieldWrapper<Scalars['Boolean']>
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
@@ -4024,14 +4094,14 @@ type IProjectMembers = {
 }
 
 /** aggregated selection of "ProjectMembers" */
-type IProjectMembers_Aggregate = {
+export type IProjectMembers_Aggregate = {
   __typename?: 'ProjectMembers_aggregate'
   aggregate?: Maybe<FieldWrapper<IProjectMembers_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IProjectMembers>>
 }
 
 /** aggregate fields of "ProjectMembers" */
-type IProjectMembers_Aggregate_Fields = {
+export type IProjectMembers_Aggregate_Fields = {
   __typename?: 'ProjectMembers_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IProjectMembers_Max_Fields>>
@@ -4039,27 +4109,27 @@ type IProjectMembers_Aggregate_Fields = {
 }
 
 /** aggregate fields of "ProjectMembers" */
-type IProjectMembers_Aggregate_FieldsCountArgs = {
+export type IProjectMembers_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<ProjectMembers_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "ProjectMembers" */
-type IProjectMembers_Aggregate_Order_By = {
+export type IProjectMembers_Aggregate_Order_By = {
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IProjectMembers_Max_Order_By>
   min?: InputMaybe<IProjectMembers_Min_Order_By>
 }
 
 /** input type for inserting array relation for remote table "ProjectMembers" */
-type IProjectMembers_Arr_Rel_Insert_Input = {
+export type IProjectMembers_Arr_Rel_Insert_Input = {
   data: Array<IProjectMembers_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IProjectMembers_On_Conflict>
 }
 
 /** Boolean expression to filter rows from the table "ProjectMembers". All fields are combined with a logical 'AND'. */
-type IProjectMembers_Bool_Exp = {
+export type IProjectMembers_Bool_Exp = {
   _and?: InputMaybe<Array<IProjectMembers_Bool_Exp>>
   _not?: InputMaybe<IProjectMembers_Bool_Exp>
   _or?: InputMaybe<Array<IProjectMembers_Bool_Exp>>
@@ -4075,13 +4145,13 @@ type IProjectMembers_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "ProjectMembers" */
-enum ProjectMembers_Constraint {
+export enum ProjectMembers_Constraint {
   /** unique or primary key constraint */
   ProjectMembers_pkey = 'ProjectMembers_pkey',
 }
 
 /** input type for inserting data into table "ProjectMembers" */
-type IProjectMembers_Insert_Input = {
+export type IProjectMembers_Insert_Input = {
   admin?: InputMaybe<Scalars['Boolean']>
   created_at?: InputMaybe<Scalars['timestamptz']>
   id?: InputMaybe<Scalars['uuid']>
@@ -4094,7 +4164,7 @@ type IProjectMembers_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IProjectMembers_Max_Fields = {
+export type IProjectMembers_Max_Fields = {
   __typename?: 'ProjectMembers_max_fields'
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -4105,7 +4175,7 @@ type IProjectMembers_Max_Fields = {
 }
 
 /** order by max() on columns of table "ProjectMembers" */
-type IProjectMembers_Max_Order_By = {
+export type IProjectMembers_Max_Order_By = {
   created_at?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   projectId?: InputMaybe<Order_By>
@@ -4115,7 +4185,7 @@ type IProjectMembers_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IProjectMembers_Min_Fields = {
+export type IProjectMembers_Min_Fields = {
   __typename?: 'ProjectMembers_min_fields'
   created_at?: Maybe<FieldWrapper<Scalars['timestamptz']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -4126,7 +4196,7 @@ type IProjectMembers_Min_Fields = {
 }
 
 /** order by min() on columns of table "ProjectMembers" */
-type IProjectMembers_Min_Order_By = {
+export type IProjectMembers_Min_Order_By = {
   created_at?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   projectId?: InputMaybe<Order_By>
@@ -4136,7 +4206,7 @@ type IProjectMembers_Min_Order_By = {
 }
 
 /** response of any mutation on the table "ProjectMembers" */
-type IProjectMembers_Mutation_Response = {
+export type IProjectMembers_Mutation_Response = {
   __typename?: 'ProjectMembers_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -4145,14 +4215,14 @@ type IProjectMembers_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "ProjectMembers" */
-type IProjectMembers_On_Conflict = {
+export type IProjectMembers_On_Conflict = {
   constraint: ProjectMembers_Constraint
   update_columns?: Array<ProjectMembers_Update_Column>
   where?: InputMaybe<IProjectMembers_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "ProjectMembers". */
-type IProjectMembers_Order_By = {
+export type IProjectMembers_Order_By = {
   admin?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -4165,12 +4235,12 @@ type IProjectMembers_Order_By = {
 }
 
 /** primary key columns input for table: ProjectMembers */
-type IProjectMembers_Pk_Columns_Input = {
+export type IProjectMembers_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "ProjectMembers" */
-enum ProjectMembers_Select_Column {
+export enum ProjectMembers_Select_Column {
   /** column name */
   admin = 'admin',
   /** column name */
@@ -4188,7 +4258,7 @@ enum ProjectMembers_Select_Column {
 }
 
 /** input type for updating data in table "ProjectMembers" */
-type IProjectMembers_Set_Input = {
+export type IProjectMembers_Set_Input = {
   admin?: InputMaybe<Scalars['Boolean']>
   created_at?: InputMaybe<Scalars['timestamptz']>
   id?: InputMaybe<Scalars['uuid']>
@@ -4199,7 +4269,7 @@ type IProjectMembers_Set_Input = {
 }
 
 /** update columns of table "ProjectMembers" */
-enum ProjectMembers_Update_Column {
+export enum ProjectMembers_Update_Column {
   /** column name */
   admin = 'admin',
   /** column name */
@@ -4217,7 +4287,7 @@ enum ProjectMembers_Update_Column {
 }
 
 /** columns and relationships of "ProjectTag" */
-type IProjectTag = {
+export type IProjectTag = {
   __typename?: 'ProjectTag'
   /** An array relationship */
   Projects: Array<FieldWrapper<IProject>>
@@ -4233,7 +4303,7 @@ type IProjectTag = {
 }
 
 /** columns and relationships of "ProjectTag" */
-type IProjectTagProjectsArgs = {
+export type IProjectTagProjectsArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -4242,7 +4312,7 @@ type IProjectTagProjectsArgs = {
 }
 
 /** columns and relationships of "ProjectTag" */
-type IProjectTagProjects_AggregateArgs = {
+export type IProjectTagProjects_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -4251,7 +4321,7 @@ type IProjectTagProjects_AggregateArgs = {
 }
 
 /** columns and relationships of "ProjectTag" */
-type IProjectTagProjectTagsArgs = {
+export type IProjectTagProjectTagsArgs = {
   distinct_on?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -4260,7 +4330,7 @@ type IProjectTagProjectTagsArgs = {
 }
 
 /** columns and relationships of "ProjectTag" */
-type IProjectTagProjectTags_AggregateArgs = {
+export type IProjectTagProjectTags_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -4269,14 +4339,14 @@ type IProjectTagProjectTags_AggregateArgs = {
 }
 
 /** aggregated selection of "ProjectTag" */
-type IProjectTag_Aggregate = {
+export type IProjectTag_Aggregate = {
   __typename?: 'ProjectTag_aggregate'
   aggregate?: Maybe<FieldWrapper<IProjectTag_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IProjectTag>>
 }
 
 /** aggregate fields of "ProjectTag" */
-type IProjectTag_Aggregate_Fields = {
+export type IProjectTag_Aggregate_Fields = {
   __typename?: 'ProjectTag_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IProjectTag_Max_Fields>>
@@ -4284,13 +4354,13 @@ type IProjectTag_Aggregate_Fields = {
 }
 
 /** aggregate fields of "ProjectTag" */
-type IProjectTag_Aggregate_FieldsCountArgs = {
+export type IProjectTag_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<ProjectTag_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** Boolean expression to filter rows from the table "ProjectTag". All fields are combined with a logical 'AND'. */
-type IProjectTag_Bool_Exp = {
+export type IProjectTag_Bool_Exp = {
   Projects?: InputMaybe<IProject_Bool_Exp>
   _and?: InputMaybe<Array<IProjectTag_Bool_Exp>>
   _not?: InputMaybe<IProjectTag_Bool_Exp>
@@ -4302,7 +4372,7 @@ type IProjectTag_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "ProjectTag" */
-enum ProjectTag_Constraint {
+export enum ProjectTag_Constraint {
   /** unique or primary key constraint */
   ProjectTag_pkey = 'ProjectTag_pkey',
   /** unique or primary key constraint */
@@ -4310,7 +4380,7 @@ enum ProjectTag_Constraint {
 }
 
 /** input type for inserting data into table "ProjectTag" */
-type IProjectTag_Insert_Input = {
+export type IProjectTag_Insert_Input = {
   Projects?: InputMaybe<IProject_Arr_Rel_Insert_Input>
   id?: InputMaybe<Scalars['uuid']>
   label?: InputMaybe<Scalars['String']>
@@ -4319,7 +4389,7 @@ type IProjectTag_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IProjectTag_Max_Fields = {
+export type IProjectTag_Max_Fields = {
   __typename?: 'ProjectTag_max_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   label?: Maybe<FieldWrapper<Scalars['String']>>
@@ -4327,7 +4397,7 @@ type IProjectTag_Max_Fields = {
 }
 
 /** aggregate min on columns */
-type IProjectTag_Min_Fields = {
+export type IProjectTag_Min_Fields = {
   __typename?: 'ProjectTag_min_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   label?: Maybe<FieldWrapper<Scalars['String']>>
@@ -4335,7 +4405,7 @@ type IProjectTag_Min_Fields = {
 }
 
 /** response of any mutation on the table "ProjectTag" */
-type IProjectTag_Mutation_Response = {
+export type IProjectTag_Mutation_Response = {
   __typename?: 'ProjectTag_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -4344,21 +4414,21 @@ type IProjectTag_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "ProjectTag" */
-type IProjectTag_Obj_Rel_Insert_Input = {
+export type IProjectTag_Obj_Rel_Insert_Input = {
   data: IProjectTag_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IProjectTag_On_Conflict>
 }
 
 /** on_conflict condition type for table "ProjectTag" */
-type IProjectTag_On_Conflict = {
+export type IProjectTag_On_Conflict = {
   constraint: ProjectTag_Constraint
   update_columns?: Array<ProjectTag_Update_Column>
   where?: InputMaybe<IProjectTag_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "ProjectTag". */
-type IProjectTag_Order_By = {
+export type IProjectTag_Order_By = {
   Projects_aggregate?: InputMaybe<IProject_Aggregate_Order_By>
   id?: InputMaybe<Order_By>
   label?: InputMaybe<Order_By>
@@ -4367,12 +4437,12 @@ type IProjectTag_Order_By = {
 }
 
 /** primary key columns input for table: ProjectTag */
-type IProjectTag_Pk_Columns_Input = {
+export type IProjectTag_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "ProjectTag" */
-enum ProjectTag_Select_Column {
+export enum ProjectTag_Select_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -4382,14 +4452,14 @@ enum ProjectTag_Select_Column {
 }
 
 /** input type for updating data in table "ProjectTag" */
-type IProjectTag_Set_Input = {
+export type IProjectTag_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>
   label?: InputMaybe<Scalars['String']>
   value?: InputMaybe<Scalars['String']>
 }
 
 /** update columns of table "ProjectTag" */
-enum ProjectTag_Update_Column {
+export enum ProjectTag_Update_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -4399,7 +4469,7 @@ enum ProjectTag_Update_Column {
 }
 
 /** columns and relationships of "ProjectTagsBridge" */
-type IProjectTagsBridge = {
+export type IProjectTagsBridge = {
   __typename?: 'ProjectTagsBridge'
   id: FieldWrapper<Scalars['uuid']>
   /** An object relationship */
@@ -4411,14 +4481,14 @@ type IProjectTagsBridge = {
 }
 
 /** aggregated selection of "ProjectTagsBridge" */
-type IProjectTagsBridge_Aggregate = {
+export type IProjectTagsBridge_Aggregate = {
   __typename?: 'ProjectTagsBridge_aggregate'
   aggregate?: Maybe<FieldWrapper<IProjectTagsBridge_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IProjectTagsBridge>>
 }
 
 /** aggregate fields of "ProjectTagsBridge" */
-type IProjectTagsBridge_Aggregate_Fields = {
+export type IProjectTagsBridge_Aggregate_Fields = {
   __typename?: 'ProjectTagsBridge_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IProjectTagsBridge_Max_Fields>>
@@ -4426,27 +4496,27 @@ type IProjectTagsBridge_Aggregate_Fields = {
 }
 
 /** aggregate fields of "ProjectTagsBridge" */
-type IProjectTagsBridge_Aggregate_FieldsCountArgs = {
+export type IProjectTagsBridge_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "ProjectTagsBridge" */
-type IProjectTagsBridge_Aggregate_Order_By = {
+export type IProjectTagsBridge_Aggregate_Order_By = {
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IProjectTagsBridge_Max_Order_By>
   min?: InputMaybe<IProjectTagsBridge_Min_Order_By>
 }
 
 /** input type for inserting array relation for remote table "ProjectTagsBridge" */
-type IProjectTagsBridge_Arr_Rel_Insert_Input = {
+export type IProjectTagsBridge_Arr_Rel_Insert_Input = {
   data: Array<IProjectTagsBridge_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IProjectTagsBridge_On_Conflict>
 }
 
 /** Boolean expression to filter rows from the table "ProjectTagsBridge". All fields are combined with a logical 'AND'. */
-type IProjectTagsBridge_Bool_Exp = {
+export type IProjectTagsBridge_Bool_Exp = {
   _and?: InputMaybe<Array<IProjectTagsBridge_Bool_Exp>>
   _not?: InputMaybe<IProjectTagsBridge_Bool_Exp>
   _or?: InputMaybe<Array<IProjectTagsBridge_Bool_Exp>>
@@ -4458,13 +4528,13 @@ type IProjectTagsBridge_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "ProjectTagsBridge" */
-enum ProjectTagsBridge_Constraint {
+export enum ProjectTagsBridge_Constraint {
   /** unique or primary key constraint */
   ProjectTagsBridge_pkey = 'ProjectTagsBridge_pkey',
 }
 
 /** input type for inserting data into table "ProjectTagsBridge" */
-type IProjectTagsBridge_Insert_Input = {
+export type IProjectTagsBridge_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>
   project?: InputMaybe<IProject_Obj_Rel_Insert_Input>
   projectId?: InputMaybe<Scalars['uuid']>
@@ -4473,7 +4543,7 @@ type IProjectTagsBridge_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IProjectTagsBridge_Max_Fields = {
+export type IProjectTagsBridge_Max_Fields = {
   __typename?: 'ProjectTagsBridge_max_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   projectId?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -4481,14 +4551,14 @@ type IProjectTagsBridge_Max_Fields = {
 }
 
 /** order by max() on columns of table "ProjectTagsBridge" */
-type IProjectTagsBridge_Max_Order_By = {
+export type IProjectTagsBridge_Max_Order_By = {
   id?: InputMaybe<Order_By>
   projectId?: InputMaybe<Order_By>
   tagId?: InputMaybe<Order_By>
 }
 
 /** aggregate min on columns */
-type IProjectTagsBridge_Min_Fields = {
+export type IProjectTagsBridge_Min_Fields = {
   __typename?: 'ProjectTagsBridge_min_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   projectId?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -4496,14 +4566,14 @@ type IProjectTagsBridge_Min_Fields = {
 }
 
 /** order by min() on columns of table "ProjectTagsBridge" */
-type IProjectTagsBridge_Min_Order_By = {
+export type IProjectTagsBridge_Min_Order_By = {
   id?: InputMaybe<Order_By>
   projectId?: InputMaybe<Order_By>
   tagId?: InputMaybe<Order_By>
 }
 
 /** response of any mutation on the table "ProjectTagsBridge" */
-type IProjectTagsBridge_Mutation_Response = {
+export type IProjectTagsBridge_Mutation_Response = {
   __typename?: 'ProjectTagsBridge_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -4512,14 +4582,14 @@ type IProjectTagsBridge_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "ProjectTagsBridge" */
-type IProjectTagsBridge_On_Conflict = {
+export type IProjectTagsBridge_On_Conflict = {
   constraint: ProjectTagsBridge_Constraint
   update_columns?: Array<ProjectTagsBridge_Update_Column>
   where?: InputMaybe<IProjectTagsBridge_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "ProjectTagsBridge". */
-type IProjectTagsBridge_Order_By = {
+export type IProjectTagsBridge_Order_By = {
   id?: InputMaybe<Order_By>
   project?: InputMaybe<IProject_Order_By>
   projectId?: InputMaybe<Order_By>
@@ -4528,12 +4598,12 @@ type IProjectTagsBridge_Order_By = {
 }
 
 /** primary key columns input for table: ProjectTagsBridge */
-type IProjectTagsBridge_Pk_Columns_Input = {
+export type IProjectTagsBridge_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "ProjectTagsBridge" */
-enum ProjectTagsBridge_Select_Column {
+export enum ProjectTagsBridge_Select_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -4543,14 +4613,14 @@ enum ProjectTagsBridge_Select_Column {
 }
 
 /** input type for updating data in table "ProjectTagsBridge" */
-type IProjectTagsBridge_Set_Input = {
+export type IProjectTagsBridge_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>
   projectId?: InputMaybe<Scalars['uuid']>
   tagId?: InputMaybe<Scalars['uuid']>
 }
 
 /** update columns of table "ProjectTagsBridge" */
-enum ProjectTagsBridge_Update_Column {
+export enum ProjectTagsBridge_Update_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -4560,7 +4630,7 @@ enum ProjectTagsBridge_Update_Column {
 }
 
 /** columns and relationships of "ProjectType" */
-type IProjectType = {
+export type IProjectType = {
   __typename?: 'ProjectType'
   /** An array relationship */
   ProjectType: Array<FieldWrapper<IProjectTypeBridge>>
@@ -4572,7 +4642,7 @@ type IProjectType = {
 }
 
 /** columns and relationships of "ProjectType" */
-type IProjectTypeProjectTypeArgs = {
+export type IProjectTypeProjectTypeArgs = {
   distinct_on?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -4581,7 +4651,7 @@ type IProjectTypeProjectTypeArgs = {
 }
 
 /** columns and relationships of "ProjectType" */
-type IProjectTypeProjectType_AggregateArgs = {
+export type IProjectTypeProjectType_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -4590,7 +4660,7 @@ type IProjectTypeProjectType_AggregateArgs = {
 }
 
 /** columns and relationships of "ProjectTypeBridge" */
-type IProjectTypeBridge = {
+export type IProjectTypeBridge = {
   __typename?: 'ProjectTypeBridge'
   id: FieldWrapper<Scalars['uuid']>
   /** An object relationship */
@@ -4602,14 +4672,14 @@ type IProjectTypeBridge = {
 }
 
 /** aggregated selection of "ProjectTypeBridge" */
-type IProjectTypeBridge_Aggregate = {
+export type IProjectTypeBridge_Aggregate = {
   __typename?: 'ProjectTypeBridge_aggregate'
   aggregate?: Maybe<FieldWrapper<IProjectTypeBridge_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IProjectTypeBridge>>
 }
 
 /** aggregate fields of "ProjectTypeBridge" */
-type IProjectTypeBridge_Aggregate_Fields = {
+export type IProjectTypeBridge_Aggregate_Fields = {
   __typename?: 'ProjectTypeBridge_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IProjectTypeBridge_Max_Fields>>
@@ -4617,27 +4687,27 @@ type IProjectTypeBridge_Aggregate_Fields = {
 }
 
 /** aggregate fields of "ProjectTypeBridge" */
-type IProjectTypeBridge_Aggregate_FieldsCountArgs = {
+export type IProjectTypeBridge_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "ProjectTypeBridge" */
-type IProjectTypeBridge_Aggregate_Order_By = {
+export type IProjectTypeBridge_Aggregate_Order_By = {
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IProjectTypeBridge_Max_Order_By>
   min?: InputMaybe<IProjectTypeBridge_Min_Order_By>
 }
 
 /** input type for inserting array relation for remote table "ProjectTypeBridge" */
-type IProjectTypeBridge_Arr_Rel_Insert_Input = {
+export type IProjectTypeBridge_Arr_Rel_Insert_Input = {
   data: Array<IProjectTypeBridge_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IProjectTypeBridge_On_Conflict>
 }
 
 /** Boolean expression to filter rows from the table "ProjectTypeBridge". All fields are combined with a logical 'AND'. */
-type IProjectTypeBridge_Bool_Exp = {
+export type IProjectTypeBridge_Bool_Exp = {
   _and?: InputMaybe<Array<IProjectTypeBridge_Bool_Exp>>
   _not?: InputMaybe<IProjectTypeBridge_Bool_Exp>
   _or?: InputMaybe<Array<IProjectTypeBridge_Bool_Exp>>
@@ -4649,13 +4719,13 @@ type IProjectTypeBridge_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "ProjectTypeBridge" */
-enum ProjectTypeBridge_Constraint {
+export enum ProjectTypeBridge_Constraint {
   /** unique or primary key constraint */
   ProjectTypeBridge_pkey = 'ProjectTypeBridge_pkey',
 }
 
 /** input type for inserting data into table "ProjectTypeBridge" */
-type IProjectTypeBridge_Insert_Input = {
+export type IProjectTypeBridge_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>
   project?: InputMaybe<IProject_Obj_Rel_Insert_Input>
   projectId?: InputMaybe<Scalars['uuid']>
@@ -4664,7 +4734,7 @@ type IProjectTypeBridge_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IProjectTypeBridge_Max_Fields = {
+export type IProjectTypeBridge_Max_Fields = {
   __typename?: 'ProjectTypeBridge_max_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   projectId?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -4672,14 +4742,14 @@ type IProjectTypeBridge_Max_Fields = {
 }
 
 /** order by max() on columns of table "ProjectTypeBridge" */
-type IProjectTypeBridge_Max_Order_By = {
+export type IProjectTypeBridge_Max_Order_By = {
   id?: InputMaybe<Order_By>
   projectId?: InputMaybe<Order_By>
   typeId?: InputMaybe<Order_By>
 }
 
 /** aggregate min on columns */
-type IProjectTypeBridge_Min_Fields = {
+export type IProjectTypeBridge_Min_Fields = {
   __typename?: 'ProjectTypeBridge_min_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   projectId?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -4687,14 +4757,14 @@ type IProjectTypeBridge_Min_Fields = {
 }
 
 /** order by min() on columns of table "ProjectTypeBridge" */
-type IProjectTypeBridge_Min_Order_By = {
+export type IProjectTypeBridge_Min_Order_By = {
   id?: InputMaybe<Order_By>
   projectId?: InputMaybe<Order_By>
   typeId?: InputMaybe<Order_By>
 }
 
 /** response of any mutation on the table "ProjectTypeBridge" */
-type IProjectTypeBridge_Mutation_Response = {
+export type IProjectTypeBridge_Mutation_Response = {
   __typename?: 'ProjectTypeBridge_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -4703,14 +4773,14 @@ type IProjectTypeBridge_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "ProjectTypeBridge" */
-type IProjectTypeBridge_On_Conflict = {
+export type IProjectTypeBridge_On_Conflict = {
   constraint: ProjectTypeBridge_Constraint
   update_columns?: Array<ProjectTypeBridge_Update_Column>
   where?: InputMaybe<IProjectTypeBridge_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "ProjectTypeBridge". */
-type IProjectTypeBridge_Order_By = {
+export type IProjectTypeBridge_Order_By = {
   id?: InputMaybe<Order_By>
   project?: InputMaybe<IProject_Order_By>
   projectId?: InputMaybe<Order_By>
@@ -4719,12 +4789,12 @@ type IProjectTypeBridge_Order_By = {
 }
 
 /** primary key columns input for table: ProjectTypeBridge */
-type IProjectTypeBridge_Pk_Columns_Input = {
+export type IProjectTypeBridge_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "ProjectTypeBridge" */
-enum ProjectTypeBridge_Select_Column {
+export enum ProjectTypeBridge_Select_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -4734,14 +4804,14 @@ enum ProjectTypeBridge_Select_Column {
 }
 
 /** input type for updating data in table "ProjectTypeBridge" */
-type IProjectTypeBridge_Set_Input = {
+export type IProjectTypeBridge_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>
   projectId?: InputMaybe<Scalars['uuid']>
   typeId?: InputMaybe<Scalars['uuid']>
 }
 
 /** update columns of table "ProjectTypeBridge" */
-enum ProjectTypeBridge_Update_Column {
+export enum ProjectTypeBridge_Update_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -4751,14 +4821,14 @@ enum ProjectTypeBridge_Update_Column {
 }
 
 /** aggregated selection of "ProjectType" */
-type IProjectType_Aggregate = {
+export type IProjectType_Aggregate = {
   __typename?: 'ProjectType_aggregate'
   aggregate?: Maybe<FieldWrapper<IProjectType_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IProjectType>>
 }
 
 /** aggregate fields of "ProjectType" */
-type IProjectType_Aggregate_Fields = {
+export type IProjectType_Aggregate_Fields = {
   __typename?: 'ProjectType_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IProjectType_Max_Fields>>
@@ -4766,13 +4836,13 @@ type IProjectType_Aggregate_Fields = {
 }
 
 /** aggregate fields of "ProjectType" */
-type IProjectType_Aggregate_FieldsCountArgs = {
+export type IProjectType_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<ProjectType_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** Boolean expression to filter rows from the table "ProjectType". All fields are combined with a logical 'AND'. */
-type IProjectType_Bool_Exp = {
+export type IProjectType_Bool_Exp = {
   ProjectType?: InputMaybe<IProjectTypeBridge_Bool_Exp>
   _and?: InputMaybe<Array<IProjectType_Bool_Exp>>
   _not?: InputMaybe<IProjectType_Bool_Exp>
@@ -4783,7 +4853,7 @@ type IProjectType_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "ProjectType" */
-enum ProjectType_Constraint {
+export enum ProjectType_Constraint {
   /** unique or primary key constraint */
   ProjectType_pkey = 'ProjectType_pkey',
   /** unique or primary key constraint */
@@ -4791,7 +4861,7 @@ enum ProjectType_Constraint {
 }
 
 /** input type for inserting data into table "ProjectType" */
-type IProjectType_Insert_Input = {
+export type IProjectType_Insert_Input = {
   ProjectType?: InputMaybe<IProjectTypeBridge_Arr_Rel_Insert_Input>
   id?: InputMaybe<Scalars['uuid']>
   label?: InputMaybe<Scalars['String']>
@@ -4799,7 +4869,7 @@ type IProjectType_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IProjectType_Max_Fields = {
+export type IProjectType_Max_Fields = {
   __typename?: 'ProjectType_max_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   label?: Maybe<FieldWrapper<Scalars['String']>>
@@ -4807,7 +4877,7 @@ type IProjectType_Max_Fields = {
 }
 
 /** aggregate min on columns */
-type IProjectType_Min_Fields = {
+export type IProjectType_Min_Fields = {
   __typename?: 'ProjectType_min_fields'
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
   label?: Maybe<FieldWrapper<Scalars['String']>>
@@ -4815,7 +4885,7 @@ type IProjectType_Min_Fields = {
 }
 
 /** response of any mutation on the table "ProjectType" */
-type IProjectType_Mutation_Response = {
+export type IProjectType_Mutation_Response = {
   __typename?: 'ProjectType_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -4824,21 +4894,21 @@ type IProjectType_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "ProjectType" */
-type IProjectType_Obj_Rel_Insert_Input = {
+export type IProjectType_Obj_Rel_Insert_Input = {
   data: IProjectType_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IProjectType_On_Conflict>
 }
 
 /** on_conflict condition type for table "ProjectType" */
-type IProjectType_On_Conflict = {
+export type IProjectType_On_Conflict = {
   constraint: ProjectType_Constraint
   update_columns?: Array<ProjectType_Update_Column>
   where?: InputMaybe<IProjectType_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "ProjectType". */
-type IProjectType_Order_By = {
+export type IProjectType_Order_By = {
   ProjectType_aggregate?: InputMaybe<IProjectTypeBridge_Aggregate_Order_By>
   id?: InputMaybe<Order_By>
   label?: InputMaybe<Order_By>
@@ -4846,12 +4916,12 @@ type IProjectType_Order_By = {
 }
 
 /** primary key columns input for table: ProjectType */
-type IProjectType_Pk_Columns_Input = {
+export type IProjectType_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "ProjectType" */
-enum ProjectType_Select_Column {
+export enum ProjectType_Select_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -4861,14 +4931,14 @@ enum ProjectType_Select_Column {
 }
 
 /** input type for updating data in table "ProjectType" */
-type IProjectType_Set_Input = {
+export type IProjectType_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>
   label?: InputMaybe<Scalars['String']>
   value?: InputMaybe<Scalars['String']>
 }
 
 /** update columns of table "ProjectType" */
-enum ProjectType_Update_Column {
+export enum ProjectType_Update_Column {
   /** column name */
   id = 'id',
   /** column name */
@@ -4878,14 +4948,14 @@ enum ProjectType_Update_Column {
 }
 
 /** aggregated selection of "Project" */
-type IProject_Aggregate = {
+export type IProject_Aggregate = {
   __typename?: 'Project_aggregate'
   aggregate?: Maybe<FieldWrapper<IProject_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IProject>>
 }
 
 /** aggregate fields of "Project" */
-type IProject_Aggregate_Fields = {
+export type IProject_Aggregate_Fields = {
   __typename?: 'Project_aggregate_fields'
   avg?: Maybe<FieldWrapper<IProject_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -4901,13 +4971,13 @@ type IProject_Aggregate_Fields = {
 }
 
 /** aggregate fields of "Project" */
-type IProject_Aggregate_FieldsCountArgs = {
+export type IProject_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Project_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "Project" */
-type IProject_Aggregate_Order_By = {
+export type IProject_Aggregate_Order_By = {
   avg?: InputMaybe<IProject_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<IProject_Max_Order_By>
@@ -4922,14 +4992,14 @@ type IProject_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "Project" */
-type IProject_Arr_Rel_Insert_Input = {
+export type IProject_Arr_Rel_Insert_Input = {
   data: Array<IProject_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<IProject_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type IProject_Avg_Fields = {
+export type IProject_Avg_Fields = {
   __typename?: 'Project_avg_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   onChainId?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -4937,14 +5007,14 @@ type IProject_Avg_Fields = {
 }
 
 /** order by avg() on columns of table "Project" */
-type IProject_Avg_Order_By = {
+export type IProject_Avg_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   onChainId?: InputMaybe<Order_By>
   totalInvested?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "Project". All fields are combined with a logical 'AND'. */
-type IProject_Bool_Exp = {
+export type IProject_Bool_Exp = {
   GrantSubmitions?: InputMaybe<IGrantSubmissions_Bool_Exp>
   Likes?: InputMaybe<ILikes_Bool_Exp>
   ProjectTagBridge?: InputMaybe<IProjectTag_Bool_Exp>
@@ -4980,7 +5050,7 @@ type IProject_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "Project" */
-enum Project_Constraint {
+export enum Project_Constraint {
   /** unique or primary key constraint */
   Project_activityId_key = 'Project_activityId_key',
   /** unique or primary key constraint */
@@ -4990,14 +5060,14 @@ enum Project_Constraint {
 }
 
 /** input type for incrementing numeric columns in table "Project" */
-type IProject_Inc_Input = {
+export type IProject_Inc_Input = {
   currentInvested?: InputMaybe<Scalars['Int']>
   onChainId?: InputMaybe<Scalars['Int']>
   totalInvested?: InputMaybe<Scalars['Int']>
 }
 
 /** input type for inserting data into table "Project" */
-type IProject_Insert_Input = {
+export type IProject_Insert_Input = {
   GrantSubmitions?: InputMaybe<IGrantSubmissions_Arr_Rel_Insert_Input>
   Likes?: InputMaybe<ILikes_Arr_Rel_Insert_Input>
   ProjectTagBridge?: InputMaybe<IProjectTag_Obj_Rel_Insert_Input>
@@ -5030,7 +5100,7 @@ type IProject_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IProject_Max_Fields = {
+export type IProject_Max_Fields = {
   __typename?: 'Project_max_fields'
   activityId?: Maybe<FieldWrapper<Scalars['uuid']>>
   author_id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -5054,7 +5124,7 @@ type IProject_Max_Fields = {
 }
 
 /** order by max() on columns of table "Project" */
-type IProject_Max_Order_By = {
+export type IProject_Max_Order_By = {
   activityId?: InputMaybe<Order_By>
   author_id?: InputMaybe<Order_By>
   category?: InputMaybe<Order_By>
@@ -5077,7 +5147,7 @@ type IProject_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type IProject_Min_Fields = {
+export type IProject_Min_Fields = {
   __typename?: 'Project_min_fields'
   activityId?: Maybe<FieldWrapper<Scalars['uuid']>>
   author_id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -5101,7 +5171,7 @@ type IProject_Min_Fields = {
 }
 
 /** order by min() on columns of table "Project" */
-type IProject_Min_Order_By = {
+export type IProject_Min_Order_By = {
   activityId?: InputMaybe<Order_By>
   author_id?: InputMaybe<Order_By>
   category?: InputMaybe<Order_By>
@@ -5124,7 +5194,7 @@ type IProject_Min_Order_By = {
 }
 
 /** response of any mutation on the table "Project" */
-type IProject_Mutation_Response = {
+export type IProject_Mutation_Response = {
   __typename?: 'Project_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -5133,21 +5203,21 @@ type IProject_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "Project" */
-type IProject_Obj_Rel_Insert_Input = {
+export type IProject_Obj_Rel_Insert_Input = {
   data: IProject_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IProject_On_Conflict>
 }
 
 /** on_conflict condition type for table "Project" */
-type IProject_On_Conflict = {
+export type IProject_On_Conflict = {
   constraint: Project_Constraint
   update_columns?: Array<Project_Update_Column>
   where?: InputMaybe<IProject_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "Project". */
-type IProject_Order_By = {
+export type IProject_Order_By = {
   GrantSubmitions_aggregate?: InputMaybe<IGrantSubmissions_Aggregate_Order_By>
   Likes_aggregate?: InputMaybe<ILikes_Aggregate_Order_By>
   ProjectTagBridge?: InputMaybe<IProjectTag_Order_By>
@@ -5180,12 +5250,12 @@ type IProject_Order_By = {
 }
 
 /** primary key columns input for table: Project */
-type IProject_Pk_Columns_Input = {
+export type IProject_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "Project" */
-enum Project_Select_Column {
+export enum Project_Select_Column {
   /** column name */
   activityId = 'activityId',
   /** column name */
@@ -5233,7 +5303,7 @@ enum Project_Select_Column {
 }
 
 /** input type for updating data in table "Project" */
-type IProject_Set_Input = {
+export type IProject_Set_Input = {
   activityId?: InputMaybe<Scalars['uuid']>
   author_id?: InputMaybe<Scalars['uuid']>
   category?: InputMaybe<Scalars['String']>
@@ -5259,7 +5329,7 @@ type IProject_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type IProject_Stddev_Fields = {
+export type IProject_Stddev_Fields = {
   __typename?: 'Project_stddev_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   onChainId?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5267,14 +5337,14 @@ type IProject_Stddev_Fields = {
 }
 
 /** order by stddev() on columns of table "Project" */
-type IProject_Stddev_Order_By = {
+export type IProject_Stddev_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   onChainId?: InputMaybe<Order_By>
   totalInvested?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_pop on columns */
-type IProject_Stddev_Pop_Fields = {
+export type IProject_Stddev_Pop_Fields = {
   __typename?: 'Project_stddev_pop_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   onChainId?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5282,14 +5352,14 @@ type IProject_Stddev_Pop_Fields = {
 }
 
 /** order by stddev_pop() on columns of table "Project" */
-type IProject_Stddev_Pop_Order_By = {
+export type IProject_Stddev_Pop_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   onChainId?: InputMaybe<Order_By>
   totalInvested?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
-type IProject_Stddev_Samp_Fields = {
+export type IProject_Stddev_Samp_Fields = {
   __typename?: 'Project_stddev_samp_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   onChainId?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5297,14 +5367,14 @@ type IProject_Stddev_Samp_Fields = {
 }
 
 /** order by stddev_samp() on columns of table "Project" */
-type IProject_Stddev_Samp_Order_By = {
+export type IProject_Stddev_Samp_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   onChainId?: InputMaybe<Order_By>
   totalInvested?: InputMaybe<Order_By>
 }
 
 /** aggregate sum on columns */
-type IProject_Sum_Fields = {
+export type IProject_Sum_Fields = {
   __typename?: 'Project_sum_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Int']>>
   onChainId?: Maybe<FieldWrapper<Scalars['Int']>>
@@ -5312,14 +5382,14 @@ type IProject_Sum_Fields = {
 }
 
 /** order by sum() on columns of table "Project" */
-type IProject_Sum_Order_By = {
+export type IProject_Sum_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   onChainId?: InputMaybe<Order_By>
   totalInvested?: InputMaybe<Order_By>
 }
 
 /** update columns of table "Project" */
-enum Project_Update_Column {
+export enum Project_Update_Column {
   /** column name */
   activityId = 'activityId',
   /** column name */
@@ -5367,7 +5437,7 @@ enum Project_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type IProject_Var_Pop_Fields = {
+export type IProject_Var_Pop_Fields = {
   __typename?: 'Project_var_pop_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   onChainId?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5375,14 +5445,14 @@ type IProject_Var_Pop_Fields = {
 }
 
 /** order by var_pop() on columns of table "Project" */
-type IProject_Var_Pop_Order_By = {
+export type IProject_Var_Pop_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   onChainId?: InputMaybe<Order_By>
   totalInvested?: InputMaybe<Order_By>
 }
 
 /** aggregate var_samp on columns */
-type IProject_Var_Samp_Fields = {
+export type IProject_Var_Samp_Fields = {
   __typename?: 'Project_var_samp_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   onChainId?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5390,14 +5460,14 @@ type IProject_Var_Samp_Fields = {
 }
 
 /** order by var_samp() on columns of table "Project" */
-type IProject_Var_Samp_Order_By = {
+export type IProject_Var_Samp_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   onChainId?: InputMaybe<Order_By>
   totalInvested?: InputMaybe<Order_By>
 }
 
 /** aggregate variance on columns */
-type IProject_Variance_Fields = {
+export type IProject_Variance_Fields = {
   __typename?: 'Project_variance_fields'
   currentInvested?: Maybe<FieldWrapper<Scalars['Float']>>
   onChainId?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5405,14 +5475,14 @@ type IProject_Variance_Fields = {
 }
 
 /** order by variance() on columns of table "Project" */
-type IProject_Variance_Order_By = {
+export type IProject_Variance_Order_By = {
   currentInvested?: InputMaybe<Order_By>
   onChainId?: InputMaybe<Order_By>
   totalInvested?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
-type IString_Comparison_Exp = {
+export type IString_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['String']>
   _gt?: InputMaybe<Scalars['String']>
   _gte?: InputMaybe<Scalars['String']>
@@ -5445,7 +5515,7 @@ type IString_Comparison_Exp = {
 }
 
 /** columns and relationships of "Swaps" */
-type ISwaps = {
+export type ISwaps = {
   __typename?: 'Swaps'
   amount: FieldWrapper<Scalars['numeric']>
   id: FieldWrapper<Scalars['uuid']>
@@ -5455,14 +5525,14 @@ type ISwaps = {
 }
 
 /** aggregated selection of "Swaps" */
-type ISwaps_Aggregate = {
+export type ISwaps_Aggregate = {
   __typename?: 'Swaps_aggregate'
   aggregate?: Maybe<FieldWrapper<ISwaps_Aggregate_Fields>>
   nodes: Array<FieldWrapper<ISwaps>>
 }
 
 /** aggregate fields of "Swaps" */
-type ISwaps_Aggregate_Fields = {
+export type ISwaps_Aggregate_Fields = {
   __typename?: 'Swaps_aggregate_fields'
   avg?: Maybe<FieldWrapper<ISwaps_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -5478,19 +5548,19 @@ type ISwaps_Aggregate_Fields = {
 }
 
 /** aggregate fields of "Swaps" */
-type ISwaps_Aggregate_FieldsCountArgs = {
+export type ISwaps_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Swaps_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** aggregate avg on columns */
-type ISwaps_Avg_Fields = {
+export type ISwaps_Avg_Fields = {
   __typename?: 'Swaps_avg_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** Boolean expression to filter rows from the table "Swaps". All fields are combined with a logical 'AND'. */
-type ISwaps_Bool_Exp = {
+export type ISwaps_Bool_Exp = {
   _and?: InputMaybe<Array<ISwaps_Bool_Exp>>
   _not?: InputMaybe<ISwaps_Bool_Exp>
   _or?: InputMaybe<Array<ISwaps_Bool_Exp>>
@@ -5502,18 +5572,18 @@ type ISwaps_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "Swaps" */
-enum Swaps_Constraint {
+export enum Swaps_Constraint {
   /** unique or primary key constraint */
   Swaps_pkey = 'Swaps_pkey',
 }
 
 /** input type for incrementing numeric columns in table "Swaps" */
-type ISwaps_Inc_Input = {
+export type ISwaps_Inc_Input = {
   amount?: InputMaybe<Scalars['numeric']>
 }
 
 /** input type for inserting data into table "Swaps" */
-type ISwaps_Insert_Input = {
+export type ISwaps_Insert_Input = {
   amount?: InputMaybe<Scalars['numeric']>
   id?: InputMaybe<Scalars['uuid']>
   state?: InputMaybe<Scalars['String']>
@@ -5522,7 +5592,7 @@ type ISwaps_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type ISwaps_Max_Fields = {
+export type ISwaps_Max_Fields = {
   __typename?: 'Swaps_max_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -5532,7 +5602,7 @@ type ISwaps_Max_Fields = {
 }
 
 /** aggregate min on columns */
-type ISwaps_Min_Fields = {
+export type ISwaps_Min_Fields = {
   __typename?: 'Swaps_min_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
   id?: Maybe<FieldWrapper<Scalars['uuid']>>
@@ -5542,7 +5612,7 @@ type ISwaps_Min_Fields = {
 }
 
 /** response of any mutation on the table "Swaps" */
-type ISwaps_Mutation_Response = {
+export type ISwaps_Mutation_Response = {
   __typename?: 'Swaps_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -5551,14 +5621,14 @@ type ISwaps_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "Swaps" */
-type ISwaps_On_Conflict = {
+export type ISwaps_On_Conflict = {
   constraint: Swaps_Constraint
   update_columns?: Array<Swaps_Update_Column>
   where?: InputMaybe<ISwaps_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "Swaps". */
-type ISwaps_Order_By = {
+export type ISwaps_Order_By = {
   amount?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   state?: InputMaybe<Order_By>
@@ -5567,12 +5637,12 @@ type ISwaps_Order_By = {
 }
 
 /** primary key columns input for table: Swaps */
-type ISwaps_Pk_Columns_Input = {
+export type ISwaps_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "Swaps" */
-enum Swaps_Select_Column {
+export enum Swaps_Select_Column {
   /** column name */
   amount = 'amount',
   /** column name */
@@ -5586,7 +5656,7 @@ enum Swaps_Select_Column {
 }
 
 /** input type for updating data in table "Swaps" */
-type ISwaps_Set_Input = {
+export type ISwaps_Set_Input = {
   amount?: InputMaybe<Scalars['numeric']>
   id?: InputMaybe<Scalars['uuid']>
   state?: InputMaybe<Scalars['String']>
@@ -5595,31 +5665,31 @@ type ISwaps_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type ISwaps_Stddev_Fields = {
+export type ISwaps_Stddev_Fields = {
   __typename?: 'Swaps_stddev_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** aggregate stddev_pop on columns */
-type ISwaps_Stddev_Pop_Fields = {
+export type ISwaps_Stddev_Pop_Fields = {
   __typename?: 'Swaps_stddev_pop_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** aggregate stddev_samp on columns */
-type ISwaps_Stddev_Samp_Fields = {
+export type ISwaps_Stddev_Samp_Fields = {
   __typename?: 'Swaps_stddev_samp_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** aggregate sum on columns */
-type ISwaps_Sum_Fields = {
+export type ISwaps_Sum_Fields = {
   __typename?: 'Swaps_sum_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
 }
 
 /** update columns of table "Swaps" */
-enum Swaps_Update_Column {
+export enum Swaps_Update_Column {
   /** column name */
   amount = 'amount',
   /** column name */
@@ -5633,25 +5703,25 @@ enum Swaps_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type ISwaps_Var_Pop_Fields = {
+export type ISwaps_Var_Pop_Fields = {
   __typename?: 'Swaps_var_pop_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** aggregate var_samp on columns */
-type ISwaps_Var_Samp_Fields = {
+export type ISwaps_Var_Samp_Fields = {
   __typename?: 'Swaps_var_samp_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** aggregate variance on columns */
-type ISwaps_Variance_Fields = {
+export type ISwaps_Variance_Fields = {
   __typename?: 'Swaps_variance_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
 }
 
 /** columns and relationships of "TopUpWallet" */
-type ITopUpWallet = {
+export type ITopUpWallet = {
   __typename?: 'TopUpWallet'
   /** An object relationship */
   User: FieldWrapper<IUser>
@@ -5668,14 +5738,14 @@ type ITopUpWallet = {
 }
 
 /** aggregated selection of "TopUpWallet" */
-type ITopUpWallet_Aggregate = {
+export type ITopUpWallet_Aggregate = {
   __typename?: 'TopUpWallet_aggregate'
   aggregate?: Maybe<FieldWrapper<ITopUpWallet_Aggregate_Fields>>
   nodes: Array<FieldWrapper<ITopUpWallet>>
 }
 
 /** aggregate fields of "TopUpWallet" */
-type ITopUpWallet_Aggregate_Fields = {
+export type ITopUpWallet_Aggregate_Fields = {
   __typename?: 'TopUpWallet_aggregate_fields'
   avg?: Maybe<FieldWrapper<ITopUpWallet_Avg_Fields>>
   count: FieldWrapper<Scalars['Int']>
@@ -5691,13 +5761,13 @@ type ITopUpWallet_Aggregate_Fields = {
 }
 
 /** aggregate fields of "TopUpWallet" */
-type ITopUpWallet_Aggregate_FieldsCountArgs = {
+export type ITopUpWallet_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<TopUpWallet_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** order by aggregate values of table "TopUpWallet" */
-type ITopUpWallet_Aggregate_Order_By = {
+export type ITopUpWallet_Aggregate_Order_By = {
   avg?: InputMaybe<ITopUpWallet_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<ITopUpWallet_Max_Order_By>
@@ -5712,14 +5782,14 @@ type ITopUpWallet_Aggregate_Order_By = {
 }
 
 /** input type for inserting array relation for remote table "TopUpWallet" */
-type ITopUpWallet_Arr_Rel_Insert_Input = {
+export type ITopUpWallet_Arr_Rel_Insert_Input = {
   data: Array<ITopUpWallet_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<ITopUpWallet_On_Conflict>
 }
 
 /** aggregate avg on columns */
-type ITopUpWallet_Avg_Fields = {
+export type ITopUpWallet_Avg_Fields = {
   __typename?: 'TopUpWallet_avg_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5727,14 +5797,14 @@ type ITopUpWallet_Avg_Fields = {
 }
 
 /** order by avg() on columns of table "TopUpWallet" */
-type ITopUpWallet_Avg_Order_By = {
+export type ITopUpWallet_Avg_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   timestamp?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "TopUpWallet". All fields are combined with a logical 'AND'. */
-type ITopUpWallet_Bool_Exp = {
+export type ITopUpWallet_Bool_Exp = {
   User?: InputMaybe<IUser_Bool_Exp>
   _and?: InputMaybe<Array<ITopUpWallet_Bool_Exp>>
   _not?: InputMaybe<ITopUpWallet_Bool_Exp>
@@ -5752,20 +5822,20 @@ type ITopUpWallet_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "TopUpWallet" */
-enum TopUpWallet_Constraint {
+export enum TopUpWallet_Constraint {
   /** unique or primary key constraint */
   topupWallet_pkey = 'topupWallet_pkey',
 }
 
 /** input type for incrementing numeric columns in table "TopUpWallet" */
-type ITopUpWallet_Inc_Input = {
+export type ITopUpWallet_Inc_Input = {
   amount?: InputMaybe<Scalars['numeric']>
   fee?: InputMaybe<Scalars['numeric']>
   timestamp?: InputMaybe<Scalars['bigint']>
 }
 
 /** input type for inserting data into table "TopUpWallet" */
-type ITopUpWallet_Insert_Input = {
+export type ITopUpWallet_Insert_Input = {
   User?: InputMaybe<IUser_Obj_Rel_Insert_Input>
   amount?: InputMaybe<Scalars['numeric']>
   fee?: InputMaybe<Scalars['numeric']>
@@ -5780,7 +5850,7 @@ type ITopUpWallet_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type ITopUpWallet_Max_Fields = {
+export type ITopUpWallet_Max_Fields = {
   __typename?: 'TopUpWallet_max_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
   fee?: Maybe<FieldWrapper<Scalars['numeric']>>
@@ -5795,7 +5865,7 @@ type ITopUpWallet_Max_Fields = {
 }
 
 /** order by max() on columns of table "TopUpWallet" */
-type ITopUpWallet_Max_Order_By = {
+export type ITopUpWallet_Max_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -5809,7 +5879,7 @@ type ITopUpWallet_Max_Order_By = {
 }
 
 /** aggregate min on columns */
-type ITopUpWallet_Min_Fields = {
+export type ITopUpWallet_Min_Fields = {
   __typename?: 'TopUpWallet_min_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
   fee?: Maybe<FieldWrapper<Scalars['numeric']>>
@@ -5824,7 +5894,7 @@ type ITopUpWallet_Min_Fields = {
 }
 
 /** order by min() on columns of table "TopUpWallet" */
-type ITopUpWallet_Min_Order_By = {
+export type ITopUpWallet_Min_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
@@ -5838,7 +5908,7 @@ type ITopUpWallet_Min_Order_By = {
 }
 
 /** response of any mutation on the table "TopUpWallet" */
-type ITopUpWallet_Mutation_Response = {
+export type ITopUpWallet_Mutation_Response = {
   __typename?: 'TopUpWallet_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -5847,14 +5917,14 @@ type ITopUpWallet_Mutation_Response = {
 }
 
 /** on_conflict condition type for table "TopUpWallet" */
-type ITopUpWallet_On_Conflict = {
+export type ITopUpWallet_On_Conflict = {
   constraint: TopUpWallet_Constraint
   update_columns?: Array<TopUpWallet_Update_Column>
   where?: InputMaybe<ITopUpWallet_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "TopUpWallet". */
-type ITopUpWallet_Order_By = {
+export type ITopUpWallet_Order_By = {
   User?: InputMaybe<IUser_Order_By>
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
@@ -5869,12 +5939,12 @@ type ITopUpWallet_Order_By = {
 }
 
 /** primary key columns input for table: TopUpWallet */
-type ITopUpWallet_Pk_Columns_Input = {
+export type ITopUpWallet_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "TopUpWallet" */
-enum TopUpWallet_Select_Column {
+export enum TopUpWallet_Select_Column {
   /** column name */
   amount = 'amount',
   /** column name */
@@ -5898,7 +5968,7 @@ enum TopUpWallet_Select_Column {
 }
 
 /** input type for updating data in table "TopUpWallet" */
-type ITopUpWallet_Set_Input = {
+export type ITopUpWallet_Set_Input = {
   amount?: InputMaybe<Scalars['numeric']>
   fee?: InputMaybe<Scalars['numeric']>
   id?: InputMaybe<Scalars['uuid']>
@@ -5912,7 +5982,7 @@ type ITopUpWallet_Set_Input = {
 }
 
 /** aggregate stddev on columns */
-type ITopUpWallet_Stddev_Fields = {
+export type ITopUpWallet_Stddev_Fields = {
   __typename?: 'TopUpWallet_stddev_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5920,14 +5990,14 @@ type ITopUpWallet_Stddev_Fields = {
 }
 
 /** order by stddev() on columns of table "TopUpWallet" */
-type ITopUpWallet_Stddev_Order_By = {
+export type ITopUpWallet_Stddev_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   timestamp?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_pop on columns */
-type ITopUpWallet_Stddev_Pop_Fields = {
+export type ITopUpWallet_Stddev_Pop_Fields = {
   __typename?: 'TopUpWallet_stddev_pop_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5935,14 +6005,14 @@ type ITopUpWallet_Stddev_Pop_Fields = {
 }
 
 /** order by stddev_pop() on columns of table "TopUpWallet" */
-type ITopUpWallet_Stddev_Pop_Order_By = {
+export type ITopUpWallet_Stddev_Pop_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   timestamp?: InputMaybe<Order_By>
 }
 
 /** aggregate stddev_samp on columns */
-type ITopUpWallet_Stddev_Samp_Fields = {
+export type ITopUpWallet_Stddev_Samp_Fields = {
   __typename?: 'TopUpWallet_stddev_samp_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -5950,14 +6020,14 @@ type ITopUpWallet_Stddev_Samp_Fields = {
 }
 
 /** order by stddev_samp() on columns of table "TopUpWallet" */
-type ITopUpWallet_Stddev_Samp_Order_By = {
+export type ITopUpWallet_Stddev_Samp_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   timestamp?: InputMaybe<Order_By>
 }
 
 /** aggregate sum on columns */
-type ITopUpWallet_Sum_Fields = {
+export type ITopUpWallet_Sum_Fields = {
   __typename?: 'TopUpWallet_sum_fields'
   amount?: Maybe<FieldWrapper<Scalars['numeric']>>
   fee?: Maybe<FieldWrapper<Scalars['numeric']>>
@@ -5965,14 +6035,14 @@ type ITopUpWallet_Sum_Fields = {
 }
 
 /** order by sum() on columns of table "TopUpWallet" */
-type ITopUpWallet_Sum_Order_By = {
+export type ITopUpWallet_Sum_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   timestamp?: InputMaybe<Order_By>
 }
 
 /** update columns of table "TopUpWallet" */
-enum TopUpWallet_Update_Column {
+export enum TopUpWallet_Update_Column {
   /** column name */
   amount = 'amount',
   /** column name */
@@ -5996,7 +6066,7 @@ enum TopUpWallet_Update_Column {
 }
 
 /** aggregate var_pop on columns */
-type ITopUpWallet_Var_Pop_Fields = {
+export type ITopUpWallet_Var_Pop_Fields = {
   __typename?: 'TopUpWallet_var_pop_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -6004,14 +6074,14 @@ type ITopUpWallet_Var_Pop_Fields = {
 }
 
 /** order by var_pop() on columns of table "TopUpWallet" */
-type ITopUpWallet_Var_Pop_Order_By = {
+export type ITopUpWallet_Var_Pop_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   timestamp?: InputMaybe<Order_By>
 }
 
 /** aggregate var_samp on columns */
-type ITopUpWallet_Var_Samp_Fields = {
+export type ITopUpWallet_Var_Samp_Fields = {
   __typename?: 'TopUpWallet_var_samp_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -6019,14 +6089,14 @@ type ITopUpWallet_Var_Samp_Fields = {
 }
 
 /** order by var_samp() on columns of table "TopUpWallet" */
-type ITopUpWallet_Var_Samp_Order_By = {
+export type ITopUpWallet_Var_Samp_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   timestamp?: InputMaybe<Order_By>
 }
 
 /** aggregate variance on columns */
-type ITopUpWallet_Variance_Fields = {
+export type ITopUpWallet_Variance_Fields = {
   __typename?: 'TopUpWallet_variance_fields'
   amount?: Maybe<FieldWrapper<Scalars['Float']>>
   fee?: Maybe<FieldWrapper<Scalars['Float']>>
@@ -6034,14 +6104,14 @@ type ITopUpWallet_Variance_Fields = {
 }
 
 /** order by variance() on columns of table "TopUpWallet" */
-type ITopUpWallet_Variance_Order_By = {
+export type ITopUpWallet_Variance_Order_By = {
   amount?: InputMaybe<Order_By>
   fee?: InputMaybe<Order_By>
   timestamp?: InputMaybe<Order_By>
 }
 
 /** columns and relationships of "User" */
-type IUser = {
+export type IUser = {
   __typename?: 'User'
   /** An array relationship */
   GrantOwners: Array<FieldWrapper<IGrantOwners>>
@@ -6106,7 +6176,7 @@ type IUser = {
 }
 
 /** columns and relationships of "User" */
-type IUserGrantOwnersArgs = {
+export type IUserGrantOwnersArgs = {
   distinct_on?: InputMaybe<Array<GrantOwners_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6115,7 +6185,7 @@ type IUserGrantOwnersArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserGrantOwners_AggregateArgs = {
+export type IUserGrantOwners_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantOwners_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6124,7 +6194,7 @@ type IUserGrantOwners_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserProjectMembersArgs = {
+export type IUserProjectMembersArgs = {
   distinct_on?: InputMaybe<Array<ProjectMembers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6133,7 +6203,7 @@ type IUserProjectMembersArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserProjectMembers_AggregateArgs = {
+export type IUserProjectMembers_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectMembers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6142,7 +6212,7 @@ type IUserProjectMembers_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserTopUpWalletsArgs = {
+export type IUserTopUpWalletsArgs = {
   distinct_on?: InputMaybe<Array<TopUpWallet_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6151,7 +6221,7 @@ type IUserTopUpWalletsArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserTopUpWallets_AggregateArgs = {
+export type IUserTopUpWallets_AggregateArgs = {
   distinct_on?: InputMaybe<Array<TopUpWallet_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6160,7 +6230,7 @@ type IUserTopUpWallets_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserDonationsArgs = {
+export type IUserDonationsArgs = {
   distinct_on?: InputMaybe<Array<Donations_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6169,7 +6239,7 @@ type IUserDonationsArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserDonations_AggregateArgs = {
+export type IUserDonations_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Donations_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6178,7 +6248,7 @@ type IUserDonations_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserFollowsArgs = {
+export type IUserFollowsArgs = {
   distinct_on?: InputMaybe<Array<Follows_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6187,7 +6257,7 @@ type IUserFollowsArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserFollows_AggregateArgs = {
+export type IUserFollows_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Follows_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6196,7 +6266,7 @@ type IUserFollows_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserGrantSubmissionReviewsArgs = {
+export type IUserGrantSubmissionReviewsArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6205,7 +6275,7 @@ type IUserGrantSubmissionReviewsArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserGrantSubmissionReviews_AggregateArgs = {
+export type IUserGrantSubmissionReviews_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6214,7 +6284,7 @@ type IUserGrantSubmissionReviews_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserGrantSubmissionsArgs = {
+export type IUserGrantSubmissionsArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6223,7 +6293,7 @@ type IUserGrantSubmissionsArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserGrantSubmissions_AggregateArgs = {
+export type IUserGrantSubmissions_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6232,7 +6302,7 @@ type IUserGrantSubmissions_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserGrantsArgs = {
+export type IUserGrantsArgs = {
   distinct_on?: InputMaybe<Array<Grants_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6241,7 +6311,7 @@ type IUserGrantsArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserGrants_AggregateArgs = {
+export type IUserGrants_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Grants_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6250,7 +6320,7 @@ type IUserGrants_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserLikedByArgs = {
+export type IUserLikedByArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6259,7 +6329,7 @@ type IUserLikedByArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserLikedBy_AggregateArgs = {
+export type IUserLikedBy_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6268,7 +6338,7 @@ type IUserLikedBy_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserLikesArgs = {
+export type IUserLikesArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6277,7 +6347,7 @@ type IUserLikesArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserLikes_AggregateArgs = {
+export type IUserLikes_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6286,7 +6356,7 @@ type IUserLikes_AggregateArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserProjectsArgs = {
+export type IUserProjectsArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6295,7 +6365,7 @@ type IUserProjectsArgs = {
 }
 
 /** columns and relationships of "User" */
-type IUserProjects_AggregateArgs = {
+export type IUserProjects_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -6304,14 +6374,14 @@ type IUserProjects_AggregateArgs = {
 }
 
 /** aggregated selection of "User" */
-type IUser_Aggregate = {
+export type IUser_Aggregate = {
   __typename?: 'User_aggregate'
   aggregate?: Maybe<FieldWrapper<IUser_Aggregate_Fields>>
   nodes: Array<FieldWrapper<IUser>>
 }
 
 /** aggregate fields of "User" */
-type IUser_Aggregate_Fields = {
+export type IUser_Aggregate_Fields = {
   __typename?: 'User_aggregate_fields'
   count: FieldWrapper<Scalars['Int']>
   max?: Maybe<FieldWrapper<IUser_Max_Fields>>
@@ -6319,13 +6389,13 @@ type IUser_Aggregate_Fields = {
 }
 
 /** aggregate fields of "User" */
-type IUser_Aggregate_FieldsCountArgs = {
+export type IUser_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<User_Select_Column>>
   distinct?: InputMaybe<Scalars['Boolean']>
 }
 
 /** Boolean expression to filter rows from the table "User". All fields are combined with a logical 'AND'. */
-type IUser_Bool_Exp = {
+export type IUser_Bool_Exp = {
   GrantOwners?: InputMaybe<IGrantOwners_Bool_Exp>
   ProjectMembers?: InputMaybe<IProjectMembers_Bool_Exp>
   TopUpWallets?: InputMaybe<ITopUpWallet_Bool_Exp>
@@ -6359,7 +6429,7 @@ type IUser_Bool_Exp = {
 }
 
 /** unique or primary key constraints on table "User" */
-enum User_Constraint {
+export enum User_Constraint {
   /** unique or primary key constraint */
   User_email_key = 'User_email_key',
   /** unique or primary key constraint */
@@ -6369,7 +6439,7 @@ enum User_Constraint {
 }
 
 /** input type for inserting data into table "User" */
-type IUser_Insert_Input = {
+export type IUser_Insert_Input = {
   GrantOwners?: InputMaybe<IGrantOwners_Arr_Rel_Insert_Input>
   ProjectMembers?: InputMaybe<IProjectMembers_Arr_Rel_Insert_Input>
   TopUpWallets?: InputMaybe<ITopUpWallet_Arr_Rel_Insert_Input>
@@ -6400,7 +6470,7 @@ type IUser_Insert_Input = {
 }
 
 /** aggregate max on columns */
-type IUser_Max_Fields = {
+export type IUser_Max_Fields = {
   __typename?: 'User_max_fields'
   activityId?: Maybe<FieldWrapper<Scalars['uuid']>>
   bio?: Maybe<FieldWrapper<Scalars['String']>>
@@ -6420,7 +6490,7 @@ type IUser_Max_Fields = {
 }
 
 /** aggregate min on columns */
-type IUser_Min_Fields = {
+export type IUser_Min_Fields = {
   __typename?: 'User_min_fields'
   activityId?: Maybe<FieldWrapper<Scalars['uuid']>>
   bio?: Maybe<FieldWrapper<Scalars['String']>>
@@ -6440,7 +6510,7 @@ type IUser_Min_Fields = {
 }
 
 /** response of any mutation on the table "User" */
-type IUser_Mutation_Response = {
+export type IUser_Mutation_Response = {
   __typename?: 'User_mutation_response'
   /** number of rows affected by the mutation */
   affected_rows: FieldWrapper<Scalars['Int']>
@@ -6449,21 +6519,21 @@ type IUser_Mutation_Response = {
 }
 
 /** input type for inserting object relation for remote table "User" */
-type IUser_Obj_Rel_Insert_Input = {
+export type IUser_Obj_Rel_Insert_Input = {
   data: IUser_Insert_Input
   /** upsert condition */
   on_conflict?: InputMaybe<IUser_On_Conflict>
 }
 
 /** on_conflict condition type for table "User" */
-type IUser_On_Conflict = {
+export type IUser_On_Conflict = {
   constraint: User_Constraint
   update_columns?: Array<User_Update_Column>
   where?: InputMaybe<IUser_Bool_Exp>
 }
 
 /** Ordering options when selecting data from "User". */
-type IUser_Order_By = {
+export type IUser_Order_By = {
   GrantOwners_aggregate?: InputMaybe<IGrantOwners_Aggregate_Order_By>
   ProjectMembers_aggregate?: InputMaybe<IProjectMembers_Aggregate_Order_By>
   TopUpWallets_aggregate?: InputMaybe<ITopUpWallet_Aggregate_Order_By>
@@ -6494,12 +6564,12 @@ type IUser_Order_By = {
 }
 
 /** primary key columns input for table: User */
-type IUser_Pk_Columns_Input = {
+export type IUser_Pk_Columns_Input = {
   id: Scalars['uuid']
 }
 
 /** select columns of table "User" */
-enum User_Select_Column {
+export enum User_Select_Column {
   /** column name */
   activityId = 'activityId',
   /** column name */
@@ -6535,7 +6605,7 @@ enum User_Select_Column {
 }
 
 /** input type for updating data in table "User" */
-type IUser_Set_Input = {
+export type IUser_Set_Input = {
   activityId?: InputMaybe<Scalars['uuid']>
   bio?: InputMaybe<Scalars['String']>
   company?: InputMaybe<Scalars['String']>
@@ -6555,7 +6625,7 @@ type IUser_Set_Input = {
 }
 
 /** update columns of table "User" */
-enum User_Update_Column {
+export enum User_Update_Column {
   /** column name */
   activityId = 'activityId',
   /** column name */
@@ -6590,8 +6660,40 @@ enum User_Update_Column {
   website = 'website',
 }
 
+export type I_Block_ = {
+  __typename?: '_Block_'
+  /** The hash of the block */
+  hash?: Maybe<FieldWrapper<Scalars['Bytes']>>
+  /** The block number */
+  number: FieldWrapper<Scalars['Int']>
+}
+
+/** The type for the top-level _meta field */
+export type I_Meta_ = {
+  __typename?: '_Meta_'
+  /**
+   * Information about a specific subgraph block. The hash of the block
+   * will be null if the _meta field has a block constraint that asks for
+   * a block number. It will be filled if the _meta field has no block constraint
+   * and therefore asks for the latest  block
+   *
+   */
+  block: FieldWrapper<I_Block_>
+  /** The deployment ID */
+  deployment: FieldWrapper<Scalars['String']>
+  /** If `true`, the subgraph encountered indexing errors at some past block */
+  hasIndexingErrors: FieldWrapper<Scalars['Boolean']>
+}
+
+export enum _SubgraphErrorPolicy_ {
+  /** Data will be returned even if the subgraph has indexing errors */
+  allow = 'allow',
+  /** If the subgraph has indexing errors, data will be omitted. The default. */
+  deny = 'deny',
+}
+
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
-type IBigint_Comparison_Exp = {
+export type IBigint_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['bigint']>
   _gt?: InputMaybe<Scalars['bigint']>
   _gte?: InputMaybe<Scalars['bigint']>
@@ -6604,7 +6706,7 @@ type IBigint_Comparison_Exp = {
 }
 
 /** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
-type IFloat8_Comparison_Exp = {
+export type IFloat8_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['float8']>
   _gt?: InputMaybe<Scalars['float8']>
   _gte?: InputMaybe<Scalars['float8']>
@@ -6617,7 +6719,7 @@ type IFloat8_Comparison_Exp = {
 }
 
 /** Boolean expression to compare columns of type "json". All fields are combined with logical 'AND'. */
-type IJson_Comparison_Exp = {
+export type IJson_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['json']>
   _gt?: InputMaybe<Scalars['json']>
   _gte?: InputMaybe<Scalars['json']>
@@ -6630,7 +6732,7 @@ type IJson_Comparison_Exp = {
 }
 
 /** mutation root */
-type IMutation_Root = {
+export type IMutation_Root = {
   __typename?: 'mutation_root'
   /** delete data from the table: "Donations" */
   delete_Donations?: Maybe<FieldWrapper<IDonations_Mutation_Response>>
@@ -6899,775 +7001,775 @@ type IMutation_Root = {
 }
 
 /** mutation root */
-type IMutation_RootDelete_DonationsArgs = {
+export type IMutation_RootDelete_DonationsArgs = {
   where: IDonations_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_Donations_By_PkArgs = {
+export type IMutation_RootDelete_Donations_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_FollowsArgs = {
+export type IMutation_RootDelete_FollowsArgs = {
   where: IFollows_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_Follows_By_PkArgs = {
+export type IMutation_RootDelete_Follows_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantCategoriesArgs = {
+export type IMutation_RootDelete_GrantCategoriesArgs = {
   where: IGrantCategories_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantCategoriesBridgeArgs = {
+export type IMutation_RootDelete_GrantCategoriesBridgeArgs = {
   where: IGrantCategoriesBridge_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantCategoriesBridge_By_PkArgs = {
+export type IMutation_RootDelete_GrantCategoriesBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantCategories_By_PkArgs = {
+export type IMutation_RootDelete_GrantCategories_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantCyclesArgs = {
+export type IMutation_RootDelete_GrantCyclesArgs = {
   where: IGrantCycles_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantCycles_By_PkArgs = {
+export type IMutation_RootDelete_GrantCycles_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantOwnersArgs = {
+export type IMutation_RootDelete_GrantOwnersArgs = {
   where: IGrantOwners_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantOwnersTiersArgs = {
+export type IMutation_RootDelete_GrantOwnersTiersArgs = {
   where: IGrantOwnersTiers_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantOwnersTiers_By_PkArgs = {
+export type IMutation_RootDelete_GrantOwnersTiers_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantOwners_By_PkArgs = {
+export type IMutation_RootDelete_GrantOwners_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantSubmissionReviewArgs = {
+export type IMutation_RootDelete_GrantSubmissionReviewArgs = {
   where: IGrantSubmissionReview_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantSubmissionReview_By_PkArgs = {
+export type IMutation_RootDelete_GrantSubmissionReview_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantSubmissionsArgs = {
+export type IMutation_RootDelete_GrantSubmissionsArgs = {
   where: IGrantSubmissions_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantSubmissions_By_PkArgs = {
+export type IMutation_RootDelete_GrantSubmissions_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantTagsArgs = {
+export type IMutation_RootDelete_GrantTagsArgs = {
   where: IGrantTags_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantTagsBridgeArgs = {
+export type IMutation_RootDelete_GrantTagsBridgeArgs = {
   where: IGrantTagsBridge_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantTagsBridge_By_PkArgs = {
+export type IMutation_RootDelete_GrantTagsBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantTags_By_PkArgs = {
+export type IMutation_RootDelete_GrantTags_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_GrantsArgs = {
+export type IMutation_RootDelete_GrantsArgs = {
   where: IGrants_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_Grants_By_PkArgs = {
+export type IMutation_RootDelete_Grants_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_LikesArgs = {
+export type IMutation_RootDelete_LikesArgs = {
   where: ILikes_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_Likes_By_PkArgs = {
+export type IMutation_RootDelete_Likes_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectArgs = {
+export type IMutation_RootDelete_ProjectArgs = {
   where: IProject_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectMembersArgs = {
+export type IMutation_RootDelete_ProjectMembersArgs = {
   where: IProjectMembers_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectMembers_By_PkArgs = {
+export type IMutation_RootDelete_ProjectMembers_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectTagArgs = {
+export type IMutation_RootDelete_ProjectTagArgs = {
   where: IProjectTag_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectTag_By_PkArgs = {
+export type IMutation_RootDelete_ProjectTag_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectTagsBridgeArgs = {
+export type IMutation_RootDelete_ProjectTagsBridgeArgs = {
   where: IProjectTagsBridge_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectTagsBridge_By_PkArgs = {
+export type IMutation_RootDelete_ProjectTagsBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectTypeArgs = {
+export type IMutation_RootDelete_ProjectTypeArgs = {
   where: IProjectType_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectTypeBridgeArgs = {
+export type IMutation_RootDelete_ProjectTypeBridgeArgs = {
   where: IProjectTypeBridge_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectTypeBridge_By_PkArgs = {
+export type IMutation_RootDelete_ProjectTypeBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_ProjectType_By_PkArgs = {
+export type IMutation_RootDelete_ProjectType_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_Project_By_PkArgs = {
+export type IMutation_RootDelete_Project_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_SwapsArgs = {
+export type IMutation_RootDelete_SwapsArgs = {
   where: ISwaps_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_Swaps_By_PkArgs = {
+export type IMutation_RootDelete_Swaps_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_TopUpWalletArgs = {
+export type IMutation_RootDelete_TopUpWalletArgs = {
   where: ITopUpWallet_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_TopUpWallet_By_PkArgs = {
+export type IMutation_RootDelete_TopUpWallet_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootDelete_UserArgs = {
+export type IMutation_RootDelete_UserArgs = {
   where: IUser_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootDelete_User_By_PkArgs = {
+export type IMutation_RootDelete_User_By_PkArgs = {
   id: Scalars['uuid']
 }
 
 /** mutation root */
-type IMutation_RootInsert_DonationsArgs = {
+export type IMutation_RootInsert_DonationsArgs = {
   objects: Array<IDonations_Insert_Input>
   on_conflict?: InputMaybe<IDonations_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_Donations_OneArgs = {
+export type IMutation_RootInsert_Donations_OneArgs = {
   object: IDonations_Insert_Input
   on_conflict?: InputMaybe<IDonations_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_FollowsArgs = {
+export type IMutation_RootInsert_FollowsArgs = {
   objects: Array<IFollows_Insert_Input>
   on_conflict?: InputMaybe<IFollows_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_Follows_OneArgs = {
+export type IMutation_RootInsert_Follows_OneArgs = {
   object: IFollows_Insert_Input
   on_conflict?: InputMaybe<IFollows_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantCategoriesArgs = {
+export type IMutation_RootInsert_GrantCategoriesArgs = {
   objects: Array<IGrantCategories_Insert_Input>
   on_conflict?: InputMaybe<IGrantCategories_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantCategoriesBridgeArgs = {
+export type IMutation_RootInsert_GrantCategoriesBridgeArgs = {
   objects: Array<IGrantCategoriesBridge_Insert_Input>
   on_conflict?: InputMaybe<IGrantCategoriesBridge_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantCategoriesBridge_OneArgs = {
+export type IMutation_RootInsert_GrantCategoriesBridge_OneArgs = {
   object: IGrantCategoriesBridge_Insert_Input
   on_conflict?: InputMaybe<IGrantCategoriesBridge_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantCategories_OneArgs = {
+export type IMutation_RootInsert_GrantCategories_OneArgs = {
   object: IGrantCategories_Insert_Input
   on_conflict?: InputMaybe<IGrantCategories_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantCyclesArgs = {
+export type IMutation_RootInsert_GrantCyclesArgs = {
   objects: Array<IGrantCycles_Insert_Input>
   on_conflict?: InputMaybe<IGrantCycles_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantCycles_OneArgs = {
+export type IMutation_RootInsert_GrantCycles_OneArgs = {
   object: IGrantCycles_Insert_Input
   on_conflict?: InputMaybe<IGrantCycles_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantOwnersArgs = {
+export type IMutation_RootInsert_GrantOwnersArgs = {
   objects: Array<IGrantOwners_Insert_Input>
   on_conflict?: InputMaybe<IGrantOwners_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantOwnersTiersArgs = {
+export type IMutation_RootInsert_GrantOwnersTiersArgs = {
   objects: Array<IGrantOwnersTiers_Insert_Input>
   on_conflict?: InputMaybe<IGrantOwnersTiers_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantOwnersTiers_OneArgs = {
+export type IMutation_RootInsert_GrantOwnersTiers_OneArgs = {
   object: IGrantOwnersTiers_Insert_Input
   on_conflict?: InputMaybe<IGrantOwnersTiers_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantOwners_OneArgs = {
+export type IMutation_RootInsert_GrantOwners_OneArgs = {
   object: IGrantOwners_Insert_Input
   on_conflict?: InputMaybe<IGrantOwners_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantSubmissionReviewArgs = {
+export type IMutation_RootInsert_GrantSubmissionReviewArgs = {
   objects: Array<IGrantSubmissionReview_Insert_Input>
   on_conflict?: InputMaybe<IGrantSubmissionReview_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantSubmissionReview_OneArgs = {
+export type IMutation_RootInsert_GrantSubmissionReview_OneArgs = {
   object: IGrantSubmissionReview_Insert_Input
   on_conflict?: InputMaybe<IGrantSubmissionReview_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantSubmissionsArgs = {
+export type IMutation_RootInsert_GrantSubmissionsArgs = {
   objects: Array<IGrantSubmissions_Insert_Input>
   on_conflict?: InputMaybe<IGrantSubmissions_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantSubmissions_OneArgs = {
+export type IMutation_RootInsert_GrantSubmissions_OneArgs = {
   object: IGrantSubmissions_Insert_Input
   on_conflict?: InputMaybe<IGrantSubmissions_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantTagsArgs = {
+export type IMutation_RootInsert_GrantTagsArgs = {
   objects: Array<IGrantTags_Insert_Input>
   on_conflict?: InputMaybe<IGrantTags_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantTagsBridgeArgs = {
+export type IMutation_RootInsert_GrantTagsBridgeArgs = {
   objects: Array<IGrantTagsBridge_Insert_Input>
   on_conflict?: InputMaybe<IGrantTagsBridge_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantTagsBridge_OneArgs = {
+export type IMutation_RootInsert_GrantTagsBridge_OneArgs = {
   object: IGrantTagsBridge_Insert_Input
   on_conflict?: InputMaybe<IGrantTagsBridge_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantTags_OneArgs = {
+export type IMutation_RootInsert_GrantTags_OneArgs = {
   object: IGrantTags_Insert_Input
   on_conflict?: InputMaybe<IGrantTags_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_GrantsArgs = {
+export type IMutation_RootInsert_GrantsArgs = {
   objects: Array<IGrants_Insert_Input>
   on_conflict?: InputMaybe<IGrants_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_Grants_OneArgs = {
+export type IMutation_RootInsert_Grants_OneArgs = {
   object: IGrants_Insert_Input
   on_conflict?: InputMaybe<IGrants_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_LikesArgs = {
+export type IMutation_RootInsert_LikesArgs = {
   objects: Array<ILikes_Insert_Input>
   on_conflict?: InputMaybe<ILikes_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_Likes_OneArgs = {
+export type IMutation_RootInsert_Likes_OneArgs = {
   object: ILikes_Insert_Input
   on_conflict?: InputMaybe<ILikes_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectArgs = {
+export type IMutation_RootInsert_ProjectArgs = {
   objects: Array<IProject_Insert_Input>
   on_conflict?: InputMaybe<IProject_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectMembersArgs = {
+export type IMutation_RootInsert_ProjectMembersArgs = {
   objects: Array<IProjectMembers_Insert_Input>
   on_conflict?: InputMaybe<IProjectMembers_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectMembers_OneArgs = {
+export type IMutation_RootInsert_ProjectMembers_OneArgs = {
   object: IProjectMembers_Insert_Input
   on_conflict?: InputMaybe<IProjectMembers_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectTagArgs = {
+export type IMutation_RootInsert_ProjectTagArgs = {
   objects: Array<IProjectTag_Insert_Input>
   on_conflict?: InputMaybe<IProjectTag_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectTag_OneArgs = {
+export type IMutation_RootInsert_ProjectTag_OneArgs = {
   object: IProjectTag_Insert_Input
   on_conflict?: InputMaybe<IProjectTag_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectTagsBridgeArgs = {
+export type IMutation_RootInsert_ProjectTagsBridgeArgs = {
   objects: Array<IProjectTagsBridge_Insert_Input>
   on_conflict?: InputMaybe<IProjectTagsBridge_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectTagsBridge_OneArgs = {
+export type IMutation_RootInsert_ProjectTagsBridge_OneArgs = {
   object: IProjectTagsBridge_Insert_Input
   on_conflict?: InputMaybe<IProjectTagsBridge_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectTypeArgs = {
+export type IMutation_RootInsert_ProjectTypeArgs = {
   objects: Array<IProjectType_Insert_Input>
   on_conflict?: InputMaybe<IProjectType_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectTypeBridgeArgs = {
+export type IMutation_RootInsert_ProjectTypeBridgeArgs = {
   objects: Array<IProjectTypeBridge_Insert_Input>
   on_conflict?: InputMaybe<IProjectTypeBridge_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectTypeBridge_OneArgs = {
+export type IMutation_RootInsert_ProjectTypeBridge_OneArgs = {
   object: IProjectTypeBridge_Insert_Input
   on_conflict?: InputMaybe<IProjectTypeBridge_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_ProjectType_OneArgs = {
+export type IMutation_RootInsert_ProjectType_OneArgs = {
   object: IProjectType_Insert_Input
   on_conflict?: InputMaybe<IProjectType_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_Project_OneArgs = {
+export type IMutation_RootInsert_Project_OneArgs = {
   object: IProject_Insert_Input
   on_conflict?: InputMaybe<IProject_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_SwapsArgs = {
+export type IMutation_RootInsert_SwapsArgs = {
   objects: Array<ISwaps_Insert_Input>
   on_conflict?: InputMaybe<ISwaps_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_Swaps_OneArgs = {
+export type IMutation_RootInsert_Swaps_OneArgs = {
   object: ISwaps_Insert_Input
   on_conflict?: InputMaybe<ISwaps_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_TopUpWalletArgs = {
+export type IMutation_RootInsert_TopUpWalletArgs = {
   objects: Array<ITopUpWallet_Insert_Input>
   on_conflict?: InputMaybe<ITopUpWallet_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_TopUpWallet_OneArgs = {
+export type IMutation_RootInsert_TopUpWallet_OneArgs = {
   object: ITopUpWallet_Insert_Input
   on_conflict?: InputMaybe<ITopUpWallet_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_UserArgs = {
+export type IMutation_RootInsert_UserArgs = {
   objects: Array<IUser_Insert_Input>
   on_conflict?: InputMaybe<IUser_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootInsert_User_OneArgs = {
+export type IMutation_RootInsert_User_OneArgs = {
   object: IUser_Insert_Input
   on_conflict?: InputMaybe<IUser_On_Conflict>
 }
 
 /** mutation root */
-type IMutation_RootUpdate_DonationsArgs = {
+export type IMutation_RootUpdate_DonationsArgs = {
   _inc?: InputMaybe<IDonations_Inc_Input>
   _set?: InputMaybe<IDonations_Set_Input>
   where: IDonations_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_Donations_By_PkArgs = {
+export type IMutation_RootUpdate_Donations_By_PkArgs = {
   _inc?: InputMaybe<IDonations_Inc_Input>
   _set?: InputMaybe<IDonations_Set_Input>
   pk_columns: IDonations_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_FollowsArgs = {
+export type IMutation_RootUpdate_FollowsArgs = {
   _set?: InputMaybe<IFollows_Set_Input>
   where: IFollows_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_Follows_By_PkArgs = {
+export type IMutation_RootUpdate_Follows_By_PkArgs = {
   _set?: InputMaybe<IFollows_Set_Input>
   pk_columns: IFollows_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantCategoriesArgs = {
+export type IMutation_RootUpdate_GrantCategoriesArgs = {
   _set?: InputMaybe<IGrantCategories_Set_Input>
   where: IGrantCategories_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantCategoriesBridgeArgs = {
+export type IMutation_RootUpdate_GrantCategoriesBridgeArgs = {
   _set?: InputMaybe<IGrantCategoriesBridge_Set_Input>
   where: IGrantCategoriesBridge_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantCategoriesBridge_By_PkArgs = {
+export type IMutation_RootUpdate_GrantCategoriesBridge_By_PkArgs = {
   _set?: InputMaybe<IGrantCategoriesBridge_Set_Input>
   pk_columns: IGrantCategoriesBridge_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantCategories_By_PkArgs = {
+export type IMutation_RootUpdate_GrantCategories_By_PkArgs = {
   _set?: InputMaybe<IGrantCategories_Set_Input>
   pk_columns: IGrantCategories_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantCyclesArgs = {
+export type IMutation_RootUpdate_GrantCyclesArgs = {
   _inc?: InputMaybe<IGrantCycles_Inc_Input>
   _set?: InputMaybe<IGrantCycles_Set_Input>
   where: IGrantCycles_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantCycles_By_PkArgs = {
+export type IMutation_RootUpdate_GrantCycles_By_PkArgs = {
   _inc?: InputMaybe<IGrantCycles_Inc_Input>
   _set?: InputMaybe<IGrantCycles_Set_Input>
   pk_columns: IGrantCycles_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantOwnersArgs = {
+export type IMutation_RootUpdate_GrantOwnersArgs = {
   _inc?: InputMaybe<IGrantOwners_Inc_Input>
   _set?: InputMaybe<IGrantOwners_Set_Input>
   where: IGrantOwners_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantOwnersTiersArgs = {
+export type IMutation_RootUpdate_GrantOwnersTiersArgs = {
   _inc?: InputMaybe<IGrantOwnersTiers_Inc_Input>
   _set?: InputMaybe<IGrantOwnersTiers_Set_Input>
   where: IGrantOwnersTiers_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantOwnersTiers_By_PkArgs = {
+export type IMutation_RootUpdate_GrantOwnersTiers_By_PkArgs = {
   _inc?: InputMaybe<IGrantOwnersTiers_Inc_Input>
   _set?: InputMaybe<IGrantOwnersTiers_Set_Input>
   pk_columns: IGrantOwnersTiers_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantOwners_By_PkArgs = {
+export type IMutation_RootUpdate_GrantOwners_By_PkArgs = {
   _inc?: InputMaybe<IGrantOwners_Inc_Input>
   _set?: InputMaybe<IGrantOwners_Set_Input>
   pk_columns: IGrantOwners_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantSubmissionReviewArgs = {
+export type IMutation_RootUpdate_GrantSubmissionReviewArgs = {
   _inc?: InputMaybe<IGrantSubmissionReview_Inc_Input>
   _set?: InputMaybe<IGrantSubmissionReview_Set_Input>
   where: IGrantSubmissionReview_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantSubmissionReview_By_PkArgs = {
+export type IMutation_RootUpdate_GrantSubmissionReview_By_PkArgs = {
   _inc?: InputMaybe<IGrantSubmissionReview_Inc_Input>
   _set?: InputMaybe<IGrantSubmissionReview_Set_Input>
   pk_columns: IGrantSubmissionReview_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantSubmissionsArgs = {
+export type IMutation_RootUpdate_GrantSubmissionsArgs = {
   _inc?: InputMaybe<IGrantSubmissions_Inc_Input>
   _set?: InputMaybe<IGrantSubmissions_Set_Input>
   where: IGrantSubmissions_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantSubmissions_By_PkArgs = {
+export type IMutation_RootUpdate_GrantSubmissions_By_PkArgs = {
   _inc?: InputMaybe<IGrantSubmissions_Inc_Input>
   _set?: InputMaybe<IGrantSubmissions_Set_Input>
   pk_columns: IGrantSubmissions_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantTagsArgs = {
+export type IMutation_RootUpdate_GrantTagsArgs = {
   _set?: InputMaybe<IGrantTags_Set_Input>
   where: IGrantTags_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantTagsBridgeArgs = {
+export type IMutation_RootUpdate_GrantTagsBridgeArgs = {
   _set?: InputMaybe<IGrantTagsBridge_Set_Input>
   where: IGrantTagsBridge_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantTagsBridge_By_PkArgs = {
+export type IMutation_RootUpdate_GrantTagsBridge_By_PkArgs = {
   _set?: InputMaybe<IGrantTagsBridge_Set_Input>
   pk_columns: IGrantTagsBridge_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantTags_By_PkArgs = {
+export type IMutation_RootUpdate_GrantTags_By_PkArgs = {
   _set?: InputMaybe<IGrantTags_Set_Input>
   pk_columns: IGrantTags_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_GrantsArgs = {
+export type IMutation_RootUpdate_GrantsArgs = {
   _inc?: InputMaybe<IGrants_Inc_Input>
   _set?: InputMaybe<IGrants_Set_Input>
   where: IGrants_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_Grants_By_PkArgs = {
+export type IMutation_RootUpdate_Grants_By_PkArgs = {
   _inc?: InputMaybe<IGrants_Inc_Input>
   _set?: InputMaybe<IGrants_Set_Input>
   pk_columns: IGrants_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_LikesArgs = {
+export type IMutation_RootUpdate_LikesArgs = {
   _set?: InputMaybe<ILikes_Set_Input>
   where: ILikes_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_Likes_By_PkArgs = {
+export type IMutation_RootUpdate_Likes_By_PkArgs = {
   _set?: InputMaybe<ILikes_Set_Input>
   pk_columns: ILikes_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectArgs = {
+export type IMutation_RootUpdate_ProjectArgs = {
   _inc?: InputMaybe<IProject_Inc_Input>
   _set?: InputMaybe<IProject_Set_Input>
   where: IProject_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectMembersArgs = {
+export type IMutation_RootUpdate_ProjectMembersArgs = {
   _set?: InputMaybe<IProjectMembers_Set_Input>
   where: IProjectMembers_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectMembers_By_PkArgs = {
+export type IMutation_RootUpdate_ProjectMembers_By_PkArgs = {
   _set?: InputMaybe<IProjectMembers_Set_Input>
   pk_columns: IProjectMembers_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectTagArgs = {
+export type IMutation_RootUpdate_ProjectTagArgs = {
   _set?: InputMaybe<IProjectTag_Set_Input>
   where: IProjectTag_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectTag_By_PkArgs = {
+export type IMutation_RootUpdate_ProjectTag_By_PkArgs = {
   _set?: InputMaybe<IProjectTag_Set_Input>
   pk_columns: IProjectTag_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectTagsBridgeArgs = {
+export type IMutation_RootUpdate_ProjectTagsBridgeArgs = {
   _set?: InputMaybe<IProjectTagsBridge_Set_Input>
   where: IProjectTagsBridge_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectTagsBridge_By_PkArgs = {
+export type IMutation_RootUpdate_ProjectTagsBridge_By_PkArgs = {
   _set?: InputMaybe<IProjectTagsBridge_Set_Input>
   pk_columns: IProjectTagsBridge_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectTypeArgs = {
+export type IMutation_RootUpdate_ProjectTypeArgs = {
   _set?: InputMaybe<IProjectType_Set_Input>
   where: IProjectType_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectTypeBridgeArgs = {
+export type IMutation_RootUpdate_ProjectTypeBridgeArgs = {
   _set?: InputMaybe<IProjectTypeBridge_Set_Input>
   where: IProjectTypeBridge_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectTypeBridge_By_PkArgs = {
+export type IMutation_RootUpdate_ProjectTypeBridge_By_PkArgs = {
   _set?: InputMaybe<IProjectTypeBridge_Set_Input>
   pk_columns: IProjectTypeBridge_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_ProjectType_By_PkArgs = {
+export type IMutation_RootUpdate_ProjectType_By_PkArgs = {
   _set?: InputMaybe<IProjectType_Set_Input>
   pk_columns: IProjectType_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_Project_By_PkArgs = {
+export type IMutation_RootUpdate_Project_By_PkArgs = {
   _inc?: InputMaybe<IProject_Inc_Input>
   _set?: InputMaybe<IProject_Set_Input>
   pk_columns: IProject_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_SwapsArgs = {
+export type IMutation_RootUpdate_SwapsArgs = {
   _inc?: InputMaybe<ISwaps_Inc_Input>
   _set?: InputMaybe<ISwaps_Set_Input>
   where: ISwaps_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_Swaps_By_PkArgs = {
+export type IMutation_RootUpdate_Swaps_By_PkArgs = {
   _inc?: InputMaybe<ISwaps_Inc_Input>
   _set?: InputMaybe<ISwaps_Set_Input>
   pk_columns: ISwaps_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_TopUpWalletArgs = {
+export type IMutation_RootUpdate_TopUpWalletArgs = {
   _inc?: InputMaybe<ITopUpWallet_Inc_Input>
   _set?: InputMaybe<ITopUpWallet_Set_Input>
   where: ITopUpWallet_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_TopUpWallet_By_PkArgs = {
+export type IMutation_RootUpdate_TopUpWallet_By_PkArgs = {
   _inc?: InputMaybe<ITopUpWallet_Inc_Input>
   _set?: InputMaybe<ITopUpWallet_Set_Input>
   pk_columns: ITopUpWallet_Pk_Columns_Input
 }
 
 /** mutation root */
-type IMutation_RootUpdate_UserArgs = {
+export type IMutation_RootUpdate_UserArgs = {
   _set?: InputMaybe<IUser_Set_Input>
   where: IUser_Bool_Exp
 }
 
 /** mutation root */
-type IMutation_RootUpdate_User_By_PkArgs = {
+export type IMutation_RootUpdate_User_By_PkArgs = {
   _set?: InputMaybe<IUser_Set_Input>
   pk_columns: IUser_Pk_Columns_Input
 }
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
-type INumeric_Comparison_Exp = {
+export type INumeric_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['numeric']>
   _gt?: InputMaybe<Scalars['numeric']>
   _gte?: InputMaybe<Scalars['numeric']>
@@ -7680,7 +7782,7 @@ type INumeric_Comparison_Exp = {
 }
 
 /** column ordering options */
-enum Order_By {
+export enum Order_By {
   /** in ascending order, nulls last */
   asc = 'asc',
   /** in ascending order, nulls first */
@@ -7695,7 +7797,7 @@ enum Order_By {
   desc_nulls_last = 'desc_nulls_last',
 }
 
-type IQuery_Root = {
+export type IQuery_Root = {
   __typename?: 'query_root'
   /** fetch data from the table: "Donations" */
   Donations: Array<FieldWrapper<IDonations>>
@@ -7829,9 +7931,13 @@ type IQuery_Root = {
   User_aggregate: FieldWrapper<IUser_Aggregate>
   /** fetch data from the table: "User" using primary key columns */
   User_by_pk?: Maybe<FieldWrapper<IUser>>
+  /** Access to subgraph metadata */
+  _meta?: Maybe<FieldWrapper<I_Meta_>>
+  exampleEntities: Array<FieldWrapper<IExampleEntity>>
+  exampleEntity?: Maybe<FieldWrapper<IExampleEntity>>
 }
 
-type IQuery_RootDonationsArgs = {
+export type IQuery_RootDonationsArgs = {
   distinct_on?: InputMaybe<Array<Donations_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7839,7 +7945,7 @@ type IQuery_RootDonationsArgs = {
   where?: InputMaybe<IDonations_Bool_Exp>
 }
 
-type IQuery_RootDonations_AggregateArgs = {
+export type IQuery_RootDonations_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Donations_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7847,11 +7953,11 @@ type IQuery_RootDonations_AggregateArgs = {
   where?: InputMaybe<IDonations_Bool_Exp>
 }
 
-type IQuery_RootDonations_By_PkArgs = {
+export type IQuery_RootDonations_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootFollowsArgs = {
+export type IQuery_RootFollowsArgs = {
   distinct_on?: InputMaybe<Array<Follows_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7859,7 +7965,7 @@ type IQuery_RootFollowsArgs = {
   where?: InputMaybe<IFollows_Bool_Exp>
 }
 
-type IQuery_RootFollows_AggregateArgs = {
+export type IQuery_RootFollows_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Follows_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7867,11 +7973,11 @@ type IQuery_RootFollows_AggregateArgs = {
   where?: InputMaybe<IFollows_Bool_Exp>
 }
 
-type IQuery_RootFollows_By_PkArgs = {
+export type IQuery_RootFollows_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantCategoriesArgs = {
+export type IQuery_RootGrantCategoriesArgs = {
   distinct_on?: InputMaybe<Array<GrantCategories_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7879,7 +7985,7 @@ type IQuery_RootGrantCategoriesArgs = {
   where?: InputMaybe<IGrantCategories_Bool_Exp>
 }
 
-type IQuery_RootGrantCategoriesBridgeArgs = {
+export type IQuery_RootGrantCategoriesBridgeArgs = {
   distinct_on?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7887,7 +7993,7 @@ type IQuery_RootGrantCategoriesBridgeArgs = {
   where?: InputMaybe<IGrantCategoriesBridge_Bool_Exp>
 }
 
-type IQuery_RootGrantCategoriesBridge_AggregateArgs = {
+export type IQuery_RootGrantCategoriesBridge_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7895,11 +8001,11 @@ type IQuery_RootGrantCategoriesBridge_AggregateArgs = {
   where?: InputMaybe<IGrantCategoriesBridge_Bool_Exp>
 }
 
-type IQuery_RootGrantCategoriesBridge_By_PkArgs = {
+export type IQuery_RootGrantCategoriesBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantCategories_AggregateArgs = {
+export type IQuery_RootGrantCategories_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCategories_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7907,11 +8013,11 @@ type IQuery_RootGrantCategories_AggregateArgs = {
   where?: InputMaybe<IGrantCategories_Bool_Exp>
 }
 
-type IQuery_RootGrantCategories_By_PkArgs = {
+export type IQuery_RootGrantCategories_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantCyclesArgs = {
+export type IQuery_RootGrantCyclesArgs = {
   distinct_on?: InputMaybe<Array<GrantCycles_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7919,7 +8025,7 @@ type IQuery_RootGrantCyclesArgs = {
   where?: InputMaybe<IGrantCycles_Bool_Exp>
 }
 
-type IQuery_RootGrantCycles_AggregateArgs = {
+export type IQuery_RootGrantCycles_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCycles_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7927,11 +8033,11 @@ type IQuery_RootGrantCycles_AggregateArgs = {
   where?: InputMaybe<IGrantCycles_Bool_Exp>
 }
 
-type IQuery_RootGrantCycles_By_PkArgs = {
+export type IQuery_RootGrantCycles_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantOwnersArgs = {
+export type IQuery_RootGrantOwnersArgs = {
   distinct_on?: InputMaybe<Array<GrantOwners_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7939,7 +8045,7 @@ type IQuery_RootGrantOwnersArgs = {
   where?: InputMaybe<IGrantOwners_Bool_Exp>
 }
 
-type IQuery_RootGrantOwnersTiersArgs = {
+export type IQuery_RootGrantOwnersTiersArgs = {
   distinct_on?: InputMaybe<Array<GrantOwnersTiers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7947,7 +8053,7 @@ type IQuery_RootGrantOwnersTiersArgs = {
   where?: InputMaybe<IGrantOwnersTiers_Bool_Exp>
 }
 
-type IQuery_RootGrantOwnersTiers_AggregateArgs = {
+export type IQuery_RootGrantOwnersTiers_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantOwnersTiers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7955,11 +8061,11 @@ type IQuery_RootGrantOwnersTiers_AggregateArgs = {
   where?: InputMaybe<IGrantOwnersTiers_Bool_Exp>
 }
 
-type IQuery_RootGrantOwnersTiers_By_PkArgs = {
+export type IQuery_RootGrantOwnersTiers_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantOwners_AggregateArgs = {
+export type IQuery_RootGrantOwners_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantOwners_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7967,11 +8073,11 @@ type IQuery_RootGrantOwners_AggregateArgs = {
   where?: InputMaybe<IGrantOwners_Bool_Exp>
 }
 
-type IQuery_RootGrantOwners_By_PkArgs = {
+export type IQuery_RootGrantOwners_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantSubmissionReviewArgs = {
+export type IQuery_RootGrantSubmissionReviewArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7979,7 +8085,7 @@ type IQuery_RootGrantSubmissionReviewArgs = {
   where?: InputMaybe<IGrantSubmissionReview_Bool_Exp>
 }
 
-type IQuery_RootGrantSubmissionReview_AggregateArgs = {
+export type IQuery_RootGrantSubmissionReview_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7987,11 +8093,11 @@ type IQuery_RootGrantSubmissionReview_AggregateArgs = {
   where?: InputMaybe<IGrantSubmissionReview_Bool_Exp>
 }
 
-type IQuery_RootGrantSubmissionReview_By_PkArgs = {
+export type IQuery_RootGrantSubmissionReview_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantSubmissionsArgs = {
+export type IQuery_RootGrantSubmissionsArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -7999,7 +8105,7 @@ type IQuery_RootGrantSubmissionsArgs = {
   where?: InputMaybe<IGrantSubmissions_Bool_Exp>
 }
 
-type IQuery_RootGrantSubmissions_AggregateArgs = {
+export type IQuery_RootGrantSubmissions_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8007,11 +8113,11 @@ type IQuery_RootGrantSubmissions_AggregateArgs = {
   where?: InputMaybe<IGrantSubmissions_Bool_Exp>
 }
 
-type IQuery_RootGrantSubmissions_By_PkArgs = {
+export type IQuery_RootGrantSubmissions_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantTagsArgs = {
+export type IQuery_RootGrantTagsArgs = {
   distinct_on?: InputMaybe<Array<GrantTags_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8019,7 +8125,7 @@ type IQuery_RootGrantTagsArgs = {
   where?: InputMaybe<IGrantTags_Bool_Exp>
 }
 
-type IQuery_RootGrantTagsBridgeArgs = {
+export type IQuery_RootGrantTagsBridgeArgs = {
   distinct_on?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8027,7 +8133,7 @@ type IQuery_RootGrantTagsBridgeArgs = {
   where?: InputMaybe<IGrantTagsBridge_Bool_Exp>
 }
 
-type IQuery_RootGrantTagsBridge_AggregateArgs = {
+export type IQuery_RootGrantTagsBridge_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8035,11 +8141,11 @@ type IQuery_RootGrantTagsBridge_AggregateArgs = {
   where?: InputMaybe<IGrantTagsBridge_Bool_Exp>
 }
 
-type IQuery_RootGrantTagsBridge_By_PkArgs = {
+export type IQuery_RootGrantTagsBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantTags_AggregateArgs = {
+export type IQuery_RootGrantTags_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantTags_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8047,11 +8153,11 @@ type IQuery_RootGrantTags_AggregateArgs = {
   where?: InputMaybe<IGrantTags_Bool_Exp>
 }
 
-type IQuery_RootGrantTags_By_PkArgs = {
+export type IQuery_RootGrantTags_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootGrantsArgs = {
+export type IQuery_RootGrantsArgs = {
   distinct_on?: InputMaybe<Array<Grants_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8059,7 +8165,7 @@ type IQuery_RootGrantsArgs = {
   where?: InputMaybe<IGrants_Bool_Exp>
 }
 
-type IQuery_RootGrants_AggregateArgs = {
+export type IQuery_RootGrants_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Grants_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8067,11 +8173,11 @@ type IQuery_RootGrants_AggregateArgs = {
   where?: InputMaybe<IGrants_Bool_Exp>
 }
 
-type IQuery_RootGrants_By_PkArgs = {
+export type IQuery_RootGrants_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootLikesArgs = {
+export type IQuery_RootLikesArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8079,7 +8185,7 @@ type IQuery_RootLikesArgs = {
   where?: InputMaybe<ILikes_Bool_Exp>
 }
 
-type IQuery_RootLikes_AggregateArgs = {
+export type IQuery_RootLikes_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8087,11 +8193,11 @@ type IQuery_RootLikes_AggregateArgs = {
   where?: InputMaybe<ILikes_Bool_Exp>
 }
 
-type IQuery_RootLikes_By_PkArgs = {
+export type IQuery_RootLikes_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootProjectArgs = {
+export type IQuery_RootProjectArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8099,7 +8205,7 @@ type IQuery_RootProjectArgs = {
   where?: InputMaybe<IProject_Bool_Exp>
 }
 
-type IQuery_RootProjectMembersArgs = {
+export type IQuery_RootProjectMembersArgs = {
   distinct_on?: InputMaybe<Array<ProjectMembers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8107,7 +8213,7 @@ type IQuery_RootProjectMembersArgs = {
   where?: InputMaybe<IProjectMembers_Bool_Exp>
 }
 
-type IQuery_RootProjectMembers_AggregateArgs = {
+export type IQuery_RootProjectMembers_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectMembers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8115,11 +8221,11 @@ type IQuery_RootProjectMembers_AggregateArgs = {
   where?: InputMaybe<IProjectMembers_Bool_Exp>
 }
 
-type IQuery_RootProjectMembers_By_PkArgs = {
+export type IQuery_RootProjectMembers_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootProjectTagArgs = {
+export type IQuery_RootProjectTagArgs = {
   distinct_on?: InputMaybe<Array<ProjectTag_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8127,7 +8233,7 @@ type IQuery_RootProjectTagArgs = {
   where?: InputMaybe<IProjectTag_Bool_Exp>
 }
 
-type IQuery_RootProjectTag_AggregateArgs = {
+export type IQuery_RootProjectTag_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTag_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8135,11 +8241,11 @@ type IQuery_RootProjectTag_AggregateArgs = {
   where?: InputMaybe<IProjectTag_Bool_Exp>
 }
 
-type IQuery_RootProjectTag_By_PkArgs = {
+export type IQuery_RootProjectTag_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootProjectTagsBridgeArgs = {
+export type IQuery_RootProjectTagsBridgeArgs = {
   distinct_on?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8147,7 +8253,7 @@ type IQuery_RootProjectTagsBridgeArgs = {
   where?: InputMaybe<IProjectTagsBridge_Bool_Exp>
 }
 
-type IQuery_RootProjectTagsBridge_AggregateArgs = {
+export type IQuery_RootProjectTagsBridge_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8155,11 +8261,11 @@ type IQuery_RootProjectTagsBridge_AggregateArgs = {
   where?: InputMaybe<IProjectTagsBridge_Bool_Exp>
 }
 
-type IQuery_RootProjectTagsBridge_By_PkArgs = {
+export type IQuery_RootProjectTagsBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootProjectTypeArgs = {
+export type IQuery_RootProjectTypeArgs = {
   distinct_on?: InputMaybe<Array<ProjectType_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8167,7 +8273,7 @@ type IQuery_RootProjectTypeArgs = {
   where?: InputMaybe<IProjectType_Bool_Exp>
 }
 
-type IQuery_RootProjectTypeBridgeArgs = {
+export type IQuery_RootProjectTypeBridgeArgs = {
   distinct_on?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8175,7 +8281,7 @@ type IQuery_RootProjectTypeBridgeArgs = {
   where?: InputMaybe<IProjectTypeBridge_Bool_Exp>
 }
 
-type IQuery_RootProjectTypeBridge_AggregateArgs = {
+export type IQuery_RootProjectTypeBridge_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8183,11 +8289,11 @@ type IQuery_RootProjectTypeBridge_AggregateArgs = {
   where?: InputMaybe<IProjectTypeBridge_Bool_Exp>
 }
 
-type IQuery_RootProjectTypeBridge_By_PkArgs = {
+export type IQuery_RootProjectTypeBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootProjectType_AggregateArgs = {
+export type IQuery_RootProjectType_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectType_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8195,11 +8301,11 @@ type IQuery_RootProjectType_AggregateArgs = {
   where?: InputMaybe<IProjectType_Bool_Exp>
 }
 
-type IQuery_RootProjectType_By_PkArgs = {
+export type IQuery_RootProjectType_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootProject_AggregateArgs = {
+export type IQuery_RootProject_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8207,11 +8313,11 @@ type IQuery_RootProject_AggregateArgs = {
   where?: InputMaybe<IProject_Bool_Exp>
 }
 
-type IQuery_RootProject_By_PkArgs = {
+export type IQuery_RootProject_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootSwapsArgs = {
+export type IQuery_RootSwapsArgs = {
   distinct_on?: InputMaybe<Array<Swaps_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8219,7 +8325,7 @@ type IQuery_RootSwapsArgs = {
   where?: InputMaybe<ISwaps_Bool_Exp>
 }
 
-type IQuery_RootSwaps_AggregateArgs = {
+export type IQuery_RootSwaps_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Swaps_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8227,11 +8333,11 @@ type IQuery_RootSwaps_AggregateArgs = {
   where?: InputMaybe<ISwaps_Bool_Exp>
 }
 
-type IQuery_RootSwaps_By_PkArgs = {
+export type IQuery_RootSwaps_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootTopUpWalletArgs = {
+export type IQuery_RootTopUpWalletArgs = {
   distinct_on?: InputMaybe<Array<TopUpWallet_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8239,7 +8345,7 @@ type IQuery_RootTopUpWalletArgs = {
   where?: InputMaybe<ITopUpWallet_Bool_Exp>
 }
 
-type IQuery_RootTopUpWallet_AggregateArgs = {
+export type IQuery_RootTopUpWallet_AggregateArgs = {
   distinct_on?: InputMaybe<Array<TopUpWallet_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8247,11 +8353,11 @@ type IQuery_RootTopUpWallet_AggregateArgs = {
   where?: InputMaybe<ITopUpWallet_Bool_Exp>
 }
 
-type IQuery_RootTopUpWallet_By_PkArgs = {
+export type IQuery_RootTopUpWallet_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type IQuery_RootUserArgs = {
+export type IQuery_RootUserArgs = {
   distinct_on?: InputMaybe<Array<User_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8259,7 +8365,7 @@ type IQuery_RootUserArgs = {
   where?: InputMaybe<IUser_Bool_Exp>
 }
 
-type IQuery_RootUser_AggregateArgs = {
+export type IQuery_RootUser_AggregateArgs = {
   distinct_on?: InputMaybe<Array<User_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8267,11 +8373,31 @@ type IQuery_RootUser_AggregateArgs = {
   where?: InputMaybe<IUser_Bool_Exp>
 }
 
-type IQuery_RootUser_By_PkArgs = {
+export type IQuery_RootUser_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_Root = {
+export type IQuery_Root_MetaArgs = {
+  block?: InputMaybe<IBlock_Height>
+}
+
+export type IQuery_RootExampleEntitiesArgs = {
+  block?: InputMaybe<IBlock_Height>
+  first?: InputMaybe<Scalars['Int']>
+  orderBy?: InputMaybe<ExampleEntity_OrderBy>
+  orderDirection?: InputMaybe<OrderDirection>
+  skip?: InputMaybe<Scalars['Int']>
+  subgraphError?: _SubgraphErrorPolicy_
+  where?: InputMaybe<IExampleEntity_Filter>
+}
+
+export type IQuery_RootExampleEntityArgs = {
+  block?: InputMaybe<IBlock_Height>
+  id: Scalars['ID']
+  subgraphError?: _SubgraphErrorPolicy_
+}
+
+export type ISubscription_Root = {
   __typename?: 'subscription_root'
   /** fetch data from the table: "Donations" */
   Donations: Array<FieldWrapper<IDonations>>
@@ -8405,9 +8531,13 @@ type ISubscription_Root = {
   User_aggregate: FieldWrapper<IUser_Aggregate>
   /** fetch data from the table: "User" using primary key columns */
   User_by_pk?: Maybe<FieldWrapper<IUser>>
+  /** Access to subgraph metadata */
+  _meta?: Maybe<FieldWrapper<I_Meta_>>
+  exampleEntities: Array<FieldWrapper<IExampleEntity>>
+  exampleEntity?: Maybe<FieldWrapper<IExampleEntity>>
 }
 
-type ISubscription_RootDonationsArgs = {
+export type ISubscription_RootDonationsArgs = {
   distinct_on?: InputMaybe<Array<Donations_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8415,7 +8545,7 @@ type ISubscription_RootDonationsArgs = {
   where?: InputMaybe<IDonations_Bool_Exp>
 }
 
-type ISubscription_RootDonations_AggregateArgs = {
+export type ISubscription_RootDonations_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Donations_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8423,11 +8553,11 @@ type ISubscription_RootDonations_AggregateArgs = {
   where?: InputMaybe<IDonations_Bool_Exp>
 }
 
-type ISubscription_RootDonations_By_PkArgs = {
+export type ISubscription_RootDonations_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootFollowsArgs = {
+export type ISubscription_RootFollowsArgs = {
   distinct_on?: InputMaybe<Array<Follows_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8435,7 +8565,7 @@ type ISubscription_RootFollowsArgs = {
   where?: InputMaybe<IFollows_Bool_Exp>
 }
 
-type ISubscription_RootFollows_AggregateArgs = {
+export type ISubscription_RootFollows_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Follows_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8443,11 +8573,11 @@ type ISubscription_RootFollows_AggregateArgs = {
   where?: InputMaybe<IFollows_Bool_Exp>
 }
 
-type ISubscription_RootFollows_By_PkArgs = {
+export type ISubscription_RootFollows_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantCategoriesArgs = {
+export type ISubscription_RootGrantCategoriesArgs = {
   distinct_on?: InputMaybe<Array<GrantCategories_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8455,7 +8585,7 @@ type ISubscription_RootGrantCategoriesArgs = {
   where?: InputMaybe<IGrantCategories_Bool_Exp>
 }
 
-type ISubscription_RootGrantCategoriesBridgeArgs = {
+export type ISubscription_RootGrantCategoriesBridgeArgs = {
   distinct_on?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8463,7 +8593,7 @@ type ISubscription_RootGrantCategoriesBridgeArgs = {
   where?: InputMaybe<IGrantCategoriesBridge_Bool_Exp>
 }
 
-type ISubscription_RootGrantCategoriesBridge_AggregateArgs = {
+export type ISubscription_RootGrantCategoriesBridge_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCategoriesBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8471,11 +8601,11 @@ type ISubscription_RootGrantCategoriesBridge_AggregateArgs = {
   where?: InputMaybe<IGrantCategoriesBridge_Bool_Exp>
 }
 
-type ISubscription_RootGrantCategoriesBridge_By_PkArgs = {
+export type ISubscription_RootGrantCategoriesBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantCategories_AggregateArgs = {
+export type ISubscription_RootGrantCategories_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCategories_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8483,11 +8613,11 @@ type ISubscription_RootGrantCategories_AggregateArgs = {
   where?: InputMaybe<IGrantCategories_Bool_Exp>
 }
 
-type ISubscription_RootGrantCategories_By_PkArgs = {
+export type ISubscription_RootGrantCategories_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantCyclesArgs = {
+export type ISubscription_RootGrantCyclesArgs = {
   distinct_on?: InputMaybe<Array<GrantCycles_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8495,7 +8625,7 @@ type ISubscription_RootGrantCyclesArgs = {
   where?: InputMaybe<IGrantCycles_Bool_Exp>
 }
 
-type ISubscription_RootGrantCycles_AggregateArgs = {
+export type ISubscription_RootGrantCycles_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantCycles_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8503,11 +8633,11 @@ type ISubscription_RootGrantCycles_AggregateArgs = {
   where?: InputMaybe<IGrantCycles_Bool_Exp>
 }
 
-type ISubscription_RootGrantCycles_By_PkArgs = {
+export type ISubscription_RootGrantCycles_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantOwnersArgs = {
+export type ISubscription_RootGrantOwnersArgs = {
   distinct_on?: InputMaybe<Array<GrantOwners_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8515,7 +8645,7 @@ type ISubscription_RootGrantOwnersArgs = {
   where?: InputMaybe<IGrantOwners_Bool_Exp>
 }
 
-type ISubscription_RootGrantOwnersTiersArgs = {
+export type ISubscription_RootGrantOwnersTiersArgs = {
   distinct_on?: InputMaybe<Array<GrantOwnersTiers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8523,7 +8653,7 @@ type ISubscription_RootGrantOwnersTiersArgs = {
   where?: InputMaybe<IGrantOwnersTiers_Bool_Exp>
 }
 
-type ISubscription_RootGrantOwnersTiers_AggregateArgs = {
+export type ISubscription_RootGrantOwnersTiers_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantOwnersTiers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8531,11 +8661,11 @@ type ISubscription_RootGrantOwnersTiers_AggregateArgs = {
   where?: InputMaybe<IGrantOwnersTiers_Bool_Exp>
 }
 
-type ISubscription_RootGrantOwnersTiers_By_PkArgs = {
+export type ISubscription_RootGrantOwnersTiers_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantOwners_AggregateArgs = {
+export type ISubscription_RootGrantOwners_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantOwners_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8543,11 +8673,11 @@ type ISubscription_RootGrantOwners_AggregateArgs = {
   where?: InputMaybe<IGrantOwners_Bool_Exp>
 }
 
-type ISubscription_RootGrantOwners_By_PkArgs = {
+export type ISubscription_RootGrantOwners_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantSubmissionReviewArgs = {
+export type ISubscription_RootGrantSubmissionReviewArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8555,7 +8685,7 @@ type ISubscription_RootGrantSubmissionReviewArgs = {
   where?: InputMaybe<IGrantSubmissionReview_Bool_Exp>
 }
 
-type ISubscription_RootGrantSubmissionReview_AggregateArgs = {
+export type ISubscription_RootGrantSubmissionReview_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissionReview_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8563,11 +8693,11 @@ type ISubscription_RootGrantSubmissionReview_AggregateArgs = {
   where?: InputMaybe<IGrantSubmissionReview_Bool_Exp>
 }
 
-type ISubscription_RootGrantSubmissionReview_By_PkArgs = {
+export type ISubscription_RootGrantSubmissionReview_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantSubmissionsArgs = {
+export type ISubscription_RootGrantSubmissionsArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8575,7 +8705,7 @@ type ISubscription_RootGrantSubmissionsArgs = {
   where?: InputMaybe<IGrantSubmissions_Bool_Exp>
 }
 
-type ISubscription_RootGrantSubmissions_AggregateArgs = {
+export type ISubscription_RootGrantSubmissions_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantSubmissions_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8583,11 +8713,11 @@ type ISubscription_RootGrantSubmissions_AggregateArgs = {
   where?: InputMaybe<IGrantSubmissions_Bool_Exp>
 }
 
-type ISubscription_RootGrantSubmissions_By_PkArgs = {
+export type ISubscription_RootGrantSubmissions_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantTagsArgs = {
+export type ISubscription_RootGrantTagsArgs = {
   distinct_on?: InputMaybe<Array<GrantTags_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8595,7 +8725,7 @@ type ISubscription_RootGrantTagsArgs = {
   where?: InputMaybe<IGrantTags_Bool_Exp>
 }
 
-type ISubscription_RootGrantTagsBridgeArgs = {
+export type ISubscription_RootGrantTagsBridgeArgs = {
   distinct_on?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8603,7 +8733,7 @@ type ISubscription_RootGrantTagsBridgeArgs = {
   where?: InputMaybe<IGrantTagsBridge_Bool_Exp>
 }
 
-type ISubscription_RootGrantTagsBridge_AggregateArgs = {
+export type ISubscription_RootGrantTagsBridge_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8611,11 +8741,11 @@ type ISubscription_RootGrantTagsBridge_AggregateArgs = {
   where?: InputMaybe<IGrantTagsBridge_Bool_Exp>
 }
 
-type ISubscription_RootGrantTagsBridge_By_PkArgs = {
+export type ISubscription_RootGrantTagsBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantTags_AggregateArgs = {
+export type ISubscription_RootGrantTags_AggregateArgs = {
   distinct_on?: InputMaybe<Array<GrantTags_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8623,11 +8753,11 @@ type ISubscription_RootGrantTags_AggregateArgs = {
   where?: InputMaybe<IGrantTags_Bool_Exp>
 }
 
-type ISubscription_RootGrantTags_By_PkArgs = {
+export type ISubscription_RootGrantTags_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootGrantsArgs = {
+export type ISubscription_RootGrantsArgs = {
   distinct_on?: InputMaybe<Array<Grants_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8635,7 +8765,7 @@ type ISubscription_RootGrantsArgs = {
   where?: InputMaybe<IGrants_Bool_Exp>
 }
 
-type ISubscription_RootGrants_AggregateArgs = {
+export type ISubscription_RootGrants_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Grants_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8643,11 +8773,11 @@ type ISubscription_RootGrants_AggregateArgs = {
   where?: InputMaybe<IGrants_Bool_Exp>
 }
 
-type ISubscription_RootGrants_By_PkArgs = {
+export type ISubscription_RootGrants_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootLikesArgs = {
+export type ISubscription_RootLikesArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8655,7 +8785,7 @@ type ISubscription_RootLikesArgs = {
   where?: InputMaybe<ILikes_Bool_Exp>
 }
 
-type ISubscription_RootLikes_AggregateArgs = {
+export type ISubscription_RootLikes_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Likes_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8663,11 +8793,11 @@ type ISubscription_RootLikes_AggregateArgs = {
   where?: InputMaybe<ILikes_Bool_Exp>
 }
 
-type ISubscription_RootLikes_By_PkArgs = {
+export type ISubscription_RootLikes_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootProjectArgs = {
+export type ISubscription_RootProjectArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8675,7 +8805,7 @@ type ISubscription_RootProjectArgs = {
   where?: InputMaybe<IProject_Bool_Exp>
 }
 
-type ISubscription_RootProjectMembersArgs = {
+export type ISubscription_RootProjectMembersArgs = {
   distinct_on?: InputMaybe<Array<ProjectMembers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8683,7 +8813,7 @@ type ISubscription_RootProjectMembersArgs = {
   where?: InputMaybe<IProjectMembers_Bool_Exp>
 }
 
-type ISubscription_RootProjectMembers_AggregateArgs = {
+export type ISubscription_RootProjectMembers_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectMembers_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8691,11 +8821,11 @@ type ISubscription_RootProjectMembers_AggregateArgs = {
   where?: InputMaybe<IProjectMembers_Bool_Exp>
 }
 
-type ISubscription_RootProjectMembers_By_PkArgs = {
+export type ISubscription_RootProjectMembers_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootProjectTagArgs = {
+export type ISubscription_RootProjectTagArgs = {
   distinct_on?: InputMaybe<Array<ProjectTag_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8703,7 +8833,7 @@ type ISubscription_RootProjectTagArgs = {
   where?: InputMaybe<IProjectTag_Bool_Exp>
 }
 
-type ISubscription_RootProjectTag_AggregateArgs = {
+export type ISubscription_RootProjectTag_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTag_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8711,11 +8841,11 @@ type ISubscription_RootProjectTag_AggregateArgs = {
   where?: InputMaybe<IProjectTag_Bool_Exp>
 }
 
-type ISubscription_RootProjectTag_By_PkArgs = {
+export type ISubscription_RootProjectTag_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootProjectTagsBridgeArgs = {
+export type ISubscription_RootProjectTagsBridgeArgs = {
   distinct_on?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8723,7 +8853,7 @@ type ISubscription_RootProjectTagsBridgeArgs = {
   where?: InputMaybe<IProjectTagsBridge_Bool_Exp>
 }
 
-type ISubscription_RootProjectTagsBridge_AggregateArgs = {
+export type ISubscription_RootProjectTagsBridge_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTagsBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8731,11 +8861,11 @@ type ISubscription_RootProjectTagsBridge_AggregateArgs = {
   where?: InputMaybe<IProjectTagsBridge_Bool_Exp>
 }
 
-type ISubscription_RootProjectTagsBridge_By_PkArgs = {
+export type ISubscription_RootProjectTagsBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootProjectTypeArgs = {
+export type ISubscription_RootProjectTypeArgs = {
   distinct_on?: InputMaybe<Array<ProjectType_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8743,7 +8873,7 @@ type ISubscription_RootProjectTypeArgs = {
   where?: InputMaybe<IProjectType_Bool_Exp>
 }
 
-type ISubscription_RootProjectTypeBridgeArgs = {
+export type ISubscription_RootProjectTypeBridgeArgs = {
   distinct_on?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8751,7 +8881,7 @@ type ISubscription_RootProjectTypeBridgeArgs = {
   where?: InputMaybe<IProjectTypeBridge_Bool_Exp>
 }
 
-type ISubscription_RootProjectTypeBridge_AggregateArgs = {
+export type ISubscription_RootProjectTypeBridge_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectTypeBridge_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8759,11 +8889,11 @@ type ISubscription_RootProjectTypeBridge_AggregateArgs = {
   where?: InputMaybe<IProjectTypeBridge_Bool_Exp>
 }
 
-type ISubscription_RootProjectTypeBridge_By_PkArgs = {
+export type ISubscription_RootProjectTypeBridge_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootProjectType_AggregateArgs = {
+export type ISubscription_RootProjectType_AggregateArgs = {
   distinct_on?: InputMaybe<Array<ProjectType_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8771,11 +8901,11 @@ type ISubscription_RootProjectType_AggregateArgs = {
   where?: InputMaybe<IProjectType_Bool_Exp>
 }
 
-type ISubscription_RootProjectType_By_PkArgs = {
+export type ISubscription_RootProjectType_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootProject_AggregateArgs = {
+export type ISubscription_RootProject_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8783,11 +8913,11 @@ type ISubscription_RootProject_AggregateArgs = {
   where?: InputMaybe<IProject_Bool_Exp>
 }
 
-type ISubscription_RootProject_By_PkArgs = {
+export type ISubscription_RootProject_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootSwapsArgs = {
+export type ISubscription_RootSwapsArgs = {
   distinct_on?: InputMaybe<Array<Swaps_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8795,7 +8925,7 @@ type ISubscription_RootSwapsArgs = {
   where?: InputMaybe<ISwaps_Bool_Exp>
 }
 
-type ISubscription_RootSwaps_AggregateArgs = {
+export type ISubscription_RootSwaps_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Swaps_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8803,11 +8933,11 @@ type ISubscription_RootSwaps_AggregateArgs = {
   where?: InputMaybe<ISwaps_Bool_Exp>
 }
 
-type ISubscription_RootSwaps_By_PkArgs = {
+export type ISubscription_RootSwaps_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootTopUpWalletArgs = {
+export type ISubscription_RootTopUpWalletArgs = {
   distinct_on?: InputMaybe<Array<TopUpWallet_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8815,7 +8945,7 @@ type ISubscription_RootTopUpWalletArgs = {
   where?: InputMaybe<ITopUpWallet_Bool_Exp>
 }
 
-type ISubscription_RootTopUpWallet_AggregateArgs = {
+export type ISubscription_RootTopUpWallet_AggregateArgs = {
   distinct_on?: InputMaybe<Array<TopUpWallet_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8823,11 +8953,11 @@ type ISubscription_RootTopUpWallet_AggregateArgs = {
   where?: InputMaybe<ITopUpWallet_Bool_Exp>
 }
 
-type ISubscription_RootTopUpWallet_By_PkArgs = {
+export type ISubscription_RootTopUpWallet_By_PkArgs = {
   id: Scalars['uuid']
 }
 
-type ISubscription_RootUserArgs = {
+export type ISubscription_RootUserArgs = {
   distinct_on?: InputMaybe<Array<User_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8835,7 +8965,7 @@ type ISubscription_RootUserArgs = {
   where?: InputMaybe<IUser_Bool_Exp>
 }
 
-type ISubscription_RootUser_AggregateArgs = {
+export type ISubscription_RootUser_AggregateArgs = {
   distinct_on?: InputMaybe<Array<User_Select_Column>>
   limit?: InputMaybe<Scalars['Int']>
   offset?: InputMaybe<Scalars['Int']>
@@ -8843,12 +8973,32 @@ type ISubscription_RootUser_AggregateArgs = {
   where?: InputMaybe<IUser_Bool_Exp>
 }
 
-type ISubscription_RootUser_By_PkArgs = {
+export type ISubscription_RootUser_By_PkArgs = {
   id: Scalars['uuid']
+}
+
+export type ISubscription_Root_MetaArgs = {
+  block?: InputMaybe<IBlock_Height>
+}
+
+export type ISubscription_RootExampleEntitiesArgs = {
+  block?: InputMaybe<IBlock_Height>
+  first?: InputMaybe<Scalars['Int']>
+  orderBy?: InputMaybe<ExampleEntity_OrderBy>
+  orderDirection?: InputMaybe<OrderDirection>
+  skip?: InputMaybe<Scalars['Int']>
+  subgraphError?: _SubgraphErrorPolicy_
+  where?: InputMaybe<IExampleEntity_Filter>
+}
+
+export type ISubscription_RootExampleEntityArgs = {
+  block?: InputMaybe<IBlock_Height>
+  id: Scalars['ID']
+  subgraphError?: _SubgraphErrorPolicy_
 }
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
-type ITimestamptz_Comparison_Exp = {
+export type ITimestamptz_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamptz']>
   _gt?: InputMaybe<Scalars['timestamptz']>
   _gte?: InputMaybe<Scalars['timestamptz']>
@@ -8861,7 +9011,7 @@ type ITimestamptz_Comparison_Exp = {
 }
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
-type IUuid_Comparison_Exp = {
+export type IUuid_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['uuid']>
   _gt?: InputMaybe<Scalars['uuid']>
   _gte?: InputMaybe<Scalars['uuid']>
@@ -8872,3 +9022,133 @@ type IUuid_Comparison_Exp = {
   _neq?: InputMaybe<Scalars['uuid']>
   _nin?: InputMaybe<Array<Scalars['uuid']>>
 }
+
+export type ISidebarDonatorsQueryVariables = Exact<{ [key: string]: never }>
+
+export type ISidebarDonatorsQuery = {
+  __typename?: 'query_root'
+  Donations: Array<{
+    __typename?: 'Donations'
+    amount: any
+    User: { __typename?: 'User'; firstName?: string | null; lastName?: string | null; profileImage?: string | null }
+  }>
+}
+
+export type ICreateTopUpWalletMutationVariables = Exact<{
+  data: ITopUpWallet_Insert_Input
+}>
+
+export type ICreateTopUpWalletMutation = {
+  __typename?: 'mutation_root'
+  insert_TopUpWallet_one?: {
+    __typename?: 'TopUpWallet'
+    id: any
+    amount: any
+    originFund: string
+    state: string
+    userId: any
+    timestamp?: any | null
+  } | null
+}
+
+export const SidebarDonatorsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'SidebarDonators' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'Donations' },
+            arguments: [
+              { kind: 'Argument', name: { kind: 'Name', value: 'limit' }, value: { kind: 'IntValue', value: '5' } },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'amount' },
+                      value: { kind: 'EnumValue', value: 'desc' },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'User' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'profileImage' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ISidebarDonatorsQuery, ISidebarDonatorsQueryVariables>
+export const CreateTopUpWalletDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'createTopUpWallet' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'TopUpWallet_insert_input' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'insert_TopUpWallet_one' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'object' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'originFund' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'state' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ICreateTopUpWalletMutation, ICreateTopUpWalletMutationVariables>
