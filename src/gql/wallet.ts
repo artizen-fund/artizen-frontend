@@ -1,4 +1,4 @@
-import { gql } from 'graphql-tag'
+import { gql } from '@apollo/client'
 
 export const CREATE_TOP_UP_WALLET = gql`
   mutation createTopUpWallet($data: TopUpWallet_insert_input!) {
