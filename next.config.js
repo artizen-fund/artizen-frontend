@@ -1,75 +1,21 @@
+const { withSentryConfig } = require('@sentry/nextjs')
 const withGraphql = require('next-plugin-graphql')
 
-// const LEGACY_DOMAIN = 'https://legacy.artizen.fund'
-
-module.exports = withGraphql({
+const moduleExports = {
   reactStrictMode: true,
   compiler: { styledComponents: true },
-  // images: {
-  //   domains: ['res.cloudinary.com'],
-  // },
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/index/:slug*',
-  //       destination: `/`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/project/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/project/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/edit-project/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/project/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/projects/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/project/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/grant/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/grant/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/edit-grant/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/project/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/grants/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/grants/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/member/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/member/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/members/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/members/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/loves/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/loves/:slug*`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/inbox',
-  //       destination: `${LEGACY_DOMAIN}/inbox`,
-  //       permanent: false,
-  //     },
-  //     {
-  //       source: '/settings/:slug*',
-  //       destination: `${LEGACY_DOMAIN}/settings/:slug*`,
-  //       permanent: false,
-  //     },
-  //   ]
-  // },
-})
+}
+
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+
+  silent: true, // Suppresses all logs
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+}
+
+module.exports = withGraphql(withSentryConfig(moduleExports, sentryWebpackPluginOptions))

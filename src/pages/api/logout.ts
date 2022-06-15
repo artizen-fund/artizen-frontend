@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { magicAdmin, removeTokenCookie, assert } from '@lib'
+import { magicLinkAdmin, removeTokenCookie, assert } from '@lib'
+import { withSentry } from '@sentry/nextjs'
 import jwt from 'jsonwebtoken'
 import type { MagicUserMetadata } from 'magic-sdk'
 
@@ -14,7 +15,7 @@ const logout = async (req: NextApiRequest, res: NextApiResponse) => {
     // Add the try/catch because a user's session may have already expired with Magic (expired 7 days after login)
     try {
       if (!user.issuer) throw 'Bad JWT payload.'
-      await magicAdmin.users.logoutByIssuer(user.issuer)
+      await magicLinkAdmin.users.logoutByIssuer(user.issuer)
     } catch (error) {
       console.error('Users session with Magic already expired')
     }
@@ -25,4 +26,4 @@ const logout = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default logout
+export default withSentry(logout)

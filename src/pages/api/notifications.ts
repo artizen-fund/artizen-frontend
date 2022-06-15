@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { withSentry } from '@sentry/nextjs'
 import { assert } from '@lib'
 
 const initNotifications = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -25,4 +26,4 @@ const initNotifications = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default initNotifications
+export default withSentry(initNotifications)
