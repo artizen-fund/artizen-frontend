@@ -6,22 +6,22 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-8d8cf31b-0 exoMbV"
+      class="sc-2401c112-0 fSRIkS"
     >
       <div
-        class="sc-8d8cf31b-2 cIfwE"
+        class="sc-2401c112-2 iqTmXD"
       >
         <a
           href="/"
         >
           <div
-            class="sc-8d8cf31b-1 hgnaem"
+            class="sc-2401c112-1 cpSrel"
           >
             Artizen
           </div>
         </a>
         <button
-          class="sc-a6b3add2-2 bTccxJ sc-8d8cf31b-4 gheJck "
+          class="sc-a6b3add2-2 bTccxJ sc-2401c112-4 kbLHcD "
         >
           <span>
             Menu
@@ -29,10 +29,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-8d8cf31b-2 cIfwE"
+        class="sc-2401c112-2 iqTmXD"
       >
         <div
-          class="sc-8d8cf31b-3 hWUpcx"
+          class="sc-2401c112-3 ftXPqi"
         >
           <ul>
             <li>

@@ -113,24 +113,24 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <label
-            class="sc-32dd2a74-4 fZyKhj"
+            class="sc-dd35d48e-4 cvrVnH"
             id="#/properties/OPTIN"
           >
             <div
-              class="sc-32dd2a74-0 jdmmOy"
+              class="sc-dd35d48e-0 lmHjtw"
             >
               <input
                 checked=""
-                class="sc-32dd2a74-1 iRKuyc"
+                class="sc-dd35d48e-1 clTMzK"
                 required=""
                 type="checkbox"
               />
               <span
-                class="sc-32dd2a74-2 ceuIVM"
+                class="sc-dd35d48e-2 Legqi"
               />
             </div>
             <span
-              class="sc-32dd2a74-3 gIJOYI"
+              class="sc-dd35d48e-3 kiyWfS"
             >
               Opt-in to receive the Artizen newsletter.
             </span>
