@@ -6,19 +6,15 @@ import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@compon
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
-const Sidebar = () => {
-  // note: this is just some placeholder nonsense, not final var names
-  const FUND_COUNT = 3.2
-  const FUND_AMOUNT = 15250
-  const FUND_GOAL = 25000
-  const FUND_DATE = 'May, 2022'
-  const FUND_DEADLINE = '2022-06-30T00:00:00'
-  const leaderboard = [
-    { name: 'herp derp', amount: 69 },
-    { name: 'dorp donk', amount: 68 },
-    { name: 'hoop doop', amount: 67 },
-  ]
+type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'> & {
+  FUND_COUNT: number
+  FUND_AMOUNT: number
+  FUND_GOAL: number
+  FUND_DATE: string
+  FUND_DEADLINE: string
+}
 
+const Sidebar = ({ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -39,15 +35,15 @@ const Sidebar = () => {
             </Row>
           </FundBlock>
           <Row>
-            <Button onClick={() => console.log('donate!')} level={1} stretch glyph="donate">
+            <Button onClick={() => alert('todo: implement this')} level={1} stretch glyph="donate">
               Donate
             </Button>
-            <Button onClick={() => console.log('share!')} level={1} stretch outline>
+            <Button onClick={() => alert('todo: implement this')} level={1} stretch outline>
               Share Now
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ leaderboard }} />
+            <Leaderboard {...{ Donations }} />
             <Perks />
           </LargeScreensOnly>
         </Content>
@@ -70,10 +66,12 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
   }
   border-radius: 0px 0px 16px 16px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    border-radius: 16px 16px 16px 16px;
+    max-width: 388px;
     top: 92px;
+    border-radius: 16px 16px 16px 16px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
+    max-width: 498px;
     top: 108px;
   }
 `

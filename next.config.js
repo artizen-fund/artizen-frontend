@@ -1,6 +1,8 @@
+const withGraphql = require('next-plugin-graphql')
+
 // const LEGACY_DOMAIN = 'https://legacy.artizen.fund'
 
-module.exports = {
+module.exports = withGraphql({
   reactStrictMode: true,
   compiler: { styledComponents: true },
   // images: {
@@ -70,4 +72,4 @@ module.exports = {
   //     },
   //   ]
   // },
-}
+})

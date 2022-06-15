@@ -8,7 +8,7 @@ const user = async (req: NextApiRequest, res: NextApiResponse) => {
     const JWT_SECRET = assert(process.env.JWT_SECRET, 'JWT_SECRET')
 
     if (!req.cookies.token) {
-      console.log('Error: Token not found in cookies.')
+      console.warn('Error: Token not found in cookies.')
       return res.json({})
     }
 
