@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { setTokenCookie, assert } from '@lib'
+import { withSentry } from '@sentry/nextjs'
 import { createNewToken, getUserDataFromDataBase } from '../../lib/utilsServer'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -100,4 +101,4 @@ const user = async (req: NextApiRequest, res: NextApiResponse) => {
 //   }
 // }
 
-export default user
+export default withSentry(user)
