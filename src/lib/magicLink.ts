@@ -1,8 +1,7 @@
 import { Magic } from 'magic-sdk'
 import type { EthNetworkConfiguration } from '@magic-sdk/types'
 import { OAuthExtension } from '@magic-ext/oauth'
-import { assert } from '@lib'
-import { assertInt } from './assert'
+import { assert, assertInt } from '@lib'
 import { ethers } from 'ethers'
 
 const NEXT_PUBLIC_RPC_URL = assert(process.env.NEXT_PUBLIC_RPC_URL, 'NEXT_PUBLIC_RPC_URL')
