@@ -26,6 +26,7 @@
     "@apollo/client": "^3.6.6",
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
+    "@biconomy/mexa": "^2.0.32",
     "@depay/web3-blockchains": "^5.0.1",
     "@depay/web3-mock": "^11.10.1",
     "@jsonforms/core": "^2.5.2",
@@ -44,6 +45,7 @@
     "assert": "^2.0.0",
     "cookie": "^0.5.0",
     "env-var": "^7.1.1",
+    "ethers": "^5.6.8",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "magic-sdk": "^8.1.0",
@@ -56,8 +58,7 @@
     "react-phone-number-input": "^3.2.2",
     "react-use-intercom": "^1.5.2",
     "react-useinterval": "^1.0.2",
-    "styled-components": "^5.3.5",
-    "web3": "^1.7.3"
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
