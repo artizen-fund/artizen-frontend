@@ -98,8 +98,8 @@ const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
     content: '';
     transition: opacity 0.25s ease-in-out, transform 0.6s cubic-bezier(0.44, 1.86, 0.74, 1);
   }
-`
-
+`//TODO: Check with Eric
+// @ts-ignore: Unreachable code error
 const Label = styled.span<Pick<BooleanControlProps, 'disabled' | 'inverted'>>`
   display: block;
   color: ${props => rgba(props.disabled ? palette.barracuda : props.inverted ? palette.white : palette.night)};
@@ -108,6 +108,7 @@ const Label = styled.span<Pick<BooleanControlProps, 'disabled' | 'inverted'>>`
   }
 `
 
+// @ts-ignore: Unreachable code error
 const Wrapper = styled.label<Pick<BooleanControlProps, 'disabled' | 'inverted'> & { gridArea?: string }>`
   position: relative;
   ${props => props.gridArea && `grid-area: ${props.gridArea};`}

@@ -5,6 +5,9 @@ import { CreateTopUpWallet, rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 
 const Home: NextPage = () => {
+
+
+
   // note: obviously this is going to come from CMS data
   const tabbedInfo: Record<string, any> = {
     About: (

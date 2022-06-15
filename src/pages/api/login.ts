@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { magicAdmin, setTokenCookie } from '@lib'
+import { withSentry } from '@sentry/nextjs'
+import { magicLinkAdmin, setTokenCookie } from '@lib'
 import {
   createNewToken,
   checkTypeOfUser,
@@ -12,9 +13,9 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
     const didToken = req?.headers?.authorization?.substr(7)
     if (!didToken) throw 'Token not found.'
 
-    magicAdmin.token.validate(didToken)
+    magicLinkAdmin.token.validate(didToken)
 
-    const metadata = await magicAdmin.users.getMetadataByToken(didToken)
+    const metadata = await magicLinkAdmin.users.getMetadataByToken(didToken)
     if (!metadata || !metadata.email) throw 'Token metadata not found.'
 
     const token = createNewToken(metadata)
@@ -41,4 +42,4 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default login
+export default withSentry(login)
