@@ -32,3 +32,19 @@ Explain the problem and include additional details to help maintainers reproduce
 - **If the problem is related to performance or memory**, include a [CPU profile capture](https://flight-manual.atom.io/hacking-atom/sections/debugging/#diagnose-runtime-performance) with your report.
 - **If Chrome's developer tools pane is shown without you triggering it**, that normally means that you have a syntax error in one of your themes.
 - **If the problem wasn't triggered by a specific action**, describe what you were doing before the problem happened and share more information using the guidelines below.
+
+#### How Do I Submit A (Good) Bug Report?
+
+### Suggesting Enhancements
+
+This section guides you through submitting an enhancement suggestion for Artizen, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion :pencil: and find related suggestions :mag_right:.
+
+Before creating enhancement suggestions, please check [Wiki](https://github.com/artizen-fund/docs/wiki) as you might find out that you don't need to create one.
+
+#### Local development
+
+Artizen and all repositories can be developed locally. For instructions on how to do this, see the information in each repository
+
+#### Code Quality
+
+Follow [Artizen's code style](https://github.com/artizen-fund/docs/wiki/Code-Style-guidelines)
