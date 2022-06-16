@@ -32,8 +32,13 @@ export type IBlock_Height = {
   number_gte?: InputMaybe<Scalars['Int']>
 }
 
+export type IBoolean_Cast_Exp = {
+  String?: InputMaybe<IString_Comparison_Exp>
+}
+
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 export type IBoolean_Comparison_Exp = {
+  _cast?: InputMaybe<IBoolean_Cast_Exp>
   _eq?: InputMaybe<Scalars['Boolean']>
   _gt?: InputMaybe<Scalars['Boolean']>
   _gte?: InputMaybe<Scalars['Boolean']>
@@ -142,7 +147,7 @@ export type IDonations_Bool_Exp = {
 
 /** unique or primary key constraints on table "Donations" */
 export enum Donations_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   Donations_pkey = 'Donations_pkey',
 }
 
@@ -397,8 +402,9 @@ export type IExampleEntity = {
   OnChainUser?: Maybe<FieldWrapper<IUser>>
   count: FieldWrapper<Scalars['BigInt']>
   donation_amount: FieldWrapper<Scalars['BigInt']>
-  donation_donor: FieldWrapper<Scalars['Bytes']>
+  donation_donor: FieldWrapper<Scalars['String']>
   id: FieldWrapper<Scalars['ID']>
+  totalDonations: FieldWrapper<Scalars['BigInt']>
 }
 
 export type IExampleEntity_Filter = {
@@ -420,12 +426,26 @@ export type IExampleEntity_Filter = {
   donation_amount_lte?: InputMaybe<Scalars['BigInt']>
   donation_amount_not?: InputMaybe<Scalars['BigInt']>
   donation_amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>
-  donation_donor?: InputMaybe<Scalars['Bytes']>
-  donation_donor_contains?: InputMaybe<Scalars['Bytes']>
-  donation_donor_in?: InputMaybe<Array<Scalars['Bytes']>>
-  donation_donor_not?: InputMaybe<Scalars['Bytes']>
-  donation_donor_not_contains?: InputMaybe<Scalars['Bytes']>
-  donation_donor_not_in?: InputMaybe<Array<Scalars['Bytes']>>
+  donation_donor?: InputMaybe<Scalars['String']>
+  donation_donor_contains?: InputMaybe<Scalars['String']>
+  donation_donor_contains_nocase?: InputMaybe<Scalars['String']>
+  donation_donor_ends_with?: InputMaybe<Scalars['String']>
+  donation_donor_ends_with_nocase?: InputMaybe<Scalars['String']>
+  donation_donor_gt?: InputMaybe<Scalars['String']>
+  donation_donor_gte?: InputMaybe<Scalars['String']>
+  donation_donor_in?: InputMaybe<Array<Scalars['String']>>
+  donation_donor_lt?: InputMaybe<Scalars['String']>
+  donation_donor_lte?: InputMaybe<Scalars['String']>
+  donation_donor_not?: InputMaybe<Scalars['String']>
+  donation_donor_not_contains?: InputMaybe<Scalars['String']>
+  donation_donor_not_contains_nocase?: InputMaybe<Scalars['String']>
+  donation_donor_not_ends_with?: InputMaybe<Scalars['String']>
+  donation_donor_not_ends_with_nocase?: InputMaybe<Scalars['String']>
+  donation_donor_not_in?: InputMaybe<Array<Scalars['String']>>
+  donation_donor_not_starts_with?: InputMaybe<Scalars['String']>
+  donation_donor_not_starts_with_nocase?: InputMaybe<Scalars['String']>
+  donation_donor_starts_with?: InputMaybe<Scalars['String']>
+  donation_donor_starts_with_nocase?: InputMaybe<Scalars['String']>
   id?: InputMaybe<Scalars['ID']>
   id_gt?: InputMaybe<Scalars['ID']>
   id_gte?: InputMaybe<Scalars['ID']>
@@ -434,6 +454,14 @@ export type IExampleEntity_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>
   id_not?: InputMaybe<Scalars['ID']>
   id_not_in?: InputMaybe<Array<Scalars['ID']>>
+  totalDonations?: InputMaybe<Scalars['BigInt']>
+  totalDonations_gt?: InputMaybe<Scalars['BigInt']>
+  totalDonations_gte?: InputMaybe<Scalars['BigInt']>
+  totalDonations_in?: InputMaybe<Array<Scalars['BigInt']>>
+  totalDonations_lt?: InputMaybe<Scalars['BigInt']>
+  totalDonations_lte?: InputMaybe<Scalars['BigInt']>
+  totalDonations_not?: InputMaybe<Scalars['BigInt']>
+  totalDonations_not_in?: InputMaybe<Array<Scalars['BigInt']>>
 }
 
 export enum ExampleEntity_OrderBy {
@@ -441,6 +469,7 @@ export enum ExampleEntity_OrderBy {
   donation_amount = 'donation_amount',
   donation_donor = 'donation_donor',
   id = 'id',
+  totalDonations = 'totalDonations',
 }
 
 /** columns and relationships of "Follows" */
@@ -506,7 +535,7 @@ export type IFollows_Bool_Exp = {
 
 /** unique or primary key constraints on table "Follows" */
 export enum Follows_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   Follows_pkey = 'Follows_pkey',
 }
 
@@ -708,7 +737,7 @@ export type IGrantCategoriesBridge_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantCategoriesBridge" */
 export enum GrantCategoriesBridge_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantCategoriesBridge_pkey = 'GrantCategoriesBridge_pkey',
 }
 
@@ -842,9 +871,9 @@ export type IGrantCategories_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantCategories" */
 export enum GrantCategories_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantCategories_pkey = 'GrantCategories_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   GrantCategories_value_key = 'GrantCategories_value_key',
 }
 
@@ -1074,7 +1103,7 @@ export type IGrantCycles_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantCycles" */
 export enum GrantCycles_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantCycles_pkey = 'GrantCycles_pkey',
 }
 
@@ -1548,7 +1577,7 @@ export type IGrantOwnersTiers_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantOwnersTiers" */
 export enum GrantOwnersTiers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantOwnersTiers_pkey = 'GrantOwnersTiers_pkey',
 }
 
@@ -1850,7 +1879,7 @@ export type IGrantOwners_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantOwners" */
 export enum GrantOwners_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantOwners_pkey = 'GrantOwners_pkey',
 }
 
@@ -2143,7 +2172,7 @@ export type IGrantSubmissionReview_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantSubmissionReview" */
 export enum GrantSubmissionReview_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantSubmissionReview_pkey = 'GrantSubmissionReview_pkey',
 }
 
@@ -2524,7 +2553,7 @@ export type IGrantSubmissions_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantSubmissions" */
 export enum GrantSubmissions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantSubmitions_pkey = 'GrantSubmitions_pkey',
 }
 
@@ -2859,7 +2888,7 @@ export type IGrantTagsBridge_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantTagsBridge" */
 export enum GrantTagsBridge_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantTagsBridge_pkey = 'GrantTagsBridge_pkey',
 }
 
@@ -2993,9 +3022,9 @@ export type IGrantTags_Bool_Exp = {
 
 /** unique or primary key constraints on table "GrantTags" */
 export enum GrantTags_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GrantTags_pkey = 'GrantTags_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   GrantTags_value_key = 'GrantTags_value_key',
 }
 
@@ -3354,11 +3383,11 @@ export type IGrants_Bool_Exp = {
 
 /** unique or primary key constraints on table "Grants" */
 export enum Grants_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   grant_pkey = 'grant_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "titleURL" */
   grant_titleURL_key = 'grant_titleURL_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "title" */
   grant_title_key = 'grant_title_key',
 }
 
@@ -3702,8 +3731,13 @@ export type IGrants_Variance_Order_By = {
   length?: InputMaybe<Order_By>
 }
 
+export type IInt_Cast_Exp = {
+  String?: InputMaybe<IString_Comparison_Exp>
+}
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type IInt_Comparison_Exp = {
+  _cast?: InputMaybe<IInt_Cast_Exp>
   _eq?: InputMaybe<Scalars['Int']>
   _gt?: InputMaybe<Scalars['Int']>
   _gte?: InputMaybe<Scalars['Int']>
@@ -3788,7 +3822,7 @@ export type ILikes_Bool_Exp = {
 
 /** unique or primary key constraints on table "Likes" */
 export enum Likes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   Likes_pkey = 'Likes_pkey',
 }
 
@@ -4146,7 +4180,7 @@ export type IProjectMembers_Bool_Exp = {
 
 /** unique or primary key constraints on table "ProjectMembers" */
 export enum ProjectMembers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ProjectMembers_pkey = 'ProjectMembers_pkey',
 }
 
@@ -4373,9 +4407,9 @@ export type IProjectTag_Bool_Exp = {
 
 /** unique or primary key constraints on table "ProjectTag" */
 export enum ProjectTag_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ProjectTag_pkey = 'ProjectTag_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   ProjectTag_value_key = 'ProjectTag_value_key',
 }
 
@@ -4529,7 +4563,7 @@ export type IProjectTagsBridge_Bool_Exp = {
 
 /** unique or primary key constraints on table "ProjectTagsBridge" */
 export enum ProjectTagsBridge_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ProjectTagsBridge_pkey = 'ProjectTagsBridge_pkey',
 }
 
@@ -4720,7 +4754,7 @@ export type IProjectTypeBridge_Bool_Exp = {
 
 /** unique or primary key constraints on table "ProjectTypeBridge" */
 export enum ProjectTypeBridge_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ProjectTypeBridge_pkey = 'ProjectTypeBridge_pkey',
 }
 
@@ -4854,9 +4888,9 @@ export type IProjectType_Bool_Exp = {
 
 /** unique or primary key constraints on table "ProjectType" */
 export enum ProjectType_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ProjectType_pkey = 'ProjectType_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   ProjectType_value_key = 'ProjectType_value_key',
 }
 
@@ -5051,11 +5085,11 @@ export type IProject_Bool_Exp = {
 
 /** unique or primary key constraints on table "Project" */
 export enum Project_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "activityId" */
   Project_activityId_key = 'Project_activityId_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   Project_pkey = 'Project_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "titleURL" */
   Project_titleURL_key = 'Project_titleURL_key',
 }
 
@@ -5573,7 +5607,7 @@ export type ISwaps_Bool_Exp = {
 
 /** unique or primary key constraints on table "Swaps" */
 export enum Swaps_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   Swaps_pkey = 'Swaps_pkey',
 }
 
@@ -5823,7 +5857,7 @@ export type ITopUpWallet_Bool_Exp = {
 
 /** unique or primary key constraints on table "TopUpWallet" */
 export enum TopUpWallet_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   topupWallet_pkey = 'topupWallet_pkey',
 }
 
@@ -6430,11 +6464,11 @@ export type IUser_Bool_Exp = {
 
 /** unique or primary key constraints on table "User" */
 export enum User_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "email" */
   User_email_key = 'User_email_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   User_pkey = 'User_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "publicAddress" */
   User_publicAddress_key = 'User_publicAddress_key',
 }
 
@@ -6692,8 +6726,13 @@ export enum _SubgraphErrorPolicy_ {
   deny = 'deny',
 }
 
+export type IBigint_Cast_Exp = {
+  String?: InputMaybe<IString_Comparison_Exp>
+}
+
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
 export type IBigint_Comparison_Exp = {
+  _cast?: InputMaybe<IBigint_Cast_Exp>
   _eq?: InputMaybe<Scalars['bigint']>
   _gt?: InputMaybe<Scalars['bigint']>
   _gte?: InputMaybe<Scalars['bigint']>
@@ -6705,8 +6744,13 @@ export type IBigint_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['bigint']>>
 }
 
+export type IFloat8_Cast_Exp = {
+  String?: InputMaybe<IString_Comparison_Exp>
+}
+
 /** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
 export type IFloat8_Comparison_Exp = {
+  _cast?: InputMaybe<IFloat8_Cast_Exp>
   _eq?: InputMaybe<Scalars['float8']>
   _gt?: InputMaybe<Scalars['float8']>
   _gte?: InputMaybe<Scalars['float8']>
@@ -6718,8 +6762,13 @@ export type IFloat8_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['float8']>>
 }
 
+export type IJson_Cast_Exp = {
+  String?: InputMaybe<IString_Comparison_Exp>
+}
+
 /** Boolean expression to compare columns of type "json". All fields are combined with logical 'AND'. */
 export type IJson_Comparison_Exp = {
+  _cast?: InputMaybe<IJson_Cast_Exp>
   _eq?: InputMaybe<Scalars['json']>
   _gt?: InputMaybe<Scalars['json']>
   _gte?: InputMaybe<Scalars['json']>
@@ -7768,8 +7817,13 @@ export type IMutation_RootUpdate_User_By_PkArgs = {
   pk_columns: IUser_Pk_Columns_Input
 }
 
+export type INumeric_Cast_Exp = {
+  String?: InputMaybe<IString_Comparison_Exp>
+}
+
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
 export type INumeric_Comparison_Exp = {
+  _cast?: InputMaybe<INumeric_Cast_Exp>
   _eq?: InputMaybe<Scalars['numeric']>
   _gt?: InputMaybe<Scalars['numeric']>
   _gte?: InputMaybe<Scalars['numeric']>
@@ -8997,8 +9051,13 @@ export type ISubscription_RootExampleEntityArgs = {
   subgraphError?: _SubgraphErrorPolicy_
 }
 
+export type ITimestamptz_Cast_Exp = {
+  String?: InputMaybe<IString_Comparison_Exp>
+}
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type ITimestamptz_Comparison_Exp = {
+  _cast?: InputMaybe<ITimestamptz_Cast_Exp>
   _eq?: InputMaybe<Scalars['timestamptz']>
   _gt?: InputMaybe<Scalars['timestamptz']>
   _gte?: InputMaybe<Scalars['timestamptz']>
@@ -9010,8 +9069,13 @@ export type ITimestamptz_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamptz']>>
 }
 
+export type IUuid_Cast_Exp = {
+  String?: InputMaybe<IString_Comparison_Exp>
+}
+
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type IUuid_Comparison_Exp = {
+  _cast?: InputMaybe<IUuid_Cast_Exp>
   _eq?: InputMaybe<Scalars['uuid']>
   _gt?: InputMaybe<Scalars['uuid']>
   _gte?: InputMaybe<Scalars['uuid']>
