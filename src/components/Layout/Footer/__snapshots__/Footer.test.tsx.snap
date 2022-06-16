@@ -9,7 +9,7 @@ exports[`Footer renders Footer unchanged 1`] = `
       class="sc-aae777ba-0 hitCwF"
     >
       <hr
-        class="sc-aae777ba-1 LzWqX"
+        class="sc-aae777ba-1 kwCfu"
       />
       <ul
         class="sc-aae777ba-2 eNWZjQ"
@@ -41,7 +41,7 @@ exports[`Footer renders Footer unchanged 1`] = `
         </li>
       </ul>
       <hr
-        class="sc-aae777ba-1 bPvDbo"
+        class="sc-aae777ba-1 haPlHx"
       />
       <div
         class="sc-aae777ba-4 jhvGw"
@@ -71,7 +71,7 @@ exports[`Footer renders Footer unchanged 1`] = `
         </div>
       </div>
       <hr
-        class="sc-aae777ba-1 haqjUl"
+        class="sc-aae777ba-1 buYhaQ"
       />
       <div
         class="sc-697e6c26-0 kswkdX"
@@ -111,7 +111,7 @@ exports[`Footer renders Footer unchanged 1`] = `
     class="sc-9199b4ac-0 brREMd sc-aae777ba-8 cKHMOq"
   >
     <footer
-      class="sc-aae777ba-7 fRCnZI"
+      class="sc-aae777ba-7 leANSN"
     >
       <div>
         Open source platform made with ❤️ by a globally distributed team

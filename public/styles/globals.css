@@ -29,6 +29,11 @@ p {
   letter-spacing: -0.4px;
   color: rgba(32, 34, 34, 1);
 }
+@media (prefers-color-scheme: dark) {
+  p {
+    color: rgba(241, 243, 238, 1);
+  }
+}
 
 * {
   box-sizing: border-box;
