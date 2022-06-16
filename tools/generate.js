@@ -2,8 +2,6 @@ const { generateTemplateFiles } = require('generate-template-files')
 
 const config = require('../package.json')
 
-alert('todo before merge: fill in Test and Stories with default data')
-
 generateTemplateFiles([
   {
     option: 'Generic Component',
