@@ -5,17 +5,17 @@ import { breakpoint, palette } from '@theme'
 
 interface IShelf {
   visible: boolean
-  setVisible: (newValue: boolean) => void
+  hideShelf: any
   children: React.ReactNode
 }
 
-const Shelf = ({ visible, setVisible, children }: IShelf) => {
+const Shelf = ({ visible, hideShelf, children }: IShelf) => {
   return (
     <>
       <Wrapper {...{ visible }}>
         <PagePadding>{children}</PagePadding>
       </Wrapper>
-      <Onionskin className={visible ? 'visible' : ''} onClick={() => setVisible(false)} />
+      <Onionskin className={visible ? 'visible' : ''} onClick={hideShelf} />
     </>
   )
 }
