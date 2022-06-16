@@ -1,7 +1,7 @@
 import Login from './'
 
 export default {
-  title: 'components/Login',
+  title: 'header/Login',
   component: Login,
   argTypes: {},
 }

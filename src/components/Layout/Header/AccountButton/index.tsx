@@ -7,12 +7,11 @@ import { rgba } from '@lib'
 interface IAccountButton {
   loggedOutAction: () => void
   loggedInAction?: () => void
+  signedIn: boolean
 }
 
-const AccountButton = ({ loggedOutAction }: IAccountButton) => {
+const AccountButton = ({ loggedOutAction, signedIn = false }: IAccountButton) => {
   const TEMP_INITIALS = 'RP'
-
-  const [signedIn, setSignedIn] = useState(false)
 
   const handleClick = () => {
     if (signedIn) {
