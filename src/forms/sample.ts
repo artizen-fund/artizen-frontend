@@ -54,6 +54,18 @@ export const initialState = {
   integerExample: undefined,
 }
 
+export interface FormState {
+  stringExample?: string
+  emailExample?: string
+  phoneExample?: string
+  booleanCheckExample?: boolean
+  switchBooleanExample?: boolean
+  enumExample?: string
+  enumSegmentsExample?: string
+  numberExample?: number
+  integerExample?: number
+}
+
 export const uischema = {
   type: 'VerticalLayout',
   elements: [

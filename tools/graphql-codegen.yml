@@ -5,30 +5,10 @@ schema:
         'x-hasura-admin-secret': ${HASURA_ADMIN_SECRET}
 documents: 'src/gql/*.ts'
 generates:
-  src/types/generatedDataTypes.ts:
+  src/types/generated.ts:
     plugins:
       - typescript
-    config:
-      noExport: true
-      typesPrefix: I
-      enumPrefix: false
-      wrapFieldDefinitions: true
-      fieldWrapperValue: Partial<T>
-      namingConvention:
-        enumValues: keep
-  src/types/generatedOperations.ts:
-    plugins:
       - 'typescript-operations'
-    config:
-      noExport: true
-      typesPrefix: I
-      enumPrefix: false
-      wrapFieldDefinitions: true
-      fieldWrapperValue: Partial<T>
-      namingConvention:
-        enumValues: keep
-  src/types/generatedDocumentNodes.ts:
-    plugins:
       - 'typed-document-node'
     config:
       typesPrefix: I

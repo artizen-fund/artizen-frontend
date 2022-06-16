@@ -19,8 +19,8 @@ interface FormProps<TStateInterface> {
   uischema: Layout
   data: TStateInterface
   setData: (input: TStateInterface) => void
-  readonly: boolean
-  children: React.ReactNode
+  readonly?: boolean
+  children?: React.ReactNode
 }
 
 const Form = <TStateInterface,>({

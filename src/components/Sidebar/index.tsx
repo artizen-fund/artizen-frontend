@@ -5,8 +5,9 @@ import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
+import { ISidebarDonatorsQuery } from '@types'
 
-type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'> & {
+export type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'> & {
   FUND_COUNT: number
   FUND_AMOUNT: number
   FUND_GOAL: number

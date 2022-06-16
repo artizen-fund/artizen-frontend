@@ -1350,22 +1350,22 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <label
-        class="sc-32dd2a74-4 hluhiq"
+        class="sc-dd35d48e-4 eMxXNK"
         id="#/properties/booleanCheckExample"
       >
         <div
-          class="sc-32dd2a74-0 jdmmOy"
+          class="sc-dd35d48e-0 lmHjtw"
         >
           <input
-            class="sc-32dd2a74-1 iRKuyc"
+            class="sc-dd35d48e-1 clTMzK"
             type="checkbox"
           />
           <span
-            class="sc-32dd2a74-2 hvqdrD"
+            class="sc-dd35d48e-2 dtceeR"
           />
         </div>
         <span
-          class="sc-32dd2a74-3 jLQRRt"
+          class="sc-dd35d48e-3 eAaGSv"
         >
           Boolean Check Example
         </span>
