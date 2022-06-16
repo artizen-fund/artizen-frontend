@@ -1,51 +1,71 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import { Button } from '@components'
 import AccountButton from './AccountButton'
+import Login from './Login'
+import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba } from '@lib'
 
 const Header = () => {
-  const [scrolled, setScrolled] = useState(false)
-  useScrollPosition(({ currPos }) => setScrolled(currPos.y > 0), [], undefined, true, 50)
+  const [shadowVisible, setShadowVisible] = useState(false)
+  useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
+
   const [navVisible, setNavVisible] = useState(false)
+
+  const [loginVisible, setLoginVisible] = useState(false)
+
+  const [shelfVisible, setShelfVisible] = useState(false)
+  useEffect(() => setShelfVisible(loginVisible || navVisible), [loginVisible, navVisible])
+
   return (
-    <Wrapper {...{ scrolled }}>
-      <Items>
-        <Link href="/">
-          <a>
-            <Logo>Artizen</Logo>
-          </a>
-        </Link>
-        <MobileNavButton onClick={() => setNavVisible(!navVisible)} icon={glyphKey.arrow} iconOnRight outline size="l1">
-          Menu
-        </MobileNavButton>
-      </Items>
-      <Items>
-        <Nav>
-          <ul>
-            <li>
-              <Link href="/">Leaderboard</Link>
-            </li>
-            <li>
-              <Link href="/">How it Works</Link>
-            </li>
-          </ul>
-        </Nav>
-        <Button href="/" glyph={glyphKey.donate} level={1}>
-          Donate
-        </Button>
-        <AccountButton />
-      </Items>
-    </Wrapper>
+    <>
+      <Wrapper {...{ shadowVisible }} className={shelfVisible ? 'shelfVisible' : ''}>
+        <Items>
+          <Link href="/">
+            <a>
+              <Logo>Artizen</Logo>
+            </a>
+          </Link>
+          <MobileNavButton
+            onClick={() => setNavVisible(!navVisible)}
+            icon={glyphKey.arrow}
+            iconOnRight
+            outline
+            size="l1"
+          >
+            Menu
+          </MobileNavButton>
+        </Items>
+        <Items>
+          <Nav>
+            <ul>
+              <li>
+                <Link href="/">Leaderboard</Link>
+              </li>
+              <li>
+                <Link href="/">How it Works</Link>
+              </li>
+            </ul>
+          </Nav>
+          <Button href="/" glyph={glyphKey.donate} level={1}>
+            Donate
+          </Button>
+          <AccountButton loggedOutAction={() => setLoginVisible(!loginVisible)} />
+        </Items>
+      </Wrapper>
+      <Shelf visible={loginVisible} setVisible={setLoginVisible}>
+        <Login />
+      </Shelf>
+    </>
   )
 }
 
-const Wrapper = styled.header<{ scrolled: boolean }>`
+const Wrapper = styled.header<{ shadowVisible: boolean }>`
   position: fixed;
-  z-index: 1;
+  z-index: 102;
   top: 0;
   left: 0;
   width: 100%;
@@ -64,15 +84,23 @@ const Wrapper = styled.header<{ scrolled: boolean }>`
     height: 88px;
   }
 
-  background: ${props => rgba(palette.white, props.scrolled ? 0.92 : 1)};
+  background: ${props => rgba(palette.white, props.shadowVisible ? 0.92 : 1)};
   @media (prefers-color-scheme: dark) {
-    background: ${props => rgba(palette.slate, props.scrolled ? 0.92 : 1)};
+    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.92 : 1)};
   }
   filter: drop-shadow(
-    ${props => (props.scrolled ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
+    ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
   );
-  backdrop-filter: blur(${props => (props.scrolled ? 16 : 0)}px);
-  transition: background-color 0.3s ease-in-out, filter 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
+  backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
+
+  border-bottom: 0.5px solid transparent;
+  transition: border-color 0.3s 0.3s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
+    backdrop-filter 0.3s ease-in-out;
+  &.shelfVisible {
+    border-color: ${rgba(palette.stone)};
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
+      backdrop-filter 0.3s ease-in-out;
+  }
 `
 
 const Logo = styled.div`

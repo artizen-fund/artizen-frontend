@@ -25,7 +25,7 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) =
 
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string>()
-  const [readonly, setReadonly] = useState(true)
+  const [readonly, setReadonly] = useState(false)
 
   useEffect(() => {
     switch (status) {
