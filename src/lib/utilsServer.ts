@@ -169,7 +169,7 @@ export const queryHasuraAsAdmin = async (query: any, adminSecret?: string, uri?:
     }
     return data
   } catch (error) {
-    console.log('queryHasuraAsAdmin error', error)
+    console.error('queryHasuraAsAdmin error', error)
   }
 }
 

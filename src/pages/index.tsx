@@ -3,13 +3,8 @@ import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedI
 import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { SIDEBAR_DONATORS } from '@gql'
+import { ISidebarDonatorsQuery } from '@types'
 
-<<<<<<< HEAD
-const Home: NextPage = () => {
-
-
-
-=======
 interface IHome {
   apolloData: {
     ROOT_QUERY: ISidebarDonatorsQuery
@@ -21,7 +16,6 @@ const Home = ({
     ROOT_QUERY: { Donations },
   },
 }: IHome) => {
->>>>>>> efae758440920a035d28bc9bb993a4ecd5772724
   // note: obviously this is going to come from CMS data
   const FUND_COUNT = 3.2
   const FUND_AMOUNT = 15250

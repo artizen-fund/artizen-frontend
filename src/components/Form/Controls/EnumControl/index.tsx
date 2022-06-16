@@ -4,6 +4,7 @@ import SegmentedControl from './SegmentedControl'
 import SelectControl from './SelectControl'
 
 export interface EnumControlProps {
+  disabled?: boolean
   invalid?: boolean
   label: string | Labels
   enabled?: boolean
