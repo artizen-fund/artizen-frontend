@@ -9,7 +9,7 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jest-environment-jsdom',
-  testPathIgnorePatterns: ['<rootDir>/cypress/integration/'],
+  testPathIgnorePatterns: ['<rootDir>/cypress/integration/', '<rootDir>/tools/templates/'],
   globals: {
     'ts-jest': {
       tsConfig: 'tsconfig.json',
