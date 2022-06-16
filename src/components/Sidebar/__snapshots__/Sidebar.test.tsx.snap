@@ -3,13 +3,13 @@
 exports[`Sidebar renders Sidebar unchanged 1`] = `
 <div>
   <section
-    class="sc-f67c5638-1 cQDgcH sc-76f8654d-0 jtFVFh"
+    class="sc-f67c5638-1 cQDgcH sc-3dcc67ad-0 ljJwpW"
   >
     <div
-      class="sc-f67c5638-0 fqyVoy sc-76f8654d-1 eREjku"
+      class="sc-f67c5638-0 fqyVoy sc-3dcc67ad-1 ivUnoR"
     >
       <h3
-        class="sc-76f8654d-7 gZJYFI"
+        class="sc-3dcc67ad-7 hBhiTn"
       >
         Join our 
         <strong>
@@ -18,13 +18,13 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
          donation drive
       </h3>
       <div
-        class="sc-76f8654d-2 daVxTG"
+        class="sc-3dcc67ad-2 gMhAql"
       >
         <div
-          class="sc-76f8654d-3 iIhjtP"
+          class="sc-3dcc67ad-3 hIzCZU"
         >
           <div
-            class="sc-76f8654d-4 kYGPoK"
+            class="sc-3dcc67ad-4 gGZgZE"
           >
             <span>
               $
@@ -35,12 +35,12 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
              goal
           </div>
           <div
-            class="sc-2e76876c-0 enIdsX"
+            class="sc-2e76876c-0 iIEwYy"
           >
             0.61
           </div>
           <div
-            class="sc-76f8654d-6 iLzaeN"
+            class="sc-3dcc67ad-6 hsSsdm"
           >
             <div
               class="sc-ba3887ec-0 jyWTDZ"
@@ -50,7 +50,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               />
             </div>
             <div
-              class="sc-76f8654d-5 keFhMN"
+              class="sc-3dcc67ad-5 eBhMNe"
             >
               <div
                 class="sc-9eb58f28-0 feoVcp"
@@ -64,7 +64,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-76f8654d-6 iLzaeN"
+          class="sc-3dcc67ad-6 hsSsdm"
         >
           <button
             class="sc-a6b3add2-2 eOvyKw undefined "
@@ -85,7 +85,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </button>
         </div>
         <div
-          class="sc-76f8654d-8 bjZCyB"
+          class="sc-3dcc67ad-8 chvfjG"
         >
           <div
             class="sc-bdd02fd6-0 fJPhsS"
@@ -127,7 +127,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               </a>
             </div>
             <div
-              class="sc-9ed997bc-0 vnowi"
+              class="sc-9ed997bc-0 gnOwtT"
             >
               <div>
                 <div
@@ -141,7 +141,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               </div>
             </div>
             <div
-              class="sc-9ed997bc-0 vnowi"
+              class="sc-9ed997bc-0 gnOwtT"
             >
               <div>
                 <div
@@ -155,7 +155,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               </div>
             </div>
             <div
-              class="sc-9ed997bc-0 vnowi"
+              class="sc-9ed997bc-0 gnOwtT"
             >
               <div>
                 <div
@@ -169,7 +169,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               </div>
             </div>
             <div
-              class="sc-9ed997bc-0 vnowi"
+              class="sc-9ed997bc-0 gnOwtT"
             >
               <div>
                 <div

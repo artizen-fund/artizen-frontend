@@ -3,22 +3,22 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-2401c112-0 fSRIkS"
+    class="sc-9d33a393-0 tAVsA"
   >
     <div
-      class="sc-2401c112-2 iqTmXD"
+      class="sc-9d33a393-2 ceRXWY"
     >
       <a
         href="/"
       >
         <div
-          class="sc-2401c112-1 cpSrel"
+          class="sc-9d33a393-1 hGYXGO"
         >
           Artizen
         </div>
       </a>
       <button
-        class="sc-a6b3add2-2 bTccxJ sc-2401c112-4 kbLHcD "
+        class="sc-a6b3add2-2 bTccxJ sc-9d33a393-4 dpCqwo "
       >
         <span>
           Menu
@@ -26,10 +26,10 @@ exports[`renders homepage unchanged 1`] = `
       </button>
     </div>
     <div
-      class="sc-2401c112-2 iqTmXD"
+      class="sc-9d33a393-2 ceRXWY"
     >
       <div
-        class="sc-2401c112-3 ftXPqi"
+        class="sc-9d33a393-3 dWZeUZ"
       >
         <ul>
           <li>
@@ -59,20 +59,20 @@ exports[`renders homepage unchanged 1`] = `
         </span>
       </a>
       <div
-        class="sc-c9ad08a7-0 bmdPNW"
+        class="sc-8545662-0 fOOGVo"
       >
         <div
-          class="sc-c9ad08a7-1 exDNIY"
+          class="sc-8545662-1 krkozH"
         />
         <div
-          class="sc-9eb58f28-0 htauXl sc-c9ad08a7-2 clzIyX"
+          class="sc-9eb58f28-0 htauXl sc-8545662-2 hHwBY"
           color="night"
         />
         <div
-          class="sc-c9ad08a7-3 zyGfP"
+          class="sc-8545662-3 kzlgNV"
         >
           <div
-            class="sc-c9ad08a7-4 fdnGin"
+            class="sc-8545662-4 JjgOs"
           >
             RP
           </div>
@@ -80,5 +80,164 @@ exports[`renders homepage unchanged 1`] = `
       </div>
     </div>
   </header>
+  <div
+    class="sc-3fa26a99-0 loPMsv"
+  >
+    <div
+      class="sc-9199b4ac-0 brREMd"
+    >
+      <div
+        class="sc-368b8254-0 fWbIUD"
+      >
+        <div
+          class="sc-368b8254-2 dxnzY"
+        >
+          <h1
+            class="sc-368b8254-3 iWTFZB"
+          >
+            Let’s get started by setting up your Artizen account
+          </h1>
+          <div
+            class="sc-368b8254-4 kEQIjb"
+          >
+            <div
+              class="sc-8c7bf1ae-2 huxvCL"
+            >
+              <div
+                class="sc-8c7bf1ae-0 bhoRgU"
+                color="night"
+              >
+                <div
+                  class="sc-9eb58f28-0 kSymdK"
+                  color="night"
+                />
+              </div>
+            </div>
+            <p
+              class="sc-368b8254-5 kRJSVv"
+            >
+              Already have an account?
+              <br />
+              You can still use this form, it’s magic!
+            </p>
+          </div>
+        </div>
+        <div
+          class="vertical-layout"
+        >
+          <div
+            class="vertical-layout-item"
+          >
+            <div
+              class="sc-2f9d5146-0 jjUILZ"
+              id="#/properties/email"
+            >
+              <div
+                class="sc-233fee17-0 cRUHBc"
+              >
+                <input
+                  placeholder="e.g. rene@artizen.fund"
+                  required=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="sc-ffdb2e6c-0 dXVxRc"
+                >
+                  Email Address
+                   *
+                </label>
+              </div>
+              <div
+                class="sc-93ba83c0-0 bAVzHI"
+              >
+                is a required property
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="sc-a6b3add2-2 ebsYdi sc-368b8254-1 fmUQgm  disabled"
+          disabled=""
+        >
+          <span>
+            Sign In / Sign Up
+          </span>
+        </button>
+        <div
+          class="sc-368b8254-7 bKnvfw"
+        >
+          <div
+            class="sc-368b8254-6 keSoKT"
+          />
+          <div
+            class="sc-368b8254-8 jekvQM"
+          >
+            <button
+              class="sc-a6b3add2-2 erODIt undefined "
+            >
+              <span>
+                Phone
+              </span>
+            </button>
+            <button
+              class="sc-a6b3add2-2 erODIt undefined "
+            >
+              <span>
+                Twitter
+              </span>
+            </button>
+            <button
+              class="sc-a6b3add2-2 erODIt undefined "
+            >
+              <span>
+                Discord
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="sc-368b8254-9 fPSwZc"
+        >
+          <div
+            class="sc-368b8254-10 hDmRYN"
+          >
+            <label
+              class="sc-dd35d48e-4 dCKwdz"
+            >
+              <div
+                class="sc-dd35d48e-0 lmHjtw"
+              >
+                <input
+                  checked=""
+                  class="sc-dd35d48e-1 clTMzK"
+                  type="checkbox"
+                />
+                <span
+                  class="sc-dd35d48e-2 dtceeR"
+                />
+              </div>
+              <span
+                class="sc-dd35d48e-3 eAaGSv"
+              />
+            </label>
+            <p
+              class="sc-368b8254-11 YMULz"
+            >
+              I agree to Artizen’s
+              <a
+                href="/toc"
+              >
+                 Terms & Conditions
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="sc-3fa26a99-1 kGRfwR"
+  />
 </div>
 `;

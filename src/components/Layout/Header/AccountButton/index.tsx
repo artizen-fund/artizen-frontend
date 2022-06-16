@@ -4,15 +4,26 @@ import { Glyph } from '@components'
 import { breakpoint, palette, typeface } from '@theme'
 import { rgba } from '@lib'
 
-const AccountButton = () => {
-  // note: this will connect to a hook that manages login state
-  // note: I had previous thought to use children to display Badge, but I think that should be self-generated now.
+interface IAccountButton {
+  loggedOutAction: () => void
+  loggedInAction?: () => void
+}
 
+const AccountButton = ({ loggedOutAction }: IAccountButton) => {
   const TEMP_INITIALS = 'RP'
+
   const [signedIn, setSignedIn] = useState(false)
 
+  const handleClick = () => {
+    if (signedIn) {
+      // todo: run loggedInAction (should show Account shelf)
+    } else {
+      loggedOutAction()
+    }
+  }
+
   return (
-    <Wrapper signedIn={signedIn} onClick={() => setSignedIn(!signedIn)}>
+    <Wrapper signedIn={signedIn} onClick={() => handleClick()}>
       <SignInLabel signedIn={signedIn} />
       <HamburgerGlyph signedIn={signedIn} color="night" darkColor="moon" glyph="hamburger" />
       <AvatarImage signedIn={signedIn}>

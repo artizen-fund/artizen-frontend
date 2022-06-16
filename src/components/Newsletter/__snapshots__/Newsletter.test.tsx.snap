@@ -6,18 +6,18 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
     class="sc-9199b4ac-0 gjUYWF"
   >
     <div
-      class="sc-e052cc57-2 kzhQlf"
+      class="sc-6d6f9e69-2 fKUxgy"
     >
       <div
-        class="sc-e052cc57-3 ekWlwl"
+        class="sc-6d6f9e69-3 jTZexg"
       >
         <div
-          class="sc-e052cc57-4 bXgnMH"
+          class="sc-6d6f9e69-4 cwVKQG"
         >
           Join us in building the world's largest web3 fund for public goods
         </div>
         <div
-          class="sc-e052cc57-5 iHMvsT"
+          class="sc-6d6f9e69-5 iNJfTz"
         >
           Sign up for our free newsletter
         </div>
@@ -33,7 +33,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/FNAME"
           >
             <div
-              class="sc-233fee17-0 kLNnFl"
+              class="sc-233fee17-0 cRUHBc"
             >
               <input
                 minlength="2"
@@ -42,7 +42,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 eexGRl"
+                class="sc-ffdb2e6c-0 dXVxRc"
               >
                 First Name
               </label>
@@ -60,7 +60,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/LNAME"
           >
             <div
-              class="sc-233fee17-0 kLNnFl"
+              class="sc-233fee17-0 cRUHBc"
             >
               <input
                 minlength="2"
@@ -69,7 +69,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 eexGRl"
+                class="sc-ffdb2e6c-0 dXVxRc"
               >
                 Last Name
               </label>
@@ -87,7 +87,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/EMAIL"
           >
             <div
-              class="sc-233fee17-0 kLNnFl"
+              class="sc-233fee17-0 cRUHBc"
             >
               <input
                 placeholder=" "
@@ -96,7 +96,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 eexGRl"
+                class="sc-ffdb2e6c-0 dXVxRc"
               >
                 Email Address
                  *
@@ -113,7 +113,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <label
-            class="sc-dd35d48e-4 cvrVnH"
+            class="sc-dd35d48e-4 xNpwT"
             id="#/properties/OPTIN"
           >
             <div
@@ -138,7 +138,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </div>
       </div>
       <button
-        class="sc-a6b3add2-2 flWfZN sc-e052cc57-0 ragrT  disabled"
+        class="sc-a6b3add2-2 bhQcOt sc-6d6f9e69-0 fdlizS  disabled"
         disabled=""
       >
         <span>
@@ -146,7 +146,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </span>
       </button>
       <div
-        class="sc-e052cc57-1 kRvjmH"
+        class="sc-6d6f9e69-1 cQdkjv"
       >
         <div>
           Congrats, confirmation sent!
