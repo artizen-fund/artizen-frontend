@@ -1,7 +1,7 @@
 import HowItWorks from './'
 
 export default {
-  title: 'components/HowItWorks',
+  title: 'header/HowItWorks',
   component: HowItWorks,
   argTypes: {},
 }
