@@ -6,7 +6,7 @@ The following is a set of guidelines for contributing to Artizenand its reposito
 
 ## Code of Conduct
 
-By participating, you are expected to uphold this code. Please report unacceptable behavior to [atom@github.com](mailto:admin@artizen.fund).
+By participating, you are expected to uphold this code. Please report unacceptable behavior to [admin@artizen.fund](mailto:admin@artizen.fund).
 
 ## What should I know before I get started?
 
