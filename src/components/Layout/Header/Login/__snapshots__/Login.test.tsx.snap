@@ -2,36 +2,40 @@
 
 exports[`Login renders correctly 1`] = `
 <div
-  className="sc-cf1b6002-0 dLyNyX"
+  className="sc-368b8254-0 fWbIUD"
 >
-  <h1
-    className="sc-cf1b6002-1 hUHuMR"
-  >
-    Let’s get started by setting up your Artizen account
-  </h1>
   <div
-    className="sc-cf1b6002-2 dsHacc"
+    className="sc-368b8254-2 dxnzY"
   >
+    <h1
+      className="sc-368b8254-3 iWTFZB"
+    >
+      Let’s get started by setting up your Artizen account
+    </h1>
     <div
-      className="sc-8c7bf1ae-2 huxvCL"
+      className="sc-368b8254-4 kEQIjb"
     >
       <div
-        className="sc-8c7bf1ae-0 bhoRgU"
-        color="night"
+        className="sc-8c7bf1ae-2 huxvCL"
       >
         <div
-          className="sc-9eb58f28-0 kSymdK"
+          className="sc-8c7bf1ae-0 bhoRgU"
           color="night"
-        />
+        >
+          <div
+            className="sc-9eb58f28-0 kSymdK"
+            color="night"
+          />
+        </div>
       </div>
+      <p
+        className="sc-368b8254-5 kRJSVv"
+      >
+        Already have an account?
+        <br />
+        You can still use this form, it’s magic!
+      </p>
     </div>
-    <p
-      className="sc-cf1b6002-3 bDtHVf"
-    >
-      Already have an account?
-      <br />
-      You can still use this form, it’s magic!
-    </p>
   </div>
   <div
     className="vertical-layout"
@@ -45,7 +49,7 @@ exports[`Login renders correctly 1`] = `
         id="#/properties/email"
       >
         <div
-          className="sc-233fee17-0 kLNnFl"
+          className="sc-233fee17-0 cRUHBc"
         >
           <input
             onBlur={[Function]}
@@ -55,7 +59,7 @@ exports[`Login renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 eexGRl"
+            className="sc-ffdb2e6c-0 dXVxRc"
           >
             Email Address
              *
@@ -68,7 +72,7 @@ exports[`Login renders correctly 1`] = `
     </div>
   </div>
   <button
-    className="sc-a6b3add2-2 hsAXIm undefined  disabled"
+    className="sc-a6b3add2-2 ebsYdi sc-368b8254-1 fmUQgm  disabled"
     disabled={true}
     onClick={[Function]}
   >
@@ -77,73 +81,81 @@ exports[`Login renders correctly 1`] = `
     </span>
   </button>
   <div
-    className="sc-cf1b6002-4 gsXijY"
-  />
-  <div
-    className="sc-cf1b6002-5 fAZZfH"
+    className="sc-368b8254-7 bKnvfw"
   >
-    <button
-      className="sc-a6b3add2-2 jEHJsK undefined "
-      onClick={[Function]}
+    <div
+      className="sc-368b8254-6 keSoKT"
+    />
+    <div
+      className="sc-368b8254-8 jekvQM"
     >
-      <span>
-        Telegram
-      </span>
-    </button>
-    <button
-      className="sc-a6b3add2-2 jEHJsK undefined "
-      onClick={[Function]}
-    >
-      <span>
-        Twitter
-      </span>
-    </button>
-    <button
-      className="sc-a6b3add2-2 jEHJsK undefined "
-      onClick={[Function]}
-    >
-      <span>
-        Discord
-      </span>
-    </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <span>
+          Phone
+        </span>
+      </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <span>
+          Twitter
+        </span>
+      </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <span>
+          Discord
+        </span>
+      </button>
+    </div>
   </div>
   <div
-    className="sc-cf1b6002-6 kBnJzi"
+    className="sc-368b8254-9 fPSwZc"
   >
-    <label
-      className="sc-dd35d48e-4 bqDNzr"
+    <div
+      className="sc-368b8254-10 hDmRYN"
     >
-      <div
-        className="sc-dd35d48e-0 lmHjtw"
+      <label
+        className="sc-dd35d48e-4 dCKwdz"
       >
-        <input
-          checked={true}
-          className="sc-dd35d48e-1 clTMzK"
-          disabled={false}
-          onChange={[Function]}
-          required={false}
-          type="checkbox"
-        />
+        <div
+          className="sc-dd35d48e-0 lmHjtw"
+        >
+          <input
+            checked={true}
+            className="sc-dd35d48e-1 clTMzK"
+            disabled={false}
+            onChange={[Function]}
+            required={false}
+            type="checkbox"
+          />
+          <span
+            className="sc-dd35d48e-2 dtceeR"
+          />
+        </div>
         <span
-          className="sc-dd35d48e-2 dtceeR"
+          className="sc-dd35d48e-3 eAaGSv"
         />
-      </div>
-      <span
-        className="sc-dd35d48e-3 eAaGSv"
-      />
-    </label>
-    <p
-      className="sc-cf1b6002-7 edFTkn"
-    >
-      I agree to Artizen’s
-      <a
-        href="/toc"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
+      </label>
+      <p
+        className="sc-368b8254-11 YMULz"
       >
-         Terms & Conditions
-      </a>
-    </p>
+        I agree to Artizen’s
+        <a
+          href="/toc"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+           Terms & Conditions
+        </a>
+      </p>
+    </div>
   </div>
 </div>
 `;

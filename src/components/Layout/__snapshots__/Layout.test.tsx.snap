@@ -6,22 +6,22 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-29e15dc2-0 bwVHwQ"
+      class="sc-9d33a393-0 tAVsA"
     >
       <div
-        class="sc-29e15dc2-2 hdbzMW"
+        class="sc-9d33a393-2 ceRXWY"
       >
         <a
           href="/"
         >
           <div
-            class="sc-29e15dc2-1 QOYGI"
+            class="sc-9d33a393-1 hGYXGO"
           >
             Artizen
           </div>
         </a>
         <button
-          class="sc-a6b3add2-2 bTccxJ sc-29e15dc2-4 bsMAgK "
+          class="sc-a6b3add2-2 bTccxJ sc-9d33a393-4 dpCqwo "
         >
           <span>
             Menu
@@ -29,10 +29,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-29e15dc2-2 hdbzMW"
+        class="sc-9d33a393-2 ceRXWY"
       >
         <div
-          class="sc-29e15dc2-3 jfAPib"
+          class="sc-9d33a393-3 dWZeUZ"
         >
           <ul>
             <li>
@@ -62,7 +62,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </span>
         </a>
         <div
-          class="sc-8545662-0 BrlAB"
+          class="sc-8545662-0 fOOGVo"
         >
           <div
             class="sc-8545662-1 krkozH"
@@ -72,7 +72,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             color="night"
           />
           <div
-            class="sc-8545662-3 kkeRaI"
+            class="sc-8545662-3 kzlgNV"
           >
             <div
               class="sc-8545662-4 JjgOs"
@@ -84,42 +84,46 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </header>
     <div
-      class="sc-7be7c5c4-0 hFGwOL"
+      class="sc-3fa26a99-0 loPMsv"
     >
       <div
         class="sc-9199b4ac-0 brREMd"
       >
         <div
-          class="sc-cf1b6002-0 dLyNyX"
+          class="sc-368b8254-0 fWbIUD"
         >
-          <h1
-            class="sc-cf1b6002-1 hUHuMR"
-          >
-            Let’s get started by setting up your Artizen account
-          </h1>
           <div
-            class="sc-cf1b6002-2 dsHacc"
+            class="sc-368b8254-2 dxnzY"
           >
+            <h1
+              class="sc-368b8254-3 iWTFZB"
+            >
+              Let’s get started by setting up your Artizen account
+            </h1>
             <div
-              class="sc-8c7bf1ae-2 huxvCL"
+              class="sc-368b8254-4 kEQIjb"
             >
               <div
-                class="sc-8c7bf1ae-0 bhoRgU"
-                color="night"
+                class="sc-8c7bf1ae-2 huxvCL"
               >
                 <div
-                  class="sc-9eb58f28-0 kSymdK"
+                  class="sc-8c7bf1ae-0 bhoRgU"
                   color="night"
-                />
+                >
+                  <div
+                    class="sc-9eb58f28-0 kSymdK"
+                    color="night"
+                  />
+                </div>
               </div>
+              <p
+                class="sc-368b8254-5 kRJSVv"
+              >
+                Already have an account?
+                <br />
+                You can still use this form, it’s magic!
+              </p>
             </div>
-            <p
-              class="sc-cf1b6002-3 bDtHVf"
-            >
-              Already have an account?
-              <br />
-              You can still use this form, it’s magic!
-            </p>
           </div>
           <div
             class="vertical-layout"
@@ -132,7 +136,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 id="#/properties/email"
               >
                 <div
-                  class="sc-233fee17-0 kLNnFl"
+                  class="sc-233fee17-0 cRUHBc"
                 >
                   <input
                     placeholder="e.g. rene@artizen.fund"
@@ -141,7 +145,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                     value=""
                   />
                   <label
-                    class="sc-ffdb2e6c-0 eexGRl"
+                    class="sc-ffdb2e6c-0 dXVxRc"
                   >
                     Email Address
                      *
@@ -156,7 +160,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <button
-            class="sc-a6b3add2-2 hsAXIm undefined  disabled"
+            class="sc-a6b3add2-2 ebsYdi sc-368b8254-1 fmUQgm  disabled"
             disabled=""
           >
             <span>
@@ -164,71 +168,79 @@ exports[`Layout renders Layout unchanged 1`] = `
             </span>
           </button>
           <div
-            class="sc-cf1b6002-4 gsXijY"
-          />
-          <div
-            class="sc-cf1b6002-5 fAZZfH"
+            class="sc-368b8254-7 bKnvfw"
           >
-            <button
-              class="sc-a6b3add2-2 jEHJsK undefined "
+            <div
+              class="sc-368b8254-6 keSoKT"
+            />
+            <div
+              class="sc-368b8254-8 jekvQM"
             >
-              <span>
-                Telegram
-              </span>
-            </button>
-            <button
-              class="sc-a6b3add2-2 jEHJsK undefined "
-            >
-              <span>
-                Twitter
-              </span>
-            </button>
-            <button
-              class="sc-a6b3add2-2 jEHJsK undefined "
-            >
-              <span>
-                Discord
-              </span>
-            </button>
+              <button
+                class="sc-a6b3add2-2 erODIt undefined "
+              >
+                <span>
+                  Phone
+                </span>
+              </button>
+              <button
+                class="sc-a6b3add2-2 erODIt undefined "
+              >
+                <span>
+                  Twitter
+                </span>
+              </button>
+              <button
+                class="sc-a6b3add2-2 erODIt undefined "
+              >
+                <span>
+                  Discord
+                </span>
+              </button>
+            </div>
           </div>
           <div
-            class="sc-cf1b6002-6 kBnJzi"
+            class="sc-368b8254-9 fPSwZc"
           >
-            <label
-              class="sc-dd35d48e-4 bqDNzr"
+            <div
+              class="sc-368b8254-10 hDmRYN"
             >
-              <div
-                class="sc-dd35d48e-0 lmHjtw"
+              <label
+                class="sc-dd35d48e-4 dCKwdz"
               >
-                <input
-                  checked=""
-                  class="sc-dd35d48e-1 clTMzK"
-                  type="checkbox"
-                />
+                <div
+                  class="sc-dd35d48e-0 lmHjtw"
+                >
+                  <input
+                    checked=""
+                    class="sc-dd35d48e-1 clTMzK"
+                    type="checkbox"
+                  />
+                  <span
+                    class="sc-dd35d48e-2 dtceeR"
+                  />
+                </div>
                 <span
-                  class="sc-dd35d48e-2 dtceeR"
+                  class="sc-dd35d48e-3 eAaGSv"
                 />
-              </div>
-              <span
-                class="sc-dd35d48e-3 eAaGSv"
-              />
-            </label>
-            <p
-              class="sc-cf1b6002-7 edFTkn"
-            >
-              I agree to Artizen’s
-              <a
-                href="/toc"
+              </label>
+              <p
+                class="sc-368b8254-11 YMULz"
               >
-                 Terms & Conditions
-              </a>
-            </p>
+                I agree to Artizen’s
+                <a
+                  href="/toc"
+                >
+                   Terms & Conditions
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="sc-7be7c5c4-1 gwFawm"
+      class="sc-3fa26a99-1 kGRfwR"
     />
     <main
       class="sc-29d73b66-1 gEpBEx"
@@ -240,7 +252,7 @@ exports[`Layout renders Layout unchanged 1`] = `
         class="sc-aae777ba-0 hitCwF"
       >
         <hr
-          class="sc-aae777ba-1 LzWqX"
+          class="sc-aae777ba-1 kwCfu"
         />
         <ul
           class="sc-aae777ba-2 eNWZjQ"
@@ -272,7 +284,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </li>
         </ul>
         <hr
-          class="sc-aae777ba-1 bPvDbo"
+          class="sc-aae777ba-1 haPlHx"
         />
         <div
           class="sc-aae777ba-4 jhvGw"
@@ -302,7 +314,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </div>
         </div>
         <hr
-          class="sc-aae777ba-1 haqjUl"
+          class="sc-aae777ba-1 buYhaQ"
         />
         <div
           class="sc-697e6c26-0 kswkdX"
@@ -342,7 +354,7 @@ exports[`Layout renders Layout unchanged 1`] = `
       class="sc-9199b4ac-0 brREMd sc-aae777ba-8 cKHMOq"
     >
       <footer
-        class="sc-aae777ba-7 fRCnZI"
+        class="sc-aae777ba-7 leANSN"
       >
         <div>
           Open source platform made with ❤️ by a globally distributed team
