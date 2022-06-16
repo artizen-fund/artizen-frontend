@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shelf renders correctly 1`] = `
+<div
+  className="sc-e641f1e6-0 bTRRSx"
+>
+  <h1>
+    design Shelf here
+  </h1>
+  <div
+    className="sc-8c7bf1ae-2 jOAuUM"
+  >
+    <div
+      className="sc-8c7bf1ae-0 gTUyet"
+      color="white"
+    >
+      <div
+        className="sc-9eb58f28-0 eFuJIU"
+        color="white"
+      />
+    </div>
+  </div>
+</div>
+`;
