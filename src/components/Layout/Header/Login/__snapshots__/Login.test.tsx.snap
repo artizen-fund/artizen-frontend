@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login renders correctly 1`] = `
+<div
+  className="sc-cf1b6002-0 dLyNyX"
+>
+  <h1
+    className="sc-cf1b6002-1 hUHuMR"
+  >
+    Let’s get started by setting up your Artizen account
+  </h1>
+  <div
+    className="sc-cf1b6002-2 dsHacc"
+  >
+    <div
+      className="sc-8c7bf1ae-2 huxvCL"
+    >
+      <div
+        className="sc-8c7bf1ae-0 bhoRgU"
+        color="night"
+      >
+        <div
+          className="sc-9eb58f28-0 kSymdK"
+          color="night"
+        />
+      </div>
+    </div>
+    <p
+      className="sc-cf1b6002-3 bDtHVf"
+    >
+      Already have an account?
+      <br />
+      You can still use this form, it’s magic!
+    </p>
+  </div>
+  <div
+    className="vertical-layout"
+    hidden={false}
+  >
+    <div
+      className="vertical-layout-item"
+    >
+      <div
+        className="sc-2f9d5146-0 jjUILZ"
+        id="#/properties/email"
+      >
+        <div
+          className="sc-233fee17-0 kLNnFl"
+        >
+          <input
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="e.g. rene@artizen.fund"
+            required={true}
+            type="text"
+          />
+          <label
+            className="sc-ffdb2e6c-0 eexGRl"
+          >
+            Email Address
+             *
+          </label>
+        </div>
+        <div
+          className="sc-93ba83c0-0 bAVzHI"
+        />
+      </div>
+    </div>
+  </div>
+  <button
+    className="sc-a6b3add2-2 hsAXIm undefined  disabled"
+    disabled={true}
+    onClick={[Function]}
+  >
+    <span>
+      Sign In / Sign Up
+    </span>
+  </button>
+  <div
+    className="sc-cf1b6002-4 gsXijY"
+  />
+  <div
+    className="sc-cf1b6002-5 fAZZfH"
+  >
+    <button
+      className="sc-a6b3add2-2 jEHJsK undefined "
+      onClick={[Function]}
+    >
+      <span>
+        Telegram
+      </span>
+    </button>
+    <button
+      className="sc-a6b3add2-2 jEHJsK undefined "
+      onClick={[Function]}
+    >
+      <span>
+        Twitter
+      </span>
+    </button>
+    <button
+      className="sc-a6b3add2-2 jEHJsK undefined "
+      onClick={[Function]}
+    >
+      <span>
+        Discord
+      </span>
+    </button>
+  </div>
+  <div
+    className="sc-cf1b6002-6 kBnJzi"
+  >
+    <label
+      className="sc-dd35d48e-4 bqDNzr"
+    >
+      <div
+        className="sc-dd35d48e-0 lmHjtw"
+      >
+        <input
+          checked={true}
+          className="sc-dd35d48e-1 clTMzK"
+          disabled={false}
+          onChange={[Function]}
+          required={false}
+          type="checkbox"
+        />
+        <span
+          className="sc-dd35d48e-2 dtceeR"
+        />
+      </div>
+      <span
+        className="sc-dd35d48e-3 eAaGSv"
+      />
+    </label>
+    <p
+      className="sc-cf1b6002-7 edFTkn"
+    >
+      I agree to Artizen’s
+      <a
+        href="/toc"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+      >
+         Terms & Conditions
+      </a>
+    </p>
+  </div>
+</div>
+`;

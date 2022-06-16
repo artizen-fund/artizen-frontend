@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shelf renders correctly 1`] = `
+Array [
+  <div
+    className="sc-7be7c5c4-0 hFGwOL"
+  >
+    <div
+      className="sc-9199b4ac-0 brREMd"
+    />
+  </div>,
+  <div
+    className="sc-7be7c5c4-1 gwFawm"
+    onClick={[Function]}
+  />,
+]
+`;
