@@ -6,22 +6,22 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-9d33a393-0 tAVsA"
+      class="sc-d2c6f04f-0 hTpgDm"
     >
       <div
-        class="sc-9d33a393-2 ceRXWY"
+        class="sc-d2c6f04f-2 gJXNSa"
       >
         <a
           href="/"
         >
           <div
-            class="sc-9d33a393-1 hGYXGO"
+            class="sc-d2c6f04f-1 krapRU"
           >
             Artizen
           </div>
         </a>
         <button
-          class="sc-a6b3add2-2 bTccxJ sc-9d33a393-4 dpCqwo "
+          class="sc-a6b3add2-2 bTccxJ sc-d2c6f04f-4 hYIxFO "
         >
           <span>
             Menu
@@ -29,10 +29,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-9d33a393-2 ceRXWY"
+        class="sc-d2c6f04f-2 gJXNSa"
       >
         <div
-          class="sc-9d33a393-3 dWZeUZ"
+          class="sc-d2c6f04f-3 gJXmLm"
         >
           <ul>
             <li>
@@ -43,11 +43,7 @@ exports[`Layout renders Layout unchanged 1`] = `
               </a>
             </li>
             <li>
-              <a
-                href="/"
-              >
-                How it Works
-              </a>
+              How it Works
             </li>
           </ul>
         </div>
@@ -84,7 +80,7 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </header>
     <div
-      class="sc-3fa26a99-0 loPMsv"
+      class="sc-29c3ca86-0 fjqojh"
     >
       <div
         class="sc-9199b4ac-0 brREMd"
@@ -240,7 +236,106 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-3fa26a99-1 kGRfwR"
+      class="sc-29c3ca86-1 gxkoFP"
+    />
+    <div
+      class="sc-29c3ca86-0 fjqojh"
+    >
+      <div
+        class="sc-9199b4ac-0 brREMd"
+      >
+        <div
+          class="sc-9c39a8d4-0 kyQfjj"
+        >
+          <div
+            class="sc-9c39a8d4-1 iiNHcL"
+          >
+            <div
+              class="sc-9c39a8d4-3 jtIKMm"
+            />
+            <div
+              class="sc-9c39a8d4-2 kKIze"
+            >
+              <h2
+                class="sc-9c39a8d4-4 jyHrZX"
+              >
+                About
+              </h2>
+              <p
+                class="sc-9c39a8d4-5 gEjRCL"
+              >
+                Nullam id dolor id nibh ultricies vehicula ut id elit.
+              </p>
+              <a
+                class="sc-a6b3add2-1 jdXTho undefined "
+              >
+                <span>
+                  Learn More
+                </span>
+              </a>
+            </div>
+          </div>
+          <div
+            class="sc-9c39a8d4-1 iiNHcL"
+          >
+            <div
+              class="sc-9c39a8d4-3 jtIKMm"
+            />
+            <div
+              class="sc-9c39a8d4-2 kKIze"
+            >
+              <h2
+                class="sc-9c39a8d4-4 jyHrZX"
+              >
+                Grants
+              </h2>
+              <p
+                class="sc-9c39a8d4-5 gEjRCL"
+              >
+                Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+              </p>
+              <a
+                class="sc-a6b3add2-1 jdXTho undefined "
+              >
+                <span>
+                  Learn More
+                </span>
+              </a>
+            </div>
+          </div>
+          <div
+            class="sc-9c39a8d4-1 iiNHcL"
+          >
+            <div
+              class="sc-9c39a8d4-3 jtIKMm"
+            />
+            <div
+              class="sc-9c39a8d4-2 kKIze"
+            >
+              <h2
+                class="sc-9c39a8d4-4 jyHrZX"
+              >
+                FAQs
+              </h2>
+              <p
+                class="sc-9c39a8d4-5 gEjRCL"
+              >
+                Nullam id dolor id nibh ultricies vehicula ut id elit.
+              </p>
+              <a
+                class="sc-a6b3add2-1 jdXTho undefined "
+              >
+                <span>
+                  Learn More
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-29c3ca86-1 gxkoFP"
     />
     <main
       class="sc-29d73b66-1 gEpBEx"
