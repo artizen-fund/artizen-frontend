@@ -1,5 +1,7 @@
 # Artizen Frontend
 
+Artizen.fund codebase
+
 Featuring…
 
 - NextJS 👷
