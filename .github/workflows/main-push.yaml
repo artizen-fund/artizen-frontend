@@ -14,10 +14,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
-      - run: export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       - name: Zip file
         uses: thedoctor0/zip-release@main
         with:
