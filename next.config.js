@@ -6,6 +6,8 @@ const moduleExports = {
   compiler: { styledComponents: true },
 }
 
+console.log('process.env.SENTRY_AUTH_TOKEN    ', process.env.SENTRY_AUTH_TOKEN)
+
 const sentryWebpackPluginOptions = {
   // Additional config options for the Sentry Webpack plugin. Keep in mind that
   // the following options are set automatically, and overriding them is not
