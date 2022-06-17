@@ -27,8 +27,6 @@
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
     "@biconomy/mexa": "^2.0.32",
-    "@depay/web3-blockchains": "^5.0.1",
-    "@depay/web3-mock": "^11.10.1",
     "@jsonforms/core": "^2.5.2",
     "@jsonforms/material-renderers": "^2.5.2",
     "@jsonforms/react": "^2.5.2",
