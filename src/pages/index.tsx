@@ -126,6 +126,9 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
       height: 675px;
     }
     background-color: ${rgba(palette.moon)};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.slate)};
+    }
   }
 `
 
