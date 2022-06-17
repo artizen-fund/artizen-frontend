@@ -1,6 +1,6 @@
 {
   "name": "artizen-frontend",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": true,
   "engines": {
     "node": ">=16.14.2 <17",
@@ -12,7 +12,7 @@
     "dev": "next dev",
     "develop": "yarn codegen && next dev",
     "build": "next build",
-    "start": "PROD=true DOMAIN=production next start -p $PORT",
+    "start": "PROD=true DOMAIN=production next build && next start -p $PORT",
     "lint": "next lint",
     "test:cypress": "cypress open",
     "test:jest": "jest --watch",
