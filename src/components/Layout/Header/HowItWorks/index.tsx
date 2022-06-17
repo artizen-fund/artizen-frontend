@@ -75,7 +75,7 @@ const Illustration = styled.div`
 `
 
 const Title = styled.h2`
-  ${typography.title.l3}
+  ${typography.title.l4}
   color: ${rgba(palette.night)};
   @media (prefers-color-scheme: dark) {
     color: ${rgba(palette.moon)};
@@ -83,7 +83,7 @@ const Title = styled.h2`
 `
 
 const Description = styled.p`
-  ${typography.body.l1}
+  ${typography.body.l3}
   color: ${rgba(palette.slate)};
   @media (prefers-color-scheme: dark) {
     color: ${rgba(palette.stone)};
