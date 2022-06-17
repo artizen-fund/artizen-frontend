@@ -58,9 +58,10 @@ const Onionskin = styled.div`
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
   transition: opacity 0.15s ease-in-out;
+  pointer-events: none;
   &.visible {
     opacity: 1;
-    pointer-events: none;
+    pointer-events: all;
     transition: opacity 1s ease-in-out;
   }
   will-change: opacity;
