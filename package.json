@@ -58,9 +58,7 @@
     "react-phone-number-input": "^3.2.2",
     "react-use-intercom": "^1.5.2",
     "react-useinterval": "^1.0.2",
-    "styled-components": "^5.3.5"
-  },
-  "devDependencies": {
+    "styled-components": "^5.3.5",
     "@babel/core": "^7.18.2",
     "@cypress/react": "^5.12.5",
     "@cypress/webpack-dev-server": "^1.8.3",
@@ -117,4 +115,5 @@
     "typescript": "4.7.3",
     "webpack": "^5.73.0"
   }
+ 
 }
