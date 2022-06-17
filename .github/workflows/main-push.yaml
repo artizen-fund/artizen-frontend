@@ -31,7 +31,8 @@ jobs:
         with:
           type: 'zip'
           filename: 'release.zip'
-          path: '.next'
+          exclusions: '*.git* /*node_modules/*
+
       - name: Init Eb
         uses: hmanzur/actions-aws-eb@v1.0.0
         with:
