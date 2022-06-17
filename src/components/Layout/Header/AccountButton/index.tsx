@@ -6,7 +6,7 @@ import { rgba } from '@lib'
 interface IAccountButton {
   loggedOutAction: () => void
   loggedInAction?: () => void
-  loggedIn: boolean
+  loggedIn?: boolean
 }
 
 const AccountButton = ({ loggedOutAction, loggedIn = false }: IAccountButton) => {

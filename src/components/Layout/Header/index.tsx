@@ -61,10 +61,10 @@ const Header = () => {
           <AccountButton loggedOutAction={() => toggleShelf('login')} />
         </Items>
       </Wrapper>
-      <Shelf visible={visibleShelf === 'login'} hideShelf={() => toggleShelf()}>
+      <Shelf visible={visibleShelf === 'login'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
         <Login />
       </Shelf>
-      <Shelf visible={visibleShelf === 'howItWorks'} hideShelf={() => toggleShelf()}>
+      <Shelf visible={visibleShelf === 'howItWorks'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
         <HowItWorks />
       </Shelf>
     </>
@@ -92,9 +92,9 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
     height: 88px;
   }
 
-  background: ${props => rgba(palette.white, props.shadowVisible ? 0.92 : 1)};
+  background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
   @media (prefers-color-scheme: dark) {
-    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.92 : 1)};
+    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
   }
   filter: drop-shadow(
     ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
@@ -105,6 +105,7 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
     backdrop-filter 0.3s ease-in-out;
   &.visibleShelf {
+    filter: drop-shadow(0px 0.5px 0px rgba(217, 219, 224, 1));
     border-color: ${rgba(palette.stone)};
     @media (prefers-color-scheme: dark) {
       border-color: ${rgba(palette.barracuda, 0.64)};
