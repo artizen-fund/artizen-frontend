@@ -10,6 +10,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Download .env
+        uses: keithweaver/aws-s3-github-action@v1.0.0
+        with:
+          command: cp
+          source: s3://artizen-env/.env.production.local
+          destination: .env.local
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-east-1
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -17,14 +26,13 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       - name: Zip file
         uses: thedoctor0/zip-release@main
         with:
           type: 'zip'
           filename: 'release.zip'
-          path: '/.next'
+          exclusions: '*.git* /*node_modules/*'
+
       - name: Init Eb
         uses: hmanzur/actions-aws-eb@v1.0.0
         with:
