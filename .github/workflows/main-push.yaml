@@ -3,26 +3,13 @@ on:
   push:
     branches:
       - main
-
+  pull_request:
+    branches: [staging]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-      - run: npm install -g yarn
-      - run: yarn install --frozen-lockfile
-      - run: yarn build
-      - name: Zip file
-        uses: thedoctor0/zip-release@main
-        with:
-          type: 'zip'
-          filename: 'release.zip'
-          path: '/.next'
+      - uses: actions/checkout@main
       - name: Init Eb
         uses: hmanzur/actions-aws-eb@v1.0.0
         with:
