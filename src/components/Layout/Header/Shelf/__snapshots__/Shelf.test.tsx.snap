@@ -3,14 +3,14 @@
 exports[`Shelf renders correctly 1`] = `
 Array [
   <div
-    className="sc-7be7c5c4-0 hFGwOL"
+    className="sc-3fa26a99-0 loPMsv"
   >
     <div
       className="sc-9199b4ac-0 brREMd"
     />
   </div>,
   <div
-    className="sc-7be7c5c4-1 gwFawm"
+    className="sc-3fa26a99-1 kGRfwR"
     onClick={[Function]}
   />,
 ]

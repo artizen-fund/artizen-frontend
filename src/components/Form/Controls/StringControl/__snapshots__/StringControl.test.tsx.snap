@@ -6,7 +6,7 @@ exports[`StringControl renders StringControl unchanged 1`] = `
     class="sc-2f9d5146-0 kysoaZ"
   >
     <div
-      class="sc-233fee17-0 bfoGJf"
+      class="sc-233fee17-0 bYhviy"
       disabled=""
     >
       <input
@@ -16,7 +16,7 @@ exports[`StringControl renders StringControl unchanged 1`] = `
         value="derp"
       />
       <label
-        class="sc-ffdb2e6c-0 eexGRl"
+        class="sc-ffdb2e6c-0 dXVxRc"
       >
         String test
       </label>
@@ -47,7 +47,7 @@ exports[`StringControl renders StringControl:Phone unchanged 1`] = `
     class="sc-2f9d5146-0 bVdSQY"
   >
     <div
-      class="sc-233fee17-0 bfoGJf"
+      class="sc-233fee17-0 bYhviy"
       disabled=""
     >
       <input
@@ -57,7 +57,7 @@ exports[`StringControl renders StringControl:Phone unchanged 1`] = `
         value=""
       />
       <label
-        class="sc-ffdb2e6c-0 eexGRl"
+        class="sc-ffdb2e6c-0 dXVxRc"
       >
         String test
       </label>

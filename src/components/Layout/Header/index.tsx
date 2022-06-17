@@ -68,15 +68,15 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   z-index: 102;
   top: 0;
   left: 0;
-  width: 100%;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
-  height: 64px;
   padding: 0 40px;
+  width: 100%;
+  height: 64px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     height: 72px;
   }
@@ -94,10 +94,13 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
 
   border-bottom: 0.5px solid transparent;
-  transition: border-color 0.3s 0.3s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
+  transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
     backdrop-filter 0.3s ease-in-out;
   &.shelfVisible {
     border-color: ${rgba(palette.stone)};
+    @media (prefers-color-scheme: dark) {
+      border-color: ${rgba(palette.barracuda, 0.64)};
+    }
     transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
       backdrop-filter 0.3s ease-in-out;
   }
