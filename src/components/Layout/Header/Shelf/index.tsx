@@ -35,6 +35,11 @@ const Wrapper = styled.div<Pick<IShelf, 'visible'>>`
 
   background: ${rgba(palette.white)};
 
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.slate)};
+    color: ${rgba(palette.moon)};
+  }
+
   opacity: ${props => (props.visible ? 1 : 0)};
   transform: translateY(${props => (props.visible ? 0 : -100)}px);
   transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;

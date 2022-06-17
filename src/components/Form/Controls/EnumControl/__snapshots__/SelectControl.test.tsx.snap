@@ -6,7 +6,7 @@ exports[`SelectControl renders SelectControl unchanged 1`] = `
     class="sc-2f9d5146-0 hUuFSv"
   >
     <div
-      class="sc-233fee17-0 kLNnFl"
+      class="sc-233fee17-0 cRUHBc"
     >
       <select
         class="hasData"
@@ -16,7 +16,7 @@ exports[`SelectControl renders SelectControl unchanged 1`] = `
         class="sc-b0af9a1b-0 dENUF"
       />
       <label
-        class="sc-ffdb2e6c-0 eexGRl hasData"
+        class="sc-ffdb2e6c-0 dXVxRc hasData"
       >
         Segmented enum control test
       </label>
