@@ -2,24 +2,24 @@
 
 exports[`HowItWorks renders correctly 1`] = `
 <div
-  className="sc-9c39a8d4-0 kyQfjj"
+  className="sc-39d2e67e-0 grcqj"
 >
   <div
-    className="sc-9c39a8d4-1 iiNHcL"
+    className="sc-39d2e67e-1 khkivv"
   >
     <div
-      className="sc-9c39a8d4-3 jtIKMm"
+      className="sc-39d2e67e-3 lnOegi"
     />
     <div
-      className="sc-9c39a8d4-2 kKIze"
+      className="sc-39d2e67e-2 kXHZxG"
     >
       <h2
-        className="sc-9c39a8d4-4 jyHrZX"
+        className="sc-39d2e67e-4 iuvHBM"
       >
         About
       </h2>
       <p
-        className="sc-9c39a8d4-5 gEjRCL"
+        className="sc-39d2e67e-5 fZdGxw"
       >
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>
@@ -35,21 +35,21 @@ exports[`HowItWorks renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-9c39a8d4-1 iiNHcL"
+    className="sc-39d2e67e-1 khkivv"
   >
     <div
-      className="sc-9c39a8d4-3 jtIKMm"
+      className="sc-39d2e67e-3 lnOegi"
     />
     <div
-      className="sc-9c39a8d4-2 kKIze"
+      className="sc-39d2e67e-2 kXHZxG"
     >
       <h2
-        className="sc-9c39a8d4-4 jyHrZX"
+        className="sc-39d2e67e-4 iuvHBM"
       >
         Grants
       </h2>
       <p
-        className="sc-9c39a8d4-5 gEjRCL"
+        className="sc-39d2e67e-5 fZdGxw"
       >
         Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
       </p>
@@ -65,21 +65,21 @@ exports[`HowItWorks renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-9c39a8d4-1 iiNHcL"
+    className="sc-39d2e67e-1 khkivv"
   >
     <div
-      className="sc-9c39a8d4-3 jtIKMm"
+      className="sc-39d2e67e-3 lnOegi"
     />
     <div
-      className="sc-9c39a8d4-2 kKIze"
+      className="sc-39d2e67e-2 kXHZxG"
     >
       <h2
-        className="sc-9c39a8d4-4 jyHrZX"
+        className="sc-39d2e67e-4 iuvHBM"
       >
         FAQs
       </h2>
       <p
-        className="sc-9c39a8d4-5 gEjRCL"
+        className="sc-39d2e67e-5 fZdGxw"
       >
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>

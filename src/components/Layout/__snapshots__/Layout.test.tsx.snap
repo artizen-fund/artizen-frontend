@@ -6,22 +6,22 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-d2c6f04f-0 hTpgDm"
+      class="sc-bafee0ea-0 dgbvsL"
     >
       <div
-        class="sc-d2c6f04f-2 gJXNSa"
+        class="sc-bafee0ea-2 gA-dJkE"
       >
         <a
           href="/"
         >
           <div
-            class="sc-d2c6f04f-1 krapRU"
+            class="sc-bafee0ea-1 kCLvZa"
           >
             Artizen
           </div>
         </a>
         <button
-          class="sc-a6b3add2-2 bTccxJ sc-d2c6f04f-4 hYIxFO "
+          class="sc-a6b3add2-2 bTccxJ sc-bafee0ea-4 eSCkis "
         >
           <span>
             Menu
@@ -29,10 +29,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-d2c6f04f-2 gJXNSa"
+        class="sc-bafee0ea-2 gA-dJkE"
       >
         <div
-          class="sc-d2c6f04f-3 gJXmLm"
+          class="sc-bafee0ea-3 cdYmLI"
         >
           <ul>
             <li>
@@ -58,20 +58,20 @@ exports[`Layout renders Layout unchanged 1`] = `
           </span>
         </a>
         <div
-          class="sc-8545662-0 fOOGVo"
+          class="sc-88922287-0 bYsKBK"
         >
           <div
-            class="sc-8545662-1 krkozH"
+            class="sc-88922287-1 fRVXTB"
           />
           <div
-            class="sc-9eb58f28-0 htauXl sc-8545662-2 hHwBY"
+            class="sc-9eb58f28-0 htauXl sc-88922287-2 egWgHG"
             color="night"
           />
           <div
-            class="sc-8545662-3 kzlgNV"
+            class="sc-88922287-3 fBvHqr"
           >
             <div
-              class="sc-8545662-4 JjgOs"
+              class="sc-88922287-4 fyJJre"
             >
               RP
             </div>
@@ -80,7 +80,7 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </header>
     <div
-      class="sc-29c3ca86-0 fjqojh"
+      class="sc-99af955d-0 bvvcNU"
     >
       <div
         class="sc-9199b4ac-0 brREMd"
@@ -236,33 +236,33 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-29c3ca86-1 gxkoFP"
+      class="sc-99af955d-1 jvQqsc"
     />
     <div
-      class="sc-29c3ca86-0 fjqojh"
+      class="sc-99af955d-0 bvvcNU"
     >
       <div
         class="sc-9199b4ac-0 brREMd"
       >
         <div
-          class="sc-9c39a8d4-0 kyQfjj"
+          class="sc-39d2e67e-0 grcqj"
         >
           <div
-            class="sc-9c39a8d4-1 iiNHcL"
+            class="sc-39d2e67e-1 khkivv"
           >
             <div
-              class="sc-9c39a8d4-3 jtIKMm"
+              class="sc-39d2e67e-3 lnOegi"
             />
             <div
-              class="sc-9c39a8d4-2 kKIze"
+              class="sc-39d2e67e-2 kXHZxG"
             >
               <h2
-                class="sc-9c39a8d4-4 jyHrZX"
+                class="sc-39d2e67e-4 iuvHBM"
               >
                 About
               </h2>
               <p
-                class="sc-9c39a8d4-5 gEjRCL"
+                class="sc-39d2e67e-5 fZdGxw"
               >
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
@@ -276,21 +276,21 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-9c39a8d4-1 iiNHcL"
+            class="sc-39d2e67e-1 khkivv"
           >
             <div
-              class="sc-9c39a8d4-3 jtIKMm"
+              class="sc-39d2e67e-3 lnOegi"
             />
             <div
-              class="sc-9c39a8d4-2 kKIze"
+              class="sc-39d2e67e-2 kXHZxG"
             >
               <h2
-                class="sc-9c39a8d4-4 jyHrZX"
+                class="sc-39d2e67e-4 iuvHBM"
               >
                 Grants
               </h2>
               <p
-                class="sc-9c39a8d4-5 gEjRCL"
+                class="sc-39d2e67e-5 fZdGxw"
               >
                 Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
               </p>
@@ -304,21 +304,21 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-9c39a8d4-1 iiNHcL"
+            class="sc-39d2e67e-1 khkivv"
           >
             <div
-              class="sc-9c39a8d4-3 jtIKMm"
+              class="sc-39d2e67e-3 lnOegi"
             />
             <div
-              class="sc-9c39a8d4-2 kKIze"
+              class="sc-39d2e67e-2 kXHZxG"
             >
               <h2
-                class="sc-9c39a8d4-4 jyHrZX"
+                class="sc-39d2e67e-4 iuvHBM"
               >
                 FAQs
               </h2>
               <p
-                class="sc-9c39a8d4-5 gEjRCL"
+                class="sc-39d2e67e-5 fZdGxw"
               >
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
@@ -335,7 +335,7 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-29c3ca86-1 gxkoFP"
+      class="sc-99af955d-1 jvQqsc"
     />
     <main
       class="sc-29d73b66-1 gEpBEx"
