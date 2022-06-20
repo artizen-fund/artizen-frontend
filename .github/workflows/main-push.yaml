@@ -26,12 +26,13 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build
+      - run: mkdir release && cp -rf .next package.json release
       - name: Zip file
         uses: thedoctor0/zip-release@main
         with:
           type: 'zip'
           filename: 'release.zip'
-          exclusions: '*.git* /*node_modules/*'
+          directory: release
 
       - name: Init Eb
         uses: hmanzur/actions-aws-eb@v1.0.0
