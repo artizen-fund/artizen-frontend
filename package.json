@@ -11,7 +11,7 @@
     "generate": "node ./tools/generate.js",
     "dev": "next dev",
     "develop": "yarn codegen && next dev",
-    "build": "next build",
+    "build": "yarn codegen && next build",
     "start": "PROD=true DOMAIN=production next build && next start -p $PORT",
     "lint": "next lint",
     "test:cypress": "cypress open",
