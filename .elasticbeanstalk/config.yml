@@ -1,0 +1,2 @@
+deploy:
+  artifact: release/release.zip
