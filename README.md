@@ -1,8 +1,10 @@
-# Artizen Frontend
+<img width="301" alt="Artizen_Logo_RGB_InverseLarge" src="https://user-images.githubusercontent.com/1488156/174081651-c71ab531-3122-483a-ae30-1b771bc8d5a9.png">
 
-Artizen.fund codebase
+## Welcome to Artizen.fund Frontend codebase
 
-Featuring…
+This is the codebase for Artizen frontend. This code includes the NFT Raffles frontend implementation, Smart contracts and GraphQL queries.
+
+## Featuring…
 
 - NextJS 👷
 - Typescript 🧑‍💻
