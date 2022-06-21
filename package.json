@@ -1,6 +1,6 @@
 {
-  "name": "artizen-frontend",
-  "version": "0.0.6",
+  "name": "test",
+  "version": "0.1.2",
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
@@ -85,8 +85,6 @@
     "@types/cookie": "^0.5.1",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/lodash": "^4.14.182",
-    "@types/react": "18.0.14",
-    "@types/react-dom": "18.0.5",
     "@types/react-mailchimp-subscribe": "^2.1.1",
     "@types/react-test-renderer": "^18.0.0",
     "@types/styled-components": "^5.1.25",
@@ -96,8 +94,7 @@
     "babel-plugin-styled-components": "^2.0.7",
     "cypress": "^10.0.3",
     "dotenv": "^16.0.1",
-    "eslint": "8.17.0",
-    "eslint-config-next": "12.1.6",
+    "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-cypress": "^2.12.1",
