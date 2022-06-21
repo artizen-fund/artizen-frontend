@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HowItWorks renders correctly 1`] = `
+<div
+  className="sc-39d2e67e-0 grcqj"
+>
+  <div
+    className="sc-39d2e67e-1 khkivv"
+  >
+    <div
+      className="sc-39d2e67e-3 lnOegi"
+    />
+    <div
+      className="sc-39d2e67e-2 kXHZxG"
+    >
+      <h2
+        className="sc-39d2e67e-4 iuvHBM"
+      >
+        About
+      </h2>
+      <p
+        className="sc-39d2e67e-5 fZdGxw"
+      >
+        Nullam id dolor id nibh ultricies vehicula ut id elit.
+      </p>
+      <a
+        className="sc-a6b3add2-1 jdXTho undefined "
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+      >
+        <span>
+          Learn More
+        </span>
+      </a>
+    </div>
+  </div>
+  <div
+    className="sc-39d2e67e-1 khkivv"
+  >
+    <div
+      className="sc-39d2e67e-3 lnOegi"
+    />
+    <div
+      className="sc-39d2e67e-2 kXHZxG"
+    >
+      <h2
+        className="sc-39d2e67e-4 iuvHBM"
+      >
+        Grants
+      </h2>
+      <p
+        className="sc-39d2e67e-5 fZdGxw"
+      >
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+      </p>
+      <a
+        className="sc-a6b3add2-1 jdXTho undefined "
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+      >
+        <span>
+          Learn More
+        </span>
+      </a>
+    </div>
+  </div>
+  <div
+    className="sc-39d2e67e-1 khkivv"
+  >
+    <div
+      className="sc-39d2e67e-3 lnOegi"
+    />
+    <div
+      className="sc-39d2e67e-2 kXHZxG"
+    >
+      <h2
+        className="sc-39d2e67e-4 iuvHBM"
+      >
+        FAQs
+      </h2>
+      <p
+        className="sc-39d2e67e-5 fZdGxw"
+      >
+        Nullam id dolor id nibh ultricies vehicula ut id elit.
+      </p>
+      <a
+        className="sc-a6b3add2-1 jdXTho undefined "
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+      >
+        <span>
+          Learn More
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+`;

@@ -5,22 +5,23 @@ import { breakpoint, palette } from '@theme'
 
 interface IShelf {
   visible: boolean
-  setVisible: (newValue: boolean) => void
+  shadowVisible: boolean
+  hideShelf: any
   children: React.ReactNode
 }
 
-const Shelf = ({ visible, setVisible, children }: IShelf) => {
+const Shelf = ({ visible, shadowVisible, hideShelf, children }: IShelf) => {
   return (
     <>
-      <Wrapper {...{ visible }}>
+      <Wrapper {...{ visible, shadowVisible }}>
         <PagePadding>{children}</PagePadding>
       </Wrapper>
-      <Onionskin className={visible ? 'visible' : ''} onClick={() => setVisible(false)} />
+      <Onionskin className={visible ? 'visible' : ''} onClick={hideShelf} />
     </>
   )
 }
 
-const Wrapper = styled.div<Pick<IShelf, 'visible'>>`
+const Wrapper = styled.div<Pick<IShelf, 'visible' | 'shadowVisible'>>`
   position: fixed;
   z-index: 101;
   width: 100%;
@@ -33,16 +34,21 @@ const Wrapper = styled.div<Pick<IShelf, 'visible'>>`
     top: 88px;
   }
 
-  background: ${rgba(palette.white)};
-
+  background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
   @media (prefers-color-scheme: dark) {
-    background: ${rgba(palette.slate)};
+    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
     color: ${rgba(palette.moon)};
   }
+  filter: drop-shadow(
+    ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
+  );
+  backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
 
   opacity: ${props => (props.visible ? 1 : 0)};
-  transform: translateY(${props => (props.visible ? 0 : -100)}px);
-  transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
+  transform: translateY(${props => (props.visible ? 0 : 30)}px);
+  transition: opacity 0.3s ease-in-out, transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1), filter 0.3s 0s ease-in-out,
+    background-color 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
+
   will-change: transition, transform;
   pointer-events: ${props => (props.visible ? 'all' : 'none')};
 `
@@ -57,11 +63,12 @@ const Onionskin = styled.div`
 
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
-  transition: opacity 0.15s ease-in-out;
+  transition: opacity 0.15s 0s ease-in-out;
+  pointer-events: none;
   &.visible {
     opacity: 1;
-    pointer-events: none;
-    transition: opacity 1s ease-in-out;
+    pointer-events: all;
+    transition: opacity 1.5s 0.15s ease-in-out;
   }
   will-change: opacity;
 `

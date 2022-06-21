@@ -1,7 +1,7 @@
 import Header from './'
 
 const story = {
-  title: 'layout/Header',
+  title: 'header/Header',
   component: Header,
   argTypes: {},
 }
