@@ -1,7 +1,7 @@
 import AccountButton from './'
 
 const story = {
-  title: 'layout/AccountButton',
+  title: 'header/AccountButton',
   component: AccountButton,
   argTypes: {},
 }

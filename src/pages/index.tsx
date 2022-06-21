@@ -126,6 +126,9 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
       height: 675px;
     }
     background-color: ${rgba(palette.moon)};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.slate)};
+    }
   }
 `
 
@@ -140,7 +143,9 @@ const Wrapper = styled.section`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     grid-gap: 0px 80px;
   }
+  padding-bottom: 100px;
 `
+// todo: above is just a filled-in value, check design
 
 const Tab = styled.div<{ label: string }>``
 

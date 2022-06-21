@@ -5,9 +5,12 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import { Button } from '@components'
 import AccountButton from './AccountButton'
 import Login from './Login'
+import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba } from '@lib'
+
+type ShelfType = 'login' | 'howItWorks'
 
 const Header = () => {
   const [shadowVisible, setShadowVisible] = useState(false)
@@ -15,14 +18,18 @@ const Header = () => {
 
   const [navVisible, setNavVisible] = useState(false)
 
-  const [loginVisible, setLoginVisible] = useState(false)
-
-  const [shelfVisible, setShelfVisible] = useState(false)
-  useEffect(() => setShelfVisible(loginVisible || navVisible), [loginVisible, navVisible])
+  const [visibleShelf, setVisibleShelf] = useState<ShelfType>()
+  const toggleShelf = (shelf?: ShelfType) => {
+    if (shelf === visibleShelf) {
+      setVisibleShelf(undefined)
+    } else {
+      setVisibleShelf(shelf)
+    }
+  }
 
   return (
     <>
-      <Wrapper {...{ shadowVisible }} className={shelfVisible ? 'shelfVisible' : ''}>
+      <Wrapper {...{ shadowVisible }} className={visibleShelf ? 'visibleShelf' : ''}>
         <Items>
           <Link href="/">
             <a>
@@ -45,19 +52,20 @@ const Header = () => {
               <li>
                 <Link href="/">Leaderboard</Link>
               </li>
-              <li>
-                <Link href="/">How it Works</Link>
-              </li>
+              <li onClick={() => toggleShelf('howItWorks')}>How it Works</li>
             </ul>
           </Nav>
           <Button href="/" glyph={glyphKey.donate} level={1}>
             Donate
           </Button>
-          <AccountButton loggedOutAction={() => setLoginVisible(!loginVisible)} />
+          <AccountButton loggedOutAction={() => toggleShelf('login')} />
         </Items>
       </Wrapper>
-      <Shelf visible={loginVisible} setVisible={setLoginVisible}>
+      <Shelf visible={visibleShelf === 'login'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
         <Login />
+      </Shelf>
+      <Shelf visible={visibleShelf === 'howItWorks'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
+        <HowItWorks />
       </Shelf>
     </>
   )
@@ -84,9 +92,9 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
     height: 88px;
   }
 
-  background: ${props => rgba(palette.white, props.shadowVisible ? 0.92 : 1)};
+  background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
   @media (prefers-color-scheme: dark) {
-    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.92 : 1)};
+    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
   }
   filter: drop-shadow(
     ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
@@ -96,7 +104,8 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
     backdrop-filter 0.3s ease-in-out;
-  &.shelfVisible {
+  &.visibleShelf {
+    filter: drop-shadow(0px 0.5px 0px rgba(217, 219, 224, 1));
     border-color: ${rgba(palette.stone)};
     @media (prefers-color-scheme: dark) {
       border-color: ${rgba(palette.barracuda, 0.64)};
@@ -157,6 +166,9 @@ const Nav = styled.div`
     align-items: center;
     gap: 20px;
     white-space: nowrap;
+    li {
+      cursor: pointer;
+    }
   }
 `
 

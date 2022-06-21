@@ -1,21 +1,19 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import { Glyph } from '@components'
-import { breakpoint, palette, typeface } from '@theme'
+import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
 interface IAccountButton {
   loggedOutAction: () => void
   loggedInAction?: () => void
+  loggedIn?: boolean
 }
 
-const AccountButton = ({ loggedOutAction }: IAccountButton) => {
+const AccountButton = ({ loggedOutAction, loggedIn = false }: IAccountButton) => {
   const TEMP_INITIALS = 'RP'
 
-  const [signedIn, setSignedIn] = useState(false)
-
   const handleClick = () => {
-    if (signedIn) {
+    if (loggedIn) {
       // todo: run loggedInAction (should show Account shelf)
     } else {
       loggedOutAction()
@@ -23,21 +21,17 @@ const AccountButton = ({ loggedOutAction }: IAccountButton) => {
   }
 
   return (
-    <Wrapper signedIn={signedIn} onClick={() => handleClick()}>
-      <SignInLabel signedIn={signedIn} />
-      <HamburgerGlyph signedIn={signedIn} color="night" darkColor="moon" glyph="hamburger" />
-      <AvatarImage signedIn={signedIn}>
+    <Wrapper {...{ loggedIn }} onClick={() => handleClick()}>
+      <SignInLabel {...{ loggedIn }} />
+      <HamburgerGlyph {...{ loggedIn }} color="night" darkColor="moon" glyph="hamburger" />
+      <AvatarImage {...{ loggedIn }}>
         <Initials>{TEMP_INITIALS}</Initials>
       </AvatarImage>
     </Wrapper>
   )
 }
 
-interface SignedInProps {
-  signedIn: boolean
-}
-
-const Wrapper = styled.div<SignedInProps>`
+const Wrapper = styled.div<Pick<IAccountButton, 'loggedIn'>>`
   position: relative;
 
   display: flex;
@@ -46,16 +40,16 @@ const Wrapper = styled.div<SignedInProps>`
   align-items: center;
 
   padding: 4px;
-  width: ${props => (props.signedIn ? 72 : 85)}px;
+  width: ${props => (props.loggedIn ? 72 : 85)}px;
   height: 40px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     padding: 6px;
-    width: ${props => (props.signedIn ? 84 : 99)}px;
+    width: ${props => (props.loggedIn ? 84 : 99)}px;
     height: 48px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     padding: 8px;
-    width: ${props => (props.signedIn ? 96 : 119)}px;
+    width: ${props => (props.loggedIn ? 96 : 119)}px;
     height: 56px;
   }
 
@@ -70,7 +64,7 @@ const Wrapper = styled.div<SignedInProps>`
   transition: width 0.3s ease-in-out;
 `
 
-const SignInLabel = styled.div<SignedInProps>`
+const SignInLabel = styled.div<Pick<IAccountButton, 'loggedIn'>>`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -90,12 +84,12 @@ const SignInLabel = styled.div<SignedInProps>`
     line-height: 100%;
   }
 
-  opacity: ${props => (props.signedIn ? 0 : 1)};
+  opacity: ${props => (props.loggedIn ? 0 : 1)};
   transition: opacity 0.15s ease-in-out;
   pointer-events: none;
 `
 
-const HamburgerGlyph = styled(props => <Glyph {...props} />)<SignedInProps>`
+const HamburgerGlyph = styled(props => <Glyph {...props} />)<Pick<IAccountButton, 'loggedIn'>>`
   width: 32px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 36px;
@@ -104,11 +98,11 @@ const HamburgerGlyph = styled(props => <Glyph {...props} />)<SignedInProps>`
     width: 40px;
   }
 
-  opacity: ${props => (props.signedIn ? 1 : 0)};
+  opacity: ${props => (props.loggedIn ? 1 : 0)};
   transition: opacity 0.3s ease-in-out;
 `
 
-const AvatarImage = styled.div<SignedInProps>`
+const AvatarImage = styled.div<Pick<IAccountButton, 'loggedIn'>>`
   display: flex;
   align-items: center;
   border-radius: 9999px;
@@ -133,8 +127,8 @@ const AvatarImage = styled.div<SignedInProps>`
     background-color: ${rgba(palette.barracuda)};
   }
 
-  opacity: ${props => (props.signedIn ? 1 : 0)};
-  transform: scale(${props => (props.signedIn ? 1 : 0)});
+  opacity: ${props => (props.loggedIn ? 1 : 0)};
+  transform: scale(${props => (props.loggedIn ? 1 : 0)});
   transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
 `
 
