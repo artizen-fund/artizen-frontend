@@ -23,8 +23,20 @@ const assertInt = (input?: string, message?: string): number => {
   return intValue
 }
 
-const assertBool = (input?: string): boolean => {
-  const envInt = assertInt(input)
+const assertBool = (input?: string, message?: string): boolean => {
+  if (input === undefined) {
+    console.warn(`Input is undefined\n${message}`)
+    return false
+  }
+
+  // input might be 1, 0, 'true', or 'false'
+  // test for string first…
+  const envStr = assert(input)
+
+  // if 'true', convert to 1
+  // if 'false', assertInt('false') -> parseInt('false') -> undefined -> Boolean(undefined) -> false
+  // and if number, cool, no problem
+  const envInt = envStr === 'true' ? 1 : assertInt(envStr)
   return Boolean(envInt)
 }
 

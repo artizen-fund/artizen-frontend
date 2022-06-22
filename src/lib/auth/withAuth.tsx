@@ -1,9 +1,12 @@
 import React from 'react'
+import type { AppProps } from 'next/app'
 import { assert } from '@lib'
 import { AuthForm } from './'
 
-const withAuth = () => PageComponent => {
-  const WithAuth = props => {
+type NextJsInitializedPage = (props: AppProps) => JSX.Element
+
+const withAuth = () => (PageComponent: NextJsInitializedPage) => {
+  const WithAuth = (props: AppProps) => {
     const storedPasswordBundle = localStorage.getItem('ARTIZEN_DEV_PASSWORD')
     if (!storedPasswordBundle) {
       return <AuthForm />
