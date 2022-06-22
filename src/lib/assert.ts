@@ -36,7 +36,7 @@ const assertBool = (input?: string, message?: string): boolean => {
   // if 'true', convert to 1
   // if 'false', assertInt('false') -> parseInt('false') -> undefined -> Boolean(undefined) -> false
   // and if number, cool, no problem
-  const envInt = envStr === 'true' ? 1 : assertInt(envStr)
+  const envInt = envStr === 'true' ? 1 : envStr === 'false' ? 0 : assertInt(envStr)
   return Boolean(envInt)
 }
 
