@@ -1,15 +1,17 @@
 import type { MagicUserMetadata } from 'magic-sdk'
 
-export {}
+interface ArtizenUser extends MagicUserMetadata {
+  token?: string
+  id?: string
+}
+
+interface SimpleComponentProps {
+  children?: React.ReadNode
+  className?: string
+}
 
 declare global {
-  interface ArtizenUser extends MagicUserMetadata {
-    token?: string
-    id?: string
-  }
-
-  interface SimpleComponentProps {
-    children?: React.ReadNode
-    className?: string
-  }
+  ArtizenUser, SimpleComponentProps
 }
+
+export {}

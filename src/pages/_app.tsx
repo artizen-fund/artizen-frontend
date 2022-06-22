@@ -19,6 +19,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     fetch('/api/user')
       .then(res => res.json())
       .then(async data => {
+        console.log(data)
         if (data.id) {
           setUser(data)
           // const balance = await getBalance(data.publicAddress)
@@ -42,8 +43,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     </>
   )
 }
-
-
 
 const devApp = dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
 
