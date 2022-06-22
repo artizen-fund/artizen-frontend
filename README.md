@@ -1,8 +1,12 @@
 # Artizen Frontend
 
-Artizen.fund codebase
+![Screenshot 2022-06-22 at 16 24 55](https://user-images.githubusercontent.com/1488156/175069661-b0f6e6f0-2e3e-430f-9058-c1f5955e628d.png)
 
-Featuring…
+# Contributing to Artizen
+
+Check [CONTRIBUTING.md](https://github.com/artizen-fund/artizen-frontend/blob/main/CONTRIBUTING.md) before open an issue or PR
+
+## Featuring…
 
 - NextJS 👷
 - Typescript 🧑‍💻
@@ -56,3 +60,7 @@ yarn test
 ```bash
 yarn test:jest
 ```
+
+## Licence
+
+This code is published under [MIT licence](https://github.com/artizen-fund/artizen-frontend/blob/main/LICENSE.md)
