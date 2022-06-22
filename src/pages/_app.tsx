@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
-import { assert, SessionProvider, useApollo, withAuth } from '@lib'
+import { assert, isProd, SessionProvider, useApollo, withAuth } from '@lib'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
@@ -43,10 +43,4 @@ const App = ({ Component, pageProps }: AppProps) => {
   )
 }
 
-
-
-const devApp = dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
-
-export default process.env.NEXT_PUBLIC_PROD === 'true' ? App : devApp
-// todo: ^ when we want to restore SSR and dump this password system, strike this line
-// export default withAuth()(App)
+export default isProd() ? App : dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
