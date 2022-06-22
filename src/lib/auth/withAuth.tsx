@@ -7,12 +7,11 @@ type NextJsInitializedPage = (props: AppProps) => JSX.Element
 
 const withAuth = () => (PageComponent: NextJsInitializedPage) => {
   const WithAuth = (props: AppProps) => {
-    const storedPasswordBundle = localStorage.getItem('ARTIZEN_DEV_PASSWORD')
-    if (!storedPasswordBundle) {
+    const { password } = JSON.parse(localStorage.getItem('ARTIZEN_DEV_PASSWORD') || '{}')
+    if (!password) {
       return <AuthForm />
     }
 
-    const { password } = JSON.parse(storedPasswordBundle)
     const NEXT_PUBLIC_DEV_PASSWORD = assert(process.env.NEXT_PUBLIC_DEV_PASSWORD, 'NEXT_PUBLIC_DEV_PASSWORD')
 
     if (password !== NEXT_PUBLIC_DEV_PASSWORD) {
