@@ -43,6 +43,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   )
 }
 
-export default dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
+const devApp = dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
+
+export default process.env.PROD ? App : devApp
 // todo: ^ when we want to restore SSR and dump this password system, strike this line
 // export default withAuth()(App)
