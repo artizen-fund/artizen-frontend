@@ -4,7 +4,7 @@
 
 # Contributing to Artizen
 
-Check [CONTRIBUTING.md](https://github.com/artizen-fund/artizen-frontend/blob/main/CONTRIBUTING.md) before open an issue or open a PR
+Check [CONTRIBUTING.md](https://github.com/artizen-fund/artizen-frontend/blob/main/CONTRIBUTING.md) before open an issue or PR
 
 ## Featuring…
 
