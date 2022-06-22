@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
-import { maticWeb3 } from './magicLink'
+import { magicWeb3 } from './magicLink'
 
 export const useReadContract = (
   contractAddress: string,
@@ -15,7 +15,7 @@ export const useReadContract = (
   const callContract = useCallback(async () => {
     setLoading(true)
 
-    const contract = new ethers.Contract(contractAddress, contractAbi, maticWeb3)
+    const contract = new ethers.Contract(contractAddress, contractAbi, magicWeb3)
 
     try {
       const value = await contract[methodName](...attr)

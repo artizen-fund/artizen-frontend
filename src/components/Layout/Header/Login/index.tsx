@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba } from '@lib'
+import { rgba, magic } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -30,6 +30,35 @@ const Login = () => {
 
   const submit = () => alert('derp')
 
+  const handleLoginWithEmail = async () => {
+    setReadonly(true)
+    try {
+      // Trigger Magic link to be sent to user
+      const didToken = await magic.auth.loginWithMagicLink({
+        email,
+      })
+      setMagicLoginIsDone(true)
+      // Validate didToken with server
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + didToken,
+        },
+      })
+
+      // res.status === 200 && Router.reload('/')
+      if (res.status === 200) {
+        setIsLoggedIn(true)
+        redirectBasedOnQuery()
+      }
+    } catch (error) {
+      setDisabled(false) // Re-enable login button - user may have requested to edit their email
+      setBtnLoading(false)
+      console.log('it goes here', error)
+    }
+  }
+
   return (
     <Wrapper>
       <Copy>
@@ -44,7 +73,7 @@ const Login = () => {
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <SubmitButton stretch onClick={() => submit()} disabled={!data.email || !acceptedToc}>
+        <SubmitButton stretch onClick={() => submit()} disabled={!data.email || !acceptedToc || readonly}>
           Sign In / Sign Up
         </SubmitButton>
       </Form>
