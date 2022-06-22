@@ -48,6 +48,6 @@ console.log("process.env.NEXT_PUBLIC_PRO=====    ", process.env.NEXT_PUBLIC_PROD
 
 const devApp = dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
 
-export default process.env.NEXT_PUBLIC_PROD ? App : devApp
+export default process.env.NEXT_PUBLIC_PROD === 'true' ? App : devApp
 // todo: ^ when we want to restore SSR and dump this password system, strike this line
 // export default withAuth()(App)
