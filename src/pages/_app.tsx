@@ -43,6 +43,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   )
 }
 
+// eslint-disable-next-line
+console.log("process.env.NEXT_PUBLIC_PRO=====    ", process.env.NEXT_PUBLIC_PRO, "--typeof--", typeof process.env.NEXT_PUBLIC_PRO )
 
 const devApp = dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
 
