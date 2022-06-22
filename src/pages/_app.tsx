@@ -43,6 +43,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   )
 }
 
+console.log('its PROD====', process.env.PROD)
 const devApp = dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
 
 export default process.env.PROD ? App : devApp
