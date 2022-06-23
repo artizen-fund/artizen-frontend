@@ -2,9 +2,8 @@ import { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Form, Button, PagePadding } from '@components'
 import { schema, uischema, initialState, FormState } from './form'
-import { isServer } from '@lib'
 
-const AuthForm = () => {
+export const AuthForm = () => {
   const router = useRouter()
 
   const LOCALSTORAGE_KEY = 'ARTIZEN_DEV_PASSWORD'
@@ -23,10 +22,7 @@ const AuthForm = () => {
     setData(thawedAnswers)
   }, [])
 
-  const submit = () => {
-    if (isServer()) return
-    router.reload()
-  }
+  const submit = () => router.reload()
 
   return (
     <PagePadding>
@@ -38,5 +34,3 @@ const AuthForm = () => {
     </PagePadding>
   )
 }
-
-export default AuthForm
