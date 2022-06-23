@@ -2,12 +2,12 @@ import { Biconomy } from '@biconomy/mexa'
 import { Web3Provider } from '@ethersproject/providers'
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { useMagicLink, assertInt } from '@lib'
+import { useSession, assertInt } from '@lib'
 
 // NOTE: this is untested with useMagicLink()
 
 export const useMetaContract = () => {
-  const { magic } = useMagicLink()
+  const { magic } = useSession()
   const [biconomy, setBiconomy] = useState()
   const [web3, setWeb3] = useState<Web3Provider>()
   const [loading, setLoading] = useState(false)

@@ -33,7 +33,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/FNAME"
           >
             <div
-              class="sc-233fee17-0 cRUHBc"
+              class="sc-dccedff6-0 dxDPQx"
             >
               <input
                 minlength="2"
@@ -60,7 +60,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/LNAME"
           >
             <div
-              class="sc-233fee17-0 cRUHBc"
+              class="sc-dccedff6-0 dxDPQx"
             >
               <input
                 minlength="2"
@@ -87,7 +87,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/EMAIL"
           >
             <div
-              class="sc-233fee17-0 cRUHBc"
+              class="sc-dccedff6-0 dxDPQx"
             >
               <input
                 placeholder=" "
