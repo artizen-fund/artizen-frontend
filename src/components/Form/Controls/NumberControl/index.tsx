@@ -1,7 +1,7 @@
 import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import { Labels, JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
-import { Wrapper, InputLabel, InputIcon, InputWrapper, Message } from '../_Common'
+import { Wrapper, InputLabel, InputGlyph, InputWrapper, Message } from '../_Common'
 import { GlyphKey } from '@theme'
 
 export interface NumberControlProps {
@@ -52,9 +52,9 @@ export const NumberControl = ({
 
   // This effect is for all right-hand-side icons.
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
-  const [statusIcon, setStatusIcon] = useState<keyof GlyphKey>()
+  const [statusGlyph, setStatusGlyph] = useState<keyof GlyphKey>()
   useEffect(() => {
-    setStatusIcon(enabled ? undefined : 'lock')
+    setStatusGlyph(enabled ? undefined : 'lock')
   }, [enabled])
 
   const step = schema.type === 'integer' ? 1 : uischema.options?.precision ? uischema.options.precision : 'any'
@@ -63,7 +63,7 @@ export const NumberControl = ({
 
   return (
     <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
-      <InputWrapper disabled={!enabled || processing} hasStatusIcon={!!statusIcon}>
+      <InputWrapper disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
         <input
           {...{ required }}
           disabled={!enabled || processing}
@@ -81,7 +81,7 @@ export const NumberControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusIcon && <InputIcon>{statusIcon}</InputIcon>}
+        {statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
       </InputWrapper>
       <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
         {visibleError}

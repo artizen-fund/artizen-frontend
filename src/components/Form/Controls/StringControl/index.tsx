@@ -1,7 +1,7 @@
 import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import { rankWith, schemaMatches, Labels, JsonSchema, ControlElement } from '@jsonforms/core'
-import { Wrapper, InputLabel, InputWrapper, Message, InputIcon } from '../_Common'
+import { Wrapper, InputLabel, InputWrapper, Message, InputGlyph } from '../_Common'
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
 
@@ -59,9 +59,9 @@ export const StringControl = ({
 
   // This effect is for all right-hand-side icons.
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
-  const [statusIcon, setStatusIcon] = useState<keyof GlyphKey>()
+  const [statusGlyph, setStatusGlyph] = useState<keyof GlyphKey>()
   useEffect(() => {
-    setStatusIcon(enabled ? undefined : 'lock')
+    setStatusGlyph(enabled ? undefined : 'lock')
   }, [enabled])
 
   // This is for all left-hand-side icons.
@@ -70,7 +70,7 @@ export const StringControl = ({
 
   return (
     <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
-      <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusIcon={!!statusIcon}>
+      <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
             {...{ required, autoComplete }}
@@ -100,7 +100,7 @@ export const StringControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusIcon && <InputIcon color="night" glyph={statusIcon} />}
+        {statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
       </InputWrapper>
       <Message className={!virgin && !!errors ? 'hasErrors' : ''}>{visibleError}</Message>
     </Wrapper>
