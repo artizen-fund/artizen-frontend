@@ -2,9 +2,12 @@ import { Biconomy } from '@biconomy/mexa'
 import { Web3Provider } from '@ethersproject/providers'
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { magicProvider, assertInt } from '@lib'
+import { useMagicLink, assertInt } from '@lib'
+
+// NOTE: this is untested with useMagicLink()
 
 export const useMetaContract = () => {
+  const { magic } = useMagicLink()
   const [biconomy, setBiconomy] = useState()
   const [web3, setWeb3] = useState<Web3Provider>()
   const [loading, setLoading] = useState(false)
@@ -12,7 +15,7 @@ export const useMetaContract = () => {
 
   useEffect(() => {
     setLoading(true)
-    const biconomy = new Biconomy(magicProvider, {
+    const biconomy = new Biconomy(magic, {
       apiKey: process.env.NEXT_PUBLIC_BICONOMY_API_KEY,
       debug: true,
     })
