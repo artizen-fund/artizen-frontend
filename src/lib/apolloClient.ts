@@ -6,15 +6,15 @@ import { assert, isServer } from '@lib'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-function createApolloClient(user?: ArtizenUser) {
+export const createApolloClient = (token?: string) => {
   const httpOptions: HttpOptions = {
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
     headers: {},
     credentials: 'same-origin',
   }
 
-  if (user) {
-    httpOptions.headers['Authorization'] = `Bearer ${user?.token}`
+  if (token) {
+    httpOptions.headers['Authorization'] = `Bearer ${token}`
   } else if (isServer()) {
     httpOptions.headers['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
   }
@@ -34,13 +34,15 @@ function createApolloClient(user?: ArtizenUser) {
               // keyArgs: ['where'],
               keyArgs: false,
               // Concatenate the incoming list items with the existing list items.
-              merge(incoming, existing = []) {
-                return [
-                  ...existing,
-                  ...incoming.filter((incomingVar: any) =>
-                    existing.every((existingVar: any) => !isEqual(incomingVar, existingVar)),
-                  ),
-                ]
+              merge(existing, incoming) {
+                return !existing
+                  ? incoming
+                  : [
+                      ...existing,
+                      ...incoming.filter((incomingVar: any) =>
+                        existing.every((existingVar: any) => !isEqual(incomingVar, existingVar)),
+                      ),
+                    ]
               },
             },
             User: {
@@ -48,8 +50,8 @@ function createApolloClient(user?: ArtizenUser) {
               // keyArgs: ['where'],
               keyArgs: ['where'],
               // Concatenate the incoming list items with the existing list items.
-              merge(incoming, existing = []) {
-                return [...existing, ...incoming]
+              merge(existing, incoming) {
+                return !existing ? incoming : [...existing, ...incoming]
               },
             },
           },
@@ -60,7 +62,7 @@ function createApolloClient(user?: ArtizenUser) {
 }
 
 export function initializeApollo(initialState?: any, user?: ArtizenUser): ApolloClient<NormalizedCacheObject> {
-  const newApolloClient = createApolloClient(user)
+  const newApolloClient = createApolloClient(user?.token)
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here.
   if (initialState) {
     // Get existing cache, loaded during client side data fetching

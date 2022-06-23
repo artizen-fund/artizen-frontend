@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
-import { assert, SessionProvider, useApollo, withAuth } from '@lib'
+import { assert, isProd, MagicLinkProvider, useApollo, withAuth } from '@lib'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
@@ -19,7 +19,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     fetch('/api/user')
       .then(res => res.json())
       .then(async data => {
-        console.log(data)
         if (data.id) {
           setUser(data)
           // const balance = await getBalance(data.publicAddress)
@@ -33,19 +32,15 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <IntercomProvider appId={NEXT_PUBLIC_INTERCOM_APP_ID}>
-        <SessionProvider {...{ user, setUser }}>
+        <MagicLinkProvider>
           <ApolloProvider client={apolloClient}>
             {/* <Toaster /> */}
             <Component {...pageProps} />
           </ApolloProvider>
-        </SessionProvider>
+        </MagicLinkProvider>
       </IntercomProvider>
     </>
   )
 }
 
-const devApp = dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
-
-export default process.env.NEXT_PUBLIC_PROD === 'true' ? App : devApp
-// todo: ^ when we want to restore SSR and dump this password system, strike this line
-// export default withAuth()(App)
+export default isProd() ? App : dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
