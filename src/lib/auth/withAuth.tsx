@@ -1,9 +1,7 @@
 import React from 'react'
 import type { AppProps } from 'next/app'
 import { assert } from '@lib'
-import { AuthForm } from './'
-
-type NextJsInitializedPage = (props: AppProps) => JSX.Element
+import { AuthForm } from './AuthForm'
 
 const withAuth = () => (PageComponent: NextJsInitializedPage) => {
   const WithAuth = (props: AppProps) => {
