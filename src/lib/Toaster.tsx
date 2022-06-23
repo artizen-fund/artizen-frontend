@@ -1,6 +1,7 @@
 import { CourierProvider, ICourierMessage } from '@trycourier/react-provider'
 // import { Toast } from '@trycourier/react-toast'
-import { useSession, getUSDCBalance, isServer, assert } from '@lib'
+// import { useSession, getUSDCBalance, isServer, assert } from '@lib'
+import { useMagicLink, getUSDCBalance, isServer, assert } from '@lib'
 
 export const Toaster = () => {
   const NEXT_PUBLIC_COURIER_CLIENT_KEY = assert(
@@ -8,7 +9,7 @@ export const Toaster = () => {
     'NEXT_PUBLIC_COURIER_CLIENT_KEY',
   )
 
-  const user = useSession()
+  const { user } = useMagicLink()
   if (isServer()) return <></>
 
   const handleBalance = async () => {

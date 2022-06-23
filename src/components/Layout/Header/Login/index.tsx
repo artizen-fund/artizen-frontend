@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, magic } from '@lib'
+import { Button, Icon, Form, CheckboxControl, Confirmation } from '@components'
+import { rgba, useMagicLink, fetchUser } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -24,43 +24,32 @@ const Login = () => {
   }, [])
 
   const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState<string>()
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const submit = () => alert('derp')
+  const { magic, user, setUser } = useMagicLink()
 
   const handleLoginWithEmail = async () => {
+    if (!data.email || !magic) return
     setReadonly(true)
+    setSubmitted(true)
     try {
-      // Trigger Magic link to be sent to user
-      const didToken = await magic.auth.loginWithMagicLink({
-        email,
-      })
-      setMagicLoginIsDone(true)
-      // Validate didToken with server
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + didToken,
-        },
-      })
-
-      // res.status === 200 && Router.reload('/')
-      if (res.status === 200) {
-        setIsLoggedIn(true)
-        redirectBasedOnQuery()
-      }
+      const token = await magic.auth.loginWithMagicLink({ email: data.email, showUI: false })
+      if (!token) throw 'error retrieving token'
+      const loggedInUser = await fetchUser(token)
+      setUser(loggedInUser)
+      setSubmitted(true)
+      setReadonly(false)
     } catch (error) {
-      setDisabled(false) // Re-enable login button - user may have requested to edit their email
-      setBtnLoading(false)
-      console.log('it goes here', error)
+      console.error(error)
+      setReadonly(false)
     }
   }
 
-  return (
-    <Wrapper>
+  return user ? (
+    <p>yeah you are logged in boi</p>
+  ) : (
+    <Wrapper className={submitted ? 'submitted' : ''}>
       <Copy>
         <Headline>Let’s get started by setting up your Artizen account</Headline>
         <InfoRow>
@@ -73,9 +62,13 @@ const Login = () => {
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <SubmitButton stretch onClick={() => submit()} disabled={!data.email || !acceptedToc || readonly}>
+        <SubmitButton stretch onClick={() => handleLoginWithEmail()} disabled={!data.email || !acceptedToc || readonly}>
           Sign In / Sign Up
         </SubmitButton>
+        <Confirmation>
+          <div>Congrats, confirmation sent!</div>
+          <p>We emailed a magic link to {data.email}.</p>
+        </Confirmation>
       </Form>
       <Alternatives>
         <OrLine />
@@ -111,6 +104,14 @@ const Login = () => {
   )
 }
 
+const SubmitButton = styled(props => <Button {...props} />)`
+  grid-area: submit;
+`
+
+const Alternatives = styled.div`
+  grid-area: alternatives;
+`
+
 const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: grid;
@@ -119,6 +120,12 @@ const Wrapper = styled.div`
       'copy email'
       'copy submit'
       'tocCheck alternatives';
+    &.submitted {
+      grid-template-areas:
+        'copy confirmation'
+        'copy confirmation'
+        'tocCheck confirmation';
+    }
     gap: 10px;
 
     .vertical-layout,
@@ -130,10 +137,16 @@ const Wrapper = styled.div`
       grid-area: email;
     }
   }
-`
 
-const SubmitButton = styled(props => <Button {...props} />)`
-  grid-area: submit;
+  &.submitted {
+    *[id='#/properties/email'],
+    ${SubmitButton}, ${Alternatives} {
+      display: none;
+    }
+    ${Confirmation} {
+      display: flex;
+    }
+  }
 `
 
 const Copy = styled.div`
@@ -193,10 +206,6 @@ const OrLine = styled.div`
       background: ${rgba(palette.slate)};
     }
   }
-`
-
-const Alternatives = styled.div`
-  grid-area: alternatives;
 `
 
 const Buttons = styled.div`
