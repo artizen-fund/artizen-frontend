@@ -12,4 +12,6 @@ declare global {
     children?: React.ReadNode
     className?: string
   }
+
+  type NextJsInitializedPage = (props: AppProps) => JSX.Element
 }
