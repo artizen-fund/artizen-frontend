@@ -100,7 +100,7 @@ export const StringControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusIcon && <InputIcon color="night">{statusIcon}</InputIcon>}
+        {statusIcon && <InputIcon color="night" glyph={statusIcon} />}
       </InputWrapper>
       <Message className={!virgin && !!errors ? 'hasErrors' : ''}>{visibleError}</Message>
     </Wrapper>
