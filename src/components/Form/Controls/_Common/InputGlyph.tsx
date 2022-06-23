@@ -1,10 +1,10 @@
 /* Optional floating icon for input[type=text/email/password], textarea, and select inputs */
 
 import styled from 'styled-components'
-import { Icon } from '@components'
+import { Glyph } from '@components'
 import { breakpoint } from '@theme'
 
-export default styled(props => <Icon {...props} />)`
+export default styled(props => <Glyph {...props} />)`
   z-index: 2;
   position: absolute;
   top: 0;
