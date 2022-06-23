@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login renders correctly 1`] = `
+exports[`SessionShelf renders correctly 1`] = `
 <div
-  className="sc-368b8254-0 fWbIUD"
+  className="sc-4a4f802d-3 fuQvvd"
 >
   <div
-    className="sc-368b8254-2 dxnzY"
+    className="sc-4a4f802d-4 fhjysv"
   >
     <h1
-      className="sc-368b8254-3 iWTFZB"
+      className="sc-4a4f802d-5 jbsSsK"
     >
       Let’s get started by setting up your Artizen account
     </h1>
     <div
-      className="sc-368b8254-4 kEQIjb"
+      className="sc-4a4f802d-6 ehlijM"
     >
       <div
         className="sc-8c7bf1ae-2 huxvCL"
@@ -29,7 +29,7 @@ exports[`Login renders correctly 1`] = `
         </div>
       </div>
       <p
-        className="sc-368b8254-5 kRJSVv"
+        className="sc-4a4f802d-7 hAzDhs"
       >
         Already have an account?
         <br />
@@ -49,7 +49,7 @@ exports[`Login renders correctly 1`] = `
         id="#/properties/email"
       >
         <div
-          className="sc-233fee17-0 cRUHBc"
+          className="sc-dccedff6-0 dxDPQx"
         >
           <input
             onBlur={[Function]}
@@ -72,7 +72,7 @@ exports[`Login renders correctly 1`] = `
     </div>
   </div>
   <button
-    className="sc-a6b3add2-2 ebsYdi sc-368b8254-1 fmUQgm  disabled"
+    className="sc-a6b3add2-2 ebsYdi sc-4a4f802d-0 iErgSy  disabled"
     disabled={true}
     onClick={[Function]}
   >
@@ -81,13 +81,24 @@ exports[`Login renders correctly 1`] = `
     </span>
   </button>
   <div
-    className="sc-368b8254-7 bKnvfw"
+    className="sc-4a4f802d-2 hPhXmc"
+  >
+    <div>
+      Congrats, confirmation sent!
+    </div>
+    <p>
+      We emailed a magic link to 
+      .
+    </p>
+  </div>
+  <div
+    className="sc-4a4f802d-1 iqsVwz"
   >
     <div
-      className="sc-368b8254-6 keSoKT"
+      className="sc-4a4f802d-8 hyNfNI"
     />
     <div
-      className="sc-368b8254-8 jekvQM"
+      className="sc-4a4f802d-9 iCNaSc"
     >
       <button
         className="sc-a6b3add2-2 erODIt undefined "
@@ -116,10 +127,10 @@ exports[`Login renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-368b8254-9 fPSwZc"
+    className="sc-4a4f802d-10 kwsLrN"
   >
     <div
-      className="sc-368b8254-10 hDmRYN"
+      className="sc-4a4f802d-11 fRBTKZ"
     >
       <label
         className="sc-dd35d48e-4 dCKwdz"
@@ -144,7 +155,7 @@ exports[`Login renders correctly 1`] = `
         />
       </label>
       <p
-        className="sc-368b8254-11 YMULz"
+        className="sc-4a4f802d-12 camNOd"
       >
         I agree to Artizen’s
         <a

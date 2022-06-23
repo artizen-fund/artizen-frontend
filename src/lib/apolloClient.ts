@@ -99,6 +99,12 @@ export function addApolloState(client: ApolloClient<NormalizedCacheObject>, page
 }
 
 export function useApollo(pageProps: any, user?: ArtizenUser) {
+  /* IMPORTANT NOTE:
+   *  Users are currently not initialized until after useApollo is called by _app.tsx
+   *  That is not going to change!
+   *  We need a better way to re-initialized ApolloClient upon login,
+   *    or (more likely) we need to add session tracking to this lib.
+   */
   const state = pageProps['apolloData']
   const store = useMemo(() => initializeApollo(state, user), [user, state])
   return { apolloClient: store, loading: Boolean(!user) }

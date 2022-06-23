@@ -5,11 +5,11 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/client'
 import { CREATE_TOP_UP_WALLET } from '@gql'
-import { useMagicLink } from '@lib'
+import { useSession } from '@lib'
 
 export const CreateTopUpWallet = () => {
   const router = useRouter()
-  const { user } = useMagicLink()
+  const { user } = useSession()
 
   const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
     onError: error => console.error('updatePost resultado', error),
