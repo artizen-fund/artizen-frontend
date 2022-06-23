@@ -22,7 +22,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/stringExample"
       >
         <div
-          class="sc-233fee17-0 cRUHBc"
+          class="sc-dccedff6-0 dxDPQx"
         >
           <input
             maxlength="20"
@@ -54,7 +54,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/phoneExample"
       >
         <div
-          class="sc-233fee17-0 cRUHBc"
+          class="sc-dccedff6-0 dxDPQx"
         >
           <div
             class="sc-f5b34ffa-0 iLecjc PhoneInput"
@@ -1379,7 +1379,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/enumExample"
       >
         <div
-          class="sc-233fee17-0 cRUHBc"
+          class="sc-dccedff6-0 dxDPQx"
         >
           <select
             class="noData"
@@ -1420,7 +1420,7 @@ exports[`Form renders Form unchanged 1`] = `
             </option>
           </select>
           <div
-            class="sc-b0af9a1b-0 dENUF"
+            class="sc-38d39bf1-0 hobJpn"
           />
           <label
             class="sc-ffdb2e6c-0 dXVxRc noData"
@@ -1495,7 +1495,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/integerExample"
       >
         <div
-          class="sc-233fee17-0 cRUHBc"
+          class="sc-dccedff6-0 dxDPQx"
         >
           <input
             class="noData"
@@ -1525,7 +1525,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/numberExample"
       >
         <div
-          class="sc-233fee17-0 cRUHBc"
+          class="sc-dccedff6-0 dxDPQx"
         >
           <input
             class="noData"
@@ -1553,7 +1553,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/emailExample"
       >
         <div
-          class="sc-233fee17-0 cRUHBc"
+          class="sc-dccedff6-0 dxDPQx"
         >
           <input
             placeholder="your@email.com"

@@ -1,11 +1,5 @@
-const fetchUser = async (token: string): Promise<ArtizenUser> =>
-  await fetch('/api/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  })
+const fetchUser = async (): Promise<ArtizenUser> =>
+  await fetch('/api/user')
     .then(async data => {
       return await data.json()
     })
