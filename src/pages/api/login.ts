@@ -38,6 +38,8 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const user = await getUserProfile(metadata.issuer, token)
+    // TODO: is this getting user, or an array??
+    console.log(user)
     setTokenCookie(res, token)
     res.status(200).send(user)
   } catch (error) {
