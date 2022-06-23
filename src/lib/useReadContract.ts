@@ -18,20 +18,19 @@ export const useReadContract = (
   const callContract = useCallback(async () => {
     setLoading(true)
 
-    // TODO: fix this Provider types mismatch
-    // @ts-ignore
-    const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider)
-
-    const contract = new ethers.Contract(contractAddress, contractAbi, magicWeb3)
-
-    try {
-      const value = await contract[methodName](...attr)
-
-      setValue(value)
-    } catch (error: unknown) {
-      setError(error)
-    }
-    setLoading(false)
+    // todo: typescript says this is all wrong… will troubleshoot when the time comes
+    // const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider)
+    //
+    // const contract = new ethers.Contract(contractAddress, contractAbi, magicWeb3)
+    //
+    // try {
+    //   const value = await contract[methodName](...attr)
+    //
+    //   setValue(value)
+    // } catch (error: unknown) {
+    //   setError(error)
+    // }
+    // setLoading(false)
   }, [attr, contractAbi, contractAddress, methodName])
 
   useEffect(() => {
