@@ -19,7 +19,6 @@ const SelectControl = ({
   ...props
 }: EnumControlProps) => {
   /* does Select ever have status icon? */
-  const hasStatusIcon = false
   const [virgin, setVirgin] = useState(data === undefined)
 
   const ref = useRef<HTMLSelectElement>(null)
@@ -51,7 +50,7 @@ const SelectControl = ({
 
   return (
     <Wrapper gridArea={path} {...{ filled }} {...props} id={uischema?.scope}>
-      <InputWrapper {...{ hasStatusIcon }}>
+      <InputWrapper>
         <select
           {...{ required, ref }}
           disabled={!enabled || processing}
