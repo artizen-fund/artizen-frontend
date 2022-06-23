@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba } from '@lib'
+import { rgba, useMagicLink, fetchUser } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -24,14 +24,32 @@ const Login = () => {
   }, [])
 
   const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState<string>()
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const submit = () => alert('derp')
+  const { magic, user, setUser } = useMagicLink()
 
-  return (
-    <Wrapper>
+  const handleLoginWithEmail = async () => {
+    if (!data.email || !magic) return
+    setReadonly(true)
+    setSubmitted(true)
+    try {
+      const token = await magic.auth.loginWithMagicLink({ email: data.email, showUI: false })
+      if (!token) throw 'error retrieving token'
+      const loggedInUser = await fetchUser(token)
+      setUser(loggedInUser)
+      setSubmitted(true)
+      setReadonly(false)
+    } catch (error) {
+      console.error(error)
+      setReadonly(false)
+    }
+  }
+
+  return user ? (
+    <p>yeah you are logged in boi</p>
+  ) : (
+    <Wrapper className={submitted ? 'submitted' : ''}>
       <Copy>
         <Headline>Let’s get started by setting up your Artizen account</Headline>
         <InfoRow>
@@ -44,9 +62,13 @@ const Login = () => {
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <SubmitButton stretch onClick={() => submit()} disabled={!data.email || !acceptedToc}>
+        <SubmitButton stretch onClick={() => handleLoginWithEmail()} disabled={!data.email || !acceptedToc || readonly}>
           Sign In / Sign Up
         </SubmitButton>
+        <Confirmation>
+          <div>Congrats, confirmation sent!</div>
+          <p>We emailed a magic link to {data.email}.</p>
+        </Confirmation>
       </Form>
       <Alternatives>
         <OrLine />
@@ -82,6 +104,31 @@ const Login = () => {
   )
 }
 
+const SubmitButton = styled(props => <Button {...props} />)`
+  grid-area: submit;
+`
+
+const Alternatives = styled.div`
+  grid-area: alternatives;
+`
+
+const Confirmation = styled.div`
+  display: none;
+  grid-area: confirmation;
+  flex-direction: column;
+  justify-content: center;
+  div {
+    ${typography.title.l4}
+    color: ${rgba(palette.moon)};
+    margin-bottom: 0.25em;
+  }
+  p {
+    ${typography.label.l1}
+    color: ${rgba(palette.barracuda)};
+  }
+  text-align: center;
+`
+
 const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: grid;
@@ -90,6 +137,12 @@ const Wrapper = styled.div`
       'copy email'
       'copy submit'
       'tocCheck alternatives';
+    &.submitted {
+      grid-template-areas:
+        'copy confirmation'
+        'copy confirmation'
+        'tocCheck confirmation';
+    }
     gap: 10px;
 
     .vertical-layout,
@@ -101,10 +154,16 @@ const Wrapper = styled.div`
       grid-area: email;
     }
   }
-`
 
-const SubmitButton = styled(props => <Button {...props} />)`
-  grid-area: submit;
+  &.submitted {
+    *[id='#/properties/email'],
+    ${SubmitButton}, ${Alternatives} {
+      display: none;
+    }
+    ${Confirmation} {
+      display: flex;
+    }
+  }
 `
 
 const Copy = styled.div`
@@ -164,10 +223,6 @@ const OrLine = styled.div`
       background: ${rgba(palette.slate)};
     }
   }
-`
-
-const Alternatives = styled.div`
-  grid-area: alternatives;
 `
 
 const Buttons = styled.div`

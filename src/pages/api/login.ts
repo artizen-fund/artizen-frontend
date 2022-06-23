@@ -1,43 +1,48 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { Magic } from '@magic-sdk/admin'
 import { withSentry } from '@sentry/nextjs'
-import { magicLinkAdmin, setTokenCookie } from '@lib'
 import {
+  setTokenCookie,
+  assert,
   createNewToken,
-  checkTypeOfUser,
-  // updateUserCreatedPro,
-  createNewUser,
-} from '../../lib/utilsServer'
+  checkUserProfile,
+  updateUserProfile,
+  createUserProfile,
+  getUserProfile,
+} from '@lib'
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
+  const MAGIC_SECRET_KEY = assert(process.env.NEXT_PUBLIC_MAGIC_SECRET_KEY, 'NEXT_PUBLIC_MAGIC_SECRET_KEY')
+  const magic = new Magic(MAGIC_SECRET_KEY)
+
   try {
     const didToken = req?.headers?.authorization?.substr(7)
     if (!didToken) throw 'Token not found.'
 
-    magicLinkAdmin.token.validate(didToken)
+    magic.token.validate(didToken)
 
-    const metadata = await magicLinkAdmin.users.getMetadataByToken(didToken)
-    if (!metadata || !metadata.email) throw 'Token metadata not found.'
+    const metadata = await magic.users.getMetadataByToken(didToken)
+    if (!metadata || !metadata.email || !metadata.issuer) throw 'Token metadata not found.'
 
     const token = createNewToken(metadata)
     if (!token) {
       throw 'Error creating token'
     }
 
-    const check = await checkTypeOfUser(metadata.email, token)
-    if (!check) throw 'Error retrieving user type.'
+    const userProfileType = await checkUserProfile(metadata.email, token)
 
-    if (check.type === 'OLD_USER') {
-      // await updateUserCreatedPro(metadata, token)
+    if (userProfileType === 'OLD') {
+      await updateUserProfile(metadata, token)
+    } else if (userProfileType === 'NEW') {
+      await createUserProfile(metadata, token)
     }
 
-    if (check.type === 'NEW_USER') {
-      await createNewUser(metadata, token)
-    }
+    const user = await getUserProfile(metadata.issuer, token)
 
     setTokenCookie(res, token)
-    res.status(200).send({ done: true })
+    res.status(200).send(user)
   } catch (error) {
-    console.error('error from api login ')
+    console.error('error from api login:', error)
     res.status(500).end()
   }
 }
