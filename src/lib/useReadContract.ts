@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
-import { magicWeb3 } from './magicLink'
+import { useMagicLink } from '@lib'
 
 export const useReadContract = (
   contractAddress: string,
@@ -8,12 +8,19 @@ export const useReadContract = (
   methodName: string,
   attr: Array<unknown> = [],
 ) => {
+  const { magic } = useMagicLink()
+  if (magic === undefined) return
+
   const [value, setValue] = useState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
 
   const callContract = useCallback(async () => {
     setLoading(true)
+
+    // TODO: fix this Provider types mismatch
+    // @ts-ignore
+    const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider)
 
     const contract = new ethers.Contract(contractAddress, contractAbi, magicWeb3)
 
