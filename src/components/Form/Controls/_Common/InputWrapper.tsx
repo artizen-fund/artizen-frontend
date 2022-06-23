@@ -68,7 +68,7 @@ const InputTypography = css`
 
 export default styled.div<{
   hasWidget?: boolean
-  hasStatusIcon: boolean
+  hasStatusGlyph?: boolean
   disabled?: boolean
 }>`
   position: relative;
@@ -86,14 +86,14 @@ export default styled.div<{
 
     width: 100%;
     height: 56px;
-    padding: 18px ${props => (props.hasStatusIcon ? 48 : 16)}px 0 16px;
+    padding: 18px ${props => (props.hasStatusGlyph ? 48 : 16)}px 0 16px;
     @media only screen and (min-width: ${breakpoint.laptop}px) {
       height: 64px;
-      padding: 20px ${props => (props.hasStatusIcon ? 72 : 24)}px 0 24px;
+      padding: 20px ${props => (props.hasStatusGlyph ? 72 : 24)}px 0 24px;
     }
     @media only screen and (min-width: ${breakpoint.desktop}px) {
       height: 72px;
-      padding: 22px ${props => (props.hasStatusIcon ? 88 : 32)}px 0 32px;
+      padding: 22px ${props => (props.hasStatusGlyph ? 88 : 32)}px 0 32px;
     }
 
     border-width: 1px 1px 4px 1px;
