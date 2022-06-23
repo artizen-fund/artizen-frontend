@@ -1,8 +1,7 @@
-import jwt from 'jsonwebtoken'
-import { setTokenCookie, assert } from '@lib'
-import { withSentry } from '@sentry/nextjs'
-import { createNewToken, getUserDataFromDataBase } from '../../lib/utilsServer'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { withSentry } from '@sentry/nextjs'
+import jwt from 'jsonwebtoken'
+import { setTokenCookie, assert, createNewToken, getUserProfile } from '@lib'
 
 const user = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -27,7 +26,7 @@ const user = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     setTokenCookie(res, newToken)
 
-    const userFromDatabase = await getUserDataFromDataBase(jwtUser.issuer, token)
+    const userFromDatabase = await getUserProfile(jwtUser.issuer, token)
     if (!userFromDatabase) throw 'Error retrieving user from database.'
 
     res.status(200).json({
