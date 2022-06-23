@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import MailchimpSubscribe, { FormHooks, NameFormFields } from 'react-mailchimp-subscribe'
 import { rgba, assert } from '@lib'
-import { Form, Button, PagePadding } from '@components'
+import { Form, Button, PagePadding, Confirmation } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -71,23 +71,6 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) =
 
 const StyledButton = styled(props => <Button {...props} />)`
   grid-area: submit;
-`
-
-const Confirmation = styled.div`
-  display: none;
-  grid-area: confirmation;
-  flex-direction: column;
-  justify-content: center;
-  div {
-    ${typography.title.l4}
-    color: ${rgba(palette.moon)};
-    margin-bottom: 0.25em;
-  }
-  p {
-    ${typography.label.l1}
-    color: ${rgba(palette.barracuda)};
-  }
-  text-align: center;
 `
 
 const Wrapper = styled.div`
