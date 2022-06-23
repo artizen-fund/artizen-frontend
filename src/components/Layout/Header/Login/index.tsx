@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Button, Icon, Form, CheckboxControl, Confirmation } from '@components'
+import { Button, Icon, Form, CheckboxControl } from '@components'
 import { rgba, useMagicLink, fetchUser } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
@@ -110,6 +110,23 @@ const SubmitButton = styled(props => <Button {...props} />)`
 
 const Alternatives = styled.div`
   grid-area: alternatives;
+`
+
+const Confirmation = styled.div`
+  display: none;
+  grid-area: confirmation;
+  flex-direction: column;
+  justify-content: center;
+  div {
+    ${typography.title.l4}
+    color: ${rgba(palette.moon)};
+    margin-bottom: 0.25em;
+  }
+  p {
+    ${typography.label.l1}
+    color: ${rgba(palette.barracuda)};
+  }
+  text-align: center;
 `
 
 const Wrapper = styled.div`

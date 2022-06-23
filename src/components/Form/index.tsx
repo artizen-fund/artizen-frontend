@@ -12,7 +12,6 @@ import {
   EnumControl,
   enumControlTester,
 } from './Controls'
-import Confirmation from './Confirmation'
 
 interface FormProps<TStateInterface> {
   localStorageKey?: string
@@ -60,4 +59,4 @@ const Form = <TStateInterface,>({
   )
 }
 
-export { Confirmation, Form }
+export default Form
