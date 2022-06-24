@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { Button } from '@components'
+import { Button, Logo } from '@components'
 import AccountButton from './AccountButton'
 import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
@@ -27,7 +27,7 @@ const Header = () => {
         <Items>
           <Link href="/">
             <a>
-              <Logo>Artizen</Logo>
+              <Logo />
             </a>
           </Link>
           <MobileNavButton
@@ -106,39 +106,6 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
     }
     transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
       backdrop-filter 0.3s ease-in-out;
-  }
-`
-
-const Logo = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  font-size: 13px;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    font-size: 15px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    font-size: 16px;
-  }
-  text-transform: uppercase;
-
-  &:before {
-    content: ' ';
-    display: block;
-    width: 40px;
-    height: 40px;
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      height: 44px;
-      width: 44px;
-    }
-    @media only screen and (min-width: ${breakpoint.desktop}px) {
-      height: 48px;
-      width: 48px;
-    }
-    background-color: ${rgba(palette.algae)};
-    border-radius: 9999px;
-    margin-right: 8px;
   }
 `
 
