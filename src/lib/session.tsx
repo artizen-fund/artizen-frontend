@@ -41,7 +41,7 @@ export const SessionProvider = ({ children }: SimpleComponentProps) => {
 
   const checkSession = async () => {
     const userFromApi = await fetchUser()
-    if (userFromApi) {
+    if (!!userFromApi.id) {
       setUser(userFromApi)
     }
   }
