@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, Dispatch, SetStateAction } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { Magic } from 'magic-sdk'
 import { OAuthExtension } from '@magic-ext/oauth'
 import { SDKBase, InstanceWithExtensions } from '@magic-sdk/provider'
