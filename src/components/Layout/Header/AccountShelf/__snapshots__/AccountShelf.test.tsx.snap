@@ -2,26 +2,191 @@
 
 exports[`AccountShelf renders correctly 1`] = `
 <div
-  className="sc-72ef8b62-0 rVPRG"
+  className="sc-a64ee2a1-0 kqTaqp"
 >
-  <div>
-    <h1>
-      Congrats on being logged in, buckaroo.
-    </h1>
-    <p>
-      herp@derp.com
-    </p>
-    <p>
-      abc123
-    </p>
-  </div>
-  <button
-    className="sc-a6b3add2-2 ifpeQA undefined "
-    onClick={[Function]}
+  <div
+    className="sc-a64ee2a1-1 hULhlL"
   >
-    <span>
-      Log out
-    </span>
-  </button>
+    <h1
+      className="sc-a64ee2a1-2 eXNwXt"
+    >
+      Welcome
+    </h1>
+    <h2
+      className="sc-a64ee2a1-3 hzPfGl"
+    >
+      Thanks for supporting the future of public goods.
+    </h2>
+    <div
+      className="sc-a64ee2a1-4 duaXJo"
+    >
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-9eb58f28-0 jzDiDl sc-a6b3add2-0 fCwpyU"
+        />
+        <span>
+          Profile
+        </span>
+      </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-9eb58f28-0 kuWgSW sc-a6b3add2-0 fCwpyU"
+        />
+        <span>
+          Wallet
+        </span>
+      </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-9eb58f28-0 kuWgSW sc-a6b3add2-0 fCwpyU"
+        />
+        <span>
+          Settings
+        </span>
+      </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-9eb58f28-0 kuWgSW sc-a6b3add2-0 fCwpyU"
+        />
+        <span>
+          Notifications
+        </span>
+      </button>
+    </div>
+    <hr />
+    <div
+      onClick={[Function]}
+    >
+      Sign Out
+    </div>
+  </div>
+  <ul
+    className="sc-cf63bf03-0 jnGrA-D"
+  >
+    <li
+      className="sc-cf63bf03-1 doApLo"
+    >
+      <div
+        className="sc-8c7bf1ae-2 jOAuUM"
+      >
+        <div
+          className="sc-8c7bf1ae-0 kBszjY"
+          color="night"
+        >
+          <div
+            className="sc-9eb58f28-0 iglxpF"
+            color="night"
+          />
+        </div>
+      </div>
+      <div
+        className="sc-cf63bf03-2 dRsowg"
+      >
+        $800
+      </div>
+      <div
+        className="sc-cf63bf03-3 YunQa"
+      >
+        donated
+      </div>
+    </li>
+    <li
+      className="sc-cf63bf03-1 doApLo"
+    >
+      <div
+        className="sc-8c7bf1ae-2 jOAuUM"
+      >
+        <div
+          className="sc-8c7bf1ae-0 kBszjY"
+          color="night"
+        >
+          <div
+            className="sc-9eb58f28-0 kuWgSW"
+            color="night"
+          />
+        </div>
+      </div>
+      <div
+        className="sc-cf63bf03-2 dRsowg"
+      >
+        42
+      </div>
+      <div
+        className="sc-cf63bf03-3 YunQa"
+      >
+        collected
+      </div>
+    </li>
+    <li
+      className="sc-cf63bf03-1 doApLo"
+    >
+      <div
+        className="sc-8c7bf1ae-2 jOAuUM"
+      >
+        <div
+          className="sc-8c7bf1ae-0 kBszjY"
+          color="night"
+        >
+          <div
+            className="sc-9eb58f28-0 kuWgSW"
+            color="night"
+          />
+        </div>
+      </div>
+      <div
+        className="sc-cf63bf03-2 dRsowg"
+      >
+        $0
+      </div>
+      <div
+        className="sc-cf63bf03-3 YunQa"
+      >
+        collected
+      </div>
+    </li>
+    <li
+      className="sc-cf63bf03-1 doApLo"
+    >
+      <div
+        className="sc-8c7bf1ae-2 jOAuUM"
+      >
+        <div
+          className="sc-8c7bf1ae-0 kBszjY"
+          color="night"
+        >
+          <div
+            className="sc-9eb58f28-0 kuWgSW"
+            color="night"
+          />
+        </div>
+      </div>
+      <div
+        className="sc-cf63bf03-2 dRsowg"
+      >
+        100
+      </div>
+      <div
+        className="sc-cf63bf03-3 YunQa"
+      >
+        $ART
+      </div>
+    </li>
+  </ul>
+  <img
+    className="sc-a64ee2a1-5 fZdsHB"
+    src="/images/qf-square.svg"
+  />
 </div>
 `;

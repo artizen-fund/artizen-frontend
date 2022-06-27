@@ -3,10 +3,10 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <header
-    class="sc-ed6aba9b-0 cjsGqI"
+    class="sc-cacc6b00-0 jaTyAY"
   >
     <div
-      class="sc-ed6aba9b-1 pQqXw"
+      class="sc-cacc6b00-1 fLYmVg"
     >
       <a
         href="/"
@@ -54,7 +54,7 @@ exports[`renders homepage unchanged 1`] = `
         </svg>
       </a>
       <button
-        class="sc-a6b3add2-2 bTccxJ sc-ed6aba9b-3 jTgOJU "
+        class="sc-a6b3add2-2 bTccxJ sc-cacc6b00-3 tJjWc "
       >
         <span>
           Menu
@@ -62,10 +62,10 @@ exports[`renders homepage unchanged 1`] = `
       </button>
     </div>
     <div
-      class="sc-ed6aba9b-1 pQqXw"
+      class="sc-cacc6b00-1 fLYmVg"
     >
       <div
-        class="sc-ed6aba9b-2 javRQa"
+        class="sc-cacc6b00-2 jVpwBe"
       >
         <ul>
           <li>
@@ -91,20 +91,20 @@ exports[`renders homepage unchanged 1`] = `
         </span>
       </a>
       <div
-        class="sc-88922287-0 bYsKBK"
+        class="sc-ea036ebc-0 bJSKZv"
       >
         <div
-          class="sc-88922287-1 fRVXTB"
+          class="sc-ea036ebc-1 hqjJow"
         />
         <div
-          class="sc-9eb58f28-0 htauXl sc-88922287-2 egWgHG"
+          class="sc-9eb58f28-0 htauXl sc-ea036ebc-2 fBGPjb"
           color="night"
         />
         <div
-          class="sc-88922287-3 fBvHqr"
+          class="sc-ea036ebc-3 iPFdte"
         >
           <div
-            class="sc-88922287-4 fyJJre"
+            class="sc-ea036ebc-4 fqPGuP"
           >
             RP
           </div>
