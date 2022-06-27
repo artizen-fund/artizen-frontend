@@ -1,5 +1,6 @@
 export * from './palette'
 export * from './breakpoint'
+export * from './button'
 export * from './icon'
 export * from './typeface'
 export * from './typography'
