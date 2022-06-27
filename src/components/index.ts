@@ -1,5 +1,7 @@
+export { default as AmountWidget } from './AmountWidget'
 export { default as Badge } from './Badge'
 export { default as Button } from './Button'
+export { default as DonationShelf } from './DonationShelf'
 export { default as Form } from './Form'
 export { default as Glyph } from './Glyph'
 export { default as Icon } from './Icon'
