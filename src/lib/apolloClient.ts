@@ -26,7 +26,7 @@ export const createApolloClient = (token?: string) => {
       typePolicies: {
         Query: {
           fields: {
-            Donations: {
+            exampleEntities: {
               keyArgs: false,
             },
             Project: {

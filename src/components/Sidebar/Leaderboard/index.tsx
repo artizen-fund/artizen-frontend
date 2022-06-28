@@ -3,6 +3,7 @@ import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
+import { ethers } from 'ethers'
 
 export type ILeaderboard = Pick<ISidebarDonatorsQuery, 'exampleEntities'>
 
@@ -21,11 +22,11 @@ const Leaderboard = ({ exampleEntities }: ILeaderboard) => {
             <div>#{index + 1}</div>
             {donation.OnChainUser?.profileImage && <Avatar profileImage={donation.OnChainUser?.profileImage} />}
             <Name>
-              {donation.OnChainUser?.firstName} {donation.OnChainUser?.lastName} herp derp derp{' '}
+              {donation.OnChainUser?.firstName} {donation.OnChainUser?.lastName} herp derp derp
               {index === 0 && <span>👑</span>}
             </Name>
           </div>
-          <Amount>${donation.donation_amount.toLocaleString()}</Amount>
+          <Amount>${Number(ethers.utils.formatUnits(donation.donation_amount, 6)).toFixed(2)}</Amount>
         </TableCell>
       ))}
     </Table>
