@@ -4,7 +4,7 @@ import FeaturedArt from './'
 
 describe('FeaturedArt', () => {
   it('renders FeaturedArt unchanged', () => {
-    const { container } = render(<FeaturedArt />)
+    const { container } = render(<FeaturedArt tokenId={1} startDate={new Date()} tagName="Tag Name" />)
     expect(container).toMatchSnapshot()
   })
 })
