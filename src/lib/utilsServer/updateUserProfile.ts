@@ -6,6 +6,6 @@ export const updateUserProfile = async ({ email, issuer, publicAddress }: Artize
   const apolloClient = createApolloClient(token)
   return await apolloClient.query<IUpdateUserMutation>({
     query: UPDATE_USER,
-    variables: { email, issuer, publicAddress },
+    variables: { email, issuer, publicAddress: publicAddress?.toLowerCase() },
   })
 }
