@@ -6,6 +6,6 @@ export const createUserProfile = async ({ issuer, publicAddress, email }: Artize
   const apolloClient = createApolloClient(token)
   return await apolloClient.query<ICreateUserMutation>({
     query: CREATE_USER,
-    variables: { email, issuer, publicAddress },
+    variables: { email, issuer, publicAddress: publicAddress?.toLowerCase() },
   })
 }

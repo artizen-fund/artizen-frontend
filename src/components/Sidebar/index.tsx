@@ -7,7 +7,7 @@ import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
 
-export type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'> & {
+export type ISidebar = Pick<ISidebarDonatorsQuery, 'exampleEntities'> & {
   FUND_COUNT: number
   FUND_AMOUNT: number
   FUND_GOAL: number
@@ -15,7 +15,7 @@ export type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'> & {
   FUND_DEADLINE: string
 }
 
-const Sidebar = ({ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
+const Sidebar = ({ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -44,7 +44,7 @@ const Sidebar = ({ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUN
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ Donations }} />
+            <Leaderboard {...{ exampleEntities }} />
             <Perks />
           </LargeScreensOnly>
         </Content>

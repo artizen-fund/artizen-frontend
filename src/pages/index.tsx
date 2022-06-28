@@ -13,7 +13,7 @@ interface IHome {
 
 const Home = ({
   apolloData: {
-    ROOT_QUERY: { Donations },
+    ROOT_QUERY: { exampleEntities },
   },
 }: IHome) => {
   // note: obviously this is going to come from CMS data
@@ -92,7 +92,7 @@ const Home = ({
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar {...{ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
+          <Sidebar {...{ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
         </Wrapper>
       </StyledPagePadding>
 
