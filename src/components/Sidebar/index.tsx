@@ -4,7 +4,7 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba } from '@lib'
+import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'exampleEntities'> & {
@@ -25,7 +25,7 @@ const Sidebar = ({ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DAT
         <Content>
           <FundBlock>
             <AmountRaised>
-              <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
+              <span>${formatUSDC(exampleEntities[0].totalDonations)}</span> raised of ${FUND_GOAL.toLocaleString()} goal
             </AmountRaised>
             <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
             <Row>

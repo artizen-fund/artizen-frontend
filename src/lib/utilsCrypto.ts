@@ -2,6 +2,7 @@
 import { AbiItem } from 'web3-utils'
 import { provider } from 'web3-core'
 import { contracts, isServer } from '@lib'
+import { ethers } from 'ethers'
 
 export const getUSDCBalance = async (address: string) => {
   if (isServer()) return
@@ -23,4 +24,8 @@ export const getEthBalance = async (address: string) => {
   //   const result = magicWeb3.utils.fromWei(balance, 'ether')
   //   return result
   // })
+}
+
+export const formatUSDC = (value: number) => {
+  return Number(ethers.utils.formatUnits(value, 6)).toFixed(2)
 }

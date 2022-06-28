@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
+import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
 import { ethers } from 'ethers'
 
@@ -26,7 +26,7 @@ const Leaderboard = ({ exampleEntities }: ILeaderboard) => {
               {index === 0 && <span>👑</span>}
             </Name>
           </div>
-          <Amount>${Number(ethers.utils.formatUnits(donation.donation_amount, 6)).toFixed(2)}</Amount>
+          <Amount>${formatUSDC(donation.donation_amount)}</Amount>
         </TableCell>
       ))}
     </Table>
