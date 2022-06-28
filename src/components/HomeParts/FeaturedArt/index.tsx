@@ -1,24 +1,74 @@
 import styled from 'styled-components'
 import { Icon, Slideshow } from '@components'
 import { palette, breakpoint, typography } from '@theme'
-import { rgba } from '@lib'
+import { rgba, assert } from '@lib'
+import { useEffect, useState } from 'react'
+import artizenERC1155Abi from 'src/lib/contracts/ArtizenERC1155Abi'
+import { useReadContract } from 'src/lib/useReadContract'
 
-const FeaturedArt = () => {
-  const sampleSlides = ['/images/sample-art-1.jpg', '/images/sample-art-2.jpg', '/images/sample-art-3.jpg']
+type FeaturedArtProps = {
+  tokenId: number
+  startDate: Date
+  tagName: string
+}
+
+interface Metadata {
+  name: string
+  description: string
+  artist: string
+  image: string
+  attributes: Array<unknown>
+}
+
+const FeaturedArt = ({ tokenId, startDate, tagName }: FeaturedArtProps) => {
+  const [metadataUri] = useReadContract(
+    assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS'),
+    artizenERC1155Abi,
+    'uri',
+    [tokenId],
+  )
+  const [metadata, setMetadata] = useState<Metadata>()
+
+  const getMetadataFromUri = async (uri: string) => {
+    const response = await fetch(uri)
+    const json = await response.json()
+    setMetadata(json)
+  }
+
+  useEffect(() => {
+    if (metadataUri) {
+      // TODO: Remove this replace when contract start using ERC1155URIStorage
+      const uri = (metadataUri as string).replace('{id}.json', `${tokenId}.json`)
+      getMetadataFromUri(uri)
+    }
+  }, [metadataUri])
+
+  const getDaysAgoFromDate = (start: Date) => {
+    const now = new Date()
+
+    const oneDay = 1000 * 60 * 60 * 24
+
+    const diffInTime = now.getTime() - start.getTime()
+
+    const diffInDays = Math.round(diffInTime / oneDay)
+
+    return diffInDays
+  }
+
   return (
     <Wrapper>
-      <Slideshow slides={sampleSlides} />
+      <Slideshow slides={metadata?.image ? [metadata?.image] : []} />
       <Copy>
         <Title>Title of Monthly Featured Artwork</Title>
         <Metadata>
           <Metadatum>
-            <Icon glyph="face" level={1} outline label="Artist Name" />
+            <Icon glyph="face" level={1} outline label={metadata?.artist} />
           </Metadatum>
           <Metadatum>
-            <Icon glyph="calendar" level={1} outline label="Created # days ago" />
+            <Icon glyph="calendar" level={1} outline label={`Created ${getDaysAgoFromDate(startDate)} days ago`} />
           </Metadatum>
           <Metadatum>
-            <Icon glyph="tag" level={1} outline label="Tag Name" />
+            <Icon glyph="tag" level={1} outline label={tagName} />
           </Metadatum>
         </Metadata>
       </Copy>
