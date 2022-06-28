@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import artizenERC1155Abi from 'src/lib/contracts/ArtizenERC1155Abi'
 import { useReadContract } from 'src/lib/useReadContract'
 
-type FeaturedArtProps = {
+type IFeaturedArt = {
   tokenId: number
   startDate: Date
   tagName: string
@@ -20,7 +20,7 @@ interface Metadata {
   attributes: Array<unknown>
 }
 
-const FeaturedArt = ({ tokenId, startDate, tagName }: FeaturedArtProps) => {
+const FeaturedArt = ({ tokenId, startDate, tagName }: IFeaturedArt) => {
   const [metadataUri] = useReadContract(
     assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS'),
     artizenERC1155Abi,
