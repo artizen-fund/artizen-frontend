@@ -84,7 +84,7 @@ const Home = ({
 
       <StyledPagePadding>
         <Wrapper>
-          <FeaturedArt />
+          <FeaturedArt tokenId={1} startDate={new Date()} tagName="Tag Name" />
           <TabbedInfo>
             {Object.keys(tabbedInfo).map(key => (
               <Tab key={`tab-${key}`} label={key}>
