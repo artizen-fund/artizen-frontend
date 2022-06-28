@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
-import { useMagicLink } from '@lib'
+import { useSession } from '@lib'
 
 export const useReadContract = (
   contractAddress: string,
@@ -8,7 +8,7 @@ export const useReadContract = (
   methodName: string,
   attr: Array<unknown> = [],
 ) => {
-  const { magic } = useMagicLink()
+  const { magic } = useSession()
   if (magic === undefined) return
 
   const [value, setValue] = useState()
