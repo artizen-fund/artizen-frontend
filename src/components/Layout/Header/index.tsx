@@ -85,6 +85,9 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     height: 88px;
   }
+  @media only screen and (min-width: 1680px) {
+    padding: 0 calc((100vw - 1600px) / 2);
+  }
 
   background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
   @media (prefers-color-scheme: dark) {
