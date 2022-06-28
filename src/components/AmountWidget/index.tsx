@@ -23,11 +23,11 @@ const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
         <label>donation total</label>
       </AmountBox>
       <Buttons>
-        <Button outline level={2} onClick={() => setAmount(amount - 1)} glyphOnly glyph="face">
-          subtract
-        </Button>
-        <Button outline level={2} onClick={() => setAmount(amount + 1)} glyphOnly glyph="donate">
+        <Button outline level={2} onClick={() => setAmount(amount + 1)} glyphOnly glyph="face">
           add
+        </Button>
+        <Button outline level={2} onClick={() => setAmount(amount - 1)} glyphOnly glyph="donate">
+          subtract
         </Button>
       </Buttons>
     </Wrapper>
@@ -43,9 +43,6 @@ const Wrapper = styled.div`
   border: 1px solid ${rgba(palette.night)};
   border-radius: 16px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16);
-  > * {
-    outline: 1px dashed red;
-  }
 `
 
 const Denomination = styled.div`
@@ -60,7 +57,7 @@ const Denomination = styled.div`
 
 const Amount = styled.input`
   width: 100%;
-  font-family: 'Roc Grotesk';
+  font-family: 'roc-grotesk';
   font-style: normal;
   font-weight: 750;
   font-size: 64px;
