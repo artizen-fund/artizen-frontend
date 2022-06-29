@@ -1,15 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Magic } from '@magic-sdk/admin'
 import { withSentry } from '@sentry/nextjs'
-import {
-  setTokenCookie,
-  assert,
-  createNewToken,
-  checkUserProfile,
-  updateUserProfile,
-  createUserProfile,
-  getUserProfile,
-} from '@lib'
+import { setTokenCookie, assert, checkUserProfile, updateUserProfile, createUserProfile, getUserProfile } from '@lib'
+import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
   const MAGIC_SECRET_KEY = assert(process.env.NEXT_PUBLIC_MAGIC_SECRET_KEY, 'NEXT_PUBLIC_MAGIC_SECRET_KEY')

@@ -9,9 +9,9 @@ export * from './envHelpers'
 export * from './session'
 export * from './Toaster'
 export * from './usePreventTabClose'
+export * from './useReadContract'
 export * from './utilsCrypto'
 export * from './utilsServer'
-export * as contracts from './contracts'
 
 export * from './auth'
 /* TODO: There is an error where, if AuthForm is exported before some of these other functions

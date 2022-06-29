@@ -1,6 +1,6 @@
 import { ContractInterface, ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
-import { useSession } from '@lib'
+import { useSession } from './'
 
 export const useReadContract = (
   contractAddress: string,

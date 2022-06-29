@@ -1,10 +1,9 @@
 import styled from 'styled-components'
 import { Icon, Slideshow } from '@components'
 import { palette, breakpoint, typography } from '@theme'
-import { rgba, assert } from '@lib'
+import { rgba, assert, useReadContract } from '@lib'
 import { useEffect, useState } from 'react'
-import artizenERC1155Abi from 'src/lib/contracts/ArtizenERC1155Abi'
-import { useReadContract } from 'src/lib/useReadContract'
+import { ArtizenERC1155 } from '@contracts'
 
 type IFeaturedArt = {
   tokenId: number
@@ -23,7 +22,7 @@ interface Metadata {
 const FeaturedArt = ({ tokenId, startDate, tagName }: IFeaturedArt) => {
   const [metadataUri] = useReadContract(
     assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS'),
-    artizenERC1155Abi,
+    ArtizenERC1155,
     'uri',
     [tokenId],
   )
