@@ -40,16 +40,16 @@ const AccountShelf = ({ user }: IAccountShelf) => {
         {!user.firstName && <Welcome>Welcome</Welcome>}
         <Message>Thanks for supporting the future of public goods.</Message>
         <Buttons>
-          <Button onClick={() => console.log('I do nothing!')} stretch outline level={1} glyph="face">
+          <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="face">
             Profile
           </Button>
-          <Button onClick={() => console.log('I do nothing!')} stretch outline level={1} glyph="info">
+          <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="info">
             Wallet
           </Button>
-          <Button onClick={() => console.log('I do nothing!')} stretch outline level={1} glyph="info">
+          <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="info">
             Settings
           </Button>
-          <Button onClick={() => console.log('I do nothing!')} stretch outline level={1} glyph="info">
+          <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="info">
             Notifications
           </Button>
         </Buttons>
