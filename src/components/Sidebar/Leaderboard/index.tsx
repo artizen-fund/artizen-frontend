@@ -1,29 +1,32 @@
 import styled from 'styled-components'
 import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
+import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
+import { ethers } from 'ethers'
 
-export type ILeaderboard = Pick<ISidebarDonatorsQuery, 'Donations'>
+export type ILeaderboard = Pick<ISidebarDonatorsQuery, 'exampleEntities'>
 
-const Leaderboard = ({ Donations }: ILeaderboard) => {
+const Leaderboard = ({ exampleEntities }: ILeaderboard) => {
   const sideItem = (
     <Button onClick={() => alert('do something')} outline level={2}>
       See All
     </Button>
   )
+
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
-      {Donations.map((donation, index) => (
+      {exampleEntities?.map((donation, index) => (
         <TableCell key={`donation-${index}`}>
           <div>
             <div>#{index + 1}</div>
-            {donation.User.profileImage && <Avatar profileImage={donation.User.profileImage} />}
+            {donation.OnChainUser?.profileImage && <Avatar profileImage={donation.OnChainUser?.profileImage} />}
             <Name>
-              {donation.User.firstName} {donation.User.lastName} herp derp derp {index === 0 && <span>👑</span>}
+              {donation.OnChainUser?.firstName} {donation.OnChainUser?.lastName} herp derp derp
+              {index === 0 && <span>👑</span>}
             </Name>
           </div>
-          <Amount>${donation.amount.toLocaleString()}</Amount>
+          <Amount>${formatUSDC(donation.donation_amount)}</Amount>
         </TableCell>
       ))}
     </Table>

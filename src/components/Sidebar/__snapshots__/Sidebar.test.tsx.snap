@@ -3,13 +3,13 @@
 exports[`Sidebar renders Sidebar unchanged 1`] = `
 <div>
   <section
-    class="sc-f67c5638-1 cQDgcH sc-3dcc67ad-0 ljJwpW"
+    class="sc-f67c5638-1 cQDgcH sc-5301581a-0 czEzwn"
   >
     <div
-      class="sc-f67c5638-0 fqyVoy sc-3dcc67ad-1 ivUnoR"
+      class="sc-f67c5638-0 fqyVoy sc-5301581a-1 dLCcPg"
     >
       <h3
-        class="sc-3dcc67ad-7 hBhiTn"
+        class="sc-5301581a-7 gyjzOO"
       >
         Join our 
         <strong>
@@ -18,29 +18,18 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
          donation drive
       </h3>
       <div
-        class="sc-3dcc67ad-2 gMhAql"
+        class="sc-5301581a-2 ekrSFw"
       >
         <div
-          class="sc-3dcc67ad-3 hIzCZU"
+          class="sc-5301581a-3 kgOFbF"
         >
-          <div
-            class="sc-3dcc67ad-4 gGZgZE"
-          >
-            <span>
-              $
-              15,250
-            </span>
-             raised of $
-            25,000
-             goal
-          </div>
           <div
             class="sc-2e76876c-0 iIEwYy"
           >
             0.61
           </div>
           <div
-            class="sc-3dcc67ad-6 hsSsdm"
+            class="sc-5301581a-6 gsDnlv"
           >
             <div
               class="sc-ba3887ec-0 jyWTDZ"
@@ -50,7 +39,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               />
             </div>
             <div
-              class="sc-3dcc67ad-5 eBhMNe"
+              class="sc-5301581a-5 fAUXGj"
             >
               <div
                 class="sc-1d011157-0 jrSJnU"
@@ -64,7 +53,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-3dcc67ad-6 hsSsdm"
+          class="sc-5301581a-6 gsDnlv"
         >
           <button
             class="sc-a6b3add2-2 eOvyKw undefined "
@@ -85,7 +74,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </button>
         </div>
         <div
-          class="sc-3dcc67ad-8 chvfjG"
+          class="sc-5301581a-8 iFjFBb"
         >
           <div
             class="sc-bdd02fd6-0 fJPhsS"

@@ -1,9 +1,9 @@
 import renderer from 'react-test-renderer'
-import Login from './'
+import LoginShelf from './'
 
-describe('Login', () => {
+describe('LoginShelf', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<Login />).toJSON()
+    const tree = renderer.create(<LoginShelf />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

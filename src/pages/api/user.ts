@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSentry } from '@sentry/nextjs'
 import jwt from 'jsonwebtoken'
-import { setTokenCookie, assert, createNewToken, getUserProfile } from '@lib'
+import { setTokenCookie, assert, getUserProfile } from '@lib'
+import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
 const user = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

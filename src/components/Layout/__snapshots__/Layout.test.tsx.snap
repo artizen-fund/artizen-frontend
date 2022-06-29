@@ -6,10 +6,10 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-eb3f345e-0 bhvkBT"
+      class="sc-ed6aba9b-0 cjsGqI"
     >
       <div
-        class="sc-eb3f345e-1 ftYaCr"
+        class="sc-ed6aba9b-1 pQqXw"
       >
         <a
           href="/"
@@ -57,7 +57,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </svg>
         </a>
         <button
-          class="sc-a6b3add2-2 bTccxJ sc-eb3f345e-3 jrLIQz "
+          class="sc-a6b3add2-2 bTccxJ sc-ed6aba9b-3 jTgOJU "
         >
           <span>
             Menu
@@ -65,10 +65,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-eb3f345e-1 ftYaCr"
+        class="sc-ed6aba9b-1 pQqXw"
       >
         <div
-          class="sc-eb3f345e-2 CRAqt"
+          class="sc-ed6aba9b-2 javRQa"
         >
           <ul>
             <li>
@@ -122,18 +122,18 @@ exports[`Layout renders Layout unchanged 1`] = `
         class="sc-9199b4ac-0 brREMd"
       >
         <div
-          class="sc-20585be0-3 hfxWMF"
+          class="sc-4a4f802d-3 fuQvvd"
         >
           <div
-            class="sc-20585be0-4 fOhjbf"
+            class="sc-4a4f802d-4 fhjysv"
           >
             <h1
-              class="sc-20585be0-5 ewWGcq"
+              class="sc-4a4f802d-5 jbsSsK"
             >
               Let’s get started by setting up your Artizen account
             </h1>
             <div
-              class="sc-20585be0-6 qchlI"
+              class="sc-4a4f802d-6 ehlijM"
             >
               <div
                 class="sc-8c7bf1ae-2 huxvCL"
@@ -149,7 +149,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 </div>
               </div>
               <p
-                class="sc-20585be0-7 fxrMIY"
+                class="sc-4a4f802d-7 hAzDhs"
               >
                 Already have an account?
                 <br />
@@ -192,7 +192,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <button
-            class="sc-a6b3add2-2 ebsYdi sc-20585be0-0 LspDi  disabled"
+            class="sc-a6b3add2-2 ebsYdi sc-4a4f802d-0 iErgSy  disabled"
             disabled=""
           >
             <span>
@@ -200,7 +200,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             </span>
           </button>
           <div
-            class="sc-20585be0-2 etMmpQ"
+            class="sc-4a4f802d-2 hPhXmc"
           >
             <div>
               Congrats, confirmation sent!
@@ -211,13 +211,13 @@ exports[`Layout renders Layout unchanged 1`] = `
             </p>
           </div>
           <div
-            class="sc-20585be0-1 fCLJNz"
+            class="sc-4a4f802d-1 iqsVwz"
           >
             <div
-              class="sc-20585be0-8 iUAXHM"
+              class="sc-4a4f802d-8 hyNfNI"
             />
             <div
-              class="sc-20585be0-9 itPPoE"
+              class="sc-4a4f802d-9 iCNaSc"
             >
               <button
                 class="sc-a6b3add2-2 erODIt undefined "
@@ -243,10 +243,10 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-20585be0-10 czHqrR"
+            class="sc-4a4f802d-10 kwsLrN"
           >
             <div
-              class="sc-20585be0-11 eXuJQV"
+              class="sc-4a4f802d-11 fRBTKZ"
             >
               <label
                 class="sc-dd35d48e-4 dCKwdz"
@@ -268,7 +268,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 />
               </label>
               <p
-                class="sc-20585be0-12 gKRctR"
+                class="sc-4a4f802d-12 camNOd"
               >
                 I agree to Artizen’s
                 <a

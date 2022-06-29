@@ -2,11 +2,11 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, useMagicLink, fetchUser } from '@lib'
+import { rgba, useSession } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
-const Login = () => {
+const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
 
   const [data, setData] = useState<FormState>(initialState)
@@ -27,17 +27,13 @@ const Login = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const { magic, user, setUser } = useMagicLink()
-
+  const { createSession } = useSession()
   const handleLoginWithEmail = async () => {
-    if (!data.email || !magic) return
+    if (!data.email) return
     setReadonly(true)
     setSubmitted(true)
     try {
-      const token = await magic.auth.loginWithMagicLink({ email: data.email, showUI: false })
-      if (!token) throw 'error retrieving token'
-      const loggedInUser = await fetchUser(token)
-      setUser(loggedInUser)
+      createSession(data.email)
       setSubmitted(true)
       setReadonly(false)
     } catch (error) {
@@ -46,9 +42,7 @@ const Login = () => {
     }
   }
 
-  return user ? (
-    <p>yeah you are logged in boi</p>
-  ) : (
+  return (
     <Wrapper className={submitted ? 'submitted' : ''}>
       <Copy>
         <Headline>Let’s get started by setting up your Artizen account</Headline>
@@ -261,4 +255,4 @@ const TocMessage = styled.p`
   color: ${rgba(palette.barracuda)};
 `
 
-export default Login
+export default LoginShelf
