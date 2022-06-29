@@ -4,7 +4,7 @@ declare global {
   interface ArtizenUser extends MagicUserMetadata {
     token?: string
 
-    id: string
+    id?: string
     bio?: string
     company?: string
     firstName?: string
