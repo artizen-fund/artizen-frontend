@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
+import { rgba, assetPath } from '@lib'
 
 export interface SpinnerProps {
   hidden?: boolean
@@ -52,12 +52,12 @@ const AnimatedSpinner = styled.div`
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
-  mask-image: url('/spinner.svg');
+  mask-image: url(${assetPath('/assets/spinner.svg')});
   width: 24px;
   height: 24px;
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    mask-image: url('/spinnerLarge.svg');
+    mask-image: url(${assetPath('/assets/spinnerLarge.svg')});
     width: 32px;
     height: 32px;
   }

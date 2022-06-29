@@ -46,14 +46,14 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               class="sc-ba3887ec-0 jyWTDZ"
             >
               <div
-                class="sc-9eb58f28-0 ivFNcN"
+                class="sc-1d011157-0 iDlDxE"
               />
             </div>
             <div
               class="sc-3dcc67ad-5 eBhMNe"
             >
               <div
-                class="sc-9eb58f28-0 feoVcp"
+                class="sc-1d011157-0 jrSJnU"
               />
                
               <span>
@@ -70,7 +70,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
             class="sc-a6b3add2-2 eOvyKw undefined "
           >
             <div
-              class="sc-9eb58f28-0 iglxpF sc-a6b3add2-0 fCwpyU"
+              class="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
             />
             <span>
               Donate
@@ -134,7 +134,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   class="sc-b48a7ce9-0 hZzOYd"
                 >
                   <div
-                    class="sc-9eb58f28-0 fZooDs"
+                    class="sc-1d011157-0 iOTvJN"
                   />
                 </div>
                 Membership in Artizen DAO
@@ -148,7 +148,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   class="sc-b48a7ce9-0 hZzOYd"
                 >
                   <div
-                    class="sc-9eb58f28-0 guGTIq"
+                    class="sc-1d011157-0 eiHEDj"
                   />
                 </div>
                 0.01% of $ART tokens
@@ -162,7 +162,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   class="sc-b48a7ce9-0 hZzOYd"
                 >
                   <div
-                    class="sc-9eb58f28-0 kJcPPI"
+                    class="sc-1d011157-0 deEGDF"
                   />
                 </div>
                 Collectable Receipt
@@ -176,7 +176,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   class="sc-b48a7ce9-0 hZzOYd"
                 >
                   <div
-                    class="sc-9eb58f28-0 hKCRJg"
+                    class="sc-1d011157-0 fYqubd"
                   />
                 </div>
                 Custom Discord Avatar

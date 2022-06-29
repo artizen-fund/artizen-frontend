@@ -87,7 +87,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           class="sc-a6b3add2-1 hCOHDc undefined "
         >
           <div
-            class="sc-9eb58f28-0 iglxpF sc-a6b3add2-0 fCwpyU"
+            class="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
           />
           <span>
             Donate
@@ -100,7 +100,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             class="sc-88922287-1 fRVXTB"
           />
           <div
-            class="sc-9eb58f28-0 htauXl sc-88922287-2 egWgHG"
+            class="sc-1d011157-0 fItlDg sc-88922287-2 egWgHG"
             color="night"
           />
           <div
@@ -122,18 +122,18 @@ exports[`Layout renders Layout unchanged 1`] = `
         class="sc-9199b4ac-0 brREMd"
       >
         <div
-          class="sc-368b8254-0 fWbIUD"
+          class="sc-20585be0-3 hfxWMF"
         >
           <div
-            class="sc-368b8254-2 dxnzY"
+            class="sc-20585be0-4 fOhjbf"
           >
             <h1
-              class="sc-368b8254-3 iWTFZB"
+              class="sc-20585be0-5 ewWGcq"
             >
               Let’s get started by setting up your Artizen account
             </h1>
             <div
-              class="sc-368b8254-4 kEQIjb"
+              class="sc-20585be0-6 qchlI"
             >
               <div
                 class="sc-8c7bf1ae-2 huxvCL"
@@ -143,13 +143,13 @@ exports[`Layout renders Layout unchanged 1`] = `
                   color="night"
                 >
                   <div
-                    class="sc-9eb58f28-0 kSymdK"
+                    class="sc-1d011157-0 ejjWfH"
                     color="night"
                   />
                 </div>
               </div>
               <p
-                class="sc-368b8254-5 kRJSVv"
+                class="sc-20585be0-7 fxrMIY"
               >
                 Already have an account?
                 <br />
@@ -168,7 +168,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 id="#/properties/email"
               >
                 <div
-                  class="sc-233fee17-0 cRUHBc"
+                  class="sc-dccedff6-0 dxDPQx"
                 >
                   <input
                     placeholder="e.g. rene@artizen.fund"
@@ -192,7 +192,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <button
-            class="sc-a6b3add2-2 ebsYdi sc-368b8254-1 fmUQgm  disabled"
+            class="sc-a6b3add2-2 ebsYdi sc-20585be0-0 LspDi  disabled"
             disabled=""
           >
             <span>
@@ -200,13 +200,24 @@ exports[`Layout renders Layout unchanged 1`] = `
             </span>
           </button>
           <div
-            class="sc-368b8254-7 bKnvfw"
+            class="sc-20585be0-2 etMmpQ"
+          >
+            <div>
+              Congrats, confirmation sent!
+            </div>
+            <p>
+              We emailed a magic link to 
+              .
+            </p>
+          </div>
+          <div
+            class="sc-20585be0-1 fCLJNz"
           >
             <div
-              class="sc-368b8254-6 keSoKT"
+              class="sc-20585be0-8 iUAXHM"
             />
             <div
-              class="sc-368b8254-8 jekvQM"
+              class="sc-20585be0-9 itPPoE"
             >
               <button
                 class="sc-a6b3add2-2 erODIt undefined "
@@ -232,10 +243,10 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-368b8254-9 fPSwZc"
+            class="sc-20585be0-10 czHqrR"
           >
             <div
-              class="sc-368b8254-10 hDmRYN"
+              class="sc-20585be0-11 eXuJQV"
             >
               <label
                 class="sc-dd35d48e-4 dCKwdz"
@@ -257,7 +268,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 />
               </label>
               <p
-                class="sc-368b8254-11 YMULz"
+                class="sc-20585be0-12 gKRctR"
               >
                 I agree to Artizen’s
                 <a
@@ -448,31 +459,31 @@ exports[`Layout renders Layout unchanged 1`] = `
           class="sc-aae777ba-1 buYhaQ"
         />
         <div
-          class="sc-697e6c26-0 kswkdX"
+          class="sc-91c5d1a5-0 hnoAeU"
         >
           <a
-            class="sc-697e6c26-1 ZHgeb"
+            class="sc-91c5d1a5-1 cSkmvx"
             href="https://twitter.com/artizenfund"
             target="_blank"
           >
             twitter
           </a>
           <a
-            class="sc-697e6c26-1 jyPDCi"
+            class="sc-91c5d1a5-1 cSkmvx"
             href="https://artizen.link/discord"
             target="_blank"
           >
             discord
           </a>
           <a
-            class="sc-697e6c26-1 eVSbPL"
+            class="sc-91c5d1a5-1 cSkmvx"
             href="https://github.com/artizen-fund"
             target="_blank"
           >
             github
           </a>
           <a
-            class="sc-697e6c26-1 ddRiBr"
+            class="sc-91c5d1a5-1 cSkmvx"
             href="https://artizen.link/telegram"
             target="_blank"
           >

@@ -29,7 +29,7 @@ generateTemplateFiles([
     entry: { folderPath: './tools/templates/iconSet/' },
     stringReplacers: [{ question: 'Icon Set name (ex. currencyEuro)', slot: '__name__' }],
     output: {
-      path: './public/glyphs/__name__(camelCase)',
+      path: './public/assets/glyphs/__name__(camelCase)',
       pathAndFileNameDefaultCase: '(camelCase)',
     },
   },
