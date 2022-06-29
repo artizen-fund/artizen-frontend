@@ -17,6 +17,7 @@
     "incremental": true,
     "paths": {
       "@components": ["src/components"],
+      "@contracts": ["src/contracts"],
       "@forms/*": ["src/forms/*"],
       "@gql": ["src/gql"],
       "@lib": ["src/lib"],
