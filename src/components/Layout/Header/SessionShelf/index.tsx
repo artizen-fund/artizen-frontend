@@ -6,6 +6,8 @@ import AccountShelf from '../AccountShelf'
 const SessionShelf = () => {
   const { user, checkSession } = useSession()
 
+  console.log('user  ', user)
+
   useEffect(() => {
     checkSession()
   }, [])
