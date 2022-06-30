@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DonationShelf renders correctly 1`] = `
+<div
+  className="sc-76c3510a-0 ebQHog"
+>
+  <div
+    className="sc-76c3510a-1 MWPUA"
+  >
+    <div>
+      <h1
+        className="sc-76c3510a-2"
+      >
+        Choose your donation amount and payment method
+      </h1>
+      <div
+        className="sc-76c3510a-3 fQXfyu"
+      >
+        <div
+          className="sc-8c7bf1ae-2 huxvCL"
+        >
+          <div
+            className="sc-8c7bf1ae-0 eAJanY"
+            color="night"
+          >
+            <div
+              className="sc-1d011157-0 eWHmUn"
+              color="night"
+            />
+          </div>
+        </div>
+        <span>
+          Need help? We’ve prepared a useful guide to donating.
+        </span>
+      </div>
+    </div>
+    <p>
+      todo: insert Leaderboard here
+    </p>
+    <label
+      className="sc-dd35d48e-4 fUZPkX"
+    >
+      <div
+        className="sc-dd35d48e-0 lmHjtw"
+      >
+        <input
+          checked={false}
+          className="sc-dd35d48e-1 clTMzK"
+          disabled={false}
+          onChange={[Function]}
+          required={false}
+          type="checkbox"
+        />
+        <span
+          className="sc-dd35d48e-2 dtceeR"
+        />
+      </div>
+      <span
+        className="sc-dd35d48e-3 eAaGSv"
+      >
+        Hide my personal details from the leaderboard.
+      </span>
+    </label>
+  </div>
+  <div
+    className="sc-76c3510a-4 NtRYj"
+  >
+    <div
+      className="sc-7984f01-0 eoLmFa"
+    >
+      <div
+        className="sc-7984f01-1 gqYHLd"
+      >
+        <div
+          className="sc-8c7bf1ae-2 huxvCL"
+        >
+          <div
+            className="sc-8c7bf1ae-0 bhoRgU"
+            color="night"
+          >
+            <div
+              className="sc-1d011157-0 ejjWfH"
+              color="night"
+            />
+          </div>
+        </div>
+        <span>
+          USD
+        </span>
+      </div>
+      <div
+        className="sc-7984f01-3 dvlwkU"
+      >
+        <input
+          className="sc-7984f01-2 bNLFwN"
+          onChange={[Function]}
+          type="number"
+          value={10}
+        />
+        <label>
+          donation total
+        </label>
+      </div>
+      <div
+        className="sc-7984f01-4 dPqWsp"
+      >
+        <button
+          className="sc-a6b3add2-2 fZSedd undefined "
+          onClick={[Function]}
+        >
+          <div
+            className="sc-1d011157-0 dGSXRE sc-a6b3add2-0 fCwpyU"
+          />
+          <span>
+            add
+          </span>
+        </button>
+        <button
+          className="sc-a6b3add2-2 fZSedd undefined "
+          onClick={[Function]}
+        >
+          <div
+            className="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
+          />
+          <span>
+            subtract
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      className="sc-76c3510a-5 eWxYDQ"
+    >
+      <span>
+        Friends of Artizen typically donate:
+      </span>
+      <div>
+        <button
+          className="sc-a6b3add2-2 iJUNCj undefined "
+          onClick={[Function]}
+        >
+          <span>
+            $200
+          </span>
+        </button>
+        <button
+          className="sc-a6b3add2-2 iJUNCj undefined "
+          onClick={[Function]}
+        >
+          <span>
+            $500
+          </span>
+        </button>
+        <button
+          className="sc-a6b3add2-2 iJUNCj undefined "
+          onClick={[Function]}
+        >
+          <span>
+            $1000
+          </span>
+        </button>
+      </div>
+    </div>
+    <ul
+      className="sc-76c3510a-6 kKRccu"
+    >
+      <li
+        className="sc-76c3510a-7 cEBQjC"
+      >
+        <div
+          className="sc-8c7bf1ae-2 huxvCL"
+        >
+          <div
+            className="sc-8c7bf1ae-0 eAJanY"
+            color="night"
+          >
+            <div
+              className="sc-1d011157-0 eWHmUn"
+              color="night"
+            />
+          </div>
+        </div>
+        <div>
+          Credit Card
+        </div>
+        <span>
+          min $10.00
+        </span>
+      </li>
+      <li
+        className="sc-76c3510a-7 cEBQjC"
+      >
+        <div
+          className="sc-8c7bf1ae-2 huxvCL"
+        >
+          <div
+            className="sc-8c7bf1ae-0 eAJanY"
+            color="night"
+          >
+            <div
+              className="sc-1d011157-0 eWHmUn"
+              color="night"
+            />
+          </div>
+        </div>
+        <div>
+          Polygon
+        </div>
+        <span>
+          min $10.00
+        </span>
+      </li>
+      <li
+        className="sc-76c3510a-7 cEBQjC"
+      >
+        <div
+          className="sc-8c7bf1ae-2 huxvCL"
+        >
+          <div
+            className="sc-8c7bf1ae-0 eAJanY"
+            color="night"
+          >
+            <div
+              className="sc-1d011157-0 eWHmUn"
+              color="night"
+            />
+          </div>
+        </div>
+        <div>
+          Ethereum
+        </div>
+        <span>
+          min $100.00
+        </span>
+      </li>
+    </ul>
+    <button
+      className="sc-a6b3add2-2 eOvyKw undefined "
+      onClick={[Function]}
+    >
+      <span>
+        Continue
+      </span>
+    </button>
+  </div>
+</div>
+`;
