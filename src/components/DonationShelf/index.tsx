@@ -4,15 +4,19 @@ import { Button, Icon, AmountWidget } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 import CheckboxControl from '../Form/Controls/BooleanControl/CheckboxControl'
+import DonateWCicle from '../DonateWcicle'
 
 type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
 const DonationShelf = () => {
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
+  const [openDonateWCicle, setOpenDonateWCicle] = useState(false)
   const [amount, setAmount] = useState(10) // note: sort out integer or float
   return (
-    <Wrapper>
+    <>
+    {openDonateWCicle && <DonateWCicle/> }
+    {!openDonateWCicle && <Wrapper>
       <Information>
         <div>
           <Title>Choose your donation amount and payment method</Title>
@@ -67,11 +71,15 @@ const DonationShelf = () => {
           </Method>
         </Methods>
 
-        <Button onClick={() => alert('derp')} stretch level={1}>
+        <Button
+onClick={() => {
+          setOpenDonateWCicle(true)
+        }} stretch level={1}>
           Continue
         </Button>
       </Form>
-    </Wrapper>
+    </Wrapper>}
+    </>
   )
 }
 
