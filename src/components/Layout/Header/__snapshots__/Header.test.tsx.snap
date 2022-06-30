@@ -84,7 +84,7 @@ exports[`renders homepage unchanged 1`] = `
         class="sc-a6b3add2-1 hCOHDc undefined "
       >
         <div
-          class="sc-9eb58f28-0 iglxpF sc-a6b3add2-0 fCwpyU"
+          class="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
         />
         <span>
           Donate
@@ -97,7 +97,7 @@ exports[`renders homepage unchanged 1`] = `
           class="sc-88922287-1 fRVXTB"
         />
         <div
-          class="sc-9eb58f28-0 htauXl sc-88922287-2 egWgHG"
+          class="sc-1d011157-0 fItlDg sc-88922287-2 egWgHG"
           color="night"
         />
         <div
@@ -140,7 +140,7 @@ exports[`renders homepage unchanged 1`] = `
                 color="night"
               >
                 <div
-                  class="sc-9eb58f28-0 kSymdK"
+                  class="sc-1d011157-0 ejjWfH"
                   color="night"
                 />
               </div>

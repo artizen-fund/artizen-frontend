@@ -9,7 +9,7 @@ describe('Sidebar', () => {
     FUND_GOAL: 25000,
     FUND_DATE: 'May, 2022',
     FUND_DEADLINE: '2022-06-30T00:00:00',
-    Donations: [],
+    exampleEntities: [],
   }
   it('renders Sidebar unchanged', () => {
     const { container } = render(<Sidebar {...props} />)

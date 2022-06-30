@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { rgba } from '@lib'
+import { rgba, assetPath } from '@lib'
 import { breakpoint, palette, Palette, GlyphKey, Level } from '@theme'
 import { responsiveGlyphSize, maskPath } from './Glyph.helpers'
 
@@ -33,23 +33,25 @@ export const Glyph = styled.div<GlyphProps>`
   ${props =>
     props.size
       ? `
-        mask-image: url("/glyphs/${props.children}/${props.size}/${props.outline ? 'outline' : 'solid'}.svg");
+        mask-image: url(${assetPath(
+          `/glyphs/${props.children}/${props.size}/${props.outline ? 'outline' : 'solid'}.svg`,
+        )});
         mask-size: ${props.size}px ${props.size}px;
         width: ${props.size}px;
         height: ${props.size}px;
       `
       : `
         --iconSize: ${responsiveGlyphSize('mobile', props.level)}px;
-        mask-image: ${maskPath('mobile', props.glyph, props.level, props.outline)};
+        mask-image: url(${maskPath('mobile', props.glyph, props.level, props.outline)});
         
         @media only screen and (min-width: ${breakpoint.laptop}px) {
         --iconSize: ${responsiveGlyphSize('laptop', props.level)}px;
-          mask-image: ${maskPath('laptop', props.glyph, props.level, props.outline)};
+          mask-image: url(${maskPath('laptop', props.glyph, props.level, props.outline)});
         }
         
         @media only screen and (min-width: ${breakpoint.desktop}px) {
           --iconSize: ${responsiveGlyphSize('desktop', props.level)}px;
-          mask-image: ${maskPath('desktop', props.glyph, props.level, props.outline)};
+          mask-image: url(${maskPath('desktop', props.glyph, props.level, props.outline)});
         }
         mask-size: var(--iconSize);
         width: var(--iconSize);
