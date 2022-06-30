@@ -1,6 +1,8 @@
+import { Magic } from 'magic-sdk'
+import { OAuthExtension } from '@magic-ext/oauth'
 import { ContractInterface, ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
-import { useSession } from '@lib'
+import { assert, assertInt } from '@lib'
 
 export const useReadContract = (
   contractAddress: string,
@@ -8,15 +10,21 @@ export const useReadContract = (
   methodName: string,
   attr: Array<unknown> = [],
 ) => {
-  const { magic } = useSession()
-  if (magic === undefined) return []
-
   const [value, setValue] = useState<unknown>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
 
   const callContract = useCallback(async () => {
     setLoading(true)
+
+    const rpcUrl = assert(process.env.NEXT_PUBLIC_RPC_URL, 'NEXT_PUBLIC_RPC_URL')
+    const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+    const magicPublicKey = assert(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY, 'NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY')
+
+    const magic = new Magic(magicPublicKey, {
+      network: { rpcUrl, chainId },
+      extensions: [new OAuthExtension()],
+    })
 
     //todo: types are different but that is how docs shows to do
     //https://magic.link/docs/advanced/blockchains/ethereum/javascript#es-modules-type-script
