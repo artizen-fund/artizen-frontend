@@ -8,10 +8,10 @@ import { loginUser, fetchUser, logoutUser } from '@lib'
  * source: https://gist.github.com/astoilkov/013c513e33fe95fa8846348038d8fe42
  */
 
-export const dispatchMiddleware = (dispatch: Dispatch) => (action: SessionAction) => {
+export const dispatchMiddleware = (dispatch: Dispatch, magic: MagicLinkInstance) => (action: SessionAction) => {
   switch (action.type) {
     case 'CREATE_SESSION':
-      loginUser(action.payload.email, dispatch)
+      loginUser(action.payload.email, dispatch, magic)
       break
     case 'END_SESSION':
       logoutUser(dispatch)

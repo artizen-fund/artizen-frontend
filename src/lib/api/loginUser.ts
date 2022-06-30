@@ -1,18 +1,6 @@
-import { Magic } from 'magic-sdk'
-import { OAuthExtension } from '@magic-ext/oauth'
-import { assert, assertInt } from '@lib'
 import { Dispatch } from '../session/actions'
 
-const loginUser = async (email: string, dispatch: Dispatch) => {
-  const rpcUrl = assert(process.env.NEXT_PUBLIC_RPC_URL, 'NEXT_PUBLIC_RPC_URL')
-  const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
-  const magicPublicKey = assert(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY, 'NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY')
-
-  const magic = new Magic(magicPublicKey, {
-    network: { rpcUrl, chainId },
-    extensions: [new OAuthExtension()],
-  })
-
+const loginUser = async (email: string, dispatch: Dispatch, magic: MagicLinkInstance) => {
   const token = await magic.auth.loginWithMagicLink({ email, showUI: false })
 
   return await fetch('/api/login', {
