@@ -6,10 +6,10 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-ed6aba9b-0 cjsGqI"
+      class="sc-a0e5b15c-0 ioPGGi"
     >
       <div
-        class="sc-ed6aba9b-1 pQqXw"
+        class="sc-a0e5b15c-1 kbfffm"
       >
         <a
           href="/"
@@ -57,7 +57,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </svg>
         </a>
         <button
-          class="sc-a6b3add2-2 bTccxJ sc-ed6aba9b-3 jTgOJU "
+          class="sc-a6b3add2-2 bTccxJ sc-a0e5b15c-3 cbUThK "
         >
           <span>
             Menu
@@ -65,10 +65,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-ed6aba9b-1 pQqXw"
+        class="sc-a0e5b15c-1 kbfffm"
       >
         <div
-          class="sc-ed6aba9b-2 javRQa"
+          class="sc-a0e5b15c-2 dSSmFg"
         >
           <ul>
             <li>
@@ -83,8 +83,8 @@ exports[`Layout renders Layout unchanged 1`] = `
             </li>
           </ul>
         </div>
-        <a
-          class="sc-a6b3add2-1 hCOHDc undefined "
+        <button
+          class="sc-a6b3add2-2 eWNAgD undefined "
         >
           <div
             class="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
@@ -92,22 +92,22 @@ exports[`Layout renders Layout unchanged 1`] = `
           <span>
             Donate
           </span>
-        </a>
+        </button>
         <div
-          class="sc-88922287-0 bYsKBK"
+          class="sc-ea036ebc-0 bJSKZv"
         >
           <div
-            class="sc-88922287-1 fRVXTB"
+            class="sc-ea036ebc-1 hqjJow"
           />
           <div
-            class="sc-1d011157-0 fItlDg sc-88922287-2 egWgHG"
+            class="sc-1d011157-0 fItlDg sc-ea036ebc-2 fBGPjb"
             color="night"
           />
           <div
-            class="sc-88922287-3 fBvHqr"
+            class="sc-ea036ebc-3 iPFdte"
           >
             <div
-              class="sc-88922287-4 fyJJre"
+              class="sc-ea036ebc-4 fqPGuP"
             >
               RP
             </div>
@@ -377,6 +377,249 @@ exports[`Layout renders Layout unchanged 1`] = `
                 </span>
               </a>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-99af955d-1 jvQqsc"
+    />
+    <div
+      class="sc-99af955d-0 bvvcNU"
+    >
+      <div
+        class="sc-9199b4ac-0 brREMd"
+      >
+        <div
+          class="sc-76c3510a-0 ebQHog"
+        >
+          <div
+            class="sc-76c3510a-1 MWPUA"
+          >
+            <div>
+              <h1
+                class="sc-76c3510a-2"
+              >
+                Choose your donation amount and payment method
+              </h1>
+              <div
+                class="sc-76c3510a-3 fQXfyu"
+              >
+                <div
+                  class="sc-8c7bf1ae-2 huxvCL"
+                >
+                  <div
+                    class="sc-8c7bf1ae-0 eAJanY"
+                    color="night"
+                  >
+                    <div
+                      class="sc-1d011157-0 eWHmUn"
+                      color="night"
+                    />
+                  </div>
+                </div>
+                <span>
+                  Need help? We’ve prepared a useful guide to donating.
+                </span>
+              </div>
+            </div>
+            <p>
+              todo: insert Leaderboard here
+            </p>
+            <label
+              class="sc-dd35d48e-4 fUZPkX"
+            >
+              <div
+                class="sc-dd35d48e-0 lmHjtw"
+              >
+                <input
+                  class="sc-dd35d48e-1 clTMzK"
+                  type="checkbox"
+                />
+                <span
+                  class="sc-dd35d48e-2 dtceeR"
+                />
+              </div>
+              <span
+                class="sc-dd35d48e-3 eAaGSv"
+              >
+                Hide my personal details from the leaderboard.
+              </span>
+            </label>
+          </div>
+          <div
+            class="sc-76c3510a-4 NtRYj"
+          >
+            <div
+              class="sc-7984f01-0 eoLmFa"
+            >
+              <div
+                class="sc-7984f01-1 gqYHLd"
+              >
+                <div
+                  class="sc-8c7bf1ae-2 huxvCL"
+                >
+                  <div
+                    class="sc-8c7bf1ae-0 bhoRgU"
+                    color="night"
+                  >
+                    <div
+                      class="sc-1d011157-0 ejjWfH"
+                      color="night"
+                    />
+                  </div>
+                </div>
+                <span>
+                  USD
+                </span>
+              </div>
+              <div
+                class="sc-7984f01-3 dvlwkU"
+              >
+                <input
+                  class="sc-7984f01-2 bNLFwN"
+                  type="number"
+                  value="10"
+                />
+                <label>
+                  donation total
+                </label>
+              </div>
+              <div
+                class="sc-7984f01-4 dPqWsp"
+              >
+                <button
+                  class="sc-a6b3add2-2 fZSedd undefined "
+                >
+                  <div
+                    class="sc-1d011157-0 dGSXRE sc-a6b3add2-0 fCwpyU"
+                  />
+                  <span>
+                    add
+                  </span>
+                </button>
+                <button
+                  class="sc-a6b3add2-2 fZSedd undefined "
+                >
+                  <div
+                    class="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
+                  />
+                  <span>
+                    subtract
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div
+              class="sc-76c3510a-5 eWxYDQ"
+            >
+              <span>
+                Friends of Artizen typically donate:
+              </span>
+              <div>
+                <button
+                  class="sc-a6b3add2-2 iJUNCj undefined "
+                >
+                  <span>
+                    $200
+                  </span>
+                </button>
+                <button
+                  class="sc-a6b3add2-2 iJUNCj undefined "
+                >
+                  <span>
+                    $500
+                  </span>
+                </button>
+                <button
+                  class="sc-a6b3add2-2 iJUNCj undefined "
+                >
+                  <span>
+                    $1000
+                  </span>
+                </button>
+              </div>
+            </div>
+            <ul
+              class="sc-76c3510a-6 kKRccu"
+            >
+              <li
+                class="sc-76c3510a-7 cEBQjC"
+              >
+                <div
+                  class="sc-8c7bf1ae-2 huxvCL"
+                >
+                  <div
+                    class="sc-8c7bf1ae-0 eAJanY"
+                    color="night"
+                  >
+                    <div
+                      class="sc-1d011157-0 eWHmUn"
+                      color="night"
+                    />
+                  </div>
+                </div>
+                <div>
+                  Credit Card
+                </div>
+                <span>
+                  min $10.00
+                </span>
+              </li>
+              <li
+                class="sc-76c3510a-7 cEBQjC"
+              >
+                <div
+                  class="sc-8c7bf1ae-2 huxvCL"
+                >
+                  <div
+                    class="sc-8c7bf1ae-0 eAJanY"
+                    color="night"
+                  >
+                    <div
+                      class="sc-1d011157-0 eWHmUn"
+                      color="night"
+                    />
+                  </div>
+                </div>
+                <div>
+                  Polygon
+                </div>
+                <span>
+                  min $10.00
+                </span>
+              </li>
+              <li
+                class="sc-76c3510a-7 cEBQjC"
+              >
+                <div
+                  class="sc-8c7bf1ae-2 huxvCL"
+                >
+                  <div
+                    class="sc-8c7bf1ae-0 eAJanY"
+                    color="night"
+                  >
+                    <div
+                      class="sc-1d011157-0 eWHmUn"
+                      color="night"
+                    />
+                  </div>
+                </div>
+                <div>
+                  Ethereum
+                </div>
+                <span>
+                  min $100.00
+                </span>
+              </li>
+            </ul>
+            <button
+              class="sc-a6b3add2-2 eOvyKw undefined "
+            >
+              <span>
+                Continue
+              </span>
+            </button>
           </div>
         </div>
       </div>

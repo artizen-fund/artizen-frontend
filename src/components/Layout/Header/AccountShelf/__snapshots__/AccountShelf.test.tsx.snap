@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountShelf renders correctly 1`] = `
+<div
+  className="sc-49344e38-0 kTDCQw"
+>
+  <div
+    className="sc-49344e38-1 dLktxK"
+  >
+    <h1
+      className="sc-49344e38-2 ixmepk"
+    >
+      Welcome
+    </h1>
+    <h2
+      className="sc-49344e38-3 QOpSQ"
+    >
+      Thanks for supporting the future of public goods.
+    </h2>
+    <div
+      className="sc-49344e38-4 ebbGlV"
+    >
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-1d011157-0 dGSXRE sc-a6b3add2-0 fCwpyU"
+        />
+        <span>
+          Profile
+        </span>
+      </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-1d011157-0 hGpMlj sc-a6b3add2-0 fCwpyU"
+        />
+        <span>
+          Wallet
+        </span>
+      </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-1d011157-0 hGpMlj sc-a6b3add2-0 fCwpyU"
+        />
+        <span>
+          Settings
+        </span>
+      </button>
+      <button
+        className="sc-a6b3add2-2 erODIt undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-1d011157-0 hGpMlj sc-a6b3add2-0 fCwpyU"
+        />
+        <span>
+          Notifications
+        </span>
+      </button>
+    </div>
+    <hr />
+    <div
+      onClick={[Function]}
+    >
+      Sign Out
+    </div>
+  </div>
+  <ul
+    className="sc-cf63bf03-0 jnGrA-D"
+  >
+    <li
+      className="sc-cf63bf03-1 doApLo"
+    >
+      <div
+        className="sc-8c7bf1ae-2 jOAuUM"
+      >
+        <div
+          className="sc-8c7bf1ae-0 kBszjY"
+          color="night"
+        >
+          <div
+            className="sc-1d011157-0 ggBQiE"
+            color="night"
+          />
+        </div>
+      </div>
+      <div
+        className="sc-cf63bf03-2 dRsowg"
+      >
+        $800
+      </div>
+      <div
+        className="sc-cf63bf03-3 YunQa"
+      >
+        donated
+      </div>
+    </li>
+    <li
+      className="sc-cf63bf03-1 doApLo"
+    >
+      <div
+        className="sc-8c7bf1ae-2 jOAuUM"
+      >
+        <div
+          className="sc-8c7bf1ae-0 kBszjY"
+          color="night"
+        >
+          <div
+            className="sc-1d011157-0 hGpMlj"
+            color="night"
+          />
+        </div>
+      </div>
+      <div
+        className="sc-cf63bf03-2 dRsowg"
+      >
+        42
+      </div>
+      <div
+        className="sc-cf63bf03-3 YunQa"
+      >
+        collected
+      </div>
+    </li>
+    <li
+      className="sc-cf63bf03-1 doApLo"
+    >
+      <div
+        className="sc-8c7bf1ae-2 jOAuUM"
+      >
+        <div
+          className="sc-8c7bf1ae-0 kBszjY"
+          color="night"
+        >
+          <div
+            className="sc-1d011157-0 hGpMlj"
+            color="night"
+          />
+        </div>
+      </div>
+      <div
+        className="sc-cf63bf03-2 dRsowg"
+      >
+        $0
+      </div>
+      <div
+        className="sc-cf63bf03-3 YunQa"
+      >
+        collected
+      </div>
+    </li>
+    <li
+      className="sc-cf63bf03-1 doApLo"
+    >
+      <div
+        className="sc-8c7bf1ae-2 jOAuUM"
+      >
+        <div
+          className="sc-8c7bf1ae-0 kBszjY"
+          color="night"
+        >
+          <div
+            className="sc-1d011157-0 hGpMlj"
+            color="night"
+          />
+        </div>
+      </div>
+      <div
+        className="sc-cf63bf03-2 dRsowg"
+      >
+        100
+      </div>
+      <div
+        className="sc-cf63bf03-3 YunQa"
+      >
+        $ART
+      </div>
+    </li>
+  </ul>
+  <img
+    className="sc-49344e38-5 eEUOZI"
+    src="/images/qf-square.svg"
+  />
+</div>
+`;
