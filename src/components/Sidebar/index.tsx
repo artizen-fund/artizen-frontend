@@ -24,9 +24,12 @@ const Sidebar = ({ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DAT
         </Header>
         <Content>
           <FundBlock>
-            <AmountRaised>
-              <span>${formatUSDC(exampleEntities[0].totalDonations)}</span> raised of ${FUND_GOAL.toLocaleString()} goal
-            </AmountRaised>
+            {exampleEntities.length > 0 && (
+              <AmountRaised>
+                <span>${formatUSDC(exampleEntities[0].totalDonations)}</span> raised of ${FUND_GOAL.toLocaleString()}{' '}
+                goal
+              </AmountRaised>
+            )}
             <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
             <Row>
               <Countdown date={FUND_DEADLINE} />

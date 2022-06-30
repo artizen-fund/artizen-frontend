@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
+import { rgba, assetPath } from '@lib'
 
 const SocialLinks = () => {
   const networks: Record<string, string> = {
@@ -51,7 +51,7 @@ const SocialLink = styled.a<{ icon: string }>`
   background-color: ${rgba(palette.white)};
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url('/socialIcons/${props => props.icon}.svg');
+  background-image: url(${assetPath('/socialIcons/${props => props.icon}.svg')});
 `
 
 export default SocialLinks

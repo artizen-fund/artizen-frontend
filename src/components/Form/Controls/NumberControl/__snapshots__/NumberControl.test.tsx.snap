@@ -23,7 +23,7 @@ exports[`NumberControl renders NumberControl unchanged 1`] = `
         Integer test
       </label>
       <div
-        class="sc-9eb58f28-0 iWKCtj sc-5f903e4e-0 fvVMpv"
+        class="sc-1d011157-0 gisjpe sc-5f903e4e-0 fvVMpv"
         color="night"
       />
     </div>
