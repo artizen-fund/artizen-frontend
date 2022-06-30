@@ -91,20 +91,20 @@ exports[`renders homepage unchanged 1`] = `
         </span>
       </button>
       <div
-        class="sc-ea036ebc-0 bJSKZv"
+        class="sc-1aa879f8-0 ehCrLP"
       >
         <div
-          class="sc-ea036ebc-1 hqjJow"
+          class="sc-1aa879f8-1 cNciec"
         />
         <div
-          class="sc-1d011157-0 fItlDg sc-ea036ebc-2 fBGPjb"
+          class="sc-1d011157-0 fItlDg sc-1aa879f8-2 khDPzf"
           color="night"
         />
         <div
-          class="sc-ea036ebc-3 iPFdte"
+          class="sc-1aa879f8-3 hmiiKm"
         >
           <div
-            class="sc-ea036ebc-4 fqPGuP"
+            class="sc-1aa879f8-4 gzTTPr"
           >
             RP
           </div>
@@ -119,18 +119,18 @@ exports[`renders homepage unchanged 1`] = `
       class="sc-9199b4ac-0 brREMd"
     >
       <div
-        class="sc-4a4f802d-3 fuQvvd"
+        class="sc-45580985-3 deoMBB"
       >
         <div
-          class="sc-4a4f802d-4 fhjysv"
+          class="sc-45580985-4 kkLWYe"
         >
           <h1
-            class="sc-4a4f802d-5 jbsSsK"
+            class="sc-45580985-5 gBHqbP"
           >
             Let’s get started by setting up your Artizen account
           </h1>
           <div
-            class="sc-4a4f802d-6 ehlijM"
+            class="sc-45580985-6 dklJMJ"
           >
             <div
               class="sc-8c7bf1ae-2 huxvCL"
@@ -146,7 +146,7 @@ exports[`renders homepage unchanged 1`] = `
               </div>
             </div>
             <p
-              class="sc-4a4f802d-7 hAzDhs"
+              class="sc-45580985-7 fCSpqV"
             >
               Already have an account?
               <br />
@@ -189,7 +189,7 @@ exports[`renders homepage unchanged 1`] = `
           </div>
         </div>
         <button
-          class="sc-a6b3add2-2 ebsYdi sc-4a4f802d-0 iErgSy  disabled"
+          class="sc-a6b3add2-2 ebsYdi sc-45580985-0 hcobQH  disabled"
           disabled=""
         >
           <span>
@@ -197,7 +197,7 @@ exports[`renders homepage unchanged 1`] = `
           </span>
         </button>
         <div
-          class="sc-4a4f802d-2 hPhXmc"
+          class="sc-45580985-2 ickIoB"
         >
           <div>
             Congrats, confirmation sent!
@@ -208,13 +208,13 @@ exports[`renders homepage unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-4a4f802d-1 iqsVwz"
+          class="sc-45580985-1 ioivqa"
         >
           <div
-            class="sc-4a4f802d-8 hyNfNI"
+            class="sc-45580985-8 kyWlZ"
           />
           <div
-            class="sc-4a4f802d-9 iCNaSc"
+            class="sc-45580985-9 UysnF"
           >
             <button
               class="sc-a6b3add2-2 erODIt undefined "
@@ -240,10 +240,10 @@ exports[`renders homepage unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-4a4f802d-10 kwsLrN"
+          class="sc-45580985-10 gnKFiQ"
         >
           <div
-            class="sc-4a4f802d-11 fRBTKZ"
+            class="sc-45580985-11 cWcjdw"
           >
             <label
               class="sc-dd35d48e-4 dCKwdz"
@@ -265,7 +265,7 @@ exports[`renders homepage unchanged 1`] = `
               />
             </label>
             <p
-              class="sc-4a4f802d-12 camNOd"
+              class="sc-45580985-12 jokuNw"
             >
               I agree to Artizen’s
               <a
@@ -388,19 +388,24 @@ exports[`renders homepage unchanged 1`] = `
       class="sc-9199b4ac-0 brREMd"
     >
       <div
-        class="sc-76c3510a-0 ebQHog"
+        class="sc-da4feadb-0 drYXkN"
       >
         <div
-          class="sc-76c3510a-1 MWPUA"
+          class="sc-da4feadb-1 dZfBCZ"
         >
           <div>
             <h1
-              class="sc-76c3510a-2"
+              class="sc-da4feadb-2"
             >
               Choose your donation amount and payment method
             </h1>
+            <h1
+              class="sc-da4feadb-2"
+            >
+              DONATION STAGE: 
+            </h1>
             <div
-              class="sc-76c3510a-3 fQXfyu"
+              class="sc-da4feadb-3 hSahfH"
             >
               <div
                 class="sc-8c7bf1ae-2 huxvCL"
@@ -445,7 +450,7 @@ exports[`renders homepage unchanged 1`] = `
           </label>
         </div>
         <div
-          class="sc-76c3510a-4 NtRYj"
+          class="sc-da4feadb-4 cljjbm"
         >
           <div
             class="sc-7984f01-0 eoLmFa"
@@ -508,7 +513,7 @@ exports[`renders homepage unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-76c3510a-5 eWxYDQ"
+            class="sc-da4feadb-5 gHQETB"
           >
             <span>
               Friends of Artizen typically donate:
@@ -538,10 +543,10 @@ exports[`renders homepage unchanged 1`] = `
             </div>
           </div>
           <ul
-            class="sc-76c3510a-6 kKRccu"
+            class="sc-da4feadb-6 kqrjTz"
           >
             <li
-              class="sc-76c3510a-7 cEBQjC"
+              class="sc-da4feadb-7 brptVF"
             >
               <div
                 class="sc-8c7bf1ae-2 huxvCL"
@@ -560,11 +565,12 @@ exports[`renders homepage unchanged 1`] = `
                 Credit Card
               </div>
               <span>
-                min $10.00
+                min $
+                10.00
               </span>
             </li>
             <li
-              class="sc-76c3510a-7 cEBQjC"
+              class="sc-da4feadb-7 bKKHgA"
             >
               <div
                 class="sc-8c7bf1ae-2 huxvCL"
@@ -580,14 +586,15 @@ exports[`renders homepage unchanged 1`] = `
                 </div>
               </div>
               <div>
-                Polygon
+                Credit Card
               </div>
               <span>
-                min $10.00
+                min $
+                10.00
               </span>
             </li>
             <li
-              class="sc-76c3510a-7 cEBQjC"
+              class="sc-da4feadb-7 bKKHgA"
             >
               <div
                 class="sc-8c7bf1ae-2 huxvCL"
@@ -603,10 +610,11 @@ exports[`renders homepage unchanged 1`] = `
                 </div>
               </div>
               <div>
-                Ethereum
+                Credit Card
               </div>
               <span>
-                min $100.00
+                min $
+                10.00
               </span>
             </li>
           </ul>

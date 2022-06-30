@@ -2,13 +2,16 @@ import { useEffect } from 'react'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba, useSession, useSessionDispatch } from '@lib'
+import { rgba, useSession, useSessionDispatch, isServer } from '@lib'
 
 const AccountButton = (props: SimpleComponentProps) => {
   const { user } = useSession()
   const dispatch = useSessionDispatch()
 
-  useEffect(() => dispatch({ type: 'CHECK_SESSION' }), [])
+  useEffect(() => {
+    if (isServer()) return
+    dispatch({ type: 'CHECK_SESSION' })
+  }, [])
 
   const TEMP_INITIALS = 'RP'
 

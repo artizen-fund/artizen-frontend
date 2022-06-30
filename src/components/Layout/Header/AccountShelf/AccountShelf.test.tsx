@@ -1,4 +1,5 @@
 import renderer from 'react-test-renderer'
+import { SessionProvider } from '@lib'
 import AccountShelf from './'
 
 describe('AccountShelf', () => {
@@ -10,7 +11,13 @@ describe('AccountShelf', () => {
     phoneNumber: '555-555-1234',
   }
   it('renders correctly', () => {
-    const tree = renderer.create(<AccountShelf {...{ user }} />).toJSON()
+    const tree = renderer
+      .create(
+        <SessionProvider>
+          <AccountShelf {...{ user }} />
+        </SessionProvider>,
+      )
+      .toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

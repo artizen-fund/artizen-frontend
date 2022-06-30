@@ -2,19 +2,24 @@
 
 exports[`DonationShelf renders correctly 1`] = `
 <div
-  className="sc-76c3510a-0 ebQHog"
+  className="sc-da4feadb-0 drYXkN"
 >
   <div
-    className="sc-76c3510a-1 MWPUA"
+    className="sc-da4feadb-1 dZfBCZ"
   >
     <div>
       <h1
-        className="sc-76c3510a-2"
+        className="sc-da4feadb-2"
       >
         Choose your donation amount and payment method
       </h1>
+      <h1
+        className="sc-da4feadb-2"
+      >
+        DONATION STAGE: 
+      </h1>
       <div
-        className="sc-76c3510a-3 fQXfyu"
+        className="sc-da4feadb-3 hSahfH"
       >
         <div
           className="sc-8c7bf1ae-2 huxvCL"
@@ -63,7 +68,7 @@ exports[`DonationShelf renders correctly 1`] = `
     </label>
   </div>
   <div
-    className="sc-76c3510a-4 NtRYj"
+    className="sc-da4feadb-4 cljjbm"
   >
     <div
       className="sc-7984f01-0 eoLmFa"
@@ -129,7 +134,7 @@ exports[`DonationShelf renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="sc-76c3510a-5 eWxYDQ"
+      className="sc-da4feadb-5 gHQETB"
     >
       <span>
         Friends of Artizen typically donate:
@@ -162,10 +167,11 @@ exports[`DonationShelf renders correctly 1`] = `
       </div>
     </div>
     <ul
-      className="sc-76c3510a-6 kKRccu"
+      className="sc-da4feadb-6 kqrjTz"
     >
       <li
-        className="sc-76c3510a-7 cEBQjC"
+        className="sc-da4feadb-7 brptVF"
+        onClick={[Function]}
       >
         <div
           className="sc-8c7bf1ae-2 huxvCL"
@@ -184,11 +190,13 @@ exports[`DonationShelf renders correctly 1`] = `
           Credit Card
         </div>
         <span>
-          min $10.00
+          min $
+          10.00
         </span>
       </li>
       <li
-        className="sc-76c3510a-7 cEBQjC"
+        className="sc-da4feadb-7 bKKHgA"
+        onClick={[Function]}
       >
         <div
           className="sc-8c7bf1ae-2 huxvCL"
@@ -204,14 +212,16 @@ exports[`DonationShelf renders correctly 1`] = `
           </div>
         </div>
         <div>
-          Polygon
+          Credit Card
         </div>
         <span>
-          min $10.00
+          min $
+          10.00
         </span>
       </li>
       <li
-        className="sc-76c3510a-7 cEBQjC"
+        className="sc-da4feadb-7 bKKHgA"
+        onClick={[Function]}
       >
         <div
           className="sc-8c7bf1ae-2 huxvCL"
@@ -227,10 +237,11 @@ exports[`DonationShelf renders correctly 1`] = `
           </div>
         </div>
         <div>
-          Ethereum
+          Credit Card
         </div>
         <span>
-          min $100.00
+          min $
+          10.00
         </span>
       </li>
     </ul>

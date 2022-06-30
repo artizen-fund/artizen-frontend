@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, useSessionDispatch } from '@lib'
+import { rgba, useSessionDispatch, isServer } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -11,6 +11,7 @@ const LoginShelf = () => {
 
   const [data, setData] = useState<FormState>(initialState)
   useMemo(() => {
+    if (isServer()) return
     if (typeof localStorage === 'undefined') {
       return
     }
