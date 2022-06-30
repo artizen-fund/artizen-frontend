@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { useSession, rgba } from '@lib'
+import { useSessionDispatch, rgba } from '@lib'
 import AccountStats from './AccountStats'
 
 interface IAccountShelf {
@@ -9,7 +9,8 @@ interface IAccountShelf {
 }
 
 const AccountShelf = ({ user }: IAccountShelf) => {
-  const { endSession } = useSession()
+  const dispatch = useSessionDispatch()
+
   const stats = [
     {
       glyph: 'donate',
@@ -54,7 +55,7 @@ const AccountShelf = ({ user }: IAccountShelf) => {
           </Button>
         </Buttons>
         <hr />
-        <div onClick={() => endSession()}>Sign Out</div>
+        <div onClick={() => dispatch({ type: 'END_SESSION' })}>Sign Out</div>
       </Commands>
       <AccountStats {...{ stats }} />
       <Illustration src="/images/qf-square.svg" />
