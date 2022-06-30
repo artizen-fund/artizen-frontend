@@ -2,7 +2,10 @@ import { sign } from 'jsonwebtoken'
 import { assert, assertInt } from '@lib'
 
 export const createNewToken = ({ issuer, publicAddress, email }: ArtizenUser) => {
-  const SESSION_LENGTH_IN_DAYS = assertInt(process.env.SESSION_LENGTH_IN_DAYS, 'SESSION_LENGTH_IN_DAYS')
+  const SESSION_LENGTH_IN_DAYS = assertInt(
+    process.env.NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS,
+    'NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS',
+  )
   const JWT_SECRET = assert(process.env.JWT_SECRET, 'JWT_SECRET')
   const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * SESSION_LENGTH_IN_DAYS
   return sign(

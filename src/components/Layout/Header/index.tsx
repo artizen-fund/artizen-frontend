@@ -18,8 +18,6 @@ const Header = () => {
 
   const [navVisible, setNavVisible] = useState(false)
 
-  const [donateVisible, setDonateVisible] = useState(false)
-
   const [visibleShelf, setVisibleShelf] = useState<ShelfType>()
   const toggleShelf = (shelf?: ShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
