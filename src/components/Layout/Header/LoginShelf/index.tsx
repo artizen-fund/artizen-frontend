@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, useSession } from '@lib'
+import { rgba, useSessionDispatch } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -27,13 +27,14 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const { createSession } = useSession()
+  const dispatch = useSessionDispatch()
+
   const handleLoginWithEmail = async () => {
     if (!data.email) return
     setReadonly(true)
     setSubmitted(true)
     try {
-      createSession(data.email)
+      dispatch({ type: 'CREATE_SESSION', payload: { email: data.email } })
       setSubmitted(true)
       setReadonly(false)
     } catch (error) {
