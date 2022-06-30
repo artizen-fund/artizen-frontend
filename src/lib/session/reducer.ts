@@ -1,31 +1,9 @@
 import { SessionState, checkoutMethods } from './state'
-import { Dispatch, SessionAction } from './actions'
-import { loginUser, fetchUser, logoutUser } from '@lib'
+import { SessionAction } from './actions'
 
-/* useReducer isn't crazy about async actions.
- * This middleware intercepts our async actions, which will initiate their own dispatches upon completion.
- * Normal actions get passed directly to the reducer normally.
- *
- * It's not as ugly as it looks. Async actions are in the middleware, everything else in the reducer.
- *
- * source: https://gist.github.com/astoilkov/013c513e33fe95fa8846348038d8fe42
+/* "hey were are the other actions?"
+ * see ./dispatchMiddleware
  */
-
-export const dispatchMiddleware = (dispatch: Dispatch) => (action: SessionAction) => {
-  switch (action.type) {
-    case 'CREATE_SESSION':
-      loginUser(action.payload.email, dispatch)
-      break
-    case 'END_SESSION':
-      logoutUser(dispatch)
-      break
-    case 'CHECK_SESSION':
-      fetchUser(dispatch)
-      break
-    default:
-      return dispatch(action)
-  }
-}
 
 export const reducer = (state: SessionState, action: SessionAction): SessionState => {
   switch (action.type) {
@@ -36,22 +14,22 @@ export const reducer = (state: SessionState, action: SessionAction): SessionStat
       }
     }
     case 'SET_AMOUNT': {
-      const minAmountForMethod = checkoutMethods[state.method].minimum
+      const minAmountForMethod = checkoutMethods[state.checkoutMethod].minimum
       return {
         ...state,
         amount: action.payload.amount < minAmountForMethod ? minAmountForMethod : action.payload.amount,
       }
     }
     case 'SET_CHECKOUT_METHOD': {
-      const minAmountForMethod = checkoutMethods[action.payload.method].minimum
+      const minAmountForMethod = checkoutMethods[action.payload.checkoutMethod].minimum
       return {
         ...state,
-        method: action.payload.method,
+        checkoutMethod: action.payload.checkoutMethod,
         amount: state.amount < minAmountForMethod ? minAmountForMethod : state.amount,
       }
     }
     case 'SET_CHECKOUT_STAGE': {
-      return { ...state, stage: action.payload.stage }
+      return { ...state, checkoutStage: action.payload.checkoutStage }
     }
 
     default: {

@@ -6,14 +6,14 @@ import { rgba, useSession, useSessionDispatch, checkoutMethods } from '@lib'
 import CheckboxControl from '../Form/Controls/BooleanControl/CheckboxControl'
 
 const DonationShelf = () => {
-  const { method, amount } = useSession()
+  const { checkoutMethod, amount, checkoutStage } = useSession()
   const dispatch = useSessionDispatch()
 
-  const setMethod = (newMethod: CheckoutMethodType) =>
+  const setCheckoutMethod = (newMethod: CheckoutMethodType) =>
     dispatch({
       type: 'SET_CHECKOUT_METHOD',
       payload: {
-        method: newMethod,
+        checkoutMethod: newMethod,
       },
     })
 
@@ -29,7 +29,7 @@ const DonationShelf = () => {
     dispatch({
       type: 'SET_CHECKOUT_STAGE',
       payload: {
-        stage: 'COLLECTING_FIAT_PAYMENT',
+        checkoutStage: 'COLLECTING_FIAT_PAYMENT',
       },
     })
 
@@ -40,6 +40,7 @@ const DonationShelf = () => {
       <Information>
         <div>
           <Title>Choose your donation amount and payment method</Title>
+          <Title>DONATION STAGE: {checkoutStage}</Title>
           <InfoLine>
             <Icon outline glyph="info" level={2} />
             <span>Need help? We’ve prepared a useful guide to donating.</span>
@@ -74,8 +75,8 @@ const DonationShelf = () => {
         </SuggestedDonations>
 
         <Methods>
-          {(Object.keys(checkoutMethods) as Array<CheckoutMethodType>).map(checkoutMethod => (
-            <Method key={checkoutMethod} active={method === checkoutMethod} onClick={() => setMethod(checkoutMethod)}>
+          {(Object.keys(checkoutMethods) as Array<CheckoutMethodType>).map(method => (
+            <Method key={method} active={method === checkoutMethod} onClick={() => setCheckoutMethod(method)}>
               <Icon outline level={2} glyph="info" />
               <div>{checkoutMethods[checkoutMethod].label}</div>
               <span>min ${checkoutMethods[checkoutMethod].minimum.toFixed(2)}</span>

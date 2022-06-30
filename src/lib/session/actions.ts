@@ -10,14 +10,14 @@ export type SET_AMOUNT = {
 export type SET_CHECKOUT_METHOD = {
   type: 'SET_CHECKOUT_METHOD'
   payload: {
-    method: CheckoutMethodType
+    checkoutMethod: CheckoutMethodType
   }
 }
 
 export type SET_CHECKOUT_STAGE = {
   type: 'SET_CHECKOUT_STAGE'
   payload: {
-    stage: CheckoutStage
+    checkoutStage: CheckoutStage
   }
 }
 

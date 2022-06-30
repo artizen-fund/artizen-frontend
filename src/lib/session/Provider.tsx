@@ -1,7 +1,8 @@
 import { createContext, useReducer, ReactNode } from 'react'
 import { SessionState, initialState } from './state'
 import { Dispatch } from './actions'
-import { reducer, dispatchMiddleware } from './reducer'
+import { reducer } from './reducer'
+import { dispatchMiddleware } from './dispatchMiddleware'
 
 export const SessionContext = createContext<SessionState | undefined>(initialState)
 

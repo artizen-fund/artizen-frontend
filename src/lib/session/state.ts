@@ -34,8 +34,8 @@ export type CheckoutStage =
 export interface SessionState {
   user?: ArtizenUser
   amount: number
-  method: CheckoutMethodType
-  stage?: CheckoutStage
+  checkoutMethod: CheckoutMethodType
+  checkoutStage?: CheckoutStage
 }
 
 const DEFAULT_AMOUNT = 10
@@ -43,5 +43,5 @@ const DEFAULT_METHOD = 'usd'
 
 export const initialState: SessionState = {
   amount: DEFAULT_AMOUNT,
-  method: DEFAULT_METHOD,
+  checkoutMethod: DEFAULT_METHOD,
 }
