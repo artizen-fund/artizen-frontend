@@ -52,7 +52,7 @@ const Header = () => {
           <Button href="/" glyph={glyphKey.donate} level={1}>
             Donate
           </Button>
-          <AccountButton loggedOutAction={() => toggleShelf('session')} />
+          <AccountButton onClick={() => toggleShelf('session')} />
         </Items>
       </Wrapper>
       <Shelf visible={visibleShelf === 'session'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
