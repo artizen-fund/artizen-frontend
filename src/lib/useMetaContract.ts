@@ -1,19 +1,29 @@
+import { Magic } from 'magic-sdk'
+import { OAuthExtension } from '@magic-ext/oauth'
 import { Biconomy } from '@biconomy/mexa'
 import { Web3Provider } from '@ethersproject/providers'
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { useSession, assertInt } from '@lib'
+import { assert, assertInt } from '@lib'
 
 // NOTE: this is untested with useMagicLink()
 
 export const useMetaContract = () => {
-  const { magic } = useSession()
   const [biconomy, setBiconomy] = useState()
   const [web3, setWeb3] = useState<Web3Provider>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
 
   useEffect(() => {
+    const rpcUrl = assert(process.env.NEXT_PUBLIC_RPC_URL, 'NEXT_PUBLIC_RPC_URL')
+    const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+    const magicPublicKey = assert(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY, 'NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY')
+
+    const magic = new Magic(magicPublicKey, {
+      network: { rpcUrl, chainId },
+      extensions: [new OAuthExtension()],
+    })
+
     setLoading(true)
     const biconomy = new Biconomy(magic, {
       apiKey: process.env.NEXT_PUBLIC_BICONOMY_API_KEY,
