@@ -1,6 +1,12 @@
-const logoutUser = async (): Promise<boolean> =>
+import { Dispatch } from '../session/actions'
+
+const logoutUser = async (dispatch: Dispatch) =>
   await fetch('/api/logout', {
     method: 'POST',
-  }).then(data => data.status === 200)
+  }).then(data => {
+    if (data.status === 200) {
+      dispatch({ type: 'SET_USER', payload: { user: undefined } })
+    }
+  })
 
 export default logoutUser

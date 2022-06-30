@@ -1,16 +1,40 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba } from '@lib'
+import { rgba, useSession, useSessionDispatch, checkoutMethods } from '@lib'
 import CheckboxControl from '../Form/Controls/BooleanControl/CheckboxControl'
 
-type DonationMethod = 'usd' | 'polygon' | 'ethereum'
-
 const DonationShelf = () => {
+  const { method, amount } = useSession()
+  const dispatch = useSessionDispatch()
+
+  const setMethod = (newMethod: CheckoutMethodType) =>
+    dispatch({
+      type: 'SET_CHECKOUT_METHOD',
+      payload: {
+        method: newMethod,
+      },
+    })
+
+  const setAmount = (newAmount: number) =>
+    dispatch({
+      type: 'SET_AMOUNT',
+      payload: {
+        amount: newAmount,
+      },
+    })
+
+  const proceedToPayment = () =>
+    dispatch({
+      type: 'SET_CHECKOUT_STAGE',
+      payload: {
+        stage: 'COLLECTING_FIAT_PAYMENT',
+      },
+    })
+
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
-  const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
-  const [amount, setAmount] = useState(10) // note: sort out integer or float
+
   return (
     <Wrapper>
       <Information>
@@ -50,24 +74,16 @@ const DonationShelf = () => {
         </SuggestedDonations>
 
         <Methods>
-          <Method>
-            <Icon outline level={2} glyph="info" />
-            <div>Credit Card</div>
-            <span>min $10.00</span>
-          </Method>
-          <Method>
-            <Icon outline level={2} glyph="info" />
-            <div>Polygon</div>
-            <span>min $10.00</span>
-          </Method>
-          <Method>
-            <Icon outline level={2} glyph="info" />
-            <div>Ethereum</div>
-            <span>min $100.00</span>
-          </Method>
+          {(Object.keys(checkoutMethods) as Array<CheckoutMethodType>).map(checkoutMethod => (
+            <Method key={checkoutMethod} active={method === checkoutMethod} onClick={() => setMethod(checkoutMethod)}>
+              <Icon outline level={2} glyph="info" />
+              <div>{checkoutMethods[checkoutMethod].label}</div>
+              <span>min ${checkoutMethods[checkoutMethod].minimum.toFixed(2)}</span>
+            </Method>
+          ))}
         </Methods>
 
-        <Button onClick={() => alert('derp')} stretch level={1}>
+        <Button onClick={() => proceedToPayment()} stretch level={1}>
           Continue
         </Button>
       </Form>
@@ -126,7 +142,7 @@ const Methods = styled.ul`
   margin: 1em 0;
 `
 
-const Method = styled.li`
+const Method = styled.li<{ active: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -143,7 +159,7 @@ const Method = styled.li`
     color: ${rgba(palette.barracuda)};
   }
 
-  border: 0.5px solid ${rgba(palette.night)};
+  border: ${props => (props.active ? 2 : 0.5)}px solid ${rgba(palette.night)};
   border-radius: 16px;
   padding: 10px 0;
 `

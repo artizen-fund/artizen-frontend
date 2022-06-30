@@ -2,14 +2,13 @@ import { useEffect } from 'react'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba, useSession } from '@lib'
+import { rgba, useSession, useSessionDispatch } from '@lib'
 
 const AccountButton = (props: SimpleComponentProps) => {
-  const { user, checkSession } = useSession()
+  const { user } = useSession()
+  const dispatch = useSessionDispatch()
 
-  useEffect(() => {
-    checkSession()
-  }, [])
+  useEffect(() => dispatch({ type: 'CHECK_SESSION' }), [])
 
   const TEMP_INITIALS = 'RP'
 

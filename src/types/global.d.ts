@@ -24,6 +24,8 @@ declare global {
   }
 
   type NextJsInitializedPage = (props: AppProps) => JSX.Element
+
+  export type CheckoutMethodType = 'usd' | 'polygon' | 'ethereum'
 }
 
 export {}
