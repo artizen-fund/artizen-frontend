@@ -67,7 +67,7 @@ const DonationShelf = () => {
           </Method>
         </Methods>
 
-        <Button onClick={() => console.log('derp')} stretch level={1}>
+        <Button onClick={() => alert('derp')} stretch level={1}>
           Continue
         </Button>
       </Form>
