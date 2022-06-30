@@ -1,7 +1,7 @@
 import { createContext, useReducer, ReactNode, useEffect, useState } from 'react'
 import { Magic } from 'magic-sdk'
 import { OAuthExtension } from '@magic-ext/oauth'
-import { assert, assertInt } from '@lib'
+import { assert, assertInt, isServer } from '@lib'
 import { SessionState, initialState } from './state'
 import { Dispatch } from './actions'
 import { reducer } from './reducer'
@@ -21,6 +21,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
   const [magic, setMagic] = useState<MagicLinkInstance>()
 
   useEffect(() => {
+    if (isServer()) return
     const rpcUrl = assert(process.env.NEXT_PUBLIC_RPC_URL, 'NEXT_PUBLIC_RPC_URL')
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
     const magicPublicKey = assert(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY, 'NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY')
