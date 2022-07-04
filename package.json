@@ -3,7 +3,7 @@
   "version": "0.0.8",
   "private": true,
   "engines": {
-    "node": ">=16.14.0 <17",
+    "node": "16.10.0",
     "yarn": "^1.22.10"
   },
   "overrides": {
@@ -53,6 +53,7 @@
     "magic-sdk": "^8.1.0",
     "next": "12.2.0",
     "next-plugin-graphql": "^0.0.2",
+    "openpgp": "^5.3.1",
     "react": "18.2.0",
     "react-countdown": "^2.3.2",
     "react-dom": "18.2.0",
@@ -60,7 +61,8 @@
     "react-phone-number-input": "^3.2.3",
     "react-use-intercom": "^2.0.0",
     "react-useinterval": "^1.0.2",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",

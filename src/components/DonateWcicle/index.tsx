@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from './form'
+import encryptData from './carEncryptation'
 
 const DonateWcicle = () => {
   const LOCALSTORAGE_KEY = 'donatewcicle'
@@ -27,8 +28,11 @@ const DonateWcicle = () => {
   const [error, setError] = useState<string>()
   const [readonly, setReadonly] = useState(false)
 
-  const submit = () => {
+  const submit = async () => {
     console.log('data    ', data)
+    // const {{creditCardNumber, CVC}} = data
+    const resutl = await encryptData(data)
+    console.log('resutl   ', resutl)
     // const response = await someService.submit(data)
   }
 

@@ -1,0 +1,52 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { withSentry } from '@sentry/nextjs'
+
+
+import { removeTokenCookie, assert } from '@lib'
+
+const getCicleApi = async (req: NextApiRequest, res: NextApiResponse) => {
+    if (!req.cookies.token) {
+        return res.status(401).json({ message: 'User is not logged in' })
+    }
+
+    const {body} = req
+
+    console.log('body  ', body)
+
+    const apiRaw = await fetch('https://api-sandbox.circle.com/v1/cards', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.CIRCLE_API}`,
+        },
+        body: JSON.stringify(body),
+      })
+
+      console.log('apiRaw 4   ', apiRaw)
+
+      const api = await apiRaw.json()
+
+      console.log('api::::    ', api)
+
+
+      if(api?.code) {
+        return res.status(500).json(api)
+      }
+
+      
+      return res.status(200).json(api)
+
+      
+        // .then(async data => {
+            
+        //   const api = await data.json()
+        //   console.log('api backend   ', api)
+        //   return api
+        // })
+        // .catch(e => {
+        //   throw new Error(e)
+        // })
+  
+}
+
+export default withSentry(getCicleApi)

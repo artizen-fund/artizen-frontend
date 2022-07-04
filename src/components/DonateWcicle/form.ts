@@ -6,29 +6,32 @@ export const schema: JsonSchema = {
   properties: {
    
     creditCardNumber: {
-      type: 'number',
-      maxLength:3,
+      type: 'string',
+      maxLength:9,
     },
     CVC: {
-      type: 'number',
+      type: 'string',
+      maxLength:3,
     },
   },
   required: ['creditCardNumber', 'CVC'],
 }
+
+
 
 /*
 	This is the local state that our useState() bundle will conform to. 
 	All values must be optional, as an unfilled form will conform to this state.
 */
 export interface FormState {
-  creditCardNumber?: number
-  CVC?: number
+  creditCardNumber: string
+  CVC?: string
   
 }
 
 /* This is our local initialState. */
 export const initialState: FormState = {
-  creditCardNumber: undefined,
+  creditCardNumber: '',
   CVC: undefined,
 }
 

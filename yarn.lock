@@ -5848,7 +5848,7 @@ asap@~2.0.3, asap@~2.0.6:
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
   integrity sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==
 
-asn1.js@^5.2.0:
+asn1.js@^5.0.0, asn1.js@^5.2.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-5.4.1.tgz#11a980b84ebb91781ce35b0fdc2ee294e3783f07"
   integrity sha512-+I//4cYPccV8LdmBLiX8CYvf9Sp3vQsrqu2QNXRcrbiWvcx/UdlFiqUJJzxRQxgsZmvhXhn4cSKeSmoFjVdupA==
@@ -13613,6 +13613,13 @@ openapi-types@^11.0.0:
   resolved "https://registry.yarnpkg.com/openapi-types/-/openapi-types-11.1.0.tgz#037969f3dfa5999423ee33bf889fb0d12984277e"
   integrity sha512-ZW+Jf12flFF6DXSij8DGL3svDA4RtSyHXjC/xB/JAh18gg3uVfVIFLvCfScUMowrpvlkxsMMbErakbth2g3/iQ==
 
+openpgp@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/openpgp/-/openpgp-5.3.1.tgz#001df6b33546fbed044686d4d6af7e80ed9354d2"
+  integrity sha512-CxjY4gZ3D0pp6dJUmcM6EgjvDv0u+LsY+3ymULPZYRUPa0tmigDXHNUm5EX+omqmU401DTQNO6ud+QA6UpCdEA==
+  dependencies:
+    asn1.js "^5.0.0"
+
 optimism@^0.16.1:
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/optimism/-/optimism-0.16.1.tgz#7c8efc1f3179f18307b887e18c15c5b7133f6e7d"
@@ -17591,10 +17598,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"

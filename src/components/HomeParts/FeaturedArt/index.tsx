@@ -38,7 +38,7 @@ const FeaturedArt = ({ tokenId, startDate, tagName }: IFeaturedArt) => {
     if (metadataUri) {
       // TODO: Remove this replace when contract start using ERC1155URIStorage
       const uri = (metadataUri as string).replace('{id}.json', `${tokenId}.json`)
-      getMetadataFromUri(uri)
+      // getMetadataFromUri(uri)
     }
   }, [metadataUri])
 
