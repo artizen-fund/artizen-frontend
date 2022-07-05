@@ -23,10 +23,10 @@ async function encrypt(dataToEncrypt: object, { keyId, publicKey }: PublicKey) {
   return pgpEncrypt({
     message,
     encryptionKeys: decodedPublicKey,
-  }).then((ciphertext) => {
+  }).then(ciphertext => {
     return {
-      // @ts-ignore: Unreachable code error
-      encryptedMessage: btoa(ciphertext),
+      
+      encryptedMessage: btoa(ciphertext.toString()),
       keyId: 'key1',
     }
   })

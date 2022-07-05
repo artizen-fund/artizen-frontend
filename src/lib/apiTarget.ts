@@ -16,10 +16,7 @@ function getAPIHostname() {
   return process.env.NEXT_PUBLIC_CIRCLE_URL
 }
 
-function getLive() {
-  const hostname = getAPIHostname()
-  return !(process.env!.includes('sandbox') || process.env!.includes('smokebox'))
-}
+
 
 function getIsStaging() {
   const hostname = getAPIHostname()
@@ -31,4 +28,4 @@ function getIsLocalHost(): boolean {
   return hostname!.includes(':3011')
 }
 
-export { getAPIHostname, getLive, getIsStaging, getIsLocalHost }
+export { getAPIHostname,  getIsLocalHost }

@@ -10,7 +10,7 @@ const getCicleApi = async (req: NextApiRequest, res: NextApiResponse) => {
 }  
 
 
-    console.log('${process.env.CIRCLE_API}   ', process.env.CIRCLE_API)
+    // console.log('${process.env.CIRCLE_API}   ', process.env.CIRCLE_API)
 
     const apiRaw = await fetch('https://api-sandbox.circle.com/v1/encryption/public', {
         method: 'GET',
