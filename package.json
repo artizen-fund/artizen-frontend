@@ -2,10 +2,7 @@
   "name": "artizen-frontend",
   "version": "0.0.8",
   "private": true,
-  "engines": {
-    "node": "16.10.0",
-    "yarn": "^1.22.10"
-  },
+ 
   "overrides": {
     "webpack": "^5"
   },
