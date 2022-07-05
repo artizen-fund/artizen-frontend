@@ -1,5 +1,19 @@
 import { JsonSchema } from '@jsonforms/core'
 
+/*
+ expMonth: parseInt('01'),
+      expYear: parseInt('2025'),
+
+      name: 'Customer 0001',
+        country: 'US',
+        district: 'MA',
+        line1: 'Test',
+        line2: '',
+        city: 'Test City',
+        postalCode: '11111',
+
+*/
+
 /* This is the data schema. See JSONForms documentation for more options. */
 export const schema: JsonSchema = {
   type: 'object',
@@ -7,15 +21,54 @@ export const schema: JsonSchema = {
    
     creditCardNumber: {
       type: 'string',
-      maxLength:9,
     },
-    CVC: {
+    cvv: {
       type: 'string',
       maxLength:3,
     },
+    expMonth: {
+      type: 'string',
+      maxLength:2,
+    },
+    expYear: {
+      type: 'string',
+      maxLength:4,
+    },
+    name: {
+      type: 'string',
+    },
+    country: {
+      type: 'string',
+      maxLength:4,
+    },
+    district: {
+      type: 'string',
+      maxLength:2,
+    },
+    line1: {
+      type: 'string',
+      
+    },
+    line2: {
+      type: 'string',
+      
+    },
+    city: {
+      type: 'string',
+      maxLength:2,
+    },
+    postalCode: {
+      type: 'string',
+      
+    },
+
+    
+
   },
-  required: ['creditCardNumber', 'CVC'],
+  required: ['creditCardNumber', 'cvv', 'expMonth', 'expYear', 'name', 'country', 'district', 'line1', 'line2', 'city', 'postalCode'],
 }
+
+
 
 
 
@@ -25,14 +78,19 @@ export const schema: JsonSchema = {
 */
 export interface FormState {
   creditCardNumber: string
-  CVC?: string
+  cvv?: string
+  expMonth: string 
+  expYear: string
   
 }
 
 /* This is our local initialState. */
 export const initialState: FormState = {
   creditCardNumber: '',
-  CVC: undefined,
+  cvv: undefined,
+  expMonth: '', 
+  expYear: '',
+ 
 }
 
 /*
@@ -51,10 +109,21 @@ export const uischema = {
     },
     {
       type: 'Control',
-      scope: '#/properties/CVC',
-      label: 'CVC',
+      scope: '#/properties/cvv',
+      label: 'cvv',
       
     },
+    {
+      type: 'Control',
+      scope: '#/properties/expMonth',
+      label: 'expMonth',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/expYear',
+      label: 'expYear',
+    },
+   
     
   ],
 }

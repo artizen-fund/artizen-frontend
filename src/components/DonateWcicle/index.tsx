@@ -1,8 +1,9 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from './form'
 import encryptData from './carEncryptation'
+import makePayment from './makePayment'
 
 const DonateWcicle = () => {
   const LOCALSTORAGE_KEY = 'donatewcicle'
@@ -10,6 +11,7 @@ const DonateWcicle = () => {
   /* set up initialState of form, including previously recorded
    * responses from browser localStorage */
   const [data, setData] = useState<FormState>(initialState)
+  
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
       return
@@ -24,23 +26,69 @@ const DonateWcicle = () => {
   }, [])
 
   // component state data
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState<string>()
+  const [formSubmitted, setFormSubmitted] = useState('')
+  // eslint-disable-next-line
   const [readonly, setReadonly] = useState(false)
 
+  
+
   const submit = async () => {
-    console.log('data    ', data)
-    // const {{creditCardNumber, CVC}} = data
-    const resutl = await encryptData(data)
-    console.log('resutl   ', resutl)
+    // eslint-disable-next-line
+    console.log('start create card    ', data)
+    
+    const cardCreation = await encryptData(data)
+    // eslint-disable-next-line
+    console.log('cardCreation finished ', cardCreation)
+
+    if(!cardCreation.id) {
+      return new Error('data creation error')
+    }
+    // eslint-disable-next-line
+    console.log('cardCreation result   ', cardCreation)
+    
+
+    // make payment
+    const makePaymentF = await makePayment(cardCreation)
+    // eslint-disable-next-line
+    console.log('makePaymentF  ', makePaymentF)
+
+    if(!makePaymentF.data.id) {
+      return new Error('data creation error')
+    }
+
+    setFormSubmitted(makePaymentF.data.id)
+    
     // const response = await someService.submit(data)
   }
 
   return (
     <Wrapper>
-      <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
+     
+      {formSubmitted &&
+      <div>
+        {'Payment received'}
+      </div>
+      }
+      {!formSubmitted && 
+      <>
+         <div style={{height: '60px'}}>
+      <p>
+        {`
+        name: 'Customer 0001'                ,
+        country: 'US'    ,
+        district:    'MA'   ,
+        Adress:    'Test'   ,
+        city: 'Test City'    ,
+        postalCode: '11111'
+      `}
+      </p>
+      </div>
+      
+        <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <Button onClick={() => submit()}>Submit</Button>
       </Form>
+      </>
+      }
     </Wrapper>
   )
 }

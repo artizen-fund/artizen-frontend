@@ -36,8 +36,6 @@ export interface CreateCardPayload {
   metadata: MetaData
 }
 
-console.log('getAPIHostname()   ', getAPIHostname())
-
 const instance = axios.create({
   baseURL: getAPIHostname(),
 })
@@ -63,12 +61,12 @@ instance.interceptors.response.use(
   },
 )
 
-const nullIfEmpty = (prop: string | undefined) => {
-  if (prop !== undefined && prop.trim() === '') {
-    return undefined
-  }
-  return prop
-}
+// const nullIfEmpty = (prop: string | undefined) => {
+//   if (prop !== undefined && prop.trim() === '') {
+//     return undefined
+//   }
+//   return prop
+// }
 
 /** Returns the axios instance */
 function getInstance() {
@@ -87,8 +85,6 @@ function getInstance() {
 
   const cicleApi = await cicleApiRaw.json()
 
-  console.log('getPCIPublicKey   cicleApi   ', cicleApi)
-  
   if(cicleApiRaw.status !== 200) {
     return {error: cicleApi}
   }
@@ -136,7 +132,7 @@ function getCards(pageBefore: string, pageAfter: string, pageSize: string) {
   // }
   // return instance.post(url, payload)
 
-  console.log('createCard   payload     ', payload)
+  
 
   const createCardDataRaw = await fetch('/api/createcard', 
   {
@@ -149,26 +145,13 @@ function getCards(pageBefore: string, pageAfter: string, pageSize: string) {
   },
   )
 
-  console.log('------------------------')
-  console.log(createCardDataRaw)
-  console.log('------------------------')
-
-
-
-
-
- 
-
-
+  if(createCardDataRaw.status !== 200) {
+    return  new Error('Error creating card   ')
+  }
   const createCardData = await createCardDataRaw.json()
 
-  console.log('getPCIPublicKey   cicleApi   ', createCardData)
-  
-  // if(cicleApiRaw.status !== 200) {
-  //   return {error: cicleApi}
-  // }
+  return createCardData.data
 
-  // return cicleApi.data
 }
 
 /**

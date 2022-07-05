@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSentry } from '@sentry/nextjs'
 
-const createcard = async (req: NextApiRequest, res: NextApiResponse) => {
+const makePayment = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!req.cookies.token) {
         return res.status(401).json({ message: 'User is not logged in' })
     }
 
     const {body} = req
 
-    const apiRaw = await fetch('https://api-sandbox.circle.com/v1/cards', {
+    const apiRaw = await fetch('https://api-sandbox.circle.com/v1/payments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -18,9 +18,8 @@ const createcard = async (req: NextApiRequest, res: NextApiResponse) => {
       })
 
       const api = await apiRaw.json()
-      
       // eslint-disable-next-line
-      console.log('api::::    ', api)
+      console.log('result of payment  ', api)
 
       if(api?.code) {
         return res.status(500).json(api)
@@ -32,4 +31,4 @@ const createcard = async (req: NextApiRequest, res: NextApiResponse) => {
 
 }
 
-export default withSentry(createcard)
+export default withSentry(makePayment)
