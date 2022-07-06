@@ -1,8 +1,4 @@
-
-import get from 'lodash/get'
-import axios from 'axios'
-
-import { getAPIHostname } from './apiTarget'
+// import { getAPIHostname } from './apiTarget'
 
 interface MetaData {
   email?: string

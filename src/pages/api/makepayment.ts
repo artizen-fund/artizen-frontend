@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSentry } from '@sentry/nextjs'
 
 const makePayment = async (req: NextApiRequest, res: NextApiResponse) => {
-    if (!req.cookies.token) {
-        return res.status(401).json({ message: 'User is not logged in' })
-    }
+    // if (!req.cookies.token) {
+    //     return res.status(401).json({ message: 'User is not logged in' })
+    // }
 
     const {body} = req
 
