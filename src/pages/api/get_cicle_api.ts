@@ -5,9 +5,10 @@ import { withSentry } from '@sentry/nextjs'
 import { removeTokenCookie, assert } from '@lib'
 
 const getCicleApi = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (!req.cookies.token) {
-    return res.status(401).json({ message: 'User is not logged in' })
-}  
+//   if (!req.cookies.token) {
+//     return res.status(401).json({ message: 'User is not logged in' })
+// }  
+
 
 
     // console.log('${process.env.CIRCLE_API}   ', process.env.CIRCLE_API)

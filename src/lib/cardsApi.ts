@@ -51,6 +51,8 @@ export interface CreateCardPayload {
 
   const cicleApiRaw = await fetch('/api/get_cicle_api', {method: 'GET'})
 
+  // eslint-disable-next-line
+  console.log('cicleApiRaw  ', cicleApiRaw)
   const cicleApi = await cicleApiRaw.json()
 
   if(cicleApiRaw.status !== 200) {
