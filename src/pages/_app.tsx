@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
-import { assert, isProd, SessionProvider, useApollo, withAuth } from '@lib'
+import { assert, isProd, useApollo, withAuth } from '@lib'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
@@ -15,12 +15,10 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <IntercomProvider appId={NEXT_PUBLIC_INTERCOM_APP_ID}>
-        <SessionProvider>
-          <ApolloProvider client={apolloClient}>
-            {/* <Toaster /> */}
-            <Component {...pageProps} />
-          </ApolloProvider>
-        </SessionProvider>
+        <ApolloProvider client={apolloClient}>
+          {/* <Toaster /> */}
+          <Component {...pageProps} />
+        </ApolloProvider>
       </IntercomProvider>
     </>
   )

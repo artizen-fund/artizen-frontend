@@ -1,8 +1,10 @@
 import { useMemo } from 'react'
-import { ApolloClient, HttpLink, HttpOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import { gql, ApolloClient, HttpLink, HttpOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import { assert, isServer } from '@lib'
+import { typeDefs } from '@gql'
+import { cache } from './'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
@@ -22,42 +24,8 @@ export const createApolloClient = (token?: string) => {
   return new ApolloClient({
     ssrMode: isServer(),
     link: new HttpLink(httpOptions),
-    cache: new InMemoryCache({
-      typePolicies: {
-        Query: {
-          fields: {
-            exampleEntities: {
-              keyArgs: false,
-            },
-            Project: {
-              // Don't cache separate results based on any of this field's arguments.
-              // keyArgs: ['where'],
-              keyArgs: false,
-              // Concatenate the incoming list items with the existing list items.
-              merge(existing, incoming) {
-                return !existing
-                  ? incoming
-                  : [
-                      ...existing,
-                      ...incoming.filter((incomingVar: any) =>
-                        existing.every((existingVar: any) => !isEqual(incomingVar, existingVar)),
-                      ),
-                    ]
-              },
-            },
-            User: {
-              // Don't cache separate results based on any of this field's arguments.
-              // keyArgs: ['where'],
-              keyArgs: ['where'],
-              // Concatenate the incoming list items with the existing list items.
-              merge(existing, incoming) {
-                return !existing ? incoming : [...existing, ...incoming]
-              },
-            },
-          },
-        },
-      },
-    }),
+    cache,
+    typeDefs,
   })
 }
 

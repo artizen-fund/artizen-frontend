@@ -6,7 +6,6 @@ import { isServer, assert, assertInt, loginUser, fetchUser, logoutUser } from '@
 
 interface ISessionContext {
   magic?: InstanceWithExtensions<SDKBase, OAuthExtension[]>
-  user?: ArtizenUser
   createSession: (email: string) => void
   checkSession: () => void
   endSession: () => void
@@ -30,29 +29,26 @@ export const SessionProvider = ({ children }: SimpleComponentProps) => {
     extensions: [new OAuthExtension()],
   })
 
-  const [user, setUser] = useState<ArtizenUser>()
-
   const createSession = async (email: string) => {
     const token = await magic.auth.loginWithMagicLink({ email, showUI: false })
     if (!token) throw 'error retrieving token'
     const loggedInUser = await loginUser(token)
-    setUser(loggedInUser)
   }
 
   const checkSession = async () => {
     const userFromApi = await fetchUser()
     if (!!userFromApi.id) {
-      setUser(userFromApi)
     }
   }
 
   const endSession = async () => {
     const loggedOut = await logoutUser()
-    if (loggedOut) setUser(undefined)
+    if (loggedOut) {
+    }
   }
 
   return (
-    <SessionContext.Provider value={{ magic, user, createSession, checkSession, endSession }}>
+    <SessionContext.Provider value={{ magic, createSession, checkSession, endSession }}>
       {children}
     </SessionContext.Provider>
   )

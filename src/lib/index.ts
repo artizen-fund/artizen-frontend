@@ -1,5 +1,5 @@
 export * from './api'
-export * from './apolloClient'
+export * from './apollo'
 export * from './assert'
 export * from './assetPath'
 export * from './rgba'
