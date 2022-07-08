@@ -8,7 +8,7 @@ const Metrics = () => (
     <Wrapper>
       {[0, 1, 2, 3].map(index => (
         <Metric key={`metric-${index}`}>
-          <Illustration />
+          <Illustration url="/assets/illustrations/stats-collected.svg" />
           <Amount>
             <span>$</span>99,999
           </Amount>
@@ -20,18 +20,33 @@ const Metrics = () => (
 )
 
 const Wrapper = styled.section`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 30px;
+  grid-column-gap: 15px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 25px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    grid-column-gap: 30px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    grid-column-gap: 80px;
+  }
 `
 
 const Metric = styled.div`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 `
 
-// todo: replace with styled.img
 // todo: the responsive layout needs work, waiting on images first
-const Illustration = styled.div`
+const Illustration = styled.div<{ url: string }>`
   width: 148px;
   height: 148px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -42,8 +57,11 @@ const Illustration = styled.div`
     width: 320px;
     height: 320px;
   }
-  border-radius: 9999px;
-  background-color: ${rgba(palette.algae)};
+  background-image: url(${props => props.url});
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  outline: 1px dashed black;
 `
 
 const Amount = styled.div`

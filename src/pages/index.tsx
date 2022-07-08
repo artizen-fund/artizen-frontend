@@ -1,5 +1,15 @@
 import styled from 'styled-components'
-import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedInfo } from '@components'
+import {
+  FeaturedArt,
+  Layout,
+  Metrics,
+  Newsletter,
+  PagePadding,
+  Sidebar,
+  TabbedInfo,
+  AlternatingPanels,
+  AlternatingPanel,
+} from '@components'
 import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { SIDEBAR_DONATORS } from '@gql'
@@ -70,6 +80,33 @@ const Home = ({
     ),
   }
 
+  const panels = [
+    {
+      image: '/assets/illustrations/how-it-works.svg',
+      imageDark: '/assets/illustrations/how-it-works-dark.svg',
+      title: 'How It Works Placeholder Title',
+      copy: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nulla vitae elit libero, a pharetra augue.',
+      subtitle: 'Duis mollis, est non commodo luctus, nisi erat porttitor ligula.',
+      buttonLabel: 'Herp Derp',
+    },
+    {
+      image: '/assets/illustrations/how-it-works.svg',
+      imageDark: '/assets/illustrations/how-it-works-dark.svg',
+      title: 'How It Works Placeholder Title',
+      copy: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nulla vitae elit libero, a pharetra augue.',
+      subtitle: 'Duis mollis, est non commodo luctus, nisi erat porttitor ligula.',
+      buttonLabel: 'Herp Derp',
+    },
+    {
+      image: '/assets/illustrations/how-it-works.svg',
+      imageDark: '/assets/illustrations/how-it-works-dark.svg',
+      title: 'How It Works Placeholder Title',
+      copy: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nulla vitae elit libero, a pharetra augue.',
+      subtitle: 'Duis mollis, est non commodo luctus, nisi erat porttitor ligula.',
+      buttonLabel: 'Herp Derp',
+    },
+  ]
+
   return (
     <Layout>
       <CreateTopUpWallet />
@@ -95,6 +132,12 @@ const Home = ({
           <Sidebar {...{ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
         </Wrapper>
       </StyledPagePadding>
+
+      <AlternatingPanels>
+        {panels.map((panel, i) => (
+          <AlternatingPanel key={`panel-${i}`} {...panel} />
+        ))}
+      </AlternatingPanels>
 
       <Newsletter />
       <Metrics />
