@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 import { PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba } from '@lib'
+import { rgba, assetPath } from '@lib'
 
 const Metrics = () => (
   <PagePadding>
     <Wrapper>
       {[0, 1, 2, 3].map(index => (
         <Metric key={`metric-${index}`}>
-          <Illustration url="/assets/illustrations/stats-collected.svg" />
+          <Illustration url={assetPath('/assets/illustrations/stats-collected.svg')} />
           <Amount>
             <span>$</span>99,999
           </Amount>

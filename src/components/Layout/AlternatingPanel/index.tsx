@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
+import { assetPath } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 
 export interface IAlternatingPanel {
@@ -49,12 +50,12 @@ const Image = styled.div<Pick<IAlternatingPanel, 'image' | 'imageDark'>>`
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
-  background-image: url(${props => props.image});
+  background-image: url(${props => assetPath(props.image)});
   ${props =>
     props.imageDark &&
     `
     @media (prefers-color-scheme: dark) {
-      background-image: url(${props.imageDark});
+      background-image: url(${assetPath(props.imageDark)});
     }
   `}
   @media only screen and (min-width: ${breakpoint.tablet}px) {
