@@ -6,4 +6,10 @@ export default {
   argTypes: {},
 }
 
-export const AccountShelfComponent = (props: any) => <AccountShelf {...props} />
+export const AccountShelfComponent = (props: any) => {
+  const user = {
+    firstName: 'Herp',
+    lastName: 'Derp',
+  }
+  return <AccountShelf {...props} {...{ user }} />
+}
