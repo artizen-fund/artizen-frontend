@@ -1,6 +1,5 @@
-import { InMemoryCache, Reference, makeVar } from '@apollo/client'
+import { InMemoryCache } from '@apollo/client'
 import { isEqual } from 'lodash'
-import type { MagicUserMetadata } from 'magic-sdk'
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -35,23 +34,7 @@ export const cache: InMemoryCache = new InMemoryCache({
             return !existing ? incoming : [...existing, ...incoming]
           },
         },
-
-        /* local (client) fields */
-        userToken: {
-          read() {
-            return userTokenVar()
-          },
-        },
-        userMetadata: {
-          read() {
-            return userMetadataVar()
-          },
-        },
       },
     },
   },
 })
-
-export const userTokenVar = makeVar<string | undefined>(undefined)
-
-export const userMetadataVar = makeVar<MagicUserMetadata | undefined>(undefined)

@@ -1,9 +1,8 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { gql, ApolloClient, HttpLink, HttpOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import { assert, isServer } from '@lib'
-import { typeDefs } from '@gql'
 import { cache } from './'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
@@ -25,12 +24,11 @@ export const createApolloClient = (token?: string) => {
     ssrMode: isServer(),
     link: new HttpLink(httpOptions),
     cache,
-    typeDefs,
   })
 }
 
-export function initializeApollo(initialState?: any, user?: ArtizenUser): ApolloClient<NormalizedCacheObject> {
-  const newApolloClient = createApolloClient(user?.token)
+export function initializeApollo(initialState?: any, token?: string): ApolloClient<NormalizedCacheObject> {
+  const newApolloClient = createApolloClient(token)
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here.
   if (initialState) {
     // Get existing cache, loaded during client side data fetching
@@ -66,14 +64,9 @@ export function addApolloState(client: ApolloClient<NormalizedCacheObject>, page
   return pageProps
 }
 
-export function useApollo(pageProps: any, user?: ArtizenUser) {
-  /* IMPORTANT NOTE:
-   *  Users are currently not initialized until after useApollo is called by _app.tsx
-   *  That is not going to change!
-   *  We need a better way to re-initialized ApolloClient upon login,
-   *    or (more likely) we need to add session tracking to this lib.
-   */
-  const state = pageProps['apolloData']
-  const store = useMemo(() => initializeApollo(state, user), [user, state])
-  return { apolloClient: store, loading: Boolean(!user) }
+export function useApollo(pageProps?: any, initialToken?: string) {
+  const [token, setToken] = useState<string | undefined>(initialToken)
+  const state = pageProps?.apolloData || {}
+  const store = useMemo(() => initializeApollo(state, token), [token, state])
+  return { apolloClient: store, setToken }
 }

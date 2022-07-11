@@ -1,6 +1,6 @@
 import { ContractInterface, ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
-import { useSession } from '@lib'
+import { useMagic } from '@lib'
 
 export const useReadContract = (
   contractAddress: string,
@@ -8,7 +8,7 @@ export const useReadContract = (
   methodName: string,
   attr: Array<unknown> = [],
 ) => {
-  const { magic } = useSession()
+  const { magic } = useMagic()
   if (magic === undefined) return []
 
   const [value, setValue] = useState<unknown>()

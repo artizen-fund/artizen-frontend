@@ -1,12 +1,13 @@
 import { CourierProvider, ICourierMessage } from '@trycourier/react-provider'
 // import { Toast } from '@trycourier/react-toast'
 // import { useSession, getUSDCBalance, isServer, assert } from '@lib'
-import { useSession, getUSDCBalance, isServer, assert } from '@lib'
+import { getUSDCBalance, isServer, assert } from '@lib'
 
 export const Toaster = () => {
   const COURIER_CLIENT_KEY = assert(process.env.NEXT_PUBLIC_COURIER_CLIENT_KEY, 'NEXT_PUBLIC_COURIER_CLIENT_KEY')
 
-  const { user } = useSession()
+  // const { user } = useSession()
+  const user = undefined
   if (isServer()) return <></>
 
   const handleBalance = async () => {

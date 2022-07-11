@@ -1,5 +1,5 @@
-const loginUser = async (token: string): Promise<ArtizenUser> =>
-  await fetch('/api/login', {
+const fetchToken = async (token: string): Promise<UserToken> =>
+  await fetch('/api/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,4 +13,4 @@ const loginUser = async (token: string): Promise<ArtizenUser> =>
       throw new Error(e)
     })
 
-export default loginUser
+export default fetchToken

@@ -1,15 +1,14 @@
 import styled from 'styled-components'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { useSession, rgba } from '@lib'
+import { rgba, logoutUser } from '@lib'
 import AccountStats from './AccountStats'
 
 interface IAccountShelf {
-  user: ArtizenUser
+  user: any
 }
 
 const AccountShelf = ({ user }: IAccountShelf) => {
-  const { endSession } = useSession()
   const stats = [
     {
       glyph: 'donate',
@@ -54,7 +53,7 @@ const AccountShelf = ({ user }: IAccountShelf) => {
           </Button>
         </Buttons>
         <hr />
-        <div onClick={() => endSession()}>Sign Out</div>
+        <div onClick={() => logoutUser()}>Sign Out</div>
       </Commands>
       <AccountStats {...{ stats }} />
       <Illustration src="/images/qf-square.svg" />

@@ -8,6 +8,11 @@ declare global {
   }
 
   type NextJsInitializedPage = (props: AppProps) => JSX.Element
+
+  type UserToken = {
+    issuer: string
+    token: string
+  }
 }
 
 export {}

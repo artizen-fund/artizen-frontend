@@ -1,7 +1,13 @@
 import { sign } from 'jsonwebtoken'
 import { assert, assertInt } from '@lib'
 
-export const createNewToken = ({ issuer, publicAddress, email }: ArtizenUser) => {
+interface TokenBundle {
+  email: string
+  issuer: string
+  publicAddress: string
+}
+
+export const createNewToken = ({ issuer, publicAddress, email }: TokenBundle) => {
   const SESSION_LENGTH_IN_DAYS = assertInt(
     process.env.NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS,
     'NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS',

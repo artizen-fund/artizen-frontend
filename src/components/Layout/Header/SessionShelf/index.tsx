@@ -4,8 +4,9 @@ import LoginShelf from '../LoginShelf'
 import AccountShelf from '../AccountShelf'
 
 const SessionShelf = () => {
-  const { User } = useQuery(USER)
-  return !!User ? <AccountShelf user={User} /> : <LoginShelf />
+  return <LoginShelf />
+  //  const { User } = useQuery(USER)
+  //  return !!User ? <AccountShelf user={User} /> : <LoginShelf />
 }
 
 export default SessionShelf

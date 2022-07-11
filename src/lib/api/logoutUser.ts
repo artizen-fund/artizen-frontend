@@ -1,3 +1,5 @@
+// todo: this is incomplete, it doesn't affect Apollo local store
+
 const logoutUser = async (): Promise<boolean> =>
   await fetch('/api/logout', {
     method: 'POST',
