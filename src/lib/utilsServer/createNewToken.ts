@@ -1,13 +1,8 @@
 import { sign } from 'jsonwebtoken'
 import { assert, assertInt } from '@lib'
+import type { MagicUserMetadata } from 'magic-sdk'
 
-interface TokenBundle {
-  email: string
-  issuer: string
-  publicAddress: string
-}
-
-export const createNewToken = ({ issuer, publicAddress, email }: TokenBundle) => {
+export const createNewToken = ({ issuer, publicAddress, email }: MagicUserMetadata) => {
   const SESSION_LENGTH_IN_DAYS = assertInt(
     process.env.NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS,
     'NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS',
