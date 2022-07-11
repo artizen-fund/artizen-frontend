@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlternatingPanels renders correctly 1`] = `
+<div
+  className="sc-9199b4ac-0 brREMd"
+>
+  <div
+    className="sc-d74fb460-0 kscYoG"
+  />
+</div>
+`;
