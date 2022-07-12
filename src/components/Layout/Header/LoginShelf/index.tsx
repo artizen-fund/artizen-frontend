@@ -1,16 +1,16 @@
 import { useMemo, useState } from 'react'
+import { useApolloClient } from '@apollo/client'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, createSession, useApollo, useMagic } from '@lib'
+import { rgba, createSession, useMagic } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
 const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
-  console.log('r')
-  const { apolloClient, setToken } = useApollo()
   const { magic } = useMagic()
+  const apolloClient = useApolloClient<()
 
   const [data, setData] = useState<FormState>(initialState)
   useMemo(() => {
@@ -35,7 +35,7 @@ const LoginShelf = () => {
     setReadonly(true)
     setSubmitted(true)
     try {
-      createSession(data.email, magic, apolloClient, setToken)
+      createSession(data.email, magic, apolloClient)
       setSubmitted(true)
       setReadonly(false)
     } catch (error) {

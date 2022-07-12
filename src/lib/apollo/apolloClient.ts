@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { gql, ApolloClient, HttpLink, HttpOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import { ApolloClient, createHttpLink, NormalizedCacheObject } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import { assert, isServer } from '@lib'
@@ -8,21 +9,27 @@ import { cache } from './'
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 export const createApolloClient = (token?: string) => {
-  const httpOptions: HttpOptions = {
+  const httpLink = createHttpLink({
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
     headers: {},
     credentials: 'same-origin',
-  }
+  })
 
-  if (token) {
-    httpOptions.headers['Authorization'] = `Bearer ${token}`
-  } else if (isServer()) {
-    httpOptions.headers['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
-  }
+  const authLink = setContext((_, { headers }) => {
+    if (isServer()) {
+      headers['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
+    } else {
+      const token = localStorage.getItem('token')
+      if (token) {
+        headers['authorization'] = `Bearer ${token}`
+      }
+    }
+    return headers
+  })
 
   return new ApolloClient({
     ssrMode: isServer(),
-    link: new HttpLink(httpOptions),
+    link: authLink.concat(httpLink),
     cache,
   })
 }
@@ -62,11 +69,4 @@ export function addApolloState(client: ApolloClient<NormalizedCacheObject>, page
     pageProps.props['apolloData'] = client.cache.extract()
   }
   return pageProps
-}
-
-export function useApollo(pageProps?: any, initialToken?: string) {
-  const [token, setToken] = useState<string | undefined>(initialToken)
-  const state = pageProps?.apolloData || {}
-  const apolloClient = useMemo(() => initializeApollo(state, token), [token])
-  return { apolloClient, setToken }
 }
