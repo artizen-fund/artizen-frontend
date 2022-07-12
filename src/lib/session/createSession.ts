@@ -1,8 +1,8 @@
 import type { Magic } from 'magic-sdk'
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
-import { loginUser, userMetadata } from '@lib'
-import { GET_USER } from '@gql'
-import { ICheckUserQuery } from '@types'
+import { fetchToken, userMetadata, initializeApollo } from '@lib'
+import { GET_USER, CHECK_USER } from '@gql'
+import { IGetUserQuery, ICheckUserQuery } from '@types'
 
 const createSession = async (
   email: string,
@@ -10,11 +10,15 @@ const createSession = async (
   apolloClient: ApolloClient<NormalizedCacheObject>,
   setToken: (s: string) => void,
 ) => {
-  const token = await magic.auth.loginWithMagicLink({ email, showUI: false })
-  if (!token) throw 'error retrieving token'
-  const data = await loginUser(token)
+  const didToken = await magic.auth.loginWithMagicLink({ email, showUI: false })
+  if (!didToken) throw 'error retrieving token'
+  const { token, issuer } = await fetchToken(didToken)
+  setToken(token)
+
+  const freshClient = initializeApollo({}, token)
+  const { data } = await freshClient.query<IGetUserQuery>({ query: GET_USER, variables: { issuer } })
   console.log(data)
-  userMetadata(data)
+  // userMetadata(data.User[0])
 }
 
 export { createSession }

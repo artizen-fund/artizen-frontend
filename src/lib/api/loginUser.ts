@@ -1,9 +1,9 @@
-const loginUser = async (token: string): Promise<any> =>
+const loginUser = async (magicToken: string): Promise<any> =>
   await fetch('/api/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${magicToken}`,
     },
   })
     .then(async data => {

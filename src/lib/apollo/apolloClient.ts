@@ -67,6 +67,6 @@ export function addApolloState(client: ApolloClient<NormalizedCacheObject>, page
 export function useApollo(pageProps?: any, initialToken?: string) {
   const [token, setToken] = useState<string | undefined>(initialToken)
   const state = pageProps?.apolloData || {}
-  const store = useMemo(() => initializeApollo(state, token), [token, state])
-  return { apolloClient: store, setToken }
+  const apolloClient = useMemo(() => initializeApollo(state, token), [token])
+  return { apolloClient, setToken }
 }
