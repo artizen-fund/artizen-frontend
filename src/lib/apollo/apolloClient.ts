@@ -8,23 +8,37 @@ import { cache } from './'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-export const createApolloClient = (token?: string) => {
+export const createApolloClient = (didToken?: string) => {
   const httpLink = createHttpLink({
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
-    headers: {},
     credentials: 'same-origin',
   })
 
+  // This sets up a kind of middleware that circumstantially uses the correct query token.
+  // https://www.apollographql.com/docs/react/networking/authentication/#header
   const authLink = setContext((_, { headers }) => {
-    if (isServer()) {
-      headers['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
+    const newHeaders: Record<string, string> = {}
+    if (isServer() && didToken) {
+      // server request on behalf of user via MagicLink DecentralizedID token
+      newHeaders['Authorization'] = `Bearer ${didToken}`
+    } else if (isServer()) {
+      // server request (usually for SSR)
+      newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
     } else {
+      // client request
       const token = localStorage.getItem('token')
       if (token) {
-        headers['authorization'] = `Bearer ${token}`
+        newHeaders['Authorization'] = `Bearer ${token}`
       }
     }
-    return headers
+    console.log({
+      ...headers,
+      ...newHeaders,
+    })
+    return {
+      ...headers,
+      ...newHeaders,
+    }
   })
 
   return new ApolloClient({
@@ -35,7 +49,7 @@ export const createApolloClient = (token?: string) => {
 }
 
 export function initializeApollo(initialState?: any, token?: string): ApolloClient<NormalizedCacheObject> {
-  const newApolloClient = createApolloClient(token)
+  const newApolloClient = createApolloClient()
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here.
   if (initialState) {
     // Get existing cache, loaded during client side data fetching

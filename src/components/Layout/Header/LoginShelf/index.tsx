@@ -10,7 +10,7 @@ import { schema, uischema, initialState, FormState } from './form'
 const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
   const { magic } = useMagic()
-  const apolloClient = useApolloClient<()
+  const apolloClient = useApolloClient()
 
   const [data, setData] = useState<FormState>(initialState)
   useMemo(() => {

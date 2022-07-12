@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import { setTokenCookie, assert, getUserProfile } from '@lib'
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
+// TODO: we are doing this call client-side now, this api route is obsolete
 const user = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const JWT_SECRET = assert(process.env.JWT_SECRET, 'JWT_SECRET')
