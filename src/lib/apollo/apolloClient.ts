@@ -31,10 +31,6 @@ export const createApolloClient = (didToken?: string) => {
         newHeaders['Authorization'] = `Bearer ${token}`
       }
     }
-    console.log({
-      ...headers,
-      ...newHeaders,
-    })
     return {
       ...headers,
       ...newHeaders,
