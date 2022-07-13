@@ -7,9 +7,9 @@ declare global {
 
   type NextJsInitializedPage = (props: AppProps) => JSX.Element
 
-  type UserToken = {
-    issuer: string
+  type TokenAndMetadataBundle = {
     token: string
+    metadata: MagicUserMetadata
   }
 }
 

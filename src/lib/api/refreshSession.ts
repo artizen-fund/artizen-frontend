@@ -1,4 +1,4 @@
-const refreshSession = async (): Promise<any> =>
+const refreshSession = async (): Promise<TokenAndMetadataBundle> =>
   await fetch('/api/refreshSession')
     .then(async data => {
       return await data.json()

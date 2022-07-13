@@ -1,10 +1,5 @@
 import type { MagicUserMetadata } from 'magic-sdk'
 
-type TokenAndMetadataBundle = {
-  token: string
-  metadata: MagicUserMetadata
-}
-
 const login = async (didToken: string): Promise<TokenAndMetadataBundle> =>
   await fetch('/api/createSession', {
     method: 'POST',
