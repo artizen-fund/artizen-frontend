@@ -28,7 +28,6 @@ export const createApolloClient = (didToken?: string) => {
       // client request
       const token = localStorage.getItem('token')
       if (token) {
-        console.log('token found in localStorage', token)
         newHeaders['Authorization'] = `Bearer ${token}`
       }
     }

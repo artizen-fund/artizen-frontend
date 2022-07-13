@@ -5,8 +5,8 @@ type TokenAndMetadataBundle = {
   metadata: MagicUserMetadata
 }
 
-const fetchTokenAndMetadata = async (didToken: string): Promise<TokenAndMetadataBundle> =>
-  await fetch('/api/tokenAndMetadata', {
+const login = async (didToken: string): Promise<TokenAndMetadataBundle> =>
+  await fetch('/api/createSession', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,4 +20,4 @@ const fetchTokenAndMetadata = async (didToken: string): Promise<TokenAndMetadata
       throw new Error(e)
     })
 
-export default fetchTokenAndMetadata
+export default login

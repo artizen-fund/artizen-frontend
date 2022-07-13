@@ -1,4 +1,4 @@
-export * from './api'
+export * as api from './api'
 export * from './apollo'
 export * from './assert'
 export * from './assetPath'

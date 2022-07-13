@@ -1,5 +1,6 @@
 import { InMemoryCache } from '@apollo/client'
 import { isEqual } from 'lodash'
+import { userMetadataVar } from './localState'
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -31,7 +32,19 @@ export const cache: InMemoryCache = new InMemoryCache({
           keyArgs: ['where'],
           // Concatenate the incoming list items with the existing list items.
           merge(existing, incoming) {
-            return !existing ? incoming : [...existing, ...incoming]
+            return !existing
+              ? incoming
+              : [
+                  ...existing,
+                  ...incoming.filter((incomingVar: any) =>
+                    existing.every((existingVar: any) => !isEqual(incomingVar, existingVar)),
+                  ),
+                ]
+          },
+        },
+        userMetadata: {
+          read() {
+            return userMetadataVar()
           },
         },
       },
