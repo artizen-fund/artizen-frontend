@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
+import { rgba, checkSession } from '@lib'
 
 const AccountButton = (props: SimpleComponentProps) => {
   const user = undefined
 
   useEffect(() => {
-    // checkSession()
+    checkSession()
   }, [])
 
   const TEMP_INITIALS = 'RP'

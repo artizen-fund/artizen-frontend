@@ -15,7 +15,8 @@ const user = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const { token } = req.cookies
-    const jwtUser = jwt.verify(token, JWT_SECRET) as UserToken
+    const jwtUser = jwt.verify(token, JWT_SECRET)
+    console.log(jwtUser)
     if (!jwtUser.issuer) throw 'Bad JWT payload.'
 
     // Refresh the JWT for the user each time they send a request to /user so they only get logged out after SESSION_LENGTH_IN_DAYS of inactivity

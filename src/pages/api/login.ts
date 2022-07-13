@@ -4,6 +4,7 @@ import { withSentry } from '@sentry/nextjs'
 import { setTokenCookie, assert, checkUserProfile, updateUserProfile, createUserProfile, getUserProfile } from '@lib'
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
+// I think this is obsolete
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
   const MAGIC_SECRET_KEY = assert(process.env.NEXT_PUBLIC_MAGIC_SECRET_KEY, 'NEXT_PUBLIC_MAGIC_SECRET_KEY')
   const magic = new Magic(MAGIC_SECRET_KEY)
