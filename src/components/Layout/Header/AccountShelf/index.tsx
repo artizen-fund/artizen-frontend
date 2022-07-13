@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { rgba, logoutUser } from '@lib'
+import { rgba, api } from '@lib'
 import AccountStats from './AccountStats'
 
 interface IAccountShelf {
@@ -53,7 +53,7 @@ const AccountShelf = ({ user }: IAccountShelf) => {
           </Button>
         </Buttons>
         <hr />
-        <div onClick={() => logoutUser()}>Sign Out</div>
+        <div onClick={() => api.logoutUser()}>Sign Out</div>
       </Commands>
       <AccountStats {...{ stats }} />
       <Illustration src="/images/qf-square.svg" />
