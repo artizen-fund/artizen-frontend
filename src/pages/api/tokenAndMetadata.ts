@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Magic } from '@magic-sdk/admin'
 import { withSentry } from '@sentry/nextjs'
-import { setTokenCookie, assert, checkUserProfile, updateUserProfile, createUserProfile, getUserProfile } from '@lib'
+import { setTokenCookie, assert, checkUserProfile, updateUserProfile, createUserProfile } from '@lib'
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
 const token = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -31,7 +31,7 @@ const token = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     setTokenCookie(res, token)
-    res.status(200).send({ token })
+    res.status(200).send({ token, metadata })
   } catch (error) {
     console.error('error from api login:', error)
     res.status(500).end()

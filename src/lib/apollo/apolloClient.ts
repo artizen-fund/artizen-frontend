@@ -1,5 +1,4 @@
-import { useMemo, useState } from 'react'
-import { ApolloClient, createHttpLink, HttpOptions, NormalizedCacheObject } from '@apollo/client'
+import { ApolloClient, createHttpLink, NormalizedCacheObject } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
@@ -15,20 +14,21 @@ export const createApolloClient = (didToken?: string) => {
     credentials: 'same-origin',
   })
 
-  // This sets up a kind of middleware that circumstantially uses the correct query token.
+  // This sets up a middleware that circumstantially uses the correct query token.
   // https://www.apollographql.com/docs/react/networking/authentication/#header
   const authLink = setContext((_, { headers }) => {
     const newHeaders: Record<string, string> = {}
-    if (isServer() && didToken) {
-      // server request on behalf of user via MagicLink DecentralizedID token
-      headers['Authorization'] = `Bearer ${didToken}`
-    } else if (isServer()) {
+    if (isServer() && !didToken) {
       // server request (usually for SSR)
       newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
+    } else if (isServer()) {
+      // server request on behalf of user via MagicLink DecentralizedID token
+      newHeaders['Authorization'] = `Bearer ${didToken}`
     } else {
       // client request
       const token = localStorage.getItem('token')
       if (token) {
+        console.log('token found in localStorage', token)
         newHeaders['Authorization'] = `Bearer ${token}`
       }
     }
@@ -48,7 +48,7 @@ export const createApolloClient = (didToken?: string) => {
 }
 
 export function initializeApollo(initialState?: any, token?: string): ApolloClient<NormalizedCacheObject> {
-  const newApolloClient = createApolloClient()
+  const newApolloClient = createApolloClient(token)
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here.
   if (initialState) {
     // Get existing cache, loaded during client side data fetching

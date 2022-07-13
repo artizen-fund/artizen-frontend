@@ -4,7 +4,8 @@ import { fetchTokenAndMetadata, userMetadata } from '@lib'
 import { GET_USER } from '@gql'
 import { IGetUserQuery } from '@types'
 
-const createSession = async (email: string, magic: Magic, apolloClient: ApolloClient<object>) => {
+// todo: this is bonked
+const checkSession = async (apolloClient: ApolloClient<object>) => {
   const didToken = await magic.auth.loginWithMagicLink({ email, showUI: false })
   if (!didToken) throw 'Error retrieving token'
 
@@ -18,4 +19,4 @@ const createSession = async (email: string, magic: Magic, apolloClient: ApolloCl
   console.log('user query success', data.User)
 }
 
-export { createSession }
+export { checkSession }
