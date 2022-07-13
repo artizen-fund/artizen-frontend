@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ApolloClient, createHttpLink, NormalizedCacheObject } from '@apollo/client'
+import { ApolloClient, createHttpLink, HttpOptions, NormalizedCacheObject } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
@@ -11,6 +11,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 export const createApolloClient = (didToken?: string) => {
   const httpLink = createHttpLink({
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
+    headers: {},
     credentials: 'same-origin',
   })
 
@@ -20,7 +21,7 @@ export const createApolloClient = (didToken?: string) => {
     const newHeaders: Record<string, string> = {}
     if (isServer() && didToken) {
       // server request on behalf of user via MagicLink DecentralizedID token
-      newHeaders['Authorization'] = `Bearer ${didToken}`
+      headers['Authorization'] = `Bearer ${didToken}`
     } else if (isServer()) {
       // server request (usually for SSR)
       newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
@@ -32,8 +33,10 @@ export const createApolloClient = (didToken?: string) => {
       }
     }
     return {
-      ...headers,
-      ...newHeaders,
+      headers: {
+        ...headers,
+        ...newHeaders,
+      },
     }
   })
 
