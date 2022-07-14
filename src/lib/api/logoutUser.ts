@@ -1,3 +1,5 @@
+// todo: this is probably busted
+
 const logoutUser = async (): Promise<boolean> =>
   await fetch('/api/logout', {
     method: 'POST',

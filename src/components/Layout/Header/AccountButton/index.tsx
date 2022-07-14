@@ -1,14 +1,28 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useApolloClient, useReactiveVar, useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba, useSession } from '@lib'
+import { rgba, refreshSession, userMetadataVar } from '@lib'
+import { GET_USER } from '@gql'
+import { IGetUserQuery, IUser } from '@types'
 
 const AccountButton = (props: SimpleComponentProps) => {
-  const { user, checkSession } = useSession()
+  const apolloClient = useApolloClient()
+  const metadata = useReactiveVar(userMetadataVar)
+  const { data } = useQuery<IGetUserQuery>(GET_USER, {
+    variables: { issuer: metadata?.issuer },
+  })
+
+  const [loggedInUser, setLoggedInUser] = useState<IUser>()
+  useEffect(() => {
+    if (data?.User && data.User.length > 0) {
+      setLoggedInUser(data.User[0] as IUser)
+    }
+  }, [data])
 
   useEffect(() => {
-    checkSession()
+    refreshSession(apolloClient)
   }, [])
 
   const TEMP_INITIALS = 'RP'
@@ -20,10 +34,10 @@ const AccountButton = (props: SimpleComponentProps) => {
   // SessionShelf hidden and logged in "avatar or initials view"
 
   return (
-    <Wrapper loggedIn={!!user} {...props}>
-      <SignInLabel loggedIn={!!user} />
-      <HamburgerGlyph loggedIn={!!user} color="night" darkColor="moon" glyph="hamburger" />
-      <AvatarImage loggedIn={!!user}>
+    <Wrapper loggedIn={!!loggedInUser} {...props}>
+      <SignInLabel loggedIn={!!loggedInUser} />
+      <HamburgerGlyph loggedIn={!!loggedInUser} color="night" darkColor="moon" glyph="hamburger" />
+      <AvatarImage loggedIn={!!loggedInUser}>
         <Initials>{TEMP_INITIALS}</Initials>
       </AvatarImage>
     </Wrapper>

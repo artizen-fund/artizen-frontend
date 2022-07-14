@@ -1,8 +1,9 @@
+import React, { useMemo } from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
-import { assert, isProd, SessionProvider, useApollo, withAuth } from '@lib'
+import { assert, isProd, withAuth, MagicProvider, initializeApollo } from '@lib'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
@@ -10,19 +11,17 @@ import '@public/styles/globals.css'
 const App = ({ Component, pageProps }: AppProps) => {
   const NEXT_PUBLIC_INTERCOM_APP_ID = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
-  const { apolloClient } = useApollo(pageProps)
+  const apolloClient = initializeApollo(pageProps?.apolloData || {})
 
   return (
-    <>
-      <IntercomProvider appId={NEXT_PUBLIC_INTERCOM_APP_ID}>
-        <SessionProvider>
-          <ApolloProvider client={apolloClient}>
-            {/* <Toaster /> */}
-            <Component {...pageProps} />
-          </ApolloProvider>
-        </SessionProvider>
-      </IntercomProvider>
-    </>
+    <IntercomProvider appId={NEXT_PUBLIC_INTERCOM_APP_ID}>
+      <ApolloProvider client={apolloClient}>
+        <MagicProvider>
+          {/* <Toaster /> */}
+          <Component {...pageProps} />
+        </MagicProvider>
+      </ApolloProvider>
+    </IntercomProvider>
   )
 }
 
