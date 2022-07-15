@@ -27,6 +27,10 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
+  const registerTwitter = () => {
+    console.log('registerTwitter ')
+  }
+
   const { createSession } = useSession()
   const handleLoginWithEmail = async () => {
     if (!data.email) return
@@ -70,7 +74,7 @@ const LoginShelf = () => {
           <Button level={1} outline onClick={() => alert('derp')} stretch>
             Phone
           </Button>
-          <Button level={1} outline onClick={() => alert('derp')} stretch>
+          <Button level={1} outline onClick={registerTwitter} stretch>
             Twitter
           </Button>
           <Button level={1} outline onClick={() => alert('derp')} stretch>
