@@ -5,7 +5,7 @@ import type { MagicUserMetadata } from 'magic-sdk'
 import jwt from 'jsonwebtoken'
 import { removeTokenCookie, assert } from '@lib'
 
-const logout = async (req: NextApiRequest, res: NextApiResponse) => {
+const endSession = async (req: NextApiRequest, res: NextApiResponse) => {
   const MAGIC_SECRET_KEY = assert(process.env.NEXT_PUBLIC_MAGIC_SECRET_KEY, 'NEXT_PUBLIC_MAGIC_SECRET_KEY')
   const magic = new Magic(MAGIC_SECRET_KEY)
 
@@ -30,4 +30,4 @@ const logout = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default withSentry(logout)
+export default withSentry(endSession)
