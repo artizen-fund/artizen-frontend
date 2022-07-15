@@ -19,7 +19,7 @@ const SessionShelf = () => {
     }
   }, [data])
 
-  return !!loggedInUser ? <AccountShelf user={loggedInUser} /> : <LoginShelf />
+  return !!metadata && !!loggedInUser ? <AccountShelf user={loggedInUser} /> : <LoginShelf />
 }
 
 export default SessionShelf
