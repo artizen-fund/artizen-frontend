@@ -1,13 +1,16 @@
 import { useMemo, useState } from 'react'
+import { useApolloClient } from '@apollo/client'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, useSession } from '@lib'
+import { rgba, createSession, useMagic } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
 const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
+  const { magic } = useMagic()
+  const apolloClient = useApolloClient()
 
   const [data, setData] = useState<FormState>(initialState)
   useMemo(() => {
@@ -27,17 +30,12 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const registerTwitter = () => {
-    console.log('registerTwitter ')
-  }
-
-  const { createSession } = useSession()
   const handleLoginWithEmail = async () => {
     if (!data.email) return
     setReadonly(true)
     setSubmitted(true)
     try {
-      createSession(data.email)
+      createSession(data.email, magic, apolloClient)
       setSubmitted(true)
       setReadonly(false)
     } catch (error) {
@@ -74,7 +72,7 @@ const LoginShelf = () => {
           <Button level={1} outline onClick={() => alert('derp')} stretch>
             Phone
           </Button>
-          <Button level={1} outline onClick={registerTwitter} stretch>
+          <Button level={1} outline onClick={() => alert('derp')} stretch>
             Twitter
           </Button>
           <Button level={1} outline onClick={() => alert('derp')} stretch>

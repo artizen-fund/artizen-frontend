@@ -2,7 +2,7 @@ import renderer from 'react-test-renderer'
 import AccountShelf from './'
 
 describe('AccountShelf', () => {
-  const user: ArtizenUser = {
+  const user = {
     id: 'abc123',
     email: 'herp@derp.com',
     issuer: 'Derp Donk',
