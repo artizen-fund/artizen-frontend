@@ -62,7 +62,7 @@ const AccountShelf = ({ user }: IAccountShelf) => {
         </div>
       </Commands>
       <AccountStats {...{ stats }} />
-      <Illustration src="/images/assets/qf-square.svg" />
+      <Illustration data="/assets/qf-square.svg" />
     </Wrapper>
   )
 }
@@ -89,6 +89,7 @@ const Commands = styled.div`
   grid-area: commands;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 50px;
 `
 
@@ -122,7 +123,7 @@ const Buttons = styled.div`
   }
 `
 
-const Illustration = styled.img`
+const Illustration = styled.object`
   grid-area: illustration;
   margin: auto;
 `
