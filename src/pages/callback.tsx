@@ -1,52 +1,48 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useMagic } from '@lib'
 // import { magicLink } from '@lib'
 // import Loading from '../components/loading'
 
 const Callback = () => {
   {
-    /*
-  const {
-    query: { magic_credential, provider },
-    push,
-  } = useRouter()
+  const {push, query} = useRouter()
+  const { magic } = useMagic()
 
   // The redirect contains a `provider` query param if the user is logging in with a social provider
   useEffect(() => {
     // Send token to server to validate
-    const authenticateWithServer = async (didToken: string) => {
-      console.log('didToken  ', didToken)
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${didToken}`,
-        },
-      })
+    query.provider && finishSocialLogin()
 
-      if (res.status === 200) {
-        push('/')
-      }
+  }, [query])
+
+
+  const finishSocialLogin = async () => {
+    const result = await magic.oauth.getRedirectResult()
+    authenticateWithServer(result.magic.idToken)
+  }
+
+  const authenticateWithServer = async (didToken: string) => {
+    
+    const res = await fetch('/api/createSession', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${didToken}`,
+      },
+    })
+
+    const resP = await res.json()
+
+    console.log('resP    ', resP)
+
+    if (res.status === 200) {
+      push('/')
     }
-
-    const finishSocialLogin = async () => {
-      magicLink?.oauth.getRedirectResult().then(result => authenticateWithServer(result.magic.idToken))
-    }
-
-    // `loginWithCredential()` returns a didToken for the user logging in
-    const finishEmailRedirectLogin = () => {
-      if (magic_credential) {
-        magicLink?.auth.loginWithCredential().then(didToken => authenticateWithServer(didToken!))
-      }
-    }
-
-    provider ? finishSocialLogin() : finishEmailRedirectLogin()
-  }, [magic_credential, provider, push])
-
-  // `getRedirectResult()` returns an object with user data from Magic and the social provider
+  }
 
   return 'loading'
-  */
+  
   }
 }
 

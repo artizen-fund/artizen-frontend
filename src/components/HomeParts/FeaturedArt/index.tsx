@@ -29,9 +29,9 @@ const FeaturedArt = ({ tokenId, startDate, tagName }: IFeaturedArt) => {
   const [metadata, setMetadata] = useState<Metadata>()
 
   const getMetadataFromUri = async (uri: string) => {
-    const response = await fetch(uri)
-    const json = await response.json()
-    setMetadata(json)
+    // const response = await fetch(uri)
+    // const json = await response.json()
+    // setMetadata(json)
   }
 
   useEffect(() => {
