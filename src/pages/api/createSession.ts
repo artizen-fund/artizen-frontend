@@ -4,7 +4,7 @@ import { withSentry } from '@sentry/nextjs'
 import { setTokenCookie, assert, checkUserProfile, updateUserProfile, createUserProfile } from '@lib'
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
-const tokenAndMetadata = async (req: NextApiRequest, res: NextApiResponse) => {
+const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
   const MAGIC_SECRET_KEY = assert(process.env.NEXT_PUBLIC_MAGIC_SECRET_KEY, 'NEXT_PUBLIC_MAGIC_SECRET_KEY')
   const magic = new Magic(MAGIC_SECRET_KEY)
 
@@ -38,4 +38,4 @@ const tokenAndMetadata = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default withSentry(tokenAndMetadata)
+export default withSentry(createSession)

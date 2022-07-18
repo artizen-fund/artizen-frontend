@@ -1,11 +1,11 @@
-import type { Magic } from 'magic-sdk'
 import { ApolloClient } from '@apollo/client'
-import { userMetadataVar, api } from '@lib'
+import { userMetadataVar } from '@lib'
 import { GET_USER } from '@gql'
 import { IGetUserQuery } from '@types'
 
 const refreshSession = async (apolloClient: ApolloClient<object>) => {
-  const { token, metadata } = await api.refreshSession()
+  const apiData = await fetch('/api/refreshSession')
+  const { token, metadata } = await apiData.json()
   if (!token || !metadata) throw 'Error refreshing session from API'
 
   userMetadataVar(metadata)

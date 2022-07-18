@@ -1,6 +1,6 @@
 import type { Magic } from 'magic-sdk'
 import { ApolloClient } from '@apollo/client'
-import { api, userMetadataVar } from '@lib'
+import { userMetadataVar } from '@lib'
 import { GET_USER } from '@gql'
 import { IGetUserQuery } from '@types'
 
@@ -8,7 +8,14 @@ const createSession = async (email: string, magic: Magic, apolloClient: ApolloCl
   const didToken = await magic.auth.loginWithMagicLink({ email, showUI: false })
   if (!didToken) throw 'Error retrieving token'
 
-  const { token, metadata } = await api.login(didToken)
+  const apiData = await fetch('/api/createSession', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${didToken}`,
+    },
+  })
+  const { token, metadata } = await apiData.json()
   if (!token || !metadata) throw 'Error creating session from API'
 
   userMetadataVar(metadata)
