@@ -44,12 +44,17 @@ const LoginShelf = () => {
     }
   }
 
+  const reset = () => {
+    setSubmitted(false)
+    setReadonly(false)
+  }
+
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
       <Copy>
         <Headline>Let’s get started by setting up your Artizen account</Headline>
         <InfoRow>
-          <Icon glyph="info" outline level={1} />
+          <Icon glyph="infoLarge" outline level={1} />
           <SignInDirections>
             Already have an account?
             <br />
@@ -62,8 +67,12 @@ const LoginShelf = () => {
           Sign In / Sign Up
         </SubmitButton>
         <Confirmation>
-          <div>Congrats, confirmation sent!</div>
-          <p>We emailed a magic link to {data.email}.</p>
+          <Icon glyph="tick" outline level={2} color="moss" />
+          <div>
+            <h1>Done, confirmation sent!</h1>
+            <p>We emailed a magic link to {data.email}. Click the link Sign in or sign up.</p>
+          </div>
+          <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
         </Confirmation>
       </Form>
       <Alternatives>
@@ -113,16 +122,28 @@ const Confirmation = styled.div`
   grid-area: confirmation;
   flex-direction: column;
   justify-content: center;
-  div {
+  align-items: center;
+  gap: 30px;
+  h1 {
     ${typography.title.l4}
-    color: ${rgba(palette.moon)};
-    margin-bottom: 0.25em;
+    color: ${rgba(palette.night)};
+    @media (prefers-color-scheme: dark) {
+      color: ${rgba(palette.moon)};
+    }
   }
   p {
     ${typography.label.l1}
     color: ${rgba(palette.barracuda)};
   }
   text-align: center;
+`
+
+const Reset = styled.p`
+  cursor: pointer;
+  border-bottom: 2px solid ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    border-bottom: 2px solid ${rgba(palette.moon)};
+  }
 `
 
 const Wrapper = styled.div`

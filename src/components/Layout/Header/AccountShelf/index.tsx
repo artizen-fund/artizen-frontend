@@ -16,17 +16,17 @@ const AccountShelf = ({ user }: IAccountShelf) => {
       label: 'donated',
     },
     {
-      glyph: 'info',
+      glyph: 'palette',
       unit: '42',
       label: 'collected',
     },
     {
-      glyph: 'info',
+      glyph: 'wallet',
       unit: '$0',
       label: 'collected',
     },
     {
-      glyph: 'info',
+      glyph: 'token',
       unit: '100',
       label: '$ART',
     },
@@ -35,28 +35,34 @@ const AccountShelf = ({ user }: IAccountShelf) => {
   return (
     <Wrapper>
       <Commands>
-        {user.firstName && <Welcome>Hi {user.firstName}</Welcome>}
-        {!user.firstName && <Welcome>Welcome</Welcome>}
-        <Message>Thanks for supporting the future of public goods.</Message>
-        <Buttons>
-          <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="face">
-            Profile
+        <Top>
+          {user.firstName && <Welcome>Hi {user.firstName}</Welcome>}
+          {!user.firstName && <Welcome>Welcome</Welcome>}
+          <Message>Thanks for supporting the future of public goods.</Message>
+          <Buttons>
+            <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="face">
+              Profile
+            </Button>
+            <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="wallet">
+              Wallet
+            </Button>
+            <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="gear">
+              Settings
+            </Button>
+            <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="bell">
+              Notifications
+            </Button>
+          </Buttons>
+        </Top>
+        <div>
+          <Rule />
+          <Button onClick={() => logout} stretch level={1} glyph="power" transparent>
+            Sign Out
           </Button>
-          <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="info">
-            Wallet
-          </Button>
-          <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="info">
-            Settings
-          </Button>
-          <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="info">
-            Notifications
-          </Button>
-        </Buttons>
-        <hr />
-        <div onClick={() => logout()}>Sign Out</div>
+        </div>
       </Commands>
       <AccountStats {...{ stats }} />
-      <Illustration src="/images/qf-square.svg" />
+      <Illustration src="/images/assets/qf-square.svg" />
     </Wrapper>
   )
 }
@@ -81,6 +87,15 @@ const Wrapper = styled.div`
 
 const Commands = styled.div`
   grid-area: commands;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+`
+
+const Top = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 `
 
 const Welcome = styled.h1`
@@ -110,6 +125,15 @@ const Buttons = styled.div`
 const Illustration = styled.img`
   grid-area: illustration;
   margin: auto;
+`
+
+const Rule = styled.hr`
+  appearance: none;
+  width: 100%;
+  height: 1px;
+  background: ${rgba(palette.barracuda)};
+  border: 0;
+  outline: 0;
 `
 
 export default AccountShelf
