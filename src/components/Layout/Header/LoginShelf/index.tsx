@@ -1,11 +1,16 @@
 import { useMemo, useState } from 'react'
-import { useApolloClient } from '@apollo/client'
+import type { Magic } from 'magic-sdk'
+import { useApolloClient, ApolloClient } from '@apollo/client'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, createSession, useMagic } from '@lib'
+import { rgba, createSession, useMagic} from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
+
+
+
+
 
 const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
@@ -30,12 +35,28 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const handleLoginWithEmail = async () => {
-    if (!data.email) return
+  const handleLogin = async (
+    magic: Magic, 
+    apolloClient: ApolloClient,
+    provider?: string, 
+    email?: string,
+  ) => {
     setReadonly(true)
     setSubmitted(true)
+
+    console.log('gets here email  ', email)
+
+    const loginWithEmail = email && { email,magic }
+    const loginWithSocial = provider && {provider,magic }
+
+    console.log('loginWithSocial  ', loginWithSocial)
+
     try {
-      createSession(data.email, magic, apolloClient)
+      createSession(
+        apolloClient,
+        loginWithEmail,
+        loginWithSocial,
+      )
       setSubmitted(true)
       setReadonly(false)
     } catch (error) {
@@ -43,6 +64,7 @@ const LoginShelf = () => {
       setReadonly(false)
     }
   }
+
 
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
@@ -58,7 +80,19 @@ const LoginShelf = () => {
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <SubmitButton stretch onClick={() => handleLoginWithEmail()} disabled={!data.email || !acceptedToc || readonly}>
+        <SubmitButton
+          stretch onClick={
+            
+             () => {
+              console.log('its clicking here  before   ', data.email)
+              if(!data.email) return
+              console.log('its clicking here  2   ', data.email)
+              handleLogin(magic, apolloClient, undefined, data.email)
+
+            }
+
+
+        } disabled={!data.email || !acceptedToc || readonly}>
           Sign In / Sign Up
         </SubmitButton>
         <Confirmation>
@@ -72,7 +106,12 @@ const LoginShelf = () => {
           <Button level={1} outline onClick={() => alert('derp')} stretch>
             Phone
           </Button>
-          <Button level={1} outline onClick={() => alert('derp')} stretch>
+          <Button
+level={1} outline onClick={
+             () => {
+              handleLogin(magic, apolloClient, 'twitter', undefined)
+              } 
+          } stretch>
             Twitter
           </Button>
           <Button level={1} outline onClick={() => alert('derp')} stretch>
