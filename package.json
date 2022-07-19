@@ -48,6 +48,7 @@
     "cookie": "^0.5.0",
     "env-var": "^7.1.1",
     "ethers": "^5.6.8",
+    "husky": "^8.0.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "magic-sdk": "^8.1.0",
