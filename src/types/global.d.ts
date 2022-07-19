@@ -1,3 +1,6 @@
+import { SDKBase, InstanceWithExtensions } from '@magic-sdk/provider'
+import { OAuthExtension } from '@magic-ext/oauth'
+
 declare global {
   interface SimpleComponentProps {
     children?: React.ReadNode
@@ -11,6 +14,8 @@ declare global {
     token: string
     metadata: MagicUserMetadata
   }
+
+  type MagicInstance = InstanceWithExtensions<SDKBase, OAuthExtension[]>
 }
 
 export {}
