@@ -1,5 +1,5 @@
 {
-  "plugins": ["@typescript-eslint", "module-resolver", "import", "react"],
+  "plugins": ["@typescript-eslint", "module-resolver", "import", "react", "prettier"],
   "parser": "@typescript-eslint/parser",
   "extends": [
     "prettier",
@@ -9,9 +9,11 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:json/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": ["error"],
     "json/*": ["error", { "allowComments": true }],
 
     /* references */
