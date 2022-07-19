@@ -43,7 +43,7 @@ const createSession = async (
     const didToken = loginWithEmail && await handleLoginWithEmail(loginWithEmail) || 
                     loginWithSocial && await handleLoginWithSocial(loginWithSocial)
 
-  console.log('didToken   ', didToken) 
+  
   
 
 

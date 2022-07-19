@@ -101,7 +101,7 @@ const LoginShelf = () => {
             level={1} outline onClick={
 
               () => {
-                console.log('click in handleLogin')
+                
                 handleLogin(magic, apolloClient, 'twitter', undefined)
               } 
             
@@ -111,7 +111,6 @@ const LoginShelf = () => {
           <Button
                 level={1} outline onClick={
                () => {
-                console.log('click in handleLogin')
                 handleLogin(magic, apolloClient, 'discord', undefined)
               } 
 

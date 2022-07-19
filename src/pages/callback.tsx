@@ -32,9 +32,9 @@ const Callback = () => {
       },
     })
 
-    const resP = await res.json()
+    // const resP = await res.json()
 
-    console.log('resP    ', resP)
+    
     
     if (res.status === 200) {
       push('/')
