@@ -20,6 +20,9 @@ const Callback = () => {
     }, [query])
 
     const finishSocialLogin = async () => {
+      if (!magic) {
+        throw 'Error: magic is not initialized.'
+      }
       const result = await magic.oauth.getRedirectResult()
       authenticateWithServer(result.magic.idToken)
     }
