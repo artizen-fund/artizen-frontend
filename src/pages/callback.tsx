@@ -1,22 +1,31 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useMagic, userMetadataVar } from '@lib'
+import { GET_USER } from '@gql'
+import { useApolloClient } from '@apollo/client'
+import { IGetUserQuery } from '@types'
 // import { magicLink } from '@lib'
 // import Loading from '../components/loading'
 
 const Callback = () => {
   {
-    /*
-  const {
-    query: { magic_credential, provider },
-    push,
-  } = useRouter()
+    const { query } = useRouter()
+    const { magic } = useMagic()
+    const apolloClient = useApolloClient()
 
-  // The redirect contains a `provider` query param if the user is logging in with a social provider
-  useEffect(() => {
-    // Send token to server to validate
+    // The redirect contains a `provider` query param if the user is logging in with a social provider
+    useEffect(() => {
+      // Send token to server to validate
+      query.provider && finishSocialLogin()
+    }, [query])
+
+    const finishSocialLogin = async () => {
+      const result = await magic.oauth.getRedirectResult()
+      authenticateWithServer(result.magic.idToken)
+    }
+
     const authenticateWithServer = async (didToken: string) => {
-      console.log('didToken  ', didToken)
-      const res = await fetch('/api/login', {
+      const apiData = await fetch('/api/createSession', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,29 +33,23 @@ const Callback = () => {
         },
       })
 
-      if (res.status === 200) {
-        push('/')
-      }
+      const { token, metadata } = await apiData.json()
+      if (!token || !metadata) throw 'Error creating session from API'
+
+      userMetadataVar(metadata)
+      // this will now get picked up by ApolloClient authLink
+      localStorage.setItem('token', token)
+
+      const { data } = await apolloClient.query<IGetUserQuery>({
+        query: GET_USER,
+        variables: { issuer: metadata.issuer },
+      })
+      // console.log('data  ', data)
+      if (data.User.length < 1) throw 'Error retrieving user'
     }
 
-    const finishSocialLogin = async () => {
-      magicLink?.oauth.getRedirectResult().then(result => authenticateWithServer(result.magic.idToken))
-    }
-
-    // `loginWithCredential()` returns a didToken for the user logging in
-    const finishEmailRedirectLogin = () => {
-      if (magic_credential) {
-        magicLink?.auth.loginWithCredential().then(didToken => authenticateWithServer(didToken!))
-      }
-    }
-
-    provider ? finishSocialLogin() : finishEmailRedirectLogin()
-  }, [magic_credential, provider, push])
-
-  // `getRedirectResult()` returns an object with user data from Magic and the social provider
-
-  return 'loading'
-  */
+    // TODO: Add loading icon
+    return 'loading'
   }
 }
 

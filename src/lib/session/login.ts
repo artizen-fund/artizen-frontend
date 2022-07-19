@@ -4,9 +4,44 @@ import { userMetadataVar } from '@lib'
 import { GET_USER } from '@gql'
 import { IGetUserQuery } from '@types'
 
-const createSession = async (email: string, magic: Magic, apolloClient: ApolloClient<object>) => {
-  const didToken = await magic.auth.loginWithMagicLink({ email, showUI: false })
-  if (!didToken) throw 'Error retrieving token'
+export interface loginWithEmailProps {
+  email: string
+  magic: Magic
+}
+
+async function handleLoginWithEmail(data: loginWithEmailProps) {
+  const didToken = await data.magic.auth.loginWithMagicLink({ email: data.email, showUI: false })
+  if (!didToken) throw 'Error retrieving token with email'
+
+  return didToken
+}
+
+export interface loginWithSocialProps {
+  provider: string
+  magic: Magic
+}
+
+async function handleLoginWithSocial(data: loginWithSocialProps) {
+  const didToken = await data.magic.oauth.loginWithRedirect({
+    provider: data.provider, // google, apple, etc
+    redirectURI: new URL('/callback', window.location.origin).href, // required redirect to finish social login
+  })
+
+  if (!didToken) throw 'Error retrieving token with social'
+
+  return didToken
+}
+
+const createSession = async (
+  apolloClient: ApolloClient<object>,
+  loginWithEmail?: loginWithEmailProps,
+  loginWithSocial?: loginWithSocialProps,
+) => {
+  const didToken =
+    (loginWithEmail && (await handleLoginWithEmail(loginWithEmail))) ||
+    (loginWithSocial && (await handleLoginWithSocial(loginWithSocial)))
+
+  // console.log('didToken    ', didToken)
 
   const apiData = await fetch('/api/createSession', {
     method: 'POST',
