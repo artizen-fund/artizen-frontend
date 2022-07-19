@@ -1,5 +1,6 @@
-import { useMemo, useState, useEffect } from 'react'
-import { useApolloClient } from '@apollo/client'
+import { useMemo, useState } from 'react'
+import { useApolloClient, ApolloClient } from '@apollo/client'
+import type { Magic } from 'magic-sdk'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
@@ -30,35 +31,20 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  // const handleLoginWithEmail = async () => {
-  //   if (!data.email) return
-  //   setReadonly(true)
-  //   setSubmitted(true)
-  //   try {
-  //     createSession(data.email, magic, apolloClient)
-  //     setSubmitted(true)
-  //     setReadonly(false)
-  //   } catch (error) {
-  //     console.error(error)
-  //     setReadonly(false)
-  //   }
-  // }
 
   const handleLogin = async (
     magic: Magic, 
-    apolloClient: ApolloClient,
+    apolloClient: ApolloClient<object>,
     provider?: string, 
     email?: string,
   ) => {
     setReadonly(true)
     setSubmitted(true)
 
-    console.log('gets here email  ', email)
+    const loginWithEmail = email ? { email,magic } : undefined
+    const loginWithSocial = provider ? {provider,magic } : undefined
 
-    const loginWithEmail = email && { email,magic }
-    const loginWithSocial = provider && {provider,magic }
-
-    console.log('loginWithSocial  ', loginWithSocial)
+    
 
     try {
       createSession(
@@ -92,9 +78,7 @@ const LoginShelf = () => {
         <SubmitButton
             stretch onClick={
             () => {
-              console.log('its clicking here  before   ', data.email)
               if(!data.email) return
-              console.log('its clicking here  2   ', data.email)
               handleLogin(magic, apolloClient, undefined, data.email)
 
             }
@@ -114,17 +98,24 @@ const LoginShelf = () => {
             Phone
           </Button>
           <Button
-level={1} outline onClick={
+            level={1} outline onClick={
 
-          () => {
-            console.log('click in handleLogin')
-            handleLogin(magic, apolloClient, 'twitter', undefined)
-          } 
+              () => {
+                console.log('click in handleLogin')
+                handleLogin(magic, apolloClient, 'twitter', undefined)
+              } 
             
           } stretch>
             Twitter
           </Button>
-          <Button level={1} outline onClick={() => alert('derp')} stretch>
+          <Button
+                level={1} outline onClick={
+               () => {
+                console.log('click in handleLogin')
+                handleLogin(magic, apolloClient, 'discord', undefined)
+              } 
+
+          } stretch>
             Discord
           </Button>
         </Buttons>

@@ -35,12 +35,13 @@ const Callback = () => {
     const resP = await res.json()
 
     console.log('resP    ', resP)
-
+    
     if (res.status === 200) {
       push('/')
     }
   }
 
+  // TODO: Add loading icon
   return 'loading'
   
   }
