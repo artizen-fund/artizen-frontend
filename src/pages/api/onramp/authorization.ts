@@ -4,7 +4,7 @@ import { assert } from '@lib'
 
 const authorizationHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const SENDWYRE_SECRET = assert(process.env.SENDWYRE_SECRET, 'SENDWYRE_SECRET')
-  const sdk = api('@wyre-hub/v4#fxprd1kl2b0beym')
+  const sdk = api('@wyre-hub/v4#fyktdr28l3w9dqt1')
   // todo: what's that? ^ why is it hard coded?
   sdk.auth(SENDWYRE_SECRET)
   if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
