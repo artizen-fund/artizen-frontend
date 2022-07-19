@@ -1,4 +1,4 @@
-import type { Magic } from 'magic-sdk'
+import { OAuthProvider } from '@magic-ext/oauth'
 import { ApolloClient } from '@apollo/client'
 import { userMetadataVar } from '@lib'
 import { GET_USER } from '@gql'
@@ -6,27 +6,27 @@ import { IGetUserQuery } from '@types'
 
 export interface loginWithEmailProps {
   email: string
-  magic: Magic
+  magic: MagicInstance
 }
 
-async function handleLoginWithEmail(data: loginWithEmailProps) {
-  const didToken = await data.magic.auth.loginWithMagicLink({ email: data.email, showUI: false })
+async function handleLoginWithEmail({ email, magic }: loginWithEmailProps) {
+  const didToken = await magic.auth.loginWithMagicLink({ email, showUI: false })
   if (!didToken) throw 'Error retrieving token with email'
 
   return didToken
 }
 
 export interface loginWithSocialProps {
-  provider: string
-  magic: Magic
+  provider: OAuthProvider
+  magic: MagicInstance
 }
 
-async function handleLoginWithSocial(data: loginWithSocialProps) {
-  const didToken = await data.magic.oauth.loginWithRedirect({
-    provider: data.provider, // google, apple, etc
+async function handleLoginWithSocial({ magic, provider }: loginWithSocialProps) {
+  const didToken = await magic.oauth.loginWithRedirect({
+    provider, // google, apple, etc
     redirectURI: new URL('/callback', window.location.origin).href, // required redirect to finish social login
   })
-
+  // todo… refactor wheeee
   if (!didToken) throw 'Error retrieving token with social'
 
   return didToken
@@ -40,8 +40,6 @@ const createSession = async (
   const didToken =
     (loginWithEmail && (await handleLoginWithEmail(loginWithEmail))) ||
     (loginWithSocial && (await handleLoginWithSocial(loginWithSocial)))
-
-  // console.log('didToken    ', didToken)
 
   const apiData = await fetch('/api/createSession', {
     method: 'POST',

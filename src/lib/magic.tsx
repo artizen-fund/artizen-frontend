@@ -4,7 +4,7 @@ import { OAuthExtension } from '@magic-ext/oauth'
 import { isServer, assert, assertInt } from '@lib'
 
 interface IMagicContext {
-  magic?: any
+  magic?: MagicInstance
 }
 
 const MagicContext = createContext<IMagicContext>({})
