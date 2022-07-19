@@ -2,6 +2,7 @@
   "plugins": ["@typescript-eslint", "module-resolver", "import", "react"],
   "parser": "@typescript-eslint/parser",
   "extends": [
+    "prettier",
     "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",

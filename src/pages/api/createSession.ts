@@ -24,6 +24,8 @@ const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const userProfileType = await checkUserProfile(metadata.email, token)
 
+    console.log('userProfileType   ', userProfileType)
+
     if (userProfileType === 'OLD') {
       await updateUserProfile(metadata, token)
     } else if (userProfileType === 'NEW') {

@@ -14,6 +14,7 @@ const LoginShelf = () => {
   const apolloClient = useApolloClient()
 
   const [data, setData] = useState<FormState>(initialState)
+  const [sentEmail, setSentEmail] = useState(false)
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
       return
@@ -47,7 +48,7 @@ const LoginShelf = () => {
     
 
     try {
-      createSession(
+      await createSession(
         apolloClient,
         loginWithEmail,
         loginWithSocial,
@@ -90,14 +91,14 @@ const LoginShelf = () => {
         } disabled={!data.email || !acceptedToc || readonly}>
           Sign In / Sign Up
         </SubmitButton>
-        <Confirmation>
+       {sentEmail && <Confirmation>
           <Icon glyph="tick" outline level={2} color="moss" />
           <div>
             <h1>Done, confirmation sent!</h1>
             <p>We emailed a magic link to {data.email}. Click the link Sign in or sign up.</p>
           </div>
           <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
-        </Confirmation>
+        </Confirmation>}
       </Form>
       <Alternatives>
         <OrLine />

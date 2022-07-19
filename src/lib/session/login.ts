@@ -45,7 +45,7 @@ const createSession = async (
 
   
   
-
+    console.log('didToken    ', didToken)
 
   const apiData = await fetch('/api/createSession', {
     method: 'POST',
