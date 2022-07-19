@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Icon, AmountWidget } from '@components'
+import { Button, Icon, AmountWidget, CheckboxControl } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
-import CheckboxControl from '../Form/Controls/BooleanControl/CheckboxControl'
 
-type DonationMethod = 'usd' | 'polygon' | 'ethereum'
+interface IDonationAmount {
+  setStage: (s: DonationStage) => void
+  amount: number
+  setAmount: (n: number) => void
+}
 
-const DonationShelf = () => {
+const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
-  const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
-  const [amount, setAmount] = useState(10) // note: sort out integer or float
+  // todo: how is this managed?
+
   return (
     <Wrapper>
       <Information>
@@ -67,7 +70,7 @@ const DonationShelf = () => {
           </Method>
         </Methods>
 
-        <Button onClick={() => alert('derp')} stretch level={1}>
+        <Button onClick={() => setStage('payment')} stretch level={1}>
           Continue
         </Button>
       </Form>
@@ -148,4 +151,4 @@ const Method = styled.li`
   padding: 10px 0;
 `
 
-export default DonationShelf
+export default DonationAmount

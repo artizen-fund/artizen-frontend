@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DonationShelf renders correctly 1`] = `
+exports[`DonationAmount renders correctly 1`] = `
 <div
   className="sc-76c3510a-0 ebQHog"
 >

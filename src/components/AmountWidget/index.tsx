@@ -10,7 +10,7 @@ interface IAmountWidget {
 
 const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
   // todo: sort out integer or float
-  // todo: clamp amount (I think makes more sense to do here than donationShelf)
+  // todo: clamp amount (I think makes more sense to do here than DonationAmount)
   // todo: will we have text/typing input?
   return (
     <Wrapper>

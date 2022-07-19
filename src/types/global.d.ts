@@ -16,6 +16,10 @@ declare global {
   }
 
   type MagicInstance = InstanceWithExtensions<SDKBase, OAuthExtension[]>
+
+  type DonationStage = 'setAmount' | 'login' | 'payment' | 'processCrypto' | 'confirmation'
+
+  type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 }
 
 export {}
