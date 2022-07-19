@@ -9,15 +9,17 @@ export interface IconProps {
   outline?: boolean
   inverted?: boolean
   label?: string
+  color?: string
+  darkColor?: string
 }
 
-const Icon = ({ glyph, level, outline, inverted, label }: IconProps) => {
-  const color = (!outline && !inverted) || (outline && inverted) ? 'white' : 'night'
-  const darkColor = outline ? 'moon' : 'night'
+const Icon = ({ glyph, level, outline, inverted, color, darkColor, label }: IconProps) => {
+  const calculatedColor = color ? color : (!outline && !inverted) || (outline && inverted) ? 'white' : 'night'
+  const calculatedDarkColor = darkColor ? darkColor : color ? color : outline ? 'moon' : 'night'
   return (
     <Wrapper {...{ level }}>
-      <Circle {...{ outline, level, inverted, color, darkColor }}>
-        <Glyph {...{ glyph, level, color, darkColor }} />
+      <Circle {...{ outline, level, inverted }} color={calculatedColor} darkColor={calculatedDarkColor}>
+        <Glyph {...{ glyph, level }} color={calculatedColor} darkColor={calculatedDarkColor} />
       </Circle>
       {label && <Label color={inverted ? 'white' : 'night'}>{label}</Label>}
     </Wrapper>
