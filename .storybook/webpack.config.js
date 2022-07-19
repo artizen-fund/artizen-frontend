@@ -13,6 +13,7 @@ module.exports = ({ config }) => {
     '@gql': path.resolve(__dirname, '..', 'src', 'gql'),
     '@lib': path.resolve(__dirname, '..', 'src', 'lib'),
     '@types': path.resolve(__dirname, '..', 'src', 'types'),
+    '@copy': path.resolve(__dirname, '..', 'copy', '*'),
   }
 
   // We're using several that don't play nicely with Webpack5.

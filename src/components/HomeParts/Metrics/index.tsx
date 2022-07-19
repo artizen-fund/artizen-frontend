@@ -3,16 +3,25 @@ import { PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba, assetPath } from '@lib'
 
-const Metrics = () => (
+interface IMetrics {
+  metrics: Array<{
+    description: string
+    image: string
+    amount: number
+  }>
+}
+
+const Metrics = ({ metrics }: IMetrics) => (
   <PagePadding>
     <Wrapper>
-      {[0, 1, 2, 3].map(index => (
+      {metrics.map((metric, index) => (
         <Metric key={`metric-${index}`}>
-          <Illustration url={assetPath('/assets/illustrations/stats-collected.svg')} />
+          <Illustration type="image/svg+xml" data={assetPath(metric.image)} />
           <Amount>
-            <span>$</span>99,999
+            <span>$</span>
+            {metric.amount.toLocaleString('en-US')}
           </Amount>
-          <Description>Description</Description>
+          <Description>{metric.description}</Description>
         </Metric>
       ))}
     </Wrapper>
@@ -46,7 +55,7 @@ const Metric = styled.div`
 `
 
 // todo: the responsive layout needs work, waiting on images first
-const Illustration = styled.div<{ url: string }>`
+const Illustration = styled.object`
   width: 148px;
   height: 148px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -57,17 +66,15 @@ const Illustration = styled.div<{ url: string }>`
     width: 320px;
     height: 320px;
   }
-  background-image: url(${props => props.url});
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  outline: 1px dashed black;
 `
 
 const Amount = styled.div`
   margin-top: 0.75em;
   ${typography.title.l2}
   color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
   span {
     ${typography.title.l4}
     padding-right: 5px;
