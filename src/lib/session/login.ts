@@ -10,17 +10,16 @@ export interface loginWithEmailProps {
 }
 
 async function handleLoginWithEmail(data: loginWithEmailProps) {
-  const didToken = await data.magic.auth.loginWithMagicLink({email: data.email, showUI: false })
+  const didToken = await data.magic.auth.loginWithMagicLink({ email: data.email, showUI: false })
   if (!didToken) throw 'Error retrieving token with email'
 
   return didToken
-} 
+}
 
 export interface loginWithSocialProps {
   provider: string
   magic: Magic
 }
-
 
 async function handleLoginWithSocial(data: loginWithSocialProps) {
   const didToken = await data.magic.oauth.loginWithRedirect({
@@ -35,17 +34,14 @@ async function handleLoginWithSocial(data: loginWithSocialProps) {
 
 const createSession = async (
   apolloClient: ApolloClient<object>,
-  loginWithEmail?: loginWithEmailProps, 
-  loginWithSocial?: loginWithSocialProps, 
-  ) => {
-  
-  
-    const didToken = loginWithEmail && await handleLoginWithEmail(loginWithEmail) || 
-                    loginWithSocial && await handleLoginWithSocial(loginWithSocial)
+  loginWithEmail?: loginWithEmailProps,
+  loginWithSocial?: loginWithSocialProps,
+) => {
+  const didToken =
+    (loginWithEmail && (await handleLoginWithEmail(loginWithEmail))) ||
+    (loginWithSocial && (await handleLoginWithSocial(loginWithSocial)))
 
-  
-  
-    console.log('didToken    ', didToken)
+  // console.log('didToken    ', didToken)
 
   const apiData = await fetch('/api/createSession', {
     method: 'POST',

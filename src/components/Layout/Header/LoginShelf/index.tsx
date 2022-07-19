@@ -32,27 +32,16 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-
-  const handleLogin = async (
-    magic: Magic, 
-    apolloClient: ApolloClient<object>,
-    provider?: string, 
-    email?: string,
-  ) => {
+  const handleLogin = async (magic: Magic, apolloClient: ApolloClient<object>, provider?: string, email?: string) => {
     setReadonly(true)
     setSubmitted(true)
 
-    const loginWithEmail = email ? { email,magic } : undefined
-    const loginWithSocial = provider ? {provider,magic } : undefined
-
-    
+    const loginWithEmail = email ? { email, magic } : undefined
+    const loginWithSocial = provider ? { provider, magic } : undefined
 
     try {
-      await createSession(
-        apolloClient,
-        loginWithEmail,
-        loginWithSocial,
-      )
+      await createSession(apolloClient, loginWithEmail, loginWithSocial)
+      setSentEmail(true)
       setSubmitted(true)
       setReadonly(false)
     } catch (error) {
@@ -81,24 +70,25 @@ const LoginShelf = () => {
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <SubmitButton
-            stretch onClick={
-            () => {
-              if(!data.email) return
-              handleLogin(magic, apolloClient, undefined, data.email)
-
-            }
-
-        } disabled={!data.email || !acceptedToc || readonly}>
+          stretch
+          onClick={() => {
+            if (!data.email) return
+            handleLogin(magic, apolloClient, undefined, data.email)
+          }}
+          disabled={!data.email || !acceptedToc || readonly}
+        >
           Sign In / Sign Up
         </SubmitButton>
-       {sentEmail && <Confirmation>
-          <Icon glyph="tick" outline level={2} color="moss" />
-          <div>
-            <h1>Done, confirmation sent!</h1>
-            <p>We emailed a magic link to {data.email}. Click the link Sign in or sign up.</p>
-          </div>
-          <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
-        </Confirmation>}
+        {sentEmail && (
+          <Confirmation>
+            <Icon glyph="tick" outline level={2} color="moss" />
+            <div>
+              <h1>Done, confirmation sent!</h1>
+              <p>We emailed a magic link to {data.email}. Click the link Sign in or sign up.</p>
+            </div>
+            <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
+          </Confirmation>
+        )}
       </Form>
       <Alternatives>
         <OrLine />
@@ -107,23 +97,23 @@ const LoginShelf = () => {
             Phone
           </Button>
           <Button
-            level={1} outline onClick={
-
-              () => {
-                
-                handleLogin(magic, apolloClient, 'twitter', undefined)
-              } 
-            
-          } stretch>
+            level={1}
+            outline
+            onClick={() => {
+              handleLogin(magic, apolloClient, 'twitter', undefined)
+            }}
+            stretch
+          >
             Twitter
           </Button>
           <Button
-                level={1} outline onClick={
-               () => {
-                handleLogin(magic, apolloClient, 'discord', undefined)
-              } 
-
-          } stretch>
+            level={1}
+            outline
+            onClick={() => {
+              handleLogin(magic, apolloClient, 'discord', undefined)
+            }}
+            stretch
+          >
             Discord
           </Button>
         </Buttons>
