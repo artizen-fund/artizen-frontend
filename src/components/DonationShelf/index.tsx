@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba, userMetadataVar, useSession } from '@lib'
+import { rgba, userMetadataVar } from '@lib'
 import CheckboxControl from '../Form/Controls/BooleanControl/CheckboxControl'
 import { useQuery, useReactiveVar } from '@apollo/client'
 import { GET_USER } from '@gql'
@@ -24,6 +24,8 @@ const DonationShelf = () => {
   const metadata = useReactiveVar(userMetadataVar)
   const {
     data: {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       User: [user],
     },
   } = useQuery<IGetUserQuery>(GET_USER, {
