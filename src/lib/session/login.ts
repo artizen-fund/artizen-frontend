@@ -4,42 +4,34 @@ import { userMetadataVar } from '@lib'
 import { GET_USER } from '@gql'
 import { IGetUserQuery } from '@types'
 
-export interface loginWithEmailProps {
-  email: string
-  magic: MagicInstance
-}
-
-async function handleLoginWithEmail({ email, magic }: loginWithEmailProps) {
+async function handleLoginWithEmail(magic: MagicInstance, email: string) {
   const didToken = await magic.auth.loginWithMagicLink({ email, showUI: false })
   if (!didToken) throw 'Error retrieving token with email'
-
   return didToken
 }
 
-export interface loginWithSocialProps {
-  provider: OAuthProvider
-  magic: MagicInstance
-}
-
-async function handleLoginWithSocial({ magic, provider }: loginWithSocialProps) {
-  const didToken = await magic.oauth.loginWithRedirect({
+async function handleLoginWithSocial(magic: MagicInstance, provider: OAuthProvider) {
+  await magic.oauth.loginWithRedirect({
     provider, // google, apple, etc
     redirectURI: new URL('/callback', window.location.origin).href, // required redirect to finish social login
   })
-  // todo… refactor wheeee
-  if (!didToken) throw 'Error retrieving token with social'
-
-  return didToken
+  // TODO: oauth does not return a didToken
+  // refactor this and createSession below
+  return 'derp'
 }
 
-const createSession = async (
-  apolloClient: ApolloClient<object>,
-  loginWithEmail?: loginWithEmailProps,
-  loginWithSocial?: loginWithSocialProps,
-) => {
-  const didToken =
-    (loginWithEmail && (await handleLoginWithEmail(loginWithEmail))) ||
-    (loginWithSocial && (await handleLoginWithSocial(loginWithSocial)))
+type LoginParams = {
+  email?: string
+  provider?: OAuthProvider
+}
+
+const createSession = async (apolloClient: ApolloClient<object>, magic: MagicInstance, options: LoginParams) => {
+  const { email, provider } = options
+  if (!email && !provider) {
+    throw 'Error: one of email or social login provider required.'
+  }
+  const didToken = email ? await handleLoginWithEmail(magic, email) : await handleLoginWithSocial(magic, provider!)
+  // TODO: remove non-null assertion as part of social refactor ^
 
   const apiData = await fetch('/api/createSession', {
     method: 'POST',
@@ -60,3 +52,4 @@ const createSession = async (
 }
 
 export { createSession }
+export type { LoginParams }
