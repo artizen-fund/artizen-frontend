@@ -1,8 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useQuery, useReactiveVar } from '@apollo/client'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba } from '@lib'
-import { breakpoint, typography, palette } from '@theme'
+import { IGetUserQuery, IUser } from '@types'
+import { GET_USER } from '@gql'
+import { payWithFiat, userMetadataVar } from '@lib'
+import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
 interface IPaymentFiat {
@@ -15,9 +18,8 @@ const TRANSACTION_FEE = 42
 const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-  // todo: where/how is this stored?
-
-  const [data, setData] = useState<FormState>(initialState)
+  // todo: ^ where/how is this stored?
+  const [paymentData, setPaymentData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
   const [readonly, setReadonly] = useState(false)
 
@@ -27,20 +29,32 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
     }
     const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
     if (!frozenAnswers) {
-      setData(initialState)
+      setPaymentData(initialState)
       return
     }
     const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers)
+    setPaymentData(thawedAnswers)
   }, [])
 
-  const processTransation = () => {
+  const metadata = useReactiveVar(userMetadataVar)
+  const { data } = useQuery<IGetUserQuery>(GET_USER, {
+    variables: { issuer: metadata?.issuer },
+  })
+  const [loggedInUser, setLoggedInUser] = useState<IUser>()
+  useEffect(() => {
+    if (data?.User && data.User.length > 0) {
+      setLoggedInUser(data.User[0] as IUser)
+    }
+  }, [data])
+
+  const processTransation = async () => {
+    if (!metadata || !loggedInUser) {
+      throw 'Error: user session not found.'
+    }
     setReadonly(true)
     setProcessing(true)
-    console.warn('processing form data', data)
-    // todo: stuff
-    // then
-    setTimeout(() => setStage('processCrypto'), 5000)
+    await payWithFiat(amount, metadata.publicAddress!, paymentData, loggedInUser)
+    setStage('processCrypto')
   }
 
   return (
@@ -70,7 +84,12 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
           path="derp"
         />
       </Information>
-      <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
+      <Form
+        localStorageKey={LOCALSTORAGE_KEY}
+        {...{ schema, uischema, initialState, readonly }}
+        data={paymentData}
+        setData={setPaymentData}
+      >
         <SubmitButton stretch onClick={() => processTransation()}>
           Transfer ${amount + TRANSACTION_FEE}
         </SubmitButton>
@@ -111,11 +130,11 @@ const Wrapper = styled.div`
   gap: 10px;
   grid-template-areas:
     'copy copy'
-    'firstName lastName'
-    'cardNumber cardNumber'
-    'expiresMonth expiresYear'
-    'postalCode cvv'
-    'phone phone'
+    'first_name last_name'
+    'number number'
+    'month year'
+    'zip verification_value'
+    'phone_number phone_number'
     'submit submit';
   &.submitted {
     grid-template-areas:
@@ -126,11 +145,11 @@ const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 12px;
     grid-template-areas:
-      'copy copy firstName lastName'
-      'copy copy cardNumber cardNumber'
-      'copy copy expiresMonth expiresYear'
-      'copy copy postalCode cvv'
-      'copy copy phone phone'
+      'copy copy first_name last_name'
+      'copy copy number number'
+      'copy copy month year'
+      'copy copy zip verification_value'
+      'copy copy phone_number phone_number'
       'copy copy submit submit';
     &.submitted {
       grid-template-areas:
@@ -151,36 +170,36 @@ const Wrapper = styled.div`
     display: contents;
   }
 
-  *[id='#/properties/firstName'] {
-    grid-area: firstName;
+  *[id='#/properties/first_name'] {
+    grid-area: first_name;
   }
 
-  *[id='#/properties/lastName'] {
-    grid-area: lastName;
+  *[id='#/properties/last_name'] {
+    grid-area: last_name;
   }
 
-  *[id='#/properties/cardNumber'] {
-    grid-area: cardNumber;
+  *[id='#/properties/number'] {
+    grid-area: number;
   }
 
-  *[id='#/properties/cvv'] {
-    grid-area: cvv;
+  *[id='#/properties/verification_value'] {
+    grid-area: verification_value;
   }
 
-  *[id='#/properties/expiresMonth'] {
-    grid-area: expiresMonth;
+  *[id='#/properties/month'] {
+    grid-area: month;
   }
 
-  *[id='#/properties/expiresYear'] {
-    grid-area: expiresYear;
+  *[id='#/properties/year'] {
+    grid-area: year;
   }
 
-  *[id='#/properties/postalCode'] {
-    grid-area: postalCode;
+  *[id='#/properties/zip'] {
+    grid-area: zip;
   }
 
-  *[id='#/properties/phone'] {
-    grid-area: phone;
+  *[id='#/properties/phone_number'] {
+    grid-area: phone_number;
   }
 
   &.processing {

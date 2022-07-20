@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+/* eslint-disable camelcase */
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget, CheckboxControl } from '@components'
 import { breakpoint, palette, typography } from '@theme'

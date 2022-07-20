@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react'
-import { useApolloClient, ApolloClient } from '@apollo/client'
-import type { Magic } from 'magic-sdk'
+import { useApolloClient } from '@apollo/client'
+import { OAuthProvider } from '@magic-ext/oauth'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, createSession, useMagic } from '@lib'
+import { rgba, createSession, useMagic, LoginParams } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -32,15 +32,21 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const handleLogin = async (magic: Magic, apolloClient: ApolloClient<object>, provider?: string, email?: string) => {
+  const loginWithSocial = (provider: OAuthProvider) => handleLogin({ provider })
+
+  const loginWithEmail = () => handleLogin({ email: data.email })
+
+  const handleLogin = async (loginParams: LoginParams) => {
+    if (!magic) {
+      throw 'Error: magic session not initialized.'
+    }
+    if (!loginParams.email && !loginParams.provider) {
+      throw 'Error: either email or social network is required.'
+    }
     setReadonly(true)
     setSubmitted(true)
-
-    const loginWithEmail = email ? { email, magic } : undefined
-    const loginWithSocial = provider ? { provider, magic } : undefined
-
     try {
-      await createSession(apolloClient, loginWithEmail, loginWithSocial)
+      await createSession(apolloClient, magic, loginParams)
       setSentEmail(true)
       setSubmitted(true)
       setReadonly(false)
@@ -69,14 +75,7 @@ const LoginShelf = () => {
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <SubmitButton
-          stretch
-          onClick={() => {
-            if (!data.email) return
-            handleLogin(magic, apolloClient, undefined, data.email)
-          }}
-          disabled={!data.email || !acceptedToc || readonly}
-        >
+        <SubmitButton stretch onClick={() => loginWithEmail()} disabled={!data.email || !acceptedToc || readonly}>
           Sign In / Sign Up
         </SubmitButton>
         {sentEmail && (
@@ -96,24 +95,10 @@ const LoginShelf = () => {
           <Button level={1} outline onClick={() => alert('derp')} stretch>
             Phone
           </Button>
-          <Button
-            level={1}
-            outline
-            onClick={() => {
-              handleLogin(magic, apolloClient, 'twitter', undefined)
-            }}
-            stretch
-          >
+          <Button level={1} outline onClick={() => loginWithSocial('twitter')} stretch>
             Twitter
           </Button>
-          <Button
-            level={1}
-            outline
-            onClick={() => {
-              handleLogin(magic, apolloClient, 'discord', undefined)
-            }}
-            stretch
-          >
+          <Button level={1} outline onClick={() => loginWithSocial('discord')} stretch>
             Discord
           </Button>
         </Buttons>

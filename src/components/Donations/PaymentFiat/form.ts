@@ -3,43 +3,43 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    firstName: {
+    first_name: {
       type: 'string',
     },
-    lastName: {
+    last_name: {
       type: 'string',
     },
-    cardNumber: {
+    number: {
       type: 'string',
     },
-    cvv: {
+    verification_value: {
       type: 'string',
     },
-    expiresMonth: {
+    month: {
       type: 'string',
     },
-    expiresYear: {
+    year: {
       type: 'string',
     },
-    postalCode: {
+    zip: {
       type: 'string',
     },
-    phone: {
+    phone_number: {
       type: 'string',
     },
   },
-  required: ['firstName', 'lastName', 'cardNumber', 'cvv', 'expiresMonth', 'expiresYear', 'postalCode', 'phone'],
+  required: ['first_name', 'last_name', 'number', 'verification_value', 'month', 'year', 'zip'],
 }
 
 export interface FormState {
-  firstName?: string
-  lastName?: string
-  cardNumber?: string
-  cvv?: string
-  expiresMonth?: string
-  expiresYear?: string
-  postalCode?: string
-  phone?: string
+  first_name?: string
+  last_name?: string
+  number?: string
+  verification_value?: string
+  month?: string
+  year?: string
+  zip?: string
+  phone_number?: string
 }
 
 export const initialState: FormState = {}
@@ -49,42 +49,42 @@ export const uischema = {
   elements: [
     {
       type: 'Control',
-      scope: '#/properties/firstName',
+      scope: '#/properties/first_name',
       label: 'First Name',
     },
     {
       type: 'Control',
-      scope: '#/properties/lastName',
+      scope: '#/properties/last_name',
       label: 'Last Name',
     },
     {
       type: 'Control',
-      scope: '#/properties/cardNumber',
+      scope: '#/properties/number',
       label: 'Card Number',
     },
     {
       type: 'Control',
-      scope: '#/properties/expiresMonth',
+      scope: '#/properties/month',
       label: 'Expiration Month',
     },
     {
       type: 'Control',
-      scope: '#/properties/expiresYear',
+      scope: '#/properties/year',
       label: 'Expiration Year',
     },
     {
       type: 'Control',
-      scope: '#/properties/cvv',
+      scope: '#/properties/verification_value',
       label: 'CVV',
     },
     {
       type: 'Control',
-      scope: '#/properties/postalCode',
+      scope: '#/properties/zip',
       label: 'Billing Zip Code',
     },
     {
       type: 'Control',
-      scope: '#/properties/phone',
+      scope: '#/properties/phone_number',
       label: 'Phone Number',
       options: { format: 'phone' },
     },
