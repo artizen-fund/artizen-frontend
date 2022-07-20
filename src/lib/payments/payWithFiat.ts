@@ -26,7 +26,7 @@ const payWithFiat = async (amount: number, walletAddress: string, paymentData: F
     payment_method: {
       credit_card: {
         ...paymentData,
-        email: 'rodrigo@artizen.fund',
+        email: user.email,
       },
       data: {
         my_payment_method_identifier: 'test_card',
