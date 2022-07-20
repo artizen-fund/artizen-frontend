@@ -1,16 +1,135 @@
-import { useEffect, useState } from 'react'
+/* eslint-disable camelcase */
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba } from '@lib'
+import { rgba, userMetadataVar } from '@lib'
 import CheckboxControl from '../Form/Controls/BooleanControl/CheckboxControl'
+import { useQuery, useReactiveVar } from '@apollo/client'
+import { GET_USER } from '@gql'
+import { IGetUserQuery } from '@types'
 
 type DonationMethod = 'usd' | 'polygon' | 'ethereum'
+
+const getConfirmDonationURL = () => {
+  return `${window.location.protocol}//${window.location.hostname}${
+    window.location.port ? `:${window.location.port}` : ''
+  }/crowdfunding/confirmDonation`
+}
 
 const DonationShelf = () => {
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
+  const metadata = useReactiveVar(userMetadataVar)
+  const {
+    data: {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      User: [user],
+    },
+  } = useQuery<IGetUserQuery>(GET_USER, {
+    variables: { issuer: metadata?.issuer },
+  })
+
+  const handleCreditCardDonation = async () => {
+    const reservationResponse = await fetch('/api/onramp/reservation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount,
+        walletAddress: metadata?.publicAddress,
+      }),
+    })
+
+    const reservation = await reservationResponse.json()
+
+    // eslint-disable-next-line no-console
+    console.log(reservation)
+
+    const card = {
+      payment_method: {
+        credit_card: {
+          first_name: 'Rodrigo',
+          last_name: 'Pavezi',
+          number: '4111111111111111',
+          verification_value: '555',
+          month: '10',
+          year: '2023',
+          email: 'rodrigo@artizen.fund',
+        },
+        data: {
+          my_payment_method_identifier: 'test_card',
+          extra_stuff: {
+            some_other_things: 'Can be anything really',
+          },
+        },
+      },
+    }
+
+    const paymentMethodResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_SPREEDLY_BASE_URL}/payment_methods.json?environment_key=${process.env.NEXT_PUBLIC_SPREEDLY_ENVIRONMENT_KEY}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(card),
+      },
+    )
+
+    const paymentMethod = await paymentMethodResponse.json()
+
+    // eslint-disable-next-line no-console
+    console.log(paymentMethod)
+
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      transaction: {
+        payment_method: { token },
+      },
+    } = paymentMethod
+
+    const orderResponse = await fetch('/api/onramp/order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount,
+        walletAddress: metadata?.publicAddress,
+        address: {
+          street1: 'Jhon street',
+          city: 'San Diego',
+          state: 'CA',
+          postalCode: '98327',
+          country: 'US',
+        },
+        reservationId: reservation.reservation,
+        givenName: 'Rodrigo',
+        familyName: 'Pavezi',
+        email: 'rodrigo@artizen.fund',
+        phone: 14199745456,
+        referenceId: `${getConfirmDonationURL()}|${user?.id}`,
+        ipAddress: '1.1.1.1',
+        paymentMethodToken: token,
+      }),
+    })
+
+    const order = await orderResponse.json()
+    // eslint-disable-next-line no-console
+    console.log(order)
+
+    const authorizationResponse = await fetch(`/api/onramp/authorization?orderId=${order.id}`)
+
+    const authorization = await authorizationResponse.json()
+
+    // eslint-disable-next-line no-console
+    console.log(authorization)
+  }
+
   return (
     <Wrapper>
       <Information>
@@ -67,7 +186,7 @@ const DonationShelf = () => {
           </Method>
         </Methods>
 
-        <Button onClick={() => alert('derp')} stretch level={1}>
+        <Button onClick={handleCreditCardDonation} stretch level={1}>
           Continue
         </Button>
       </Form>

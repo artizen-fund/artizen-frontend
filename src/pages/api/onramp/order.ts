@@ -1,18 +1,11 @@
-import api from 'api'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { assert } from '@lib'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const orderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
-  const SENDWYRE_ACCOUNT = assert(process.env.SENDWYRE_ACCOUNT, 'SENDWYRE_ACCOUNT')
-  const SENDWYRE_SECRET = assert(process.env.SENDWYRE_SECRET, 'SENDWYRE_SECRET')
-  const sdk = api('@wyre-hub/v4#fxprd1kl2b0beym')
-  sdk.auth(SENDWYRE_SECRET)
 
   const {
     amount,
     walletAddress,
-    debitCard,
     address,
     reservationId,
     givenName,
@@ -21,32 +14,70 @@ const orderHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     phone,
     referenceId,
     ipAddress,
+    paymentMethodToken,
   } = req.body
 
-  try {
-    const order = await sdk.CreateOrder({
-      debitCard,
-      address,
-      reservationId,
-      amount,
-      sourceCurrency: 'USD',
-      destCurrency: 'MUSDC',
-      dest: `ethereum:${walletAddress}`,
-      referrerAccountId: SENDWYRE_ACCOUNT,
-      givenName,
-      familyName,
-      email,
-      phone,
-      referenceId,
-      ipAddress,
-      trigger3ds: true,
-    })
+  const body = {
+    delivery: {
+      // eslint-disable-next-line camelcase
+      payment_method_token: paymentMethodToken,
+      url: `${process.env.SENDRYRE_BASE_URL}/v3/debitcard/process/partner`,
+      headers: `Content-Type: application/json\r\nAuthorization: Bearer ${process.env.SENDWYRE_SECRET}`,
+      body: JSON.stringify({
+        debitCard: {
+          number: '{{credit_card_number}}',
+          year: '{{credit_card_year}}',
+          month: '{{credit_card_month}}',
+          cvv: '{{credit_card_verification_value}}',
+        },
+        address,
+        reservationId,
+        amount,
+        sourceCurrency: 'USD',
+        destCurrency: 'MUSDC',
+        dest: `matic:${walletAddress}`,
+        referrerAccountId: process.env.SENDWYRE_ACCOUNT,
+        givenName,
+        familyName,
+        email,
+        phone,
+        referenceId,
+        ipAddress,
+        trigger3ds: true,
+      }),
+    },
+  }
 
-    res.status(200).json(order)
+  // eslint-disable-next-line no-console
+  console.log('BODY: ', body)
+
+  const credentials = btoa(`${process.env.NEXT_PUBLIC_SPREEDLY_ENVIRONMENT_KEY}:${process.env.SPREEDLY_ACCESS_KEY}`)
+
+  try {
+    const orderResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_SPREEDLY_BASE_URL}/receivers/${process.env.SPREEDLY_RECEIVER_TOKEN}/deliver.json`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${credentials}`,
+        },
+        body: JSON.stringify(body),
+      },
+    )
+
+    const {
+      transaction: {
+        response: { body: order },
+      },
+    } = await orderResponse.json()
+
+    // eslint-disable-next-line no-console
+    console.log(order)
+
+    res.status(200).json(JSON.parse(order))
   } catch (error) {
     console.error(error)
     res.status(500).json({ error })
   }
 }
-
-export default orderHandler
