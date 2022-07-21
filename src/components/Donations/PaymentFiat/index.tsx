@@ -37,15 +37,14 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   }, [])
 
   const metadata = useReactiveVar(userMetadataVar)
-  const { data } = useQuery<IGetUserQuery>(GET_USER, {
-    variables: { issuer: metadata?.issuer },
-  })
   const [loggedInUser, setLoggedInUser] = useState<IUser>()
-  useEffect(() => {
-    if (data?.User && data.User.length > 0) {
+
+  useQuery<IGetUserQuery>(GET_USER, {
+    variables: { issuer: metadata?.issuer },
+    onCompleted: data => {
       setLoggedInUser(data.User[0] as IUser)
-    }
-  }, [data])
+    },
+  })
 
   const processTransation = async () => {
     if (!metadata || !loggedInUser) {
