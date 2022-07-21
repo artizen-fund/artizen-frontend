@@ -19,7 +19,7 @@ const AccountButton = (props: SimpleComponentProps) => {
   })
 
   useEffect(() => {
-    refreshSession(apolloClient)
+    // refreshSession(apolloClient)
   }, [])
 
   const TEMP_INITIALS = 'RP'

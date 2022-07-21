@@ -12,7 +12,9 @@ const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
     const didToken = req?.headers?.authorization?.replace('Bearer ', '')
     if (!didToken) throw 'Token not found.'
 
-    magic.token.validate(didToken)
+    const validation = magic.token.validate(didToken)
+
+    console.log('validation  ', validation)
 
     const metadata = await magic.users.getMetadataByToken(didToken)
     if (!metadata || !metadata.email || !metadata.issuer) throw 'Token metadata not found.'

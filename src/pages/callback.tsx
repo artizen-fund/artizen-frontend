@@ -28,6 +28,7 @@ const Callback = () => {
     }
 
     const authenticateWithServer = async (didToken: string) => {
+      console.log('didToken     ', didToken)
       const apiData = await fetch('/api/createSession', {
         method: 'POST',
         headers: {
