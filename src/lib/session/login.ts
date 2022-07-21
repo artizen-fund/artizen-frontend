@@ -15,9 +15,6 @@ async function handleLoginWithSocial(magic: MagicInstance, provider: OAuthProvid
     provider, // google, apple, etc
     redirectURI: new URL('/callback', window.location.origin).href, // required redirect to finish social login
   })
-  // TODO: oauth does not return a didToken
-  // refactor this and createSession below
-  return 'derp'
 }
 
 type LoginParams = {
@@ -27,10 +24,16 @@ type LoginParams = {
 
 const createSession = async (apolloClient: ApolloClient<object>, magic: MagicInstance, options: LoginParams) => {
   const { email, provider } = options
-  if (!email && !provider) {
+  if (!!provider) {
+    handleLoginWithSocial(magic, provider)
+    return
+  }
+
+  if (!email) {
     throw 'Error: one of email or social login provider required.'
   }
-  const didToken = email ? await handleLoginWithEmail(magic, email) : await handleLoginWithSocial(magic, provider!)
+
+  const didToken = await handleLoginWithEmail(magic, email)
   // TODO: remove non-null assertion as part of social refactor ^
 
   const apiData = await fetch('/api/createSession', {
