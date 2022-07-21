@@ -91,7 +91,6 @@
 
     /* naming-conventions */
     "id-length": ["error", { "exceptions": ["_", "i", "e"] }],
-    "camelcase": "error",
     "no-underscore-dangle": "error",
 
     /* react */
