@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, ApolloClient } from '@apollo/client'
 import { OAuthProvider } from '@magic-ext/oauth'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, createSession, useMagic, LoginParams } from '@lib'
+import { rgba, createSession, useMagic } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -15,38 +15,28 @@ const LoginShelf = () => {
 
   const [data, setData] = useState<FormState>(initialState)
   const [sentEmail, setSentEmail] = useState(false)
-  useMemo(() => {
-    if (typeof localStorage === 'undefined') {
-      return
-    }
-    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
-    if (!frozenAnswers) {
-      setData(initialState)
-      return
-    }
-    const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers)
-  }, [])
-
   const [submitted, setSubmitted] = useState(false)
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const loginWithSocial = (provider: OAuthProvider) => handleLogin({ provider })
+  const loginWithSocial = async (magic: MagicInstance, provider: OAuthProvider) => {
+    await magic.oauth.loginWithRedirect({
+      provider, // google, apple, etc
+      redirectURI: new URL('/', window.location.origin).href, // required redirect to finish social login
+    })
+  }
 
-  const loginWithEmail = () => handleLogin({ email: data.email })
-
-  const handleLogin = async (loginParams: LoginParams) => {
+  const loginWithEmail = async (apolloClient: ApolloClient<object>, email: string, magic?: MagicInstance) => {
     if (!magic) {
       throw 'Error: magic session not initialized.'
     }
-    if (!loginParams.email && !loginParams.provider) {
-      throw 'Error: either email or social network is required.'
+    if (!email) {
+      throw 'Error: either email'
     }
     setReadonly(true)
     setSubmitted(true)
     try {
-      await createSession(apolloClient, magic, loginParams)
+      await createSession(apolloClient, magic, email)
       setSentEmail(true)
       setSubmitted(true)
       setReadonly(false)
@@ -60,6 +50,19 @@ const LoginShelf = () => {
     setSubmitted(false)
     setReadonly(false)
   }
+
+  useMemo(() => {
+    if (typeof localStorage === 'undefined') {
+      return
+    }
+    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
+    if (!frozenAnswers) {
+      setData(initialState)
+      return
+    }
+    const thawedAnswers = JSON.parse(frozenAnswers)
+    setData(thawedAnswers)
+  }, [])
 
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
@@ -75,7 +78,11 @@ const LoginShelf = () => {
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <SubmitButton stretch onClick={() => loginWithEmail()} disabled={!data.email || !acceptedToc || readonly}>
+        <SubmitButton
+          stretch
+          onClick={() => data.email && loginWithEmail(apolloClient, data.email, magic)}
+          disabled={!data.email || !acceptedToc || readonly}
+        >
           Sign In / Sign Up
         </SubmitButton>
         {sentEmail && (
@@ -95,10 +102,10 @@ const LoginShelf = () => {
           <Button level={1} outline onClick={() => alert('derp')} stretch>
             Phone
           </Button>
-          <Button level={1} outline onClick={() => loginWithSocial('twitter')} stretch>
+          <Button level={1} outline onClick={() => magic && loginWithSocial(magic, 'twitter')} stretch>
             Twitter
           </Button>
-          <Button level={1} outline onClick={() => loginWithSocial('discord')} stretch>
+          <Button level={1} outline onClick={() => magic && loginWithSocial(magic, 'discord')} stretch>
             Discord
           </Button>
         </Buttons>

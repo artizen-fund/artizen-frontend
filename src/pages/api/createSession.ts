@@ -15,6 +15,7 @@ const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
     magic.token.validate(didToken)
 
     const metadata = await magic.users.getMetadataByToken(didToken)
+
     if (!metadata || !metadata.email || !metadata.issuer) throw 'Token metadata not found.'
 
     const token = createNewToken(metadata)

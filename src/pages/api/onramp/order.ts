@@ -48,9 +48,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     },
   }
 
-  // eslint-disable-next-line no-console
-  console.log('BODY: ', body)
-
   const credentials = btoa(`${process.env.NEXT_PUBLIC_SPREEDLY_ENVIRONMENT_KEY}:${process.env.SPREEDLY_ACCESS_KEY}`)
 
   try {
@@ -71,9 +68,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         response: { body: order },
       },
     } = await orderResponse.json()
-
-    // eslint-disable-next-line no-console
-    console.log(order)
 
     res.status(200).json(JSON.parse(order))
   } catch (error) {
