@@ -54,11 +54,7 @@ const payWithFiat = async (amount: number, walletAddress: string, paymentData: F
 
   const paymentMethod = await paymentMethodResponse.json()
 
-  // eslint-disable-next-line no-console
-  console.log(paymentMethod)
-
   const {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     transaction: {
       payment_method: { token },
     },
@@ -91,15 +87,10 @@ const payWithFiat = async (amount: number, walletAddress: string, paymentData: F
   })
 
   const order = await orderResponse.json()
-  // eslint-disable-next-line no-console
-  console.log(order)
 
   const authorizationResponse = await fetch(`/api/onramp/authorization?orderId=${order.id}`)
 
   const authorization = await authorizationResponse.json()
-
-  // eslint-disable-next-line no-console
-  console.log(authorization)
 }
 
 export default payWithFiat
