@@ -11,7 +11,7 @@ const AccountButton = (props: SimpleComponentProps) => {
   const apolloClient = useApolloClient()
   const metadata = useReactiveVar(userMetadataVar)
   const [loggedInUser, setLoggedInUser] = useState<IUser>()
-  const { data } = useQuery<IGetUserQuery>(GET_USER, {
+  useQuery<IGetUserQuery>(GET_USER, {
     variables: { issuer: metadata?.issuer },
     onCompleted: data => {
       setLoggedInUser(data.User[0] as IUser)
@@ -19,7 +19,7 @@ const AccountButton = (props: SimpleComponentProps) => {
   })
 
   useEffect(() => {
-    // refreshSession(apolloClient)
+    refreshSession(apolloClient)
   }, [])
 
   const TEMP_INITIALS = 'RP'

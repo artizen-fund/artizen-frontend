@@ -5,5 +5,8 @@ import { ICheckUserQuery } from '@types'
 export async function checkUserProfile(email: string, token: string) {
   const apolloClient = createApolloClient(token)
   const hasuraUserCheck = await apolloClient.query<ICheckUserQuery>({ query: CHECK_USER, variables: { email } })
+
+  console.log('hasuraUserCheck     ', hasuraUserCheck.data.User[0])
+
   return hasuraUserCheck.data.User.length < 1 ? 'NEW' : !hasuraUserCheck.data.User[0].issuer ? 'OLD' : 'EXISTING'
 }
