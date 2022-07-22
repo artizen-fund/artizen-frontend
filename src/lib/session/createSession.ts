@@ -1,25 +1,9 @@
-import { OAuthProvider } from '@magic-ext/oauth'
 import { ApolloClient } from '@apollo/client'
 import { userMetadataVar } from '@lib'
 import { GET_USER } from '@gql'
 import { IGetUserQuery } from '@types'
 
-async function handleLoginWithEmail(magic: MagicInstance, email: string) {
-  const didToken = await magic.auth.loginWithMagicLink({ email, showUI: false })
-  if (!didToken) throw 'Error retrieving token with email'
-  return didToken
-}
-
-const createSession = async (apolloClient: ApolloClient<object>, magic: MagicInstance, email: string) => {
-  if (!email) {
-    throw 'Error: one of email'
-  }
-
-  const didToken = await handleLoginWithEmail(magic, email)
-
-  // const didToken = email ?  : await handleLoginWithSocial(magic, provider!)
-  // TODO: remove non-null assertion as part of social refactor ^
-
+export const createSession = async (apolloClient: ApolloClient<object>, didToken: string) => {
   const apiData = await fetch('/api/createSession', {
     method: 'POST',
     headers: {
@@ -37,5 +21,3 @@ const createSession = async (apolloClient: ApolloClient<object>, magic: MagicIns
   const { data } = await apolloClient.query<IGetUserQuery>({ query: GET_USER, variables: { issuer: metadata.issuer } })
   if (data.User.length < 1) throw 'Error retrieving user'
 }
-
-export { createSession }

@@ -1,3 +1,5 @@
-export * from './login'
+export * from './createSession'
+export * from './finishSocialLogin'
+export * from './loginWithEmail'
 export * from './logout'
 export * from './refreshSession'
