@@ -24,7 +24,7 @@ exports[`HowItWorks renders correctly 1`] = `
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>
       <a
-        className="sc-a6b3add2-1 jdXTho undefined "
+        className="sc-3eee0409-1 hVsLhi undefined "
         onClick={[Function]}
         onMouseEnter={[Function]}
       >
@@ -54,7 +54,7 @@ exports[`HowItWorks renders correctly 1`] = `
         Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
       </p>
       <a
-        className="sc-a6b3add2-1 jdXTho undefined "
+        className="sc-3eee0409-1 hVsLhi undefined "
         onClick={[Function]}
         onMouseEnter={[Function]}
       >
@@ -84,7 +84,7 @@ exports[`HowItWorks renders correctly 1`] = `
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>
       <a
-        className="sc-a6b3add2-1 jdXTho undefined "
+        className="sc-3eee0409-1 hVsLhi undefined "
         onClick={[Function]}
         onMouseEnter={[Function]}
       >

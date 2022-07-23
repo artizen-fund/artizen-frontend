@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useQuery, useReactiveVar } from '@apollo/client'
 import { Button, Icon, Form, CheckboxControl } from '@components'
@@ -46,13 +46,13 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
     },
   })
 
-  const processTransation = async () => {
-    if (!metadata || !loggedInUser) {
+  const processTransaction = async () => {
+    if (!metadata || !loggedInUser || !metadata.publicAddress) {
       throw 'Error: user session not found.'
     }
     setReadonly(true)
     setProcessing(true)
-    await payWithFiat(amount, metadata.publicAddress!, paymentData, loggedInUser)
+    await payWithFiat(amount, metadata.publicAddress, paymentData, loggedInUser)
     setStage('processCrypto')
   }
 
@@ -89,7 +89,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
         data={paymentData}
         setData={setPaymentData}
       >
-        <SubmitButton stretch onClick={() => processTransation()}>
+        <SubmitButton stretch onClick={() => processTransaction()}>
           Transfer ${amount + TRANSACTION_FEE}
         </SubmitButton>
         <ProcessingMessage>hum de dooo</ProcessingMessage>

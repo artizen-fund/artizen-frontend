@@ -16,4 +16,11 @@ const refreshSession = async (apolloClient: ApolloClient<object>) => {
   if (data.User.length < 1) throw 'Error retrieving user'
 }
 
-export { refreshSession }
+const mockRefreshSessionData = {
+  token: 'herpderp',
+  metadata: {
+    issuer: 'herpderp',
+  },
+}
+
+export { refreshSession, mockRefreshSessionData }

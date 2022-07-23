@@ -2,74 +2,88 @@
 
 exports[`AccountShelf renders correctly 1`] = `
 <div
-  className="sc-49344e38-0 kTDCQw"
+  className="sc-f98fdc9e-0 fDzPaK"
 >
   <div
-    className="sc-49344e38-1 dLktxK"
+    className="sc-f98fdc9e-1 ioThHy"
   >
-    <h1
-      className="sc-49344e38-2 ixmepk"
-    >
-      Welcome
-    </h1>
-    <h2
-      className="sc-49344e38-3 QOpSQ"
-    >
-      Thanks for supporting the future of public goods.
-    </h2>
     <div
-      className="sc-49344e38-4 ebbGlV"
+      className="sc-f98fdc9e-2 covHmc"
     >
-      <button
-        className="sc-a6b3add2-2 erODIt undefined "
-        onClick={[Function]}
+      <h1
+        className="sc-f98fdc9e-3 jkNrin"
       >
-        <div
-          className="sc-1d011157-0 dGSXRE sc-a6b3add2-0 fCwpyU"
-        />
-        <span>
-          Profile
-        </span>
-      </button>
-      <button
-        className="sc-a6b3add2-2 erODIt undefined "
-        onClick={[Function]}
+        Welcome
+      </h1>
+      <h2
+        className="sc-f98fdc9e-4 hkYKmx"
       >
-        <div
-          className="sc-1d011157-0 hGpMlj sc-a6b3add2-0 fCwpyU"
-        />
-        <span>
-          Wallet
-        </span>
-      </button>
-      <button
-        className="sc-a6b3add2-2 erODIt undefined "
-        onClick={[Function]}
+        Thanks for supporting the future of public goods.
+      </h2>
+      <div
+        className="sc-f98fdc9e-5 dyYozS"
       >
-        <div
-          className="sc-1d011157-0 hGpMlj sc-a6b3add2-0 fCwpyU"
-        />
-        <span>
-          Settings
-        </span>
-      </button>
-      <button
-        className="sc-a6b3add2-2 erODIt undefined "
-        onClick={[Function]}
-      >
-        <div
-          className="sc-1d011157-0 hGpMlj sc-a6b3add2-0 fCwpyU"
-        />
-        <span>
-          Notifications
-        </span>
-      </button>
+        <button
+          className="sc-3eee0409-2 hImsqL undefined "
+          onClick={[Function]}
+        >
+          <div
+            className="sc-1d011157-0 dGSXRE sc-3eee0409-0 fKTQlu"
+          />
+          <span>
+            Profile
+          </span>
+        </button>
+        <button
+          className="sc-3eee0409-2 hImsqL undefined "
+          onClick={[Function]}
+        >
+          <div
+            className="sc-1d011157-0 elJQce sc-3eee0409-0 fKTQlu"
+          />
+          <span>
+            Wallet
+          </span>
+        </button>
+        <button
+          className="sc-3eee0409-2 hImsqL undefined "
+          onClick={[Function]}
+        >
+          <div
+            className="sc-1d011157-0 cTesVU sc-3eee0409-0 fKTQlu"
+          />
+          <span>
+            Settings
+          </span>
+        </button>
+        <button
+          className="sc-3eee0409-2 hImsqL undefined "
+          onClick={[Function]}
+        >
+          <div
+            className="sc-1d011157-0 hjmJta sc-3eee0409-0 fKTQlu"
+          />
+          <span>
+            Notifications
+          </span>
+        </button>
+      </div>
     </div>
-    <hr />
-    <div
-      onClick={[Function]}
-    >
-      Sign Out
+    <div>
+      <hr
+        className="sc-f98fdc9e-7 eICzrO"
+      />
+      <button
+        className="sc-3eee0409-2 caxAZL undefined "
+        onClick={[Function]}
+      >
+        <div
+          className="sc-1d011157-0 eTjabG sc-3eee0409-0 fKTQlu"
+        />
+        <span>
+          Sign Out
+        </span>
+      </button>
     </div>
   </div>
   <ul
@@ -79,10 +93,10 @@ exports[`AccountShelf renders correctly 1`] = `
       className="sc-cf63bf03-1 doApLo"
     >
       <div
-        className="sc-8c7bf1ae-2 jOAuUM"
+        className="sc-122b7a3d-2 hwMXZL"
       >
         <div
-          className="sc-8c7bf1ae-0 kBszjY"
+          className="sc-122b7a3d-0 fCFnor"
           color="night"
         >
           <div
@@ -106,14 +120,14 @@ exports[`AccountShelf renders correctly 1`] = `
       className="sc-cf63bf03-1 doApLo"
     >
       <div
-        className="sc-8c7bf1ae-2 jOAuUM"
+        className="sc-122b7a3d-2 hwMXZL"
       >
         <div
-          className="sc-8c7bf1ae-0 kBszjY"
+          className="sc-122b7a3d-0 fCFnor"
           color="night"
         >
           <div
-            className="sc-1d011157-0 hGpMlj"
+            className="sc-1d011157-0 kJNvLc"
             color="night"
           />
         </div>
@@ -133,14 +147,14 @@ exports[`AccountShelf renders correctly 1`] = `
       className="sc-cf63bf03-1 doApLo"
     >
       <div
-        className="sc-8c7bf1ae-2 jOAuUM"
+        className="sc-122b7a3d-2 hwMXZL"
       >
         <div
-          className="sc-8c7bf1ae-0 kBszjY"
+          className="sc-122b7a3d-0 fCFnor"
           color="night"
         >
           <div
-            className="sc-1d011157-0 hGpMlj"
+            className="sc-1d011157-0 elJQce"
             color="night"
           />
         </div>
@@ -160,14 +174,14 @@ exports[`AccountShelf renders correctly 1`] = `
       className="sc-cf63bf03-1 doApLo"
     >
       <div
-        className="sc-8c7bf1ae-2 jOAuUM"
+        className="sc-122b7a3d-2 hwMXZL"
       >
         <div
-          className="sc-8c7bf1ae-0 kBszjY"
+          className="sc-122b7a3d-0 fCFnor"
           color="night"
         >
           <div
-            className="sc-1d011157-0 hGpMlj"
+            className="sc-1d011157-0 bgNAfS"
             color="night"
           />
         </div>
@@ -184,9 +198,9 @@ exports[`AccountShelf renders correctly 1`] = `
       </div>
     </li>
   </ul>
-  <img
-    className="sc-49344e38-5 eEUOZI"
-    src="/images/qf-square.svg"
+  <object
+    className="sc-f98fdc9e-6 foYDJl"
+    data="/assets/qf-square.svg"
   />
 </div>
 `;

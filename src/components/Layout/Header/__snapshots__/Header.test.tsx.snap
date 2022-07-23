@@ -54,7 +54,7 @@ exports[`renders homepage unchanged 1`] = `
         </svg>
       </a>
       <button
-        class="sc-a6b3add2-2 bTccxJ sc-a0e5b15c-3 cbUThK "
+        class="sc-3eee0409-2 xQuzn sc-a0e5b15c-3 cbUThK "
       >
         <span>
           Menu
@@ -81,30 +81,30 @@ exports[`renders homepage unchanged 1`] = `
         </ul>
       </div>
       <button
-        class="sc-a6b3add2-2 eWNAgD undefined "
+        class="sc-3eee0409-2 jxZTLN undefined "
       >
         <div
-          class="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
+          class="sc-1d011157-0 ggBQiE sc-3eee0409-0 fKTQlu"
         />
         <span>
           Donate
         </span>
       </button>
       <div
-        class="sc-ea036ebc-0 bJSKZv"
+        class="sc-7e8755e4-0 jqxFXe"
       >
         <div
-          class="sc-ea036ebc-1 hqjJow"
+          class="sc-7e8755e4-1 euSzLZ"
         />
         <div
-          class="sc-1d011157-0 fItlDg sc-ea036ebc-2 fBGPjb"
+          class="sc-1d011157-0 fItlDg sc-7e8755e4-2 iVTCFW"
           color="night"
         />
         <div
-          class="sc-ea036ebc-3 iPFdte"
+          class="sc-7e8755e4-3 dvEHvv"
         >
           <div
-            class="sc-ea036ebc-4 fqPGuP"
+            class="sc-7e8755e4-4 jiHyW"
           >
             RP
           </div>
@@ -119,34 +119,34 @@ exports[`renders homepage unchanged 1`] = `
       class="sc-9199b4ac-0 brREMd"
     >
       <div
-        class="sc-4a4f802d-3 fuQvvd"
+        class="sc-19e6b784-4 lndqcO"
       >
         <div
-          class="sc-4a4f802d-4 fhjysv"
+          class="sc-19e6b784-5 iXJhJB"
         >
           <h1
-            class="sc-4a4f802d-5 jbsSsK"
+            class="sc-19e6b784-6 eoJMxi"
           >
             Let’s get started by setting up your Artizen account
           </h1>
           <div
-            class="sc-4a4f802d-6 ehlijM"
+            class="sc-19e6b784-7 imNgdK"
           >
             <div
-              class="sc-8c7bf1ae-2 huxvCL"
+              class="sc-122b7a3d-2 ebIrfw"
             >
               <div
-                class="sc-8c7bf1ae-0 bhoRgU"
+                class="sc-122b7a3d-0 fqxyJD"
                 color="night"
               >
                 <div
-                  class="sc-1d011157-0 ejjWfH"
+                  class="sc-1d011157-0 gkxKzK"
                   color="night"
                 />
               </div>
             </div>
             <p
-              class="sc-4a4f802d-7 hAzDhs"
+              class="sc-19e6b784-8 kSNHDM"
             >
               Already have an account?
               <br />
@@ -189,7 +189,7 @@ exports[`renders homepage unchanged 1`] = `
           </div>
         </div>
         <button
-          class="sc-a6b3add2-2 ebsYdi sc-4a4f802d-0 iErgSy  disabled"
+          class="sc-3eee0409-2 kGjZMI sc-19e6b784-0 cHIONN  disabled"
           disabled=""
         >
           <span>
@@ -197,41 +197,30 @@ exports[`renders homepage unchanged 1`] = `
           </span>
         </button>
         <div
-          class="sc-4a4f802d-2 hPhXmc"
-        >
-          <div>
-            Congrats, confirmation sent!
-          </div>
-          <p>
-            We emailed a magic link to 
-            .
-          </p>
-        </div>
-        <div
-          class="sc-4a4f802d-1 iqsVwz"
+          class="sc-19e6b784-1 gpPKnw"
         >
           <div
-            class="sc-4a4f802d-8 hyNfNI"
+            class="sc-19e6b784-9 juxsRO"
           />
           <div
-            class="sc-4a4f802d-9 iCNaSc"
+            class="sc-19e6b784-10 lcydTD"
           >
             <button
-              class="sc-a6b3add2-2 erODIt undefined "
+              class="sc-3eee0409-2 hImsqL undefined "
             >
               <span>
                 Phone
               </span>
             </button>
             <button
-              class="sc-a6b3add2-2 erODIt undefined "
+              class="sc-3eee0409-2 hImsqL undefined "
             >
               <span>
                 Twitter
               </span>
             </button>
             <button
-              class="sc-a6b3add2-2 erODIt undefined "
+              class="sc-3eee0409-2 hImsqL undefined "
             >
               <span>
                 Discord
@@ -240,10 +229,10 @@ exports[`renders homepage unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-4a4f802d-10 kwsLrN"
+          class="sc-19e6b784-11 hNDYzD"
         >
           <div
-            class="sc-4a4f802d-11 fRBTKZ"
+            class="sc-19e6b784-12 fHQdXh"
           >
             <label
               class="sc-dd35d48e-4 dCKwdz"
@@ -265,7 +254,7 @@ exports[`renders homepage unchanged 1`] = `
               />
             </label>
             <p
-              class="sc-4a4f802d-12 camNOd"
+              class="sc-19e6b784-13 esldgb"
             >
               I agree to Artizen’s
               <a
@@ -311,7 +300,7 @@ exports[`renders homepage unchanged 1`] = `
               Nullam id dolor id nibh ultricies vehicula ut id elit.
             </p>
             <a
-              class="sc-a6b3add2-1 jdXTho undefined "
+              class="sc-3eee0409-1 hVsLhi undefined "
             >
               <span>
                 Learn More
@@ -339,7 +328,7 @@ exports[`renders homepage unchanged 1`] = `
               Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
             </p>
             <a
-              class="sc-a6b3add2-1 jdXTho undefined "
+              class="sc-3eee0409-1 hVsLhi undefined "
             >
               <span>
                 Learn More
@@ -367,7 +356,7 @@ exports[`renders homepage unchanged 1`] = `
               Nullam id dolor id nibh ultricies vehicula ut id elit.
             </p>
             <a
-              class="sc-a6b3add2-1 jdXTho undefined "
+              class="sc-3eee0409-1 hVsLhi undefined "
             >
               <span>
                 Learn More
@@ -388,25 +377,25 @@ exports[`renders homepage unchanged 1`] = `
       class="sc-9199b4ac-0 brREMd"
     >
       <div
-        class="sc-76c3510a-0 ebQHog"
+        class="sc-26e233cf-0 oxQpq"
       >
         <div
-          class="sc-76c3510a-1 MWPUA"
+          class="sc-26e233cf-1 uZmBu"
         >
           <div>
             <h1
-              class="sc-76c3510a-2"
+              class="sc-26e233cf-2"
             >
               Choose your donation amount and payment method
             </h1>
             <div
-              class="sc-76c3510a-3 fQXfyu"
+              class="sc-26e233cf-3 dZyfvc"
             >
               <div
-                class="sc-8c7bf1ae-2 huxvCL"
+                class="sc-122b7a3d-2 ebIrfw"
               >
                 <div
-                  class="sc-8c7bf1ae-0 eAJanY"
+                  class="sc-122b7a3d-0 PLncb"
                   color="night"
                 >
                   <div
@@ -445,19 +434,19 @@ exports[`renders homepage unchanged 1`] = `
           </label>
         </div>
         <div
-          class="sc-76c3510a-4 NtRYj"
+          class="sc-26e233cf-4 ffmkbF"
         >
           <div
-            class="sc-7984f01-0 eoLmFa"
+            class="sc-9e28a803-0 eigpMD"
           >
             <div
-              class="sc-7984f01-1 gqYHLd"
+              class="sc-9e28a803-1 eGtFrA"
             >
               <div
-                class="sc-8c7bf1ae-2 huxvCL"
+                class="sc-122b7a3d-2 ebIrfw"
               >
                 <div
-                  class="sc-8c7bf1ae-0 bhoRgU"
+                  class="sc-122b7a3d-0 fqxyJD"
                   color="night"
                 >
                   <div
@@ -471,10 +460,10 @@ exports[`renders homepage unchanged 1`] = `
               </span>
             </div>
             <div
-              class="sc-7984f01-3 dvlwkU"
+              class="sc-9e28a803-3 eBAchZ"
             >
               <input
-                class="sc-7984f01-2 bNLFwN"
+                class="sc-9e28a803-2 ipUAAE"
                 type="number"
                 value="10"
               />
@@ -483,23 +472,23 @@ exports[`renders homepage unchanged 1`] = `
               </label>
             </div>
             <div
-              class="sc-7984f01-4 dPqWsp"
+              class="sc-9e28a803-4 fJrvQg"
             >
               <button
-                class="sc-a6b3add2-2 fZSedd undefined "
+                class="sc-3eee0409-2 dHZKXD undefined "
               >
                 <div
-                  class="sc-1d011157-0 dGSXRE sc-a6b3add2-0 fCwpyU"
+                  class="sc-1d011157-0 dGSXRE sc-3eee0409-0 fKTQlu"
                 />
                 <span>
                   add
                 </span>
               </button>
               <button
-                class="sc-a6b3add2-2 fZSedd undefined "
+                class="sc-3eee0409-2 dHZKXD undefined "
               >
                 <div
-                  class="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
+                  class="sc-1d011157-0 ggBQiE sc-3eee0409-0 fKTQlu"
                 />
                 <span>
                   subtract
@@ -508,28 +497,28 @@ exports[`renders homepage unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-76c3510a-5 eWxYDQ"
+            class="sc-26e233cf-5 eJDgNW"
           >
             <span>
               Friends of Artizen typically donate:
             </span>
             <div>
               <button
-                class="sc-a6b3add2-2 iJUNCj undefined "
+                class="sc-3eee0409-2 htNOdl undefined "
               >
                 <span>
                   $200
                 </span>
               </button>
               <button
-                class="sc-a6b3add2-2 iJUNCj undefined "
+                class="sc-3eee0409-2 htNOdl undefined "
               >
                 <span>
                   $500
                 </span>
               </button>
               <button
-                class="sc-a6b3add2-2 iJUNCj undefined "
+                class="sc-3eee0409-2 htNOdl undefined "
               >
                 <span>
                   $1000
@@ -538,16 +527,16 @@ exports[`renders homepage unchanged 1`] = `
             </div>
           </div>
           <ul
-            class="sc-76c3510a-6 kKRccu"
+            class="sc-26e233cf-6 bFXJHQ"
           >
             <li
-              class="sc-76c3510a-7 cEBQjC"
+              class="sc-26e233cf-7 ckveOI"
             >
               <div
-                class="sc-8c7bf1ae-2 huxvCL"
+                class="sc-122b7a3d-2 ebIrfw"
               >
                 <div
-                  class="sc-8c7bf1ae-0 eAJanY"
+                  class="sc-122b7a3d-0 PLncb"
                   color="night"
                 >
                   <div
@@ -564,13 +553,13 @@ exports[`renders homepage unchanged 1`] = `
               </span>
             </li>
             <li
-              class="sc-76c3510a-7 cEBQjC"
+              class="sc-26e233cf-7 ckveOI"
             >
               <div
-                class="sc-8c7bf1ae-2 huxvCL"
+                class="sc-122b7a3d-2 ebIrfw"
               >
                 <div
-                  class="sc-8c7bf1ae-0 eAJanY"
+                  class="sc-122b7a3d-0 PLncb"
                   color="night"
                 >
                   <div
@@ -587,13 +576,13 @@ exports[`renders homepage unchanged 1`] = `
               </span>
             </li>
             <li
-              class="sc-76c3510a-7 cEBQjC"
+              class="sc-26e233cf-7 ckveOI"
             >
               <div
-                class="sc-8c7bf1ae-2 huxvCL"
+                class="sc-122b7a3d-2 ebIrfw"
               >
                 <div
-                  class="sc-8c7bf1ae-0 eAJanY"
+                  class="sc-122b7a3d-0 PLncb"
                   color="night"
                 >
                   <div
@@ -611,7 +600,7 @@ exports[`renders homepage unchanged 1`] = `
             </li>
           </ul>
           <button
-            class="sc-a6b3add2-2 eOvyKw undefined "
+            class="sc-3eee0409-2 hwtkdS undefined "
           >
             <span>
               Continue

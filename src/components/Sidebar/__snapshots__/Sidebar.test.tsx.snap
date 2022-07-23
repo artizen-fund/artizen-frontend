@@ -56,17 +56,17 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           class="sc-5301581a-6 gsDnlv"
         >
           <button
-            class="sc-a6b3add2-2 eOvyKw undefined "
+            class="sc-3eee0409-2 hwtkdS undefined "
           >
             <div
-              class="sc-1d011157-0 ggBQiE sc-a6b3add2-0 fCwpyU"
+              class="sc-1d011157-0 ggBQiE sc-3eee0409-0 fKTQlu"
             />
             <span>
               Donate
             </span>
           </button>
           <button
-            class="sc-a6b3add2-2 erODIt undefined "
+            class="sc-3eee0409-2 hImsqL undefined "
           >
             <span>
               Share Now
@@ -77,7 +77,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           class="sc-5301581a-8 iFjFBb"
         >
           <div
-            class="sc-bdd02fd6-0 fJPhsS"
+            class="sc-ecff4829-0 fMTZxv"
           >
             <div
               class="sc-c6d4a71-0 iFQvvL"
@@ -88,7 +88,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Leaderboard
               </div>
               <button
-                class="sc-a6b3add2-2 iJUNCj undefined "
+                class="sc-3eee0409-2 htNOdl undefined "
               >
                 <span>
                   See All
@@ -97,7 +97,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-bdd02fd6-0 fJPhsS"
+            class="sc-ecff4829-0 fMTZxv"
           >
             <div
               class="sc-c6d4a71-0 iFQvvL"
@@ -108,7 +108,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Additional Perks
               </div>
               <a
-                class="sc-a6b3add2-1 jdXTho undefined "
+                class="sc-3eee0409-1 hVsLhi undefined "
               >
                 <span>
                   Learn More

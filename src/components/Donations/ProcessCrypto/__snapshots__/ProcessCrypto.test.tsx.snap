@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProcessCrypto renders correctly 1`] = `
+<div
+  className="sc-31f6673-0 cwKLFj"
+>
+  <h1>
+    It’s time to create your donation which requires a little extra magic
+  </h1>
+  <p>
+    blah blah blah
+  </p>
+  <p>
+    insert timeline here
+  </p>
+  <button
+    className="sc-3eee0409-2 jHALBG undefined "
+    onClick={[Function]}
+  >
+    <span>
+      View Confirmation
+    </span>
+  </button>
+</div>
+`;

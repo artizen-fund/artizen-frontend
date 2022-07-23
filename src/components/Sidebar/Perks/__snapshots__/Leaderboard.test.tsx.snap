@@ -3,7 +3,7 @@
 exports[`Perks renders Perks unchanged 1`] = `
 <div>
   <div
-    class="sc-bdd02fd6-0 fJPhsS"
+    class="sc-ecff4829-0 fMTZxv"
   >
     <div
       class="sc-c6d4a71-0 iFQvvL"
@@ -14,7 +14,7 @@ exports[`Perks renders Perks unchanged 1`] = `
         Additional Perks
       </div>
       <a
-        class="sc-a6b3add2-1 jdXTho undefined "
+        class="sc-3eee0409-1 hVsLhi undefined "
       >
         <span>
           Learn More

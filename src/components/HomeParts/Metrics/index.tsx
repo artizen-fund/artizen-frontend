@@ -4,7 +4,7 @@ import { breakpoint, palette, typography } from '@theme'
 import { rgba, assetPath } from '@lib'
 
 interface IMetrics {
-  metrics: Array<{
+  metrics?: Array<{
     description: string
     image: string
     amount: number
@@ -14,7 +14,7 @@ interface IMetrics {
 const Metrics = ({ metrics }: IMetrics) => (
   <PagePadding>
     <Wrapper>
-      {metrics.map((metric, index) => (
+      {metrics?.map((metric, index) => (
         <Metric key={`metric-${index}`}>
           <Illustration type="image/svg+xml" data={assetPath(metric.image)} />
           <Amount>
