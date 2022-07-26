@@ -4,7 +4,7 @@ import { OAuthProvider } from '@magic-ext/oauth'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, createSession, useMagic } from '@lib'
+import { rgba, loginWithEmail, useMagic } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
@@ -19,14 +19,17 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const loginWithSocial = async (magic: MagicInstance, provider: OAuthProvider) => {
+  const handleSocialLogin = async (provider: OAuthProvider, magic?: MagicInstance) => {
+    if (!magic) {
+      throw 'Error: magic session not initialized.'
+    }
     await magic.oauth.loginWithRedirect({
       provider, // google, apple, etc
       redirectURI: new URL('/', window.location.origin).href, // required redirect to finish social login
     })
   }
 
-  const loginWithEmail = async (apolloClient: ApolloClient<object>, email: string, magic?: MagicInstance) => {
+  const handleEmailLogin = async (apolloClient: ApolloClient<object>, email?: string, magic?: MagicInstance) => {
     if (!magic) {
       throw 'Error: magic session not initialized.'
     }
@@ -36,7 +39,7 @@ const LoginShelf = () => {
     setReadonly(true)
     setSubmitted(true)
     try {
-      await createSession(apolloClient, magic, email)
+      await loginWithEmail(apolloClient, magic, email)
       setSentEmail(true)
       setSubmitted(true)
       setReadonly(false)
@@ -80,7 +83,7 @@ const LoginShelf = () => {
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <SubmitButton
           stretch
-          onClick={() => data.email && loginWithEmail(apolloClient, data.email, magic)}
+          onClick={() => handleEmailLogin(apolloClient, data.email, magic)}
           disabled={!data.email || !acceptedToc || readonly}
         >
           Sign In / Sign Up
@@ -102,10 +105,10 @@ const LoginShelf = () => {
           <Button level={1} outline onClick={() => alert('derp')} stretch>
             Phone
           </Button>
-          <Button level={1} outline onClick={() => magic && loginWithSocial(magic, 'twitter')} stretch>
+          <Button level={1} outline onClick={() => handleSocialLogin('twitter', magic)} stretch>
             Twitter
           </Button>
-          <Button level={1} outline onClick={() => magic && loginWithSocial(magic, 'discord')} stretch>
+          <Button level={1} outline onClick={() => handleSocialLogin('discord', magic)} stretch>
             Discord
           </Button>
         </Buttons>

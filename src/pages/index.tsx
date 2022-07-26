@@ -1,7 +1,4 @@
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
 import {
   FeaturedArt,
   Layout,
@@ -13,10 +10,10 @@ import {
   AlternatingPanels,
   AlternatingPanel,
 } from '@components'
-import { CreateTopUpWallet, rgba, initializeApollo, addApolloState, useMagic, userMetadataVar } from '@lib'
+import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { SIDEBAR_DONATORS, GET_USER } from '@gql'
-import { ISidebarDonatorsQuery, IGetUserQuery } from '@types'
+import { SIDEBAR_DONATORS } from '@gql'
+import { ISidebarDonatorsQuery } from '@types'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
 interface IHome {
@@ -30,10 +27,6 @@ const Home = ({
     ROOT_QUERY: { exampleEntities },
   },
 }: IHome) => {
-  const { query, push } = useRouter()
-  const { magic } = useMagic()
-  const apolloClient = useApolloClient()
-  const [loadingSocialLogin, setLoadingSocialLogin] = useState<boolean>(false)
   // note: obviously this is going to come from CMS data
   const FUND_COUNT = 3.2
   const FUND_AMOUNT = 15250
@@ -41,56 +34,8 @@ const Home = ({
   const FUND_DATE = 'May, 2022'
   const FUND_DEADLINE = '2022-06-30T00:00:00'
 
-  //TODO: This function will be merged into the loginWithEmail one so the code is
-  // not repeated.
-  const authenticateWithServer = async (didToken: string) => {
-    setLoadingSocialLogin(true)
-
-    const apiData = await fetch('/api/createSession', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${didToken}`,
-      },
-    })
-
-    const { token, metadata } = await apiData.json()
-    if (!token || !metadata) throw 'Error creating session from API'
-
-    userMetadataVar(metadata)
-    // this will now get picked up by ApolloClient authLink
-    localStorage.setItem('token', token)
-
-    //TODO: No really sure abut this query in here. @ERICJ
-    const { data } = await apolloClient.query<IGetUserQuery>({
-      query: GET_USER,
-      variables: { issuer: metadata.issuer },
-    })
-
-    if (data.User.length < 1) throw 'Error retrieving user'
-
-    push('/')
-  }
-
-  const finishSocialLogin = async () => {
-    if (!magic) {
-      throw 'Error: magic is not initialized.'
-    }
-    const result = await magic.oauth.getRedirectResult()
-    await authenticateWithServer(result.magic.idToken)
-  }
-
-  useEffect(() => {
-    // Send token to server to validate
-    query.provider && finishSocialLogin()
-  }, [query])
-
   return (
     <Layout>
-      {/*TODO: User should be notified that social login
-       is loading, maybe a loading icon, or pass this value to <Header> 
-       to show a box there...  */}
-      .{loadingSocialLogin && 'loading social'}
       <CreateTopUpWallet />
       <Header>
         <h1>{header.title}</h1>

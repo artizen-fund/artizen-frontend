@@ -1,7 +1,7 @@
 import SessionShelf from './'
 
 export default {
-  title: 'components/SessionShelf',
+  title: 'header/SessionShelf',
   component: SessionShelf,
   argTypes: {},
 }

@@ -19,7 +19,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const body = {
     delivery: {
-      // eslint-disable-next-line camelcase
       payment_method_token: paymentMethodToken,
       url: `${process.env.SENDRYRE_BASE_URL}/v3/debitcard/process/partner`,
       headers: `Content-Type: application/json\r\nAuthorization: Bearer ${process.env.SENDWYRE_SECRET}`,
