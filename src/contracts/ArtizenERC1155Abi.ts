@@ -82,9 +82,9 @@ const artizenERC1155Abi = [
   {
     inputs: [
       { internalType: 'address', name: 'to', type: 'address' },
-      { internalType: 'uint256[]', name: 'ids', type: 'uint256[]' },
       { internalType: 'uint256[]', name: 'amounts', type: 'uint256[]' },
       { internalType: 'bytes', name: 'data', type: 'bytes' },
+      { internalType: 'string[]', name: 'tokenURIs', type: 'string[]' },
     ],
     name: 'batchMint',
     outputs: [],
@@ -104,9 +104,9 @@ const artizenERC1155Abi = [
   {
     inputs: [
       { internalType: 'address', name: 'to', type: 'address' },
-      { internalType: 'uint256', name: 'id', type: 'uint256' },
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
       { internalType: 'bytes', name: 'data', type: 'bytes' },
+      { internalType: 'string', name: 'tokenURI', type: 'string' },
     ],
     name: 'mint',
     outputs: [],
@@ -158,7 +158,17 @@ const artizenERC1155Abi = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'string', name: 'uri', type: 'string' }],
+    inputs: [{ internalType: 'string', name: '_uri', type: 'string' }],
+    name: 'setBaseURI',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
+      { internalType: 'string', name: 'tokenURI', type: 'string' },
+    ],
     name: 'setURI',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -179,7 +189,7 @@ const artizenERC1155Abi = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
     name: 'uri',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
