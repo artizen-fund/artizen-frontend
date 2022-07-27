@@ -182,6 +182,13 @@ const artizenERC1155Abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'tokenIds',
+    outputs: [{ internalType: 'uint256', name: '_value', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
