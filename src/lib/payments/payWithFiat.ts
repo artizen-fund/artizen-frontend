@@ -1,6 +1,7 @@
 import { assert } from '@lib'
 import { IUser } from '@types'
 import { FormState } from '../../components/Donations/PaymentFiat/form'
+import type { MagicUserMetadata } from 'magic-sdk'
 
 const getConfirmDonationURL = () => {
   return `${window.location.protocol}//${window.location.hostname}${
@@ -8,7 +9,13 @@ const getConfirmDonationURL = () => {
   }/crowdfunding/confirmDonation`
 }
 
-const payWithFiat = async (amount: number, walletAddress: string, paymentData: FormState, user: IUser) => {
+const payWithFiat = async (amount: number, paymentData: FormState, user?: IUser, userMetadata?: MagicUserMetadata) => {
+  if (!userMetadata || !user || !userMetadata.publicAddress) {
+    throw 'Error: user session not found.'
+  }
+
+  const walletAddress = userMetadata.publicAddress
+
   const reservationResponse = await fetch('/api/onramp/reservation', {
     method: 'POST',
     headers: {
@@ -51,8 +58,10 @@ const payWithFiat = async (amount: number, walletAddress: string, paymentData: F
     },
     body: JSON.stringify(card),
   })
+  if (!paymentMethodResponse) throw 'Error retrieving payment method data'
 
   const paymentMethod = await paymentMethodResponse.json()
+  if (!paymentMethod) throw 'Error interpreting payment method data'
 
   const {
     transaction: {
@@ -85,12 +94,18 @@ const payWithFiat = async (amount: number, walletAddress: string, paymentData: F
       paymentMethodToken: token,
     }),
   })
+  if (!orderResponse) throw 'Error retrieving order'
 
   const order = await orderResponse.json()
+  if (!order) throw 'Error interpreting order data'
 
   const authorizationResponse = await fetch(`/api/onramp/authorization?orderId=${order.id}`)
+  if (!authorizationResponse) throw 'Error retrieving order'
 
   const authorization = await authorizationResponse.json()
+  if (!authorization) throw 'Error interpreting authorization data'
+
+  // todo: what do we do with this?
 }
 
 export default payWithFiat
