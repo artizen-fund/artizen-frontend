@@ -6,7 +6,7 @@ import { IGetUserQuery, IUser } from '@types'
 import { GET_USER } from '@gql'
 import { payWithFiat, userMetadataVar } from '@lib'
 import { breakpoint } from '@theme'
-import { schema, uischema, initialState, FormState } from './form'
+import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 interface IPaymentFiat {
   setStage: (s: DonationStage) => void
