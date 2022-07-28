@@ -15,6 +15,10 @@ const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   // todo: how is this managed?
 
+  const [minClamp, setMinClamp] = useState(10)
+
+  const [method, setMethod] = useState<DonationMethod>('usd')
+
   return (
     <Wrapper>
       <Information>
@@ -36,7 +40,7 @@ const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
         />
       </Information>
       <Form>
-        <AmountWidget {...{ amount, setAmount }} />
+        <AmountWidget {...{ amount, setAmount, minClamp }} />
 
         <SuggestedDonations>
           <span>Friends of Artizen typically donate:</span>
@@ -54,17 +58,17 @@ const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
         </SuggestedDonations>
 
         <Methods>
-          <Method>
+          <Method onClick={() => setMethod('usd')} selected={method === 'usd'}>
             <Icon outline level={2} glyph="info" />
             <div>Credit Card</div>
             <span>min $10.00</span>
           </Method>
-          <Method>
+          <Method onClick={() => setMethod('polygon')} selected={method === 'polygon'}>
             <Icon outline level={2} glyph="info" />
             <div>Polygon</div>
             <span>min $10.00</span>
           </Method>
-          <Method>
+          <Method onClick={() => setMethod('ethereum')} selected={method === 'ethereum'}>
             <Icon outline level={2} glyph="info" />
             <div>Ethereum</div>
             <span>min $100.00</span>
@@ -130,7 +134,7 @@ const Methods = styled.ul`
   margin: 1em 0;
 `
 
-const Method = styled.li`
+const Method = styled.li<{ selected: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -147,7 +151,11 @@ const Method = styled.li`
     color: ${rgba(palette.barracuda)};
   }
 
-  border: 0.5px solid ${rgba(palette.night)};
+  border: 0.5px solid ${props => rgba(props.selected ? palette.night : palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    border: 0.5px solid ${props => rgba(props.selected ? palette.moon : palette.barracuda)};
+  }
+  transition: border 0.3s ease-in-out;
   border-radius: 16px;
   padding: 10px 0;
 `

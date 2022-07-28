@@ -63,6 +63,9 @@ const Amount = styled.input`
   font-size: 64px;
   line-height: 125%;
   text-align: right;
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
 `
 
 const AmountBox = styled.div`
