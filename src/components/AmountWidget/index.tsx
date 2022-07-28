@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import { Icon, Button } from '@components'
 import { rgba } from '@lib'
@@ -6,12 +7,19 @@ import { palette, typography } from '@theme'
 interface IAmountWidget {
   amount: number
   setAmount: (n: number) => void
+  minClamp?: number
 }
 
-const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
+const AmountWidget = ({ amount, setAmount, minClamp }: IAmountWidget) => {
   // todo: sort out integer or float
   // todo: clamp amount (I think makes more sense to do here than DonationAmount)
   // todo: will we have text/typing input?
+
+  useEffect(() => {
+    console.log(minClamp, amount)
+    if (minClamp && amount < minClamp) setAmount(minClamp)
+  }, [minClamp, amount])
+
   return (
     <Wrapper>
       <Denomination>

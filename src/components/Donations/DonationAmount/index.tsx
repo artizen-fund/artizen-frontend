@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget, CheckboxControl } from '@components'
 import { breakpoint, palette, typography } from '@theme'
@@ -11,13 +11,37 @@ interface IDonationAmount {
   setAmount: (n: number) => void
 }
 
+type MethodSet = {
+  key: DonationMethod
+  label: string
+  min: number
+}
+
+const methods: Array<MethodSet> = [
+  {
+    key: 'usd',
+    label: 'Credit Card',
+    min: 10,
+  },
+  {
+    key: 'polygon',
+    label: 'Polygon',
+    min: 10,
+  },
+  {
+    key: 'ethereum',
+    label: 'Ethereum',
+    min: 100,
+  },
+]
+
 const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   // todo: how is this managed?
 
   const [minClamp, setMinClamp] = useState(10)
-
   const [method, setMethod] = useState<DonationMethod>('usd')
+  useEffect(() => setMinClamp(methods.find(thisMethod => thisMethod.key === method)?.min || minClamp), [method])
 
   return (
     <Wrapper>
@@ -58,21 +82,13 @@ const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
         </SuggestedDonations>
 
         <Methods>
-          <Method onClick={() => setMethod('usd')} selected={method === 'usd'}>
-            <Icon outline level={2} glyph="info" />
-            <div>Credit Card</div>
-            <span>min $10.00</span>
-          </Method>
-          <Method onClick={() => setMethod('polygon')} selected={method === 'polygon'}>
-            <Icon outline level={2} glyph="info" />
-            <div>Polygon</div>
-            <span>min $10.00</span>
-          </Method>
-          <Method onClick={() => setMethod('ethereum')} selected={method === 'ethereum'}>
-            <Icon outline level={2} glyph="info" />
-            <div>Ethereum</div>
-            <span>min $100.00</span>
-          </Method>
+          {methods.map(thisMethod => (
+            <Method key={thisMethod.key} onClick={() => setMethod(thisMethod.key)} selected={method === thisMethod.key}>
+              <Icon outline level={2} glyph="info" />
+              <div>{thisMethod.label}</div>
+              <span>min ${thisMethod.min}.00</span>
+            </Method>
+          ))}
         </Methods>
 
         <Button onClick={() => setStage('payment')} stretch level={1}>
