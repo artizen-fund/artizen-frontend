@@ -12,6 +12,7 @@ type Raffle = {
   endTime: BigNumber
   tokenAllocation: BigNumber
   cancelled: boolean
+  topDonatedAmount: BigNumber
 }
 
 const Admin = () => {
@@ -38,7 +39,8 @@ const Admin = () => {
       const raffle = await raflleContract.raffles(i)
       raffles.push(raffle)
     }
-
+    // eslint-disable-next-line no-console
+    console.log(raffles)
     setRaffles(raffles)
   }
 
@@ -49,6 +51,12 @@ const Admin = () => {
   const cancelRaffle = async (raffleId: number) => {
     const cancelRaffleTransaction = await raflleContract.cancelRaffle(raffleId)
     await cancelRaffleTransaction.wait()
+    loadRaffles()
+  }
+
+  const endRaffle = async (raffleId: number) => {
+    const endRaffleTransaction = await raflleContract.sendRewards(raffleId)
+    await endRaffleTransaction.wait()
     loadRaffles()
   }
 
@@ -63,6 +71,7 @@ const Admin = () => {
               <th>Start Time</th>
               <th>End Time</th>
               <th>Reward Token Allocation</th>
+              <th>Top Donation Amount</th>
               <th>Cancelled</th>
               <th>Actions</th>
             </tr>
@@ -70,7 +79,9 @@ const Admin = () => {
           <tbody>
             {raffles?.map((raffle, index) => {
               const endDateTime = new Date(raffle.endTime.toNumber() * 1000)
-              const canBeCanceled = endDateTime > new Date() && !raffle.cancelled
+              const canBeCanceled =
+                (raffle.topDonatedAmount.toNumber() === 0 || endDateTime > new Date()) && !raffle.cancelled
+              const canBeEnded = endDateTime <= new Date() && !raffle.cancelled
               return (
                 <tr key={index}>
                   <td>{raffle.raffleID.toNumber()}</td>
@@ -78,11 +89,19 @@ const Admin = () => {
                   <td>{new Date(raffle.startTime.toNumber() * 1000).toLocaleString()}</td>
                   <td>{endDateTime.toLocaleString()}</td>
                   <td>{raffle.tokenAllocation.toNumber()}</td>
+                  <td>{raffle.topDonatedAmount.toNumber()}</td>
                   <td>{raffle.cancelled ? 'true' : 'false'}</td>
                   {canBeCanceled && (
                     <td>
                       <Button level={5} onClick={() => cancelRaffle(raffle.raffleID.toNumber())}>
                         Cancel
+                      </Button>
+                    </td>
+                  )}
+                  {canBeEnded && (
+                    <td>
+                      <Button level={5} onClick={() => endRaffle(raffle.raffleID.toNumber())}>
+                        End
                       </Button>
                     </td>
                   )}

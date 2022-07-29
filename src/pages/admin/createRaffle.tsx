@@ -9,7 +9,7 @@ import artTokenAbi from 'src/contracts/ArtToken'
 import raffleAbi from 'src/contracts/RaffleAbi'
 import styled from 'styled-components'
 
-const Admin = () => {
+const CreateRaffle = () => {
   const [data, setData] = useState<FormState>(initialState)
   const { magic } = useMagic()
   const { push } = useRouter()
@@ -42,14 +42,14 @@ const Admin = () => {
 
     const nftContract = new ethers.Contract(nftContractAddress, ArtizenERC1155, signer)
 
+    // Mint a new NFT
     const mintTransaction = await nftContract.mint(walletAddress, 4, '0x', data.tokenURI)
-
     await mintTransaction.wait()
 
     const latestTokenId = await nftContract.tokenIds()
 
+    // Approve Raffle contract to use the new NFT
     const approvalTransaction = await nftContract.setApprovalForAll(raffleContractAddress, true)
-
     await approvalTransaction.wait()
 
     const raflleContract = new ethers.Contract(raffleContractAddress, raffleAbi, signer)
@@ -59,8 +59,8 @@ const Admin = () => {
       nftOwner: walletAddress,
       raffleID: 0,
       tokenID: latestTokenId,
-      startTime: Math.round(new Date(data.startTime).getTime() / 1000),
-      endTime: Math.round(new Date(data.endTime).getTime() / 1000),
+      startTime: Math.round(new Date(data.startTime).getTime() / 1000), // must be timestamp in seconds
+      endTime: Math.round(new Date(data.endTime).getTime() / 1000), // must be timestamp in seconds
       minimumDonationAmount: BigNumber.from(data.mimDonationAmount),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
@@ -69,27 +69,27 @@ const Admin = () => {
       cancelled: false,
     }
 
+    // Create a new Raffle
     const raffleTransaction = await raflleContract.createRaffle(raffle)
-
     await raffleTransaction.wait()
 
     const raffleCount = await raflleContract.raffleCount()
 
     const tokenRewardContract = new ethers.Contract(tokenRewardContractAddress, artTokenAbi, signer)
 
+    // Approve tokens to be used by raffle contract for reward
     const tokenRewardApproveTransaction = await tokenRewardContract.approve(
       raffleContractAddress,
       ethers.constants.MaxUint256,
     )
-
     await tokenRewardApproveTransaction.wait()
 
+    // Turn on token rewards on the raffle contract
     const tokenRewardTransaction = await raflleContract.turnOnTokenRewards(
       tokenRewardModuleContractAddress,
       tokenRewardContractAddress,
       raffleCount,
     )
-
     await tokenRewardTransaction.wait()
 
     push('/admin/listRaffles')
@@ -112,4 +112,4 @@ const Wrapper = styled.div`
   height: 100%;
 `
 
-export default Admin
+export default CreateRaffle
