@@ -1,1 +1,1 @@
-export { default as payWithFiat } from './payWithFiat'
+export * from './payWithFiat'

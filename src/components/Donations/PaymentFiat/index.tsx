@@ -6,7 +6,7 @@ import { IGetUserQuery, IUser } from '@types'
 import { GET_USER } from '@gql'
 import { payWithFiat, userMetadataVar } from '@lib'
 import { breakpoint } from '@theme'
-import { schema, uischema, initialState, FormState } from './form'
+import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 interface IPaymentFiat {
   setStage: (s: DonationStage) => void
@@ -21,7 +21,6 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   // todo: ^ where/how is this stored?
   const [paymentData, setPaymentData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
-  const [readonly, setReadonly] = useState(false)
 
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
@@ -47,13 +46,13 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   })
 
   const processTransaction = async () => {
-    if (!metadata || !loggedInUser || !metadata.publicAddress) {
-      throw 'Error: user session not found.'
-    }
-    setReadonly(true)
     setProcessing(true)
-    await payWithFiat(amount, metadata.publicAddress, paymentData, loggedInUser)
-    setStage('processCrypto')
+    try {
+      await payWithFiat(amount, paymentData, loggedInUser, metadata)
+      setStage('processCrypto')
+    } catch {
+      setProcessing(false)
+    }
   }
 
   return (
@@ -85,7 +84,8 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
       </Information>
       <Form
         localStorageKey={LOCALSTORAGE_KEY}
-        {...{ schema, uischema, initialState, readonly }}
+        {...{ schema, uischema, initialState }}
+        readonly={processing}
         data={paymentData}
         setData={setPaymentData}
       >
