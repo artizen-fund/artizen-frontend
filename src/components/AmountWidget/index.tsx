@@ -12,11 +12,9 @@ interface IAmountWidget {
 
 const AmountWidget = ({ amount, setAmount, minClamp }: IAmountWidget) => {
   // todo: sort out integer or float
-  // todo: clamp amount (I think makes more sense to do here than DonationAmount)
   // todo: will we have text/typing input?
 
   useEffect(() => {
-    console.log(minClamp, amount)
     if (minClamp && amount < minClamp) setAmount(minClamp)
   }, [minClamp, amount])
 
@@ -31,10 +29,10 @@ const AmountWidget = ({ amount, setAmount, minClamp }: IAmountWidget) => {
         <label>donation total</label>
       </AmountBox>
       <Buttons>
-        <Button outline level={2} onClick={() => setAmount(amount + 1)} glyphOnly glyph="face">
+        <Button outline level={2} onClick={() => setAmount(amount + 1)} glyphOnly glyph="arrow" glyphRotation={180}>
           add
         </Button>
-        <Button outline level={2} onClick={() => setAmount(amount - 1)} glyphOnly glyph="donate">
+        <Button outline level={2} onClick={() => setAmount(amount - 1)} glyphOnly glyph="arrow">
           subtract
         </Button>
       </Buttons>

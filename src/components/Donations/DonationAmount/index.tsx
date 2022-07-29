@@ -174,6 +174,7 @@ const Method = styled.li<{ selected: boolean }>`
   transition: border 0.3s ease-in-out;
   border-radius: 16px;
   padding: 10px 0;
+  cursor: pointer;
 `
 
 export default DonationAmount
