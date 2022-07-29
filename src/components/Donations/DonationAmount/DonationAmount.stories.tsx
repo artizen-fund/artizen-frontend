@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import DonationAmount from './'
 
 export default {
@@ -6,4 +7,7 @@ export default {
   argTypes: {},
 }
 
-export const DonationAmountComponent = (props: any) => <DonationAmount {...props} />
+export const DonationAmountComponent = (props: any) => {
+  const [amount, setAmount] = useState(10) // note: sort out integer or float
+  return <DonationAmount {...props} {...{ amount, setAmount }} />
+}

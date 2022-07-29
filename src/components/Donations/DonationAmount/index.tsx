@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget, CheckboxControl } from '@components'
 import { breakpoint, palette, typography } from '@theme'
@@ -11,9 +11,37 @@ interface IDonationAmount {
   setAmount: (n: number) => void
 }
 
+type MethodSet = {
+  key: DonationMethod
+  label: string
+  min: number
+}
+
+const methods: Array<MethodSet> = [
+  {
+    key: 'usd',
+    label: 'Credit Card',
+    min: 10,
+  },
+  {
+    key: 'polygon',
+    label: 'Polygon',
+    min: 10,
+  },
+  {
+    key: 'ethereum',
+    label: 'Ethereum',
+    min: 100,
+  },
+]
+
 const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   // todo: how is this managed?
+
+  const [minClamp, setMinClamp] = useState(10)
+  const [method, setMethod] = useState<DonationMethod>('usd')
+  useEffect(() => setMinClamp(methods.find(thisMethod => thisMethod.key === method)?.min || minClamp), [method])
 
   return (
     <Wrapper>
@@ -36,7 +64,7 @@ const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
         />
       </Information>
       <Form>
-        <AmountWidget {...{ amount, setAmount }} />
+        <AmountWidget {...{ amount, setAmount, minClamp }} />
 
         <SuggestedDonations>
           <span>Friends of Artizen typically donate:</span>
@@ -54,21 +82,13 @@ const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
         </SuggestedDonations>
 
         <Methods>
-          <Method>
-            <Icon outline level={2} glyph="info" />
-            <div>Credit Card</div>
-            <span>min $10.00</span>
-          </Method>
-          <Method>
-            <Icon outline level={2} glyph="info" />
-            <div>Polygon</div>
-            <span>min $10.00</span>
-          </Method>
-          <Method>
-            <Icon outline level={2} glyph="info" />
-            <div>Ethereum</div>
-            <span>min $100.00</span>
-          </Method>
+          {methods.map(thisMethod => (
+            <Method key={thisMethod.key} onClick={() => setMethod(thisMethod.key)} selected={method === thisMethod.key}>
+              <Icon outline level={2} glyph="info" />
+              <div>{thisMethod.label}</div>
+              <span>min ${thisMethod.min}.00</span>
+            </Method>
+          ))}
         </Methods>
 
         <Button onClick={() => setStage('payment')} stretch level={1}>
@@ -130,7 +150,7 @@ const Methods = styled.ul`
   margin: 1em 0;
 `
 
-const Method = styled.li`
+const Method = styled.li<{ selected: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -147,9 +167,14 @@ const Method = styled.li`
     color: ${rgba(palette.barracuda)};
   }
 
-  border: 0.5px solid ${rgba(palette.night)};
+  border: 0.5px solid ${props => rgba(props.selected ? palette.night : palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    border: 0.5px solid ${props => rgba(props.selected ? palette.moon : palette.barracuda)};
+  }
+  transition: border 0.3s ease-in-out;
   border-radius: 16px;
   padding: 10px 0;
+  cursor: pointer;
 `
 
 export default DonationAmount

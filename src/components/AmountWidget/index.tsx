@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import { Icon, Button } from '@components'
 import { rgba } from '@lib'
@@ -6,12 +7,17 @@ import { palette, typography } from '@theme'
 interface IAmountWidget {
   amount: number
   setAmount: (n: number) => void
+  minClamp?: number
 }
 
-const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
+const AmountWidget = ({ amount, setAmount, minClamp }: IAmountWidget) => {
   // todo: sort out integer or float
-  // todo: clamp amount (I think makes more sense to do here than DonationAmount)
   // todo: will we have text/typing input?
+
+  useEffect(() => {
+    if (minClamp && amount < minClamp) setAmount(minClamp)
+  }, [minClamp, amount])
+
   return (
     <Wrapper>
       <Denomination>
@@ -23,10 +29,10 @@ const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
         <label>donation total</label>
       </AmountBox>
       <Buttons>
-        <Button outline level={2} onClick={() => setAmount(amount + 1)} glyphOnly glyph="face">
+        <Button outline level={2} onClick={() => setAmount(amount + 1)} glyphOnly glyph="arrow" glyphRotation={180}>
           add
         </Button>
-        <Button outline level={2} onClick={() => setAmount(amount - 1)} glyphOnly glyph="donate">
+        <Button outline level={2} onClick={() => setAmount(amount - 1)} glyphOnly glyph="arrow">
           subtract
         </Button>
       </Buttons>
@@ -63,6 +69,9 @@ const Amount = styled.input`
   font-size: 64px;
   line-height: 125%;
   text-align: right;
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
 `
 
 const AmountBox = styled.div`

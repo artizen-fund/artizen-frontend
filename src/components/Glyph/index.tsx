@@ -16,6 +16,7 @@ export interface GlyphProps {
   level?: keyof Level
   color?: keyof Palette
   darkColor?: keyof Palette
+  rotation?: number
   outline?: boolean
 }
 
@@ -30,6 +31,11 @@ export const Glyph = styled.div<GlyphProps>`
   @media (prefers-color-scheme: dark) {
     background-color: ${props => rgba(props.darkColor || palette.moon)};
   }
+  ${props =>
+    props.rotation &&
+    `
+    transform: rotateZ(${props.rotation}deg);
+  `}
   ${props =>
     props.size
       ? `

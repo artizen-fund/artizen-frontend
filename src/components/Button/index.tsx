@@ -25,6 +25,7 @@ export interface ButtonProps {
   glyph?: keyof GlyphKey
   glyphOnRight?: boolean
   glyphOnly?: boolean
+  glyphRotation?: number
 
   className?: string
   children: React.ReactNode
@@ -36,6 +37,7 @@ const Button = ({
   glyph,
   glyphOnRight,
   glyphOnly,
+  glyphRotation,
   level,
   outline,
   stretch,
@@ -47,7 +49,7 @@ const Button = ({
     return (
       <Link {...{ href }}>
         <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-          {glyph && <StyledGlyph {...{ glyph }} />}
+          {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
           <span>{children}</span>
         </ButtonLink>
       </Link>
@@ -56,7 +58,7 @@ const Button = ({
   if (!!props.onClick) {
     return (
       <StyledButton className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-        {glyph && <StyledGlyph {...{ glyph }} />}
+        {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
         <span>{children}</span>
       </StyledButton>
     )
