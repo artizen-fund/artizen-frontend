@@ -16,6 +16,7 @@ const Wrapper = styled.ol`
   flex-direction: column;
   justify-content: space-around;
   gap: 10px;
+  padding: 10px 0;
   list-style-type: none;
   &:before {
     position: absolute;
