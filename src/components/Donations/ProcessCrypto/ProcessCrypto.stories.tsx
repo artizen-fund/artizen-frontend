@@ -1,7 +1,7 @@
 import ProcessCrypto from './'
 
 export default {
-  title: 'components/ProcessCrypto',
+  title: 'donations/ProcessCrypto',
   component: ProcessCrypto,
   argTypes: {},
 }

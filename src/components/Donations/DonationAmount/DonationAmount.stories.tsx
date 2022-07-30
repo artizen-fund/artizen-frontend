@@ -2,7 +2,7 @@ import { useState } from 'react'
 import DonationAmount from './'
 
 export default {
-  title: 'components/DonationAmount',
+  title: 'donations/DonationAmount',
   component: DonationAmount,
   argTypes: {},
 }

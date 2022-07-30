@@ -32,6 +32,7 @@ export const glyphKey: GlyphKey = {
   plane: 'plane',
   polygon: 'polygon',
   power: 'power',
+  refresh: 'refresh',
   swap: 'swap',
   tag: 'tag',
   tick: 'tick',

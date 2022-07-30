@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { Icon, DonationAmount, PaymentFiat, ProcessCrypto, Confirmation } from '@components'
-import { rgba } from '@lib'
-import { palette } from '@theme'
+import { useState } from 'react'
+import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Confirmation } from '@components'
 
 const DonationShelf = () => {
   const [stage, setStage] = useState<DonationStage>('setAmount')
@@ -14,19 +11,15 @@ const DonationShelf = () => {
       // case 'login':
       // return <DonationAmount {...{ setStage }} />
       case 'payment':
-        // todo: if donationMethod === 'polygon'
-        // return <PaymentPolygon ... />
-        // else if donationMethod === 'ethereum'
-        // return <PaymentEthereum ... />
-        // else
-        return <PaymentFiat {...{ setStage, amount }} />
+        if (donationMethod === 'usd') return <PaymentFiat {...{ setStage, amount }} />
+        else return <PaymentCrypto {...{ donationMethod, amount, setStage }} />
       case 'processCrypto':
         return <ProcessCrypto {...{ setStage }} />
       case 'confirmation':
         return <Confirmation />
       case 'setAmount':
       default:
-        return <DonationAmount {...{ setStage, setDonationMethod, setAmount, amount }} />
+        return <DonationAmount {...{ setStage, setDonationMethod, donationMethod, setAmount, amount }} />
     }
   }
   return renderSwitch(stage, donationMethod)

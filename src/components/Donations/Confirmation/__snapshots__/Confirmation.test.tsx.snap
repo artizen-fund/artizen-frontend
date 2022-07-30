@@ -8,14 +8,14 @@ exports[`Confirmation renders correctly 1`] = `
     hey good job
   </h1>
   <div
-    className="sc-122b7a3d-2 hwMXZL"
+    className="sc-c089a03b-2 gfJPuX"
   >
     <div
-      className="sc-122b7a3d-0 futyni"
+      className="sc-c089a03b-0 eexWtz"
       color="white"
     >
       <div
-        className="sc-1d011157-0 eclmZh"
+        className="sc-149d3190-0 izsvxh"
         color="white"
       />
     </div>

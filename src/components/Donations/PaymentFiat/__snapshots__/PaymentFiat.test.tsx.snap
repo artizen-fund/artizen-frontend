@@ -3,36 +3,38 @@
 exports[`PaymentFiat renders correctly 1`] = `
 <div>
   <div
-    class="sc-70681e59-5 cPrFSX"
+    class="sc-5c697404-5 cUlmCo"
   >
     <div
-      class="sc-70681e59-0 QMENU"
+      class="sc-5c697404-0 bXbfaL"
     >
       <div>
         <h1
-          class="sc-70681e59-1"
+          class="sc-5c697404-1"
         >
           Let’s enter your payment information
         </h1>
         <div
-          class="sc-70681e59-2 bKhfjS"
+          class="sc-78ba2856-0 fOnoXs"
         >
           <div
-            class="sc-122b7a3d-2 ebIrfw"
+            class="sc-c089a03b-2 VsSZo"
           >
             <div
-              class="sc-122b7a3d-0 PLncb"
+              class="sc-c089a03b-0 dhCXYi"
               color="night"
             >
               <div
-                class="sc-1d011157-0 eWHmUn"
+                class="sc-149d3190-0 DayLH"
                 color="night"
               />
             </div>
           </div>
-          <span>
+          <p
+            class="sc-78ba2856-1 cjHeIN"
+          >
             Need help? We’ve prepared a useful guide to donating.
-          </span>
+          </p>
         </div>
       </div>
       <div>
@@ -1569,7 +1571,7 @@ exports[`PaymentFiat renders correctly 1`] = `
       </div>
     </div>
     <button
-      class="sc-3eee0409-2 fFCAOF sc-70681e59-3 dZPOrV "
+      class="sc-2a588df4-2 bNtQme sc-5c697404-3 iySSou "
     >
       <span>
         Transfer $
@@ -1577,7 +1579,7 @@ exports[`PaymentFiat renders correctly 1`] = `
       </span>
     </button>
     <div
-      class="sc-70681e59-4 kcZmGG"
+      class="sc-5c697404-4 kwuFkx"
     >
       hum de dooo
     </div>

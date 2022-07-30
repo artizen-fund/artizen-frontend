@@ -2,36 +2,38 @@
 
 exports[`DonationAmount renders correctly 1`] = `
 <div
-  className="sc-26e233cf-0 oxQpq"
+  className="sc-fb1fc2fa-0 hDTemF"
 >
   <div
-    className="sc-26e233cf-1 uZmBu"
+    className="sc-fb1fc2fa-1 cxCYuZ"
   >
     <div>
       <h1
-        className="sc-26e233cf-2"
+        className="sc-fb1fc2fa-2"
       >
         Choose your donation amount and payment method
       </h1>
       <div
-        className="sc-26e233cf-3 dZyfvc"
+        className="sc-78ba2856-0 fOnoXs"
       >
         <div
-          className="sc-122b7a3d-2 ebIrfw"
+          className="sc-c089a03b-2 VsSZo"
         >
           <div
-            className="sc-122b7a3d-0 PLncb"
+            className="sc-c089a03b-0 dhCXYi"
             color="night"
           >
             <div
-              className="sc-1d011157-0 eWHmUn"
+              className="sc-149d3190-0 DayLH"
               color="night"
             />
           </div>
         </div>
-        <span>
+        <p
+          className="sc-78ba2856-1 cjHeIN"
+        >
           Need help? We’ve prepared a useful guide to donating.
-        </span>
+        </p>
       </div>
     </div>
     <p>
@@ -63,23 +65,23 @@ exports[`DonationAmount renders correctly 1`] = `
     </label>
   </div>
   <div
-    className="sc-26e233cf-4 ffmkbF"
+    className="sc-fb1fc2fa-4 gMmkdK"
   >
     <div
-      className="sc-9e28a803-0 eigpMD"
+      className="sc-8b85c6d6-0 iEXZsH"
     >
       <div
-        className="sc-9e28a803-1 eGtFrA"
+        className="sc-8b85c6d6-1 eYyyOI"
       >
         <div
-          className="sc-122b7a3d-2 ebIrfw"
+          className="sc-c089a03b-2 VsSZo"
         >
           <div
-            className="sc-122b7a3d-0 fqxyJD"
+            className="sc-c089a03b-0 ja-DffS"
             color="night"
           >
             <div
-              className="sc-1d011157-0 ejjWfH"
+              className="sc-149d3190-0 dVcEnH"
               color="night"
             />
           </div>
@@ -89,10 +91,10 @@ exports[`DonationAmount renders correctly 1`] = `
         </span>
       </div>
       <div
-        className="sc-9e28a803-3 eBAchZ"
+        className="sc-8b85c6d6-3 gtHBvp"
       >
         <input
-          className="sc-9e28a803-2 ipUAAE"
+          className="sc-8b85c6d6-2 cVuWCM"
           onChange={[Function]}
           type="number"
         />
@@ -101,25 +103,25 @@ exports[`DonationAmount renders correctly 1`] = `
         </label>
       </div>
       <div
-        className="sc-9e28a803-4 fJrvQg"
+        className="sc-8b85c6d6-4 kTqqpw"
       >
         <button
-          className="sc-3eee0409-2 dHZKXD undefined "
+          className="sc-2a588df4-2 kGwkQY undefined "
           onClick={[Function]}
         >
           <div
-            className="sc-1d011157-0 dGSXRE sc-3eee0409-0 fKTQlu"
+            className="sc-149d3190-0 kJqBVg sc-2a588df4-0 gSwEcZ"
           />
           <span>
             add
           </span>
         </button>
         <button
-          className="sc-3eee0409-2 dHZKXD undefined "
+          className="sc-2a588df4-2 kGwkQY undefined "
           onClick={[Function]}
         >
           <div
-            className="sc-1d011157-0 ggBQiE sc-3eee0409-0 fKTQlu"
+            className="sc-149d3190-0 biUHOc sc-2a588df4-0 gSwEcZ"
           />
           <span>
             subtract
@@ -128,14 +130,14 @@ exports[`DonationAmount renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="sc-26e233cf-5 eJDgNW"
+      className="sc-fb1fc2fa-5 hfrXzl"
     >
       <span>
         Friends of Artizen typically donate:
       </span>
       <div>
         <button
-          className="sc-3eee0409-2 htNOdl undefined "
+          className="sc-2a588df4-2 emJYMu undefined "
           onClick={[Function]}
         >
           <span>
@@ -143,7 +145,7 @@ exports[`DonationAmount renders correctly 1`] = `
           </span>
         </button>
         <button
-          className="sc-3eee0409-2 htNOdl undefined "
+          className="sc-2a588df4-2 emJYMu undefined "
           onClick={[Function]}
         >
           <span>
@@ -151,7 +153,7 @@ exports[`DonationAmount renders correctly 1`] = `
           </span>
         </button>
         <button
-          className="sc-3eee0409-2 htNOdl undefined "
+          className="sc-2a588df4-2 emJYMu undefined "
           onClick={[Function]}
         >
           <span>
@@ -161,20 +163,22 @@ exports[`DonationAmount renders correctly 1`] = `
       </div>
     </div>
     <ul
-      className="sc-26e233cf-6 bFXJHQ"
+      className="sc-fb1fc2fa-6 hByFiT"
     >
       <li
-        className="sc-26e233cf-7 ckveOI"
+        className="sc-fb1fc2fa-7 fiymBz"
+        onClick={[Function]}
+        selected={false}
       >
         <div
-          className="sc-122b7a3d-2 ebIrfw"
+          className="sc-c089a03b-2 VsSZo"
         >
           <div
-            className="sc-122b7a3d-0 PLncb"
+            className="sc-c089a03b-0 dhCXYi"
             color="night"
           >
             <div
-              className="sc-1d011157-0 eWHmUn"
+              className="sc-149d3190-0 DayLH"
               color="night"
             />
           </div>
@@ -183,21 +187,25 @@ exports[`DonationAmount renders correctly 1`] = `
           Credit Card
         </div>
         <span>
-          min $10.00
+          min $
+          10
+          .00
         </span>
       </li>
       <li
-        className="sc-26e233cf-7 ckveOI"
+        className="sc-fb1fc2fa-7 fiymBz"
+        onClick={[Function]}
+        selected={false}
       >
         <div
-          className="sc-122b7a3d-2 ebIrfw"
+          className="sc-c089a03b-2 VsSZo"
         >
           <div
-            className="sc-122b7a3d-0 PLncb"
+            className="sc-c089a03b-0 dhCXYi"
             color="night"
           >
             <div
-              className="sc-1d011157-0 eWHmUn"
+              className="sc-149d3190-0 DayLH"
               color="night"
             />
           </div>
@@ -206,21 +214,25 @@ exports[`DonationAmount renders correctly 1`] = `
           Polygon
         </div>
         <span>
-          min $10.00
+          min $
+          10
+          .00
         </span>
       </li>
       <li
-        className="sc-26e233cf-7 ckveOI"
+        className="sc-fb1fc2fa-7 fiymBz"
+        onClick={[Function]}
+        selected={false}
       >
         <div
-          className="sc-122b7a3d-2 ebIrfw"
+          className="sc-c089a03b-2 VsSZo"
         >
           <div
-            className="sc-122b7a3d-0 PLncb"
+            className="sc-c089a03b-0 dhCXYi"
             color="night"
           >
             <div
-              className="sc-1d011157-0 eWHmUn"
+              className="sc-149d3190-0 DayLH"
               color="night"
             />
           </div>
@@ -229,12 +241,14 @@ exports[`DonationAmount renders correctly 1`] = `
           Ethereum
         </div>
         <span>
-          min $100.00
+          min $
+          100
+          .00
         </span>
       </li>
     </ul>
     <button
-      className="sc-3eee0409-2 hwtkdS undefined "
+      className="sc-2a588df4-2 hVoeoR undefined "
       onClick={[Function]}
     >
       <span>

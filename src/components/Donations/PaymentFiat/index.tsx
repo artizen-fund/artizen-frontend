@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useQuery, useReactiveVar } from '@apollo/client'
-import { Button, Icon, Form, CheckboxControl } from '@components'
+import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
 import { IGetUserQuery, IUser } from '@types'
 import { GET_USER } from '@gql'
 import { payWithFiat, userMetadataVar } from '@lib'
@@ -60,10 +60,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
       <Information>
         <div>
           <Title>Let’s enter your payment information</Title>
-          <InfoLine>
-            <Icon outline glyph="info" level={2} />
-            <span>Need help? We’ve prepared a useful guide to donating.</span>
-          </InfoLine>
+          <DonationHelpLink />
         </div>
 
         <div>
