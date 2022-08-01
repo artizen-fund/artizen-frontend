@@ -1,22 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useApolloClient, useReactiveVar, useQuery } from '@apollo/client'
+import { useEffect } from 'react'
+import { useApolloClient } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba, refreshSession, userMetadataVar } from '@lib'
-import { GET_USER } from '@gql'
-import { IGetUserQuery, IUser } from '@types'
+import { rgba, refreshSession, useLoggedInUser } from '@lib'
 
 const AccountButton = (props: SimpleComponentProps) => {
   const apolloClient = useApolloClient()
-  const metadata = useReactiveVar(userMetadataVar)
-  const [loggedInUser, setLoggedInUser] = useState<IUser>()
-  useQuery<IGetUserQuery>(GET_USER, {
-    variables: { issuer: metadata?.issuer },
-    onCompleted: data => {
-      setLoggedInUser(data.User[0] as IUser)
-    },
-  })
+  const [loggedInUser] = useLoggedInUser()
 
   useEffect(() => {
     refreshSession(apolloClient)

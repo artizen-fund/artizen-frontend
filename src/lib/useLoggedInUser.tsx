@@ -1,12 +1,25 @@
-interface IUser2 {
-  name?: string
-}
+import { useState } from 'react'
+import { useReactiveVar, useQuery } from '@apollo/client'
+import { userMetadataVar } from '@lib'
+import { GET_USER } from '@gql'
+import { IGetUserQuery, IUser } from '@types'
 
-export const useLoggedInUser = (): [IUser2, undefined | boolean] => {
-  const user: IUser2 | undefined = undefined
-  const loading = false
+export const useLoggedInUser = (): Array<IUser | boolean | undefined> => {
+  // need to add loading because the loading value from useQuery is initial set to false
+  const [loading, setLoading] = useState<boolean>(true)
+  const [loggedInUser, setLoggedInUser] = useState<IUser>()
+  const metadata = useReactiveVar(userMetadataVar)
 
-  const user2 = user !== undefined ? user : {}
+  useQuery<IGetUserQuery>(GET_USER, {
+    variables: { issuer: metadata?.issuer },
+    onCompleted: data => {
+      setLoggedInUser(data.User[0] as IUser)
+      setLoading(false)
+    },
+    onError: error => {
+      console.error('updatePost resultado', error)
+    },
+  })
 
-  return [user2, loading]
+  return [loggedInUser, loading]
 }

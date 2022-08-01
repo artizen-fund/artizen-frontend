@@ -5,8 +5,8 @@ import type { MagicUserMetadata } from 'magic-sdk'
 
 export const updateUserProfile = async ({ email, issuer, publicAddress }: MagicUserMetadata, token: string) => {
   const apolloClient = createApolloClient(token)
-  return await apolloClient.query<IUpdateUserMutation>({
-    query: UPDATE_USER,
+  return await apolloClient.mutate<IUpdateUserMutation>({
+    mutation: UPDATE_USER,
     variables: { email, issuer, publicAddress: publicAddress?.toLowerCase() },
   })
 }

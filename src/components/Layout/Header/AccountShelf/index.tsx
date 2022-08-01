@@ -56,7 +56,7 @@ const AccountShelf = ({ user }: IAccountShelf) => {
         </Top>
         <div>
           <Rule />
-          <Button onClick={() => logout} stretch level={1} glyph="power" transparent>
+          <Button onClick={logout} stretch level={1} glyph="power" transparent>
             Sign Out
           </Button>
         </div>

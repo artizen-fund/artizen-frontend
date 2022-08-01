@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentCrypto renders correctly 1`] = `
+<div
+  className="sc-84e114c9-3 csohjN"
+>
+  <div
+    className="sc-84e114c9-0 jEDETO"
+  >
+    <div>
+      <h1
+        className="sc-84e114c9-1 rLscL"
+      >
+        Let’s connect your wallet and double check the Ethereum balance
+      </h1>
+      <h2
+        className="sc-84e114c9-2 fLpdRK"
+      >
+        Web3 takes longer to process transactions than traditional methods. But don’t worry we’ll keep guiding you through the process.
+      </h2>
+    </div>
+    <div>
+      <p>
+        Donation Summary
+      </p>
+      <ul>
+        <li>
+          Donation: $
+        </li>
+        <li>
+          Transaction fee: $
+          42
+        </li>
+        <li>
+          Purchase total: $
+          NaN
+        </li>
+      </ul>
+    </div>
+    <label
+      className="sc-dd35d48e-4 fUZPkX"
+    >
+      <div
+        className="sc-dd35d48e-0 lmHjtw"
+      >
+        <input
+          checked={false}
+          className="sc-dd35d48e-1 clTMzK"
+          disabled={false}
+          onChange={[Function]}
+          required={false}
+          type="checkbox"
+        />
+        <span
+          className="sc-dd35d48e-2 dtceeR"
+        />
+      </div>
+      <span
+        className="sc-dd35d48e-3 eAaGSv"
+      >
+        Save payment information for next time.
+      </span>
+    </label>
+  </div>
+  <div
+    className="sc-268575ae-0 gjfjNd"
+  >
+    <div
+      className="sc-268575ae-1 jwnmTS"
+      onClick={[Function]}
+    >
+      <img
+        alt="connect with MetaMask"
+        src="/assets/metamask.svg"
+      />
+      <h3
+        className="sc-268575ae-2 leZytT"
+      >
+        MetaMask
+      </h3>
+      <h4
+        className="sc-268575ae-3 bZcDbE"
+      >
+        Connect via your browser
+      </h4>
+    </div>
+    <div
+      className="sc-268575ae-1 jwnmTS"
+      onClick={[Function]}
+    >
+      <img
+        alt="connect with WalletConnect"
+        src="/assets/walletConnect.svg"
+      />
+      <h3
+        className="sc-268575ae-2 leZytT"
+      >
+        WalletConnect
+      </h3>
+      <h4
+        className="sc-268575ae-3 bZcDbE"
+      >
+        Choose an alternative wallet
+      </h4>
+    </div>
+  </div>
+</div>
+`;

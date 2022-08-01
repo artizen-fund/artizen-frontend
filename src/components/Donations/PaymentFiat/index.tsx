@@ -1,13 +1,12 @@
 import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import type { MagicUserMetadata } from 'magic-sdk'
-import { useQuery, useReactiveVar } from '@apollo/client'
-import { Button, Icon, Form, CheckboxControl } from '@components'
-import { IGetUserQuery, IUser } from '@types'
-import { GET_USER } from '@gql'
-import { payWithFiat, userMetadataVar } from '@lib'
+import { useReactiveVar } from '@apollo/client'
+import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
+import { IUser } from '@types'
+import { payWithFiat, userMetadataVar, useLoggedInUser } from '@lib'
 import { breakpoint } from '@theme'
-import { schema, uischema, initialState, FormState } from './form'
+import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 interface IPaymentFiat {
   setStage: (s: DonationStage) => void
@@ -17,13 +16,12 @@ interface IPaymentFiat {
 const TRANSACTION_FEE = 42
 
 const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
+  const [loggedInUser] = useLoggedInUser()
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
   // todo: ^ where/how is this stored?
   const [paymentData, setPaymentData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
-  const [readonly, setReadonly] = useState(false)
-  // const [loggedInUser, ,] = useLoggedInUser()
 
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
@@ -40,18 +38,15 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
 
   const metadata = useReactiveVar(userMetadataVar)
 
-  const processTransaction = async (
-    metadata: MagicUserMetadata | undefined,
-    paymentData: FormState,
-    loggedInUser: IUser | undefined,
-  ) => {
-    if (!metadata || !loggedInUser || !metadata.publicAddress) {
-      throw 'Error: user session not found.'
-    }
-    setReadonly(true)
+  // amount, metadata, paymentData, loggedInUser
+  const processTransaction = async () => {
     setProcessing(true)
-    await payWithFiat(amount, metadata.publicAddress, paymentData, loggedInUser)
-    setStage('processCrypto')
+    try {
+      await payWithFiat(amount, paymentData, loggedInUser, metadata)
+      setStage('processCrypto')
+    } catch {
+      setProcessing(false)
+    }
   }
 
   return (
@@ -59,10 +54,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
       <Information>
         <div>
           <Title>Let’s enter your payment information</Title>
-          <InfoLine>
-            <Icon outline glyph="info" level={2} />
-            <span>Need help? We’ve prepared a useful guide to donating.</span>
-          </InfoLine>
+          <DonationHelpLink />
         </div>
 
         <div>
@@ -83,7 +75,8 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
       </Information>
       <Form
         localStorageKey={LOCALSTORAGE_KEY}
-        {...{ schema, uischema, initialState, readonly }}
+        {...{ schema, uischema, initialState }}
+        readonly={processing}
         data={paymentData}
         setData={setPaymentData}
       >
@@ -91,7 +84,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
           stretch
           onClick={() => {
             if (loggedInUser) {
-              processTransaction(metadata, paymentData, loggedInUser)
+              processTransaction()
             }
           }}
         >
@@ -113,12 +106,12 @@ const Information = styled.div`
 
 const Title = styled.h1``
 
-const InfoLine = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-`
+// const InfoLine = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   gap: 15px;
+// `
 
 const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;

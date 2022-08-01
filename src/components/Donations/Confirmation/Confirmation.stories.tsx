@@ -1,7 +1,7 @@
 import Confirmation from './'
 
 export default {
-  title: 'components/Confirmation',
+  title: 'donations/Confirmation',
   component: Confirmation,
   argTypes: {},
 }

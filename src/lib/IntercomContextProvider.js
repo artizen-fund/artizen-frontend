@@ -1,4 +1,7 @@
-import React, { createContext } from 'react'
+import React, { useEffect, createContext } from 'react'
+import Script from 'next/script'
+import { useLoggedInUser, assert } from '@lib'
+import { loadIntercom, initIntercomWindow } from 'next-intercom'
 
 export const notifications = []
 
@@ -13,75 +16,26 @@ export const IntercomEventEnum = {
   DONATION_CRYTO_CONFIRMED: 'donation:crypto:confirmed',
 }
 
-export const IntercomContent = createContext(null)
+const useIntercom = () => {
+  const [loggedInUser, loading] = useLoggedInUser()
 
-export const logIntercomEvent = (event, data) => {
-  window.Intercom('trackEvent', event, data)
-  // if (process.env.NEXT_PUBLIC_PROD) {
-  //   window.Intercom('trackEvent', event, data)
-  // } else {
-  //   // eslint-disable-next-line no-console
-  //   console.log('Intercom Event - non production')
-  // }
+  console.log('loading outside', loading)
+  console.log('loggedInUser  outside ', loggedInUser)
+
+  const NEXT_PUBLIC_INTERCOM_APP_ID = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
+
+  if (!loading) {
+    loadIntercom({
+      appId: NEXT_PUBLIC_INTERCOM_APP_ID,
+      email: loggedInUser?.email, //default: ''
+      name: loggedInUser && `${loggedInUser.firstName} ${loggedInUser.lastName}`,
+      ssr: false, // default: false
+      initWindow: true, // default: true
+      delay: 0, // default: 0  - usefull for mobile devices to prevent blocking the main thread
+    })
+  }
+
+  return [loading]
 }
 
-const IntercomContextProvider = ({ children }) => {
-  // useEffect(() => {
-  //   //TODO: add process.env.NEXT_PUBLIC_PROD after texting
-  //   // user && user.email &&
-  //   if (!window.Intercom) {
-  //     window.intercomSettings = {
-  //       app_id: process.env.NEXT_PUBLIC_INTERCOM_APP_ID,
-  //     }
-
-  //     if (user && user.email) {
-  //       window.intercomSettings = {
-  //         name: `${user.firstName} ${user.lastName}`,
-  //         email: user.email,
-  //         user_id: user.id,
-  //       }
-  //     }
-
-  //     const w = window
-  //     const ic = w.Intercom
-  //     if (typeof ic === 'function') {
-  //       ic('reattach_activator')
-  //       ic('update', w.intercomSettings)
-  //     } else {
-  //       const d = document
-  //       const i = () => {
-  //         // eslint-disable-next-line
-  //         i.c(arguments)
-  //       }
-  //       i.q = []
-  //       i.c = (args) => {
-  //         i.q.push(args)
-  //       }
-  //       w.Intercom = i
-  //       const l = () => {
-  //         const s = d.createElement('script')
-  //         s.type = 'text/javascript'
-  //         s.async = true
-  //         s.src = 'https://widget.intercom.io/widget/pg8nvhfx'
-  //         const x = d.getElementsByTagName('script')[0]
-  //         x.parentNode.insertBefore(s, x)
-  //       }
-  //       if (w.attachEvent) {
-  //         w.attachEvent('onload', l)
-  //       } else {
-  //         w.addEventListener('load', l, false)
-  //       }
-  //     }
-
-  //     //   window.Intercom('update', { name: 'manilo', email: 'rubelux@gmail.com' })
-
-  //     // eslint-disable-next-line no-console
-  //     console.log('Intercom Set Up')
-  //   }
-  //   window.Intercom('hide')
-  // }, [user])
-
-  return <IntercomContent.Provider value={logIntercomEvent}>{children}</IntercomContent.Provider>
-}
-
-export default IntercomContextProvider
+export default useIntercom

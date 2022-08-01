@@ -1,7 +1,7 @@
 import DonationShelf from './'
 
 export default {
-  title: 'components/DonationShelf',
+  title: 'donations/DonationShelf',
   component: DonationShelf,
   argTypes: {},
 }

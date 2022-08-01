@@ -35,14 +35,14 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               class="sc-ba3887ec-0 jyWTDZ"
             >
               <div
-                class="sc-1d011157-0 iDlDxE"
+                class="sc-149d3190-0 kATcSk"
               />
             </div>
             <div
               class="sc-5301581a-5 fAUXGj"
             >
               <div
-                class="sc-1d011157-0 jrSJnU"
+                class="sc-149d3190-0 jzemsA"
               />
                
               <span>
@@ -56,17 +56,17 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           class="sc-5301581a-6 gsDnlv"
         >
           <button
-            class="sc-3eee0409-2 hwtkdS undefined "
+            class="sc-2a588df4-2 hVoeoR undefined "
           >
             <div
-              class="sc-1d011157-0 ggBQiE sc-3eee0409-0 fKTQlu"
+              class="sc-149d3190-0 bfUncM sc-2a588df4-0 gSwEcZ"
             />
             <span>
               Donate
             </span>
           </button>
           <button
-            class="sc-3eee0409-2 hImsqL undefined "
+            class="sc-2a588df4-2 kYegxc undefined "
           >
             <span>
               Share Now
@@ -88,7 +88,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Leaderboard
               </div>
               <button
-                class="sc-3eee0409-2 htNOdl undefined "
+                class="sc-2a588df4-2 emJYMu undefined "
               >
                 <span>
                   See All
@@ -108,7 +108,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Additional Perks
               </div>
               <a
-                class="sc-3eee0409-1 hVsLhi undefined "
+                class="sc-2a588df4-1 fWCugx undefined "
               >
                 <span>
                   Learn More
@@ -123,7 +123,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   class="sc-b48a7ce9-0 hZzOYd"
                 >
                   <div
-                    class="sc-1d011157-0 iOTvJN"
+                    class="sc-149d3190-0 bIfjZN"
                   />
                 </div>
                 Membership in Artizen DAO
@@ -137,7 +137,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   class="sc-b48a7ce9-0 hZzOYd"
                 >
                   <div
-                    class="sc-1d011157-0 eiHEDj"
+                    class="sc-149d3190-0 jXIwuD"
                   />
                 </div>
                 0.01% of $ART tokens
@@ -151,7 +151,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   class="sc-b48a7ce9-0 hZzOYd"
                 >
                   <div
-                    class="sc-1d011157-0 deEGDF"
+                    class="sc-149d3190-0 fjHUbV"
                   />
                 </div>
                 Collectable Receipt
@@ -165,7 +165,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                   class="sc-b48a7ce9-0 hZzOYd"
                 >
                   <div
-                    class="sc-1d011157-0 fYqubd"
+                    class="sc-149d3190-0 kqmMWx"
                   />
                 </div>
                 Custom Discord Avatar
