@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import styled from 'styled-components'
+import type { MagicUserMetadata } from 'magic-sdk'
 import { useQuery, useReactiveVar } from '@apollo/client'
 import { Button, Icon, Form, CheckboxControl } from '@components'
 import { IGetUserQuery, IUser } from '@types'
@@ -22,6 +23,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   const [paymentData, setPaymentData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
   const [readonly, setReadonly] = useState(false)
+  // const [loggedInUser, ,] = useLoggedInUser()
 
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
@@ -37,16 +39,12 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   }, [])
 
   const metadata = useReactiveVar(userMetadataVar)
-  const [loggedInUser, setLoggedInUser] = useState<IUser>()
 
-  useQuery<IGetUserQuery>(GET_USER, {
-    variables: { issuer: metadata?.issuer },
-    onCompleted: data => {
-      setLoggedInUser(data.User[0] as IUser)
-    },
-  })
-
-  const processTransaction = async () => {
+  const processTransaction = async (
+    metadata: MagicUserMetadata | undefined,
+    paymentData: FormState,
+    loggedInUser: IUser | undefined,
+  ) => {
     if (!metadata || !loggedInUser || !metadata.publicAddress) {
       throw 'Error: user session not found.'
     }
@@ -89,7 +87,14 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
         data={paymentData}
         setData={setPaymentData}
       >
-        <SubmitButton stretch onClick={() => processTransaction()}>
+        <SubmitButton
+          stretch
+          onClick={() => {
+            if (loggedInUser) {
+              processTransaction(metadata, paymentData, loggedInUser)
+            }
+          }}
+        >
           Transfer ${amount + TRANSACTION_FEE}
         </SubmitButton>
         <ProcessingMessage>hum de dooo</ProcessingMessage>

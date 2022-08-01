@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { IntercomProvider } from 'react-use-intercom'
 import { ApolloProvider } from '@apollo/client'
 import { assert, isProd, withAuth, MagicProvider, initializeApollo } from '@lib'
+import IntercomContextProvider from '../lib/IntercomContextProvider'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
@@ -18,7 +19,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       <ApolloProvider client={apolloClient}>
         <MagicProvider>
           {/* <Toaster /> */}
-          <Component {...pageProps} />
+          <IntercomContextProvider>
+            <Component {...pageProps} />
+          </IntercomContextProvider>
         </MagicProvider>
       </ApolloProvider>
     </IntercomProvider>

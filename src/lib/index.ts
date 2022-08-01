@@ -14,6 +14,7 @@ export * from './useReadContract'
 export * from './utilsCrypto'
 export * from './utilsServer'
 export * from './payments'
+export * from './useLoggedInUser'
 
 export * from './auth'
 /* TODO: There is an error where, if AuthForm is exported before some of these other functions
