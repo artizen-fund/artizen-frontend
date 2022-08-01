@@ -7,7 +7,7 @@ import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
 
-export type ISidebar = Pick<ISidebarDonatorsQuery, 'exampleEntities'> & {
+export type ISidebar = Pick<ISidebarDonatorsQuery, 'donations'> & {
   FUND_COUNT: number
   FUND_AMOUNT: number
   FUND_GOAL: number
@@ -15,7 +15,7 @@ export type ISidebar = Pick<ISidebarDonatorsQuery, 'exampleEntities'> & {
   FUND_DEADLINE: string
 }
 
-const Sidebar = ({ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
+const Sidebar = ({ donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -24,10 +24,9 @@ const Sidebar = ({ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DAT
         </Header>
         <Content>
           <FundBlock>
-            {exampleEntities.length > 0 && (
+            {donations.length > 0 && (
               <AmountRaised>
-                <span>${formatUSDC(exampleEntities[0].totalDonations)}</span> raised of ${FUND_GOAL.toLocaleString()}{' '}
-                goal
+                <span>${formatUSDC(donations[0].totalDonations)}</span> raised of ${FUND_GOAL.toLocaleString()} goal
               </AmountRaised>
             )}
             <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
@@ -47,7 +46,7 @@ const Sidebar = ({ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DAT
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ exampleEntities }} />
+            <Leaderboard {...{ donations }} />
             <Perks />
           </LargeScreensOnly>
         </Content>

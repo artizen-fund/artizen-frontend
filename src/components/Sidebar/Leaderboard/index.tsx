@@ -5,9 +5,9 @@ import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
 import { ethers } from 'ethers'
 
-export type ILeaderboard = Pick<ISidebarDonatorsQuery, 'exampleEntities'>
+export type ILeaderboard = Pick<ISidebarDonatorsQuery, 'donations'>
 
-const Leaderboard = ({ exampleEntities }: ILeaderboard) => {
+const Leaderboard = ({ donations }: ILeaderboard) => {
   const sideItem = (
     <Button onClick={() => alert('do something')} outline level={2}>
       See All
@@ -16,7 +16,7 @@ const Leaderboard = ({ exampleEntities }: ILeaderboard) => {
 
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
-      {exampleEntities?.map((donation, index) => (
+      {donations?.map((donation, index) => (
         <TableCell key={`donation-${index}`}>
           <div>
             <div>#{index + 1}</div>
