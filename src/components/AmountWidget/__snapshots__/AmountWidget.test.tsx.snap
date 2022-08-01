@@ -2,20 +2,20 @@
 
 exports[`AmountWidget renders correctly 1`] = `
 <div
-  className="sc-9e28a803-0 eigpMD"
+  className="sc-8b85c6d6-0 iEXZsH"
 >
   <div
-    className="sc-9e28a803-1 eGtFrA"
+    className="sc-8b85c6d6-1 eYyyOI"
   >
     <div
-      className="sc-122b7a3d-2 ebIrfw"
+      className="sc-c089a03b-2 VsSZo"
     >
       <div
-        className="sc-122b7a3d-0 fqxyJD"
+        className="sc-c089a03b-0 ja-DffS"
         color="night"
       >
         <div
-          className="sc-1d011157-0 ejjWfH"
+          className="sc-149d3190-0 dVcEnH"
           color="night"
         />
       </div>
@@ -25,10 +25,10 @@ exports[`AmountWidget renders correctly 1`] = `
     </span>
   </div>
   <div
-    className="sc-9e28a803-3 eBAchZ"
+    className="sc-8b85c6d6-3 gtHBvp"
   >
     <input
-      className="sc-9e28a803-2 ipUAAE"
+      className="sc-8b85c6d6-2 cVuWCM"
       onChange={[Function]}
       type="number"
     />
@@ -37,25 +37,25 @@ exports[`AmountWidget renders correctly 1`] = `
     </label>
   </div>
   <div
-    className="sc-9e28a803-4 fJrvQg"
+    className="sc-8b85c6d6-4 kTqqpw"
   >
     <button
-      className="sc-3eee0409-2 dHZKXD undefined "
+      className="sc-2a588df4-2 kGwkQY undefined "
       onClick={[Function]}
     >
       <div
-        className="sc-1d011157-0 dGSXRE sc-3eee0409-0 fKTQlu"
+        className="sc-149d3190-0 kJqBVg sc-2a588df4-0 gSwEcZ"
       />
       <span>
         add
       </span>
     </button>
     <button
-      className="sc-3eee0409-2 dHZKXD undefined "
+      className="sc-2a588df4-2 kGwkQY undefined "
       onClick={[Function]}
     >
       <div
-        className="sc-1d011157-0 ggBQiE sc-3eee0409-0 fKTQlu"
+        className="sc-149d3190-0 biUHOc sc-2a588df4-0 gSwEcZ"
       />
       <span>
         subtract

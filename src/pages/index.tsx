@@ -5,28 +5,15 @@ import {
   Metrics,
   Newsletter,
   PagePadding,
-  Sidebar,
   TabbedInfo,
   AlternatingPanels,
   AlternatingPanel,
 } from '@components'
-import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
+import { CreateTopUpWallet, rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { SIDEBAR_DONATORS } from '@gql'
-import { ISidebarDonatorsQuery } from '@types'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
-interface IHome {
-  apolloData: {
-    ROOT_QUERY: ISidebarDonatorsQuery
-  }
-}
-
-const Home = ({
-  apolloData: {
-    ROOT_QUERY: { exampleEntities },
-  },
-}: IHome) => {
+const Home = () => {
   // note: obviously this is going to come from CMS data
   const FUND_COUNT = 3.2
   const FUND_AMOUNT = 15250
@@ -51,7 +38,7 @@ const Home = ({
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar {...{ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
+          {/* <Sidebar {...{ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} /> */}
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
@@ -111,14 +98,5 @@ const Wrapper = styled.section`
 // todo: above is just a filled-in value, check design
 
 const Tab = styled.div<{ label: string }>``
-
-export async function getStaticProps() {
-  const apolloClient = initializeApollo()
-  await apolloClient.query({ query: SIDEBAR_DONATORS })
-  return addApolloState(apolloClient, {
-    props: {},
-    revalidate: 1,
-  })
-}
 
 export default Home

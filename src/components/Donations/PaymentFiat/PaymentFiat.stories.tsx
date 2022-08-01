@@ -1,7 +1,7 @@
 import PaymentFiat from './'
 
 export default {
-  title: 'components/PaymentFiat',
+  title: 'donations/PaymentFiat',
   component: PaymentFiat,
   argTypes: {},
 }

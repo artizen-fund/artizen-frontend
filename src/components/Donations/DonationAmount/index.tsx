@@ -1,7 +1,6 @@
-/* eslint-disable camelcase */
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Button, Icon, AmountWidget, CheckboxControl } from '@components'
+import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
@@ -9,6 +8,8 @@ interface IDonationAmount {
   setStage: (s: DonationStage) => void
   amount: number
   setAmount: (n: number) => void
+  donationMethod: DonationMethod
+  setDonationMethod: (d: DonationMethod) => void
 }
 
 type MethodSet = {
@@ -35,23 +36,22 @@ const methods: Array<MethodSet> = [
   },
 ]
 
-const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
+const DonationAmount = ({ setStage, amount, setAmount, donationMethod, setDonationMethod }: IDonationAmount) => {
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   // todo: how is this managed?
 
   const [minClamp, setMinClamp] = useState(10)
-  const [method, setMethod] = useState<DonationMethod>('usd')
-  useEffect(() => setMinClamp(methods.find(thisMethod => thisMethod.key === method)?.min || minClamp), [method])
+  useEffect(
+    () => setMinClamp(methods.find(thisMethod => thisMethod.key === donationMethod)?.min || minClamp),
+    [donationMethod],
+  )
 
   return (
     <Wrapper>
       <Information>
         <div>
           <Title>Choose your donation amount and payment method</Title>
-          <InfoLine>
-            <Icon outline glyph="info" level={2} />
-            <span>Need help? We’ve prepared a useful guide to donating.</span>
-          </InfoLine>
+          <DonationHelpLink />
         </div>
 
         <p>todo: insert Leaderboard here</p>
@@ -83,7 +83,11 @@ const DonationAmount = ({ setStage, amount, setAmount }: IDonationAmount) => {
 
         <Methods>
           {methods.map(thisMethod => (
-            <Method key={thisMethod.key} onClick={() => setMethod(thisMethod.key)} selected={method === thisMethod.key}>
+            <Method
+              key={thisMethod.key}
+              onClick={() => setDonationMethod(thisMethod.key)}
+              selected={donationMethod === thisMethod.key}
+            >
               <Icon outline level={2} glyph="info" />
               <div>{thisMethod.label}</div>
               <span>min ${thisMethod.min}.00</span>

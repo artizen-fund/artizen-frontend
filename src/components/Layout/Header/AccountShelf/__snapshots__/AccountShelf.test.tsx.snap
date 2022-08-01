@@ -2,66 +2,66 @@
 
 exports[`AccountShelf renders correctly 1`] = `
 <div
-  className="sc-f98fdc9e-0 fDzPaK"
+  className="sc-cde5bcea-0 iZFrtq"
 >
   <div
-    className="sc-f98fdc9e-1 ioThHy"
+    className="sc-cde5bcea-1 BHuYm"
   >
     <div
-      className="sc-f98fdc9e-2 covHmc"
+      className="sc-cde5bcea-2 TaRvw"
     >
       <h1
-        className="sc-f98fdc9e-3 jkNrin"
+        className="sc-cde5bcea-3 kPRyoD"
       >
         Welcome
       </h1>
       <h2
-        className="sc-f98fdc9e-4 hkYKmx"
+        className="sc-cde5bcea-4 gtGhhZ"
       >
         Thanks for supporting the future of public goods.
       </h2>
       <div
-        className="sc-f98fdc9e-5 dyYozS"
+        className="sc-cde5bcea-5 bysiUq"
       >
         <button
-          className="sc-3eee0409-2 hImsqL undefined "
+          className="sc-2a588df4-2 kYegxc undefined "
           onClick={[Function]}
         >
           <div
-            className="sc-1d011157-0 dGSXRE sc-3eee0409-0 fKTQlu"
+            className="sc-149d3190-0 hCEIGk sc-2a588df4-0 gSwEcZ"
           />
           <span>
             Profile
           </span>
         </button>
         <button
-          className="sc-3eee0409-2 hImsqL undefined "
+          className="sc-2a588df4-2 kYegxc undefined "
           onClick={[Function]}
         >
           <div
-            className="sc-1d011157-0 elJQce sc-3eee0409-0 fKTQlu"
+            className="sc-149d3190-0 bVQFrO sc-2a588df4-0 gSwEcZ"
           />
           <span>
             Wallet
           </span>
         </button>
         <button
-          className="sc-3eee0409-2 hImsqL undefined "
+          className="sc-2a588df4-2 kYegxc undefined "
           onClick={[Function]}
         >
           <div
-            className="sc-1d011157-0 cTesVU sc-3eee0409-0 fKTQlu"
+            className="sc-149d3190-0 bkwECk sc-2a588df4-0 gSwEcZ"
           />
           <span>
             Settings
           </span>
         </button>
         <button
-          className="sc-3eee0409-2 hImsqL undefined "
+          className="sc-2a588df4-2 kYegxc undefined "
           onClick={[Function]}
         >
           <div
-            className="sc-1d011157-0 hjmJta sc-3eee0409-0 fKTQlu"
+            className="sc-149d3190-0 epVpEe sc-2a588df4-0 gSwEcZ"
           />
           <span>
             Notifications
@@ -71,14 +71,14 @@ exports[`AccountShelf renders correctly 1`] = `
     </div>
     <div>
       <hr
-        className="sc-f98fdc9e-7 eICzrO"
+        className="sc-cde5bcea-7 hwHOna"
       />
       <button
-        className="sc-3eee0409-2 caxAZL undefined "
+        className="sc-2a588df4-2 kDHkxE undefined "
         onClick={[Function]}
       >
         <div
-          className="sc-1d011157-0 eTjabG sc-3eee0409-0 fKTQlu"
+          className="sc-149d3190-0 jDMljq sc-2a588df4-0 gSwEcZ"
         />
         <span>
           Sign Out
@@ -93,14 +93,14 @@ exports[`AccountShelf renders correctly 1`] = `
       className="sc-cf63bf03-1 doApLo"
     >
       <div
-        className="sc-122b7a3d-2 hwMXZL"
+        className="sc-c089a03b-2 gfJPuX"
       >
         <div
-          className="sc-122b7a3d-0 fCFnor"
+          className="sc-c089a03b-0 kNsEAy"
           color="night"
         >
           <div
-            className="sc-1d011157-0 ggBQiE"
+            className="sc-149d3190-0 bfUncM"
             color="night"
           />
         </div>
@@ -120,14 +120,14 @@ exports[`AccountShelf renders correctly 1`] = `
       className="sc-cf63bf03-1 doApLo"
     >
       <div
-        className="sc-122b7a3d-2 hwMXZL"
+        className="sc-c089a03b-2 gfJPuX"
       >
         <div
-          className="sc-122b7a3d-0 fCFnor"
+          className="sc-c089a03b-0 kNsEAy"
           color="night"
         >
           <div
-            className="sc-1d011157-0 kJNvLc"
+            className="sc-149d3190-0 inyhzs"
             color="night"
           />
         </div>
@@ -147,14 +147,14 @@ exports[`AccountShelf renders correctly 1`] = `
       className="sc-cf63bf03-1 doApLo"
     >
       <div
-        className="sc-122b7a3d-2 hwMXZL"
+        className="sc-c089a03b-2 gfJPuX"
       >
         <div
-          className="sc-122b7a3d-0 fCFnor"
+          className="sc-c089a03b-0 kNsEAy"
           color="night"
         >
           <div
-            className="sc-1d011157-0 elJQce"
+            className="sc-149d3190-0 bVQFrO"
             color="night"
           />
         </div>
@@ -174,14 +174,14 @@ exports[`AccountShelf renders correctly 1`] = `
       className="sc-cf63bf03-1 doApLo"
     >
       <div
-        className="sc-122b7a3d-2 hwMXZL"
+        className="sc-c089a03b-2 gfJPuX"
       >
         <div
-          className="sc-122b7a3d-0 fCFnor"
+          className="sc-c089a03b-0 kNsEAy"
           color="night"
         >
           <div
-            className="sc-1d011157-0 bgNAfS"
+            className="sc-149d3190-0 gRbtGG"
             color="night"
           />
         </div>
@@ -199,7 +199,7 @@ exports[`AccountShelf renders correctly 1`] = `
     </li>
   </ul>
   <object
-    className="sc-f98fdc9e-6 foYDJl"
+    className="sc-cde5bcea-6 eCCnZt"
     data="/assets/qf-square.svg"
   />
 </div>

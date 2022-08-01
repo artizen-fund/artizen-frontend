@@ -14,7 +14,7 @@ exports[`Perks renders Perks unchanged 1`] = `
         Additional Perks
       </div>
       <a
-        class="sc-3eee0409-1 hVsLhi undefined "
+        class="sc-2a588df4-1 fWCugx undefined "
       >
         <span>
           Learn More
@@ -29,7 +29,7 @@ exports[`Perks renders Perks unchanged 1`] = `
           class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-1d011157-0 iOTvJN"
+            class="sc-149d3190-0 bIfjZN"
           />
         </div>
         Membership in Artizen DAO
@@ -43,7 +43,7 @@ exports[`Perks renders Perks unchanged 1`] = `
           class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-1d011157-0 eiHEDj"
+            class="sc-149d3190-0 jXIwuD"
           />
         </div>
         0.01% of $ART tokens
@@ -57,7 +57,7 @@ exports[`Perks renders Perks unchanged 1`] = `
           class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-1d011157-0 deEGDF"
+            class="sc-149d3190-0 fjHUbV"
           />
         </div>
         Collectable Receipt
@@ -71,7 +71,7 @@ exports[`Perks renders Perks unchanged 1`] = `
           class="sc-b48a7ce9-0 hZzOYd"
         >
           <div
-            class="sc-1d011157-0 fYqubd"
+            class="sc-149d3190-0 kqmMWx"
           />
         </div>
         Custom Discord Avatar

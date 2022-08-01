@@ -3,34 +3,34 @@
 exports[`LoginShelf renders correctly 1`] = `
 <div>
   <div
-    class="sc-19e6b784-4 lndqcO"
+    class="sc-9c2c0fc5-4 iCiVJK"
   >
     <div
-      class="sc-19e6b784-5 iXJhJB"
+      class="sc-9c2c0fc5-5 fLeqkg"
     >
       <h1
-        class="sc-19e6b784-6 eoJMxi"
+        class="sc-9c2c0fc5-6 hOScBH"
       >
         Let’s get started by setting up your Artizen account
       </h1>
       <div
-        class="sc-19e6b784-7 imNgdK"
+        class="sc-9c2c0fc5-7 jXnRuP"
       >
         <div
-          class="sc-122b7a3d-2 ebIrfw"
+          class="sc-c089a03b-2 VsSZo"
         >
           <div
-            class="sc-122b7a3d-0 fqxyJD"
+            class="sc-c089a03b-0 ja-DffS"
             color="night"
           >
             <div
-              class="sc-1d011157-0 gkxKzK"
+              class="sc-149d3190-0 iAXlWi"
               color="night"
             />
           </div>
         </div>
         <p
-          class="sc-19e6b784-8 kSNHDM"
+          class="sc-9c2c0fc5-8 hFjcqt"
         >
           Already have an account?
           <br />
@@ -73,7 +73,7 @@ exports[`LoginShelf renders correctly 1`] = `
       </div>
     </div>
     <button
-      class="sc-3eee0409-2 kGjZMI sc-19e6b784-0 cHIONN  disabled"
+      class="sc-2a588df4-2 ixnoRf sc-9c2c0fc5-0 hVAiAY  disabled"
       disabled=""
     >
       <span>
@@ -81,30 +81,30 @@ exports[`LoginShelf renders correctly 1`] = `
       </span>
     </button>
     <div
-      class="sc-19e6b784-1 gpPKnw"
+      class="sc-9c2c0fc5-1 ccMnwl"
     >
       <div
-        class="sc-19e6b784-9 juxsRO"
+        class="sc-9c2c0fc5-9 cXUljj"
       />
       <div
-        class="sc-19e6b784-10 lcydTD"
+        class="sc-9c2c0fc5-10 hrMKlC"
       >
         <button
-          class="sc-3eee0409-2 hImsqL undefined "
+          class="sc-2a588df4-2 kYegxc undefined "
         >
           <span>
             Phone
           </span>
         </button>
         <button
-          class="sc-3eee0409-2 hImsqL undefined "
+          class="sc-2a588df4-2 kYegxc undefined "
         >
           <span>
             Twitter
           </span>
         </button>
         <button
-          class="sc-3eee0409-2 hImsqL undefined "
+          class="sc-2a588df4-2 kYegxc undefined "
         >
           <span>
             Discord
@@ -113,10 +113,10 @@ exports[`LoginShelf renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="sc-19e6b784-11 hNDYzD"
+      class="sc-9c2c0fc5-11 pMnPu"
     >
       <div
-        class="sc-19e6b784-12 fHQdXh"
+        class="sc-9c2c0fc5-12 bGBpas"
       >
         <label
           class="sc-dd35d48e-4 dCKwdz"
@@ -138,7 +138,7 @@ exports[`LoginShelf renders correctly 1`] = `
           />
         </label>
         <p
-          class="sc-19e6b784-13 esldgb"
+          class="sc-9c2c0fc5-13 dmkgqG"
         >
           I agree to Artizen’s
           <a
