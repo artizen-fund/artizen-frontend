@@ -7,7 +7,7 @@ export const cache: InMemoryCache = new InMemoryCache({
     Query: {
       fields: {
         /* Hasura fields */
-        exampleEntities: {
+        donations: {
           keyArgs: false,
         },
         Project: {

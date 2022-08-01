@@ -38,7 +38,7 @@ const Home = () => {
               </Tab>
             ))}
           </TabbedInfo>
-          {/* <Sidebar {...{ exampleEntities, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} /> */}
+          {/* <Sidebar {...{ donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} /> */}
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
