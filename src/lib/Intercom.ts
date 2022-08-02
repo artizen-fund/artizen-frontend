@@ -1,5 +1,6 @@
+import { useCallback } from 'react'
 import { useLoggedInUser, assert } from '@lib'
-import { loadIntercom, trackEvent } from 'next-intercom'
+import { loadIntercom, trackEvent, shutdownIntercom } from 'next-intercom'
 
 export const notifications = []
 
@@ -26,7 +27,7 @@ export function initIntercom() {
 
   const NEXT_PUBLIC_INTERCOM_APP_ID = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
-  if (!loading) {
+  const startIntercom = useCallback(() => {
     loadIntercom({
       appId: NEXT_PUBLIC_INTERCOM_APP_ID,
       email: loggedInUser?.email, //default: ''
@@ -35,6 +36,10 @@ export function initIntercom() {
       initWindow: true, // default: true
       delay: 0, // default: 0  - usefull for mobile devices to prevent blocking the main thread
     })
+  }, [loggedInUser])
+
+  if (!loading) {
+    startIntercom()
   }
 
   return [loading] as const
