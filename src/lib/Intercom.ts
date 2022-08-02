@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useLoggedInUser, assert } from '@lib'
 import { loadIntercom, trackEvent, shutdownIntercom } from 'next-intercom'
 
@@ -38,9 +38,8 @@ export function initIntercom() {
     })
   }, [loggedInUser])
 
-  if (!loading) {
+  useEffect(() => {
     startIntercom()
-  }
-
-  return [loading] as const
+    return () => shutdownIntercom()
+  }, [])
 }
