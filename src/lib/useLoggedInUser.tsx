@@ -4,7 +4,7 @@ import { userMetadataVar } from '@lib'
 import { GET_USER } from '@gql'
 import { IGetUserQuery, IUser } from '@types'
 
-export const useLoggedInUser = (): Array<IUser | boolean | undefined> => {
+export function useLoggedInUser() {
   // need to add loading because the loading value from useQuery is initial set to false
   const [loading, setLoading] = useState<boolean>(true)
   const [loggedInUser, setLoggedInUser] = useState<IUser>()
@@ -20,6 +20,6 @@ export const useLoggedInUser = (): Array<IUser | boolean | undefined> => {
       console.error('updatePost resultado', error)
     },
   })
-
-  return [loggedInUser, loading]
+  // NOTE: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks/#custom-hooks
+  return [loggedInUser, loading] as const
 }

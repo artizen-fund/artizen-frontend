@@ -1,9 +1,9 @@
 import { useLoggedInUser, assert } from '@lib'
-import { loadIntercom } from 'next-intercom'
+import { loadIntercom, trackEvent } from 'next-intercom'
 
 export const notifications = []
 
-export const IntercomEventEnum = {
+export const intercomEventEnum: { [key: string]: string } = {
   USER_LOGIN: 'user:login',
   DONATION_FIAT_START: 'donation:fiat:start',
   DONATION_FIAT_TOPUP: 'donation:fiat:pay:topup',
@@ -14,11 +14,15 @@ export const IntercomEventEnum = {
   DONATION_CRYTO_CONFIRMED: 'donation:crypto:confirmed',
 }
 
-export const initIntercom = () => {
-  const [loggedInUser, loading] = useLoggedInUser()
+export const trackEventF = (type: string, target: object = {}) => {
+  if (type !== intercomEventEnum[type]) {
+    new Error('Unknown Event label')
+  }
+  trackEvent(type, target)
+}
 
-  // console.log('loading outside', loading)
-  // console.log('loggedInUser  outside ', loggedInUser)
+export function initIntercom() {
+  const [loggedInUser, loading] = useLoggedInUser()
 
   const NEXT_PUBLIC_INTERCOM_APP_ID = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
@@ -26,12 +30,12 @@ export const initIntercom = () => {
     loadIntercom({
       appId: NEXT_PUBLIC_INTERCOM_APP_ID,
       email: loggedInUser?.email, //default: ''
-      name: loggedInUser && `${loggedInUser.firstName} ${loggedInUser.lastName}`,
+      name: loggedInUser && `${loggedInUser?.firstName} ${loggedInUser?.lastName}`,
       ssr: false, // default: false
       initWindow: true, // default: true
       delay: 0, // default: 0  - usefull for mobile devices to prevent blocking the main thread
     })
   }
 
-  return [loading]
+  return [loading] as const
 }

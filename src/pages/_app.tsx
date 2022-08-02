@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import { ApolloProvider } from '@apollo/client'
 import { isProd, withAuth, MagicProvider, initializeApollo } from '@lib'
 
-
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 

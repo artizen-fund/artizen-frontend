@@ -1,9 +1,7 @@
 import { useMemo, useState } from 'react'
 import styled from 'styled-components'
-import type { MagicUserMetadata } from 'magic-sdk'
 import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { IUser } from '@types'
 import { payWithFiat, userMetadataVar, useLoggedInUser } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
@@ -19,7 +17,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   const [loggedInUser] = useLoggedInUser()
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-  // todo: ^ where/how is this stored?
+  // TODO: ^ where/how is this stored?
   const [paymentData, setPaymentData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
 
