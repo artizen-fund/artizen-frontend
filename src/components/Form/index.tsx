@@ -1,7 +1,7 @@
 import { JsonForms } from '@jsonforms/react'
 import { JsonSchema, Layout, ControlElement } from '@jsonforms/core'
 import { vanillaRenderers } from '@jsonforms/vanilla-renderers'
-import { debounce } from 'lodash'
+import { debounce, pickBy } from 'lodash'
 import {
   StringControl,
   stringControlTester,
@@ -38,15 +38,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
       const safeVars = (uischema.elements as Array<ControlElement>)
         .filter(schemaVar => !schemaVar.options?.unsafeToRetain)
         .map(schemaVar => schemaVar.scope.replace('#/properties/', ''))
-      const safeData = Object.keys(newData)
-        .filter(key => safeVars.includes(key))
-        .reduce(
-          (obj, key) =>
-            Object.assign(obj, {
-              [key]: newData[key],
-            }),
-          {},
-        )
+      const safeData = pickBy(newData, (_, key) => safeVars.includes(key))
       localStorage.setItem(localStorageKey, JSON.stringify(safeData))
     }
   }, 100)
