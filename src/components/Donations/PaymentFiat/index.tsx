@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { payWithFiat, userMetadataVar, useLoggedInUser, assertInt } from '@lib'
+import { payWithFiat, userMetadataVar, useLoggedInUser } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 

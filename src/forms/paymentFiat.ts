@@ -31,7 +31,7 @@ export const schema: JsonSchema = {
   required: ['first_name', 'last_name', 'number', 'verification_value', 'month', 'year', 'zip'],
 }
 
-export interface FormState {
+export interface FormState extends Record<string, unknown> {
   first_name?: string
   last_name?: string
   number?: string

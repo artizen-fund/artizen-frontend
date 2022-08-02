@@ -26,7 +26,7 @@ export const schema: JsonSchema = {
 	This is the local state that our useState() bundle will conform to. 
 	All values must be optional, as an unfilled form will conform to this state.
 */
-export interface FormState {
+export interface FormState extends Record<string, unknown> {
   someString?: string
   someEmail?: string
   someNumber?: number

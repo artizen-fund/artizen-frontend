@@ -31,7 +31,7 @@ export const initialState = {
   tokenAllocation: 1000,
 }
 
-export interface FormState {
+export interface FormState extends Record<string, unknown> {
   tokenURI?: string
   startTime: string
   endTime: string
