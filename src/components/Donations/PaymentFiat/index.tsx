@@ -38,6 +38,9 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
 
   // amount, metadata, paymentData, loggedInUser
   const processTransaction = async () => {
+    if (!loggedInUser) {
+      return
+    }
     setProcessing(true)
     try {
       await payWithFiat(amount, paymentData, loggedInUser, metadata)
@@ -78,14 +81,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
         data={paymentData}
         setData={setPaymentData}
       >
-        <SubmitButton
-          stretch
-          onClick={() => {
-            if (loggedInUser) {
-              processTransaction()
-            }
-          }}
-        >
+        <SubmitButton stretch onClick={processTransaction}>
           Transfer ${amount + TRANSACTION_FEE}
         </SubmitButton>
         <ProcessingMessage>hum de dooo</ProcessingMessage>
@@ -103,13 +99,6 @@ const Information = styled.div`
 `
 
 const Title = styled.h1``
-
-// const InfoLine = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   gap: 15px;
-// `
 
 const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
