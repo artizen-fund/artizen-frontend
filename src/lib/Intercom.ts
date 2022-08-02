@@ -23,7 +23,7 @@ export const trackEventF = (type: string, target: object = {}) => {
 }
 
 export function initIntercom() {
-  const [loggedInUser, loading] = useLoggedInUser()
+  const [loggedInUser] = useLoggedInUser()
 
   const NEXT_PUBLIC_INTERCOM_APP_ID = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
