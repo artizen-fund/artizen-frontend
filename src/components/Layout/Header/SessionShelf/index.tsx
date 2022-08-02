@@ -1,12 +1,8 @@
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { useApolloClient, useReactiveVar, useQuery } from '@apollo/client'
-import { userMetadataVar, finishSocialLogin, useMagic } from '@lib'
-import { GET_USER } from '@gql'
-import { IGetUserQuery, IUser } from '@types'
+import { useEffect } from 'react'
+import { useLoggedInUser, initIntercom } from '@lib'
 import LoginShelf from '../LoginShelf'
 import AccountShelf from '../AccountShelf'
-import ProcessingSocialLoginShelf from '../ProcessingSocialLoginShelf'
+
 import { ShelfType } from '../'
 
 interface ISessionShelf {
@@ -14,34 +10,15 @@ interface ISessionShelf {
 }
 
 const SessionShelf = ({ setVisibleShelf }: ISessionShelf) => {
-  const { query } = useRouter()
-  const { magic } = useMagic()
-  const apolloClient = useApolloClient()
+  const [loggedInUser] = useLoggedInUser()
+  initIntercom()
 
-  const metadata = useReactiveVar(userMetadataVar)
-  const [loggedInUser, setLoggedInUser] = useState<IUser>()
-  useQuery<IGetUserQuery>(GET_USER, {
-    variables: { issuer: metadata?.issuer },
-    onCompleted: data => setLoggedInUser(data.User[0] as IUser),
-  })
-
-  const [loadingSocialLogin, setLoadingSocialLogin] = useState<boolean>(false)
   useEffect(() => {
-    if (!magic) throw 'Error: magic is not initialized.'
-    if (!query.provider) return
-    setLoadingSocialLogin(true)
     setVisibleShelf('session')
     // Send token to server to validate
-    finishSocialLogin(apolloClient, magic)
-  }, [query, magic])
+  }, [loggedInUser])
 
-  return !!metadata && !!loggedInUser ? (
-    <AccountShelf user={loggedInUser} />
-  ) : loadingSocialLogin ? (
-    <ProcessingSocialLoginShelf />
-  ) : (
-    <LoginShelf />
-  )
+  return !!loggedInUser ? <AccountShelf user={loggedInUser} /> : <LoginShelf />
 }
 
 export default SessionShelf

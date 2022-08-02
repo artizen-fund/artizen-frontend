@@ -1,10 +1,8 @@
 import { useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { useQuery, useReactiveVar } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { IGetUserQuery, IUser } from '@types'
-import { GET_USER } from '@gql'
-import { payWithFiat, userMetadataVar } from '@lib'
+import { payWithFiat, userMetadataVar, useLoggedInUser } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
@@ -16,9 +14,10 @@ interface IPaymentFiat {
 const TRANSACTION_FEE = 42
 
 const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
+  const [loggedInUser] = useLoggedInUser()
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-  // todo: ^ where/how is this stored?
+  // TODO: ^ where/how is this stored?
   const [paymentData, setPaymentData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
 
@@ -36,16 +35,12 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   }, [])
 
   const metadata = useReactiveVar(userMetadataVar)
-  const [loggedInUser, setLoggedInUser] = useState<IUser>()
 
-  useQuery<IGetUserQuery>(GET_USER, {
-    variables: { issuer: metadata?.issuer },
-    onCompleted: data => {
-      setLoggedInUser(data.User[0] as IUser)
-    },
-  })
-
+  // amount, metadata, paymentData, loggedInUser
   const processTransaction = async () => {
+    if (!loggedInUser) {
+      return
+    }
     setProcessing(true)
     try {
       await payWithFiat(amount, paymentData, loggedInUser, metadata)
@@ -86,7 +81,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
         data={paymentData}
         setData={setPaymentData}
       >
-        <SubmitButton stretch onClick={() => processTransaction()}>
+        <SubmitButton stretch onClick={processTransaction}>
           Transfer ${amount + TRANSACTION_FEE}
         </SubmitButton>
         <ProcessingMessage>hum de dooo</ProcessingMessage>
@@ -104,13 +99,6 @@ const Information = styled.div`
 `
 
 const Title = styled.h1``
-
-const InfoLine = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-`
 
 const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;

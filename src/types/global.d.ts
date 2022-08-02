@@ -8,6 +8,10 @@ declare global {
     onClick?: (input?: any) => void
   }
 
+  interface Window {
+    Intercom: object
+  }
+
   type NextJsInitializedPage = (props: AppProps) => JSX.Element
 
   type TokenAndMetadataBundle = {

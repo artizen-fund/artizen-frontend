@@ -14,13 +14,6 @@ import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
 const Home = () => {
-  // note: obviously this is going to come from CMS data
-  const FUND_COUNT = 3.2
-  const FUND_AMOUNT = 15250
-  const FUND_GOAL = 25000
-  const FUND_DATE = 'May, 2022'
-  const FUND_DEADLINE = '2022-06-30T00:00:00'
-
   return (
     <Layout>
       <CreateTopUpWallet />
