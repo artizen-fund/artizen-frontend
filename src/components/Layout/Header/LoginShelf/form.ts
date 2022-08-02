@@ -11,7 +11,7 @@ export const schema: JsonSchema = {
   required: ['email'],
 }
 
-export interface FormState {
+export interface FormState extends Record<string, unknown> {
   email?: string
 }
 

@@ -31,7 +31,7 @@ export const schema: JsonSchema = {
   required: ['first_name', 'last_name', 'number', 'verification_value', 'month', 'year', 'zip'],
 }
 
-export interface FormState {
+export interface FormState extends Record<string, unknown> {
   first_name?: string
   last_name?: string
   number?: string
@@ -61,26 +61,31 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/number',
       label: 'Card Number',
+      options: { unsafeToRetain: true },
     },
     {
       type: 'Control',
       scope: '#/properties/month',
       label: 'Expiration Month',
+      options: { unsafeToRetain: true },
     },
     {
       type: 'Control',
       scope: '#/properties/year',
       label: 'Expiration Year',
+      options: { unsafeToRetain: true },
     },
     {
       type: 'Control',
       scope: '#/properties/verification_value',
       label: 'CVV',
+      options: { unsafeToRetain: true },
     },
     {
       type: 'Control',
       scope: '#/properties/zip',
       label: 'Billing Zip Code',
+      options: { unsafeToRetain: true },
     },
     {
       type: 'Control',
