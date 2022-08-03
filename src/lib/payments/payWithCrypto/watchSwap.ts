@@ -2,7 +2,7 @@ import { CryptoStageFunction } from './'
 
 // all the watchers for this stage of the crypto transaction are here
 
-const watchExchange: CryptoStageFunction = (setStatus, setMessage) => {
+const watchSwap: CryptoStageFunction = (setStatus, setMessage) => {
   setStatus('PROCESSING')
   setMessage('whatever my dude')
   // begin work
@@ -10,4 +10,4 @@ const watchExchange: CryptoStageFunction = (setStatus, setMessage) => {
   return
 }
 
-export default watchExchange
+export default watchSwap
