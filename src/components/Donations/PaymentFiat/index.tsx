@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { payWithFiat, userMetadataVar, useLoggedInUser } from '@lib'
+import { payWithFiat, userMetadataVar, useLoggedInUser, calculateFee } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
@@ -11,15 +11,15 @@ interface IPaymentFiat {
   amount: number
 }
 
-const TRANSACTION_FEE = 42
+type FormStage = 'gatheringPersonal' | 'gatheringPayment' | 'processing'
 
 const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   const [loggedInUser] = useLoggedInUser()
+  const [formStage, setFormStage] = useState<FormStage>('gatheringPersonal')
+
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-  // TODO: ^ where/how is this stored?
   const [paymentData, setPaymentData] = useState<FormState>(initialState)
-  const [processing, setProcessing] = useState(false)
 
   useMemo(() => {
     if (typeof localStorage === 'undefined') {
@@ -36,22 +36,34 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
 
   const metadata = useReactiveVar(userMetadataVar)
 
-  // amount, metadata, paymentData, loggedInUser
   const processTransaction = async () => {
     if (!loggedInUser) {
       return
     }
-    setProcessing(true)
+    setFormStage('processing')
     try {
       await payWithFiat(amount, paymentData, loggedInUser, metadata)
       setStage('processCrypto')
     } catch {
-      setProcessing(false)
+      setFormStage('gatheringPersonal')
     }
   }
 
+  const [transactionFee, setTransactionFee] = useState<number>()
+  useEffect(() => {
+    if (!paymentData.country) return
+    setTransactionFee(calculateFee(amount, paymentData.country as string))
+  }, [paymentData])
+
+  const [disabled, setDisabled] = useState(true)
+  useEffect(() => {
+    console.log('paymentData', paymentData, uischema)
+    const supportedRegion = (paymentData.country, paymentData.state)
+    setDisabled(formStage === 'processing' || !transactionFee || !supportedRegion)
+  }, [formStage, transactionFee, paymentData])
+
   return (
-    <Wrapper className={processing ? 'processing' : ''}>
+    <Wrapper className={formStage}>
       <Information>
         <div>
           <Title>Let’s enter your payment information</Title>
@@ -62,8 +74,8 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
           <p>Donation Summary</p>
           <ul>
             <li>Donation: ${amount}</li>
-            <li>Transaction fee: ${TRANSACTION_FEE}</li>
-            <li>Purchase total: ${amount + TRANSACTION_FEE}</li>
+            <li>Transaction fee: {!!transactionFee ? 'checking' : `$${transactionFee}`}</li>
+            <li>Purchase total: {!!transactionFee ? 'checking' : `$${amount + transactionFee!}`}</li>
           </ul>
         </div>
 
@@ -77,12 +89,15 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
       <Form
         localStorageKey={LOCALSTORAGE_KEY}
         {...{ schema, uischema, initialState }}
-        readonly={processing}
+        readonly={formStage === 'processing'}
         data={paymentData}
         setData={setPaymentData}
       >
-        <SubmitButton stretch onClick={processTransaction}>
-          Transfer ${amount + TRANSACTION_FEE}
+        <GatherPaymentButton stretch onClick={() => setFormStage('gatheringPayment')}>
+          Payment Info
+        </GatherPaymentButton>
+        <SubmitButton stretch onClick={processTransaction} {...{ disabled }}>
+          Transfer donation
         </SubmitButton>
         <ProcessingMessage>hum de dooo</ProcessingMessage>
       </Form>
@@ -101,7 +116,11 @@ const Information = styled.div`
 const Title = styled.h1``
 
 const SubmitButton = styled(props => <Button {...props} />)`
-  grid-area: submit;
+  grid-area: submitButton;
+`
+
+const GatherPaymentButton = styled(props => <Button {...props} />)`
+  grid-area: gatherPaymentButton;
 `
 
 const ProcessingMessage = styled.div`
@@ -114,35 +133,35 @@ const Wrapper = styled.div`
   gap: 10px;
   grid-template-areas:
     'copy copy'
-    'first_name last_name'
-    'number number'
-    'month year'
-    'zip verification_value'
+    'street street'
+    'city city'
+    'state country'
     'phone_number phone_number'
-    'submit submit';
-  &.submitted {
+    'gatherPaymentButton gatherPaymentButton';
+  &.gatheringPayment {
     grid-template-areas:
-      'copy'
-      'optIn'
-      'confirmation';
+      'copy copy'
+      'first_name last_name'
+      'cc_number cc_number'
+      'month year'
+      'zip verification_value'
+      'submitButton submitButton';
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 12px;
     grid-template-areas:
-      'copy copy first_name last_name'
-      'copy copy number number'
-      'copy copy month year'
-      'copy copy zip verification_value'
+      'copy copy street street'
+      'copy copy city city'
+      'copy copy state country'
       'copy copy phone_number phone_number'
-      'copy copy submit submit';
-    &.submitted {
+      'copy copy gatherPaymentButton gatherPaymentButton';
+    &.gatheringPayment {
       grid-template-areas:
-        'copy copy processing processing'
-        'copy copy processing processing'
-        'copy copy processing processing'
-        'copy copy processing processing'
-        'copy copy processing processing'
-        'copy copy processing processing';
+        'copy copy first_name last_name'
+        'copy copy cc_number cc_number'
+        'copy copy month year'
+        'copy copy zip verification_value'
+        'copy copy submitButton submitButton';
     }
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
@@ -154,6 +173,22 @@ const Wrapper = styled.div`
     display: contents;
   }
 
+  *[id='#/properties/street1'] {
+    grid-area: street;
+  }
+
+  *[id='#/properties/city'] {
+    grid-area: city;
+  }
+
+  *[id='#/properties/state'] {
+    grid-area: state;
+  }
+
+  *[id='#/properties/country'] {
+    grid-area: country;
+  }
+
   *[id='#/properties/first_name'] {
     grid-area: first_name;
   }
@@ -163,7 +198,7 @@ const Wrapper = styled.div`
   }
 
   *[id='#/properties/number'] {
-    grid-area: number;
+    grid-area: cc_number;
   }
 
   *[id='#/properties/verification_value'] {
@@ -187,9 +222,6 @@ const Wrapper = styled.div`
   }
 
   &.processing {
-    *[id='#/properties/EMAIL'],
-    *[id='#/properties/FNAME'],
-    *[id='#/properties/LNAME'],
     ${SubmitButton} {
       display: none;
     }

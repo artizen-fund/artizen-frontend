@@ -3,6 +3,19 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
+    street1: {
+      type: 'string',
+    },
+    city: {
+      type: 'string',
+    },
+    state: {
+      type: 'string',
+    },
+    country: {
+      type: 'string',
+    },
+
     first_name: {
       type: 'string',
     },
@@ -28,10 +41,26 @@ export const schema: JsonSchema = {
       type: 'string',
     },
   },
-  required: ['first_name', 'last_name', 'number', 'verification_value', 'month', 'year', 'zip'],
+  required: [
+    'street1',
+    'city',
+    'state',
+    'country',
+    'first_name',
+    'last_name',
+    'number',
+    'verification_value',
+    'month',
+    'year',
+    'zip',
+  ],
 }
 
 export interface FormState extends Record<string, unknown> {
+  street1?: string
+  city?: string
+  state?: string
+  country?: string
   first_name?: string
   last_name?: string
   number?: string
@@ -47,6 +76,34 @@ export const initialState: FormState = {}
 export const uischema = {
   type: 'VerticalLayout',
   elements: [
+    {
+      type: 'Control',
+      scope: '#/properties/street1',
+      label: 'Street Address',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/city',
+      label: 'City',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/state',
+      label: 'State or Territory',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/zip',
+      label: 'Billing Zip Code',
+      options: { unsafeToRetain: true },
+    },
+
+    {
+      type: 'Control',
+      scope: '#/properties/country',
+      label: 'Country',
+    },
+
     {
       type: 'Control',
       scope: '#/properties/first_name',
@@ -79,12 +136,6 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/verification_value',
       label: 'CVV',
-      options: { unsafeToRetain: true },
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/zip',
-      label: 'Billing Zip Code',
       options: { unsafeToRetain: true },
     },
     {
