@@ -6,14 +6,14 @@ import { payWithFiat, userMetadataVar, useLoggedInUser, calculateFee } from '@li
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
-interface IPaymentFiat {
+interface IPaymentFiatAddress {
   setStage: (s: DonationStage) => void
   amount: number
 }
 
 type FormStage = 'gatheringPersonal' | 'gatheringPayment' | 'processing'
 
-const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
+const PaymentFiatAddress = ({ setStage, amount }: IPaymentFiatAddress) => {
   const [loggedInUser] = useLoggedInUser()
   const [formStage, setFormStage] = useState<FormStage>('gatheringPersonal')
 
@@ -173,6 +173,22 @@ const Wrapper = styled.div`
     display: contents;
   }
 
+  *[id='#/properties/street1'] {
+    grid-area: street;
+  }
+
+  *[id='#/properties/city'] {
+    grid-area: city;
+  }
+
+  *[id='#/properties/state'] {
+    grid-area: state;
+  }
+
+  *[id='#/properties/country'] {
+    grid-area: country;
+  }
+
   *[id='#/properties/first_name'] {
     grid-area: first_name;
   }
@@ -215,4 +231,4 @@ const Wrapper = styled.div`
   }
 `
 
-export default PaymentFiat
+export default PaymentFiatAddress
