@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/client'
 import { userMetadataVar, trackEventF, intercomEventEnum } from '@lib'
 import { GET_USER } from '@gql'
-import { IGetUserQuery, IUser } from '@types'
+import { IGetUserQuery } from '@types'
 
 export const createSession = async (apolloClient: ApolloClient<object>, didToken: string) => {
   const apiData = await fetch('/api/createSession', {
@@ -21,6 +21,5 @@ export const createSession = async (apolloClient: ApolloClient<object>, didToken
   const { data } = await apolloClient.query<IGetUserQuery>({ query: GET_USER, variables: { issuer: metadata.issuer } })
   if (data.User.length < 1) throw 'Error retrieving user'
 
-  //Tracking
   trackEventF(intercomEventEnum.USER_LOGIN)
 }

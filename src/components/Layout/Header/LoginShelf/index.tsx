@@ -34,14 +34,13 @@ const LoginShelf = () => {
       throw 'Error: magic session not initialized.'
     }
     if (!email) {
-      throw 'Error: either email'
+      throw 'Error: email is missing'
     }
     setReadonly(true)
     setSubmitted(true)
     try {
-      await loginWithEmail(apolloClient, magic, email)
       setSentEmail(true)
-      setSubmitted(true)
+      await loginWithEmail(apolloClient, magic, email)
       setReadonly(false)
     } catch (error) {
       console.error(error)
