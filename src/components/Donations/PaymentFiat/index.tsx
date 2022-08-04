@@ -123,7 +123,6 @@ const Wrapper = styled.div`
   &.submitted {
     grid-template-areas:
       'copy'
-      'optIn'
       'confirmation';
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {

@@ -1,4 +1,5 @@
 import { JsonSchema } from '@jsonforms/core'
+import nationCodes from './nationCodes'
 
 export const schema: JsonSchema = {
   type: 'object',
@@ -12,22 +13,23 @@ export const schema: JsonSchema = {
     state: {
       type: 'string',
     },
-    country: {
-      type: 'string',
-    },
     zip: {
       type: 'string',
     },
+    country: {
+      type: 'string',
+      enum: nationCodes.map(nation => nation.name),
+    },
   },
-  required: ['street1', 'city', 'state', 'country', 'zip'],
+  required: ['street1', 'city', 'state', 'zip', 'country'],
 }
 
 export interface FormState extends Record<string, unknown> {
   street1?: string
   city?: string
   state?: string
-  country?: string
   zip?: string
+  country?: string
 }
 
 export const initialState: FormState = {}
@@ -52,14 +54,13 @@ export const uischema = {
     },
     {
       type: 'Control',
-      scope: '#/properties/country',
-      label: 'Country',
+      scope: '#/properties/zip',
+      label: 'Billing Zip Code',
     },
     {
       type: 'Control',
-      scope: '#/properties/zip',
-      label: 'Billing Zip Code',
-      options: { unsafeToRetain: true },
+      scope: '#/properties/country',
+      label: 'Country',
     },
   ],
 }

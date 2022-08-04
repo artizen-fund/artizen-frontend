@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { payWithFiat, userMetadataVar, useLoggedInUser } from '@lib'
+import { useLoggedInUser } from '@lib'
 import { breakpoint } from '@theme'
-import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
+import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
+import { countryAndRegionIsSupported } from './helpers'
 
 interface IPaymentFiat {
   setStage: (s: DonationStage) => void
@@ -34,17 +34,24 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
     setPaymentData(thawedAnswers)
   }, [])
 
-  const processTransaction = async () => {
-    if (!loggedInUser) {
-      return
-    }
-    setProcessing(true)
+  const proceedToPayment = async () => {
     try {
+      // todo: save to Hasura
       setStage('paymentFiat')
     } catch {
       setProcessing(false)
     }
   }
+
+  const [disabled, setDisabled] = useState(true)
+  useEffect(() => {
+    setDisabled(
+      !paymentData.street1 ||
+        !paymentData.city ||
+        !paymentData.zip ||
+        countryAndRegionIsSupported(paymentData.country, paymentData.state),
+    )
+  }, [paymentData])
 
   return (
     <Wrapper className={processing ? 'processing' : ''}>
@@ -77,8 +84,8 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
         data={paymentData}
         setData={setPaymentData}
       >
-        <SubmitButton stretch onClick={processTransaction}>
-          Transfer ${amount + TRANSACTION_FEE}
+        <SubmitButton stretch onClick={proceedToPayment} {...{ disabled }}>
+          Payment
         </SubmitButton>
         <ProcessingMessage>hum de dooo</ProcessingMessage>
       </Form>
@@ -110,26 +117,21 @@ const Wrapper = styled.div`
   gap: 10px;
   grid-template-areas:
     'copy copy'
-    'first_name last_name'
-    'number number'
-    'month year'
-    'zip verification_value'
-    'phone_number phone_number'
+    'street1 street1'
+    'city state'
+    'zip countruy'
     'submit submit';
   &.submitted {
     grid-template-areas:
       'copy'
-      'optIn'
       'confirmation';
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 12px;
     grid-template-areas:
-      'copy copy first_name last_name'
-      'copy copy number number'
-      'copy copy month year'
-      'copy copy zip verification_value'
-      'copy copy phone_number phone_number'
+      'copy copy street1 street1'
+      'copy copy city state'
+      'copy copy zip country'
       'copy copy submit submit';
     &.submitted {
       grid-template-areas:
@@ -150,42 +152,32 @@ const Wrapper = styled.div`
     display: contents;
   }
 
-  *[id='#/properties/first_name'] {
-    grid-area: first_name;
+  *[id='#/properties/street1'] {
+    grid-area: street1;
   }
 
-  *[id='#/properties/last_name'] {
-    grid-area: last_name;
+  *[id='#/properties/city'] {
+    grid-area: city;
   }
 
-  *[id='#/properties/number'] {
-    grid-area: number;
+  *[id='#/properties/state'] {
+    grid-area: state;
   }
 
-  *[id='#/properties/verification_value'] {
-    grid-area: verification_value;
-  }
-
-  *[id='#/properties/month'] {
-    grid-area: month;
-  }
-
-  *[id='#/properties/year'] {
-    grid-area: year;
+  *[id='#/properties/country'] {
+    grid-area: country;
   }
 
   *[id='#/properties/zip'] {
     grid-area: zip;
   }
 
-  *[id='#/properties/phone_number'] {
-    grid-area: phone_number;
-  }
-
   &.processing {
-    *[id='#/properties/EMAIL'],
-    *[id='#/properties/FNAME'],
-    *[id='#/properties/LNAME'],
+    *[id='#/properties/street1'],
+    *[id='#/properties/city'],
+    *[id='#/properties/state'],
+    *[id='#/properties/country'],
+    *[id='#/properties/zip'],
     ${SubmitButton} {
       display: none;
     }
