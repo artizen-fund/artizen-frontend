@@ -9,14 +9,13 @@ import {
   AlternatingPanels,
   AlternatingPanel,
 } from '@components'
-import { CreateTopUpWallet, rgba } from '@lib'
+import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
 const Home = () => {
   return (
     <Layout>
-      <CreateTopUpWallet />
       <Header>
         <h1>{header.title}</h1>
         <h2>{header.subtitle}</h2>
