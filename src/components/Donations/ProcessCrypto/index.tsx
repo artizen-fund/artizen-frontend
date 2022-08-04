@@ -22,7 +22,7 @@ const ProcessCrypto = ({ setStage, donationMethod }: IProcessCrypto) => {
         setCryptoStage('building')
       }
     })
-  })
+  }, [])
 
   return (
     <Wrapper>
