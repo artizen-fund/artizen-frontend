@@ -1,16 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { IconStack, Icon } from '@components'
 import { breakpoint, typography } from '@theme'
+import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 
 interface IProcessCrypto {
   setStage: (s: DonationStage) => void
+  donationMethod: DonationMethod
 }
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
-const ProcessCrypto = ({ setStage }: IProcessCrypto) => {
+const ProcessCrypto = ({ setStage, donationMethod }: IProcessCrypto) => {
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>('swapping')
+
+  const courier = useCourier()
+
+  useEffect(() => {
+    courier.transport.intercept((message: ICourierMessage) => {
+      if (message.title === 'Payment is COMPLETE') {
+        setCryptoStage('building')
+      }
+    })
+  }, [])
 
   return (
     <Wrapper>
@@ -27,9 +39,12 @@ const ProcessCrypto = ({ setStage }: IProcessCrypto) => {
           <li onClick={() => setCryptoStage('bridging')}>
             <Icon outline={cryptoStage !== 'swapping'} glyph="swap" label="12% — Exchanging to USDC (est. 2m)" />
           </li>
-          <li onClick={() => setCryptoStage('building')}>
-            <Icon outline={cryptoStage !== 'bridging'} glyph="intersect" label="Bridging blockchains (est. 2m)" />
-          </li>
+          {donationMethod === 'ethereum' && (
+            <li onClick={() => setCryptoStage('building')}>
+              <Icon outline={cryptoStage !== 'bridging'} glyph="intersect" label="Bridging blockchains (est. 2m)" />
+            </li>
+          )}
+
           <li onClick={() => setCryptoStage('confirming')}>
             <Icon outline={cryptoStage !== 'building'} glyph="refresh" label="Building your donation (est. 10m)" />
           </li>

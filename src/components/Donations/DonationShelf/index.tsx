@@ -14,7 +14,7 @@ const DonationShelf = () => {
         if (donationMethod === 'usd') return <PaymentFiat {...{ setStage, amount }} />
         else return <PaymentCrypto {...{ donationMethod, amount, setStage }} />
       case 'processCrypto':
-        return <ProcessCrypto {...{ setStage }} />
+        return <ProcessCrypto {...{ setStage, donationMethod }} />
       case 'confirmation':
         return <Confirmation />
       case 'setAmount':

@@ -2,7 +2,7 @@ import React from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { ApolloProvider } from '@apollo/client'
-import { isProd, withAuth, MagicProvider, initializeApollo } from '@lib'
+import { isProd, withAuth, MagicProvider, initializeApollo, CourierNotification } from '@lib'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
@@ -13,8 +13,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={apolloClient}>
       <MagicProvider>
-        {/* <Toaster /> */}
-        <Component {...pageProps} />
+        <CourierNotification>
+          <Component {...pageProps} />
+        </CourierNotification>
       </MagicProvider>
     </ApolloProvider>
   )
