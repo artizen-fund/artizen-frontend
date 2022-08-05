@@ -95,7 +95,7 @@ const DonationAmount = ({ setStage, amount, setAmount, donationMethod, setDonati
           ))}
         </Methods>
 
-        <Button onClick={() => setStage('payment')} stretch level={1}>
+        <Button onClick={() => setStage('paymentFiatAddress')} stretch level={1}>
           Continue
         </Button>
       </Form>

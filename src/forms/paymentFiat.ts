@@ -85,7 +85,6 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/zip',
       label: 'Billing Zip Code',
-      options: { unsafeToRetain: true },
     },
     {
       type: 'Control',
