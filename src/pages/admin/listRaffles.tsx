@@ -17,6 +17,8 @@ type Raffle = {
 
 const Admin = () => {
   const { magic } = useMagic()
+  if (!magic) return <></>
+
   const [raffles, setRaffles] = useState<Raffle[]>()
 
   const raffleContractAddress = assert(
@@ -24,11 +26,7 @@ const Admin = () => {
     'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
   )
 
-  //todo: types are different but that is how docs shows to do
-  //https://magic.link/docs/advanced/blockchains/ethereum/javascript#es-modules-type-script
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const magicWeb3Provider = new ethers.providers.Web3Provider(magic.rpcProvider)
+  const magicWeb3Provider = new ethers.providers.Web3Provider(magic.rpcProvider as any)
   const signer = magicWeb3Provider.getSigner()
   const raflleContract = new ethers.Contract(raffleContractAddress, raffleAbi, signer)
 
