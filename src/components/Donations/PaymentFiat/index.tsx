@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { payWithFiat, userMetadataVar, useLoggedInUser } from '@lib'
+import { payWithFiat, userMetadataVar, useLoggedInUser, useFormLocalStorage } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
@@ -15,24 +15,14 @@ const TRANSACTION_FEE = 42
 
 const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   const [loggedInUser] = useLoggedInUser()
+
   const LOCALSTORAGE_KEY = 'fiatPayment'
+  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
   // TODO: ^ where/how is this stored?
   const [paymentData, setPaymentData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
-
-  useMemo(() => {
-    if (typeof localStorage === 'undefined') {
-      return
-    }
-    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
-    if (!frozenAnswers) {
-      setPaymentData(initialState)
-      return
-    }
-    const thawedAnswers = JSON.parse(frozenAnswers)
-    setPaymentData(thawedAnswers)
-  }, [])
 
   const metadata = useReactiveVar(userMetadataVar)
 
@@ -76,10 +66,8 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
       </Information>
       <Form
         localStorageKey={LOCALSTORAGE_KEY}
-        {...{ schema, uischema, initialState }}
+        {...{ schema, uischema, initialState, data, setData }}
         readonly={processing}
-        data={paymentData}
-        setData={setPaymentData}
       >
         <SubmitButton stretch onClick={processTransaction}>
           Transfer ${amount + TRANSACTION_FEE}

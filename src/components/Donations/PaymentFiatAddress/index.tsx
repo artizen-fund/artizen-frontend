@@ -1,7 +1,7 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { useLoggedInUser } from '@lib'
+import { useLoggedInUser, useFormLocalStorage } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
 import { countryAndRegionIsSupported } from './helpers'
@@ -15,24 +15,14 @@ const TRANSACTION_FEE = 42
 
 const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
   const [loggedInUser] = useLoggedInUser()
+
   const LOCALSTORAGE_KEY = 'fiatPaymentAddress'
+  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
   // TODO: ^ where/how is this stored?
-  const [paymentData, setPaymentData] = useState<FormState>(initialState)
-  const [processing, setProcessing] = useState(false)
 
-  useMemo(() => {
-    if (typeof localStorage === 'undefined') {
-      return
-    }
-    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
-    if (!frozenAnswers) {
-      setPaymentData(initialState)
-      return
-    }
-    const thawedAnswers = JSON.parse(frozenAnswers)
-    setPaymentData(thawedAnswers)
-  }, [])
+  const [processing, setProcessing] = useState(false)
 
   const proceedToPayment = async () => {
     try {
@@ -45,13 +35,8 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
 
   const [disabled, setDisabled] = useState(true)
   useEffect(() => {
-    setDisabled(
-      !paymentData.street1 ||
-        !paymentData.city ||
-        !paymentData.zip ||
-        countryAndRegionIsSupported(paymentData.country, paymentData.state),
-    )
-  }, [paymentData])
+    setDisabled(!data.street1 || !data.city || !data.zip || countryAndRegionIsSupported(data.country, data.state))
+  }, [data])
 
   return (
     <Wrapper className={processing ? 'processing' : ''}>
@@ -81,8 +66,8 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
         localStorageKey={LOCALSTORAGE_KEY}
         {...{ schema, uischema, initialState }}
         readonly={processing}
-        data={paymentData}
-        setData={setPaymentData}
+        data={data}
+        setData={setData}
       >
         <SubmitButton stretch onClick={proceedToPayment} {...{ disabled }}>
           Payment
