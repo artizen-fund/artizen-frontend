@@ -52,7 +52,6 @@
 
     /* functions */
     "no-loop-func": "error",
-    "id-denylist": ["error", "arguments"],
     "prefer-rest-params": "error",
     "default-param-last": ["error"],
     "space-before-function-paren": ["error", { "anonymous": "always", "named": "never" }],
