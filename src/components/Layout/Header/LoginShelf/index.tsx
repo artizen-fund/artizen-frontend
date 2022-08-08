@@ -1,19 +1,20 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import { OAuthProvider } from '@magic-ext/oauth'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, loginWithEmail, useMagic } from '@lib'
+import { rgba, loginWithEmail, useMagic, useFormLocalStorage } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
 const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
+  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+
   const { magic } = useMagic()
   const apolloClient = useApolloClient()
 
-  const [data, setData] = useState<FormState>(initialState)
   const [sentEmail, setSentEmail] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [readonly, setReadonly] = useState(false)
@@ -52,19 +53,6 @@ const LoginShelf = () => {
     setSubmitted(false)
     setReadonly(false)
   }
-
-  useMemo(() => {
-    if (typeof localStorage === 'undefined') {
-      return
-    }
-    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
-    if (!frozenAnswers) {
-      setData(initialState)
-      return
-    }
-    const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers)
-  }, [])
 
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
