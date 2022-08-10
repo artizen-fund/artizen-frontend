@@ -15,6 +15,11 @@ export const GET_USER = gql`
       linkedinLink
       twitterLink
       company
+      street1
+      city
+      state
+      zip
+      country
     }
   }
 `
@@ -44,6 +49,11 @@ export const mockGetUserData = [
             twitterLink: 'https://twitter.com',
             company: 'Artizen',
             issuer: 'herpderp',
+            street1: '10 Derp Street',
+            city: 'Derp City',
+            state: 'CA',
+            zip: '11111',
+            country: 'US',
           },
         ],
       },
