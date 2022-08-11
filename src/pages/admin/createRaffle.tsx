@@ -11,8 +11,9 @@ import styled from 'styled-components'
 
 const CreateRaffle = () => {
   const [data, setData] = useState<FormState>(initialState)
-  const { magic } = useMagic()
   const { push } = useRouter()
+  const { magic } = useMagic()
+  if (!magic) return <></>
 
   const handleSubmit = async () => {
     const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
@@ -31,11 +32,7 @@ const CreateRaffle = () => {
       'NEXT_PUBLIC_TOKEN_REWARD_CONTRACT_ADDRESS',
     )
 
-    //todo: types are different but that is how docs shows to do
-    //https://magic.link/docs/advanced/blockchains/ethereum/javascript#es-modules-type-script
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const magicWeb3Provider = new ethers.providers.Web3Provider(magic.rpcProvider)
+    const magicWeb3Provider = new ethers.providers.Web3Provider(magic.rpcProvider as any)
 
     const signer = magicWeb3Provider.getSigner()
     const walletAddress = await signer.getAddress()

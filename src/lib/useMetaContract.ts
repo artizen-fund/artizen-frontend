@@ -8,7 +8,7 @@ import { useMagic, assertInt } from '@lib'
 
 export const useMetaContract = () => {
   const { magic } = useMagic()
-  const [biconomy, setBiconomy] = useState()
+  const [biconomy, setBiconomy] = useState<any>()
   const [web3, setWeb3] = useState<Web3Provider>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
@@ -37,15 +37,11 @@ export const useMetaContract = () => {
     if (!ethers.utils.isHexString(signature)) {
       throw new Error('Given value "'.concat(signature, '" is not a valid hex string.'))
     }
-    // eslint-disable-next-line id-length
     const r = signature.slice(0, 66)
-    // eslint-disable-next-line id-length
     const s = '0x'.concat(signature.slice(66, 130))
     const vStr = '0x'.concat(signature.slice(130, 132))
-    // eslint-disable-next-line id-length
     let v = ethers.BigNumber.from(vStr).toNumber()
     if (![27, 28].includes(v)) v += 27
-    // eslint-disable-next-line id-length
     return { r, s, v }
   }
 
@@ -54,7 +50,6 @@ export const useMetaContract = () => {
     contractAbi: string,
     userAddress: string,
     methodName: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     attr: Array<any>,
   ) => {
     // Initialize Constants
@@ -74,13 +69,13 @@ export const useMetaContract = () => {
     const contractInterface = new ethers.utils.Interface(contractAbi)
 
     const name = await contract?.methods.name().call()
-    const NEXT_PUBLIC_CHAIN_ID = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+    const CHAIN_ID = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
     const domainData = {
       name,
       version: '1',
       verifyingContract: contractAddress,
       // converts Number to bytes32. pass your chainId instead of 42 if network is not Kovan
-      salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(NEXT_PUBLIC_CHAIN_ID).toHexString(), 32),
+      salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(CHAIN_ID).toHexString(), 32),
     }
 
     const nonce = await contract.getNonce(userAddress)
@@ -105,7 +100,6 @@ export const useMetaContract = () => {
 
     const signature = await web3?.send('eth_signTypedData_v3', [userAddress, dataToSign])
 
-    // eslint-disable-next-line id-length
     const { r, s, v } = getSignatureParameters(signature)
     const tx = contract.executeMetaTransaction(userAddress, functionSignature, r, s, v)
 
@@ -121,15 +115,14 @@ export const useMetaContract = () => {
     methodName: string,
     attr: Array<unknown>,
   ) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    if (!biconomy) {
+      throw new Error('biconomy not initialized')
+    }
     const contract = new ethers.Contract(contractAddress, contractAbi, biconomy.getSignerByAddress(userAddress))
 
     // Create your target method signature.
     const { data } = await contract.populateTransaction[methodName](...attr)
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const provider = biconomy.getEthersProvider()
 
     const gasLimit = await provider.estimateGas({

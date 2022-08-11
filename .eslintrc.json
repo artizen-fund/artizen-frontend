@@ -52,7 +52,6 @@
 
     /* functions */
     "no-loop-func": "error",
-    "id-denylist": ["error", "arguments"],
     "prefer-rest-params": "error",
     "default-param-last": ["error"],
     "space-before-function-paren": ["error", { "anonymous": "always", "named": "never" }],
@@ -90,7 +89,7 @@
     "semi": ["error", "never"],
 
     /* naming-conventions */
-    "id-length": ["error", { "exceptions": ["_", "i", "e"] }],
+    "id-length": ["error", { "exceptions": ["_", "i", "e", "r", "s", "v"] }],
     "no-underscore-dangle": "error",
 
     /* react */
