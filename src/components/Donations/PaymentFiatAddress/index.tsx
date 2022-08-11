@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useApolloClient } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { useLoggedInUser, useFormLocalStorage } from '@lib'
+import { useLoggedInUser, useFormLocalStorage, hasRequiredProperties } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
+import { UPDATE_USER_ADDRESS } from '@gql'
 import { countryAndRegionIsSupported } from './helpers'
 
 interface IPaymentFiat {
@@ -14,19 +16,28 @@ interface IPaymentFiat {
 const TRANSACTION_FEE = 42
 
 const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
+  const apolloClient = useApolloClient()
   const [loggedInUser] = useLoggedInUser()
 
   const LOCALSTORAGE_KEY = 'fiatPaymentAddress'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-  // TODO: ^ where/how is this stored?
+  // note: we're storing no more what below…
+  // unsure how best to just keep local if not storing it
+  // another responsiveVar?
 
   const [processing, setProcessing] = useState(false)
 
-  const proceedToPayment = async () => {
+  const saveAndProceed = async () => {
     try {
-      // todo: save to Hasura
+      if (!hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], data)) {
+        throw new Error('missing parameters')
+      }
+      await apolloClient.mutate({
+        mutation: UPDATE_USER_ADDRESS,
+        variables: { id: loggedInUser.id, ...data },
+      })
       setStage('paymentFiat')
     } catch {
       setProcessing(false)
@@ -69,7 +80,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
         data={data}
         setData={setData}
       >
-        <SubmitButton stretch onClick={proceedToPayment} {...{ disabled }}>
+        <SubmitButton stretch onClick={saveAndProceed} {...{ disabled }}>
           Payment
         </SubmitButton>
         <ProcessingMessage>hum de dooo</ProcessingMessage>

@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
-import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { payWithFiat, userMetadataVar, useLoggedInUser, useFormLocalStorage } from '@lib'
+import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress } from '@components'
+import { payWithFiat, userMetadataVar, useLoggedInUser, useFormLocalStorage, hasRequiredProperties } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
@@ -38,6 +38,10 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
     } catch {
       setProcessing(false)
     }
+  }
+
+  if (!hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], loggedInUser)) {
+    return <PaymentFiatAddress {...{ setStage, amount }} />
   }
 
   return (

@@ -18,8 +18,8 @@ const DonationShelf = () => {
     switch (stage) {
       // case 'login':
       // return <DonationAmount {...{ setStage }} />
-      case 'paymentFiatAddress':
-        return <PaymentFiatAddress {...{ setStage, amount }} />
+      // case 'paymentFiatAddress':
+      //   return <PaymentFiatAddress {...{ setStage, amount }} />
       case 'paymentFiat':
         return <PaymentFiat {...{ setStage, amount }} />
       case 'processCrypto':
