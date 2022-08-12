@@ -33,7 +33,7 @@ const walletConnectConnector = new WalletConnectConnector({
 
 const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: IPaymentCrypto) => {
   const [loggedInUser] = useLoggedInUser()
-  const metadata = useReactiveVar<MagicUserMetadata>(userMetadataVar)
+  const metadata = useReactiveVar<any>(userMetadataVar)
   if (!metadata.publicAddress) return <></>
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
