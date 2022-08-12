@@ -3,13 +3,12 @@ import styled from 'styled-components'
 import { CheckboxControl, Button } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
-import { useConnect, useAccount, usePrepareContractWrite, useContractWrite } from 'wagmi'
+import { useConnect, useAccount, useContractWrite } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { assert, isProd, USDC_UNIT, useLoggedInUser, userMetadataVar } from '@lib'
 import { ethers } from 'ethers'
 import { useMutation, useReactiveVar } from '@apollo/client'
-import type { MagicUserMetadata } from 'magic-sdk'
 import { CREATE_TOP_UP_WALLET } from '@gql'
 import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
 import usdcabiContract from 'src/contracts/USDCAbi'
@@ -69,7 +68,7 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
     },
   })
 
-  const connetWallet = (wallet: string) => {
+  const connectWallet = (wallet: string) => {
     if (wallet === 'metamask') {
       connect({
         connector: new InjectedConnector({ chains }),
@@ -145,7 +144,7 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
         />
       </Information>
       {!isConnected ? (
-        <WalletOptions {...{ connetWallet }} />
+        <WalletOptions {...{ connectWallet }} />
       ) : (
         <>
           <label>Your connected address is: {address}</label>
