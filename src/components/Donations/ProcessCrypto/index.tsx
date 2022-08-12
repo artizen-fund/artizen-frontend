@@ -11,7 +11,6 @@ interface IProcessCrypto {
   setStage: (s: DonationStage) => void
   donationMethod: DonationMethod
   order: { id: string }
-  donationAmount: number
 }
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
