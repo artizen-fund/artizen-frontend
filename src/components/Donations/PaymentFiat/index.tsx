@@ -38,7 +38,7 @@ const PaymentFiat = ({ setStage, amount, setOrder }: IPaymentFiat) => {
   const metadata = useReactiveVar(userMetadataVar)
 
   const getOrderStatus = async (orderId: string) => {
-    const wyreBaseUrl = assert(process.env.NEXT_PUBLIC_SENDRYRE_BASE_URL, 'NEXT_PUBLIC_SENDRYRE_BASE_URL')
+    const wyreBaseUrl = assert(process.env.NEXT_PUBLIC_SENDWYRE_BASE_URL, 'NEXT_PUBLIC_SENDWYRE_BASE_URL')
     const options = { method: 'GET', headers: { Accept: 'application/json' } }
 
     const orderResponse = await fetch(`${wyreBaseUrl}/v3/orders/${orderId}`, options)
