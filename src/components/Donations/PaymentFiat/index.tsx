@@ -2,18 +2,27 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress } from '@components'
-import { payWithFiat, userMetadataVar, useLoggedInUser, useFormLocalStorage, hasRequiredProperties } from '@lib'
+import {
+  payWithFiat,
+  userMetadataVar,
+  useLoggedInUser,
+  useFormLocalStorage,
+  hasRequiredProperties,
+  assert,
+  sleep,
+} from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 interface IPaymentFiat {
   setStage: (s: DonationStage) => void
   amount: number
+  setOrder: (o: { id: string }) => void
 }
 
 const TRANSACTION_FEE = 42
 
-const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
+const PaymentFiat = ({ setStage, amount, setOrder }: IPaymentFiat) => {
   const [loggedInUser] = useLoggedInUser()
 
   const LOCALSTORAGE_KEY = 'fiatPayment'
@@ -21,21 +30,44 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
   // TODO: ^ where/how is this stored?
-  const [paymentData, setPaymentData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
+  const [wyreAuthorization, setWyreAuthorization] = useState<{ authorization3dsUrl: string }>({
+    authorization3dsUrl: '',
+  })
 
   const metadata = useReactiveVar(userMetadataVar)
 
-  // amount, metadata, paymentData, loggedInUser
+  const getOrderStatus = async (orderId: string) => {
+    const wyreBaseUrl = assert(process.env.NEXT_PUBLIC_SENDWYRE_BASE_URL, 'NEXT_PUBLIC_SENDWYRE_BASE_URL')
+    const options = { method: 'GET', headers: { Accept: 'application/json' } }
+
+    const orderResponse = await fetch(`${wyreBaseUrl}/v3/orders/${orderId}`, options)
+    const orderJson = await orderResponse.json()
+
+    return orderJson.status
+  }
+
+  // amount, metadata, data, loggedInUser
   const processTransaction = async () => {
     if (!loggedInUser) {
       return
     }
     setProcessing(true)
     try {
-      await payWithFiat(amount, paymentData, loggedInUser, metadata)
+      const { order, authorization } = await payWithFiat(amount, data, loggedInUser, metadata)
+      setWyreAuthorization(authorization)
+      setOrder(order)
+
+      if (authorization.authorization3dsUrl) {
+        // TODO: move it to a hook or something
+        let orderStatus = await getOrderStatus(order.id)
+        while (orderStatus === 'RUNNING_CHECKS') {
+          await sleep(15000)
+          orderStatus = await getOrderStatus(order.id)
+        }
+      }
       setStage('processCrypto')
-    } catch {
+    } catch (error) {
       setProcessing(false)
     }
   }
@@ -68,16 +100,20 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
           path="derp"
         />
       </Information>
-      <Form
-        localStorageKey={LOCALSTORAGE_KEY}
-        {...{ schema, uischema, initialState, data, setData }}
-        readonly={processing}
-      >
-        <SubmitButton stretch onClick={processTransaction}>
-          Transfer ${amount + TRANSACTION_FEE}
-        </SubmitButton>
-        <ProcessingMessage>hum de dooo</ProcessingMessage>
-      </Form>
+      {wyreAuthorization?.authorization3dsUrl !== '' ? (
+        <iframe src={wyreAuthorization?.authorization3dsUrl} frameBorder="0"></iframe>
+      ) : (
+        <Form
+          localStorageKey={LOCALSTORAGE_KEY}
+          {...{ schema, uischema, initialState, data, setData }}
+          readonly={processing}
+        >
+          <SubmitButton stretch onClick={processTransaction}>
+            Transfer ${amount + TRANSACTION_FEE}
+          </SubmitButton>
+          <ProcessingMessage>hum de dooo</ProcessingMessage>
+        </Form>
+      )}
     </Wrapper>
   )
 }

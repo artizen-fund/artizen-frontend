@@ -37,8 +37,6 @@ const Admin = () => {
       const raffle = await raflleContract.raffles(i)
       raffles.push(raffle)
     }
-    // eslint-disable-next-line no-console
-    console.log(raffles)
     setRaffles(raffles)
   }
 

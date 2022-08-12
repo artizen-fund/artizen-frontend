@@ -29,7 +29,7 @@
     "@apollo/client": "3.6.9",
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
-    "@biconomy/mexa": "^2.0.33",
+    "@biconomy/mexa": "3.0.2",
     "@jsonforms/core": "^2.5.2",
     "@jsonforms/material-renderers": "^2.5.2",
     "@jsonforms/react": "^2.5.2",
@@ -62,6 +62,7 @@
     "react-phone-number-input": "^3.2.6",
     "react-use-intercom": "^2.0.0",
     "react-useinterval": "^1.0.2",
+    "request": "^2.88.2",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
