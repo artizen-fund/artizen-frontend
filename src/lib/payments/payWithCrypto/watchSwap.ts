@@ -1,8 +1,8 @@
-import { CryptoStageFunction } from './'
-
 // all the watchers for this stage of the crypto transaction are here
 
-const watchSwap: CryptoStageFunction = (setStatus, setMessage) => {
+import { StageFunction } from 'src/lib/StageFunction'
+
+const watchSwap: StageFunction = (setStatus, setMessage) => {
   setStatus('PROCESSING')
   setMessage('whatever my dude')
   // begin work

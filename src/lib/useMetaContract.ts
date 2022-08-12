@@ -1,36 +1,44 @@
 import { Biconomy } from '@biconomy/mexa'
-import { Web3Provider } from '@ethersproject/providers'
-import { ethers } from 'ethers'
+import { ContractInterface, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { useMagic, assertInt } from '@lib'
+import { useMagic, assertInt, assert } from '@lib'
+import { JsonFragment } from '@ethersproject/abi'
 
 // NOTE: this is untested with useMagicLink()
 
 export const useMetaContract = () => {
   const { magic } = useMagic()
-  const [biconomy, setBiconomy] = useState<any>()
-  const [web3, setWeb3] = useState<Web3Provider>()
+  const [biconomy, setBiconomy] = useState<Biconomy>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
 
-  useEffect(() => {
-    setLoading(true)
-    const biconomy = new Biconomy(magic, {
-      apiKey: process.env.NEXT_PUBLIC_BICONOMY_API_KEY,
-      debug: true,
-    })
-    const biconomyWeb3 = new ethers.providers.Web3Provider(biconomy)
-    setWeb3(biconomyWeb3)
-    setBiconomy(biconomy)
+  const initBiconomy = async () => {
+    const apiKey = assert(process.env.NEXT_PUBLIC_BICONOMY_API_KEY, 'NEXT_PUBLIC_BICONOMY_API_KEY')
+    const raffleContractAddress = assert(
+      process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
+      'EXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
+    )
 
-    biconomy
-      .onEvent(biconomy.READY, () => {
-        setLoading(false)
-      })
-      .onEvent(biconomy.ERROR, (error: unknown, message: string) => {
-        console.error(message)
-        setError(error)
-      })
+    const usdcContractAddress = assert(
+      process.env.NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS,
+      'NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS',
+    )
+
+    setLoading(true)
+    const biconomy = new Biconomy(magic?.rpcProvider, {
+      apiKey,
+      debug: true,
+      contractAddresses: [raffleContractAddress, usdcContractAddress],
+    })
+
+    await biconomy.init()
+    setLoading(false)
+
+    setBiconomy(biconomy)
+  }
+
+  useEffect(() => {
+    initBiconomy()
   }, [])
 
   const getSignatureParameters = (signature: string) => {
@@ -47,11 +55,11 @@ export const useMetaContract = () => {
 
   const callCustomMetaTxMethod = async (
     contractAddress: string,
-    contractAbi: string,
+    contractAbi: ContractInterface,
     userAddress: string,
     methodName: string,
     attr: Array<any>,
-  ) => {
+  ): Promise<{ msg: string; id: string; hash: string; receipt: string } | any> => {
     // Initialize Constants
     const domainType = [
       { name: 'name', type: 'string' },
@@ -64,18 +72,17 @@ export const useMetaContract = () => {
       { name: 'from', type: 'address' },
       { name: 'functionSignature', type: 'bytes' },
     ]
+    const contract = new ethers.Contract(contractAddress, contractAbi, biconomy?.ethersProvider)
+    const contractInterface = new ethers.utils.Interface(contractAbi as JsonFragment[])
 
-    const contract = new ethers.Contract(contractAddress, contractAbi)
-    const contractInterface = new ethers.utils.Interface(contractAbi)
-
-    const name = await contract?.methods.name().call()
-    const CHAIN_ID = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+    const name = await contract?.name()
+    const NEXT_PUBLIC_CHAIN_ID = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
     const domainData = {
       name,
       version: '1',
       verifyingContract: contractAddress,
       // converts Number to bytes32. pass your chainId instead of 42 if network is not Kovan
-      salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(CHAIN_ID).toHexString(), 32),
+      salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(NEXT_PUBLIC_CHAIN_ID).toHexString(), 32),
     }
 
     const nonce = await contract.getNonce(userAddress)
@@ -98,55 +105,71 @@ export const useMetaContract = () => {
       message,
     })
 
-    const signature = await web3?.send('eth_signTypedData_v3', [userAddress, dataToSign])
+    const signature = await biconomy?.ethersProvider?.send('eth_signTypedData_v3', [userAddress, dataToSign])
 
     const { r, s, v } = getSignatureParameters(signature)
-    const tx = contract.executeMetaTransaction(userAddress, functionSignature, r, s, v)
 
-    await tx.wait(1)
+    const provider = await biconomy?.provider
+    const { data } = await contract.populateTransaction.executeMetaTransaction(userAddress, functionSignature, r, s, v)
+    const txParams = {
+      data,
+      to: contractAddress,
+      from: userAddress,
+      signatureType: 'EIP712_SIGN',
+    }
+    // as ethers does not allow providing custom options while sending transaction
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    await provider.send('eth_sendTransaction', [txParams])
 
-    return tx
+    //event emitter methods
+    return new Promise((resolve, reject) => {
+      biconomy?.on('error', (data: any) => {
+        // Event emitter to monitor when an error occurs
+        reject(data)
+      })
+
+      biconomy?.on('txMined', (data: { msg: string; id: string; hash: string; receipt: string }) => {
+        resolve(data)
+      })
+    })
   }
 
   const callStandardMetaTxMethod = async (
     contractAddress: string,
-    contractAbi: string,
+    contractAbi: ContractInterface,
     userAddress: string,
     methodName: string,
     attr: Array<unknown>,
-  ) => {
-    if (!biconomy) {
-      throw new Error('biconomy not initialized')
-    }
-    const contract = new ethers.Contract(contractAddress, contractAbi, biconomy.getSignerByAddress(userAddress))
+  ): Promise<{ msg: string; id: string; hash: string; receipt: string } | any> => {
+    const contract = new ethers.Contract(contractAddress, contractAbi, biconomy?.ethersProvider)
 
     // Create your target method signature.
     const { data } = await contract.populateTransaction[methodName](...attr)
 
-    const provider = biconomy.getEthersProvider()
-
-    const gasLimit = await provider.estimateGas({
-      to: contractAddress,
-      from: userAddress,
-      data,
-    })
+    const provider = await biconomy?.provider
 
     const txParams = {
       data,
       to: contractAddress,
       from: userAddress,
-      gasLimit,
       signatureType: 'EIP712_SIGN',
     }
 
     // as ethers does not allow providing custom options while sending transaction
-    const tx = await provider.send('eth_sendTransaction', [txParams])
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    await provider.send('eth_sendTransaction', [txParams])
 
     //event emitter methods
-    return new Promise(resolve => {
-      provider.once(tx, (transaction: unknown) => {
-        // Emitted when the transaction has been mined
-        resolve(transaction)
+    return new Promise((resolve, reject) => {
+      biconomy?.on('error', (data: any) => {
+        // Event emitter to monitor when an error occurs
+        reject(data)
+      })
+
+      biconomy?.on('txMined', (data: { msg: string; id: string; hash: string; receipt: string }) => {
+        resolve(data)
       })
     })
   }

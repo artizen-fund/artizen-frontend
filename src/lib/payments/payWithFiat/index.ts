@@ -5,7 +5,7 @@ import getReservation from './getReservation'
 import getPaymentMethod from './getPaymentMethod'
 import getOrder from './getOrder'
 import getAuthorization from './getAuthorization'
-import { intercomEventEnum, trackEventF } from '@lib'
+import { intercomEventEnum, trackEventF, sleep } from '@lib'
 
 export const payWithFiat = async (
   amount: number,
@@ -33,7 +33,10 @@ export const payWithFiat = async (
 
   const order = await getOrder(amount, user, userMetadata.publicAddress, reservation, token, paymentData)
 
-  getAuthorization(order.id)
+  // wait 20 seconds before checking Authorization
+  await sleep(20000)
+
+  const authorization = await getAuthorization(order.id)
   // TODO: what do we do with this?
 
   trackEventF(intercomEventEnum.DONATION_FIAT_TOPUP, {
@@ -41,4 +44,6 @@ export const payWithFiat = async (
     wallet: userMetadata.publicAddress,
     user,
   })
+
+  return { order, authorization }
 }

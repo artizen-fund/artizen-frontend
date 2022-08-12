@@ -3,26 +3,57 @@ import styled from 'styled-components'
 import { IconStack, Icon } from '@components'
 import { breakpoint, typography } from '@theme'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
+import { GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
+import { useLazyQuery } from '@apollo/client'
+import { useDonation } from '@lib'
 
 interface IProcessCrypto {
   setStage: (s: DonationStage) => void
   donationMethod: DonationMethod
+  order: { id: string }
 }
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
-const ProcessCrypto = ({ setStage, donationMethod }: IProcessCrypto) => {
+const ProcessCrypto = ({ setStage, donationMethod, order }: IProcessCrypto) => {
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>('swapping')
-
   const courier = useCourier()
+  const [initDonation, buildingStatus, buildingMessage, confirmingStatus, confirmingMessage] = useDonation()
+
+  const [fetchTopUpWallet] = useLazyQuery(GET_TOP_UP_WALLET_VIA_TRANSFER_ID, {
+    variables: {
+      attr: {
+        orderId: { _eq: order.id },
+      },
+    },
+    onCompleted: async (topUpWalletData: { TopUpWallet: string | any[] }) => {
+      if (topUpWalletData.TopUpWallet.length > 0) {
+        const { id, amount, fee } = topUpWalletData.TopUpWallet[0]
+        setCryptoStage('confirming')
+        await initDonation(amount, donationMethod, fee, id)
+      }
+    },
+  })
+
+  const handleTopUpComplete = async () => {
+    setCryptoStage('building')
+    fetchTopUpWallet()
+  }
 
   useEffect(() => {
     courier.transport.intercept((message: ICourierMessage) => {
       if (message.title === 'Payment is COMPLETE') {
-        setCryptoStage('building')
+        handleTopUpComplete()
       }
     })
   }, [])
+
+  useEffect(() => {
+    if (confirmingStatus === 'COMPLETE') {
+      setCryptoStage('complete')
+      setStage('confirmation')
+    }
+  }, [confirmingStatus])
 
   return (
     <Wrapper>
@@ -36,22 +67,22 @@ const ProcessCrypto = ({ setStage, donationMethod }: IProcessCrypto) => {
         </div>
 
         <IconStack>
-          <li onClick={() => setCryptoStage('bridging')}>
+          <li>
             <Icon outline={cryptoStage !== 'swapping'} glyph="swap" label="12% — Exchanging to USDC (est. 2m)" />
           </li>
           {donationMethod === 'ethereum' && (
-            <li onClick={() => setCryptoStage('building')}>
+            <li>
               <Icon outline={cryptoStage !== 'bridging'} glyph="intersect" label="Bridging blockchains (est. 2m)" />
             </li>
           )}
 
-          <li onClick={() => setCryptoStage('confirming')}>
+          <li>
             <Icon outline={cryptoStage !== 'building'} glyph="refresh" label="Building your donation (est. 10m)" />
           </li>
-          <li onClick={() => setCryptoStage('complete')}>
+          <li>
             <Icon outline={cryptoStage !== 'confirming'} glyph="tick" label="Confirm your donation (est. 2m)" />
           </li>
-          <li onClick={() => setStage('confirmation')}>
+          <li>
             <Icon outline={cryptoStage !== 'complete'} glyph="party" label="Donation Complete" />
           </li>
         </IconStack>

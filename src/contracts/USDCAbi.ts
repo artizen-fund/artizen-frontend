@@ -100,12 +100,7 @@ const usdcabiContract = [
     name: 'MetaTransactionExecuted',
     type: 'event',
   },
-  {
-    anonymous: false,
-    inputs: [],
-    name: 'Pause',
-    type: 'event',
-  },
+  { anonymous: false, inputs: [], name: 'Pause', type: 'event' },
   {
     anonymous: false,
     inputs: [
@@ -122,12 +117,7 @@ const usdcabiContract = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
+      { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
       {
         indexed: true,
         internalType: 'bytes32',
@@ -147,12 +137,7 @@ const usdcabiContract = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
+      { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
       {
         indexed: true,
         internalType: 'address',
@@ -172,12 +157,7 @@ const usdcabiContract = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
+      { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
       {
         indexed: true,
         internalType: 'address',
@@ -197,18 +177,8 @@ const usdcabiContract = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
       {
         indexed: false,
         internalType: 'uint256',
@@ -232,12 +202,7 @@ const usdcabiContract = [
     name: 'UnBlacklisted',
     type: 'event',
   },
-  {
-    anonymous: false,
-    inputs: [],
-    name: 'Unpause',
-    type: 'event',
-  },
+  { anonymous: false, inputs: [], name: 'Unpause', type: 'event' },
   {
     inputs: [],
     name: 'APPROVE_WITH_AUTHORIZATION_TYPEHASH',
