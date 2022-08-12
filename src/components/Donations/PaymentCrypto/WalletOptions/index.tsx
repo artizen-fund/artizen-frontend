@@ -3,18 +3,18 @@ import { rgba } from '@lib'
 import { palette, typography } from '@theme'
 
 interface IWalletOptions {
-  processTransaction: (s: string) => void
+  connetWallet: (s: string) => void
 }
 
-const WalletOptions = ({ processTransaction }: IWalletOptions) => {
+const WalletOptions = ({ connetWallet }: IWalletOptions) => {
   return (
     <Wrapper>
-      <WalletOption onClick={() => processTransaction('metamask')}>
+      <WalletOption onClick={() => connetWallet('metamask')}>
         <img src="/assets/metamask.svg" alt="connect with MetaMask" />
         <OptionTitle>MetaMask</OptionTitle>
         <OptionSubtitle>Connect via your browser</OptionSubtitle>
       </WalletOption>
-      <WalletOption onClick={() => processTransaction('walletconnect')}>
+      <WalletOption onClick={() => connetWallet('walletconnect')}>
         <img src="/assets/walletConnect.svg" alt="connect with WalletConnect" />
         <OptionTitle>WalletConnect</OptionTitle>
         <OptionSubtitle>Choose an alternative wallet</OptionSubtitle>
