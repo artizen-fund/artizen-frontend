@@ -1,11 +1,6 @@
 import { IUser } from '@types'
 import { FormState } from '@forms/paymentFiat'
-
-const getConfirmDonationURL = () => {
-  return `${window.location.protocol}//${window.location.hostname}${
-    window.location.port ? `:${window.location.port}` : ''
-  }/crowdfunding/confirmDonation`
-}
+import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
 
 const getOrder = async (
   amount: number,

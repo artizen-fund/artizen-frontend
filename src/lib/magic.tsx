@@ -12,7 +12,7 @@ const MagicContext = createContext<IMagicContext>({})
 export const MagicProvider = ({ children }: SimpleComponentProps) => {
   if (isServer()) return children
 
-  const rpcUrl = assert(process.env.NEXT_PUBLIC_RPC_URL, 'NEXT_PUBLIC_RPC_URL')
+  const rpcUrl = assert(process.env.NEXT_PUBLIC_POLYGON_RPC_URL, 'NEXT_PUBLIC_POLYGON_RPC_URL')
   const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
   const magicPublicKey = assert(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY, 'NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY')
 

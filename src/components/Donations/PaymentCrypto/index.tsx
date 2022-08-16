@@ -1,20 +1,114 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { CheckboxControl } from '@components'
+import { CheckboxControl, Button } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
+import { useConnect, useAccount, useContractWrite } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { assert, getChainId, USDC_UNIT, useLoggedInUser, userMetadataVar } from '@lib'
+import { ethers } from 'ethers'
+import { useMutation, useReactiveVar } from '@apollo/client'
+import { CREATE_TOP_UP_WALLET } from '@gql'
+import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
+import usdcabiContract from 'src/contracts/USDCAbi'
+import { uniqueId } from 'lodash'
 
 interface IPaymentCrypto {
   setStage: (s: DonationStage) => void
   amount: number
+  donationMethod: DonationMethod
+  chains: any
+  setOrder: (o: { id: string }) => void
 }
 
 const TRANSACTION_FEE = 42
 
-const PaymentCrypto = ({ setStage, amount }: IPaymentCrypto) => {
+const walletConnectConnector = new WalletConnectConnector({
+  options: {
+    qrcode: true,
+  },
+})
+
+const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: IPaymentCrypto) => {
+  const [loggedInUser] = useLoggedInUser()
+  const metadata = useReactiveVar<any>(userMetadataVar)
+  if (!metadata.publicAddress) return <></>
+
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
 
-  const processTransaction = async () => setStage('processCrypto')
+  const { connect } = useConnect()
+  const { address, isConnected } = useAccount()
+
+  const usdcContractAddress = assert(
+    process.env.NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS,
+    'NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS',
+  )
+
+  const chainId = getChainId(donationMethod)
+
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    addressOrName: usdcContractAddress,
+    contractInterface: usdcabiContract,
+    functionName: 'transfer',
+    args: [metadata?.publicAddress, ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()],
+    chainId,
+  })
+
+  const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
+    onError: error => {
+      console.error('createTopUpWallet result    ', error)
+    },
+  })
+
+  const connectWallet = (wallet: string) => {
+    if (wallet === 'metamask') {
+      connect({
+        connector: new InjectedConnector({ chains }),
+        chainId,
+      })
+    } else {
+      connect({
+        connector: walletConnectConnector,
+        chainId,
+      })
+    }
+  }
+
+  const processTransaction = async () => {
+    if (donationMethod === 'polygon') {
+      write?.()
+    }
+  }
+
+  const handleSuccess = async () => {
+    const orderId = uniqueId()
+    await createTopUpWallet({
+      variables: {
+        data: {
+          userId: loggedInUser?.id,
+          amount,
+          originFund: donationMethod,
+          state: 'INITIATED',
+          timestamp: new Date().getTime(),
+          fee: 0,
+          txHash: data?.hash,
+          url: getConfirmDonationURL(),
+          orderId,
+        },
+      },
+    })
+
+    setOrder({ id: orderId })
+    setStage('processCrypto')
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleSuccess()
+    }
+  }, [isSuccess])
 
   return (
     <Wrapper>
@@ -43,8 +137,14 @@ const PaymentCrypto = ({ setStage, amount }: IPaymentCrypto) => {
           path="derp"
         />
       </Information>
-
-      <WalletOptions {...{ processTransaction }} />
+      {!isConnected ? (
+        <WalletOptions {...{ connectWallet }} />
+      ) : (
+        <>
+          <label>Your connected address is: {address}</label>
+          <Button onClick={processTransaction}>Proceed</Button>
+        </>
+      )}
     </Wrapper>
   )
 }

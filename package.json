@@ -63,7 +63,8 @@
     "react-use-intercom": "^2.0.0",
     "react-useinterval": "^1.0.2",
     "request": "^2.88.2",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "wagmi": "^0.6.2"
   },
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",

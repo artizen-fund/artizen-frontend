@@ -16,7 +16,7 @@ interface IProcessCrypto {
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
 const ProcessCrypto = ({ setStage, donationMethod, order }: IProcessCrypto) => {
-  const [cryptoStage, setCryptoStage] = useState<CryptoStage>('swapping')
+  const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod !== 'polygon' ? 'swapping' : 'building')
   const courier = useCourier()
   const [initDonation, buildingStatus, buildingMessage, confirmingStatus, confirmingMessage] = useDonation()
 
@@ -67,9 +67,11 @@ const ProcessCrypto = ({ setStage, donationMethod, order }: IProcessCrypto) => {
         </div>
 
         <IconStack>
-          <li>
-            <Icon outline={cryptoStage !== 'swapping'} glyph="swap" label="12% — Exchanging to USDC (est. 2m)" />
-          </li>
+          {donationMethod !== 'polygon' && (
+            <li>
+              <Icon outline={cryptoStage !== 'swapping'} glyph="swap" label="12% — Exchanging to USDC (est. 2m)" />
+            </li>
+          )}
           {donationMethod === 'ethereum' && (
             <li>
               <Icon outline={cryptoStage !== 'bridging'} glyph="intersect" label="Bridging blockchains (est. 2m)" />
