@@ -6,7 +6,7 @@ import WalletOptions from './WalletOptions'
 import { useConnect, useAccount, useContractWrite } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { assert, isProd, USDC_UNIT, useLoggedInUser, userMetadataVar } from '@lib'
+import { assert, getChainId, USDC_UNIT, useLoggedInUser, userMetadataVar } from '@lib'
 import { ethers } from 'ethers'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { CREATE_TOP_UP_WALLET } from '@gql'
@@ -40,18 +40,12 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
   const { connect } = useConnect()
   const { address, isConnected } = useAccount()
 
-  const getChainId = () => {
-    // 1 - Ethereum
-    // 137 - Matic
-    // 5 - Goerli
-    // 80001 - Mumbai
-    return isProd() ? (donationMethod === 'polygon' ? 137 : 1) : donationMethod === 'polygon' ? 80001 : 5
-  }
-
   const usdcContractAddress = assert(
     process.env.NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS,
     'NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS',
   )
+
+  const chainId = getChainId(donationMethod)
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
     mode: 'recklesslyUnprepared',
@@ -59,7 +53,7 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
     contractInterface: usdcabiContract,
     functionName: 'transfer',
     args: [metadata?.publicAddress, ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()],
-    chainId: getChainId(),
+    chainId,
   })
 
   const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
@@ -72,12 +66,12 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
     if (wallet === 'metamask') {
       connect({
         connector: new InjectedConnector({ chains }),
-        chainId: getChainId(),
+        chainId,
       })
     } else {
       connect({
         connector: walletConnectConnector,
-        chainId: getChainId(),
+        chainId,
       })
     }
   }
