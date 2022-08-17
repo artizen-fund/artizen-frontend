@@ -3,17 +3,17 @@ import styled from 'styled-components'
 import { CheckboxControl, Button } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
-import { useConnect, useAccount, useContractWrite } from 'wagmi'
+import { useConnect, useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { assert, getChainId, USDC_UNIT, useLoggedInUser, userMetadataVar } from '@lib'
+import { assert, getChainId, isProd, sleep, USDC_UNIT, useLoggedInUser, userMetadataVar } from '@lib'
 import { ethers } from 'ethers'
 import { useMutation, useReactiveVar } from '@apollo/client'
-import { CREATE_TOP_UP_WALLET } from '@gql'
+import { CREATE_SWAP, CREATE_TOP_UP_WALLET } from '@gql'
 import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
 import usdcabiContract from 'src/contracts/USDCAbi'
 import { uniqueId } from 'lodash'
-
+import qs from 'qs'
 interface IPaymentCrypto {
   setStage: (s: DonationStage) => void
   amount: number
@@ -39,6 +39,8 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
 
   const { connect } = useConnect()
   const { address, isConnected } = useAccount()
+  const { data: signer } = useSigner()
+  const { switchNetwork } = useSwitchNetwork()
 
   const usdcContractAddress = assert(
     process.env.NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS,
@@ -46,19 +48,31 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
   )
 
   const chainId = getChainId(donationMethod)
+  const amountInUSDCDecimals = ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()
 
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const {
+    data,
+    isLoading,
+    isSuccess,
+    write: transferUSDC,
+  } = useContractWrite({
     mode: 'recklesslyUnprepared',
     addressOrName: usdcContractAddress,
     contractInterface: usdcabiContract,
     functionName: 'transfer',
-    args: [metadata?.publicAddress, ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()],
+    args: [metadata?.publicAddress, amountInUSDCDecimals],
     chainId,
   })
 
   const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
     onError: error => {
       console.error('createTopUpWallet result    ', error)
+    },
+  })
+
+  const [createSwap] = useMutation(CREATE_SWAP, {
+    onError: error => {
+      console.error('createSwap result    ', error)
     },
   })
 
@@ -78,7 +92,47 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
 
   const processTransaction = async () => {
     if (donationMethod === 'polygon') {
-      write?.()
+      transferUSDC?.()
+    } else {
+      const baseURL0x = assert(process.env.NEXT_PUBLIC_0X_BASE_URL, 'NEXT_PUBLIC_0X_BASE_URL')
+      const params = {
+        buyToken: 'USDC',
+        sellToken: 'ETH',
+        buyAmount: amountInUSDCDecimals,
+        takerAddress: address,
+      }
+
+      const response = await fetch(`${baseURL0x}/swap/v1/quote?${qs.stringify(params)}`)
+      const json = await response.json()
+      json.from = address
+
+      const tx = {
+        from: address,
+        to: json.to,
+        value: json.value,
+        data: json.data,
+      }
+
+      const swapTransaction = await signer?.sendTransaction(tx)
+
+      await createSwap({
+        variables: {
+          data: {
+            state: 'INITIATED',
+            amount: amountInUSDCDecimals,
+            userId: loggedInUser?.id,
+            txHash: swapTransaction?.hash,
+          },
+        },
+      })
+
+      // Change to Goerli for testing
+      if (!isProd()) {
+        switchNetwork?.(5)
+        await sleep(15000)
+      }
+
+      setStage('processCrypto')
     }
   }
 
