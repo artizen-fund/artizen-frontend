@@ -27,7 +27,7 @@ export const useBridge = () => {
     const hyphen = new Hyphen(provider, {
       debug: true, // If 'true', it prints debug logs on console window
       environment: hyphenEnvironment, // It can be "test" or "prod"
-      onFundsTransfered: data => {
+      onFundsTransfered: (data: any) => {
         setFundsTransfered(data)
       },
     })
