@@ -12,8 +12,8 @@ import { useMutation, useReactiveVar } from '@apollo/client'
 import { CREATE_SWAP, CREATE_TOP_UP_WALLET } from '@gql'
 import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
 import usdcabiContract from 'src/contracts/USDCAbi'
-import { uniqueId } from 'lodash'
 import qs from 'qs'
+import { randomUUID } from 'crypto'
 interface IPaymentCrypto {
   setStage: (s: DonationStage) => void
   amount: number
@@ -137,7 +137,7 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
   }
 
   const handleSuccess = async () => {
-    const orderId = uniqueId()
+    const orderId = randomUUID()
     await createTopUpWallet({
       variables: {
         data: {

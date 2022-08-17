@@ -8,8 +8,8 @@ import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
 import { USDC_UNIT, useBridge, useDonation, useLoggedInUser, userMetadataVar } from '@lib'
 import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
-import { uniqueId } from 'lodash'
 import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
+import { randomUUID } from 'crypto'
 
 interface IProcessCrypto {
   setStage: (s: DonationStage) => void
@@ -91,7 +91,7 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
   useEffect(() => {
     const triggerNotification = async () => {
       if (fundsTransfered && fundsTransfered.statusCode === 2) {
-        const orderId = uniqueId()
+        const orderId = randomUUID()
         await createTopUpWallet({
           variables: {
             data: {
