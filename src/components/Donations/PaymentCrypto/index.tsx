@@ -13,7 +13,7 @@ import { CREATE_SWAP, CREATE_TOP_UP_WALLET } from '@gql'
 import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
 import usdcabiContract from 'src/contracts/USDCAbi'
 import qs from 'qs'
-import { randomUUID } from 'crypto'
+import { v4 as uuidv4 } from 'uuid'
 interface IPaymentCrypto {
   setStage: (s: DonationStage) => void
   amount: number
@@ -137,7 +137,7 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains, setOrder }: I
   }
 
   const handleSuccess = async () => {
-    const orderId = randomUUID()
+    const orderId = uuidv4()
     await createTopUpWallet({
       variables: {
         data: {

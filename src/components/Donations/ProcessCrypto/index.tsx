@@ -9,7 +9,7 @@ import { USDC_UNIT, useBridge, useDonation, useLoggedInUser, userMetadataVar } f
 import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
 import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
-import { randomUUID } from 'crypto'
+import { v4 as uuidv4 } from 'uuid'
 
 interface IProcessCrypto {
   setStage: (s: DonationStage) => void
@@ -92,7 +92,7 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
   useEffect(() => {
     const triggerNotification = async () => {
       if (fundsTransfered && fundsTransfered.statusCode === 2) {
-        const orderId = randomUUID()
+        const orderId = uuidv4()
         await createTopUpWallet({
           variables: {
             data: {
