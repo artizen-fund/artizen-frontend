@@ -3,22 +3,42 @@ import styled from 'styled-components'
 import { IconStack, Icon } from '@components'
 import { breakpoint, typography } from '@theme'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
-import { GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
-import { useLazyQuery } from '@apollo/client'
-import { useDonation } from '@lib'
+import { CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
+import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
+import { USDC_UNIT, useBridge, useDonation, useLoggedInUser, userMetadataVar } from '@lib'
+import { useAccount, useSigner } from 'wagmi'
+import { ethers } from 'ethers'
+import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
+import { v4 as uuidv4 } from 'uuid'
 
 interface IProcessCrypto {
   setStage: (s: DonationStage) => void
   donationMethod: DonationMethod
   order: { id: string }
+  amount: number
+  setOrder: (o: { id: string }) => void
 }
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
-const ProcessCrypto = ({ setStage, donationMethod, order }: IProcessCrypto) => {
+const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IProcessCrypto) => {
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod !== 'polygon' ? 'swapping' : 'building')
+  const [loggedInUser] = useLoggedInUser()
+
+  const metadata = useReactiveVar<any>(userMetadataVar)
+
   const courier = useCourier()
   const [initDonation, buildingStatus, buildingMessage, confirmingStatus, confirmingMessage] = useDonation()
+  const { address } = useAccount()
+  const { data: signer } = useSigner()
+
+  const { bridge, fundsTransfered } = useBridge()
+
+  const [createTopUpWallet] = useMutation(CREATE_TOP_UP_WALLET, {
+    onError: error => {
+      console.error('createTopUpWallet result    ', error)
+    },
+  })
 
   const [fetchTopUpWallet] = useLazyQuery(GET_TOP_UP_WALLET_VIA_TRANSFER_ID, {
     variables: {
@@ -40,10 +60,24 @@ const ProcessCrypto = ({ setStage, donationMethod, order }: IProcessCrypto) => {
     fetchTopUpWallet()
   }
 
+  const handleSwapComplete = async () => {
+    setCryptoStage('bridging')
+    const amountInUSDCDecimals = ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()
+    await bridge(address, signer?.provider, metadata?.publicAddress, amountInUSDCDecimals)
+  }
+
   useEffect(() => {
     courier.transport.intercept((message: ICourierMessage) => {
-      if (message.title === 'Payment is COMPLETE') {
-        handleTopUpComplete()
+      switch (message.title) {
+        case 'Payment is COMPLETE':
+          handleTopUpComplete()
+          break
+        case 'Swap is COMPLETE':
+          handleSwapComplete()
+          break
+        default:
+          console.error('Missing message.title from courier')
+          break
       }
     })
   }, [])
@@ -54,6 +88,32 @@ const ProcessCrypto = ({ setStage, donationMethod, order }: IProcessCrypto) => {
       setStage('confirmation')
     }
   }, [confirmingStatus])
+
+  useEffect(() => {
+    const triggerNotification = async () => {
+      if (fundsTransfered && fundsTransfered.statusCode === 2) {
+        const orderId = uuidv4()
+        await createTopUpWallet({
+          variables: {
+            data: {
+              userId: loggedInUser?.id,
+              amount,
+              originFund: donationMethod,
+              state: 'INITIATED',
+              timestamp: new Date().getTime(),
+              fee: 0,
+              txHash: fundsTransfered.exitHash,
+              url: getConfirmDonationURL(),
+              orderId,
+            },
+          },
+        })
+
+        setOrder({ id: orderId })
+      }
+    }
+    triggerNotification()
+  }, [fundsTransfered])
 
   return (
     <Wrapper>
@@ -82,7 +142,7 @@ const ProcessCrypto = ({ setStage, donationMethod, order }: IProcessCrypto) => {
             <Icon outline={cryptoStage !== 'building'} glyph="refresh" label="Building your donation (est. 10m)" />
           </li>
           <li>
-            <Icon outline={cryptoStage !== 'confirming'} glyph="tick" label="Confirm your donation (est. 2m)" />
+            <Icon outline={cryptoStage !== 'confirming'} glyph="tick" label="Confirming your donation (est. 2m)" />
           </li>
           <li>
             <Icon outline={cryptoStage !== 'complete'} glyph="party" label="Donation Complete" />

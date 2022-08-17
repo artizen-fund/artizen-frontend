@@ -100,6 +100,7 @@ export const useDonation = () => {
               state: 'INITIATED',
               txHash: donateReceipt.hash,
               topUpId,
+              timestamp: new Date().getTime(),
             },
           },
         })

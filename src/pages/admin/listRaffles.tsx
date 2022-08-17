@@ -67,7 +67,7 @@ const Admin = () => {
               <th>Start Time</th>
               <th>End Time</th>
               <th>Reward Token Allocation</th>
-              <th>Top Donation Amount</th>
+              <th>Top Donated Amount</th>
               <th>Cancelled</th>
               <th>Actions</th>
             </tr>
