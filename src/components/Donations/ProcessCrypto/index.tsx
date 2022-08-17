@@ -76,6 +76,7 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
           handleSwapComplete()
           break
         default:
+          console.error('Missing message.title from courier')
           break
       }
     })
