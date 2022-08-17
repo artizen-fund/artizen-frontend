@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import {
@@ -43,7 +43,7 @@ const Settings = () => {
       <Main>
         <ProfileCard />
         <EditSpace>
-          <TabbedInfo>
+          <TabbedInfo withHashChanges>
             {Object.keys(tabbedInfo).map(key => (
               <Tab key={`tab-${key}`} label={key}>
                 {tabbedInfo[key]}
