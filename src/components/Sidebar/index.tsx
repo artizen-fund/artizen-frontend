@@ -26,7 +26,7 @@ const Sidebar = ({ onChainDonations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DA
           <FundBlock>
             {onChainDonations && onChainDonations.donations.length > 0 && (
               <AmountRaised>
-                <span>${formatUSDC(onChainDonations.donations[0].totalDonations)}</span> raised of $
+                <span>${formatUSDC(onChainDonations.donations[0].cycleTotalDonation)}</span> raised of $
                 {FUND_GOAL.toLocaleString()} goal
               </AmountRaised>
             )}

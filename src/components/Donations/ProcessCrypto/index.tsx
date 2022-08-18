@@ -181,6 +181,7 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
     if (signer && donationMethod !== 'usd' && cryptoStage !== 'bridging') {
       processTransaction()
     }
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     return () => {}
   }, [signer])
 

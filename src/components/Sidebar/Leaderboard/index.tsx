@@ -3,7 +3,6 @@ import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
 import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
-import { ethers } from 'ethers'
 
 export type ILeaderboard = Pick<ISidebarDonatorsQuery, 'onChainDonations'>
 
@@ -20,13 +19,13 @@ const Leaderboard = ({ onChainDonations }: ILeaderboard) => {
         <TableCell key={`donation-${index}`}>
           <div>
             <div>#{index + 1}</div>
-            {donation.OnChainUser?.profileImage && <Avatar profileImage={donation.OnChainUser?.profileImage} />}
+            {donation.User?.profileImage && <Avatar profileImage={donation.User?.profileImage} />}
             <Name>
-              {donation.OnChainUser?.firstName} {donation.OnChainUser?.lastName} herp derp derp
+              {donation.User?.firstName} {donation.User?.lastName} herp derp derp
               {index === 0 && <span>👑</span>}
             </Name>
           </div>
-          <Amount>${formatUSDC(donation.donation_amount)}</Amount>
+          <Amount>${formatUSDC(donation.amount)}</Amount>
         </TableCell>
       ))}
     </Table>
