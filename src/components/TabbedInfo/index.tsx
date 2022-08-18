@@ -1,32 +1,68 @@
-import { useState } from 'react'
+import React, { useState, useEffect, cloneElement } from 'react'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { typography, palette, breakpoint } from '@theme'
 import { rgba } from '@lib'
+import { kebabCase } from 'lodash'
 
 export interface TabbedInfoProps {
+  withHashChanges?: boolean
   children: React.ReactElement<TabProps>[]
 }
 
 export interface TabProps {
   label: string
+  visible?: boolean
   children: React.ReactNode
 }
 
-const TabbedInfo = ({ children }: TabbedInfoProps) => {
-  const [activeTab, setActiveTab] = useState(0)
+const TabbedInfo = ({ withHashChanges, children }: TabbedInfoProps) => {
+  const router = useRouter()
+
+  const [activeTab, setActiveTab] = useState<string>()
+  useEffect(() => {
+    setActiveTab(kebabCase(children[0].props.label))
+
+    if (!withHashChanges) {
+      return // don't bind hash changes
+    }
+    const onHashChangeStart = (url: string) => {
+      const hash = url.split('#')[1]
+      if (hash !== activeTab) {
+        setActiveTab(hash)
+      }
+    }
+    router.events.on('hashChangeStart', onHashChangeStart)
+    return () => router.events.off('hashChangeStart', onHashChangeStart)
+  }, [])
+
+  const setTab = (tabKey: string) => {
+    if (!withHashChanges) {
+      setActiveTab(tabKey)
+    } else {
+      router.replace(`#${tabKey}`, undefined, { scroll: false })
+    }
+  }
+
   return (
     <Wrapper>
       <Tabs>
         {children.map((child, index) => (
-          <Tab key={`tab-${index}`} onClick={() => setActiveTab(index)} active={index === activeTab}>
+          <Tab
+            key={`tab-${index}`}
+            onClick={() => setTab(kebabCase(child.props.label))}
+            active={(!activeTab && index === 0) || activeTab === kebabCase(child.props.label)}
+          >
             {child.props.label}
           </Tab>
         ))}
       </Tabs>
-      {children[activeTab]}
+      {children.filter(child => kebabCase(child.props.label) === activeTab)}
     </Wrapper>
   )
 }
+
+const TabContent = styled.div
 
 const Wrapper = styled.div`
   grid-area: tabbedInfo;
