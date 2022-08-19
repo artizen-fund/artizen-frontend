@@ -8,12 +8,19 @@ import {
   TabbedInfo,
   AlternatingPanels,
   AlternatingPanel,
+  Sidebar,
 } from '@components'
 import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
 const Home = () => {
+  const FUND_COUNT = 3.2
+  const FUND_AMOUNT = 15250
+  const FUND_GOAL = 25000
+  const FUND_DATE = 'May, 2022'
+  const FUND_DEADLINE = '2022-06-30T00:00:00'
+
   return (
     <Layout>
       <Header>
@@ -30,7 +37,7 @@ const Home = () => {
               </Tab>
             ))}
           </TabbedInfo>
-          {/* <Sidebar {...{ donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} /> */}
+          <Sidebar {...{ FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>

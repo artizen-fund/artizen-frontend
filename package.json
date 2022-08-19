@@ -53,6 +53,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "magic-sdk": "^8.1.0",
+    "moralis-v1": "^1.11.0",
     "next": "12.2.4",
     "next-intercom": "^0.1.4",
     "next-plugin-graphql": "^0.0.2",

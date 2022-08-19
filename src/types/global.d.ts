@@ -24,6 +24,11 @@ declare global {
   type DonationStage = 'setAmount' | 'login' | 'paymentFiat' | 'paymentFiatAddress' | 'processCrypto' | 'confirmation'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
+
+  type Donation = {
+    amount: string
+    from: string
+  }
 }
 
 export {}
