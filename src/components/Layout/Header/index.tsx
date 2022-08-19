@@ -12,13 +12,17 @@ import { rgba } from '@lib'
 
 export type ShelfType = 'session' | 'howItWorks' | 'donate'
 
-const Header = () => {
+interface HeaderProps {
+  visibleShelf?: ShelfType
+  setVisibleShelf: (shelf?: ShelfType) => void
+}
+
+const Header = ({ visibleShelf, setVisibleShelf }: HeaderProps) => {
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 
   const [navVisible, setNavVisible] = useState(false)
 
-  const [visibleShelf, setVisibleShelf] = useState<ShelfType>()
   const toggleShelf = (shelf?: ShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
   return (

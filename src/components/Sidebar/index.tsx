@@ -7,11 +7,12 @@ import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
 import { useEffect, useState } from 'react'
-import { BigNumber } from 'ethers'
+import { ShelfType } from '../Layout/Header'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_GOAL: number
   raffle: any
+  visibleShelf?: ShelfType
 }
 
 const monthNames = [
@@ -29,7 +30,7 @@ const monthNames = [
   'December',
 ]
 
-const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
+const Sidebar = ({ FUND_GOAL, raffle, visibleShelf }: ISidebar) => {
   const [donations, setDonations] = useState<Donation[]>([])
   const [totalRaised, setTotalRaised] = useState(0)
 
@@ -42,7 +43,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
 
   useEffect(() => {
     loadDonations()
-  }, [])
+  }, [visibleShelf])
 
   const formatedTotalRaised = formatUSDC(totalRaised)
 
