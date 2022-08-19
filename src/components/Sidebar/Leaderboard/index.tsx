@@ -4,7 +4,7 @@ import { breakpoint, palette } from '@theme'
 import { formatUSDC, rgba } from '@lib'
 import _ from 'lodash'
 
-interface ILeaderboard {
+export interface ILeaderboard {
   donations: Donation[]
 }
 
