@@ -18,16 +18,15 @@ export const useMetaContract = () => {
     const apiKey = assert(process.env.NEXT_PUBLIC_BICONOMY_API_KEY, 'NEXT_PUBLIC_BICONOMY_API_KEY')
     const raffleContractAddress = assert(
       process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
-      'EXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
+      'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
     )
 
     const usdcContractAddress = assert(
       process.env.NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS,
       'NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS',
     )
-
-    setLoading(true)
     if (magic) {
+      setLoading(true)
       const biconomy = new Biconomy(magic?.rpcProvider as unknown as ExternalProvider, {
         apiKey,
         debug: true,
@@ -36,8 +35,8 @@ export const useMetaContract = () => {
 
       await biconomy.init()
       setBiconomy(biconomy)
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   useEffect(() => {

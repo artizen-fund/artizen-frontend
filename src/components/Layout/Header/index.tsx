@@ -56,7 +56,7 @@ const Header = () => {
         </Items>
       </Wrapper>
       <Shelf visible={visibleShelf === 'session'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
-        <SessionShelf />
+        <SessionShelf hideShelf={() => toggleShelf()} />
       </Shelf>
       <Shelf visible={visibleShelf === 'howItWorks'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
         <HowItWorks />

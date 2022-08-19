@@ -6,6 +6,7 @@ import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@compon
 import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
+import { useEffect, useState } from 'react'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_COUNT: number
@@ -15,7 +16,21 @@ export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_DEADLINE: string
 }
 
-const Sidebar = ({ onChainDonations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
+const Sidebar = ({ FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
+  const [donations, setDonations] = useState<Donation[]>([])
+  const [totalRaised, setTotalRaised] = useState(0)
+
+  const loadDonations = async () => {
+    const donationsResponse = await fetch('/api/donations')
+    const json = await donationsResponse.json()
+    setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
+    setDonations(json)
+  }
+
+  useEffect(() => {
+    loadDonations()
+  }, [])
+
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -24,10 +39,9 @@ const Sidebar = ({ onChainDonations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DA
         </Header>
         <Content>
           <FundBlock>
-            {onChainDonations && onChainDonations.donations.length > 0 && (
+            {donations && donations.length > 0 && (
               <AmountRaised>
-                <span>${formatUSDC(onChainDonations.donations[0].cycleTotalDonation)}</span> raised of $
-                {FUND_GOAL.toLocaleString()} goal
+                <span>${formatUSDC(totalRaised)}</span> raised of ${FUND_GOAL.toLocaleString()} goal
               </AmountRaised>
             )}
             <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
@@ -47,7 +61,7 @@ const Sidebar = ({ onChainDonations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DA
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ onChainDonations }} />
+            <Leaderboard {...{ donations }} />
             <Perks />
           </LargeScreensOnly>
         </Content>

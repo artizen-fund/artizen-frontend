@@ -3,10 +3,11 @@ import { gql } from '@apollo/client'
 export const SIDEBAR_DONATORS = gql`
   query SidebarDonators {
     onChainDonations: onchain {
-      donations(orderBy: amount, first: 3, orderDirection: desc) {
+      donations(orderBy: timestamp, orderDirection: desc) {
         amount
         from
         cycleTotalDonation
+        timestamp
         User {
           email
           firstName

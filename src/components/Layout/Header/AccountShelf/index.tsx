@@ -1,14 +1,17 @@
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
 import { rgba, logout } from '@lib'
+import { IUser } from '@types'
 import AccountStats from './AccountStats'
 
 interface IAccountShelf {
-  user: any
+  user: IUser
+  hideShelf: () => void
 }
 
-const AccountShelf = ({ user }: IAccountShelf) => {
+const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
   const stats = [
     {
       glyph: 'donate',
@@ -32,6 +35,12 @@ const AccountShelf = ({ user }: IAccountShelf) => {
     },
   ]
 
+  const router = useRouter()
+  const goToSettings = (section: string) => {
+    router.push(`/settings#${section}`)
+    hideShelf()
+  }
+
   return (
     <Wrapper>
       <Commands>
@@ -40,16 +49,16 @@ const AccountShelf = ({ user }: IAccountShelf) => {
           {!user.firstName && <Welcome>Welcome</Welcome>}
           <Message>Thanks for supporting the future of public goods.</Message>
           <Buttons>
-            <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="face">
+            <Button onClick={() => goToSettings('profile')} stretch outline level={1} glyph="face">
               Profile
             </Button>
-            <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="wallet">
+            <Button onClick={() => goToSettings('wallet')} stretch outline level={1} glyph="wallet">
               Wallet
             </Button>
-            <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="gear">
+            <Button onClick={() => goToSettings('settings')} stretch outline level={1} glyph="gear">
               Settings
             </Button>
-            <Button onClick={() => alert('I do nothing!')} stretch outline level={1} glyph="bell">
+            <Button onClick={() => goToSettings('notifications')} stretch outline level={1} glyph="bell">
               Notifications
             </Button>
           </Buttons>
