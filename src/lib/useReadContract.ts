@@ -1,13 +1,14 @@
 import { ContractInterface, ethers } from 'ethers'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMagic } from '@lib'
 
 export const useReadContract = (
   contractAddress: string,
   contractAbi: ContractInterface,
   methodName: string,
-  attr: Array<unknown> = [],
-) => {
+  attr: Array<any> = [],
+  callOnInit = true,
+): any => {
   const { magic } = useMagic()
   if (magic === undefined) return []
 
@@ -15,7 +16,7 @@ export const useReadContract = (
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
 
-  const callContract = useCallback(async () => {
+  const callContract = async () => {
     setLoading(true)
 
     const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider as any)
@@ -29,11 +30,17 @@ export const useReadContract = (
       setError(error)
     }
     setLoading(false)
-  }, [attr, contractAbi, contractAddress, methodName])
+  }
+
+  const refetch = async () => {
+    await callContract()
+  }
 
   useEffect(() => {
-    callContract()
+    if (callOnInit) {
+      callContract()
+    }
   }, [])
 
-  return [value, loading, error]
+  return { value, loading, error, refetch }
 }
