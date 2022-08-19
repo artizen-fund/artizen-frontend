@@ -1,37 +1,42 @@
+import { useEffect } from 'react'
+import { useApolloClient } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
+import { rgba, refreshSession, useLoggedInUser } from '@lib'
 
-interface IAccountButton {
-  loggedOutAction: () => void
-  loggedInAction?: () => void
-  loggedIn?: boolean
-}
+const AccountButton = (props: SimpleComponentProps) => {
+  const apolloClient = useApolloClient()
+  const [loggedInUser] = useLoggedInUser()
 
-const AccountButton = ({ loggedOutAction, loggedIn = false }: IAccountButton) => {
+  useEffect(() => {
+    refreshSession(apolloClient)
+  }, [])
+
   const TEMP_INITIALS = 'RP'
 
-  const handleClick = () => {
-    if (loggedIn) {
-      // todo: run loggedInAction (should show Account shelf)
-    } else {
-      loggedOutAction()
-    }
-  }
+  // TODO: this component has two states, loggedIn: true or false
+  // There's actually three…
+  // SessionShelf visible "close X"
+  // SessionShelf hidden and logged out "sign in"
+  // SessionShelf hidden and logged in "avatar or initials view"
 
   return (
-    <Wrapper {...{ loggedIn }} onClick={() => handleClick()}>
-      <SignInLabel {...{ loggedIn }} />
-      <HamburgerGlyph {...{ loggedIn }} color="night" darkColor="moon" glyph="hamburger" />
-      <AvatarImage {...{ loggedIn }}>
+    <Wrapper loggedIn={!!loggedInUser} {...props}>
+      <SignInLabel loggedIn={!!loggedInUser} />
+      <HamburgerGlyph loggedIn={!!loggedInUser} color="night" darkColor="moon" glyph="hamburger" />
+      <AvatarImage loggedIn={!!loggedInUser}>
         <Initials>{TEMP_INITIALS}</Initials>
       </AvatarImage>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<Pick<IAccountButton, 'loggedIn'>>`
+interface LoginState {
+  loggedIn: boolean
+}
+
+const Wrapper = styled.div<LoginState>`
   position: relative;
 
   display: flex;
@@ -64,7 +69,7 @@ const Wrapper = styled.div<Pick<IAccountButton, 'loggedIn'>>`
   transition: width 0.3s ease-in-out;
 `
 
-const SignInLabel = styled.div<Pick<IAccountButton, 'loggedIn'>>`
+const SignInLabel = styled.div<LoginState>`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -89,7 +94,7 @@ const SignInLabel = styled.div<Pick<IAccountButton, 'loggedIn'>>`
   pointer-events: none;
 `
 
-const HamburgerGlyph = styled(props => <Glyph {...props} />)<Pick<IAccountButton, 'loggedIn'>>`
+const HamburgerGlyph = styled(props => <Glyph {...props} />)<LoginState>`
   width: 32px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 36px;
@@ -102,7 +107,7 @@ const HamburgerGlyph = styled(props => <Glyph {...props} />)<Pick<IAccountButton
   transition: opacity 0.3s ease-in-out;
 `
 
-const AvatarImage = styled.div<Pick<IAccountButton, 'loggedIn'>>`
+const AvatarImage = styled.div<LoginState>`
   display: flex;
   align-items: center;
   border-radius: 9999px;

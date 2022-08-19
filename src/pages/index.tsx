@@ -1,87 +1,32 @@
 import styled from 'styled-components'
-import { FeaturedArt, Layout, Metrics, Newsletter, PagePadding, Sidebar, TabbedInfo } from '@components'
-import { CreateTopUpWallet, rgba, initializeApollo, addApolloState } from '@lib'
+import {
+  FeaturedArt,
+  Layout,
+  Metrics,
+  Newsletter,
+  PagePadding,
+  TabbedInfo,
+  AlternatingPanels,
+  AlternatingPanel,
+  Sidebar,
+} from '@components'
+import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { SIDEBAR_DONATORS } from '@gql'
-import { ISidebarDonatorsQuery } from '@types'
+import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
-interface IHome {
-  apolloData: {
-    ROOT_QUERY: ISidebarDonatorsQuery
-  }
-}
-
-const Home = ({
-  apolloData: {
-    ROOT_QUERY: { Donations },
-  },
-}: IHome) => {
-  // note: obviously this is going to come from CMS data
+const Home = () => {
   const FUND_COUNT = 3.2
   const FUND_AMOUNT = 15250
   const FUND_GOAL = 25000
   const FUND_DATE = 'May, 2022'
   const FUND_DEADLINE = '2022-06-30T00:00:00'
 
-  const tabbedInfo: Record<string, React.ReactNode> = {
-    About: (
-      <>
-        <h1>Join our May, 2022 donation drive</h1>
-        <p>
-          Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere
-          velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec
-          elit. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus
-          dolor auctor. Nullam id dolor id nibh ultricies vehicula ut id elit.
-        </p>
-        <p>
-          Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent
-          commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna mollis euismod.
-        </p>
-        <p>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce
-          dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit.
-        </p>
-        <p>
-          Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius
-          blandit sit amet non magna. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Curabitur
-          blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-        </p>
-      </>
-    ),
-    Artist: (
-      <>
-        <h1>So who’s this guy?</h1>
-        <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
-      </>
-    ),
-    Leaderboard: (
-      <>
-        <h1>Leaderboard leaderboard</h1>
-        <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
-      </>
-    ),
-    Perks: (
-      <>
-        <h1>Perky Perky Perks</h1>
-        <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
-      </>
-    ),
-  }
-
   return (
     <Layout>
-      <CreateTopUpWallet />
-
       <Header>
-        <h1>We’ve Successfully Raised $1,515,250 For Climate Action</h1>
-        <h2>
-          Join us in building the world’s largest web3 fund for public goods. 100% transparent, easy to take part in,
-          and profitable for everyone.
-        </h2>
+        <h1>{header.title}</h1>
+        <h2>{header.subtitle}</h2>
       </Header>
-
       <StyledPagePadding>
         <Wrapper>
           <FeaturedArt tokenId={1} startDate={new Date()} tagName="Tag Name" />
@@ -92,12 +37,16 @@ const Home = ({
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar {...{ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
+          <Sidebar {...{ FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
         </Wrapper>
       </StyledPagePadding>
-
+      <AlternatingPanels>
+        {alternatingPanels.map((panel, i) => (
+          <AlternatingPanel key={`panel-${i}`} {...panel} />
+        ))}
+      </AlternatingPanels>
       <Newsletter />
-      <Metrics />
+      <Metrics {...{ metrics }} />
     </Layout>
   )
 }
@@ -148,14 +97,5 @@ const Wrapper = styled.section`
 // todo: above is just a filled-in value, check design
 
 const Tab = styled.div<{ label: string }>``
-
-export async function getStaticProps() {
-  const apolloClient = initializeApollo()
-  await apolloClient.query({ query: SIDEBAR_DONATORS })
-  return addApolloState(apolloClient, {
-    props: {},
-    revalidate: 1,
-  })
-}
 
 export default Home

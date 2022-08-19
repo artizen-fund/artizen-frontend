@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Confirmation renders correctly 1`] = `
+<div
+  className="sc-e82acd28-0 crxzJA"
+>
+  <h1>
+    hey good job
+  </h1>
+  <div
+    className="sc-c089a03b-2 gfJPuX"
+  >
+    <div
+      className="sc-c089a03b-0 eexWtz"
+      color="white"
+    >
+      <div
+        className="sc-149d3190-0 izsvxh"
+        color="white"
+      />
+    </div>
+  </div>
+</div>
+`;

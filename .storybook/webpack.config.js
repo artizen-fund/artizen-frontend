@@ -5,6 +5,7 @@ module.exports = ({ config }) => {
 
   config.resolve.alias = {
     '@components': path.resolve(__dirname, '..', 'src', 'components'),
+    '@contracts': path.resolve(__dirname, '..', 'src', 'contracts'),
     '@forms': path.resolve(__dirname, '..', 'src', 'forms'),
     '@pages': path.resolve(__dirname, '..', 'src', 'pages', '*'),
     '@public': path.resolve(__dirname, '..', 'public', '*'),
@@ -12,6 +13,7 @@ module.exports = ({ config }) => {
     '@gql': path.resolve(__dirname, '..', 'src', 'gql'),
     '@lib': path.resolve(__dirname, '..', 'src', 'lib'),
     '@types': path.resolve(__dirname, '..', 'src', 'types'),
+    '@copy': path.resolve(__dirname, '..', 'copy', '*'),
   }
 
   // We're using several that don't play nicely with Webpack5.

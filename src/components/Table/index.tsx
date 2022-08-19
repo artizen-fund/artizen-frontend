@@ -9,12 +9,7 @@ export interface TableProps {
   ancillary?: React.ReactNode
 }
 
-const Table = ({
-  title,
-  sideItem,
-  children,
-  ...props
-}: TableProps) => {
+const Table = ({ title, sideItem, children, ...props }: TableProps) => {
   return (
     <Wrapper {...props}>
       <TableHeader {...{ title, sideItem }} />

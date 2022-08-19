@@ -1,27 +1,14 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import MailchimpSubscribe, { FormHooks, NameFormFields } from 'react-mailchimp-subscribe'
-import { rgba, assert } from '@lib'
+import { rgba, assert, useFormLocalStorage } from '@lib'
 import { Form, Button, PagePadding } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
 const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) => {
   const LOCALSTORAGE_KEY = 'newsletter'
-
-  const [data, setData] = useState<FormState>(initialState)
-  useMemo(() => {
-    if (typeof localStorage === 'undefined') {
-      return
-    }
-    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
-    if (!frozenAnswers) {
-      setData(initialState)
-      return
-    }
-    const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers)
-  }, [])
+  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
 
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string>()

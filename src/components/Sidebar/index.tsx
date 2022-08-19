@@ -4,10 +4,11 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba } from '@lib'
+import { formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
+import { useEffect, useState } from 'react'
 
-export type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'> & {
+export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_COUNT: number
   FUND_AMOUNT: number
   FUND_GOAL: number
@@ -15,7 +16,21 @@ export type ISidebar = Pick<ISidebarDonatorsQuery, 'Donations'> & {
   FUND_DEADLINE: string
 }
 
-const Sidebar = ({ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
+const Sidebar = ({ FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
+  const [donations, setDonations] = useState<Donation[]>([])
+  const [totalRaised, setTotalRaised] = useState(0)
+
+  const loadDonations = async () => {
+    const donationsResponse = await fetch('/api/donations')
+    const json = await donationsResponse.json()
+    setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
+    setDonations(json)
+  }
+
+  useEffect(() => {
+    loadDonations()
+  }, [])
+
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -24,9 +39,11 @@ const Sidebar = ({ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUN
         </Header>
         <Content>
           <FundBlock>
-            <AmountRaised>
-              <span>${FUND_AMOUNT.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
-            </AmountRaised>
+            {donations && donations.length > 0 && (
+              <AmountRaised>
+                <span>${formatUSDC(totalRaised)}</span> raised of ${FUND_GOAL.toLocaleString()} goal
+              </AmountRaised>
+            )}
             <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
             <Row>
               <Countdown date={FUND_DEADLINE} />
@@ -44,7 +61,7 @@ const Sidebar = ({ Donations, FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUN
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ Donations }} />
+            <Leaderboard {...{ donations }} />
             <Perks />
           </LargeScreensOnly>
         </Content>

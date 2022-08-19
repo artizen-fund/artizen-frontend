@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountStats renders correctly 1`] = `
+<ul
+  className="sc-cf63bf03-0 jnGrA-D"
+>
+  <li
+    className="sc-cf63bf03-1 doApLo"
+  >
+    <div
+      className="sc-c089a03b-2 gfJPuX"
+    >
+      <div
+        className="sc-c089a03b-0 kNsEAy"
+        color="night"
+      >
+        <div
+          className="sc-149d3190-0 bfUncM"
+          color="night"
+        />
+      </div>
+    </div>
+    <div
+      className="sc-cf63bf03-2 dRsowg"
+    >
+      $800
+    </div>
+    <div
+      className="sc-cf63bf03-3 YunQa"
+    >
+      donated
+    </div>
+  </li>
+  <li
+    className="sc-cf63bf03-1 doApLo"
+  >
+    <div
+      className="sc-c089a03b-2 gfJPuX"
+    >
+      <div
+        className="sc-c089a03b-0 kNsEAy"
+        color="night"
+      >
+        <div
+          className="sc-149d3190-0 cZntJz"
+          color="night"
+        />
+      </div>
+    </div>
+    <div
+      className="sc-cf63bf03-2 dRsowg"
+    >
+      42
+    </div>
+    <div
+      className="sc-cf63bf03-3 YunQa"
+    >
+      collected
+    </div>
+  </li>
+  <li
+    className="sc-cf63bf03-1 doApLo"
+  >
+    <div
+      className="sc-c089a03b-2 gfJPuX"
+    >
+      <div
+        className="sc-c089a03b-0 kNsEAy"
+        color="night"
+      >
+        <div
+          className="sc-149d3190-0 cZntJz"
+          color="night"
+        />
+      </div>
+    </div>
+    <div
+      className="sc-cf63bf03-2 dRsowg"
+    >
+      $0
+    </div>
+    <div
+      className="sc-cf63bf03-3 YunQa"
+    >
+      collected
+    </div>
+  </li>
+  <li
+    className="sc-cf63bf03-1 doApLo"
+  >
+    <div
+      className="sc-c089a03b-2 gfJPuX"
+    >
+      <div
+        className="sc-c089a03b-0 kNsEAy"
+        color="night"
+      >
+        <div
+          className="sc-149d3190-0 cZntJz"
+          color="night"
+        />
+      </div>
+    </div>
+    <div
+      className="sc-cf63bf03-2 dRsowg"
+    >
+      100
+    </div>
+    <div
+      className="sc-cf63bf03-3 YunQa"
+    >
+      $ART
+    </div>
+  </li>
+</ul>
+`;

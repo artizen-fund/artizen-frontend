@@ -20,7 +20,7 @@ export const schema: JsonSchema = {
   required: ['EMAIL', 'OPTIN'],
 }
 
-export interface FormState {
+export interface FormState extends Record<string, unknown> {
   FNAME?: string
   LNAME?: string
   EMAIL?: string

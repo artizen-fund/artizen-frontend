@@ -1,16 +1,19 @@
 {
-  "plugins": ["@typescript-eslint", "module-resolver", "import", "react"],
+  "plugins": ["@typescript-eslint", "module-resolver", "import", "react", "prettier"],
   "parser": "@typescript-eslint/parser",
   "extends": [
+    "prettier",
     "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:json/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": ["error"],
     "json/*": ["error", { "allowComments": true }],
 
     /* references */
@@ -49,7 +52,6 @@
 
     /* functions */
     "no-loop-func": "error",
-    "id-denylist": ["error", "arguments"],
     "prefer-rest-params": "error",
     "default-param-last": ["error"],
     "space-before-function-paren": ["error", { "anonymous": "always", "named": "never" }],
@@ -87,8 +89,7 @@
     "semi": ["error", "never"],
 
     /* naming-conventions */
-    "id-length": ["error", { "exceptions": ["_", "i", "e"] }],
-    "camelcase": "error",
+    "id-length": ["error", { "exceptions": ["_", "i", "e", "r", "s", "v"] }],
     "no-underscore-dangle": "error",
 
     /* react */

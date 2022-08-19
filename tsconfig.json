@@ -17,13 +17,15 @@
     "incremental": true,
     "paths": {
       "@components": ["src/components"],
+      "@contracts": ["src/contracts"],
       "@forms/*": ["src/forms/*"],
       "@gql": ["src/gql"],
       "@lib": ["src/lib"],
       "@pages": ["src/pages"],
       "@public/*": ["public/*"],
       "@theme": ["src/theme"],
-      "@types": ["src/types"]
+      "@types": ["src/types"],
+      "@copy/*": ["src/copy/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },

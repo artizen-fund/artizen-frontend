@@ -4,6 +4,11 @@ const withGraphql = require('next-plugin-graphql')
 const moduleExports = {
   reactStrictMode: true,
   compiler: { styledComponents: true },
+  webpack: config => {
+    config.resolve.fallback = { net: false, tls: false, fs: false, request: false }
+
+    return config
+  },
 }
 
 const sentryWebpackPluginOptions = {

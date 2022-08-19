@@ -1,4 +1,5 @@
 import { ResponsiveSize, GlyphKey, Level } from '@theme'
+import { assetPath } from '@lib'
 
 export const responsiveGlyphSize = (responsiveSize: ResponsiveSize, level?: keyof Level) => {
   const sizeSet: Record<ResponsiveSize, Record<keyof Level, number>> = {
@@ -31,4 +32,7 @@ export const maskPath = (
   glyph: keyof GlyphKey,
   level?: keyof Level,
   outline?: boolean,
-) => `url("/glyphs/${glyph}/${responsiveGlyphSize(responsiveSize, level)}/${outline ? 'outline' : 'solid'}.svg")`
+) =>
+  assetPath(
+    `/assets/glyphs/${glyph}/${responsiveGlyphSize(responsiveSize, level)}/${outline ? 'outline' : 'solid'}.svg`,
+  )

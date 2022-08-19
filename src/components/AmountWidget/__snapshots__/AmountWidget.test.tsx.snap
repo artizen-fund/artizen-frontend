@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AmountWidget renders correctly 1`] = `
+<div
+  className="sc-8b85c6d6-0 iEXZsH"
+>
+  <div
+    className="sc-8b85c6d6-1 eYyyOI"
+  >
+    <div
+      className="sc-c089a03b-2 VsSZo"
+    >
+      <div
+        className="sc-c089a03b-0 ja-DffS"
+        color="night"
+      >
+        <div
+          className="sc-149d3190-0 dVcEnH"
+          color="night"
+        />
+      </div>
+    </div>
+    <span>
+      USD
+    </span>
+  </div>
+  <div
+    className="sc-8b85c6d6-3 gtHBvp"
+  >
+    <input
+      className="sc-8b85c6d6-2 cVuWCM"
+      onChange={[Function]}
+      type="number"
+    />
+    <label>
+      donation total
+    </label>
+  </div>
+  <div
+    className="sc-8b85c6d6-4 kTqqpw"
+  >
+    <button
+      className="sc-2a588df4-2 kGwkQY undefined "
+      onClick={[Function]}
+    >
+      <div
+        className="sc-149d3190-0 kJqBVg sc-2a588df4-0 gSwEcZ"
+      />
+      <span>
+        add
+      </span>
+    </button>
+    <button
+      className="sc-2a588df4-2 kGwkQY undefined "
+      onClick={[Function]}
+    >
+      <div
+        className="sc-149d3190-0 biUHOc sc-2a588df4-0 gSwEcZ"
+      />
+      <span>
+        subtract
+      </span>
+    </button>
+  </div>
+</div>
+`;

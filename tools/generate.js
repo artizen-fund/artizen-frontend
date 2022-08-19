@@ -23,4 +23,14 @@ generateTemplateFiles([
       pathAndFileNameDefaultCase: '(pascalCase)',
     },
   },
+  {
+    option: 'Icon Set',
+    defaultCase: '(camelCase)',
+    entry: { folderPath: './tools/templates/iconSet/' },
+    stringReplacers: [{ question: 'Icon Set name (ex. currencyEuro)', slot: '__name__' }],
+    output: {
+      path: './public/assets/glyphs/__name__(camelCase)',
+      pathAndFileNameDefaultCase: '(camelCase)',
+    },
+  },
 ])

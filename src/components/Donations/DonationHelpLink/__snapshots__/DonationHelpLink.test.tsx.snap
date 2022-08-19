@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DonationHelpLink renders correctly 1`] = `
+<div
+  className="sc-78ba2856-0 fOnoXs"
+>
+  <div
+    className="sc-c089a03b-2 VsSZo"
+  >
+    <div
+      className="sc-c089a03b-0 dhCXYi"
+      color="night"
+    >
+      <div
+        className="sc-149d3190-0 DayLH"
+        color="night"
+      />
+    </div>
+  </div>
+  <p
+    className="sc-78ba2856-1 cjHeIN"
+  >
+    Need help? We’ve prepared a useful guide to donating.
+  </p>
+</div>
+`;

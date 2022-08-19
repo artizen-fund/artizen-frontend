@@ -1,6 +1,6 @@
 import { ContractInterface, ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
-import { useSession } from '@lib'
+import { useMagic } from '@lib'
 
 export const useReadContract = (
   contractAddress: string,
@@ -8,7 +8,7 @@ export const useReadContract = (
   methodName: string,
   attr: Array<unknown> = [],
 ) => {
-  const { magic } = useSession()
+  const { magic } = useMagic()
   if (magic === undefined) return []
 
   const [value, setValue] = useState<unknown>()
@@ -18,17 +18,12 @@ export const useReadContract = (
   const callContract = useCallback(async () => {
     setLoading(true)
 
-    //todo: types are different but that is how docs shows to do
-    //https://magic.link/docs/advanced/blockchains/ethereum/javascript#es-modules-type-script
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider)
+    const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider as any)
 
     const contract = new ethers.Contract(contractAddress, contractAbi, magicWeb3)
 
     try {
       const value = await contract[methodName](...attr)
-
       setValue(value)
     } catch (error: unknown) {
       setError(error)

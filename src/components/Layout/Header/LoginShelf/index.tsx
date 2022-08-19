@@ -1,40 +1,47 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
+import { useApolloClient, ApolloClient } from '@apollo/client'
+import { OAuthProvider } from '@magic-ext/oauth'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, useSession } from '@lib'
+import { rgba, loginWithEmail, useMagic, useFormLocalStorage } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
 
 const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
+  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
 
-  const [data, setData] = useState<FormState>(initialState)
-  useMemo(() => {
-    if (typeof localStorage === 'undefined') {
-      return
-    }
-    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
-    if (!frozenAnswers) {
-      setData(initialState)
-      return
-    }
-    const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers)
-  }, [])
+  const { magic } = useMagic()
+  const apolloClient = useApolloClient()
 
+  const [sentEmail, setSentEmail] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const { createSession } = useSession()
-  const handleLoginWithEmail = async () => {
-    if (!data.email) return
+  const handleSocialLogin = async (provider: OAuthProvider, magic?: MagicInstance) => {
+    if (!magic) {
+      throw 'Error: magic session not initialized.'
+    }
+    await magic.oauth.loginWithRedirect({
+      provider, // google, apple, etc
+      redirectURI: new URL('/', window.location.origin).href, // required redirect to finish social login
+    })
+  }
+
+  const handleEmailLogin = async (apolloClient: ApolloClient<object>, email?: string, magic?: MagicInstance) => {
+    if (!magic) {
+      throw 'Error: magic session not initialized.'
+    }
+    if (!email) {
+      throw 'Error: email is missing'
+    }
     setReadonly(true)
     setSubmitted(true)
     try {
-      createSession(data.email)
-      setSubmitted(true)
+      setSentEmail(true)
+      await loginWithEmail(apolloClient, magic, email)
       setReadonly(false)
     } catch (error) {
       console.error(error)
@@ -42,12 +49,17 @@ const LoginShelf = () => {
     }
   }
 
+  const reset = () => {
+    setSubmitted(false)
+    setReadonly(false)
+  }
+
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
       <Copy>
         <Headline>Let’s get started by setting up your Artizen account</Headline>
         <InfoRow>
-          <Icon glyph="info" outline level={1} />
+          <Icon glyph="infoLarge" outline level={1} />
           <SignInDirections>
             Already have an account?
             <br />
@@ -56,13 +68,23 @@ const LoginShelf = () => {
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <SubmitButton stretch onClick={() => handleLoginWithEmail()} disabled={!data.email || !acceptedToc || readonly}>
+        <SubmitButton
+          stretch
+          onClick={() => handleEmailLogin(apolloClient, data.email, magic)}
+          disabled={!data.email || !acceptedToc || readonly}
+        >
           Sign In / Sign Up
         </SubmitButton>
-        <Confirmation>
-          <div>Congrats, confirmation sent!</div>
-          <p>We emailed a magic link to {data.email}.</p>
-        </Confirmation>
+        {sentEmail && (
+          <Confirmation>
+            <Icon glyph="tick" outline level={2} color="moss" />
+            <div>
+              <h1>Done, confirmation sent!</h1>
+              <p>We emailed a magic link to {data.email}. Click the link Sign in or sign up.</p>
+            </div>
+            <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
+          </Confirmation>
+        )}
       </Form>
       <Alternatives>
         <OrLine />
@@ -70,10 +92,10 @@ const LoginShelf = () => {
           <Button level={1} outline onClick={() => alert('derp')} stretch>
             Phone
           </Button>
-          <Button level={1} outline onClick={() => alert('derp')} stretch>
+          <Button level={1} outline onClick={() => handleSocialLogin('twitter', magic)} stretch>
             Twitter
           </Button>
-          <Button level={1} outline onClick={() => alert('derp')} stretch>
+          <Button level={1} outline onClick={() => handleSocialLogin('discord', magic)} stretch>
             Discord
           </Button>
         </Buttons>
@@ -111,16 +133,28 @@ const Confirmation = styled.div`
   grid-area: confirmation;
   flex-direction: column;
   justify-content: center;
-  div {
+  align-items: center;
+  gap: 30px;
+  h1 {
     ${typography.title.l4}
-    color: ${rgba(palette.moon)};
-    margin-bottom: 0.25em;
+    color: ${rgba(palette.night)};
+    @media (prefers-color-scheme: dark) {
+      color: ${rgba(palette.moon)};
+    }
   }
   p {
     ${typography.label.l1}
     color: ${rgba(palette.barracuda)};
   }
   text-align: center;
+`
+
+const Reset = styled.p`
+  cursor: pointer;
+  border-bottom: 2px solid ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    border-bottom: 2px solid ${rgba(palette.moon)};
+  }
 `
 
 const Wrapper = styled.div`

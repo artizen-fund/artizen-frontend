@@ -54,7 +54,7 @@ export const initialState = {
   integerExample: undefined,
 }
 
-export interface FormState {
+export interface FormState extends Record<string, unknown> {
   stringExample?: string
   emailExample?: string
   phoneExample?: string

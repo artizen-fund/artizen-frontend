@@ -1,16 +1,15 @@
-import { useEffect } from 'react'
-import { useSession } from '@lib'
+import { useLoggedInUser, initIntercom } from '@lib'
 import LoginShelf from '../LoginShelf'
 import AccountShelf from '../AccountShelf'
 
-const SessionShelf = () => {
-  const { user, checkSession } = useSession()
+interface ISessionShelf {
+  hideShelf: () => void
+}
 
-  useEffect(() => {
-    checkSession()
-  }, [])
-
-  return !!user ? <AccountShelf {...{ user }} /> : <LoginShelf />
+const SessionShelf = ({ hideShelf }: ISessionShelf) => {
+  initIntercom()
+  const [loggedInUser] = useLoggedInUser()
+  return !!loggedInUser ? <AccountShelf user={loggedInUser} {...{ hideShelf }} /> : <LoginShelf />
 }
 
 export default SessionShelf

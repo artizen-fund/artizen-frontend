@@ -1,171 +1,153 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SessionShelf renders correctly 1`] = `
-<div
-  className="sc-4a4f802d-3 fuQvvd"
->
+<div>
   <div
-    className="sc-4a4f802d-4 fhjysv"
+    class="sc-19e6b784-4 lndqcO"
   >
-    <h1
-      className="sc-4a4f802d-5 jbsSsK"
-    >
-      Let’s get started by setting up your Artizen account
-    </h1>
     <div
-      className="sc-4a4f802d-6 ehlijM"
+      class="sc-19e6b784-5 iXJhJB"
     >
+      <h1
+        class="sc-19e6b784-6 eoJMxi"
+      >
+        Let’s get started by setting up your Artizen account
+      </h1>
       <div
-        className="sc-8c7bf1ae-2 huxvCL"
+        class="sc-19e6b784-7 imNgdK"
       >
         <div
-          className="sc-8c7bf1ae-0 bhoRgU"
-          color="night"
+          class="sc-122b7a3d-2 ebIrfw"
         >
           <div
-            className="sc-9eb58f28-0 kSymdK"
+            class="sc-122b7a3d-0 fqxyJD"
             color="night"
-          />
+          >
+            <div
+              class="sc-1d011157-0 gkxKzK"
+              color="night"
+            />
+          </div>
         </div>
+        <p
+          class="sc-19e6b784-8 kSNHDM"
+        >
+          Already have an account?
+          <br />
+          You can still use this form, it’s magic!
+        </p>
       </div>
-      <p
-        className="sc-4a4f802d-7 hAzDhs"
-      >
-        Already have an account?
-        <br />
-        You can still use this form, it’s magic!
-      </p>
     </div>
-  </div>
-  <div
-    className="vertical-layout"
-    hidden={false}
-  >
     <div
-      className="vertical-layout-item"
+      class="vertical-layout"
     >
       <div
-        className="sc-2f9d5146-0 jjUILZ"
-        id="#/properties/email"
+        class="vertical-layout-item"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          class="sc-2f9d5146-0 jjUILZ"
+          id="#/properties/email"
         >
-          <input
-            onBlur={[Function]}
-            onChange={[Function]}
-            placeholder="e.g. rene@artizen.fund"
-            required={true}
-            type="text"
-          />
-          <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+          <div
+            class="sc-dccedff6-0 dxDPQx"
           >
-            Email Address
-             *
-          </label>
+            <input
+              placeholder="e.g. rene@artizen.fund"
+              required=""
+              type="text"
+              value=""
+            />
+            <label
+              class="sc-ffdb2e6c-0 dXVxRc"
+            >
+              Email Address
+               *
+            </label>
+          </div>
+          <div
+            class="sc-93ba83c0-0 bAVzHI"
+          >
+            is a required property
+          </div>
         </div>
-        <div
-          className="sc-93ba83c0-0 bAVzHI"
-        />
       </div>
     </div>
-  </div>
-  <button
-    className="sc-a6b3add2-2 ebsYdi sc-4a4f802d-0 iErgSy  disabled"
-    disabled={true}
-    onClick={[Function]}
-  >
-    <span>
-      Sign In / Sign Up
-    </span>
-  </button>
-  <div
-    className="sc-4a4f802d-2 hPhXmc"
-  >
-    <div>
-      Congrats, confirmation sent!
-    </div>
-    <p>
-      We emailed a magic link to 
-      .
-    </p>
-  </div>
-  <div
-    className="sc-4a4f802d-1 iqsVwz"
-  >
-    <div
-      className="sc-4a4f802d-8 hyNfNI"
-    />
-    <div
-      className="sc-4a4f802d-9 iCNaSc"
+    <button
+      class="sc-3eee0409-2 kGjZMI sc-19e6b784-0 cHIONN  disabled"
+      disabled=""
     >
-      <button
-        className="sc-a6b3add2-2 erODIt undefined "
-        onClick={[Function]}
-      >
-        <span>
-          Phone
-        </span>
-      </button>
-      <button
-        className="sc-a6b3add2-2 erODIt undefined "
-        onClick={[Function]}
-      >
-        <span>
-          Twitter
-        </span>
-      </button>
-      <button
-        className="sc-a6b3add2-2 erODIt undefined "
-        onClick={[Function]}
-      >
-        <span>
-          Discord
-        </span>
-      </button>
-    </div>
-  </div>
-  <div
-    className="sc-4a4f802d-10 kwsLrN"
-  >
+      <span>
+        Sign In / Sign Up
+      </span>
+    </button>
     <div
-      className="sc-4a4f802d-11 fRBTKZ"
+      class="sc-19e6b784-1 gpPKnw"
     >
-      <label
-        className="sc-dd35d48e-4 dCKwdz"
+      <div
+        class="sc-19e6b784-9 juxsRO"
+      />
+      <div
+        class="sc-19e6b784-10 lcydTD"
       >
-        <div
-          className="sc-dd35d48e-0 lmHjtw"
+        <button
+          class="sc-3eee0409-2 hImsqL undefined "
         >
-          <input
-            checked={true}
-            className="sc-dd35d48e-1 clTMzK"
-            disabled={false}
-            onChange={[Function]}
-            required={false}
-            type="checkbox"
-          />
+          <span>
+            Phone
+          </span>
+        </button>
+        <button
+          class="sc-3eee0409-2 hImsqL undefined "
+        >
+          <span>
+            Twitter
+          </span>
+        </button>
+        <button
+          class="sc-3eee0409-2 hImsqL undefined "
+        >
+          <span>
+            Discord
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="sc-19e6b784-11 hNDYzD"
+    >
+      <div
+        class="sc-19e6b784-12 fHQdXh"
+      >
+        <label
+          class="sc-dd35d48e-4 dCKwdz"
+        >
+          <div
+            class="sc-dd35d48e-0 lmHjtw"
+          >
+            <input
+              checked=""
+              class="sc-dd35d48e-1 clTMzK"
+              type="checkbox"
+            />
+            <span
+              class="sc-dd35d48e-2 dtceeR"
+            />
+          </div>
           <span
-            className="sc-dd35d48e-2 dtceeR"
+            class="sc-dd35d48e-3 eAaGSv"
           />
-        </div>
-        <span
-          className="sc-dd35d48e-3 eAaGSv"
-        />
-      </label>
-      <p
-        className="sc-4a4f802d-12 camNOd"
-      >
-        I agree to Artizen’s
-        <a
-          href="/toc"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+        </label>
+        <p
+          class="sc-19e6b784-13 esldgb"
         >
-           Terms & Conditions
-        </a>
-      </p>
+          I agree to Artizen’s
+          <a
+            href="/toc"
+          >
+             Terms & Conditions
+          </a>
+        </p>
+      </div>
     </div>
   </div>
 </div>

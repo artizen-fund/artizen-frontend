@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlternatingPanel renders correctly 1`] = `
+<div
+  className="sc-9e38558c-0 lbJrHH"
+>
+  <div
+    className="sc-9e38558c-1 cvnyEh"
+  />
+  <div
+    className="sc-9e38558c-2 gDLmB"
+  >
+    <h2
+      className="sc-9e38558c-3 cVsTue"
+    />
+    <p
+      className="sc-9e38558c-4 bVTsCT"
+    />
+    <h3
+      className="sc-9e38558c-5 jCXrDL"
+    />
+    <a
+      className="sc-2a588df4-1 izfOXq undefined "
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      <span />
+    </a>
+  </div>
+</div>
+`;

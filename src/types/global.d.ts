@@ -1,17 +1,34 @@
-import type { MagicUserMetadata } from 'magic-sdk'
+import { SDKBase, InstanceWithExtensions } from '@magic-sdk/provider'
+import { OAuthExtension } from '@magic-ext/oauth'
 
 declare global {
-  interface ArtizenUser extends MagicUserMetadata {
-    token?: string
-    id?: string
-  }
-
   interface SimpleComponentProps {
     children?: React.ReadNode
     className?: string
+    onClick?: (input?: any) => void
+  }
+
+  interface Window {
+    Intercom: object
   }
 
   type NextJsInitializedPage = (props: AppProps) => JSX.Element
+
+  type TokenAndMetadataBundle = {
+    token: string
+    metadata: MagicUserMetadata
+  }
+
+  type MagicInstance = InstanceWithExtensions<SDKBase, OAuthExtension[]>
+
+  type DonationStage = 'setAmount' | 'login' | 'paymentFiat' | 'paymentFiatAddress' | 'processCrypto' | 'confirmation'
+
+  type DonationMethod = 'usd' | 'polygon' | 'ethereum'
+
+  type Donation = {
+    amount: string
+    from: string
+  }
 }
 
 export {}

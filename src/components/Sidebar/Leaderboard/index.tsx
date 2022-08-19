@@ -1,31 +1,37 @@
 import styled from 'styled-components'
 import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
-import { ISidebarDonatorsQuery } from '@types'
+import { formatUSDC, rgba } from '@lib'
+import _ from 'lodash'
 
-export type ILeaderboard = Pick<ISidebarDonatorsQuery, 'Donations'>
+export interface ILeaderboard {
+  donations: Donation[]
+}
 
-const Leaderboard = ({ Donations }: ILeaderboard) => {
+const Leaderboard = ({ donations }: ILeaderboard) => {
   const sideItem = (
     <Button onClick={() => alert('do something')} outline level={2}>
       See All
     </Button>
   )
+
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
-      {Donations.map((donation, index) => (
-        <TableCell key={`donation-${index}`}>
-          <div>
-            <div>#{index + 1}</div>
-            {donation.User.profileImage && <Avatar profileImage={donation.User.profileImage} />}
-            <Name>
-              {donation.User.firstName} {donation.User.lastName} herp derp derp {index === 0 && <span>👑</span>}
-            </Name>
-          </div>
-          <Amount>${donation.amount.toLocaleString()}</Amount>
-        </TableCell>
-      ))}
+      {_.orderBy(donations, item => Number(item.amount), ['desc'])
+        .slice(0, 3)
+        .map((donation: Donation, index) => (
+          <TableCell key={`donation-${index}`}>
+            <div>
+              <div>#{index + 1}</div>
+              {/*donation.User?.profileImage && <Avatar profileImage={donation.User?.profileImage} />*/}
+              <Name>
+                {/*donation.User?.firstName*/} {/*donation.User?.lastName*/} herp derp derp
+                {index === 0 && <span>👑</span>}
+              </Name>
+            </div>
+            <Amount>${formatUSDC(Number(donation.amount))}</Amount>
+          </TableCell>
+        ))}
     </Table>
   )
 }

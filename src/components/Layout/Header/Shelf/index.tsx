@@ -6,7 +6,7 @@ import { breakpoint, palette } from '@theme'
 interface IShelf {
   visible: boolean
   shadowVisible: boolean
-  hideShelf: any
+  hideShelf: () => void
   children: React.ReactNode
 }
 

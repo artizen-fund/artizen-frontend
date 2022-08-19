@@ -8,6 +8,7 @@ import { gapForLevel, sizeForLevel } from '@lib'
 export interface ButtonProps {
   outline?: boolean
   inverted?: boolean
+  transparent?: boolean
   disabled?: boolean
   level?: keyof Level
   stretch?: boolean
@@ -24,6 +25,7 @@ export interface ButtonProps {
   glyph?: keyof GlyphKey
   glyphOnRight?: boolean
   glyphOnly?: boolean
+  glyphRotation?: number
 
   className?: string
   children: React.ReactNode
@@ -35,6 +37,7 @@ const Button = ({
   glyph,
   glyphOnRight,
   glyphOnly,
+  glyphRotation,
   level,
   outline,
   stretch,
@@ -46,7 +49,7 @@ const Button = ({
     return (
       <Link {...{ href }}>
         <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-          {glyph && <StyledGlyph {...{ glyph }} />}
+          {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
           <span>{children}</span>
         </ButtonLink>
       </Link>
@@ -55,7 +58,7 @@ const Button = ({
   if (!!props.onClick) {
     return (
       <StyledButton className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-        {glyph && <StyledGlyph {...{ glyph }} />}
+        {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
         <span>{children}</span>
       </StyledButton>
     )
@@ -160,14 +163,14 @@ const ButtonPalette = css<Partial<ButtonProps>>`
     }
   }
 
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, ${props => (props.outline ? 0 : 0.12)});
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, ${props => (props.outline || props.transparent ? 0 : 0.12)});
   &:hover {
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, ${props => (props.transparent ? 0 : 0.16)});
   }
   @media (prefers-color-scheme: dark) {
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, ${props => (props.transparent ? 0 : 0.4)});
     &:hover {
-      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.48);
+      box-shadow: 0px 4px 16px rgba(0, 0, 0, ${props => (props.transparent ? 0 : 0.48)});
     }
   }
 `

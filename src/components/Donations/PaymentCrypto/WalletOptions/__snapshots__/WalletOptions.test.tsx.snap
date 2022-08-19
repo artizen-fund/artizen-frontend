@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WalletOptions renders correctly 1`] = `
+<div
+  className="sc-268575ae-0 gjfjNd"
+>
+  <div
+    className="sc-268575ae-1 jwnmTS"
+    onClick={[Function]}
+  >
+    <img
+      alt="connect with MetaMask"
+      src="/assets/metamask.svg"
+    />
+    <h3
+      className="sc-268575ae-2 leZytT"
+    >
+      MetaMask
+    </h3>
+    <h4
+      className="sc-268575ae-3 bZcDbE"
+    >
+      Connect via your browser
+    </h4>
+  </div>
+  <div
+    className="sc-268575ae-1 jwnmTS"
+    onClick={[Function]}
+  >
+    <img
+      alt="connect with WalletConnect"
+      src="/assets/walletConnect.svg"
+    />
+    <h3
+      className="sc-268575ae-2 leZytT"
+    >
+      WalletConnect
+    </h3>
+    <h4
+      className="sc-268575ae-3 bZcDbE"
+    >
+      Choose an alternative wallet
+    </h4>
+  </div>
+</div>
+`;

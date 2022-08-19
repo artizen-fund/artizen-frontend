@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { Button, Logo } from '@components'
+import { Button, Logo, DonationShelf } from '@components'
 import AccountButton from './AccountButton'
 import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
@@ -10,7 +10,7 @@ import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba } from '@lib'
 
-type ShelfType = 'session' | 'howItWorks'
+export type ShelfType = 'session' | 'howItWorks' | 'donate'
 
 const Header = () => {
   const [shadowVisible, setShadowVisible] = useState(false)
@@ -49,17 +49,20 @@ const Header = () => {
               <li onClick={() => toggleShelf('howItWorks')}>How it Works</li>
             </ul>
           </Nav>
-          <Button href="/" glyph={glyphKey.donate} level={1}>
+          <Button onClick={() => toggleShelf('donate')} glyph={glyphKey.donate} level={1}>
             Donate
           </Button>
-          <AccountButton loggedOutAction={() => toggleShelf('session')} />
+          <AccountButton onClick={() => toggleShelf('session')} />
         </Items>
       </Wrapper>
       <Shelf visible={visibleShelf === 'session'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
-        <SessionShelf />
+        <SessionShelf hideShelf={() => toggleShelf()} />
       </Shelf>
       <Shelf visible={visibleShelf === 'howItWorks'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
         <HowItWorks />
+      </Shelf>
+      <Shelf visible={visibleShelf === 'donate'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
+        <DonationShelf />
       </Shelf>
     </>
   )

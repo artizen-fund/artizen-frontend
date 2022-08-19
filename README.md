@@ -1,5 +1,7 @@
 # Artizen Frontend
 
+Welcome to Artize Frontend codebase. This repository includes the Artizen design components for the information pages and NFT Ruffle. You can check it easily by running the command under the Getting started Session below.
+
 ![Screenshot 2022-06-22 at 16 24 55](https://user-images.githubusercontent.com/1488156/175069661-b0f6e6f0-2e3e-430f-9058-c1f5955e628d.png)
 
 # Contributing to Artizen

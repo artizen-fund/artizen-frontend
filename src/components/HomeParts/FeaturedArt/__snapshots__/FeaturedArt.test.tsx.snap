@@ -3,95 +3,79 @@
 exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
 <div>
   <section
-    class="sc-db5f90ad-0 kYJKRz"
+    class="sc-cdeaa557-0 cAptND"
   >
     <div
       class="sc-4cf5d7c6-0 dgJcrf"
-    >
-      <div
-        class="sc-4cf5d7c6-1 rQNPJ active"
-      />
-      <div
-        class="sc-4cf5d7c6-1 eduBIm inactive"
-      />
-      <div
-        class="sc-4cf5d7c6-1 XgyHX inactive"
-      />
-    </div>
+    />
     <div
-      class="sc-db5f90ad-1 hsgONv"
+      class="sc-cdeaa557-1 boWMqn"
     >
       <div
-        class="sc-db5f90ad-2 cmmYlN"
+        class="sc-cdeaa557-2 buQvQx"
       >
         Title of Monthly Featured Artwork
       </div>
       <div
-        class="sc-db5f90ad-3 dVZYio"
+        class="sc-cdeaa557-3 GqOUk"
       >
         <div
-          class="sc-db5f90ad-4 bgWovN"
+          class="sc-cdeaa557-4 eDRDbJ"
         >
           <div
-            class="sc-8c7bf1ae-2 huxvCL"
+            class="sc-c089a03b-2 VsSZo"
           >
             <div
-              class="sc-8c7bf1ae-0 bhoRgU"
+              class="sc-c089a03b-0 ja-DffS"
               color="night"
             >
               <div
-                class="sc-9eb58f28-0 eduRIx"
+                class="sc-149d3190-0 jBhTBE"
                 color="night"
               />
-            </div>
-            <div
-              class="sc-8c7bf1ae-1 ckGAST"
-              color="night"
-            >
-              Artist Name
             </div>
           </div>
         </div>
         <div
-          class="sc-db5f90ad-4 bgWovN"
+          class="sc-cdeaa557-4 eDRDbJ"
         >
           <div
-            class="sc-8c7bf1ae-2 huxvCL"
+            class="sc-c089a03b-2 VsSZo"
           >
             <div
-              class="sc-8c7bf1ae-0 bhoRgU"
+              class="sc-c089a03b-0 ja-DffS"
               color="night"
             >
               <div
-                class="sc-9eb58f28-0 hZXkji"
+                class="sc-149d3190-0 boLSjf"
                 color="night"
               />
             </div>
             <div
-              class="sc-8c7bf1ae-1 ckGAST"
+              class="sc-c089a03b-1 gmqtJg"
               color="night"
             >
-              Created # days ago
+              Created 0 days ago
             </div>
           </div>
         </div>
         <div
-          class="sc-db5f90ad-4 bgWovN"
+          class="sc-cdeaa557-4 eDRDbJ"
         >
           <div
-            class="sc-8c7bf1ae-2 huxvCL"
+            class="sc-c089a03b-2 VsSZo"
           >
             <div
-              class="sc-8c7bf1ae-0 bhoRgU"
+              class="sc-c089a03b-0 ja-DffS"
               color="night"
             >
               <div
-                class="sc-9eb58f28-0 ccFrgu"
+                class="sc-149d3190-0 LgDQb"
                 color="night"
               />
             </div>
             <div
-              class="sc-8c7bf1ae-1 ckGAST"
+              class="sc-c089a03b-1 gmqtJg"
               color="night"
             >
               Tag Name

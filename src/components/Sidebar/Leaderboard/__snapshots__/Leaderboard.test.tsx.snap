@@ -3,7 +3,7 @@
 exports[`Leaderboard renders Leaderboard unchanged 1`] = `
 <div>
   <div
-    class="sc-bdd02fd6-0 fJPhsS"
+    class="sc-ecff4829-0 fMTZxv"
   >
     <div
       class="sc-c6d4a71-0 iFQvvL"
@@ -14,7 +14,7 @@ exports[`Leaderboard renders Leaderboard unchanged 1`] = `
         Leaderboard
       </div>
       <button
-        class="sc-a6b3add2-2 iJUNCj undefined "
+        class="sc-2a588df4-2 emJYMu undefined "
       >
         <span>
           See All

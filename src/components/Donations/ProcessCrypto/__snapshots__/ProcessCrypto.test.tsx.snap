@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProcessCrypto renders correctly 1`] = `
+<div
+  className="sc-7f3ccf41-3 eimEzz"
+>
+  <div
+    className="sc-7f3ccf41-0 becTpo"
+  >
+    <div>
+      <h1
+        className="sc-7f3ccf41-1 iVyQNF"
+      >
+        It’s time to create your donation which requires a little extra magic
+      </h1>
+      <h2
+        className="sc-7f3ccf41-2 deGwoE"
+      >
+        Web3 takes longer to process transactions than traditional methods. You can keep this window open or close it without losing any progress – we'll send you an email when we’re ready.
+      </h2>
+    </div>
+    <ol
+      className="sc-c553ee1c-0 kilepu"
+    >
+      <li
+        onClick={[Function]}
+      >
+        <div
+          className="sc-c089a03b-2 gfJPuX"
+        >
+          <div
+            className="sc-c089a03b-0 eexWtz"
+            color="white"
+          >
+            <div
+              className="sc-149d3190-0 hIEUqx"
+              color="white"
+            />
+          </div>
+          <div
+            className="sc-c089a03b-1 gmqtJg"
+            color="night"
+          >
+            12% — Exchanging to USDC (est. 2m)
+          </div>
+        </div>
+      </li>
+      <li
+        onClick={[Function]}
+      >
+        <div
+          className="sc-c089a03b-2 gfJPuX"
+        >
+          <div
+            className="sc-c089a03b-0 kNsEAy"
+            color="night"
+          >
+            <div
+              className="sc-149d3190-0 ikoVsw"
+              color="night"
+            />
+          </div>
+          <div
+            className="sc-c089a03b-1 gmqtJg"
+            color="night"
+          >
+            Bridging blockchains (est. 2m)
+          </div>
+        </div>
+      </li>
+      <li
+        onClick={[Function]}
+      >
+        <div
+          className="sc-c089a03b-2 gfJPuX"
+        >
+          <div
+            className="sc-c089a03b-0 kNsEAy"
+            color="night"
+          >
+            <div
+              className="sc-149d3190-0 gbGGRA"
+              color="night"
+            />
+          </div>
+          <div
+            className="sc-c089a03b-1 gmqtJg"
+            color="night"
+          >
+            Building your donation (est. 10m)
+          </div>
+        </div>
+      </li>
+      <li
+        onClick={[Function]}
+      >
+        <div
+          className="sc-c089a03b-2 gfJPuX"
+        >
+          <div
+            className="sc-c089a03b-0 kNsEAy"
+            color="night"
+          >
+            <div
+              className="sc-149d3190-0 fJmQeo"
+              color="night"
+            />
+          </div>
+          <div
+            className="sc-c089a03b-1 gmqtJg"
+            color="night"
+          >
+            Confirm your donation (est. 2m)
+          </div>
+        </div>
+      </li>
+      <li
+        onClick={[Function]}
+      >
+        <div
+          className="sc-c089a03b-2 gfJPuX"
+        >
+          <div
+            className="sc-c089a03b-0 kNsEAy"
+            color="night"
+          >
+            <div
+              className="sc-149d3190-0 kTIffr"
+              color="night"
+            />
+          </div>
+          <div
+            className="sc-c089a03b-1 gmqtJg"
+            color="night"
+          >
+            Donation Complete
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+  <article
+    className="sc-7f3ccf41-4 jlJDWf"
+  />
+</div>
+`;

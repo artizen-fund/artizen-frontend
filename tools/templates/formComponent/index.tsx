@@ -1,6 +1,7 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Form, Button } from '@components'
+import { useFormLocalStorage } from '@lib'
 import { schema, uischema, initialState, FormState } from './form'
 
 const __name__ = () => {
@@ -8,20 +9,7 @@ const __name__ = () => {
 
   /* set up initialState of form, including previously recorded
    * responses from browser localStorage */
-  const [data, setData] = useState<FormState>(initialState)
-  useMemo(() => {
-    if (typeof localStorage === 'undefined') {
-      return
-    }
-    const frozenAnswers = localStorage.getItem(LOCALSTORAGE_KEY)
-    if (!frozenAnswers) {
-      setData(initialState)
-      return
-    }
-    const thawedAnswers = JSON.parse(frozenAnswers)
-    setData(thawedAnswers)
-  }, [])
-
+  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
   // component state data
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string>()

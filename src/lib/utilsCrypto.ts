@@ -1,13 +1,15 @@
 // import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
 import { provider } from 'web3-core'
-import { contracts, isServer } from '@lib'
+import { isServer } from '@lib'
+import { ethers } from 'ethers'
+import { USDC } from '@contracts'
 
 export const getUSDCBalance = async (address: string) => {
   if (isServer()) return
   // const contractAddress = envString('NEXT_PUBLIC_USDC_CONTRACT_ADDRESS')
   // const magicWeb3 = new Web3(magic?.rpcProvider as provider)
-  // const contract = new magicWeb3.eth.Contract(contracts.USDC as AbiItem[], contractAddress)
+  // const contract = new magicWeb3.eth.Contract(USDC as AbiItem[], contractAddress)
   // // console.log('contract', contract.methods.balanceOf(address).call())
   // const balanceInWei = await contract.methods.balanceOf(address).call()
   // // USDC is 6 decimals
@@ -24,3 +26,9 @@ export const getEthBalance = async (address: string) => {
   //   return result
   // })
 }
+
+export const formatUSDC = (value: number) => {
+  return Number(ethers.utils.formatUnits(value, 6)).toFixed(2)
+}
+
+export const USDC_UNIT = 'mwei'
