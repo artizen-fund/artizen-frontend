@@ -28,7 +28,7 @@ export const getEthBalance = async (address: string) => {
 }
 
 export const formatUSDC = (value: number) => {
-  return Number(ethers.utils.formatUnits(value, 6)).toFixed(2)
+  return Number(Number(ethers.utils.formatUnits(value, 6)).toFixed(2))
 }
 
 export const USDC_UNIT = 'mwei'

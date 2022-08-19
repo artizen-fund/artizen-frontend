@@ -4,10 +4,12 @@ import { palette, breakpoint, typography } from '@theme'
 import { rgba, assert, useReadContract } from '@lib'
 import { useEffect, useState } from 'react'
 import { ArtizenERC1155 } from '@contracts'
-import raffleAbi from 'src/contracts/RaffleAbi'
+import { BigNumber } from 'ethers'
 
 type IFeaturedArt = {
   tagName: string
+  tokenId: BigNumber
+  startTime: BigNumber
 }
 
 interface Metadata {
@@ -18,26 +20,12 @@ interface Metadata {
   attributes: Array<unknown>
 }
 
-const FeaturedArt = ({ tagName }: IFeaturedArt) => {
-  const raffleContractAddress = assert(
-    process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
-    'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
-  )
-  const { value: raffleId } = useReadContract(raffleContractAddress, raffleAbi, 'raffleCount', [])
-
-  const { value: raffle, refetch: refetchRaffle } = useReadContract(
-    raffleContractAddress,
-    raffleAbi,
-    'getRaffle',
-    [raffleId],
-    false,
-  )
-
-  const { value: metadataUri, refetch: refetchMetadataUri } = useReadContract(
+const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
+  const { value: metadataUri, refetch: refetchTokenId } = useReadContract(
     assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS'),
     ArtizenERC1155,
     'uri',
-    [raffle?.tokenID],
+    [tokenId],
     false,
   )
 
@@ -50,25 +38,21 @@ const FeaturedArt = ({ tagName }: IFeaturedArt) => {
   }
 
   useEffect(() => {
-    refetchRaffle()
-  }, [raffleId])
-
-  useEffect(() => {
-    refetchMetadataUri()
-  }, [raffle])
-
-  useEffect(() => {
     if (metadataUri) {
       getMetadataFromUri(metadataUri as string)
     }
   }, [metadataUri])
 
-  const getDaysAgoFromDate = (start: string) => {
+  useEffect(() => {
+    refetchTokenId()
+  }, [tokenId])
+
+  const getDaysAgoFromDate = (start: number) => {
     const now = new Date()
 
     const oneDay = 1000 * 60 * 60 * 24
 
-    const diffInTime = now.getTime() - Number(start) * 1000
+    const diffInTime = now.getTime() - start * 1000
 
     const diffInDays = Math.round(diffInTime / oneDay)
 
@@ -89,7 +73,7 @@ const FeaturedArt = ({ tagName }: IFeaturedArt) => {
               glyph="calendar"
               level={1}
               outline
-              label={`Created ${getDaysAgoFromDate(raffle?.startTime.toString())} days ago`}
+              label={`Created ${getDaysAgoFromDate(startTime?.toNumber())} days ago`}
             />
           </Metadatum>
           <Metadatum>
