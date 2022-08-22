@@ -12,12 +12,12 @@ import {
   sleep,
   USDC_UNIT,
   useBridge,
-  useDonation,
   useLoggedInUser,
   userMetadataVar,
   getConfirmDonationURL,
   getWagmiClient,
 } from '@lib'
+import { useDonation } from '../../../lib/useDonation'
 import { useAccount, useContractWrite, useSigner, useSwitchNetwork, WagmiConfig } from 'wagmi'
 import { ethers } from 'ethers'
 import { v4 as uuidv4 } from 'uuid'

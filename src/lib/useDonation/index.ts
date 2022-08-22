@@ -3,14 +3,13 @@ import { useEffect, useState } from 'react'
 import { assert, USDC_UNIT, userMetadataVar, useLoggedInUser, useReadContract, useWriteContract } from '@lib'
 import { USDCAbi, RaffleAbi } from '@contracts'
 import { useMutation, useReactiveVar } from '@apollo/client'
-import { StageStatus } from './StageFunction'
 import { useMetaContract } from './useMetaContract'
 import { CREATE_DONATION } from '@gql'
 
 export const useDonation = () => {
-  const [buildingStatus, setBuildingStatus] = useState<StageStatus>('WAITING')
+  const [buildingStatus, setBuildingStatus] = useState<DonationStageStatus>('WAITING')
   const [buildingMessage, setBuildingMessage] = useState<string>('')
-  const [confirmingStatus, setConfirmingStatus] = useState<StageStatus>('WAITING')
+  const [confirmingStatus, setConfirmingStatus] = useState<DonationStageStatus>('WAITING')
   const [confirmingMessage, setConfirmingMessage] = useState<string>('')
 
   const [loggedInUser] = useLoggedInUser()

@@ -1,8 +1,6 @@
 // all the watchers for this stage of the crypto transaction are here
 
-import { StageFunction } from '@lib'
-
-const watchSwap: StageFunction = (setStatus, setMessage) => {
+const watchSwap: DonationStageFunction = (setStatus, setMessage) => {
   setStatus('PROCESSING')
   setMessage('whatever my dude')
   // begin work
