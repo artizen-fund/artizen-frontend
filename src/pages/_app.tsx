@@ -6,6 +6,7 @@ import { isProd, withAuth, MagicProvider, initializeApollo, CourierNotification 
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
+import { DonationContextProvider } from 'src/lib/donationContext'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const apolloClient = initializeApollo(pageProps?.apolloData || {})
@@ -14,7 +15,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     <ApolloProvider client={apolloClient}>
       <MagicProvider>
         <CourierNotification>
-          <Component {...pageProps} />
+          <DonationContextProvider>
+            <Component {...pageProps} />
+          </DonationContextProvider>
         </CourierNotification>
       </MagicProvider>
     </ApolloProvider>

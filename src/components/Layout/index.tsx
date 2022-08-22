@@ -1,17 +1,15 @@
 import styled from 'styled-components'
 import { breakpoint } from '@theme'
-import Header, { ShelfType } from './Header'
+import Header from './Header'
 import Footer from './Footer'
 
 interface LayoutProps {
   children: React.ReactNode
-  visibleShelf?: ShelfType
-  setVisibleShelf: (shelf?: ShelfType) => void
 }
 
-const Layout = ({ children, visibleShelf, setVisibleShelf }: LayoutProps) => (
+const Layout = ({ children }: LayoutProps) => (
   <Wrapper>
-    <Header {...{ visibleShelf, setVisibleShelf }} />
+    <Header />
     <Main>{children}</Main>
     <Footer />
   </Wrapper>

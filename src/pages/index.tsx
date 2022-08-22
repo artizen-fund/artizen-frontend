@@ -14,13 +14,10 @@ import { assert, rgba, useReadContract } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 import raffleAbi from 'src/contracts/RaffleAbi'
-import { useEffect, useState } from 'react'
-import { ShelfType } from 'src/components/Layout/Header'
+import { useEffect } from 'react'
 
 const Home = () => {
   const FUND_GOAL = 25000
-  const [visibleShelf, setVisibleShelf] = useState<ShelfType>()
-
   const raffleContractAddress = assert(
     process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
     'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
@@ -40,7 +37,7 @@ const Home = () => {
   }, [raffleId])
 
   return (
-    <Layout visibleShelf={visibleShelf} setVisibleShelf={setVisibleShelf}>
+    <Layout>
       <Header>
         <h1>{header.title}</h1>
         <h2>{header.subtitle}</h2>
@@ -55,7 +52,7 @@ const Home = () => {
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar {...{ raffle, FUND_GOAL, visibleShelf }} />
+          <Sidebar {...{ raffle, FUND_GOAL }} />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
