@@ -4,10 +4,9 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba } from '@lib'
+import { DonationContext, formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
 import { useContext, useEffect, useState } from 'react'
-import DonationContext from 'src/lib/donationContext'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_GOAL: number

@@ -7,7 +7,7 @@ interface IDonationContext {
   setDonationStatus?: (status: DonationStatus) => void
 }
 
-const DonationContext = createContext<IDonationContext>({})
+export const DonationContext = createContext<IDonationContext>({})
 
 const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
