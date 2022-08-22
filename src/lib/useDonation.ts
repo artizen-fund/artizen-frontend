@@ -49,64 +49,63 @@ export const useDonation = () => {
   }, [loading, raffleId])
 
   const initDonation = async (amount: number, donationMethod: DonationMethod, fee: number, topUpId: string) => {
-    if (!loading) {
-      setConfirmingStatus('PROCESSING')
-      setConfirmingMessage('Confirming Donation')
+    if (loading) return
+    setConfirmingStatus('PROCESSING')
+    setConfirmingMessage('Confirming Donation')
 
-      const amountInUSDC = ethers.utils.parseUnits(amount.toString(), USDC_UNIT)
-      const chainID = assert(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+    const amountInUSDC = ethers.utils.parseUnits(amount.toString(), USDC_UNIT)
+    const chainID = assert(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
-      let approveReceipt = null
-      // check if it is MATIC mainnet
-      if (chainID === '137') {
-        approveReceipt = await callCustomMetaTxMethod(
-          usdcContractAddress,
-          USDCAbi,
-          metadata?.publicAddress as string,
-          'approve',
-          [raffleContractAddress, amountInUSDC],
-        )
-      } else {
-        approveReceipt = await callWriteContract(usdcContractAddress, USDCAbi, 'approve', [
-          raffleContractAddress,
-          amountInUSDC,
-        ])
+    let approveReceipt = null
+    // check if it is MATIC mainnet
+    if (chainID === '137') {
+      approveReceipt = await callCustomMetaTxMethod(
+        usdcContractAddress,
+        USDCAbi,
+        metadata?.publicAddress as string,
+        'approve',
+        [raffleContractAddress, amountInUSDC],
+      )
+    } else {
+      approveReceipt = await callWriteContract(usdcContractAddress, USDCAbi, 'approve', [
+        raffleContractAddress,
+        amountInUSDC,
+      ])
+    }
+
+    if (approveReceipt.hash || approveReceipt.transactionHash) {
+      const donation = {
+        donor: metadata?.publicAddress as string,
+        raffleID: raffleId,
+        amount: amountInUSDC,
+        timestamp: Math.round(new Date().getTime() / 1000),
       }
 
-      if (approveReceipt.hash || approveReceipt.transactionHash) {
-        const donation = {
-          donor: metadata?.publicAddress as string,
-          raffleID: raffleId,
-          amount: amountInUSDC,
-          timestamp: Math.round(new Date().getTime() / 1000),
-        }
+      const donateReceipt = await callStandardMetaTxMethod(
+        raffleContractAddress,
+        RaffleAbi,
+        metadata?.publicAddress as string,
+        'donate',
+        [donation],
+      )
 
-        const donateReceipt = await callStandardMetaTxMethod(
-          raffleContractAddress,
-          RaffleAbi,
-          metadata?.publicAddress as string,
-          'donate',
-          [donation],
-        )
-
-        await createDonation({
-          variables: {
-            data: {
-              userId: loggedInUser?.id,
-              amount,
-              fee,
-              type: donationMethod,
-              state: 'INITIATED',
-              txHash: donateReceipt.hash,
-              topUpId,
-              timestamp: new Date().getTime(),
-            },
+      await createDonation({
+        variables: {
+          data: {
+            userId: loggedInUser?.id,
+            amount,
+            fee,
+            type: donationMethod,
+            state: 'INITIATED',
+            txHash: donateReceipt.hash,
+            topUpId,
+            timestamp: new Date().getTime(),
           },
-        })
+        },
+      })
 
-        setConfirmingStatus('COMPLETE')
-        setConfirmingMessage('Donation Confirmed')
-      }
+      setConfirmingStatus('COMPLETE')
+      setConfirmingMessage('Donation Confirmed')
     }
   }
 
