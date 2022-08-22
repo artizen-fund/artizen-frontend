@@ -1,6 +1,6 @@
+import { GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
 import { createApolloClient } from '@lib'
 import { IGetUsersByPublicAddressQuery } from '@types'
-import { GET_USERS_BY_PUBLIC_ADDRESSES } from 'src/gql/getUsers'
 
 export async function getUsersByPublicAddress(addresses: string[], token: string) {
   const apolloClient = createApolloClient(token)
