@@ -3,6 +3,7 @@ export * from './createUserProfile'
 export * from './getUserProfile'
 export * from './queryHasura'
 export * from './updateUserProfile'
+export * from './getUsersByPublicAddress'
 
 // export * from './createNewToken'
 /* ^ Note: This file cannot be exported from index.ts, as it causes Storybook to go bananas.
