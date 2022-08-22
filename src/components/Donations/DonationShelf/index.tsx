@@ -1,19 +1,5 @@
 import { useState } from 'react'
 import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Confirmation } from '@components'
-import { configureChains, chain, createClient, WagmiConfig } from 'wagmi'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { assert } from '@lib'
-
-const alchemyApiKey = assert(process.env.NEXT_PUBLIC_ALCHEMY_API, 'NEXT_PUBLIC_ALCHEMY_API')
-const supportedChains = [chain.mainnet, chain.polygon, chain.ropsten, chain.goerli, chain.polygonMumbai]
-const { chains, provider, webSocketProvider } = configureChains(supportedChains, [
-  alchemyProvider({ apiKey: alchemyApiKey }),
-])
-
-const client = createClient({
-  provider,
-  webSocketProvider,
-})
 
 const DonationShelf = () => {
   const [stage, setStage] = useState<DonationStage>('setAmount')
@@ -29,7 +15,7 @@ const DonationShelf = () => {
       case 'paymentFiat':
         if (donationMethod === 'usd') return <PaymentFiat {...{ setStage, amount, setOrder }} />
         else {
-          return <PaymentCrypto {...{ donationMethod, amount, setStage, chains }} />
+          return <PaymentCrypto {...{ donationMethod, amount, setStage }} />
         }
       case 'processCrypto':
         return <ProcessCrypto {...{ donationMethod, amount, setStage, order, setOrder }} />
@@ -40,7 +26,7 @@ const DonationShelf = () => {
         return <DonationAmount {...{ setStage, setDonationMethod, donationMethod, setAmount, amount }} />
     }
   }
-  return <WagmiConfig client={client}>{renderSwitch(stage, donationMethod)}</WagmiConfig>
+  return renderSwitch(stage, donationMethod)
 }
 
 export default DonationShelf

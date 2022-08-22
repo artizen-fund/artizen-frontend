@@ -16,8 +16,9 @@ import {
   useLoggedInUser,
   userMetadataVar,
   getConfirmDonationURL,
+  getWagmiClient,
 } from '@lib'
-import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
+import { useAccount, useContractWrite, useSigner, useSwitchNetwork, WagmiConfig } from 'wagmi'
 import { ethers } from 'ethers'
 import { v4 as uuidv4 } from 'uuid'
 import { USDCAbi } from '@contracts'
@@ -302,4 +303,10 @@ const Distractions = styled.article`
   grid-area: distractions;
 `
 
-export default ProcessCrypto
+const ProcessCryptoWithWagmi = (props: any) => (
+  <WagmiConfig client={getWagmiClient()}>
+    <ProcessCrypto {...props} />
+  </WagmiConfig>
+)
+
+export default ProcessCryptoWithWagmi
