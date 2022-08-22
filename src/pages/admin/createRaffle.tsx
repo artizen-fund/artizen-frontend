@@ -1,12 +1,10 @@
 import { Button, Form, Layout } from '@components'
-import { ArtizenERC1155 } from '@contracts'
+import { ArtizenERC1155, ArtToken, RaffleAbi } from '@contracts'
 import { schema, uischema, initialState, FormState } from '@forms/admin'
 import { assert, useMagic } from '@lib'
 import { BigNumber, ethers } from 'ethers'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import artTokenAbi from 'src/contracts/ArtToken'
-import raffleAbi from 'src/contracts/RaffleAbi'
 import styled from 'styled-components'
 
 const CreateRaffle = () => {
@@ -49,7 +47,7 @@ const CreateRaffle = () => {
     const approvalTransaction = await nftContract.setApprovalForAll(raffleContractAddress, true)
     await approvalTransaction.wait()
 
-    const raflleContract = new ethers.Contract(raffleContractAddress, raffleAbi, signer)
+    const raflleContract = new ethers.Contract(raffleContractAddress, RaffleAbi, signer)
 
     const raffle = {
       nftContract: nftContractAddress,
@@ -72,7 +70,7 @@ const CreateRaffle = () => {
 
     const raffleCount = await raflleContract.raffleCount()
 
-    const tokenRewardContract = new ethers.Contract(tokenRewardContractAddress, artTokenAbi, signer)
+    const tokenRewardContract = new ethers.Contract(tokenRewardContractAddress, ArtToken, signer)
 
     // Approve tokens to be used by raffle contract for reward
     const tokenRewardApproveTransaction = await tokenRewardContract.approve(

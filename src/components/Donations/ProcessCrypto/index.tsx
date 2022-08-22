@@ -15,13 +15,14 @@ import {
   useDonation,
   useLoggedInUser,
   userMetadataVar,
+  getConfirmDonationURL,
 } from '@lib'
 import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
 import { ethers } from 'ethers'
-import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
 import { v4 as uuidv4 } from 'uuid'
-import usdcabiContract from 'src/contracts/USDCAbi'
+import { USDCAbi } from '@contracts'
 import qs from 'qs'
+
 interface IProcessCrypto {
   setStage: (s: DonationStage) => void
   donationMethod: DonationMethod
@@ -37,7 +38,7 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
 
   const [loggedInUser] = useLoggedInUser()
 
-  const metadata = useReactiveVar<any>(userMetadataVar)
+  const metadata = useReactiveVar(userMetadataVar)
 
   const courier = useCourier()
   const [initDonation, buildingStatus, buildingMessage, confirmingStatus, confirmingMessage] = useDonation()
@@ -62,7 +63,7 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
   } = useContractWrite({
     mode: 'recklesslyUnprepared',
     addressOrName: usdcContractAddress,
-    contractInterface: usdcabiContract,
+    contractInterface: USDCAbi,
     functionName: 'transfer',
     args: [metadata?.publicAddress, amountInUSDCDecimals],
     chainId,
@@ -109,7 +110,7 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
       refreshedSigner = await (await refetch()).data
     }
     const amountInUSDCDecimals = ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()
-    await bridge(address, refreshedSigner?.provider, metadata?.publicAddress, amountInUSDCDecimals)
+    await bridge(address, refreshedSigner?.provider, metadata?.publicAddress!, amountInUSDCDecimals)
   }
 
   const processTransaction = async () => {

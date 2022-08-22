@@ -13,7 +13,7 @@ import {
 import { assert, rgba, useReadContract } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
-import raffleAbi from 'src/contracts/RaffleAbi'
+import { RaffleAbi } from '@contracts'
 import { useEffect } from 'react'
 
 const Home = () => {
@@ -22,11 +22,11 @@ const Home = () => {
     process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
     'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
   )
-  const { value: raffleId } = useReadContract(raffleContractAddress, raffleAbi, 'raffleCount', [])
+  const { value: raffleId } = useReadContract(raffleContractAddress, RaffleAbi, 'raffleCount', [])
 
   const { value: raffle, refetch: refetchRaffle } = useReadContract(
     raffleContractAddress,
-    raffleAbi,
+    RaffleAbi,
     'getRaffle',
     [raffleId],
     false,

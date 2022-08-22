@@ -32,7 +32,7 @@ const DonationShelf = () => {
           return <PaymentCrypto {...{ donationMethod, amount, setStage, chains }} />
         }
       case 'processCrypto':
-        return <ProcessCrypto {...{ setStage, donationMethod, order, amount, setOrder }} />
+        return <ProcessCrypto {...{ donationMethod, amount, setStage, order, setOrder }} />
       case 'confirmation':
         return <Confirmation />
       case 'setAmount':

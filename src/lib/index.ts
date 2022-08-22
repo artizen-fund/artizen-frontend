@@ -22,7 +22,10 @@ export * from './useWriteContract'
 export * from './sleep'
 export * from './getChainId'
 export * from './useBridge'
+export * from './wagmiClient'
 export * from './donationContext'
+export * from './confirmDonationUrl'
+export * from './StageFunction'
 
 export * from './auth'
 /* TODO: There is an error where, if AuthForm is exported before some of these other functions
