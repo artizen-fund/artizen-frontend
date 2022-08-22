@@ -10,16 +10,31 @@ import {
   AlternatingPanel,
   Sidebar,
 } from '@components'
-import { rgba } from '@lib'
+import { assert, rgba, useReadContract } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
+import raffleAbi from 'src/contracts/RaffleAbi'
+import { useEffect } from 'react'
 
 const Home = () => {
-  const FUND_COUNT = 3.2
-  const FUND_AMOUNT = 15250
   const FUND_GOAL = 25000
-  const FUND_DATE = 'May, 2022'
-  const FUND_DEADLINE = '2022-06-30T00:00:00'
+  const raffleContractAddress = assert(
+    process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
+    'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
+  )
+  const { value: raffleId } = useReadContract(raffleContractAddress, raffleAbi, 'raffleCount', [])
+
+  const { value: raffle, refetch: refetchRaffle } = useReadContract(
+    raffleContractAddress,
+    raffleAbi,
+    'getRaffle',
+    [raffleId],
+    false,
+  )
+
+  useEffect(() => {
+    refetchRaffle()
+  }, [raffleId])
 
   return (
     <Layout>
@@ -29,7 +44,7 @@ const Home = () => {
       </Header>
       <StyledPagePadding>
         <Wrapper>
-          <FeaturedArt tokenId={1} startDate={new Date()} tagName="Tag Name" />
+          <FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} tagName="Tag Name" />
           <TabbedInfo>
             {Object.keys(tabbedInfo).map(key => (
               <Tab key={`tab-${key}`} label={key}>
@@ -37,7 +52,7 @@ const Home = () => {
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar {...{ FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }} />
+          <Sidebar {...{ raffle, FUND_GOAL }} />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
@@ -13,12 +13,12 @@ import { rgba } from '@lib'
 export type ShelfType = 'session' | 'howItWorks' | 'donate'
 
 const Header = () => {
+  const [visibleShelf, setVisibleShelf] = useState<ShelfType>()
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 
   const [navVisible, setNavVisible] = useState(false)
 
-  const [visibleShelf, setVisibleShelf] = useState<ShelfType>()
   const toggleShelf = (shelf?: ShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
   return (
