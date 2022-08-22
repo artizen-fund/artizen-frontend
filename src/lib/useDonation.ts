@@ -31,7 +31,7 @@ export const useDonation = () => {
 
   const [callWriteContract] = useWriteContract()
 
-  const [raffleId] = useReadContract(raffleContractAddress, raffleAbi, 'raffleCount', [])
+  const { value: raffleId } = useReadContract(raffleContractAddress, raffleAbi, 'raffleCount', [])
 
   const [createDonation] = useMutation(CREATE_DONATION, {
     onError: error => {

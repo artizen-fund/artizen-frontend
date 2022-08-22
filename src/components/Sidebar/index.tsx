@@ -4,19 +4,33 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba } from '@lib'
+import { DonationContext, formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
-  FUND_COUNT: number
-  FUND_AMOUNT: number
   FUND_GOAL: number
-  FUND_DATE: string
-  FUND_DEADLINE: string
+  raffle: any
 }
 
-const Sidebar = ({ FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE }: ISidebar) => {
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+
+const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
+  const { donationStatus } = useContext(DonationContext)
+
   const [donations, setDonations] = useState<Donation[]>([])
   const [totalRaised, setTotalRaised] = useState(0)
 
@@ -29,26 +43,35 @@ const Sidebar = ({ FUND_COUNT, FUND_AMOUNT, FUND_GOAL, FUND_DATE, FUND_DEADLINE 
 
   useEffect(() => {
     loadDonations()
-  }, [])
+  }, [donationStatus])
+
+  const formatedTotalRaised = formatUSDC(totalRaised)
+
+  const fundDeadline = raffle ? new Date(raffle?.endTime.toNumber() * 1000) : undefined
+  const fundStart = raffle ? new Date(raffle?.startTime.toNumber() * 1000) : undefined
 
   return (
     <StyledStickyCanvas>
       <Wrapper>
         <Header>
-          Join our <strong>{FUND_DATE}</strong> donation drive
+          Join our{' '}
+          <strong>
+            {fundStart ? monthNames[fundStart?.getMonth()] : ''}, {fundStart?.getFullYear()}
+          </strong>{' '}
+          donation drive
         </Header>
         <Content>
           <FundBlock>
             {donations && donations.length > 0 && (
               <AmountRaised>
-                <span>${formatUSDC(totalRaised)}</span> raised of ${FUND_GOAL.toLocaleString()} goal
+                <span>${formatedTotalRaised.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
               </AmountRaised>
             )}
-            <ProgressBar>{FUND_AMOUNT / FUND_GOAL}</ProgressBar>
+            <ProgressBar>{formatedTotalRaised / FUND_GOAL}</ProgressBar>
             <Row>
-              <Countdown date={FUND_DEADLINE} />
+              {fundDeadline && <Countdown date={fundDeadline?.toISOString()} />}
               <DonationCount>
-                <Glyph glyph="trend" /> <span>{FUND_COUNT}k donations</span>
+                <Glyph glyph="trend" /> <span>{donations.length} donations</span>
               </DonationCount>
             </Row>
           </FundBlock>
