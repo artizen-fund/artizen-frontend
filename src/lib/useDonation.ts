@@ -1,8 +1,7 @@
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import { assert, USDC_UNIT, userMetadataVar, useLoggedInUser, useReadContract, useWriteContract } from '@lib'
-import usdcabiContract from 'src/contracts/USDCAbi'
-import raffleAbi from 'src/contracts/RaffleAbi'
+import { USDCAbi, RaffleAbi } from '@contracts'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { StageStatus } from './StageFunction'
 import { useMetaContract } from './useMetaContract'
@@ -31,7 +30,7 @@ export const useDonation = () => {
 
   const [callWriteContract] = useWriteContract()
 
-  const { value: raffleId } = useReadContract(raffleContractAddress, raffleAbi, 'raffleCount', [])
+  const { value: raffleId } = useReadContract(raffleContractAddress, RaffleAbi, 'raffleCount', [])
 
   const [createDonation] = useMutation(CREATE_DONATION, {
     onError: error => {
@@ -62,13 +61,13 @@ export const useDonation = () => {
       if (chainID === '137') {
         approveReceipt = await callCustomMetaTxMethod(
           usdcContractAddress,
-          usdcabiContract,
+          USDCAbi,
           metadata?.publicAddress as string,
           'approve',
           [raffleContractAddress, amountInUSDC],
         )
       } else {
-        approveReceipt = await callWriteContract(usdcContractAddress, usdcabiContract, 'approve', [
+        approveReceipt = await callWriteContract(usdcContractAddress, USDCAbi, 'approve', [
           raffleContractAddress,
           amountInUSDC,
         ])
@@ -84,7 +83,7 @@ export const useDonation = () => {
 
         const donateReceipt = await callStandardMetaTxMethod(
           raffleContractAddress,
-          raffleAbi,
+          RaffleAbi,
           metadata?.publicAddress as string,
           'donate',
           [donation],

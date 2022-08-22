@@ -1,6 +1,6 @@
 // all the watchers for this stage of the crypto transaction are here
 
-import { StageFunction } from 'src/lib/StageFunction'
+import { StageFunction } from '@lib'
 
 const watchBridge: StageFunction = (setStatus, setMessage) => {
   setStatus('PROCESSING')

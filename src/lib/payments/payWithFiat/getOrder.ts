@@ -1,6 +1,6 @@
 import { IUser } from '@types'
 import { FormState } from '@forms/paymentFiat'
-import { getConfirmDonationURL } from 'src/lib/confirmDonationUrl'
+import { getConfirmDonationURL } from '@lib'
 
 const getOrder = async (
   amount: number,
