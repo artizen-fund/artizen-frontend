@@ -3,6 +3,8 @@ import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
 import { formatUSDC, rgba } from '@lib'
 import _ from 'lodash'
+import { IUser } from '@types'
+import truncateEthAddress from 'truncate-eth-address'
 
 export interface ILeaderboard {
   donations: Donation[]
@@ -15,6 +17,12 @@ const Leaderboard = ({ donations }: ILeaderboard) => {
     </Button>
   )
 
+  const getUserIdentifier = (user: IUser) => {
+    return user.firstName || user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : truncateEthAddress(user.publicAddress || '')
+  }
+
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
       {_.orderBy(donations, item => Number(item.amount), ['desc'])
@@ -23,9 +31,9 @@ const Leaderboard = ({ donations }: ILeaderboard) => {
           <TableCell key={`donation-${index}`}>
             <div>
               <div>#{index + 1}</div>
-              {/*donation.User?.profileImage && <Avatar profileImage={donation.User?.profileImage} />*/}
+              {donation.user?.profileImage && <Avatar profileImage={donation.user?.profileImage} />}
               <Name>
-                {/*donation.User?.firstName*/} {/*donation.User?.lastName*/} herp derp derp
+                {getUserIdentifier(donation.user)}
                 {index === 0 && <span>👑</span>}
               </Name>
             </div>
