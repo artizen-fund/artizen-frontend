@@ -5,13 +5,12 @@ import { getWagmiClient } from 'src/lib/wagmiClient'
 
 const clientObject = getWagmiClient()
 
-const DonationShelf = () => {
+export const DonationShelf = () => {
   const [stage, setStage] = useState<DonationStage>('setAmount')
   const [order, setOrder] = useState<{ id: string }>({ id: '' })
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
 
-  // TODO: did we overlook <PaymentCrypto /> ?
   const renderSwitch = (stage: DonationStage, donationMethod: DonationMethod) => {
     switch (stage) {
       // case 'login':
@@ -30,7 +29,13 @@ const DonationShelf = () => {
         return <DonationAmount {...{ setStage, setDonationMethod, donationMethod, setAmount, amount }} />
     }
   }
-  return <WagmiConfig client={clientObject.client}>{renderSwitch(stage, donationMethod)}</WagmiConfig>
+  return renderSwitch(stage, donationMethod)
 }
 
-export default DonationShelf
+const DonationShelfWithWagmi = (props: any) => (
+  <WagmiConfig client={clientObject.client}>
+    <DonationShelf {...props} />
+  </WagmiConfig>
+)
+
+export default DonationShelfWithWagmi
