@@ -12,10 +12,10 @@ export const getWagmiChains = () => {
 }
 
 export const getWagmiClient = () => {
-  const { provider, webSocketProvider } = getWagmiChains()
+  const { chains, provider, webSocketProvider } = getWagmiChains()
   const client = createClient({
     provider,
     webSocketProvider,
   })
-  return client
+  return { client, chains }
 }

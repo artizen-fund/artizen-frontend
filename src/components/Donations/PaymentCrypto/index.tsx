@@ -3,15 +3,16 @@ import styled from 'styled-components'
 import { CheckboxControl } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
-import { useConnect, useAccount, WagmiConfig } from 'wagmi'
+import { useConnect, useAccount } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { getChainId, getWagmiClient, getWagmiChains } from '@lib'
+import { getChainId } from '@lib'
 
 interface IPaymentCrypto {
   setStage: (s: DonationStage) => void
   amount: number
   donationMethod: DonationMethod
+  chains: any
 }
 
 const TRANSACTION_FEE = 42
@@ -22,9 +23,7 @@ const walletConnectConnector = new WalletConnectConnector({
   },
 })
 
-const PaymentCrypto = ({ setStage, amount, donationMethod }: IPaymentCrypto) => {
-  const { chains } = getWagmiChains()
-
+const PaymentCrypto = ({ setStage, amount, donationMethod, chains }: IPaymentCrypto) => {
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
 
   const { connect } = useConnect()
@@ -119,11 +118,4 @@ const Wrapper = styled.div`
     display: contents;
   }
 `
-
-const PaymentCryptoWithWagmi = (props: any) => (
-  <WagmiConfig client={getWagmiClient()}>
-    <PaymentCrypto {...props} />
-  </WagmiConfig>
-)
-
-export default PaymentCryptoWithWagmi
+export default PaymentCrypto
