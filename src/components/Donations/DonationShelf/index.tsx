@@ -3,7 +3,7 @@ import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Confirmation
 import { WagmiConfig } from 'wagmi'
 import { getWagmiClient } from 'src/lib/wagmiClient'
 
-const clientObject = getWagmiClient()
+const { client, chains } = getWagmiClient()
 
 export const DonationShelf = () => {
   const [stage, setStage] = useState<DonationStage>('setAmount')
@@ -18,7 +18,7 @@ export const DonationShelf = () => {
       case 'paymentFiat':
         if (donationMethod === 'usd') return <PaymentFiat {...{ setStage, amount, setOrder }} />
         else {
-          return <PaymentCrypto {...{ donationMethod, amount, setStage, chains: clientObject.chains }} />
+          return <PaymentCrypto {...{ donationMethod, amount, setStage, chains }} />
         }
       case 'processCrypto':
         return <ProcessCrypto {...{ donationMethod, amount, setStage, order, setOrder }} />
@@ -33,7 +33,7 @@ export const DonationShelf = () => {
 }
 
 const DonationShelfWithWagmi = (props: any) => (
-  <WagmiConfig client={clientObject.client}>
+  <WagmiConfig client={client}>
     <DonationShelf {...props} />
   </WagmiConfig>
 )
