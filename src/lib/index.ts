@@ -17,15 +17,17 @@ export * from './usePreventTabClose'
 export * from './useReadContract'
 export * from './utilsCrypto'
 export * from './utilsServer'
-export * from './useDonation'
 export * from './useWriteContract'
 export * from './sleep'
 export * from './getChainId'
 export * from './useBridge'
-export * from './wagmiClient'
 export * from './donationContext'
 export * from './confirmDonationUrl'
-export * from './StageFunction'
+
+// export * from './useDonation'
+/* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.
+ *  Possibly a webpack issue? Investigate… in the meantime, import using relative path (yuck).
+ */
 
 export * from './auth'
 /* TODO: There is an error where, if AuthForm is exported before some of these other functions

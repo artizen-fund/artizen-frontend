@@ -31,6 +31,10 @@ declare global {
     from: string
     user: IUser
   }
+
+  type DonationStageStatus = 'WAITING' | 'PROCESSING' | 'COMPLETE'
+
+  type DonationStageFunction = (setStatus: (s: StageStatus) => void, setMessage: (s: string) => void) => void
 }
 
 export {}

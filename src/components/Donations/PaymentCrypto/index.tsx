@@ -6,8 +6,8 @@ import WalletOptions from './WalletOptions'
 import { useConnect, useAccount } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { getChainId, userMetadataVar } from '@lib'
-import { useReactiveVar } from '@apollo/client'
+import { getChainId } from '@lib'
+
 interface IPaymentCrypto {
   setStage: (s: DonationStage) => void
   amount: number
@@ -24,9 +24,6 @@ const walletConnectConnector = new WalletConnectConnector({
 })
 
 const PaymentCrypto = ({ setStage, amount, donationMethod, chains }: IPaymentCrypto) => {
-  const metadata = useReactiveVar<any>(userMetadataVar)
-  if (!metadata.publicAddress) return <></>
-
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
 
   const { connect } = useConnect()
@@ -121,5 +118,4 @@ const Wrapper = styled.div`
     display: contents;
   }
 `
-
 export default PaymentCrypto
