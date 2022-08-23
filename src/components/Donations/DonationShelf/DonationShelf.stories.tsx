@@ -1,4 +1,4 @@
-import DonationShelf from './'
+import { DonationShelf } from './'
 
 export default {
   title: 'donations/DonationShelf',

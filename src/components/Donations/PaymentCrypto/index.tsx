@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { CheckboxControl } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
-import { useConnect, useAccount, WagmiConfig } from 'wagmi'
+import { useConnect, useAccount } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { getChainId, getWagmiClient, getWagmiChains } from '@lib'
+import { getChainId, getWagmiChains } from '@lib'
 
 interface IPaymentCrypto {
   setStage: (s: DonationStage) => void
@@ -120,10 +120,4 @@ const Wrapper = styled.div`
   }
 `
 
-const PaymentCryptoWithWagmi = (props: any) => (
-  <WagmiConfig client={getWagmiClient()}>
-    <PaymentCrypto {...props} />
-  </WagmiConfig>
-)
-
-export default PaymentCryptoWithWagmi
+export default PaymentCrypto
