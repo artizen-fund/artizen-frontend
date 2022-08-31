@@ -4,6 +4,10 @@ import Moralis from 'moralis-v1/node'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (!req.cookies.token) {
+    throw new Error('missing token')
+  }
+
   // reads the api key from .env.local and starts Moralis SDK
   await Moralis.start({
     serverUrl: process.env.MORALIS_SERVER_URL,
@@ -17,7 +21,7 @@ const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
   query.descending('block_number')
   const results = await query.find()
 
-  const listOfAddresses = results.map((item: any) => item.get('from'))
+  const listOfAddresses = results.map(item => item.get('from'))
 
   let donations = []
   if (req.cookies.token) {
