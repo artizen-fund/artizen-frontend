@@ -4,8 +4,6 @@ import Moralis from 'moralis-v1/node'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
-
   // reads the api key from .env.local and starts Moralis SDK
   await Moralis.start({
     serverUrl: process.env.MORALIS_SERVER_URL,

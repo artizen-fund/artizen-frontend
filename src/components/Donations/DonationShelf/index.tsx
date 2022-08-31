@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Confirmation } from '@components'
 import { WagmiConfig } from 'wagmi'
-import { getWagmiClient } from '@lib'
+import { getWagmiClient } from '../../../lib/wagmiClient'
 
 const { client, chains } = getWagmiClient()
 

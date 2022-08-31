@@ -18,9 +18,9 @@ const Leaderboard = ({ donations }: ILeaderboard) => {
   )
 
   const getUserIdentifier = (user: IUser) => {
-    return user.firstName || user.lastName
+    return user?.firstName || user?.lastName
       ? `${user.firstName} ${user.lastName}`
-      : truncateEthAddress(user.publicAddress || '')
+      : truncateEthAddress(user?.publicAddress || '')
   }
 
   return (

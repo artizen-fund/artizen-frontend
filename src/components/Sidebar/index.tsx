@@ -37,7 +37,10 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
   const loadDonations = async () => {
     const donationsResponse = await fetch('/api/donations')
     const json = await donationsResponse.json()
-    setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
+    if (json.length > 0) {
+      setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
+    }
+
     setDonations(json)
   }
 
