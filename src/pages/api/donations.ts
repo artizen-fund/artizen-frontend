@@ -19,7 +19,7 @@ const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const listOfAddresses = results.map((item: any) => item.get('from'))
 
-  const users = (await getUsersByPublicAddress(listOfAddresses, req.cookies.token)).data.User
+  const users = (await getUsersByPublicAddress(listOfAddresses, req.cookies.token!)).data.User
 
   const donations = []
   for (let i = 0; i < results.length; i++) {
