@@ -23,6 +23,7 @@ export * from './getChainId'
 export * from './useBridge'
 export * from './donationContext'
 export * from './confirmDonationUrl'
+export * from './wagmiClient'
 
 // export * from './useDonation'
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.
