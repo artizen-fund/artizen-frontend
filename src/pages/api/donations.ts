@@ -19,12 +19,15 @@ const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const listOfAddresses = results.map((item: any) => item.get('from'))
 
-  const users = (await getUsersByPublicAddress(listOfAddresses, req.cookies.token)).data.User
-
-  const donations = []
-  for (let i = 0; i < results.length; i++) {
-    const user = users.find(item => item.publicAddress === results[i].get('from'))
-    donations.push({ ...results[i].toJSON(), user })
+  let donations = []
+  if (req.cookies.token) {
+    const users = (await getUsersByPublicAddress(listOfAddresses, req?.cookies?.token)).data.User
+    for (let i = 0; i < results.length; i++) {
+      const user = users.find(item => item.publicAddress === results[i].get('from'))
+      donations.push({ ...results[i].toJSON(), user })
+    }
+  } else {
+    donations = results
   }
 
   res.setHeader('Cache-Control', 's-maxage=60')
