@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react'
 import watchBridge from './watchBridge'
 import watchSwap from './watchSwap'
 import initCryptoPayment from './initCryptoPayment'
-import { StageStatus } from 'src/lib/StageFunction'
 
 const useCryptoPayment = (amount: number, donationMethod: DonationMethod) => {
-  const [swappingStatus, setSwappingStatus] = useState<StageStatus>('WAITING')
+  const [swappingStatus, setSwappingStatus] = useState<DonationStageStatus>('WAITING')
   const [swappingMessage, setSwappingMessage] = useState<string>('')
-  const [bridgingStatus, setBridgingStatus] = useState<StageStatus>('WAITING')
+  const [bridgingStatus, setBridgingStatus] = useState<DonationStageStatus>('WAITING')
   const [bridgingMessage, setBridgingMessage] = useState<string>('')
 
   useEffect(() => {

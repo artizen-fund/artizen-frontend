@@ -1,3 +1,4 @@
+import { getUsersByPublicAddress } from '@lib'
 import { withSentry } from '@sentry/nextjs'
 import Moralis from 'moralis-v1/node'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -16,7 +17,21 @@ const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
   query.descending('block_number')
   const results = await query.find()
 
-  res.status(200).json(results)
+  const listOfAddresses = results.map(item => item.get('from'))
+
+  let donations = []
+  if (req.cookies.token) {
+    const users = (await getUsersByPublicAddress(listOfAddresses, req?.cookies?.token)).data.User
+    for (let i = 0; i < results.length; i++) {
+      const user = users.find(item => item.publicAddress === results[i].get('from'))
+      donations.push({ ...results[i].toJSON(), user })
+    }
+  } else {
+    donations = results
+  }
+
+  res.setHeader('Cache-Control', 's-maxage=60')
+  res.status(200).json(donations)
 }
 
 export default withSentry(getDonations)

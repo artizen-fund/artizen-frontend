@@ -4,11 +4,12 @@ import { palette, breakpoint, typography } from '@theme'
 import { rgba, assert, useReadContract } from '@lib'
 import { useEffect, useState } from 'react'
 import { ArtizenERC1155 } from '@contracts'
+import { BigNumber } from 'ethers'
 
 type IFeaturedArt = {
-  tokenId: number
-  startDate: Date
   tagName: string
+  tokenId: BigNumber
+  startTime: BigNumber
 }
 
 interface Metadata {
@@ -19,35 +20,39 @@ interface Metadata {
   attributes: Array<unknown>
 }
 
-const FeaturedArt = ({ tokenId, startDate, tagName }: IFeaturedArt) => {
-  const [metadataUri] = useReadContract(
+const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
+  const { value: metadataUri, refetch: refetchTokenId } = useReadContract(
     assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS'),
     ArtizenERC1155,
     'uri',
     [tokenId],
+    false,
   )
+
   const [metadata, setMetadata] = useState<Metadata>()
 
   const getMetadataFromUri = async (uri: string) => {
-    // const response = await fetch(uri)
-    // const json = await response.json()
-    // setMetadata(json)
+    const response = await fetch(uri)
+    const json = await response.json()
+    setMetadata(json)
   }
 
   useEffect(() => {
     if (metadataUri) {
-      // TODO: Remove this replace when contract start using ERC1155URIStorage
-      const uri = (metadataUri as string).replace('{id}.json', `${tokenId}.json`)
-      getMetadataFromUri(uri)
+      getMetadataFromUri(metadataUri as string)
     }
   }, [metadataUri])
 
-  const getDaysAgoFromDate = (start: Date) => {
+  useEffect(() => {
+    refetchTokenId()
+  }, [tokenId])
+
+  const getDaysAgoFromDate = (start: number) => {
     const now = new Date()
 
     const oneDay = 1000 * 60 * 60 * 24
 
-    const diffInTime = now.getTime() - start.getTime()
+    const diffInTime = now.getTime() - start * 1000
 
     const diffInDays = Math.round(diffInTime / oneDay)
 
@@ -64,7 +69,12 @@ const FeaturedArt = ({ tokenId, startDate, tagName }: IFeaturedArt) => {
             <Icon glyph="face" level={1} outline label={metadata?.artist} />
           </Metadatum>
           <Metadatum>
-            <Icon glyph="calendar" level={1} outline label={`Created ${getDaysAgoFromDate(startDate)} days ago`} />
+            <Icon
+              glyph="calendar"
+              level={1}
+              outline
+              label={`Created ${getDaysAgoFromDate(startTime?.toNumber())} days ago`}
+            />
           </Metadatum>
           <Metadatum>
             <Icon glyph="tag" level={1} outline label={tagName} />

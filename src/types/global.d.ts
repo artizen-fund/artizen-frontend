@@ -1,5 +1,6 @@
 import { SDKBase, InstanceWithExtensions } from '@magic-sdk/provider'
 import { OAuthExtension } from '@magic-ext/oauth'
+import { IUser } from './generated'
 
 declare global {
   interface SimpleComponentProps {
@@ -28,7 +29,12 @@ declare global {
   type Donation = {
     amount: string
     from: string
+    user: IUser
   }
+
+  type DonationStageStatus = 'WAITING' | 'PROCESSING' | 'COMPLETE'
+
+  type DonationStageFunction = (setStatus: (s: StageStatus) => void, setMessage: (s: string) => void) => void
 }
 
 export {}

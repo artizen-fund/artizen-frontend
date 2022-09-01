@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
-import { Icon, Button } from '@components'
 import { rgba } from '@lib'
 import { palette, typography } from '@theme'
 
@@ -21,21 +20,13 @@ const AmountWidget = ({ amount, setAmount, minClamp }: IAmountWidget) => {
   return (
     <Wrapper>
       <Denomination>
-        <Icon glyph="info" outline level={1} />
         <span>USD</span>
       </Denomination>
       <AmountBox>
         <Amount value={amount} onChange={e => setAmount(parseInt(e.target.value))} type="number" />
         <label>donation total</label>
       </AmountBox>
-      <Buttons>
-        <Button outline level={2} onClick={() => setAmount(amount + 1)} glyphOnly glyph="arrow" glyphRotation={180}>
-          add
-        </Button>
-        <Button outline level={2} onClick={() => setAmount(amount - 1)} glyphOnly glyph="arrow">
-          subtract
-        </Button>
-      </Buttons>
+      <Buttons></Buttons>
     </Wrapper>
   )
 }

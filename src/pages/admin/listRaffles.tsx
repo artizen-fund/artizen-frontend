@@ -2,7 +2,7 @@ import { Button, Layout } from '@components'
 import { assert, useMagic } from '@lib'
 import { BigNumber, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import raffleAbi from 'src/contracts/RaffleAbi'
+import { RaffleAbi } from '@contracts'
 import styled from 'styled-components'
 
 type Raffle = {
@@ -28,7 +28,7 @@ const Admin = () => {
 
   const magicWeb3Provider = new ethers.providers.Web3Provider(magic.rpcProvider as any)
   const signer = magicWeb3Provider.getSigner()
-  const raflleContract = new ethers.Contract(raffleContractAddress, raffleAbi, signer)
+  const raflleContract = new ethers.Contract(raffleContractAddress, RaffleAbi, signer)
 
   const loadRaffles = async () => {
     const raffleCount = await raflleContract.raffleCount()

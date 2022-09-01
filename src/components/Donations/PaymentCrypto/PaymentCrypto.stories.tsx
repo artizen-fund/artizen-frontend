@@ -6,4 +6,7 @@ export default {
   argTypes: {},
 }
 
-export const PaymentCryptoComponent = (props: any) => <PaymentCrypto {...props} />
+export const PaymentCryptoComponent = (props: any) => {
+  const amount = 1000
+  return <PaymentCrypto {...props} {...{ amount }} />
+}

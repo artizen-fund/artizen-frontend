@@ -110,7 +110,6 @@ export const useMetaContract = () => {
     const signature = await biconomy?.ethersProvider?.send('eth_signTypedData_v3', [userAddress, dataToSign])
 
     const { r, s, v } = getSignatureParameters(signature)
-
     const provider = await biconomy?.provider
     const { data } = await contract.populateTransaction.executeMetaTransaction(userAddress, functionSignature, r, s, v)
     const txParams = {
