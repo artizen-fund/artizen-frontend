@@ -2,10 +2,10 @@
 
 exports[`WalletOptions renders correctly 1`] = `
 <div
-  className="sc-268575ae-0 gjfjNd"
+  className="sc-db416ff1-0 dLyVHq"
 >
   <div
-    className="sc-268575ae-1 jwnmTS"
+    className="sc-db416ff1-1 jnXsel"
     onClick={[Function]}
   >
     <img
@@ -13,18 +13,18 @@ exports[`WalletOptions renders correctly 1`] = `
       src="/assets/metamask.svg"
     />
     <h3
-      className="sc-268575ae-2 leZytT"
+      className="sc-db416ff1-2 eutJlw"
     >
       MetaMask
     </h3>
     <h4
-      className="sc-268575ae-3 bZcDbE"
+      className="sc-db416ff1-3 bKSzv"
     >
       Connect via your browser
     </h4>
   </div>
   <div
-    className="sc-268575ae-1 jwnmTS"
+    className="sc-db416ff1-1 jnXsel"
     onClick={[Function]}
   >
     <img
@@ -32,12 +32,12 @@ exports[`WalletOptions renders correctly 1`] = `
       src="/assets/walletConnect.svg"
     />
     <h3
-      className="sc-268575ae-2 leZytT"
+      className="sc-db416ff1-2 eutJlw"
     >
       WalletConnect
     </h3>
     <h4
-      className="sc-268575ae-3 bZcDbE"
+      className="sc-db416ff1-3 bKSzv"
     >
       Choose an alternative wallet
     </h4>

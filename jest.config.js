@@ -21,4 +21,14 @@ const customJestConfig = {
   moduleNameMapper,
 }
 
-module.exports = createJestConfig(customJestConfig)
+/* note: we need to not-compile uuid as the source uses non-ES exports.
+ *  However, we cannot simply ass transformIgnorePatterns due to a known Next/Jest bug.
+ *  https://github.com/vercel/next.js/issues/35634#issuecomment-1115250297
+ */
+async function jestConfig() {
+  const nextJestConfig = await createJestConfig(customJestConfig)()
+  nextJestConfig.transformIgnorePatterns[0] = '/node_modules/(?!uuid)/'
+  return nextJestConfig
+}
+
+module.exports = jestConfig

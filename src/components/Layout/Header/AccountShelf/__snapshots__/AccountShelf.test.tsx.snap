@@ -2,26 +2,26 @@
 
 exports[`AccountShelf renders correctly 1`] = `
 <div
-  className="sc-cde5bcea-0 iZFrtq"
+  className="sc-efc54056-0 hpgVWm"
 >
   <div
-    className="sc-cde5bcea-1 BHuYm"
+    className="sc-efc54056-1 jQSNgm"
   >
     <div
-      className="sc-cde5bcea-2 TaRvw"
+      className="sc-efc54056-2 kEZBcY"
     >
       <h1
-        className="sc-cde5bcea-3 kPRyoD"
+        className="sc-efc54056-3 ffxptP"
       >
         Welcome
       </h1>
       <h2
-        className="sc-cde5bcea-4 gtGhhZ"
+        className="sc-efc54056-4 dhaTRd"
       >
         Thanks for supporting the future of public goods.
       </h2>
       <div
-        className="sc-cde5bcea-5 bysiUq"
+        className="sc-efc54056-5 hkxpQW"
       >
         <button
           className="sc-2a588df4-2 kYegxc undefined "
@@ -71,7 +71,7 @@ exports[`AccountShelf renders correctly 1`] = `
     </div>
     <div>
       <hr
-        className="sc-cde5bcea-7 hwHOna"
+        className="sc-efc54056-7 cqmYqe"
       />
       <button
         className="sc-2a588df4-2 kDHkxE undefined "
@@ -199,7 +199,7 @@ exports[`AccountShelf renders correctly 1`] = `
     </li>
   </ul>
   <object
-    className="sc-cde5bcea-6 eCCnZt"
+    className="sc-efc54056-6 cdncKp"
     data="/assets/qf-square.svg"
   />
 </div>

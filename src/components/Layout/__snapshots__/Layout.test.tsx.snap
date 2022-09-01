@@ -6,10 +6,10 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-a0e5b15c-0 ioPGGi"
+      class="sc-4563c985-0 dKHUaF"
     >
       <div
-        class="sc-a0e5b15c-1 kbfffm"
+        class="sc-4563c985-1 lhbjlR"
       >
         <a
           href="/"
@@ -57,7 +57,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </svg>
         </a>
         <button
-          class="sc-3eee0409-2 xQuzn sc-a0e5b15c-3 cbUThK "
+          class="sc-2a588df4-2 dgLpUc sc-4563c985-3 dcqHtl "
         >
           <span>
             Menu
@@ -65,10 +65,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-a0e5b15c-1 kbfffm"
+        class="sc-4563c985-1 lhbjlR"
       >
         <div
-          class="sc-a0e5b15c-2 dSSmFg"
+          class="sc-4563c985-2 ddLvyv"
         >
           <ul>
             <li>
@@ -84,30 +84,30 @@ exports[`Layout renders Layout unchanged 1`] = `
           </ul>
         </div>
         <button
-          class="sc-3eee0409-2 jxZTLN undefined "
+          class="sc-2a588df4-2 hclJjm undefined "
         >
           <div
-            class="sc-1d011157-0 ggBQiE sc-3eee0409-0 fKTQlu"
+            class="sc-149d3190-0 bfUncM sc-2a588df4-0 gSwEcZ"
           />
           <span>
             Donate
           </span>
         </button>
         <div
-          class="sc-7e8755e4-0 jqxFXe"
+          class="sc-24b2cfb1-0 hxXjvq"
         >
           <div
-            class="sc-7e8755e4-1 euSzLZ"
+            class="sc-24b2cfb1-1 iSojxp"
           />
           <div
-            class="sc-1d011157-0 fItlDg sc-7e8755e4-2 iVTCFW"
+            class="sc-149d3190-0 brwcbg sc-24b2cfb1-2 dFiOIi"
             color="night"
           />
           <div
-            class="sc-7e8755e4-3 dvEHvv"
+            class="sc-24b2cfb1-3 bTDIrr"
           >
             <div
-              class="sc-7e8755e4-4 jiHyW"
+              class="sc-24b2cfb1-4 jtxQnO"
             >
               RP
             </div>
@@ -116,40 +116,40 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </header>
     <div
-      class="sc-99af955d-0 bvvcNU"
+      class="sc-6f361ca5-0 iIXQEB"
     >
       <div
         class="sc-9199b4ac-0 brREMd"
       >
         <div
-          class="sc-19e6b784-4 lndqcO"
+          class="sc-e98d3470-4 hBMqrC"
         >
           <div
-            class="sc-19e6b784-5 iXJhJB"
+            class="sc-e98d3470-5 UEdlz"
           >
             <h1
-              class="sc-19e6b784-6 eoJMxi"
+              class="sc-e98d3470-6 cVXBdQ"
             >
               Let’s get started by setting up your Artizen account
             </h1>
             <div
-              class="sc-19e6b784-7 imNgdK"
+              class="sc-e98d3470-7 eBkBrE"
             >
               <div
-                class="sc-122b7a3d-2 ebIrfw"
+                class="sc-c089a03b-2 VsSZo"
               >
                 <div
-                  class="sc-122b7a3d-0 fqxyJD"
+                  class="sc-c089a03b-0 ja-DffS"
                   color="night"
                 >
                   <div
-                    class="sc-1d011157-0 gkxKzK"
+                    class="sc-149d3190-0 iAXlWi"
                     color="night"
                   />
                 </div>
               </div>
               <p
-                class="sc-19e6b784-8 kSNHDM"
+                class="sc-e98d3470-8 eZuGFS"
               >
                 Already have an account?
                 <br />
@@ -192,7 +192,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <button
-            class="sc-3eee0409-2 kGjZMI sc-19e6b784-0 cHIONN  disabled"
+            class="sc-2a588df4-2 ixnoRf sc-e98d3470-0 cgGWFL  disabled"
             disabled=""
           >
             <span>
@@ -200,30 +200,30 @@ exports[`Layout renders Layout unchanged 1`] = `
             </span>
           </button>
           <div
-            class="sc-19e6b784-1 gpPKnw"
+            class="sc-e98d3470-1 feCDDK"
           >
             <div
-              class="sc-19e6b784-9 juxsRO"
+              class="sc-e98d3470-9 JhXGw"
             />
             <div
-              class="sc-19e6b784-10 lcydTD"
+              class="sc-e98d3470-10 kSQUcl"
             >
               <button
-                class="sc-3eee0409-2 hImsqL undefined "
+                class="sc-2a588df4-2 kYegxc undefined "
               >
                 <span>
                   Phone
                 </span>
               </button>
               <button
-                class="sc-3eee0409-2 hImsqL undefined "
+                class="sc-2a588df4-2 kYegxc undefined "
               >
                 <span>
                   Twitter
                 </span>
               </button>
               <button
-                class="sc-3eee0409-2 hImsqL undefined "
+                class="sc-2a588df4-2 kYegxc undefined "
               >
                 <span>
                   Discord
@@ -232,10 +232,10 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-19e6b784-11 hNDYzD"
+            class="sc-e98d3470-11 bBfvKt"
           >
             <div
-              class="sc-19e6b784-12 fHQdXh"
+              class="sc-e98d3470-12 iLGKCz"
             >
               <label
                 class="sc-dd35d48e-4 dCKwdz"
@@ -257,7 +257,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 />
               </label>
               <p
-                class="sc-19e6b784-13 esldgb"
+                class="sc-e98d3470-13 kvlXQZ"
               >
                 I agree to Artizen’s
                 <a
@@ -272,10 +272,10 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-99af955d-1 jvQqsc"
+      class="sc-6f361ca5-1 EJtfp"
     />
     <div
-      class="sc-99af955d-0 bvvcNU"
+      class="sc-6f361ca5-0 iIXQEB"
     >
       <div
         class="sc-9199b4ac-0 brREMd"
@@ -303,7 +303,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
               <a
-                class="sc-3eee0409-1 hVsLhi undefined "
+                class="sc-2a588df4-1 fWCugx undefined "
               >
                 <span>
                   Learn More
@@ -331,7 +331,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
               </p>
               <a
-                class="sc-3eee0409-1 hVsLhi undefined "
+                class="sc-2a588df4-1 fWCugx undefined "
               >
                 <span>
                   Learn More
@@ -359,7 +359,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
               <a
-                class="sc-3eee0409-1 hVsLhi undefined "
+                class="sc-2a588df4-1 fWCugx undefined "
               >
                 <span>
                   Learn More
@@ -371,45 +371,47 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-99af955d-1 jvQqsc"
+      class="sc-6f361ca5-1 EJtfp"
     />
     <div
-      class="sc-99af955d-0 bvvcNU"
+      class="sc-6f361ca5-0 iIXQEB"
     >
       <div
         class="sc-9199b4ac-0 brREMd"
       >
         <div
-          class="sc-26e233cf-0 oxQpq"
+          class="sc-fa264814-0 fAhcDC"
         >
           <div
-            class="sc-26e233cf-1 uZmBu"
+            class="sc-fa264814-1 cssaZW"
           >
             <div>
               <h1
-                class="sc-26e233cf-2"
+                class="sc-fa264814-2"
               >
                 Choose your donation amount and payment method
               </h1>
               <div
-                class="sc-26e233cf-3 dZyfvc"
+                class="sc-78ba2856-0 fOnoXs"
               >
                 <div
-                  class="sc-122b7a3d-2 ebIrfw"
+                  class="sc-c089a03b-2 VsSZo"
                 >
                   <div
-                    class="sc-122b7a3d-0 PLncb"
+                    class="sc-c089a03b-0 dhCXYi"
                     color="night"
                   >
                     <div
-                      class="sc-1d011157-0 eWHmUn"
+                      class="sc-149d3190-0 DayLH"
                       color="night"
                     />
                   </div>
                 </div>
-                <span>
+                <p
+                  class="sc-78ba2856-1 cjHeIN"
+                >
                   Need help? We’ve prepared a useful guide to donating.
-                </span>
+                </p>
               </div>
             </div>
             <p>
@@ -437,36 +439,23 @@ exports[`Layout renders Layout unchanged 1`] = `
             </label>
           </div>
           <div
-            class="sc-26e233cf-4 ffmkbF"
+            class="sc-fa264814-4 ejyLEh"
           >
             <div
-              class="sc-9e28a803-0 eigpMD"
+              class="sc-cf7cfc90-0 dmSvkC"
             >
               <div
-                class="sc-9e28a803-1 eGtFrA"
+                class="sc-cf7cfc90-1 ikELJJ"
               >
-                <div
-                  class="sc-122b7a3d-2 ebIrfw"
-                >
-                  <div
-                    class="sc-122b7a3d-0 fqxyJD"
-                    color="night"
-                  >
-                    <div
-                      class="sc-1d011157-0 ejjWfH"
-                      color="night"
-                    />
-                  </div>
-                </div>
                 <span>
                   USD
                 </span>
               </div>
               <div
-                class="sc-9e28a803-3 eBAchZ"
+                class="sc-cf7cfc90-3 gLVa-dY"
               >
                 <input
-                  class="sc-9e28a803-2 ipUAAE"
+                  class="sc-cf7cfc90-2 fzorkd"
                   type="number"
                   value="10"
                 />
@@ -475,53 +464,32 @@ exports[`Layout renders Layout unchanged 1`] = `
                 </label>
               </div>
               <div
-                class="sc-9e28a803-4 fJrvQg"
-              >
-                <button
-                  class="sc-3eee0409-2 dHZKXD undefined "
-                >
-                  <div
-                    class="sc-1d011157-0 dGSXRE sc-3eee0409-0 fKTQlu"
-                  />
-                  <span>
-                    add
-                  </span>
-                </button>
-                <button
-                  class="sc-3eee0409-2 dHZKXD undefined "
-                >
-                  <div
-                    class="sc-1d011157-0 ggBQiE sc-3eee0409-0 fKTQlu"
-                  />
-                  <span>
-                    subtract
-                  </span>
-                </button>
-              </div>
+                class="sc-cf7cfc90-4 dERrdJ"
+              />
             </div>
             <div
-              class="sc-26e233cf-5 eJDgNW"
+              class="sc-fa264814-5 gZwxVK"
             >
               <span>
                 Friends of Artizen typically donate:
               </span>
               <div>
                 <button
-                  class="sc-3eee0409-2 htNOdl undefined "
+                  class="sc-2a588df4-2 emJYMu undefined "
                 >
                   <span>
                     $200
                   </span>
                 </button>
                 <button
-                  class="sc-3eee0409-2 htNOdl undefined "
+                  class="sc-2a588df4-2 emJYMu undefined "
                 >
                   <span>
                     $500
                   </span>
                 </button>
                 <button
-                  class="sc-3eee0409-2 htNOdl undefined "
+                  class="sc-2a588df4-2 emJYMu undefined "
                 >
                   <span>
                     $1000
@@ -530,20 +498,20 @@ exports[`Layout renders Layout unchanged 1`] = `
               </div>
             </div>
             <ul
-              class="sc-26e233cf-6 bFXJHQ"
+              class="sc-fa264814-6 yLhfE"
             >
               <li
-                class="sc-26e233cf-7 ckveOI"
+                class="sc-fa264814-7 cysOqk"
               >
                 <div
-                  class="sc-122b7a3d-2 ebIrfw"
+                  class="sc-c089a03b-2 VsSZo"
                 >
                   <div
-                    class="sc-122b7a3d-0 PLncb"
+                    class="sc-c089a03b-0 dhCXYi"
                     color="night"
                   >
                     <div
-                      class="sc-1d011157-0 eWHmUn"
+                      class="sc-149d3190-0 DayLH"
                       color="night"
                     />
                   </div>
@@ -552,21 +520,23 @@ exports[`Layout renders Layout unchanged 1`] = `
                   Credit Card
                 </div>
                 <span>
-                  min $10.00
+                  min $
+                  10
+                  .00
                 </span>
               </li>
               <li
-                class="sc-26e233cf-7 ckveOI"
+                class="sc-fa264814-7 dNnSIs"
               >
                 <div
-                  class="sc-122b7a3d-2 ebIrfw"
+                  class="sc-c089a03b-2 VsSZo"
                 >
                   <div
-                    class="sc-122b7a3d-0 PLncb"
+                    class="sc-c089a03b-0 dhCXYi"
                     color="night"
                   >
                     <div
-                      class="sc-1d011157-0 eWHmUn"
+                      class="sc-149d3190-0 DayLH"
                       color="night"
                     />
                   </div>
@@ -575,21 +545,23 @@ exports[`Layout renders Layout unchanged 1`] = `
                   Polygon
                 </div>
                 <span>
-                  min $10.00
+                  min $
+                  10
+                  .00
                 </span>
               </li>
               <li
-                class="sc-26e233cf-7 ckveOI"
+                class="sc-fa264814-7 dNnSIs"
               >
                 <div
-                  class="sc-122b7a3d-2 ebIrfw"
+                  class="sc-c089a03b-2 VsSZo"
                 >
                   <div
-                    class="sc-122b7a3d-0 PLncb"
+                    class="sc-c089a03b-0 dhCXYi"
                     color="night"
                   >
                     <div
-                      class="sc-1d011157-0 eWHmUn"
+                      class="sc-149d3190-0 DayLH"
                       color="night"
                     />
                   </div>
@@ -598,12 +570,14 @@ exports[`Layout renders Layout unchanged 1`] = `
                   Ethereum
                 </div>
                 <span>
-                  min $100.00
+                  min $
+                  100
+                  .00
                 </span>
               </li>
             </ul>
             <button
-              class="sc-3eee0409-2 hwtkdS undefined "
+              class="sc-2a588df4-2 hVoeoR undefined "
             >
               <span>
                 Continue
@@ -614,7 +588,7 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-99af955d-1 jvQqsc"
+      class="sc-6f361ca5-1 EJtfp"
     />
     <main
       class="sc-29d73b66-1 gEpBEx"
@@ -676,14 +650,14 @@ exports[`Layout renders Layout unchanged 1`] = `
             class="sc-aae777ba-6 fsaJbW"
           >
             <button
-              class="sc-3eee0409-2 jnNuNk undefined "
+              class="sc-2a588df4-2 QcBkf undefined "
             >
               <span>
                 Donate
               </span>
             </button>
             <button
-              class="sc-3eee0409-2 jnNuNk undefined "
+              class="sc-2a588df4-2 QcBkf undefined "
             >
               <span>
                 Sign In

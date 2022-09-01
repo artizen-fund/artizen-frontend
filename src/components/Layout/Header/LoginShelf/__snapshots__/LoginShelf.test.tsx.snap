@@ -3,18 +3,18 @@
 exports[`LoginShelf renders correctly 1`] = `
 <div>
   <div
-    class="sc-9c2c0fc5-4 iCiVJK"
+    class="sc-e98d3470-4 hBMqrC"
   >
     <div
-      class="sc-9c2c0fc5-5 fLeqkg"
+      class="sc-e98d3470-5 UEdlz"
     >
       <h1
-        class="sc-9c2c0fc5-6 hOScBH"
+        class="sc-e98d3470-6 cVXBdQ"
       >
         Let’s get started by setting up your Artizen account
       </h1>
       <div
-        class="sc-9c2c0fc5-7 jXnRuP"
+        class="sc-e98d3470-7 eBkBrE"
       >
         <div
           class="sc-c089a03b-2 VsSZo"
@@ -30,7 +30,7 @@ exports[`LoginShelf renders correctly 1`] = `
           </div>
         </div>
         <p
-          class="sc-9c2c0fc5-8 hFjcqt"
+          class="sc-e98d3470-8 eZuGFS"
         >
           Already have an account?
           <br />
@@ -73,7 +73,7 @@ exports[`LoginShelf renders correctly 1`] = `
       </div>
     </div>
     <button
-      class="sc-2a588df4-2 ixnoRf sc-9c2c0fc5-0 hVAiAY  disabled"
+      class="sc-2a588df4-2 ixnoRf sc-e98d3470-0 cgGWFL  disabled"
       disabled=""
     >
       <span>
@@ -81,13 +81,13 @@ exports[`LoginShelf renders correctly 1`] = `
       </span>
     </button>
     <div
-      class="sc-9c2c0fc5-1 ccMnwl"
+      class="sc-e98d3470-1 feCDDK"
     >
       <div
-        class="sc-9c2c0fc5-9 cXUljj"
+        class="sc-e98d3470-9 JhXGw"
       />
       <div
-        class="sc-9c2c0fc5-10 hrMKlC"
+        class="sc-e98d3470-10 kSQUcl"
       >
         <button
           class="sc-2a588df4-2 kYegxc undefined "
@@ -113,10 +113,10 @@ exports[`LoginShelf renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="sc-9c2c0fc5-11 pMnPu"
+      class="sc-e98d3470-11 bBfvKt"
     >
       <div
-        class="sc-9c2c0fc5-12 bGBpas"
+        class="sc-e98d3470-12 iLGKCz"
       >
         <label
           class="sc-dd35d48e-4 dCKwdz"
@@ -138,7 +138,7 @@ exports[`LoginShelf renders correctly 1`] = `
           />
         </label>
         <p
-          class="sc-9c2c0fc5-13 dmkgqG"
+          class="sc-e98d3470-13 kvlXQZ"
         >
           I agree to Artizen’s
           <a

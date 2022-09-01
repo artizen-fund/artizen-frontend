@@ -23,6 +23,7 @@ exports[`AlternatingPanel renders correctly 1`] = `
       className="sc-2a588df4-1 izfOXq undefined "
       onClick={[Function]}
       onMouseEnter={[Function]}
+      onTouchStart={[Function]}
     >
       <span />
     </a>

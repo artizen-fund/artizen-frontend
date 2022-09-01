@@ -8,15 +8,15 @@ export const useReadContract = (
   methodName: string,
   attr: Array<any> = [],
   callOnInit = true,
-): any => {
+) => {
   const { magic } = useMagic()
-  if (magic === undefined) return []
 
-  const [value, setValue] = useState<unknown>()
+  const [value, setValue] = useState<string>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
 
   const callContract = async () => {
+    if (!magic) return
     setLoading(true)
 
     const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider as any)
@@ -24,10 +24,10 @@ export const useReadContract = (
     const contract = new ethers.Contract(contractAddress, contractAbi, magicWeb3)
 
     try {
-      const value = await contract[methodName](...attr)
-      setValue(value)
-    } catch (error: unknown) {
-      setError(error)
+      const newValue = await contract[methodName](...attr)
+      setValue(newValue)
+    } catch (newError) {
+      setError(newError)
     }
     setLoading(false)
   }

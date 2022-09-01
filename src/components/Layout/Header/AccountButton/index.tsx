@@ -3,14 +3,14 @@ import { useApolloClient } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette } from '@theme'
-import { rgba, refreshSession, useLoggedInUser } from '@lib'
+import { rgba, refreshSession, useLoggedInUser, isClient } from '@lib'
 
 const AccountButton = (props: SimpleComponentProps) => {
   const apolloClient = useApolloClient()
   const [loggedInUser] = useLoggedInUser()
 
   useEffect(() => {
-    refreshSession(apolloClient)
+    if (isClient()) refreshSession(apolloClient)
   }, [])
 
   const TEMP_INITIALS = 'RP'

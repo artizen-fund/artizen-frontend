@@ -2,33 +2,20 @@
 
 exports[`AmountWidget renders correctly 1`] = `
 <div
-  className="sc-8b85c6d6-0 iEXZsH"
+  className="sc-cf7cfc90-0 dmSvkC"
 >
   <div
-    className="sc-8b85c6d6-1 eYyyOI"
+    className="sc-cf7cfc90-1 ikELJJ"
   >
-    <div
-      className="sc-c089a03b-2 VsSZo"
-    >
-      <div
-        className="sc-c089a03b-0 ja-DffS"
-        color="night"
-      >
-        <div
-          className="sc-149d3190-0 dVcEnH"
-          color="night"
-        />
-      </div>
-    </div>
     <span>
       USD
     </span>
   </div>
   <div
-    className="sc-8b85c6d6-3 gtHBvp"
+    className="sc-cf7cfc90-3 gLVa-dY"
   >
     <input
-      className="sc-8b85c6d6-2 cVuWCM"
+      className="sc-cf7cfc90-2 fzorkd"
       onChange={[Function]}
       type="number"
     />
@@ -37,30 +24,7 @@ exports[`AmountWidget renders correctly 1`] = `
     </label>
   </div>
   <div
-    className="sc-8b85c6d6-4 kTqqpw"
-  >
-    <button
-      className="sc-2a588df4-2 kGwkQY undefined "
-      onClick={[Function]}
-    >
-      <div
-        className="sc-149d3190-0 kJqBVg sc-2a588df4-0 gSwEcZ"
-      />
-      <span>
-        add
-      </span>
-    </button>
-    <button
-      className="sc-2a588df4-2 kGwkQY undefined "
-      onClick={[Function]}
-    >
-      <div
-        className="sc-149d3190-0 biUHOc sc-2a588df4-0 gSwEcZ"
-      />
-      <span>
-        subtract
-      </span>
-    </button>
-  </div>
+    className="sc-cf7cfc90-4 dERrdJ"
+  />
 </div>
 `;
