@@ -34,7 +34,7 @@ const PagePadding = styled.div<PagePaddingProps>`
     margin: auto;
 
     @media only screen and (min-width: ${breakpoint.tablet}px) {
-      max-width: calc(100vw - 340px);
+      max-width: 688px;
     }
 
     @media only screen and (min-width: ${breakpoint.laptop}px) {

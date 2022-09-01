@@ -27,8 +27,13 @@ const Wrapper = styled.div<Pick<IShelf, 'visible' | 'shadowVisible'>>`
   width: 100%;
   left: 0;
   top: 64px;
+  max-height: calc(100vh - 64px);
+  max-height: calc(100dvh - 64px);
+  overflow: scroll;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     top: 72px;
+    max-height: none;
+    overflow: visible;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     top: 88px;
