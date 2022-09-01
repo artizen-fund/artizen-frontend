@@ -11,7 +11,7 @@ export const useReadContract = (
 ) => {
   const { magic } = useMagic()
 
-  const [value, setValue] = useState<string>()
+  const [value, setValue] = useState<any>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
 
