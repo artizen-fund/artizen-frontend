@@ -18,6 +18,11 @@ export const responsiveGlyphSize = (responsiveSize: ResponsiveSize, level?: keyo
       1: 12,
       2: 12,
     },
+    phablet: {
+      0: 16,
+      1: 12,
+      2: 12,
+    },
     mobile: {
       0: 16,
       1: 12,
