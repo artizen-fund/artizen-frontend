@@ -3,21 +3,21 @@
 exports[`Newsletter renders Newsletter unchanged 1`] = `
 <div>
   <div
-    class="sc-9199b4ac-0 gjUYWF"
+    class="sc-8d0edb81-0 gAsIQZ"
   >
     <div
-      class="sc-1e3e9220-2 danEeQ"
+      class="sc-1e3e9220-2 ejNsI"
     >
       <div
         class="sc-1e3e9220-3 jleLgG"
       >
         <div
-          class="sc-1e3e9220-4 dYyFuY"
+          class="sc-1e3e9220-4 cgXCYQ"
         >
           Join us in building the world's largest web3 fund for public goods
         </div>
         <div
-          class="sc-1e3e9220-5 bdfjPZ"
+          class="sc-1e3e9220-5 fSLjZ"
         >
           Sign up for our free newsletter
         </div>
@@ -33,7 +33,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/FNAME"
           >
             <div
-              class="sc-dccedff6-0 dxDPQx"
+              class="sc-dccedff6-0 jjRMSF"
             >
               <input
                 minlength="2"
@@ -42,13 +42,13 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 dXVxRc"
+                class="sc-ffdb2e6c-0 cqczZc"
               >
                 First Name
               </label>
             </div>
             <div
-              class="sc-93ba83c0-0 bAVzHI"
+              class="sc-93ba83c0-0 BZJQU"
             />
           </div>
         </div>
@@ -60,7 +60,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/LNAME"
           >
             <div
-              class="sc-dccedff6-0 dxDPQx"
+              class="sc-dccedff6-0 jjRMSF"
             >
               <input
                 minlength="2"
@@ -69,13 +69,13 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 dXVxRc"
+                class="sc-ffdb2e6c-0 cqczZc"
               >
                 Last Name
               </label>
             </div>
             <div
-              class="sc-93ba83c0-0 bAVzHI"
+              class="sc-93ba83c0-0 BZJQU"
             />
           </div>
         </div>
@@ -87,7 +87,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/EMAIL"
           >
             <div
-              class="sc-dccedff6-0 dxDPQx"
+              class="sc-dccedff6-0 jjRMSF"
             >
               <input
                 placeholder=" "
@@ -96,14 +96,14 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 dXVxRc"
+                class="sc-ffdb2e6c-0 cqczZc"
               >
                 Email Address
                  *
               </label>
             </div>
             <div
-              class="sc-93ba83c0-0 bAVzHI"
+              class="sc-93ba83c0-0 BZJQU"
             >
               is a required property
             </div>
@@ -117,7 +117,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
             id="#/properties/OPTIN"
           >
             <div
-              class="sc-dd35d48e-0 lmHjtw"
+              class="sc-dd35d48e-0 bkkyVw"
             >
               <input
                 checked=""
@@ -138,7 +138,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </div>
       </div>
       <button
-        class="sc-2a588df4-2 hiYQrI sc-1e3e9220-0 eNYEEI  disabled"
+        class="sc-2a588df4-2 dIjHHY sc-1e3e9220-0 eNYEEI  disabled"
         disabled=""
       >
         <span>
@@ -146,7 +146,7 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
         </span>
       </button>
       <div
-        class="sc-1e3e9220-1 laGpHV"
+        class="sc-1e3e9220-1 bFEpXp"
       >
         <div>
           Congrats, confirmation sent!

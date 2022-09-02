@@ -13,12 +13,12 @@ exports[`WalletOptions renders correctly 1`] = `
       src="/assets/metamask.svg"
     />
     <h3
-      className="sc-db416ff1-2 eutJlw"
+      className="sc-db416ff1-2 ezJrKc"
     >
       MetaMask
     </h3>
     <h4
-      className="sc-db416ff1-3 bKSzv"
+      className="sc-db416ff1-3 gaNgRn"
     >
       Connect via your browser
     </h4>
@@ -32,12 +32,12 @@ exports[`WalletOptions renders correctly 1`] = `
       src="/assets/walletConnect.svg"
     />
     <h3
-      className="sc-db416ff1-2 eutJlw"
+      className="sc-db416ff1-2 ezJrKc"
     >
       WalletConnect
     </h3>
     <h4
-      className="sc-db416ff1-3 bKSzv"
+      className="sc-db416ff1-3 gaNgRn"
     >
       Choose an alternative wallet
     </h4>

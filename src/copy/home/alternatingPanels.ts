@@ -15,7 +15,7 @@ const alternatingPanels: Array<{
     buttonLabel: 'Herp Derp',
   },
   {
-    image: '/assets/illustrations/how-it-works.png',
+    image: '/assets/illustrations/home/how-it-works.png',
     imageDark: '/assets/illustrations/home/how-it-works-dark.png',
     title: 'How It Works Placeholder Title',
     copy: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nulla vitae elit libero, a pharetra augue.',

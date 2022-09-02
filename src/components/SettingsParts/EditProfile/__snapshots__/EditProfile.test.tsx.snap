@@ -2,7 +2,7 @@
 
 exports[`EditProfile renders correctly 1`] = `
 <div
-  className="sc-10f8744c-0 iikjWF"
+  className="sc-10f8744c-0 dPRsFE"
 >
   <div
     className="vertical-layout"
@@ -16,7 +16,7 @@ exports[`EditProfile renders correctly 1`] = `
         id="#/properties/firstName"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             minLength={2}
@@ -27,14 +27,14 @@ exports[`EditProfile renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             First Name
              *
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -46,7 +46,7 @@ exports[`EditProfile renders correctly 1`] = `
         id="#/properties/lastName"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             minLength={2}
@@ -57,14 +57,14 @@ exports[`EditProfile renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             Last Name
              *
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -76,7 +76,7 @@ exports[`EditProfile renders correctly 1`] = `
         id="#/properties/email"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             onBlur={[Function]}
@@ -86,14 +86,14 @@ exports[`EditProfile renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             Email
              *
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -105,7 +105,7 @@ exports[`EditProfile renders correctly 1`] = `
         id="#/properties/bio"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             onBlur={[Function]}
@@ -115,13 +115,13 @@ exports[`EditProfile renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             Biography
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -133,7 +133,7 @@ exports[`EditProfile renders correctly 1`] = `
         id="#/properties/twitterLink"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             onBlur={[Function]}
@@ -143,13 +143,13 @@ exports[`EditProfile renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             Twitter Handle
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -161,7 +161,7 @@ exports[`EditProfile renders correctly 1`] = `
         id="#/properties/website"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             minLength={12}
@@ -172,19 +172,19 @@ exports[`EditProfile renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             Website
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
   </div>
   <button
-    className="sc-2a588df4-2 hVoeoR sc-10f8744c-1 iGVMDx "
+    className="sc-2a588df4-2 jVJhXF sc-10f8744c-1 iGVMDx "
     disabled={false}
     onClick={[Function]}
   >

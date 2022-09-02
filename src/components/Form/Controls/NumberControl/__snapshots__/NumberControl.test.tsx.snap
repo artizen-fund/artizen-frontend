@@ -6,7 +6,7 @@ exports[`NumberControl renders NumberControl unchanged 1`] = `
     class="sc-2f9d5146-0 fXWYaa"
   >
     <div
-      class="sc-dccedff6-0 kaZwEr"
+      class="sc-dccedff6-0 fSqMKz"
       disabled=""
     >
       <input
@@ -18,17 +18,17 @@ exports[`NumberControl renders NumberControl unchanged 1`] = `
         value="5"
       />
       <label
-        class="sc-ffdb2e6c-0 dXVxRc"
+        class="sc-ffdb2e6c-0 cqczZc"
       >
         Integer test
       </label>
       <div
-        class="sc-149d3190-0 jMTcSq sc-5f903e4e-0 fvVMpv"
+        class="sc-149d3190-0 btmhnS sc-5f903e4e-0 cJxxyr"
         color="night"
       />
     </div>
     <div
-      class="sc-93ba83c0-0 bAVzHI"
+      class="sc-93ba83c0-0 BZJQU"
     />
   </div>
 </div>

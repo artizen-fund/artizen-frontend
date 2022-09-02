@@ -6,26 +6,30 @@ import { breakpoint, palette, typography } from '@theme'
 const HowItWorks = () => {
   const cells = [
     {
-      illustration: 'derp',
+      illustration: 'how-it-works/about.svg',
+      illustrationDark: 'how-it-works/about-dark.svg',
+      title: 'About',
+      copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
+      destination: '/derp',
+    },
+    {
+      illustration: 'how-it-works/grants.svg',
+      illustrationDark: 'how-it-works/grants-dark.svg',
+      title: 'Grants',
+      copy: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur et.',
+      destination: '/derp',
+    },
+    {
+      illustration: 'leaderboard/trust.svg',
+      illustrationDark: 'leaderboard/trust-dark.svg',
       title: 'Leaderboard',
       copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
       destination: '/derp',
       mobileOnly: true,
     },
     {
-      illustration: 'derp',
-      title: 'About',
-      copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
-      destination: '/derp',
-    },
-    {
-      illustration: 'derp',
-      title: 'Grants',
-      copy: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur et.',
-      destination: '/derp',
-    },
-    {
-      illustration: 'derp',
+      illustration: 'how-it-works/faq.svg',
+      illustrationDark: 'how-it-works/faq-dark.svg',
       title: 'FAQs',
       copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
       destination: '/derp',
@@ -35,7 +39,7 @@ const HowItWorks = () => {
     <Wrapper>
       {cells.map(cell => (
         <Cell key={`cell-${cell.title}`} mobileOnly={cell.mobileOnly}>
-          <Illustration />
+          <Illustration light={cell.illustration} dark={cell.illustrationDark} />
           <Under>
             <Title>{cell.title}</Title>
             <Description>{cell.copy}</Description>
@@ -62,8 +66,15 @@ const Wrapper = styled.div`
 const Cell = styled.div<{ mobileOnly?: boolean }>`
   flex: 1;
   display: flex;
-  flex-direction: column;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
+  flex-direction: row;
+  &:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex-direction: column;
+    &:nth-child(even) {
+      flex-direction: column;
+    }
     ${props => props.mobileOnly && 'display: none;'}
   }
 `
@@ -77,11 +88,21 @@ const Under = styled.div`
   padding: 20px;
 `
 
-const Illustration = styled.div`
-  height: 120px;
-  margin-bottom: 1em;
-  background: ${rgba(palette.moss)};
-  border-radius: 15px;
+const Illustration = styled.div<{ light: string; dark: string }>`
+  height: auto;
+  width: 50%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('/assets/illustrations/${props => props.light}');
+  @media (prefers-color-scheme: dark) {
+    background-image: url('/assets/illustrations/${props => props.dark}');
+  }
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    background-position: center center;
+    height: 150px;
+    width: auto;
+  }
 `
 
 const Title = styled.h2`

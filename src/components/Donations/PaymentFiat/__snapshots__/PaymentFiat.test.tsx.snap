@@ -3,7 +3,7 @@
 exports[`PaymentFiat renders correctly 1`] = `
 <div>
   <div
-    class="sc-1ee785b1-4 fVpSLw"
+    class="sc-1ee785b1-4 dGBQmQ"
   >
     <div
       class="sc-1ee785b1-0 faHxzV"
@@ -18,20 +18,20 @@ exports[`PaymentFiat renders correctly 1`] = `
           class="sc-78ba2856-0 fOnoXs"
         >
           <div
-            class="sc-c089a03b-2 VsSZo"
+            class="sc-c089a03b-2 ckelpU"
           >
             <div
-              class="sc-c089a03b-0 dhCXYi"
+              class="sc-c089a03b-0 hULMLC"
               color="night"
             >
               <div
-                class="sc-149d3190-0 DayLH"
+                class="sc-149d3190-0 jDOEuv"
                 color="night"
               />
             </div>
           </div>
           <p
-            class="sc-78ba2856-1 cjHeIN"
+            class="sc-78ba2856-1 jZynMh"
           >
             Need help? We’ve prepared a useful guide to donating.
           </p>
@@ -60,7 +60,7 @@ exports[`PaymentFiat renders correctly 1`] = `
         class="sc-dd35d48e-4 fUZPkX"
       >
         <div
-          class="sc-dd35d48e-0 lmHjtw"
+          class="sc-dd35d48e-0 bkkyVw"
         >
           <input
             class="sc-dd35d48e-1 clTMzK"
@@ -88,7 +88,7 @@ exports[`PaymentFiat renders correctly 1`] = `
           id="#/properties/street1"
         >
           <div
-            class="sc-dccedff6-0 dxDPQx"
+            class="sc-dccedff6-0 jjRMSF"
           >
             <input
               placeholder=" "
@@ -97,14 +97,14 @@ exports[`PaymentFiat renders correctly 1`] = `
               value=""
             />
             <label
-              class="sc-ffdb2e6c-0 dXVxRc"
+              class="sc-ffdb2e6c-0 cqczZc"
             >
               Street Address
                *
             </label>
           </div>
           <div
-            class="sc-93ba83c0-0 bAVzHI"
+            class="sc-93ba83c0-0 BZJQU"
           >
             is a required property
           </div>
@@ -118,7 +118,7 @@ exports[`PaymentFiat renders correctly 1`] = `
           id="#/properties/city"
         >
           <div
-            class="sc-dccedff6-0 dxDPQx"
+            class="sc-dccedff6-0 jjRMSF"
           >
             <input
               placeholder=" "
@@ -127,14 +127,14 @@ exports[`PaymentFiat renders correctly 1`] = `
               value=""
             />
             <label
-              class="sc-ffdb2e6c-0 dXVxRc"
+              class="sc-ffdb2e6c-0 cqczZc"
             >
               City
                *
             </label>
           </div>
           <div
-            class="sc-93ba83c0-0 bAVzHI"
+            class="sc-93ba83c0-0 BZJQU"
           >
             is a required property
           </div>
@@ -148,7 +148,7 @@ exports[`PaymentFiat renders correctly 1`] = `
           id="#/properties/state"
         >
           <div
-            class="sc-dccedff6-0 dxDPQx"
+            class="sc-dccedff6-0 jjRMSF"
           >
             <input
               placeholder=" "
@@ -157,14 +157,14 @@ exports[`PaymentFiat renders correctly 1`] = `
               value=""
             />
             <label
-              class="sc-ffdb2e6c-0 dXVxRc"
+              class="sc-ffdb2e6c-0 cqczZc"
             >
               State or Territory
                *
             </label>
           </div>
           <div
-            class="sc-93ba83c0-0 bAVzHI"
+            class="sc-93ba83c0-0 BZJQU"
           >
             is a required property
           </div>
@@ -178,7 +178,7 @@ exports[`PaymentFiat renders correctly 1`] = `
           id="#/properties/zip"
         >
           <div
-            class="sc-dccedff6-0 dxDPQx"
+            class="sc-dccedff6-0 jjRMSF"
           >
             <input
               placeholder=" "
@@ -187,14 +187,14 @@ exports[`PaymentFiat renders correctly 1`] = `
               value=""
             />
             <label
-              class="sc-ffdb2e6c-0 dXVxRc"
+              class="sc-ffdb2e6c-0 cqczZc"
             >
               Billing Zip Code
                *
             </label>
           </div>
           <div
-            class="sc-93ba83c0-0 bAVzHI"
+            class="sc-93ba83c0-0 BZJQU"
           >
             is a required property
           </div>
@@ -208,7 +208,7 @@ exports[`PaymentFiat renders correctly 1`] = `
           id="#/properties/country"
         >
           <div
-            class="sc-dccedff6-0 dxDPQx"
+            class="sc-dccedff6-0 jjRMSF"
           >
             <select
               class="noData"
@@ -1432,17 +1432,17 @@ exports[`PaymentFiat renders correctly 1`] = `
               </option>
             </select>
             <div
-              class="sc-38d39bf1-0 hobJpn"
+              class="sc-38d39bf1-0 ePQkJn"
             />
             <label
-              class="sc-ffdb2e6c-0 dXVxRc noData"
+              class="sc-ffdb2e6c-0 cqczZc noData"
             >
               Country
                *
             </label>
           </div>
           <div
-            class="sc-93ba83c0-0 bAVzHI hasErrors"
+            class="sc-93ba83c0-0 BZJQU hasErrors"
           >
             is a required property
           </div>
@@ -1450,7 +1450,7 @@ exports[`PaymentFiat renders correctly 1`] = `
       </div>
     </div>
     <button
-      class="sc-2a588df4-2 ixnoRf sc-1ee785b1-2 iChpEd  disabled"
+      class="sc-2a588df4-2 bANZSb sc-1ee785b1-2 iChpEd  disabled"
       disabled=""
     >
       <span>

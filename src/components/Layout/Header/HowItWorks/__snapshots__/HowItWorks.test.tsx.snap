@@ -2,29 +2,29 @@
 
 exports[`HowItWorks renders correctly 1`] = `
 <div
-  className="sc-39d2e67e-0 grcqj"
+  className="sc-f804dfed-0 dzRLec"
 >
   <div
-    className="sc-39d2e67e-1 khkivv"
+    className="sc-f804dfed-1 cqSxLt"
   >
     <div
-      className="sc-39d2e67e-3 lnOegi"
+      className="sc-f804dfed-3 mCVTj"
     />
     <div
-      className="sc-39d2e67e-2 kXHZxG"
+      className="sc-f804dfed-2 iDzbzu"
     >
       <h2
-        className="sc-39d2e67e-4 iuvHBM"
+        className="sc-f804dfed-4 NHBaM"
       >
         About
       </h2>
       <p
-        className="sc-39d2e67e-5 fZdGxw"
+        className="sc-f804dfed-5 bnQOXY"
       >
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>
       <a
-        className="sc-2a588df4-1 fWCugx undefined "
+        className="sc-2a588df4-1 kFiSF undefined "
         onClick={[Function]}
         onMouseEnter={[Function]}
         onTouchStart={[Function]}
@@ -36,26 +36,26 @@ exports[`HowItWorks renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-39d2e67e-1 khkivv"
+    className="sc-f804dfed-1 cqSxLt"
   >
     <div
-      className="sc-39d2e67e-3 lnOegi"
+      className="sc-f804dfed-3 iANWAv"
     />
     <div
-      className="sc-39d2e67e-2 kXHZxG"
+      className="sc-f804dfed-2 iDzbzu"
     >
       <h2
-        className="sc-39d2e67e-4 iuvHBM"
+        className="sc-f804dfed-4 NHBaM"
       >
         Grants
       </h2>
       <p
-        className="sc-39d2e67e-5 fZdGxw"
+        className="sc-f804dfed-5 bnQOXY"
       >
         Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
       </p>
       <a
-        className="sc-2a588df4-1 fWCugx undefined "
+        className="sc-2a588df4-1 kFiSF undefined "
         onClick={[Function]}
         onMouseEnter={[Function]}
         onTouchStart={[Function]}
@@ -67,26 +67,57 @@ exports[`HowItWorks renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-39d2e67e-1 khkivv"
+    className="sc-f804dfed-1 hUcaEE"
   >
     <div
-      className="sc-39d2e67e-3 lnOegi"
+      className="sc-f804dfed-3 bjzsmT"
     />
     <div
-      className="sc-39d2e67e-2 kXHZxG"
+      className="sc-f804dfed-2 iDzbzu"
     >
       <h2
-        className="sc-39d2e67e-4 iuvHBM"
+        className="sc-f804dfed-4 NHBaM"
       >
-        FAQs
+        Leaderboard
       </h2>
       <p
-        className="sc-39d2e67e-5 fZdGxw"
+        className="sc-f804dfed-5 bnQOXY"
       >
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>
       <a
-        className="sc-2a588df4-1 fWCugx undefined "
+        className="sc-2a588df4-1 kFiSF undefined "
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onTouchStart={[Function]}
+      >
+        <span>
+          Learn More
+        </span>
+      </a>
+    </div>
+  </div>
+  <div
+    className="sc-f804dfed-1 cqSxLt"
+  >
+    <div
+      className="sc-f804dfed-3 cShpZr"
+    />
+    <div
+      className="sc-f804dfed-2 iDzbzu"
+    >
+      <h2
+        className="sc-f804dfed-4 NHBaM"
+      >
+        FAQs
+      </h2>
+      <p
+        className="sc-f804dfed-5 bnQOXY"
+      >
+        Nullam id dolor id nibh ultricies vehicula ut id elit.
+      </p>
+      <a
+        className="sc-2a588df4-1 kFiSF undefined "
         onClick={[Function]}
         onMouseEnter={[Function]}
         onTouchStart={[Function]}

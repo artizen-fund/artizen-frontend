@@ -3,13 +3,13 @@
 exports[`Sidebar renders Sidebar unchanged 1`] = `
 <div>
   <section
-    class="sc-f67c5638-1 cQDgcH sc-522104b9-0 jRWqmK"
+    class="sc-f67c5638-1 OMake sc-522104b9-0 jRWqmK"
   >
     <div
-      class="sc-f67c5638-0 fqyVoy sc-522104b9-1 jqDvUZ"
+      class="sc-f67c5638-0 cRlpgy sc-522104b9-1 bftMYt"
     >
       <h3
-        class="sc-522104b9-7 hAOLIb"
+        class="sc-522104b9-7 kATPcK"
       >
         Join our
          
@@ -20,24 +20,24 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
         donation drive
       </h3>
       <div
-        class="sc-522104b9-2 hUMQdN"
+        class="sc-522104b9-2 flIpuM"
       >
         <div
-          class="sc-522104b9-3 dfBGBg"
+          class="sc-522104b9-3 fCAqCx"
         >
           <div
-            class="sc-2e76876c-0 cpDrWq"
+            class="sc-2e76876c-0 eZquMO"
           >
             0
           </div>
           <div
-            class="sc-522104b9-6 kQLhTS"
+            class="sc-522104b9-6 euksCv"
           >
             <div
               class="sc-522104b9-5 eRngVS"
             >
               <div
-                class="sc-149d3190-0 jzemsA"
+                class="sc-149d3190-0 GzuI"
               />
                
               <span>
@@ -48,20 +48,20 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-522104b9-6 kQLhTS"
+          class="sc-522104b9-6 euksCv"
         >
           <button
-            class="sc-2a588df4-2 hVoeoR undefined "
+            class="sc-2a588df4-2 jVJhXF undefined "
           >
             <div
-              class="sc-149d3190-0 bfUncM sc-2a588df4-0 gSwEcZ"
+              class="sc-149d3190-0 ewzPBY sc-2a588df4-0 gSwEcZ"
             />
             <span>
               Donate
             </span>
           </button>
           <button
-            class="sc-2a588df4-2 kYegxc undefined "
+            class="sc-2a588df4-2 ekFgDk undefined "
           >
             <span>
               Share Now
@@ -69,13 +69,13 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </button>
         </div>
         <div
-          class="sc-522104b9-8 bXQWiS"
+          class="sc-522104b9-8 kgagiP"
         >
           <div
             class="sc-ecff4829-0 fMTZxv"
           >
             <div
-              class="sc-c6d4a71-0 iFQvvL"
+              class="sc-c6d4a71-0 bzRXeC"
             >
               <div
                 class="sc-c6d4a71-1 hmYVNc"
@@ -83,7 +83,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Leaderboard
               </div>
               <button
-                class="sc-2a588df4-2 emJYMu undefined "
+                class="sc-2a588df4-2 dorpEK undefined "
               >
                 <span>
                   See All
@@ -95,7 +95,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
             class="sc-ecff4829-0 fMTZxv"
           >
             <div
-              class="sc-c6d4a71-0 iFQvvL"
+              class="sc-c6d4a71-0 bzRXeC"
             >
               <div
                 class="sc-c6d4a71-1 hmYVNc"
@@ -103,7 +103,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
                 Additional Perks
               </div>
               <a
-                class="sc-2a588df4-1 fWCugx undefined "
+                class="sc-2a588df4-1 kFiSF undefined "
               >
                 <span>
                   Learn More
@@ -111,56 +111,56 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
               </a>
             </div>
             <div
-              class="sc-9ed997bc-0 gnOwtT"
+              class="sc-9ed997bc-0 dahNPL"
             >
               <div>
                 <div
-                  class="sc-b48a7ce9-0 hZzOYd"
+                  class="sc-b48a7ce9-0 QxMPA"
                 >
                   <div
-                    class="sc-149d3190-0 bIfjZN"
+                    class="sc-149d3190-0 dSKnsB"
                   />
                 </div>
                 Membership in Artizen DAO
               </div>
             </div>
             <div
-              class="sc-9ed997bc-0 gnOwtT"
+              class="sc-9ed997bc-0 dahNPL"
             >
               <div>
                 <div
-                  class="sc-b48a7ce9-0 hZzOYd"
+                  class="sc-b48a7ce9-0 QxMPA"
                 >
                   <div
-                    class="sc-149d3190-0 jXIwuD"
+                    class="sc-149d3190-0 hEvUin"
                   />
                 </div>
                 0.01% of $ART tokens
               </div>
             </div>
             <div
-              class="sc-9ed997bc-0 gnOwtT"
+              class="sc-9ed997bc-0 dahNPL"
             >
               <div>
                 <div
-                  class="sc-b48a7ce9-0 hZzOYd"
+                  class="sc-b48a7ce9-0 QxMPA"
                 >
                   <div
-                    class="sc-149d3190-0 fjHUbV"
+                    class="sc-149d3190-0 jQAqER"
                   />
                 </div>
                 Collectable Receipt
               </div>
             </div>
             <div
-              class="sc-9ed997bc-0 gnOwtT"
+              class="sc-9ed997bc-0 dahNPL"
             >
               <div>
                 <div
-                  class="sc-b48a7ce9-0 hZzOYd"
+                  class="sc-b48a7ce9-0 QxMPA"
                 >
                   <div
-                    class="sc-149d3190-0 kqmMWx"
+                    class="sc-149d3190-0 kmdMV"
                   />
                 </div>
                 Custom Discord Avatar

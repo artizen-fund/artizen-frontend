@@ -6,23 +6,23 @@ exports[`SelectControl renders SelectControl unchanged 1`] = `
     class="sc-2f9d5146-0 hUuFSv"
   >
     <div
-      class="sc-dccedff6-0 dxDPQx"
+      class="sc-dccedff6-0 jjRMSF"
     >
       <select
         class="hasData"
         placeholder=" "
       />
       <div
-        class="sc-38d39bf1-0 hobJpn"
+        class="sc-38d39bf1-0 ePQkJn"
       />
       <label
-        class="sc-ffdb2e6c-0 dXVxRc hasData"
+        class="sc-ffdb2e6c-0 cqczZc hasData"
       >
         Segmented enum control test
       </label>
     </div>
     <div
-      class="sc-93ba83c0-0 bAVzHI"
+      class="sc-93ba83c0-0 BZJQU"
     />
   </div>
 </div>

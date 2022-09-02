@@ -3,16 +3,16 @@
 exports[`Footer renders Footer unchanged 1`] = `
 <div>
   <div
-    class="sc-9199b4ac-0 gjUYWF"
+    class="sc-8d0edb81-0 gAsIQZ"
   >
     <footer
-      class="sc-aae777ba-0 hitCwF"
+      class="sc-aae777ba-0 euptXZ"
     >
       <hr
         class="sc-aae777ba-1 kwCfu"
       />
       <ul
-        class="sc-aae777ba-2 eNWZjQ"
+        class="sc-aae777ba-2 blWKNI"
       >
         <li>
           Mission
@@ -28,7 +28,7 @@ exports[`Footer renders Footer unchanged 1`] = `
         </li>
       </ul>
       <ul
-        class="sc-aae777ba-3 kiCPon"
+        class="sc-aae777ba-3 gFIzlP"
       >
         <li>
           Contact
@@ -47,22 +47,22 @@ exports[`Footer renders Footer unchanged 1`] = `
         class="sc-aae777ba-4 jhvGw"
       >
         <div
-          class="sc-aae777ba-5 HLgQx"
+          class="sc-aae777ba-5 gwTyep"
         >
           Join the mission to fund public goods.
         </div>
         <div
-          class="sc-aae777ba-6 fsaJbW"
+          class="sc-aae777ba-6 hlbRBf"
         >
           <button
-            class="sc-2a588df4-2 QcBkf undefined "
+            class="sc-2a588df4-2 gItzDj undefined "
           >
             <span>
               Donate
             </span>
           </button>
           <button
-            class="sc-2a588df4-2 QcBkf undefined "
+            class="sc-2a588df4-2 gItzDj undefined "
           >
             <span>
               Sign In
@@ -74,31 +74,31 @@ exports[`Footer renders Footer unchanged 1`] = `
         class="sc-aae777ba-1 buYhaQ"
       />
       <div
-        class="sc-91c5d1a5-0 hnoAeU"
+        class="sc-91c5d1a5-0 hbgVsC"
       >
         <a
-          class="sc-91c5d1a5-1 cSkmvx"
+          class="sc-91c5d1a5-1 kbnAwz"
           href="https://twitter.com/artizenfund"
           target="_blank"
         >
           twitter
         </a>
         <a
-          class="sc-91c5d1a5-1 cSkmvx"
+          class="sc-91c5d1a5-1 kbnAwz"
           href="https://artizen.link/discord"
           target="_blank"
         >
           discord
         </a>
         <a
-          class="sc-91c5d1a5-1 cSkmvx"
+          class="sc-91c5d1a5-1 kbnAwz"
           href="https://github.com/artizen-fund"
           target="_blank"
         >
           github
         </a>
         <a
-          class="sc-91c5d1a5-1 cSkmvx"
+          class="sc-91c5d1a5-1 kbnAwz"
           href="https://artizen.link/telegram"
           target="_blank"
         >
@@ -108,10 +108,10 @@ exports[`Footer renders Footer unchanged 1`] = `
     </footer>
   </div>
   <div
-    class="sc-9199b4ac-0 brREMd sc-aae777ba-8 cKHMOq"
+    class="sc-8d0edb81-0 ddViZJ sc-aae777ba-8 cKHMOq"
   >
     <footer
-      class="sc-aae777ba-7 leANSN"
+      class="sc-aae777ba-7 dWhYWc"
     >
       <div>
         Open source platform made with ❤️ by a globally distributed team

@@ -5,20 +5,20 @@ exports[`DonationHelpLink renders correctly 1`] = `
   className="sc-78ba2856-0 fOnoXs"
 >
   <div
-    className="sc-c089a03b-2 VsSZo"
+    className="sc-c089a03b-2 ckelpU"
   >
     <div
-      className="sc-c089a03b-0 dhCXYi"
+      className="sc-c089a03b-0 hULMLC"
       color="night"
     >
       <div
-        className="sc-149d3190-0 DayLH"
+        className="sc-149d3190-0 jDOEuv"
         color="night"
       />
     </div>
   </div>
   <p
-    className="sc-78ba2856-1 cjHeIN"
+    className="sc-78ba2856-1 jZynMh"
   >
     Need help? We’ve prepared a useful guide to donating.
   </p>

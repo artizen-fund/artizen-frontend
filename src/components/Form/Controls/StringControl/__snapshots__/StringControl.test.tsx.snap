@@ -6,7 +6,7 @@ exports[`StringControl renders StringControl unchanged 1`] = `
     class="sc-2f9d5146-0 kysoaZ"
   >
     <div
-      class="sc-dccedff6-0 kaZwEr"
+      class="sc-dccedff6-0 fSqMKz"
       disabled=""
     >
       <input
@@ -16,17 +16,17 @@ exports[`StringControl renders StringControl unchanged 1`] = `
         value="derp"
       />
       <label
-        class="sc-ffdb2e6c-0 dXVxRc"
+        class="sc-ffdb2e6c-0 cqczZc"
       >
         String test
       </label>
       <div
-        class="sc-149d3190-0 jMTcSq sc-5f903e4e-0 fvVMpv"
+        class="sc-149d3190-0 btmhnS sc-5f903e4e-0 cJxxyr"
         color="night"
       />
     </div>
     <div
-      class="sc-93ba83c0-0 bAVzHI"
+      class="sc-93ba83c0-0 BZJQU"
     />
   </div>
 </div>
@@ -38,7 +38,7 @@ exports[`StringControl renders StringControl:Phone unchanged 1`] = `
     class="sc-2f9d5146-0 bVdSQY"
   >
     <div
-      class="sc-dccedff6-0 kaZwEr"
+      class="sc-dccedff6-0 fSqMKz"
       disabled=""
     >
       <input
@@ -48,17 +48,17 @@ exports[`StringControl renders StringControl:Phone unchanged 1`] = `
         value=""
       />
       <label
-        class="sc-ffdb2e6c-0 dXVxRc"
+        class="sc-ffdb2e6c-0 cqczZc"
       >
         String test
       </label>
       <div
-        class="sc-149d3190-0 jMTcSq sc-5f903e4e-0 fvVMpv"
+        class="sc-149d3190-0 btmhnS sc-5f903e4e-0 cJxxyr"
         color="night"
       />
     </div>
     <div
-      class="sc-93ba83c0-0 bAVzHI"
+      class="sc-93ba83c0-0 BZJQU"
     />
   </div>
 </div>

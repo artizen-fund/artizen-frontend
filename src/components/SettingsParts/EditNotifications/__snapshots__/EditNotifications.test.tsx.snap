@@ -16,7 +16,7 @@ exports[`EditNotifications renders correctly 1`] = `
         id="#/properties/someString"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             defaultValue="Some default value"
@@ -28,13 +28,13 @@ exports[`EditNotifications renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             Tell us a thing.
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -46,7 +46,7 @@ exports[`EditNotifications renders correctly 1`] = `
         id="#/properties/someEmail"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             onBlur={[Function]}
@@ -56,14 +56,14 @@ exports[`EditNotifications renders correctly 1`] = `
             type="text"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             Email Address
              *
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -75,7 +75,7 @@ exports[`EditNotifications renders correctly 1`] = `
         id="#/properties/someNumber"
       >
         <div
-          className="sc-dccedff6-0 dxDPQx"
+          className="sc-dccedff6-0 jjRMSF"
         >
           <input
             className="noData"
@@ -87,13 +87,13 @@ exports[`EditNotifications renders correctly 1`] = `
             type="number"
           />
           <label
-            className="sc-ffdb2e6c-0 dXVxRc"
+            className="sc-ffdb2e6c-0 cqczZc"
           >
             What is your lucky number?
           </label>
         </div>
         <div
-          className="sc-93ba83c0-0 bAVzHI"
+          className="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -105,7 +105,7 @@ exports[`EditNotifications renders correctly 1`] = `
         id="#/properties/someBoolean"
       >
         <div
-          className="sc-dd35d48e-0 lmHjtw"
+          className="sc-dd35d48e-0 bkkyVw"
         >
           <input
             checked={true}
@@ -128,7 +128,7 @@ exports[`EditNotifications renders correctly 1`] = `
     </div>
   </div>
   <button
-    className="sc-2a588df4-2 jKXlfZ undefined "
+    className="sc-2a588df4-2 itVOtl undefined "
     onClick={[Function]}
   >
     <span>

@@ -3,34 +3,34 @@
 exports[`SessionShelf renders correctly 1`] = `
 <div>
   <div
-    class="sc-e98d3470-4 hBMqrC"
+    class="sc-e98d3470-4 ccfmNP"
   >
     <div
       class="sc-e98d3470-5 UEdlz"
     >
       <h1
-        class="sc-e98d3470-6 cVXBdQ"
+        class="sc-e98d3470-6 cmIgXc"
       >
         Let’s get started by setting up your Artizen account
       </h1>
       <div
-        class="sc-e98d3470-7 eBkBrE"
+        class="sc-e98d3470-7 iRDciN"
       >
         <div
-          class="sc-c089a03b-2 VsSZo"
+          class="sc-c089a03b-2 ckelpU"
         >
           <div
-            class="sc-c089a03b-0 ja-DffS"
+            class="sc-c089a03b-0 iiIkrS"
             color="night"
           >
             <div
-              class="sc-149d3190-0 iAXlWi"
+              class="sc-149d3190-0 eIDYrK"
               color="night"
             />
           </div>
         </div>
         <p
-          class="sc-e98d3470-8 eZuGFS"
+          class="sc-e98d3470-8 jXQbMW"
         >
           Already have an account?
           <br />
@@ -49,7 +49,7 @@ exports[`SessionShelf renders correctly 1`] = `
           id="#/properties/email"
         >
           <div
-            class="sc-dccedff6-0 dxDPQx"
+            class="sc-dccedff6-0 jjRMSF"
           >
             <input
               placeholder="e.g. rene@artizen.fund"
@@ -58,14 +58,14 @@ exports[`SessionShelf renders correctly 1`] = `
               value=""
             />
             <label
-              class="sc-ffdb2e6c-0 dXVxRc"
+              class="sc-ffdb2e6c-0 cqczZc"
             >
               Email Address
                *
             </label>
           </div>
           <div
-            class="sc-93ba83c0-0 bAVzHI"
+            class="sc-93ba83c0-0 BZJQU"
           >
             is a required property
           </div>
@@ -73,7 +73,7 @@ exports[`SessionShelf renders correctly 1`] = `
       </div>
     </div>
     <button
-      class="sc-2a588df4-2 ixnoRf sc-e98d3470-0 cgGWFL  disabled"
+      class="sc-2a588df4-2 bANZSb sc-e98d3470-0 cgGWFL  disabled"
       disabled=""
     >
       <span>
@@ -84,27 +84,27 @@ exports[`SessionShelf renders correctly 1`] = `
       class="sc-e98d3470-1 feCDDK"
     >
       <div
-        class="sc-e98d3470-9 JhXGw"
+        class="sc-e98d3470-9 eFOEhA"
       />
       <div
         class="sc-e98d3470-10 kSQUcl"
       >
         <button
-          class="sc-2a588df4-2 kYegxc undefined "
+          class="sc-2a588df4-2 ekFgDk undefined "
         >
           <span>
             Phone
           </span>
         </button>
         <button
-          class="sc-2a588df4-2 kYegxc undefined "
+          class="sc-2a588df4-2 ekFgDk undefined "
         >
           <span>
             Twitter
           </span>
         </button>
         <button
-          class="sc-2a588df4-2 kYegxc undefined "
+          class="sc-2a588df4-2 ekFgDk undefined "
         >
           <span>
             Discord
@@ -113,16 +113,16 @@ exports[`SessionShelf renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="sc-e98d3470-11 bBfvKt"
+      class="sc-e98d3470-11 hEWjgo"
     >
       <div
-        class="sc-e98d3470-12 iLGKCz"
+        class="sc-e98d3470-12 gnYoTi"
       >
         <label
           class="sc-dd35d48e-4 dCKwdz"
         >
           <div
-            class="sc-dd35d48e-0 lmHjtw"
+            class="sc-dd35d48e-0 bkkyVw"
           >
             <input
               checked=""
@@ -138,7 +138,7 @@ exports[`SessionShelf renders correctly 1`] = `
           />
         </label>
         <p
-          class="sc-e98d3470-13 kvlXQZ"
+          class="sc-e98d3470-13 hQIAWR"
         >
           I agree to Artizen’s
           <a
