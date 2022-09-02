@@ -17,8 +17,6 @@ const Header = () => {
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 
-  const [navVisible, setNavVisible] = useState(false)
-
   const toggleShelf = (shelf?: ShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
   return (
@@ -31,11 +29,11 @@ const Header = () => {
             </a>
           </Link>
           <MobileNavButton
-            onClick={() => setNavVisible(!navVisible)}
+            onClick={() => toggleShelf('howItWorks')}
             icon={glyphKey.arrow}
             iconOnRight
             outline
-            size="l1"
+            level={1}
           >
             Menu
           </MobileNavButton>
@@ -79,7 +77,7 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   justify-content: space-between;
   align-items: center;
 
-  padding: 0 40px;
+  padding: 0 24px;
   width: 100%;
   height: 64px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -87,6 +85,9 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     height: 88px;
+  }
+  @media only screen and (min-width: 1680px) {
+    padding: 0 calc((100vw - 1600px) / 2);
   }
 
   background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
@@ -116,7 +117,10 @@ const Items = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
+  gap: 8px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    gap: 20px;
+  }
 `
 
 const Nav = styled.div`
@@ -137,6 +141,10 @@ const Nav = styled.div`
 `
 
 const MobileNavButton = styled(props => <Button {...props} />)`
+  border: 0.5px solid ${rgba(palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    border: 0.5px solid ${rgba(palette.barracuda)};
+  }
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     display: none !important;
   }

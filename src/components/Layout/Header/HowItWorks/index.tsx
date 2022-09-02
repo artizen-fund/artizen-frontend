@@ -7,6 +7,13 @@ const HowItWorks = () => {
   const cells = [
     {
       illustration: 'derp',
+      title: 'Leaderboard',
+      copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
+      destination: '/derp',
+      mobileOnly: true,
+    },
+    {
+      illustration: 'derp',
       title: 'About',
       copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
       destination: '/derp',
@@ -27,7 +34,7 @@ const HowItWorks = () => {
   return (
     <Wrapper>
       {cells.map(cell => (
-        <Cell key={`cell-${cell.title}`}>
+        <Cell key={`cell-${cell.title}`} mobileOnly={cell.mobileOnly}>
           <Illustration />
           <Under>
             <Title>{cell.title}</Title>
@@ -52,10 +59,13 @@ const Wrapper = styled.div`
   }
 `
 
-const Cell = styled.div`
+const Cell = styled.div<{ mobileOnly?: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    ${props => props.mobileOnly && 'display: none;'}
+  }
 `
 
 const Under = styled.div`
