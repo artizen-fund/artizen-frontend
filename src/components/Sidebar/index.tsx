@@ -1,12 +1,12 @@
+import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { DonationContext, formatUSDC, rgba } from '@lib'
+import { DonationContext, formatUSDC, rgba, isServer } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
-import { useContext, useEffect, useState } from 'react'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_GOAL: number
@@ -45,7 +45,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
   }
 
   useEffect(() => {
-    loadDonations()
+    // if (!isServer()) loadDonations()
   }, [donationStatus])
 
   const formatedTotalRaised = formatUSDC(totalRaised)

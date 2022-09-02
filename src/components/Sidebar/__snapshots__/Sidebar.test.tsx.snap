@@ -3,57 +3,52 @@
 exports[`Sidebar renders Sidebar unchanged 1`] = `
 <div>
   <section
-    class="sc-f67c5638-1 cQDgcH sc-5301581a-0 czEzwn"
+    class="sc-f67c5638-1 cQDgcH sc-522104b9-0 jRWqmK"
   >
     <div
-      class="sc-f67c5638-0 fqyVoy sc-5301581a-1 dLCcPg"
+      class="sc-f67c5638-0 fqyVoy sc-522104b9-1 jqDvUZ"
     >
       <h3
-        class="sc-5301581a-7 gyjzOO"
+        class="sc-522104b9-7 hAOLIb"
       >
-        Join our 
+        Join our
+         
         <strong>
-          May, 2022
+          , 
         </strong>
-         donation drive
+         
+        donation drive
       </h3>
       <div
-        class="sc-5301581a-2 ekrSFw"
+        class="sc-522104b9-2 hUMQdN"
       >
         <div
-          class="sc-5301581a-3 kgOFbF"
+          class="sc-522104b9-3 dfBGBg"
         >
           <div
-            class="sc-2e76876c-0 iIEwYy"
+            class="sc-2e76876c-0 cpDrWq"
           >
-            0.61
+            0
           </div>
           <div
-            class="sc-5301581a-6 gsDnlv"
+            class="sc-522104b9-6 kQLhTS"
           >
             <div
-              class="sc-ba3887ec-0 jyWTDZ"
-            >
-              <div
-                class="sc-149d3190-0 kATcSk"
-              />
-            </div>
-            <div
-              class="sc-5301581a-5 fAUXGj"
+              class="sc-522104b9-5 eRngVS"
             >
               <div
                 class="sc-149d3190-0 jzemsA"
               />
                
               <span>
-                3.2
-                k donations
+                0
+                 donations
               </span>
             </div>
           </div>
         </div>
         <div
-          class="sc-5301581a-6 gsDnlv"
+          class="sc-522104b9-6 kQLhTS"
         >
           <button
             class="sc-2a588df4-2 hVoeoR undefined "
@@ -74,7 +69,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </button>
         </div>
         <div
-          class="sc-5301581a-8 iFjFBb"
+          class="sc-522104b9-8 bXQWiS"
         >
           <div
             class="sc-ecff4829-0 fMTZxv"

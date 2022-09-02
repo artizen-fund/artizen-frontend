@@ -3,24 +3,24 @@
 exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
 <div>
   <section
-    class="sc-cdeaa557-0 cAptND"
+    class="sc-5284f2f8-0 gXRYJr"
   >
     <div
       class="sc-4cf5d7c6-0 dgJcrf"
     />
     <div
-      class="sc-cdeaa557-1 boWMqn"
+      class="sc-5284f2f8-1 hVkqFn"
     >
       <div
-        class="sc-cdeaa557-2 buQvQx"
+        class="sc-5284f2f8-2 jwMlaR"
       >
         Title of Monthly Featured Artwork
       </div>
       <div
-        class="sc-cdeaa557-3 GqOUk"
+        class="sc-5284f2f8-3 iUftyg"
       >
         <div
-          class="sc-cdeaa557-4 eDRDbJ"
+          class="sc-5284f2f8-4 igEtRN"
         >
           <div
             class="sc-c089a03b-2 VsSZo"
@@ -37,7 +37,7 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-cdeaa557-4 eDRDbJ"
+          class="sc-5284f2f8-4 igEtRN"
         >
           <div
             class="sc-c089a03b-2 VsSZo"
@@ -55,12 +55,12 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
               class="sc-c089a03b-1 gmqtJg"
               color="night"
             >
-              Created 0 days ago
+              Created NaN days ago
             </div>
           </div>
         </div>
         <div
-          class="sc-cdeaa557-4 eDRDbJ"
+          class="sc-5284f2f8-4 igEtRN"
         >
           <div
             class="sc-c089a03b-2 VsSZo"

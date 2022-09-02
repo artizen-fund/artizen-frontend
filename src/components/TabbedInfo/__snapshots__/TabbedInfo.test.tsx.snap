@@ -3,22 +3,26 @@
 exports[`TabbedInfo renders ProgressBar unchanged 1`] = `
 <div>
   <div
-    class="sc-2c6f37dd-0 desDpg"
+    class="sc-c749b2e3-0 dAmxpC"
   >
     <ul
-      class="sc-2c6f37dd-1 jDFHcC"
+      class="sc-c749b2e3-1 yBWDk"
     >
       <div
-        class="sc-2c6f37dd-2 isvbbe"
+        class="sc-c749b2e3-2 daJKqY"
       >
         About
       </div>
       <div
-        class="sc-2c6f37dd-2 kYBSUR"
+        class="sc-c749b2e3-2 daJKqY"
       >
         About
       </div>
     </ul>
+    <div
+      class="sc-9bd5b807-0"
+      label="About"
+    />
     <div
       class="sc-9bd5b807-0"
       label="About"

@@ -13,9 +13,12 @@ describe('PaymentFiat', () => {
     const setStage = (_: string) => {
       // do nothing
     }
+    const setOrder = (_: { id: string }) => {
+      // do nothing
+    }
     const { container } = render(
       <MockedProvider mocks={mockGetUserData} addTypename={false}>
-        <PaymentFiat {...{ setStage }} amount={42} />
+        <PaymentFiat {...{ setStage, setOrder }} amount={42} />
       </MockedProvider>,
     )
     expect(container).toMatchSnapshot()
