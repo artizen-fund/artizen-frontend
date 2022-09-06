@@ -2,24 +2,9 @@ const usdcabiContract = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
+      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'spender', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
     ],
     name: 'Approval',
     type: 'event',
@@ -27,18 +12,8 @@ const usdcabiContract = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'authorizer',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'nonce',
-        type: 'bytes32',
-      },
+      { indexed: true, internalType: 'address', name: 'authorizer', type: 'address' },
+      { indexed: true, internalType: 'bytes32', name: 'nonce', type: 'bytes32' },
     ],
     name: 'AuthorizationCanceled',
     type: 'event',
@@ -46,56 +21,24 @@ const usdcabiContract = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'authorizer',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'nonce',
-        type: 'bytes32',
-      },
+      { indexed: true, internalType: 'address', name: 'authorizer', type: 'address' },
+      { indexed: true, internalType: 'bytes32', name: 'nonce', type: 'bytes32' },
     ],
     name: 'AuthorizationUsed',
     type: 'event',
   },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
+    inputs: [{ indexed: true, internalType: 'address', name: 'account', type: 'address' }],
     name: 'Blacklisted',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'userAddress',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address payable',
-        name: 'relayerAddress',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'bytes',
-        name: 'functionSignature',
-        type: 'bytes',
-      },
+      { indexed: false, internalType: 'address', name: 'userAddress', type: 'address' },
+      { indexed: false, internalType: 'address payable', name: 'relayerAddress', type: 'address' },
+      { indexed: false, internalType: 'bytes', name: 'functionSignature', type: 'bytes' },
     ],
     name: 'MetaTransactionExecuted',
     type: 'event',
@@ -103,14 +46,7 @@ const usdcabiContract = [
   { anonymous: false, inputs: [], name: 'Pause', type: 'event' },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'newRescuer',
-        type: 'address',
-      },
-    ],
+    inputs: [{ indexed: true, internalType: 'address', name: 'newRescuer', type: 'address' }],
     name: 'RescuerChanged',
     type: 'event',
   },
@@ -118,18 +54,8 @@ const usdcabiContract = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'previousAdminRole',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'newAdminRole',
-        type: 'bytes32',
-      },
+      { indexed: true, internalType: 'bytes32', name: 'previousAdminRole', type: 'bytes32' },
+      { indexed: true, internalType: 'bytes32', name: 'newAdminRole', type: 'bytes32' },
     ],
     name: 'RoleAdminChanged',
     type: 'event',
@@ -138,18 +64,8 @@ const usdcabiContract = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
+      { indexed: true, internalType: 'address', name: 'account', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'sender', type: 'address' },
     ],
     name: 'RoleGranted',
     type: 'event',
@@ -158,18 +74,8 @@ const usdcabiContract = [
     anonymous: false,
     inputs: [
       { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
+      { indexed: true, internalType: 'address', name: 'account', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'sender', type: 'address' },
     ],
     name: 'RoleRevoked',
     type: 'event',
@@ -179,26 +85,14 @@ const usdcabiContract = [
     inputs: [
       { indexed: true, internalType: 'address', name: 'from', type: 'address' },
       { indexed: true, internalType: 'address', name: 'to', type: 'address' },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
+      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
     ],
     name: 'Transfer',
     type: 'event',
   },
   {
     anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
+    inputs: [{ indexed: true, internalType: 'address', name: 'account', type: 'address' }],
     name: 'UnBlacklisted',
     type: 'event',
   },
@@ -351,13 +245,7 @@ const usdcabiContract = [
       { internalType: 'bytes32', name: 'nonce', type: 'bytes32' },
     ],
     name: 'authorizationState',
-    outputs: [
-      {
-        internalType: 'enum GasAbstraction.AuthorizationState',
-        name: '',
-        type: 'uint8',
-      },
-    ],
+    outputs: [{ internalType: 'enum GasAbstraction.AuthorizationState', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -563,13 +451,7 @@ const usdcabiContract = [
     stateMutability: 'view',
     type: 'function',
   },
-  {
-    inputs: [],
-    name: 'pause',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
+  { inputs: [], name: 'pause', outputs: [], stateMutability: 'nonpayable', type: 'function' },
   {
     inputs: [],
     name: 'paused',
@@ -611,11 +493,7 @@ const usdcabiContract = [
   },
   {
     inputs: [
-      {
-        internalType: 'contract IERC20',
-        name: 'tokenContract',
-        type: 'address',
-      },
+      { internalType: 'contract IERC20', name: 'tokenContract', type: 'address' },
       { internalType: 'address', name: 'to', type: 'address' },
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
     ],
@@ -700,13 +578,7 @@ const usdcabiContract = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-  {
-    inputs: [],
-    name: 'unpause',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
+  { inputs: [], name: 'unpause', outputs: [], stateMutability: 'nonpayable', type: 'function' },
   {
     inputs: [
       { internalType: 'string', name: 'newName', type: 'string' },

@@ -84,7 +84,7 @@ const Admin = () => {
                   <td>{raffle.tokenID.toNumber()}</td>
                   <td>{new Date(raffle.startTime.toNumber() * 1000).toLocaleString()}</td>
                   <td>{endDateTime.toLocaleString()}</td>
-                  <td>{raffle.tokenAllocation.toNumber()}</td>
+                  <td>{raffle.tokenAllocation.toString()}</td>
                   <td>{raffle.topDonatedAmount.toNumber()}</td>
                   <td>{raffle.cancelled ? 'true' : 'false'}</td>
                   {canBeCanceled && (

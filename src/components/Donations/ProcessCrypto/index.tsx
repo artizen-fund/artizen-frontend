@@ -35,6 +35,7 @@ type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'comple
 
 const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IProcessCrypto) => {
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
+  const [error, setError] = useState('')
 
   const [loggedInUser] = useLoggedInUser()
 
@@ -95,6 +96,10 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
       }
     },
   })
+
+  const handleTopUpFailed = async () => {
+    setError('Payment Failed')
+  }
 
   const handleTopUpComplete = async () => {
     setCryptoStage('building')
@@ -192,6 +197,9 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
         case 'Payment is COMPLETE':
           handleTopUpComplete()
           break
+        case 'Payment is FAILED':
+          handleTopUpFailed()
+          break
         case 'Swap is COMPLETE':
           handleSwapComplete()
           break
@@ -222,13 +230,23 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
   return (
     <Wrapper>
       <Information>
-        <div>
-          <Title>It’s time to create your donation which requires a little extra magic</Title>
-          <Subhead>
-            Web3 takes longer to process transactions than traditional methods. You can keep this window open or close
-            it without losing any progress – we&apos;ll send you an email when we’re ready.
-          </Subhead>
-        </div>
+        {!error ? (
+          <div>
+            <Title>It’s time to create your donation which requires a little extra magic</Title>
+            <Subhead>
+              Web3 takes longer to process transactions than traditional methods. You can keep this window open –
+              we&apos;ll send you an email when it is completed.
+            </Subhead>
+          </div>
+        ) : (
+          <div>
+            <Title>Uh oh, looks like something went wrong</Title>
+            <Subhead>
+              Don&apos;t worry you haven&apos;t been charged! Unfortunately Web3 is still in it&apos;s infancy and
+              unusual issues can pop up from time-to-time.
+            </Subhead>
+          </div>
+        )}
 
         <IconStack>
           {donationMethod === 'ethereum' && (

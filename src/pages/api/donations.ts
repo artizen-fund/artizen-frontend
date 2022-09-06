@@ -4,6 +4,8 @@ import Moralis from 'moralis-v1/node'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { raffleId } = req.query
+
   // reads the api key from .env.local and starts Moralis SDK
   await Moralis.start({
     serverUrl: process.env.MORALIS_SERVER_URL,
@@ -14,6 +16,7 @@ const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
   const Donation = Moralis.Object.extend('Donation')
 
   const query = new Moralis.Query(Donation)
+  query.equalTo('raffleId', raffleId)
   query.descending('block_number')
   const results = await query.find()
 

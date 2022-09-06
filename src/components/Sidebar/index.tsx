@@ -5,7 +5,7 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { DonationContext, formatUSDC, rgba, isServer } from '@lib'
+import { DonationContext, formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
@@ -35,18 +35,20 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
   const [totalRaised, setTotalRaised] = useState(0)
 
   const loadDonations = async () => {
-    const donationsResponse = await fetch('/api/donations')
-    const json = await donationsResponse.json()
-    if (json.length > 0) {
-      setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
-    }
+    if (raffle?.raffleID) {
+      const donationsResponse = await fetch(`/api/donations?raffleId=${raffle?.raffleID.toString()}`)
+      const json = await donationsResponse.json()
+      if (json.length > 0) {
+        setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
+      }
 
-    setDonations(json)
+      setDonations(json)
+    }
   }
 
   useEffect(() => {
-    // if (!isServer()) loadDonations()
-  }, [donationStatus])
+    loadDonations()
+  }, [donationStatus, raffle])
 
   const formatedTotalRaised = formatUSDC(totalRaised)
 

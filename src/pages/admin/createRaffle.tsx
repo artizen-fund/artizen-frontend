@@ -1,7 +1,7 @@
 import { Button, Form, Layout } from '@components'
 import { ArtizenERC1155, ArtToken, RaffleAbi } from '@contracts'
 import { schema, uischema, initialState, FormState } from '@forms/admin'
-import { assert, useMagic } from '@lib'
+import { assert, USDC_UNIT, useMagic } from '@lib'
 import { BigNumber, ethers } from 'ethers'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -56,12 +56,14 @@ const CreateRaffle = () => {
       tokenID: latestTokenId,
       startTime: Math.round(new Date(data.startTime).getTime() / 1000), // must be timestamp in seconds
       endTime: Math.round(new Date(data.endTime).getTime() / 1000), // must be timestamp in seconds
-      minimumDonationAmount: BigNumber.from(data.mimDonationAmount),
+      donationCount: 0,
+      minimumDonationAmount: ethers.utils.parseUnits(data.mimDonationAmount.toString(), USDC_UNIT),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
-      tokenAllocation: BigNumber.from(data.tokenAllocation),
-      buffer: BigNumber.from(data.tokenAllocation),
+      tokenAllocation: ethers.utils.parseUnits(data.tokenAllocation.toString()),
+      tokenBuffer: ethers.utils.parseUnits(data.tokenAllocation.toString()),
       cancelled: false,
+      ended: false,
     }
 
     // Create a new Raffle
