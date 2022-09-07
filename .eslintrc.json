@@ -89,7 +89,6 @@
     "semi": ["error", "never"],
 
     /* naming-conventions */
-    "id-length": ["error", { "exceptions": ["_", "i", "e", "r", "s", "v"] }],
     "no-underscore-dangle": "error",
 
     /* react */
