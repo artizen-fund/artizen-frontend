@@ -57,11 +57,33 @@ yarn storybook
 yarn test
 ```
 
-## Run Jest tests:
+### Run Jest tests:
 
 ```bash
 yarn test:jest
 ```
+
+## Manual tests:
+- FIAT flow
+  ```
+  Card Number: 4111111111111111
+
+  Expiration: 10/2023
+
+  CVV: 555
+  ```
+- USDC Flow
+  - Install and setup Metamask in your browser
+  - Get some MATIC from [faucet](https://faucet.polygon.technology/) to your Metamask wallet
+  - Ask Rodrigo for some USDC on Mumbai
+  - Go ahead and try USDC donation
+
+- ETH Flow
+  - Install and setup Metamask in your browser
+  - Get some Ropsten ETH from [faucet](https://faucet.egorfine.com/) to your Metamask wallet
+  - Get some Goerli ETH from [faucet](https://goerlifaucet.com/) to your Metamask wallet
+  - Ask Rodrigo for some USDC on Goerli
+  - Go ahead and try ETH donation 
 
 ## Licence
 
