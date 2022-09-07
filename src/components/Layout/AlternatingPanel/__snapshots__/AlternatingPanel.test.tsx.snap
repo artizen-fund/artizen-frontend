@@ -2,25 +2,25 @@
 
 exports[`AlternatingPanel renders correctly 1`] = `
 <div
-  className="sc-9e38558c-0 lbJrHH"
+  className="sc-b080ae0a-0 eDQMOt"
 >
   <div
-    className="sc-9e38558c-1 cvnyEh"
+    className="sc-b080ae0a-1 bMldiG"
   />
   <div
-    className="sc-9e38558c-2 gDLmB"
+    className="sc-b080ae0a-2 jPZrwV"
   >
     <h2
-      className="sc-9e38558c-3 cVsTue"
+      className="sc-b080ae0a-3 kvKxCN"
     />
     <p
-      className="sc-9e38558c-4 bVTsCT"
+      className="sc-b080ae0a-4 IZZMw"
     />
     <h3
-      className="sc-9e38558c-5 jCXrDL"
+      className="sc-b080ae0a-5 djJbsc"
     />
     <a
-      className="sc-2a588df4-1 izfOXq undefined "
+      className="sc-2a588df4-1 iQLwQR undefined "
       onClick={[Function]}
       onMouseEnter={[Function]}
       onTouchStart={[Function]}

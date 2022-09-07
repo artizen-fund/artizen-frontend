@@ -22,7 +22,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/stringExample"
       >
         <div
-          class="sc-dccedff6-0 dxDPQx"
+          class="sc-dccedff6-0 jjRMSF"
         >
           <input
             maxlength="20"
@@ -33,14 +33,14 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-ffdb2e6c-0 dXVxRc"
+            class="sc-ffdb2e6c-0 cqczZc"
           >
             3-20 Character Length String
              *
           </label>
         </div>
         <div
-          class="sc-93ba83c0-0 bAVzHI"
+          class="sc-93ba83c0-0 BZJQU"
         >
           * required field
         </div>
@@ -54,10 +54,10 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/phoneExample"
       >
         <div
-          class="sc-dccedff6-0 dxDPQx"
+          class="sc-dccedff6-0 jjRMSF"
         >
           <div
-            class="sc-f5b34ffa-0 iLecjc PhoneInput"
+            class="sc-f5b34ffa-0 fZuTyM PhoneInput"
           >
             <div
               class="PhoneInputCountry"
@@ -1315,13 +1315,13 @@ exports[`Form renders Form unchanged 1`] = `
             />
           </div>
           <label
-            class="sc-ffdb2e6c-0 jECbNj"
+            class="sc-ffdb2e6c-0 hrYlnX"
           >
             Phone Example
           </label>
         </div>
         <div
-          class="sc-93ba83c0-0 bAVzHI"
+          class="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -1333,7 +1333,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/switchBooleanExample"
       >
         <span
-          class="sc-accf1c1-3 jiymrO"
+          class="sc-accf1c1-3 bWSwhq"
         >
           Switch Boolean Example
         </span>
@@ -1342,7 +1342,7 @@ exports[`Form renders Form unchanged 1`] = `
           type="checkbox"
         />
         <span
-          class="sc-accf1c1-2 jDOa-Dy"
+          class="sc-accf1c1-2 jaXOMb"
         />
       </label>
     </div>
@@ -1354,7 +1354,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/booleanCheckExample"
       >
         <div
-          class="sc-dd35d48e-0 lmHjtw"
+          class="sc-dd35d48e-0 bkkyVw"
         >
           <input
             class="sc-dd35d48e-1 clTMzK"
@@ -1379,7 +1379,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/enumExample"
       >
         <div
-          class="sc-dccedff6-0 dxDPQx"
+          class="sc-dccedff6-0 jjRMSF"
         >
           <select
             class="noData"
@@ -1420,16 +1420,16 @@ exports[`Form renders Form unchanged 1`] = `
             </option>
           </select>
           <div
-            class="sc-38d39bf1-0 hobJpn"
+            class="sc-38d39bf1-0 ePQkJn"
           />
           <label
-            class="sc-ffdb2e6c-0 dXVxRc noData"
+            class="sc-ffdb2e6c-0 cqczZc noData"
           >
             Enum Example
           </label>
         </div>
         <div
-          class="sc-93ba83c0-0 bAVzHI"
+          class="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -1437,12 +1437,12 @@ exports[`Form renders Form unchanged 1`] = `
       class="vertical-layout-item"
     >
       <div
-        class="sc-1490f8e8-0 hDZEyp"
+        class="sc-1490f8e8-0 XQsfM"
         id="#/properties/enumSegmentsExample"
         label="Enum Segments Example"
       >
         <label
-          class="sc-1490f8e8-1 vGKrz"
+          class="sc-1490f8e8-1 iYqZHK"
         >
           <input
             type="radio"
@@ -1453,7 +1453,7 @@ exports[`Form renders Form unchanged 1`] = `
           </span>
         </label>
         <label
-          class="sc-1490f8e8-1 vGKrz"
+          class="sc-1490f8e8-1 iYqZHK"
         >
           <input
             type="radio"
@@ -1464,7 +1464,7 @@ exports[`Form renders Form unchanged 1`] = `
           </span>
         </label>
         <label
-          class="sc-1490f8e8-1 vGKrz"
+          class="sc-1490f8e8-1 iYqZHK"
         >
           <input
             type="radio"
@@ -1475,7 +1475,7 @@ exports[`Form renders Form unchanged 1`] = `
           </span>
         </label>
         <label
-          class="sc-1490f8e8-1 vGKrz"
+          class="sc-1490f8e8-1 iYqZHK"
         >
           <input
             type="radio"
@@ -1495,7 +1495,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/integerExample"
       >
         <div
-          class="sc-dccedff6-0 dxDPQx"
+          class="sc-dccedff6-0 jjRMSF"
         >
           <input
             class="noData"
@@ -1507,13 +1507,13 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-ffdb2e6c-0 dXVxRc"
+            class="sc-ffdb2e6c-0 cqczZc"
           >
             Integer Example
           </label>
         </div>
         <div
-          class="sc-93ba83c0-0 bAVzHI"
+          class="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -1525,7 +1525,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/numberExample"
       >
         <div
-          class="sc-dccedff6-0 dxDPQx"
+          class="sc-dccedff6-0 jjRMSF"
         >
           <input
             class="noData"
@@ -1535,13 +1535,13 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-ffdb2e6c-0 dXVxRc"
+            class="sc-ffdb2e6c-0 cqczZc"
           >
             Number Example
           </label>
         </div>
         <div
-          class="sc-93ba83c0-0 bAVzHI"
+          class="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>
@@ -1553,7 +1553,7 @@ exports[`Form renders Form unchanged 1`] = `
         id="#/properties/emailExample"
       >
         <div
-          class="sc-dccedff6-0 dxDPQx"
+          class="sc-dccedff6-0 jjRMSF"
         >
           <input
             placeholder="your@email.com"
@@ -1561,13 +1561,13 @@ exports[`Form renders Form unchanged 1`] = `
             value=""
           />
           <label
-            class="sc-ffdb2e6c-0 dXVxRc"
+            class="sc-ffdb2e6c-0 cqczZc"
           >
             Email Example
           </label>
         </div>
         <div
-          class="sc-93ba83c0-0 bAVzHI"
+          class="sc-93ba83c0-0 BZJQU"
         />
       </div>
     </div>

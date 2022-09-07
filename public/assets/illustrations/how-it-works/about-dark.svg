@@ -6,7 +6,7 @@
                 fill:url(#j);
             }
             .t {
-                fill:#202222;
+                fill:#f1f3ee;
             }
         </style>
         <radialGradient id="j" cx="142.8" cy="263" fx="142.8" fy="263" r="336.1" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" gradientUnits="userSpaceOnUse">

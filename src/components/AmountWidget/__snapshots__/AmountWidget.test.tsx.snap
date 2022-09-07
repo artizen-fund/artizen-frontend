@@ -5,14 +5,14 @@ exports[`AmountWidget renders correctly 1`] = `
   className="sc-cf7cfc90-0 dmSvkC"
 >
   <div
-    className="sc-cf7cfc90-1 ikELJJ"
+    className="sc-cf7cfc90-1 fHdqbB"
   >
     <span>
       USD
     </span>
   </div>
   <div
-    className="sc-cf7cfc90-3 gLVa-dY"
+    className="sc-cf7cfc90-3 dwofuU"
   >
     <input
       className="sc-cf7cfc90-2 fzorkd"

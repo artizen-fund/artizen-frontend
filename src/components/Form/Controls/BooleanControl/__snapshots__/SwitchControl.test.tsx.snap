@@ -6,7 +6,7 @@ exports[`SwitchControl renders SelectControl unchanged 1`] = `
     class="sc-accf1c1-0 fbDaeG"
   >
     <span
-      class="sc-accf1c1-3 jiymrO"
+      class="sc-accf1c1-3 bWSwhq"
     >
       Switch control test
     </span>
@@ -16,7 +16,7 @@ exports[`SwitchControl renders SelectControl unchanged 1`] = `
       type="checkbox"
     />
     <span
-      class="sc-accf1c1-2 bOZKyO"
+      class="sc-accf1c1-2 glZZun"
     />
   </label>
 </div>

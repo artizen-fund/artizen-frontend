@@ -24,6 +24,11 @@ export const sizeForLevel = (responsiveSize: ResponsiveSize, level?: keyof Level
       1: 40,
       2: 24,
     },
+    phablet: {
+      0: 56,
+      1: 40,
+      2: 24,
+    },
     mobile: {
       0: 56,
       1: 40,
@@ -49,6 +54,11 @@ export const gapForLevel = (responsiveSize: ResponsiveSize, level?: keyof Level)
       0: 22,
       1: 14,
       2: 14,
+    },
+    phablet: {
+      0: 12,
+      1: 8,
+      2: 8,
     },
     mobile: {
       0: 12,

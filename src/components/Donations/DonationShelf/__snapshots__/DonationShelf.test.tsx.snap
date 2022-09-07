@@ -2,7 +2,7 @@
 
 exports[`DonationShelf renders correctly 1`] = `
 <div
-  className="sc-fa264814-0 fAhcDC"
+  className="sc-fa264814-0 kXMtVP"
 >
   <div
     className="sc-fa264814-1 cssaZW"
@@ -17,20 +17,20 @@ exports[`DonationShelf renders correctly 1`] = `
         className="sc-78ba2856-0 fOnoXs"
       >
         <div
-          className="sc-c089a03b-2 VsSZo"
+          className="sc-c089a03b-2 ckelpU"
         >
           <div
-            className="sc-c089a03b-0 dhCXYi"
+            className="sc-c089a03b-0 hULMLC"
             color="night"
           >
             <div
-              className="sc-149d3190-0 DayLH"
+              className="sc-149d3190-0 jDOEuv"
               color="night"
             />
           </div>
         </div>
         <p
-          className="sc-78ba2856-1 cjHeIN"
+          className="sc-78ba2856-1 jZynMh"
         >
           Need help? We’ve prepared a useful guide to donating.
         </p>
@@ -43,7 +43,7 @@ exports[`DonationShelf renders correctly 1`] = `
       className="sc-dd35d48e-4 fUZPkX"
     >
       <div
-        className="sc-dd35d48e-0 lmHjtw"
+        className="sc-dd35d48e-0 bkkyVw"
       >
         <input
           checked={false}
@@ -71,14 +71,14 @@ exports[`DonationShelf renders correctly 1`] = `
       className="sc-cf7cfc90-0 dmSvkC"
     >
       <div
-        className="sc-cf7cfc90-1 ikELJJ"
+        className="sc-cf7cfc90-1 fHdqbB"
       >
         <span>
           USD
         </span>
       </div>
       <div
-        className="sc-cf7cfc90-3 gLVa-dY"
+        className="sc-cf7cfc90-3 dwofuU"
       >
         <input
           className="sc-cf7cfc90-2 fzorkd"
@@ -102,7 +102,7 @@ exports[`DonationShelf renders correctly 1`] = `
       </span>
       <div>
         <button
-          className="sc-2a588df4-2 emJYMu undefined "
+          className="sc-2a588df4-2 dorpEK undefined "
           onClick={[Function]}
         >
           <span>
@@ -110,7 +110,7 @@ exports[`DonationShelf renders correctly 1`] = `
           </span>
         </button>
         <button
-          className="sc-2a588df4-2 emJYMu undefined "
+          className="sc-2a588df4-2 dorpEK undefined "
           onClick={[Function]}
         >
           <span>
@@ -118,7 +118,7 @@ exports[`DonationShelf renders correctly 1`] = `
           </span>
         </button>
         <button
-          className="sc-2a588df4-2 emJYMu undefined "
+          className="sc-2a588df4-2 dorpEK undefined "
           onClick={[Function]}
         >
           <span>
@@ -131,19 +131,19 @@ exports[`DonationShelf renders correctly 1`] = `
       className="sc-fa264814-6 yLhfE"
     >
       <li
-        className="sc-fa264814-7 cysOqk"
+        className="sc-fa264814-7 hEcMBU"
         onClick={[Function]}
         selected={true}
       >
         <div
-          className="sc-c089a03b-2 VsSZo"
+          className="sc-c089a03b-2 ckelpU"
         >
           <div
-            className="sc-c089a03b-0 dhCXYi"
+            className="sc-c089a03b-0 hULMLC"
             color="night"
           >
             <div
-              className="sc-149d3190-0 DayLH"
+              className="sc-149d3190-0 jDOEuv"
               color="night"
             />
           </div>
@@ -158,19 +158,19 @@ exports[`DonationShelf renders correctly 1`] = `
         </span>
       </li>
       <li
-        className="sc-fa264814-7 dNnSIs"
+        className="sc-fa264814-7 gcZSMc"
         onClick={[Function]}
         selected={false}
       >
         <div
-          className="sc-c089a03b-2 VsSZo"
+          className="sc-c089a03b-2 ckelpU"
         >
           <div
-            className="sc-c089a03b-0 dhCXYi"
+            className="sc-c089a03b-0 hULMLC"
             color="night"
           >
             <div
-              className="sc-149d3190-0 DayLH"
+              className="sc-149d3190-0 jDOEuv"
               color="night"
             />
           </div>
@@ -185,19 +185,19 @@ exports[`DonationShelf renders correctly 1`] = `
         </span>
       </li>
       <li
-        className="sc-fa264814-7 dNnSIs"
+        className="sc-fa264814-7 gcZSMc"
         onClick={[Function]}
         selected={false}
       >
         <div
-          className="sc-c089a03b-2 VsSZo"
+          className="sc-c089a03b-2 ckelpU"
         >
           <div
-            className="sc-c089a03b-0 dhCXYi"
+            className="sc-c089a03b-0 hULMLC"
             color="night"
           >
             <div
-              className="sc-149d3190-0 DayLH"
+              className="sc-149d3190-0 jDOEuv"
               color="night"
             />
           </div>
@@ -213,7 +213,7 @@ exports[`DonationShelf renders correctly 1`] = `
       </li>
     </ul>
     <button
-      className="sc-2a588df4-2 hVoeoR undefined "
+      className="sc-2a588df4-2 jVJhXF undefined "
       onClick={[Function]}
     >
       <span>

@@ -8,25 +8,25 @@ exports[`AccountStats renders correctly 1`] = `
     className="sc-cf63bf03-1 doApLo"
   >
     <div
-      className="sc-c089a03b-2 gfJPuX"
+      className="sc-c089a03b-2 gccEPD"
     >
       <div
-        className="sc-c089a03b-0 kNsEAy"
+        className="sc-c089a03b-0 hjQkpu"
         color="night"
       >
         <div
-          className="sc-149d3190-0 bfUncM"
+          className="sc-149d3190-0 ewzPBY"
           color="night"
         />
       </div>
     </div>
     <div
-      className="sc-cf63bf03-2 dRsowg"
+      className="sc-cf63bf03-2 kOxwXQ"
     >
       $800
     </div>
     <div
-      className="sc-cf63bf03-3 YunQa"
+      className="sc-cf63bf03-3 kdPNii"
     >
       donated
     </div>
@@ -35,25 +35,25 @@ exports[`AccountStats renders correctly 1`] = `
     className="sc-cf63bf03-1 doApLo"
   >
     <div
-      className="sc-c089a03b-2 gfJPuX"
+      className="sc-c089a03b-2 gccEPD"
     >
       <div
-        className="sc-c089a03b-0 kNsEAy"
+        className="sc-c089a03b-0 hjQkpu"
         color="night"
       >
         <div
-          className="sc-149d3190-0 cZntJz"
+          className="sc-149d3190-0 cyhlIT"
           color="night"
         />
       </div>
     </div>
     <div
-      className="sc-cf63bf03-2 dRsowg"
+      className="sc-cf63bf03-2 kOxwXQ"
     >
       42
     </div>
     <div
-      className="sc-cf63bf03-3 YunQa"
+      className="sc-cf63bf03-3 kdPNii"
     >
       collected
     </div>
@@ -62,25 +62,25 @@ exports[`AccountStats renders correctly 1`] = `
     className="sc-cf63bf03-1 doApLo"
   >
     <div
-      className="sc-c089a03b-2 gfJPuX"
+      className="sc-c089a03b-2 gccEPD"
     >
       <div
-        className="sc-c089a03b-0 kNsEAy"
+        className="sc-c089a03b-0 hjQkpu"
         color="night"
       >
         <div
-          className="sc-149d3190-0 cZntJz"
+          className="sc-149d3190-0 cyhlIT"
           color="night"
         />
       </div>
     </div>
     <div
-      className="sc-cf63bf03-2 dRsowg"
+      className="sc-cf63bf03-2 kOxwXQ"
     >
       $0
     </div>
     <div
-      className="sc-cf63bf03-3 YunQa"
+      className="sc-cf63bf03-3 kdPNii"
     >
       collected
     </div>
@@ -89,25 +89,25 @@ exports[`AccountStats renders correctly 1`] = `
     className="sc-cf63bf03-1 doApLo"
   >
     <div
-      className="sc-c089a03b-2 gfJPuX"
+      className="sc-c089a03b-2 gccEPD"
     >
       <div
-        className="sc-c089a03b-0 kNsEAy"
+        className="sc-c089a03b-0 hjQkpu"
         color="night"
       >
         <div
-          className="sc-149d3190-0 cZntJz"
+          className="sc-149d3190-0 cyhlIT"
           color="night"
         />
       </div>
     </div>
     <div
-      className="sc-cf63bf03-2 dRsowg"
+      className="sc-cf63bf03-2 kOxwXQ"
     >
       100
     </div>
     <div
-      className="sc-cf63bf03-3 YunQa"
+      className="sc-cf63bf03-3 kdPNii"
     >
       $ART
     </div>

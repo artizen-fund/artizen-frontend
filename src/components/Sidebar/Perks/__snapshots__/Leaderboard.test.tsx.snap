@@ -6,7 +6,7 @@ exports[`Perks renders Perks unchanged 1`] = `
     class="sc-ecff4829-0 fMTZxv"
   >
     <div
-      class="sc-c6d4a71-0 iFQvvL"
+      class="sc-c6d4a71-0 bzRXeC"
     >
       <div
         class="sc-c6d4a71-1 hmYVNc"
@@ -14,7 +14,7 @@ exports[`Perks renders Perks unchanged 1`] = `
         Additional Perks
       </div>
       <a
-        class="sc-2a588df4-1 fWCugx undefined "
+        class="sc-2a588df4-1 kFiSF undefined "
       >
         <span>
           Learn More
@@ -22,56 +22,56 @@ exports[`Perks renders Perks unchanged 1`] = `
       </a>
     </div>
     <div
-      class="sc-9ed997bc-0 gnOwtT"
+      class="sc-9ed997bc-0 dahNPL"
     >
       <div>
         <div
-          class="sc-b48a7ce9-0 hZzOYd"
+          class="sc-b48a7ce9-0 QxMPA"
         >
           <div
-            class="sc-149d3190-0 bIfjZN"
+            class="sc-149d3190-0 dSKnsB"
           />
         </div>
         Membership in Artizen DAO
       </div>
     </div>
     <div
-      class="sc-9ed997bc-0 gnOwtT"
+      class="sc-9ed997bc-0 dahNPL"
     >
       <div>
         <div
-          class="sc-b48a7ce9-0 hZzOYd"
+          class="sc-b48a7ce9-0 QxMPA"
         >
           <div
-            class="sc-149d3190-0 jXIwuD"
+            class="sc-149d3190-0 hEvUin"
           />
         </div>
         0.01% of $ART tokens
       </div>
     </div>
     <div
-      class="sc-9ed997bc-0 gnOwtT"
+      class="sc-9ed997bc-0 dahNPL"
     >
       <div>
         <div
-          class="sc-b48a7ce9-0 hZzOYd"
+          class="sc-b48a7ce9-0 QxMPA"
         >
           <div
-            class="sc-149d3190-0 fjHUbV"
+            class="sc-149d3190-0 jQAqER"
           />
         </div>
         Collectable Receipt
       </div>
     </div>
     <div
-      class="sc-9ed997bc-0 gnOwtT"
+      class="sc-9ed997bc-0 dahNPL"
     >
       <div>
         <div
-          class="sc-b48a7ce9-0 hZzOYd"
+          class="sc-b48a7ce9-0 QxMPA"
         >
           <div
-            class="sc-149d3190-0 kqmMWx"
+            class="sc-149d3190-0 kmdMV"
           />
         </div>
         Custom Discord Avatar

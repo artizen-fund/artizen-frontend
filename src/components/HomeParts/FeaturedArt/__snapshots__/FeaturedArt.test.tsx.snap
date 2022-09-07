@@ -3,34 +3,34 @@
 exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
 <div>
   <section
-    class="sc-5284f2f8-0 gXRYJr"
+    class="sc-5284f2f8-0 dEIGqQ"
   >
     <div
-      class="sc-4cf5d7c6-0 dgJcrf"
+      class="sc-4cf5d7c6-0 fQMtff"
     />
     <div
-      class="sc-5284f2f8-1 hVkqFn"
+      class="sc-5284f2f8-1 jNYZio"
     >
       <div
-        class="sc-5284f2f8-2 jwMlaR"
+        class="sc-5284f2f8-2 cPosCR"
       >
         Title of Monthly Featured Artwork
       </div>
       <div
-        class="sc-5284f2f8-3 iUftyg"
+        class="sc-5284f2f8-3 dcicQU"
       >
         <div
           class="sc-5284f2f8-4 igEtRN"
         >
           <div
-            class="sc-c089a03b-2 VsSZo"
+            class="sc-c089a03b-2 ckelpU"
           >
             <div
-              class="sc-c089a03b-0 ja-DffS"
+              class="sc-c089a03b-0 iiIkrS"
               color="night"
             >
               <div
-                class="sc-149d3190-0 jBhTBE"
+                class="sc-149d3190-0 jcCvuQ"
                 color="night"
               />
             </div>
@@ -40,19 +40,19 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
           class="sc-5284f2f8-4 igEtRN"
         >
           <div
-            class="sc-c089a03b-2 VsSZo"
+            class="sc-c089a03b-2 ckelpU"
           >
             <div
-              class="sc-c089a03b-0 ja-DffS"
+              class="sc-c089a03b-0 iiIkrS"
               color="night"
             >
               <div
-                class="sc-149d3190-0 boLSjf"
+                class="sc-149d3190-0 fFndyP"
                 color="night"
               />
             </div>
             <div
-              class="sc-c089a03b-1 gmqtJg"
+              class="sc-c089a03b-1 cAIRSY"
               color="night"
             >
               Created NaN days ago
@@ -63,19 +63,19 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
           class="sc-5284f2f8-4 igEtRN"
         >
           <div
-            class="sc-c089a03b-2 VsSZo"
+            class="sc-c089a03b-2 ckelpU"
           >
             <div
-              class="sc-c089a03b-0 ja-DffS"
+              class="sc-c089a03b-0 iiIkrS"
               color="night"
             >
               <div
-                class="sc-149d3190-0 LgDQb"
+                class="sc-149d3190-0 kZkAwb"
                 color="night"
               />
             </div>
             <div
-              class="sc-c089a03b-1 gmqtJg"
+              class="sc-c089a03b-1 cAIRSY"
               color="night"
             >
               Tag Name

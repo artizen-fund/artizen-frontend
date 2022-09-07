@@ -3,14 +3,14 @@
 exports[`Shelf renders correctly 1`] = `
 Array [
   <div
-    className="sc-6f361ca5-0 iIXQEB"
+    className="sc-c3b1c4c4-0 bBWKjV"
   >
     <div
-      className="sc-9199b4ac-0 brREMd"
+      className="sc-8d0edb81-0 ddViZJ"
     />
   </div>,
   <div
-    className="sc-6f361ca5-1 EJtfp"
+    className="sc-c3b1c4c4-1 Onxyd"
   />,
 ]
 `;

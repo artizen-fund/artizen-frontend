@@ -30,7 +30,9 @@ const AlternatingPanel = ({
         <Title>{title}</Title>
         <Copy>{copy}</Copy>
         <SubTitle>{subtitle}</SubTitle>
-        <Button href="/">{buttonLabel}</Button>
+        <Button href="/" level={1}>
+          {buttonLabel}
+        </Button>
       </Content>
     </Wrapper>
   )
@@ -39,14 +41,15 @@ const AlternatingPanel = ({
 const Wrapper = styled.div<Pick<IAlternatingPanel, 'imageOnRight'>>`
   display: flex;
   flex-direction: column;
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
     flex-direction: ${props => (props.imageOnRight ? 'row' : 'row-reverse')};
-    align-items: stretch;
+    align-items: center;
   }
 `
 
 const Image = styled.div<Pick<IAlternatingPanel, 'image' | 'imageDark'>>`
-  max-width: 100%;
+  width: 100%;
+  height: 54.56vw;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
@@ -59,7 +62,8 @@ const Image = styled.div<Pick<IAlternatingPanel, 'image' | 'imageDark'>>`
     }
   `}
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    min-width: 50%;
+    width: 100vw;
+    height: 27.28vw;
   }
 `
 

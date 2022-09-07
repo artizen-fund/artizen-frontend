@@ -2,34 +2,34 @@
 
 exports[`ProcessingSocialLoginShelf renders correctly 1`] = `
 <div
-  className="sc-a856124b-0 FbgnI"
+  className="sc-a856124b-0 chOtxT"
 >
   <div
     className="sc-a856124b-1 iGWUnQ"
   >
     <h1
-      className="sc-a856124b-2 jaMDdX"
+      className="sc-a856124b-2 horsa-D"
     >
       Finishing social login
     </h1>
     <div
-      className="sc-a856124b-3 bStxaz"
+      className="sc-a856124b-3 cwDClW"
     >
       <div
-        className="sc-c089a03b-2 VsSZo"
+        className="sc-c089a03b-2 ckelpU"
       >
         <div
-          className="sc-c089a03b-0 ja-DffS"
+          className="sc-c089a03b-0 iiIkrS"
           color="night"
         >
           <div
-            className="sc-149d3190-0 iAXlWi"
+            className="sc-149d3190-0 eIDYrK"
             color="night"
           />
         </div>
       </div>
       <p
-        className="sc-a856124b-4 gYJBV"
+        className="sc-a856124b-4 gvwQpV"
       >
         This will only take a moment…
       </p>
@@ -39,10 +39,10 @@ exports[`ProcessingSocialLoginShelf renders correctly 1`] = `
     className="sc-a856124b-5 ebUjMG"
   >
     <div
-      className="sc-905953ce-0 irEQQ"
+      className="sc-905953ce-0 ejRGvt"
     >
       <div
-        className="sc-905953ce-1 AlGLk"
+        className="sc-905953ce-1 bSeZcZ"
       />
     </div>
   </div>
