@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { breakpoint } from '@theme'
 import Header from './Header'
 import Footer from './Footer'
+import { DonationGuide } from '@components'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -10,6 +11,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => (
   <Wrapper>
     <Header />
+    <DonationGuide />
     <Main>{children}</Main>
     <Footer />
   </Wrapper>
