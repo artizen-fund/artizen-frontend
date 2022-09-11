@@ -80,7 +80,10 @@ const LoginShelf = () => {
             <Icon glyph="tick" outline level={2} color="moss" />
             <div>
               <h1>Done, confirmation sent!</h1>
-              <p>We emailed a magic link to {data.email}. Click the link Sign in or sign up.</p>
+              <p>
+                We emailed a magic link to {data.email}.<br />
+                Click the link Sign in or sign up.
+              </p>
             </div>
             <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
           </Confirmation>
