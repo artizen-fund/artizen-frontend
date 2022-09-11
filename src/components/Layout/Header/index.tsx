@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
@@ -8,16 +8,27 @@ import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
-import { rgba } from '@lib'
+import { rgba, DonationContext, useLoggedInUser } from '@lib'
 
 export type ShelfType = 'session' | 'howItWorks' | 'donate'
 
 const Header = () => {
+  const { donationStage, setDonationStage } = useContext(DonationContext)
+  const [loggedInUser] = useLoggedInUser()
   const [visibleShelf, setVisibleShelf] = useState<ShelfType>()
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 
   const toggleShelf = (shelf?: ShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
+
+  useEffect(() => {
+    if (visibleShelf === 'donate' && donationStage === 'login' && !loggedInUser) {
+      setVisibleShelf('session')
+    }
+    if (visibleShelf === 'session' && donationStage === 'login' && !!loggedInUser) {
+      setVisibleShelf('donate')
+    }
+  }, [donationStage, loggedInUser])
 
   return (
     <>

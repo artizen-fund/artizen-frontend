@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba } from '@lib'
+import { rgba, DonationContext } from '@lib'
 
 interface IDonationAmount {
-  setStage: (s: DonationStage) => void
   amount: number
   setAmount: (n: number) => void
   donationMethod: DonationMethod
@@ -36,7 +35,8 @@ const methods: Array<MethodSet> = [
   },
 ]
 
-const DonationAmount = ({ setStage, amount, setAmount, donationMethod, setDonationMethod }: IDonationAmount) => {
+const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }: IDonationAmount) => {
+  const { setDonationStage } = useContext(DonationContext)
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   // todo: how is this managed?
 
@@ -95,7 +95,7 @@ const DonationAmount = ({ setStage, amount, setAmount, donationMethod, setDonati
           ))}
         </Methods>
 
-        <Button onClick={() => setStage('paymentFiat')} stretch level={1}>
+        <Button onClick={() => setDonationStage?.('login')} stretch level={1}>
           Continue
         </Button>
       </Form>

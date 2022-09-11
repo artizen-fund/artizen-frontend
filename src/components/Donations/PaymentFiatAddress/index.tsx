@@ -1,21 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { useLoggedInUser, useFormLocalStorage, hasRequiredProperties } from '@lib'
+import { useLoggedInUser, useFormLocalStorage, hasRequiredProperties, DonationContext } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
 import { UPDATE_USER_ADDRESS } from '@gql'
 import { countryAndRegionIsSupported } from './helpers'
 
 interface IPaymentFiat {
-  setStage: (s: DonationStage) => void
   amount: number
 }
 
 const TRANSACTION_FEE = 42
 
-const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
+const PaymentFiat = ({ amount }: IPaymentFiat) => {
+  const { setDonationStage } = useContext(DonationContext)
+
   const apolloClient = useApolloClient()
   const [loggedInUser] = useLoggedInUser()
 
@@ -38,7 +39,7 @@ const PaymentFiat = ({ setStage, amount }: IPaymentFiat) => {
         mutation: UPDATE_USER_ADDRESS,
         variables: { id: loggedInUser.id, ...data },
       })
-      setStage('paymentFiat')
+      setDonationStage?.('payment')
     } catch {
       setProcessing(false)
     }
