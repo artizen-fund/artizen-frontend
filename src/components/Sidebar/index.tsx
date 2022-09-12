@@ -42,9 +42,10 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
 
   const donations = data?.Donation?.donations
 
-  const addresses = donations?.filter(item => !!item).map(({ userAddress }) => userAddress.toLowerCase())
+  // donations?.map(donation => donation?.userAddress?.toLowercase())
+  const addresses = donations?.map(donation => donation?.userAddress?.toLowerCase())
 
-  const totalRaised = donations?.reduce((total, obj) => parseInt(obj.amount) + total, 0)
+  const totalRaised = donations?.filter(item => !!item).reduce((total, obj) => Number(obj?.amount) + total, 0)
 
   const formatedTotalRaised = totalRaised && formatUSDC(totalRaised)
 
@@ -62,7 +63,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
     for (let i = 0; i < donations.length; i++) {
       const user =
         donorData &&
-        donorData.User.find(item => item.publicAddress.toLowerCase() === donations[i]['userAddress'].toLowerCase())
+        donorData.User.find(item => item.publicAddress?.toLowerCase() === donations[i]?.userAddress.toLowerCase())
 
       donationsWithUser.push({ ...donations[i], user })
     }
