@@ -105,7 +105,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
             </Button>
           </Row>
           <LargeScreensOnly>
-            {donationsWithUser.length > 0 && <Leaderboard {...{ donations: donationsWithUser }} />}
+            {donationsWithUser.length > 0 && <Leaderboard {...{ donations: donationsWithUser as Donation[] }} />}
             <Perks />
           </LargeScreensOnly>
         </Content>
