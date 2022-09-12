@@ -47,7 +47,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
 
   const totalRaised = donations?.filter(item => !!item).reduce((total, obj) => Number(obj?.amount) + total, 0)
 
-  const formatedTotalRaised = totalRaised && formatUSDC(totalRaised)
+  const formattedTotalRaised = totalRaised && formatUSDC(totalRaised)
 
   const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
     GET_USERS_BY_PUBLIC_ADDRESSES,
@@ -81,12 +81,12 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
         </Header>
         <Content>
           <FundBlock>
-            {formatedTotalRaised && (
+            {formattedTotalRaised && (
               <AmountRaised>
-                <span>${formatedTotalRaised.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
+                <span>${formattedTotalRaised.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
               </AmountRaised>
             )}
-            {formatedTotalRaised && <ProgressBar>{formatedTotalRaised / FUND_GOAL}</ProgressBar>}
+            {formattedTotalRaised && <ProgressBar>{formattedTotalRaised / FUND_GOAL}</ProgressBar>}
             <Row>
               {fundDeadline && <Countdown date={fundDeadline?.toISOString()} />}
               {donations && (
