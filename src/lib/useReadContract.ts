@@ -27,6 +27,7 @@ export const useReadContract = (
       const newValue = await contract[methodName](...attr)
       setValue(newValue)
     } catch (newError) {
+      console.error('loading contract ', newError)
       setError(newError)
     }
     setLoading(false)

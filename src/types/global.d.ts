@@ -27,9 +27,11 @@ declare global {
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
   type Donation = {
+    address: string
     amount: string
-    from: string
+    block_hash: string
     user: IUser
+    userAddress: string
   }
 
   type DonationStageStatus = 'WAITING' | 'PROCESSING' | 'COMPLETE'

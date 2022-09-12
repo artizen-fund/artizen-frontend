@@ -9,7 +9,7 @@ export function useLoggedInUser() {
   // const [loggedInUser, setLoggedInUser] = useState<IUser>()
   const metadata = useReactiveVar(userMetadataVar)
 
-  const { data, loading, error } = useQuery<IGetUserQuery>(GET_USER, {
+  const { data, loading, error } = useQuery(GET_USER, {
     variables: { issuer: metadata?.issuer },
   })
 
