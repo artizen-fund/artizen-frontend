@@ -38,7 +38,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
   const { data, loading } = useQuery<>(GET_DONATIONS_FROM_BLOCKCHAIN, {
     variables: { raffleId },
     skip: !raffleId,
-    onError: error => console.log('error loading donation blockchain', error),
+    onError: error => console.error('error loading donation blockchain', error),
   })
 
   const donations = data && data.Donation && data.Donation?.donations
