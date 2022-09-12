@@ -40,12 +40,11 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
     onError: error => console.error('error loading donation blockchain', error),
   })
 
-  const donations: Donation[] | null = data && data.Donation && data.Donation?.donations
+  const donations = data?.Donation?.donations
 
-  const addresses: string[] | null = donations && donations.map(({ userAddress }) => userAddress.toLowerCase())
+  const addresses = donations?.map(({ userAddress }) => userAddress.toLowerCase())
 
-  const totalRaised: number | null =
-    donations && donations.reduce((total: number, obj: Donation) => parseInt(obj.amount) + total, 0)
+  const totalRaised = donations?.reduce((total, obj) => parseInt(obj.amount) + total, 0)
 
   const formatedTotalRaised = totalRaised && formatUSDC(totalRaised)
 
