@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress } from '@components'
@@ -10,19 +10,20 @@ import {
   hasRequiredProperties,
   assert,
   sleep,
+  DonationContext,
 } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 interface IPaymentFiat {
-  setStage: (s: DonationStage) => void
   amount: number
   setOrder: (o: { id: string }) => void
 }
 
 const TRANSACTION_FEE = 42
 
-const PaymentFiat = ({ setStage, amount, setOrder }: IPaymentFiat) => {
+const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
+  const { setDonationStage } = useContext(DonationContext)
   const [loggedInUser] = useLoggedInUser()
 
   const LOCALSTORAGE_KEY = 'fiatPayment'
@@ -66,14 +67,14 @@ const PaymentFiat = ({ setStage, amount, setOrder }: IPaymentFiat) => {
           orderStatus = await getOrderStatus(order.id)
         }
       }
-      setStage('processCrypto')
+      setDonationStage?.('processCrypto')
     } catch (error) {
       setProcessing(false)
     }
   }
 
   if (!hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], loggedInUser)) {
-    return <PaymentFiatAddress {...{ setStage, amount }} />
+    return <PaymentFiatAddress {...{ setDonationStage, amount }} />
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import { IconStack, Icon } from '@components'
 import { breakpoint, typography } from '@theme'
@@ -15,6 +15,7 @@ import {
   useLoggedInUser,
   userMetadataVar,
   getConfirmDonationURL,
+  DonationContext,
 } from '@lib'
 import { useDonation } from '../../../lib/useDonation'
 import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
@@ -24,7 +25,6 @@ import { USDCAbi } from '@contracts'
 import qs from 'qs'
 
 interface IProcessCrypto {
-  setStage: (s: DonationStage) => void
   donationMethod: DonationMethod
   order: { id: string }
   amount: number
@@ -33,7 +33,8 @@ interface IProcessCrypto {
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
-const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IProcessCrypto) => {
+const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCrypto) => {
+  const { setDonationStage } = useContext(DonationContext)
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
   const [error, setError] = useState('')
 
@@ -213,7 +214,7 @@ const ProcessCrypto = ({ setStage, donationMethod, amount, order, setOrder }: IP
   const handleComplete = async () => {
     setCryptoStage('complete')
     await sleep(3000)
-    setStage('confirmation')
+    setDonationStage?.('confirmation')
   }
   useEffect(() => {
     if (confirmingStatus === 'COMPLETE') {

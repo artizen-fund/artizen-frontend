@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import { CheckboxControl } from '@components'
 import { breakpoint, typography } from '@theme'
@@ -6,10 +6,9 @@ import WalletOptions from './WalletOptions'
 import { useConnect, useAccount } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { getChainId } from '@lib'
+import { getChainId, DonationContext } from '@lib'
 
 interface IPaymentCrypto {
-  setStage: (s: DonationStage) => void
   amount: number
   donationMethod: DonationMethod
   chains: any
@@ -23,7 +22,8 @@ const walletConnectConnector = new WalletConnectConnector({
   },
 })
 
-const PaymentCrypto = ({ setStage, amount, donationMethod, chains }: IPaymentCrypto) => {
+const PaymentCrypto = ({ amount, donationMethod, chains }: IPaymentCrypto) => {
+  const { setDonationStage } = useContext(DonationContext)
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
 
   const { connect } = useConnect()
@@ -46,7 +46,7 @@ const PaymentCrypto = ({ setStage, amount, donationMethod, chains }: IPaymentCry
 
   useEffect(() => {
     if (isConnected) {
-      setStage('processCrypto')
+      setDonationStage?.('processCrypto')
     }
   }, [isConnected])
 
