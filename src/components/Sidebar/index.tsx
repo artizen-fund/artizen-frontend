@@ -35,7 +35,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
   const fundDeadline = raffle ? new Date(raffle?.endTime.toNumber() * 1000) : undefined
   const fundStart = raffle ? new Date(raffle?.startTime.toNumber() * 1000) : undefined
 
-  const { data, loading } = useQuery<>(GET_DONATIONS_FROM_BLOCKCHAIN, {
+  const { data, loading } = useQuery<any>(GET_DONATIONS_FROM_BLOCKCHAIN, {
     variables: { raffleId },
     skip: !raffleId,
     onError: error => console.error('error loading donation blockchain', error),
