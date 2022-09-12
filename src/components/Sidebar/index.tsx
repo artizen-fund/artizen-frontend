@@ -43,7 +43,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
 
   const donations = data && data.Donation && data.Donation?.donations
 
-  const addresses = donations && donations.map(({ address }) => address)
+  const addresses = donations && donations.map(({ userAddress }) => userAddress.toLowerCase())
 
   const totalRaised = donations && donations.reduce((total: number, obj: Donation) => parseInt(obj.amount) + total, 0)
 
@@ -55,18 +55,17 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
     onError: error => console.error('error ', error),
   })
 
-  console.log('donorData  ', donorData)
-
   const donationsWithUser = []
   if (donations && donations.length > 0 && !loadingDonors) {
     // const users = (await getUsersByPublicAddress(listOfAddresses, req?.cookies?.token)).data.User
     for (let i = 0; i < donations.length; i++) {
-      const user = donorData && donorData.User.find(item => item.publicAddress === donations[i]['userAddress'])
+      const user =
+        donorData &&
+        donorData.User.find(item => item.publicAddress.toLowerCase() === donations[i]['userAddress'].toLowerCase())
+
       donationsWithUser.push({ ...donations[i], user })
     }
   }
-
-  console.log('donationsWithUser   ', donationsWithUser)
 
   return (
     <StyledStickyCanvas>
