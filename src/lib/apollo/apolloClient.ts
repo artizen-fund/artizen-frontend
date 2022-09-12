@@ -32,10 +32,7 @@ export const createApolloClient = (didToken?: string) => {
         newHeaders['Authorization'] = `Bearer ${token}`
       } else {
         // Public access
-        newHeaders['x-hasura-unauthorized-role'] = assert(
-          process.env.NEXT_PUBLIC_HASURA_GRAPHQL_UNAUTHORIZED_ROLE,
-          'public',
-        )
+        newHeaders['x-hasura-unauthorized-role'] = 'public'
       }
     }
     return {

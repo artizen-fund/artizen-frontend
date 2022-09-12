@@ -44,7 +44,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
 
   const addresses = donations && donations.map(({ userAddress }) => userAddress.toLowerCase())
 
-  const totalRaised = donations && donations.reduce((total: number, obj: IDonation) => parseInt(obj.amount) + total, 0)
+  const totalRaised = donations && donations.reduce((total: number, obj: Donation) => parseInt(obj.amount) + total, 0)
 
   const formatedTotalRaised = formatUSDC(totalRaised)
 
