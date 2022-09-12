@@ -7,7 +7,7 @@ import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba } from '@lib'
-import { ISidebarDonatorsQuery, IGetUsersByPublicAddressQuery } from '@types'
+import { ISidebarDonatorsQuery } from '@types'
 import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
@@ -43,22 +43,17 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
 
   const donations = data && data.Donation && data.Donation?.donations
 
-  console.log('donations      ', donations)
-
   const addresses = donations && donations.map(({ address }) => address)
 
   const totalRaised = donations && donations.reduce((total: number, obj: Donation) => parseInt(obj.amount) + total, 0)
 
   const formatedTotalRaised = formatUSDC(totalRaised)
 
-  const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
-    GET_USERS_BY_PUBLIC_ADDRESSES,
-    {
-      skip: !raffleId || loading,
-      variables: { addresses },
-      onError: error => console.log('error ', error),
-    },
-  )
+  const { data: donorData, loading: loadingDonors } = useQuery<>(GET_USERS_BY_PUBLIC_ADDRESSES, {
+    skip: !raffleId || loading,
+    variables: { addresses },
+    onError: error => console.error('error ', error),
+  })
 
   console.log('donorData  ', donorData)
 
@@ -66,41 +61,12 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
   if (donations && donations.length > 0 && !loadingDonors) {
     // const users = (await getUsersByPublicAddress(listOfAddresses, req?.cookies?.token)).data.User
     for (let i = 0; i < donations.length; i++) {
-      console.log('donations  in here  ', donations)
-      console.log('donorData  in here  ', donorData)
       const user = donorData && donorData.User.find(item => item.publicAddress === donations[i]['userAddress'])
       donationsWithUser.push({ ...donations[i], user })
     }
   }
 
   console.log('donationsWithUser   ', donationsWithUser)
-
-  // let donations = []
-  // if (donorData.User) {
-  //   // const users = (await getUsersByPublicAddress(listOfAddresses, req?.cookies?.token)).data.User
-  //   for (let i = 0; i < results.length; i++) {
-  //     const user = users.find(item => item.publicAddress === results[i].get('from'))
-  //     donations.push({ ...results[i].toJSON(), user })
-  //   }
-  // } else {
-  //   donations = results
-  // }
-
-  // const loadDonations = async () => {
-  //   if (raffle?.raffleID) {
-  //     const donationsResponse = await fetch(`/api/donations?raffleId=${raffle?.raffleID.toString()}`)
-  //     const json = await donationsResponse.json()
-  //     if (json.length > 0) {
-  //       setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
-  //     }
-
-  //     setDonations(json)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   loadDonations()
-  // }, [donationStatus, raffle])
 
   return (
     <StyledStickyCanvas>
