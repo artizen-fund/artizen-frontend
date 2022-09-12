@@ -42,7 +42,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
 
   const donations = data?.Donation?.donations
 
-  const addresses = donations?.map(({ userAddress }) => userAddress.toLowerCase())
+  const addresses = donations?.filter(item => !!item).map(({ userAddress }) => userAddress.toLowerCase())
 
   const totalRaised = donations?.reduce((total, obj) => parseInt(obj.amount) + total, 0)
 
@@ -85,7 +85,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
                 <span>${formatedTotalRaised.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
               </AmountRaised>
             )}
-            <ProgressBar>{formatedTotalRaised / FUND_GOAL}</ProgressBar>
+            {formatedTotalRaised && <ProgressBar>{formatedTotalRaised / FUND_GOAL}</ProgressBar>}
             <Row>
               {fundDeadline && <Countdown date={fundDeadline?.toISOString()} />}
               {donations && (
