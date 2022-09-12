@@ -6,9 +6,9 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { DonationContext, formatUSDC, rgba } from '@lib'
-import { ISidebarDonatorsQuery } from '@types'
-import { GET_DONATIONS_FROM_BLOCKCHAIN } from '@gql'
+import { formatUSDC, rgba } from '@lib'
+import { ISidebarDonatorsQuery, IGetUsersByPublicAddressQuery } from '@types'
+import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_GOAL: number
@@ -31,40 +31,76 @@ const monthNames = [
 ]
 
 const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
-  console.log('Sidebar  starts  ')
-  const { data, loading, error } = useQuery<IGetUserQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
-    variables: { raffleId: '2' },
-    onCompleted: donationRaw => {
-      console.log('donationRaw  ', donationRaw)
-    },
-    onError: error => console.log('error ', error),
+  const raffleId = raffle?.raffleID.toString()
+  const fundDeadline = raffle ? new Date(raffle?.endTime.toNumber() * 1000) : undefined
+  const fundStart = raffle ? new Date(raffle?.startTime.toNumber() * 1000) : undefined
+
+  const { data, loading } = useQuery<>(GET_DONATIONS_FROM_BLOCKCHAIN, {
+    variables: { raffleId },
+    skip: !raffleId,
+    onError: error => console.log('error loading donation blockchain', error),
   })
 
-  const { donationStatus } = useContext(DonationContext)
+  const donations = data && data.Donation && data.Donation?.donations
 
-  const [donations, setDonations] = useState<Donation[]>([])
-  const [totalRaised, setTotalRaised] = useState(0)
+  console.log('donations      ', donations)
 
-  const loadDonations = async () => {
-    if (raffle?.raffleID) {
-      const donationsResponse = await fetch(`/api/donations?raffleId=${raffle?.raffleID.toString()}`)
-      const json = await donationsResponse.json()
-      if (json.length > 0) {
-        setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
-      }
+  const addresses = donations && donations.map(({ address }) => address)
 
-      setDonations(json)
-    }
-  }
-
-  useEffect(() => {
-    loadDonations()
-  }, [donationStatus, raffle])
+  const totalRaised = donations && donations.reduce((total: number, obj: Donation) => parseInt(obj.amount) + total, 0)
 
   const formatedTotalRaised = formatUSDC(totalRaised)
 
-  const fundDeadline = raffle ? new Date(raffle?.endTime.toNumber() * 1000) : undefined
-  const fundStart = raffle ? new Date(raffle?.startTime.toNumber() * 1000) : undefined
+  const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
+    GET_USERS_BY_PUBLIC_ADDRESSES,
+    {
+      skip: !raffleId || loading,
+      variables: { addresses },
+      onError: error => console.log('error ', error),
+    },
+  )
+
+  console.log('donorData  ', donorData)
+
+  const donationsWithUser = []
+  if (donations && donations.length > 0 && !loadingDonors) {
+    // const users = (await getUsersByPublicAddress(listOfAddresses, req?.cookies?.token)).data.User
+    for (let i = 0; i < donations.length; i++) {
+      console.log('donations  in here  ', donations)
+      console.log('donorData  in here  ', donorData)
+      const user = donorData && donorData.User.find(item => item.publicAddress === donations[i]['userAddress'])
+      donationsWithUser.push({ ...donations[i], user })
+    }
+  }
+
+  console.log('donationsWithUser   ', donationsWithUser)
+
+  // let donations = []
+  // if (donorData.User) {
+  //   // const users = (await getUsersByPublicAddress(listOfAddresses, req?.cookies?.token)).data.User
+  //   for (let i = 0; i < results.length; i++) {
+  //     const user = users.find(item => item.publicAddress === results[i].get('from'))
+  //     donations.push({ ...results[i].toJSON(), user })
+  //   }
+  // } else {
+  //   donations = results
+  // }
+
+  // const loadDonations = async () => {
+  //   if (raffle?.raffleID) {
+  //     const donationsResponse = await fetch(`/api/donations?raffleId=${raffle?.raffleID.toString()}`)
+  //     const json = await donationsResponse.json()
+  //     if (json.length > 0) {
+  //       setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
+  //     }
+
+  //     setDonations(json)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   loadDonations()
+  // }, [donationStatus, raffle])
 
   return (
     <StyledStickyCanvas>
@@ -78,7 +114,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
         </Header>
         <Content>
           <FundBlock>
-            {donations && donations.length > 0 && (
+            {formatedTotalRaised && (
               <AmountRaised>
                 <span>${formatedTotalRaised.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
               </AmountRaised>
@@ -86,9 +122,11 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
             <ProgressBar>{formatedTotalRaised / FUND_GOAL}</ProgressBar>
             <Row>
               {fundDeadline && <Countdown date={fundDeadline?.toISOString()} />}
-              <DonationCount>
-                <Glyph glyph="trend" /> <span>{donations.length} donations</span>
-              </DonationCount>
+              {donations && (
+                <DonationCount>
+                  <Glyph glyph="trend" /> <span>{donations.length} donations</span>
+                </DonationCount>
+              )}
             </Row>
           </FundBlock>
           <Row>
@@ -100,7 +138,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ donations }} />
+            {donationsWithUser.length > 0 && <Leaderboard {...{ donations: donationsWithUser }} />}
             <Perks />
           </LargeScreensOnly>
         </Content>
