@@ -40,13 +40,14 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
     onError: error => console.error('error loading donation blockchain', error),
   })
 
-  const donations: Donation[] = data && data.Donation && data.Donation?.donations
+  const donations: Donation[] | null = data && data.Donation && data.Donation?.donations
 
-  const addresses = donations && donations.map(({ userAddress }) => userAddress.toLowerCase())
+  const addresses: string[] | null = donations && donations.map(({ userAddress }) => userAddress.toLowerCase())
 
-  const totalRaised = donations && donations.reduce((total: number, obj: Donation) => parseInt(obj.amount) + total, 0)
+  const totalRaised: number | null =
+    donations && donations.reduce((total: number, obj: Donation) => parseInt(obj.amount) + total, 0)
 
-  const formatedTotalRaised = formatUSDC(totalRaised)
+  const formatedTotalRaised = totalRaised && formatUSDC(totalRaised)
 
   const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
     GET_USERS_BY_PUBLIC_ADDRESSES,
