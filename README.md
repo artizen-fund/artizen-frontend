@@ -64,6 +64,15 @@ yarn test:jest
 ```
 
 ## Manual tests:
+
+- Install and setup Metamask in your browser
+- Add Mumbai network to your Metamask
+  - ChainID: 8000
+  - RPC URL: https://rpc-mumbai.maticvigil.com/ or ask Rodrigo for alchemy one
+  - Block Explorer: https://mumbai.polygonscan.com/
+- Get same Mumbai MATIC from [faucet](https://faucet.polygon.technology/) to your Magic.link wallet
+
+
 - FIAT flow
   ```
   Card Number: 4111111111111111
@@ -73,15 +82,13 @@ yarn test:jest
   CVV: 555
   ```
 - USDC Flow
-  - Install and setup Metamask in your browser
-  - Get some MATIC from [faucet](https://faucet.polygon.technology/) to your Metamask wallet
+  - Get some Mumbai MATIC from [faucet](https://faucet.polygon.technology/) to your Metamask wallet
   - Ask Rodrigo for some USDC on Mumbai
   - Go ahead and try USDC donation
 
 - ETH Flow
-  - Install and setup Metamask in your browser
-  - Get some Ropsten ETH from [faucet](https://faucet.egorfine.com/) to your Metamask wallet
-  - Get some Goerli ETH from [faucet](https://goerlifaucet.com/) to your Metamask wallet
+  - Get some Ropsten ETH from [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
+  - Get some Goerli ETH from [faucet](https://goerlifaucet.com/) or [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
   - Ask Rodrigo for some USDC on Goerli
   - Go ahead and try ETH donation 
 
