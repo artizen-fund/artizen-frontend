@@ -27,3 +27,16 @@ export const GET_DONATION_VIA_TOP_UP_ID = gql`
     }
   }
 `
+
+export const GET_DONATIONS_FROM_BLOCKCHAIN = gql`
+  query loadDonationsByAttibute($raffleId: String!) {
+    Donation(raffleId: $raffleId) {
+      donations {
+        address
+        amount
+        block_hash
+        userAddress
+      }
+    }
+  }
+`

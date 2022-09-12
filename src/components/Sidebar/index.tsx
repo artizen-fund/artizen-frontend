@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
@@ -7,6 +8,7 @@ import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@compon
 import { breakpoint, palette, typography } from '@theme'
 import { DonationContext, formatUSDC, rgba } from '@lib'
 import { ISidebarDonatorsQuery } from '@types'
+import { GET_DONATIONS_FROM_BLOCKCHAIN } from '@gql'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_GOAL: number
@@ -29,6 +31,15 @@ const monthNames = [
 ]
 
 const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
+  console.log('Sidebar  starts  ')
+  const { data, loading, error } = useQuery<IGetUserQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
+    variables: { raffleId: '2' },
+    onCompleted: donationRaw => {
+      console.log('donationRaw  ', donationRaw)
+    },
+    onError: error => console.log('error ', error),
+  })
+
   const { donationStatus } = useContext(DonationContext)
 
   const [donations, setDonations] = useState<Donation[]>([])

@@ -20,6 +20,8 @@ const getDonations = async (req: NextApiRequest, res: NextApiResponse) => {
   query.descending('block_number')
   const results = await query.find()
 
+  console.log('results here:::  ', results)
+
   const listOfAddresses = results.map(item => item.get('from'))
 
   let donations = []
