@@ -1,4 +1,3 @@
-import { useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import Leaderboard from './Leaderboard'
@@ -7,7 +6,12 @@ import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba } from '@lib'
-import { ISidebarDonatorsQuery } from '@types'
+import {
+  ISidebarDonatorsQuery,
+  IGetDonationFromBlockchainQuery,
+  IGetUsersByPublicAddressQuery,
+  IDonation,
+} from '@types'
 import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
@@ -35,29 +39,31 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
   const fundDeadline = raffle ? new Date(raffle?.endTime.toNumber() * 1000) : undefined
   const fundStart = raffle ? new Date(raffle?.startTime.toNumber() * 1000) : undefined
 
-  const { data, loading } = useQuery<any>(GET_DONATIONS_FROM_BLOCKCHAIN, {
+  const { data, loading } = useQuery<IGetDonationFromBlockchainQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
     variables: { raffleId },
     skip: !raffleId,
     onError: error => console.error('error loading donation blockchain', error),
   })
 
-  const donations = data && data.Donation && data.Donation?.donations
+  const donations: IDonation[] = data && data.Donation && data.Donation?.donations
 
   const addresses = donations && donations.map(({ userAddress }) => userAddress.toLowerCase())
 
-  const totalRaised = donations && donations.reduce((total: number, obj: Donation) => parseInt(obj.amount) + total, 0)
+  const totalRaised = donations && donations.reduce((total: number, obj: IDonation) => parseInt(obj.amount) + total, 0)
 
   const formatedTotalRaised = formatUSDC(totalRaised)
 
-  const { data: donorData, loading: loadingDonors } = useQuery<>(GET_USERS_BY_PUBLIC_ADDRESSES, {
-    skip: !raffleId || loading,
-    variables: { addresses },
-    onError: error => console.error('error ', error),
-  })
+  const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
+    GET_USERS_BY_PUBLIC_ADDRESSES,
+    {
+      skip: !raffleId || loading,
+      variables: { addresses },
+      onError: error => console.error('error ', error),
+    },
+  )
 
   const donationsWithUser = []
   if (donations && donations.length > 0 && !loadingDonors) {
-    // const users = (await getUsersByPublicAddress(listOfAddresses, req?.cookies?.token)).data.User
     for (let i = 0; i < donations.length; i++) {
       const user =
         donorData &&
