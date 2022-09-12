@@ -6,12 +6,7 @@ import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba } from '@lib'
-import {
-  ISidebarDonatorsQuery,
-  IGetDonationFromBlockchainQuery,
-  IGetUsersByPublicAddressQuery,
-  IDonation,
-} from '@types'
+import { ISidebarDonatorsQuery, IGetDonationFromBlockchainQuery, IGetUsersByPublicAddressQuery } from '@types'
 import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
@@ -45,7 +40,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
     onError: error => console.error('error loading donation blockchain', error),
   })
 
-  const donations: IDonation[] = data && data.Donation && data.Donation?.donations
+  const donations: Donation[] = data && data.Donation && data.Donation?.donations
 
   const addresses = donations && donations.map(({ userAddress }) => userAddress.toLowerCase())
 
