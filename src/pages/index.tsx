@@ -36,7 +36,9 @@ const Home = () => {
   } = useReadContract(raffleContractAddress, RaffleAbi, 'getRaffle', [raffleId], false)
 
   useEffect(() => {
-    refetchRaffle()
+    if (raffleId) {
+      refetchRaffle()
+    }
   }, [raffleId])
 
   return (

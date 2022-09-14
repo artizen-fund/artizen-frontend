@@ -49,7 +49,9 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
   }, [metadataUri])
 
   useEffect(() => {
-    refetchTokenId?.()
+    if (tokenId) {
+      refetchTokenId?.()
+    }
   }, [tokenId])
 
   const getDaysAgoFromDate = (start: number) => {
