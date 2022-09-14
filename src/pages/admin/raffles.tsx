@@ -5,7 +5,7 @@ import { WagmiConfig } from 'wagmi'
 
 const { client, chains } = getWagmiClient()
 
-const CreateRaffleWrapper = () => {
+const ManageRaffle = () => {
   return (
     <WagmiConfig client={client}>
       <Layout>
@@ -17,4 +17,4 @@ const CreateRaffleWrapper = () => {
   )
 }
 
-export default CreateRaffleWrapper
+export default ManageRaffle

@@ -17,7 +17,7 @@ type Raffle = {
   topDonatedAmount: BigNumber
 }
 
-const Admin = () => {
+const ListRaffle = () => {
   const [raffles, setRaffles] = useState<Raffle[]>()
   const { isConnected } = useAccount()
   const { data: signer, isError, isLoading } = useSigner()
@@ -138,4 +138,4 @@ const Table = styled.table`
   }
 `
 
-export default Admin
+export default ListRaffle
