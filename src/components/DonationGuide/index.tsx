@@ -60,7 +60,7 @@ const Wrapper = styled.div`
     padding: 80px;
   }
 
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 250, 250, 1);
 `
 
 const Headline = styled.h1`

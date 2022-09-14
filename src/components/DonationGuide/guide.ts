@@ -16,10 +16,18 @@ type GuideImage = {
   coordinates: GuideCoordinate
 }
 
+type GuideAnimation = {
+  type: 'animation'
+  lottieJson: string
+  lottieJsonDark?: string
+  altText?: string
+  coordinates: GuideCoordinate
+}
+
 export type GuideCell = {
   columns: Record<ResponsiveSize, number>
   height: Record<ResponsiveSize, number>
-  items: Array<GuideCopy | GuideImage>
+  items: Array<GuideCopy | GuideImage | GuideAnimation>
 }
 
 const guideMap: Array<GuideCell> = [
@@ -43,11 +51,12 @@ const guideMap: Array<GuideCell> = [
     items: [
       /* 1. */ {
         type: 'copy',
-        copy: 'First, if you’re stressed about web3, don’t. We got you. It’s easier thank you think.',
+        copy: 'First, if you’re stressed about web3, don’t. We got you. It’s easier than you think.',
         coordinates: {
           desktop: {
             x: 0,
             y: 25,
+            w: 325,
           },
           laptop: {
             x: 0,
@@ -69,13 +78,14 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-01.svg',
-        imageDark: 'guide-01-dark.svg',
+        image: '01.png',
+        imageDark: '01-dark.png',
         altText: 'fellow strutting with card and coin',
         coordinates: {
           desktop: {
+            w: 50,
             x: 50,
-            y: 90,
+            y: 10,
           },
           laptop: {
             x: 0,
@@ -121,8 +131,9 @@ const guideMap: Array<GuideCell> = [
         copy: 'The grants are funded using crypto. But you can donate using two payment methods:',
         coordinates: {
           desktop: {
-            x: 0,
-            y: 25,
+            x: 5,
+            y: 0,
+            w: 490,
           },
           laptop: {
             x: 0,
@@ -148,7 +159,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 35,
+            w: 360,
           },
           laptop: {
             x: 0,
@@ -170,12 +182,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-02.svg',
-        imageDark: 'guide-02-dark.svg',
+        image: '02a.png',
+        imageDark: '02a-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 40,
+            y: 20,
+            w: 30,
           },
           laptop: {
             x: 0,
@@ -197,12 +210,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-02b.svg',
-        imageDark: 'guide-02b-dark.svg',
+        image: '02b.png',
+        imageDark: '02b-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 75,
+            y: 20,
+            w: 25,
           },
           laptop: {
             x: 0,
@@ -250,6 +264,7 @@ const guideMap: Array<GuideCell> = [
           desktop: {
             x: 0,
             y: 25,
+            w: 325,
           },
           laptop: {
             x: 0,
@@ -271,12 +286,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-03.svg',
-        imageDark: 'guide-03-dark.svg',
+        image: '03.png',
+        imageDark: '03-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 0,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -324,6 +340,7 @@ const guideMap: Array<GuideCell> = [
           desktop: {
             x: 0,
             y: 25,
+            w: 325,
           },
           laptop: {
             x: 0,
@@ -345,12 +362,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-04.svg',
-        imageDark: 'guide-04-dark.svg',
+        image: '04.png',
+        imageDark: '04-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 0,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -398,6 +416,7 @@ const guideMap: Array<GuideCell> = [
           desktop: {
             x: 0,
             y: 25,
+            w: 325,
           },
           laptop: {
             x: 0,
@@ -419,12 +438,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-05.svg',
-        imageDark: 'guide-05-dark.svg',
+        image: '05.png',
+        imageDark: '05-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 0,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -471,7 +491,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 400,
           },
           laptop: {
             x: 0,
@@ -493,12 +514,12 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-06.svg',
-        imageDark: 'guide-06-dark.svg',
+        image: '06.png',
+        imageDark: '06-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 27,
           },
           laptop: {
             x: 0,
@@ -545,7 +566,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 500,
           },
           laptop: {
             x: 0,
@@ -567,12 +589,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-07.svg',
-        imageDark: 'guide-07-dark.svg',
+        image: '07.png',
+        imageDark: '07-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 5,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -619,7 +642,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 400,
           },
           laptop: {
             x: 0,
@@ -644,8 +668,9 @@ const guideMap: Array<GuideCell> = [
         copy: 'This is where things might get a little unexpected. The transaction’s not instant. It might take anywhere from 10 minutes up to 2 hours.',
         coordinates: {
           desktop: {
-            x: 0,
-            y: 25,
+            x: 40,
+            y: 60,
+            w: 350,
           },
           laptop: {
             x: 0,
@@ -667,12 +692,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-08.svg',
-        imageDark: 'guide-08-dark.svg',
+        image: '08.png',
+        imageDark: '08-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 15,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -719,7 +745,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 190,
           },
           laptop: {
             x: 0,
@@ -744,8 +771,9 @@ const guideMap: Array<GuideCell> = [
         copy: 'No, really, it’s fine. It’s how crypto works.',
         coordinates: {
           desktop: {
-            x: 0,
-            y: 25,
+            x: 40,
+            y: 0,
+            w: 400,
           },
           laptop: {
             x: 0,
@@ -767,12 +795,12 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-09.svg',
-        imageDark: 'guide-09-dark.svg',
+        image: '09.png',
+        imageDark: '09-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 15,
           },
           laptop: {
             x: 0,
@@ -819,7 +847,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 500,
           },
           laptop: {
             x: 0,
@@ -841,12 +870,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-10.svg',
-        imageDark: 'guide-10-dark.svg',
+        image: '10.png',
+        imageDark: '10-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 15,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -893,7 +923,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 500,
           },
           laptop: {
             x: 0,
@@ -915,12 +946,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-11.svg',
-        imageDark: 'guide-11-dark.svg',
+        image: '11.png',
+        imageDark: '11-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 15,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -967,7 +999,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 500,
           },
           laptop: {
             x: 0,
@@ -993,7 +1026,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 30,
+            w: 400,
           },
           laptop: {
             x: 0,
@@ -1015,12 +1049,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-12.svg',
-        imageDark: 'guide-12-dark.svg',
+        image: '12.png',
+        imageDark: '12-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 20,
+            y: 20,
+            w: 80,
           },
           laptop: {
             x: 0,
@@ -1067,7 +1102,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 450,
           },
           laptop: {
             x: 0,
@@ -1089,12 +1125,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-13.svg',
-        imageDark: 'guide-13-dark.svg',
+        image: '13.png',
+        imageDark: '13-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 20,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -1141,7 +1178,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 450,
           },
           laptop: {
             x: 0,
@@ -1166,8 +1204,9 @@ const guideMap: Array<GuideCell> = [
         copy: 'Don’t forget that this might take some time.',
         coordinates: {
           desktop: {
-            x: 0,
+            x: 60,
             y: 25,
+            w: 250,
           },
           laptop: {
             x: 0,
@@ -1189,12 +1228,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-14.svg',
-        imageDark: 'guide-14-dark.svg',
+        image: '14.png',
+        imageDark: '14-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 25,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -1241,7 +1281,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 450,
           },
           laptop: {
             x: 0,
@@ -1266,8 +1307,9 @@ const guideMap: Array<GuideCell> = [
         copy: '(This may take another few hours, though. You know the drill by now!)',
         coordinates: {
           desktop: {
-            x: 0,
-            y: 25,
+            x: 50,
+            y: 75,
+            w: 300,
           },
           laptop: {
             x: 0,
@@ -1289,12 +1331,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-15.svg',
-        imageDark: 'guide-15-dark.svg',
+        image: '15.png',
+        imageDark: '15-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 10,
+            y: 20,
+            w: 80,
           },
           laptop: {
             x: 0,
@@ -1341,7 +1384,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 500,
           },
           laptop: {
             x: 0,
@@ -1363,12 +1407,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-16.svg',
-        imageDark: 'guide-16-dark.svg',
+        image: '16.png',
+        imageDark: '16-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 12,
+            w: 100,
           },
           laptop: {
             x: 0,
@@ -1415,7 +1460,8 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
+            y: 0,
+            w: 350,
           },
           laptop: {
             x: 0,
@@ -1440,8 +1486,9 @@ const guideMap: Array<GuideCell> = [
         copy: 'And of making the world a slightly better place.',
         coordinates: {
           desktop: {
-            x: 0,
-            y: 25,
+            x: 60,
+            y: 85,
+            w: 300,
           },
           laptop: {
             x: 0,
@@ -1463,12 +1510,13 @@ const guideMap: Array<GuideCell> = [
       },
       {
         type: 'image',
-        image: 'guide-17.svg',
-        imageDark: 'guide-17-dark.svg',
+        image: '17.png',
+        imageDark: '17-dark.png',
         coordinates: {
           desktop: {
-            x: 50,
-            y: 90,
+            x: 0,
+            y: 15,
+            w: 100,
           },
           laptop: {
             x: 0,
