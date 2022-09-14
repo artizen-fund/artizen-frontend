@@ -31,6 +31,9 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
   // eslint-disable-next-line
   console.log('NFT metadataUri   ', metadataUri)
 
+  // eslint-disable-next-line
+  console.log('NEXT_PUBLIC_NFT_CONTRACT_ADDRESS', process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS)
+
   const [metadata, setMetadata] = useState<Metadata>()
 
   const getMetadataFromUri = async (uri: string) => {
