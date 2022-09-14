@@ -28,6 +28,8 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
     [tokenId],
     false,
   )
+  // eslint-disable-next-line
+  console.log('NFT metadataUri   ', metadataUri)
 
   const [metadata, setMetadata] = useState<Metadata>()
 
