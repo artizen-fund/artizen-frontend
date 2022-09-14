@@ -18,10 +18,12 @@ const endSession = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Add the try/catch because a user's session may have already expired with Magic (expired 7 days after login)
     try {
+      // eslint-disable-next-line
+      
       if (!user.issuer) throw 'Bad JWT payload.'
       await magic.users.logoutByIssuer(user.issuer)
     } catch (error) {
-      console.error('Users session with Magic already expired')
+      console.error('Users session with Magic already expired', error)
     }
     res.writeHead(302, { Location: '/' })
     res.end()
