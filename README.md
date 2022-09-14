@@ -65,32 +65,36 @@ yarn test:jest
 
 ## Manual tests:
 
-- Install and setup Metamask in your browser
+### Metamask setup
+
+- Install and setup [Metamask](https://metamask.io/download/) in your browser
+  - [Help and Frequently Asked Questions](https://metamask.io/faqs)
 - Add Mumbai network to your Metamask
-  - ChainID: 8000
+  - ChainID: 80001
   - RPC URL: https://rpc-mumbai.maticvigil.com/ or ask Rodrigo for alchemy one
   - Block Explorer: https://mumbai.polygonscan.com/
-- Get same Mumbai MATIC from [faucet](https://faucet.polygon.technology/) to your Magic.link wallet
+- Get some MATIC tokens for Mumbai network from [faucet](https://faucet.polygon.technology/) to your Magic.link wallet
 
+### FIAT flow
 
-- FIAT flow
-  ```
-  Card Number: 4111111111111111
+```
+Card Number: 4111111111111111
+Expiration: 10/2023
+CVV: 555
+```
 
-  Expiration: 10/2023
+### USDC Flow
 
-  CVV: 555
-  ```
-- USDC Flow
-  - Get some Mumbai MATIC from [faucet](https://faucet.polygon.technology/) to your Metamask wallet
-  - Ask Rodrigo for some USDC on Mumbai
-  - Go ahead and try USDC donation
+- Get some MATIC tokens for Mumbai network from [faucet](https://faucet.polygon.technology/) to your Metamask wallet
+- Ask Rodrigo for some USDC on Mumbai
+- Go ahead and try USDC donation
 
-- ETH Flow
-  - Get some Ropsten ETH from [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
-  - Get some Goerli ETH from [faucet](https://goerlifaucet.com/) or [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
-  - Ask Rodrigo for some USDC on Goerli
-  - Go ahead and try ETH donation 
+### ETH Flow
+
+- Get some Ropsten ETH from [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
+- Get some Goerli ETH from [faucet](https://goerlifaucet.com/) or [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
+- Ask Rodrigo for some USDC on Goerli
+- Go ahead and try ETH donation
 
 ## Licence
 
