@@ -65,6 +65,11 @@ yarn test:jest
 
 ## Manual tests:
 
+- Before setup, make sure you’re running the latest version of the Metamask extension for Chrome.
+- Enable test networks:
+  - top right icon, pick Settings / Advanced
+  - turn on `Show test networks` (about halfway down the form)
+
 ### Metamask setup
 
 - Install and setup [Metamask](https://metamask.io/download/) in your browser
@@ -72,6 +77,7 @@ yarn test:jest
 - Add Mumbai network to your Metamask
   - ChainID: 80001
   - RPC URL: https://rpc-mumbai.maticvigil.com/ or ask Rodrigo for alchemy one
+  - Currency Symbol: MATIC
   - Block Explorer: https://mumbai.polygonscan.com/
 - Get some MATIC tokens for Mumbai network from [faucet](https://faucet.polygon.technology/) to your Magic.link wallet
 
@@ -87,14 +93,16 @@ CVV: 555
 
 - Get some MATIC tokens for Mumbai network from [faucet](https://faucet.polygon.technology/) to your Metamask wallet
 - Ask Rodrigo for some USDC on Mumbai
-- Go ahead and try USDC donation
+- You should now be able to run [USDC test donations](https://labs.artizen.fund)
 
 ### ETH Flow
 
 - Get some Ropsten ETH from [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
-- Get some Goerli ETH from [faucet](https://goerlifaucet.com/) or [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
+- Get some Goerli ETH from [faucet](https://faucet.paradigm.xyz/) to your Metamask wallet
+- Ask Rodrigo to add you to Alchemy
+- Ask Rodrigo for some USDC on Ropsten
 - Ask Rodrigo for some USDC on Goerli
-- Go ahead and try ETH donation
+- You should now be able to run [ETH test donations](https://labs.artizen.fund)
 
 ## Licence
 
