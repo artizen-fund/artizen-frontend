@@ -6,10 +6,10 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-9f2980ef-0 zgtVz"
+      class="sc-7ac85309-0 iIkJqy"
     >
       <div
-        class="sc-9f2980ef-1 igUyCE"
+        class="sc-7ac85309-1 hHdRlh"
       >
         <a
           href="/"
@@ -61,7 +61,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </div>
         </a>
         <button
-          class="sc-2a588df4-2 gItzDj sc-9f2980ef-3 jpNFli "
+          class="sc-2a588df4-2 gItzDj sc-7ac85309-3 dnxmsH "
         >
           <span>
             Menu
@@ -69,10 +69,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-9f2980ef-1 igUyCE"
+        class="sc-7ac85309-1 hHdRlh"
       >
         <div
-          class="sc-9f2980ef-2 iVVxdA"
+          class="sc-7ac85309-2 jIllZp"
         >
           <ul>
             <li>
@@ -120,30 +120,30 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </header>
     <div
-      class="sc-a558af5a-0 eKiCTg"
+      class="sc-d2b8f35e-0 iWKxmP"
     >
       <div
         class="sc-8d0edb81-0 ddViZJ"
       >
         <div
-          class="sc-e98d3470-4 ccfmNP"
+          class="sc-91894e3-3 iWqXNi"
         >
           <div
-            class="sc-e98d3470-5 UEdlz"
+            class="sc-91894e3-4 ecIZZ"
           >
             <h1
-              class="sc-e98d3470-6 cmIgXc"
+              class="sc-91894e3-5 fTSCwM"
             >
               Let’s get started by setting up your Artizen account
             </h1>
             <div
-              class="sc-e98d3470-7 iRDciN"
+              class="sc-91894e3-6 jXbMYf"
             >
               <div
-                class="sc-189919d9-2 kkJcfa"
+                class="sc-60e75bb7-2 elEEJs"
               >
                 <div
-                  class="sc-189919d9-0 fzTocg"
+                  class="sc-60e75bb7-0 dkGscC"
                   color="night"
                 >
                   <div
@@ -153,7 +153,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 </div>
               </div>
               <p
-                class="sc-e98d3470-8 jXQbMW"
+                class="sc-91894e3-7 iDqyHi"
               >
                 Already have an account?
                 <br />
@@ -196,7 +196,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <button
-            class="sc-2a588df4-2 bANZSb sc-e98d3470-0 cgGWFL  disabled"
+            class="sc-2a588df4-2 bANZSb sc-91894e3-0 itOROQ  disabled"
             disabled=""
           >
             <span>
@@ -204,42 +204,10 @@ exports[`Layout renders Layout unchanged 1`] = `
             </span>
           </button>
           <div
-            class="sc-e98d3470-1 feCDDK"
+            class="sc-91894e3-8 jZmRGv"
           >
             <div
-              class="sc-e98d3470-9 eFOEhA"
-            />
-            <div
-              class="sc-e98d3470-10 kSQUcl"
-            >
-              <button
-                class="sc-2a588df4-2 ekFgDk undefined "
-              >
-                <span>
-                  Phone
-                </span>
-              </button>
-              <button
-                class="sc-2a588df4-2 ekFgDk undefined "
-              >
-                <span>
-                  Twitter
-                </span>
-              </button>
-              <button
-                class="sc-2a588df4-2 ekFgDk undefined "
-              >
-                <span>
-                  Discord
-                </span>
-              </button>
-            </div>
-          </div>
-          <div
-            class="sc-e98d3470-11 hEWjgo"
-          >
-            <div
-              class="sc-e98d3470-12 gnYoTi"
+              class="sc-91894e3-9 jOehvP"
             >
               <label
                 class="sc-dd35d48e-4 dCKwdz"
@@ -261,7 +229,7 @@ exports[`Layout renders Layout unchanged 1`] = `
                 />
               </label>
               <p
-                class="sc-e98d3470-13 hQIAWR"
+                class="sc-91894e3-10 DnIa-d"
               >
                 I agree to Artizen’s
                 <a
@@ -276,58 +244,51 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-a558af5a-0 eKiCTg"
+      class="sc-d2b8f35e-0 iWKxmP"
     >
       <div
         class="sc-8d0edb81-0 ddViZJ"
       >
         <div
-          class="sc-14ad3020-0 jcdSmk"
+          class="sc-8ef8168e-0 dQCAro"
         >
           <div
-            class="sc-14ad3020-1 eNufMx"
+            class="sc-8ef8168e-1 chkazZ"
           >
             <div
-              class="sc-14ad3020-3 gumywn"
+              class="sc-8ef8168e-3 gAgQuT"
             />
             <div
-              class="sc-14ad3020-2 fIDFYi"
+              class="sc-8ef8168e-2 dhVFwq"
             >
               <h2
-                class="sc-14ad3020-4 kwHZEg"
+                class="sc-8ef8168e-4 dmUZGM"
               >
                 About
               </h2>
               <p
-                class="sc-14ad3020-5 dFatZY"
+                class="sc-8ef8168e-5 idChXc"
               >
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
-              <button
-                class="sc-2a588df4-2 dorpEK undefined "
-              >
-                <span>
-                  Learn More
-                </span>
-              </button>
             </div>
           </div>
           <div
-            class="sc-14ad3020-1 eNufMx"
+            class="sc-8ef8168e-1 chkazZ"
           >
             <div
-              class="sc-14ad3020-3 hROOXr"
+              class="sc-8ef8168e-3 hwVjNH"
             />
             <div
-              class="sc-14ad3020-2 fIDFYi"
+              class="sc-8ef8168e-2 dhVFwq"
             >
               <h2
-                class="sc-14ad3020-4 kwHZEg"
+                class="sc-8ef8168e-4 dmUZGM"
               >
                 Grants
               </h2>
               <p
-                class="sc-14ad3020-5 dFatZY"
+                class="sc-8ef8168e-5 idChXc"
               >
                 Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
               </p>
@@ -341,21 +302,21 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-14ad3020-1 ycHGE"
+            class="sc-8ef8168e-1 fZfbig"
           >
             <div
-              class="sc-14ad3020-3 hwDDHH"
+              class="sc-8ef8168e-3 bquQfz"
             />
             <div
-              class="sc-14ad3020-2 fIDFYi"
+              class="sc-8ef8168e-2 dhVFwq"
             >
               <h2
-                class="sc-14ad3020-4 kwHZEg"
+                class="sc-8ef8168e-4 dmUZGM"
               >
                 Leaderboard
               </h2>
               <p
-                class="sc-14ad3020-5 dFatZY"
+                class="sc-8ef8168e-5 idChXc"
               >
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
@@ -369,21 +330,21 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-14ad3020-1 eNufMx"
+            class="sc-8ef8168e-1 chkazZ"
           >
             <div
-              class="sc-14ad3020-3 dWANBz"
+              class="sc-8ef8168e-3 hAztPz"
             />
             <div
-              class="sc-14ad3020-2 fIDFYi"
+              class="sc-8ef8168e-2 dhVFwq"
             >
               <h2
-                class="sc-14ad3020-4 kwHZEg"
+                class="sc-8ef8168e-4 dmUZGM"
               >
                 FAQs
               </h2>
               <p
-                class="sc-14ad3020-5 dFatZY"
+                class="sc-8ef8168e-5 idChXc"
               >
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
@@ -400,31 +361,31 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-a558af5a-0 eKiCTg"
+      class="sc-d2b8f35e-0 iWKxmP"
     >
       <div
         class="sc-8d0edb81-0 ddViZJ"
       >
         <div
-          class="sc-fa264814-0 kXMtVP"
+          class="sc-97bf92d2-0 dCeXoW"
         >
           <div
-            class="sc-fa264814-1 cssaZW"
+            class="sc-97bf92d2-1 feYvdf"
           >
             <div>
               <h1
-                class="sc-fa264814-2"
+                class="sc-97bf92d2-2"
               >
                 Choose your donation amount and payment method
               </h1>
               <div
-                class="sc-78ba2856-0 fOnoXs"
+                class="sc-74bb4641-0 iFAqPP"
               >
                 <div
-                  class="sc-189919d9-2 kkJcfa"
+                  class="sc-60e75bb7-2 elEEJs"
                 >
                   <div
-                    class="sc-189919d9-0 cmvyFc"
+                    class="sc-60e75bb7-0 iVuNTq"
                     color="night"
                   >
                     <div
@@ -434,15 +395,16 @@ exports[`Layout renders Layout unchanged 1`] = `
                   </div>
                 </div>
                 <p
-                  class="sc-78ba2856-1 jZynMh"
+                  class="sc-74bb4641-1 jnnXGm"
                 >
-                  Need help? We’ve prepared a useful guide to donating.
+                  Need help? Follow this 
+                  <em>
+                    donation guide
+                  </em>
+                  .
                 </p>
               </div>
             </div>
-            <p>
-              todo: insert Leaderboard here
-            </p>
             <label
               class="sc-dd35d48e-4 fUZPkX"
             >
@@ -465,7 +427,7 @@ exports[`Layout renders Layout unchanged 1`] = `
             </label>
           </div>
           <div
-            class="sc-fa264814-4 ejyLEh"
+            class="sc-97bf92d2-4 dgkxTE"
           >
             <div
               class="sc-cf7cfc90-0 dmSvkC"
@@ -494,7 +456,7 @@ exports[`Layout renders Layout unchanged 1`] = `
               />
             </div>
             <div
-              class="sc-fa264814-5 gZwxVK"
+              class="sc-97bf92d2-5 hVWZtX"
             >
               <span>
                 Friends of Artizen typically donate:
@@ -524,16 +486,16 @@ exports[`Layout renders Layout unchanged 1`] = `
               </div>
             </div>
             <ul
-              class="sc-fa264814-6 yLhfE"
+              class="sc-97bf92d2-6 ctZciV"
             >
               <li
-                class="sc-fa264814-7 hEcMBU"
+                class="sc-97bf92d2-7 kIPUTt"
               >
                 <div
-                  class="sc-189919d9-2 kkJcfa"
+                  class="sc-60e75bb7-2 elEEJs"
                 >
                   <div
-                    class="sc-189919d9-0 cmvyFc"
+                    class="sc-60e75bb7-0 iVuNTq"
                     color="night"
                   >
                     <div
@@ -552,13 +514,13 @@ exports[`Layout renders Layout unchanged 1`] = `
                 </span>
               </li>
               <li
-                class="sc-fa264814-7 gcZSMc"
+                class="sc-97bf92d2-7 hYwjmh"
               >
                 <div
-                  class="sc-189919d9-2 kkJcfa"
+                  class="sc-60e75bb7-2 elEEJs"
                 >
                   <div
-                    class="sc-189919d9-0 cmvyFc"
+                    class="sc-60e75bb7-0 iVuNTq"
                     color="night"
                   >
                     <div
@@ -577,13 +539,13 @@ exports[`Layout renders Layout unchanged 1`] = `
                 </span>
               </li>
               <li
-                class="sc-fa264814-7 gcZSMc"
+                class="sc-97bf92d2-7 hYwjmh"
               >
                 <div
-                  class="sc-189919d9-2 kkJcfa"
+                  class="sc-60e75bb7-2 elEEJs"
                 >
                   <div
-                    class="sc-189919d9-0 cmvyFc"
+                    class="sc-60e75bb7-0 iVuNTq"
                     color="night"
                   >
                     <div
@@ -614,25 +576,25 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-213fa555-0 dZEntA"
+      class="sc-b10bbb1b-0 esxGBA"
     >
       <h1
-        class="sc-213fa555-1 bZKPya"
+        class="sc-b10bbb1b-1 errkXm"
       >
         How to donate to grants
         <br />
         using web3 — a guide
       </h1>
       <div
-        class="sc-446f2393-2 csvqBM"
+        class="sc-934236b2-2 fzamxu"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 jAqPyk"
+          class="sc-934236b2-1 jSgTfe"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             1
           </div>
@@ -641,7 +603,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 lFWcA"
+          class="sc-934236b2-1 jmovNK"
           type="image"
         >
           <img
@@ -650,15 +612,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 feABgX"
+        class="sc-934236b2-2 eGTrvN"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 iVjfef"
+          class="sc-934236b2-1 irpWBl"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             2
           </div>
@@ -667,7 +629,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 jQjSjI"
+          class="sc-934236b2-1 ezDfli"
           type="copy"
         >
           <p>
@@ -675,7 +637,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 cUVFSU"
+          class="sc-934236b2-1 kSjRyC"
           type="image"
         >
           <img
@@ -683,7 +645,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           />
         </div>
         <div
-          class="sc-446f2393-1 ftwlKd"
+          class="sc-934236b2-1 bizdOr"
           type="image"
         >
           <img
@@ -692,15 +654,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 giJrSr"
+        class="sc-934236b2-2 bAoBx"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 eUqgLc"
+          class="sc-934236b2-1 bDuuNy"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             3
           </div>
@@ -709,7 +671,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 dwxenl"
+          class="sc-934236b2-1 sLgsf"
           type="image"
         >
           <img
@@ -718,15 +680,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 iyevEe"
+        class="sc-934236b2-2 xWpwM"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 hByJwU"
+          class="sc-934236b2-1 GSLFy"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             4
           </div>
@@ -735,7 +697,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 gYhLOH"
+          class="sc-934236b2-1 gcQslx"
           type="image"
         >
           <img
@@ -744,15 +706,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 jNPiaj"
+        class="sc-934236b2-2 ktfEdV"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 hQpMkK"
+          class="sc-934236b2-1 eRveYg"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             5
           </div>
@@ -761,7 +723,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 gHkoWV"
+          class="sc-934236b2-1 iMXxJH"
           type="image"
         >
           <img
@@ -770,15 +732,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 kIQqJP"
+        class="sc-934236b2-2 hGViih"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 elHfXM"
+          class="sc-934236b2-1 dJryiO"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             6
           </div>
@@ -787,7 +749,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 gOpMcU"
+          class="sc-934236b2-1 fiuiRy"
           type="image"
         >
           <img
@@ -796,15 +758,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 gSUUtU"
+        class="sc-934236b2-2 hhahSO"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 eVGWEt"
+          class="sc-934236b2-1 eVfkTf"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             7
           </div>
@@ -813,7 +775,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 jMDYKX"
+          class="sc-934236b2-1 gaODYl"
           type="image"
         >
           <img
@@ -822,15 +784,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 iWivdU"
+        class="sc-934236b2-2 jKPAqy"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 gNCHmk"
+          class="sc-934236b2-1 SLJmi"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             8
           </div>
@@ -839,7 +801,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 bzVwfn"
+          class="sc-934236b2-1 flounV"
           type="copy"
         >
           <p>
@@ -847,7 +809,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 fUgCVu"
+          class="sc-934236b2-1 hwbuNw"
           type="image"
         >
           <img
@@ -856,15 +818,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 hriDRn"
+        class="sc-934236b2-2 epsvZp"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 iDYbSP"
+          class="sc-934236b2-1 CnveR"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             9
           </div>
@@ -873,7 +835,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 dgYpkX"
+          class="sc-934236b2-1 izZrTx"
           type="copy"
         >
           <p>
@@ -881,7 +843,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 eosUEa"
+          class="sc-934236b2-1 fvygnw"
           type="image"
         >
           <img
@@ -890,15 +852,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 blBSuE"
+        class="sc-934236b2-2 eOSmXy"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 hjINtF"
+          class="sc-934236b2-1 dRcMRT"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             10
           </div>
@@ -907,7 +869,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 eGsSnG"
+          class="sc-934236b2-1 deKyEo"
           type="image"
         >
           <img
@@ -916,15 +878,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 hKXODD"
+        class="sc-934236b2-2 eBMooR"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 feRgCi"
+          class="sc-934236b2-1 igrAHM"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             11
           </div>
@@ -933,7 +895,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 bDMYvU"
+          class="sc-934236b2-1 kfuILm"
           type="image"
         >
           <img
@@ -942,15 +904,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 hGwWys"
+        class="sc-934236b2-2 bXQnzS"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 fKqlNv"
+          class="sc-934236b2-1 viFaJ"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             12
           </div>
@@ -959,7 +921,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 lkxiWh"
+          class="sc-934236b2-1 exNjuf"
           type="copy"
         >
           <p>
@@ -967,7 +929,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 hEXoVx"
+          class="sc-934236b2-1 hsPUHn"
           type="image"
         >
           <img
@@ -976,15 +938,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 kTeKye"
+        class="sc-934236b2-2 ifykaM"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 kdghYo"
+          class="sc-934236b2-1 ihcudO"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             13
           </div>
@@ -993,7 +955,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 gWxrdT"
+          class="sc-934236b2-1 koxLzx"
           type="image"
         >
           <img
@@ -1002,15 +964,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 kbNBYM"
+        class="sc-934236b2-2 ibylni"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 cVFODP"
+          class="sc-934236b2-1 dZOsXB"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             14
           </div>
@@ -1019,7 +981,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 biFjZe"
+          class="sc-934236b2-1 JqIUA"
           type="copy"
         >
           <p>
@@ -1027,7 +989,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 dqWJBa"
+          class="sc-934236b2-1 cjRIPA"
           type="image"
         >
           <img
@@ -1036,15 +998,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 kbNBYM"
+        class="sc-934236b2-2 ibylni"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 jtayKF"
+          class="sc-934236b2-1 jhRfCn"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             15
           </div>
@@ -1053,7 +1015,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 cHmVFh"
+          class="sc-934236b2-1 ejJLBv"
           type="copy"
         >
           <p>
@@ -1061,7 +1023,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 bJrEuM"
+          class="sc-934236b2-1 fCfMCK"
           type="image"
         >
           <img
@@ -1070,15 +1032,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 gPVTwU"
+        class="sc-934236b2-2 cELDRi"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 itiGhG"
+          class="sc-934236b2-1 fATZwg"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             16
           </div>
@@ -1087,7 +1049,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 jYEmFe"
+          class="sc-934236b2-1 emmLbU"
           type="image"
         >
           <img
@@ -1096,15 +1058,15 @@ exports[`Layout renders Layout unchanged 1`] = `
         </div>
       </div>
       <div
-        class="sc-446f2393-2 fIdZCY"
+        class="sc-934236b2-2 iBetJK"
         height="[object Object]"
       >
         <div
-          class="sc-446f2393-1 jqwVIX"
+          class="sc-934236b2-1 cnLVTx"
           type="copy"
         >
           <div
-            class="sc-446f2393-0 jRxPmW"
+            class="sc-934236b2-0 iMSoJw"
           >
             17
           </div>
@@ -1113,7 +1075,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 husREw"
+          class="sc-934236b2-1 foiOC"
           type="copy"
         >
           <p>
@@ -1121,7 +1083,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </p>
         </div>
         <div
-          class="sc-446f2393-1 kSCHiq"
+          class="sc-934236b2-1 dZmVKI"
           type="image"
         >
           <img
@@ -1131,10 +1093,10 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-189919d9-2 kkJcfa sc-213fa555-2 jkrlb"
+      class="sc-60e75bb7-2 elEEJs sc-b10bbb1b-2 duyEmn"
     >
       <div
-        class="sc-189919d9-0 czelmB"
+        class="sc-60e75bb7-0 kPOjiH"
         color="white"
       >
         <div
@@ -1144,7 +1106,7 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-21f922-0 cKfzLz"
+      class="sc-104c23ae-0 dHICok"
     />
     <main
       class="sc-29d73b66-1 bztuVt"

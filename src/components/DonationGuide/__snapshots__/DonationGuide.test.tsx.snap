@@ -3,17 +3,17 @@
 exports[`DonationGuide renders correctly 1`] = `
 Array [
   <div
-    className="sc-213fa555-0 dZEntA"
+    className="sc-b10bbb1b-0 esxGBA"
   >
     <h1
-      className="sc-213fa555-1 bZKPya"
+      className="sc-b10bbb1b-1 errkXm"
     >
       How to donate to grants
       <br />
       using web3 — a guide
     </h1>
     <div
-      className="sc-446f2393-2 csvqBM"
+      className="sc-934236b2-2 fzamxu"
       height={
         Object {
           "desktop": 0.48,
@@ -25,11 +25,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 jAqPyk"
+        className="sc-934236b2-1 jSgTfe"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           1
         </div>
@@ -38,7 +38,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 lFWcA"
+        className="sc-934236b2-1 jmovNK"
         type="image"
       >
         <img
@@ -47,7 +47,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 feABgX"
+      className="sc-934236b2-2 eGTrvN"
       height={
         Object {
           "desktop": 0.25,
@@ -59,11 +59,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 iVjfef"
+        className="sc-934236b2-1 irpWBl"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           2
         </div>
@@ -72,7 +72,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 jQjSjI"
+        className="sc-934236b2-1 ezDfli"
         type="copy"
       >
         <p>
@@ -80,7 +80,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 cUVFSU"
+        className="sc-934236b2-1 kSjRyC"
         type="image"
       >
         <img
@@ -88,7 +88,7 @@ Array [
         />
       </div>
       <div
-        className="sc-446f2393-1 ftwlKd"
+        className="sc-934236b2-1 bizdOr"
         type="image"
       >
         <img
@@ -97,7 +97,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 giJrSr"
+      className="sc-934236b2-2 bAoBx"
       height={
         Object {
           "desktop": 0.32,
@@ -109,11 +109,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 eUqgLc"
+        className="sc-934236b2-1 bDuuNy"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           3
         </div>
@@ -122,7 +122,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 dwxenl"
+        className="sc-934236b2-1 sLgsf"
         type="image"
       >
         <img
@@ -131,7 +131,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 iyevEe"
+      className="sc-934236b2-2 xWpwM"
       height={
         Object {
           "desktop": 0.32,
@@ -143,11 +143,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 hByJwU"
+        className="sc-934236b2-1 GSLFy"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           4
         </div>
@@ -156,7 +156,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 gYhLOH"
+        className="sc-934236b2-1 gcQslx"
         type="image"
       >
         <img
@@ -165,7 +165,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 jNPiaj"
+      className="sc-934236b2-2 ktfEdV"
       height={
         Object {
           "desktop": 0.32,
@@ -177,11 +177,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 hQpMkK"
+        className="sc-934236b2-1 eRveYg"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           5
         </div>
@@ -190,7 +190,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 gHkoWV"
+        className="sc-934236b2-1 iMXxJH"
         type="image"
       >
         <img
@@ -199,7 +199,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 kIQqJP"
+      className="sc-934236b2-2 hGViih"
       height={
         Object {
           "desktop": 0.45,
@@ -211,11 +211,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 elHfXM"
+        className="sc-934236b2-1 dJryiO"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           6
         </div>
@@ -224,7 +224,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 gOpMcU"
+        className="sc-934236b2-1 fiuiRy"
         type="image"
       >
         <img
@@ -233,7 +233,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 gSUUtU"
+      className="sc-934236b2-2 hhahSO"
       height={
         Object {
           "desktop": 0.45,
@@ -245,11 +245,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 eVGWEt"
+        className="sc-934236b2-1 eVfkTf"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           7
         </div>
@@ -258,7 +258,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 jMDYKX"
+        className="sc-934236b2-1 gaODYl"
         type="image"
       >
         <img
@@ -267,7 +267,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 iWivdU"
+      className="sc-934236b2-2 jKPAqy"
       height={
         Object {
           "desktop": 0.368,
@@ -279,11 +279,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 gNCHmk"
+        className="sc-934236b2-1 SLJmi"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           8
         </div>
@@ -292,7 +292,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 bzVwfn"
+        className="sc-934236b2-1 flounV"
         type="copy"
       >
         <p>
@@ -300,7 +300,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 fUgCVu"
+        className="sc-934236b2-1 hwbuNw"
         type="image"
       >
         <img
@@ -309,7 +309,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 hriDRn"
+      className="sc-934236b2-2 epsvZp"
       height={
         Object {
           "desktop": 0.368,
@@ -321,11 +321,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 iDYbSP"
+        className="sc-934236b2-1 CnveR"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           9
         </div>
@@ -334,7 +334,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 dgYpkX"
+        className="sc-934236b2-1 izZrTx"
         type="copy"
       >
         <p>
@@ -342,7 +342,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 eosUEa"
+        className="sc-934236b2-1 fvygnw"
         type="image"
       >
         <img
@@ -351,7 +351,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 blBSuE"
+      className="sc-934236b2-2 eOSmXy"
       height={
         Object {
           "desktop": 0.368,
@@ -363,11 +363,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 hjINtF"
+        className="sc-934236b2-1 dRcMRT"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           10
         </div>
@@ -376,7 +376,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 eGsSnG"
+        className="sc-934236b2-1 deKyEo"
         type="image"
       >
         <img
@@ -385,7 +385,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 hKXODD"
+      className="sc-934236b2-2 eBMooR"
       height={
         Object {
           "desktop": 0.368,
@@ -397,11 +397,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 feRgCi"
+        className="sc-934236b2-1 igrAHM"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           11
         </div>
@@ -410,7 +410,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 bDMYvU"
+        className="sc-934236b2-1 kfuILm"
         type="image"
       >
         <img
@@ -419,7 +419,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 hGwWys"
+      className="sc-934236b2-2 bXQnzS"
       height={
         Object {
           "desktop": 0.368,
@@ -431,11 +431,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 fKqlNv"
+        className="sc-934236b2-1 viFaJ"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           12
         </div>
@@ -444,7 +444,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 lkxiWh"
+        className="sc-934236b2-1 exNjuf"
         type="copy"
       >
         <p>
@@ -452,7 +452,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 hEXoVx"
+        className="sc-934236b2-1 hsPUHn"
         type="image"
       >
         <img
@@ -461,7 +461,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 kTeKye"
+      className="sc-934236b2-2 ifykaM"
       height={
         Object {
           "desktop": 0.368,
@@ -473,11 +473,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 kdghYo"
+        className="sc-934236b2-1 ihcudO"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           13
         </div>
@@ -486,7 +486,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 gWxrdT"
+        className="sc-934236b2-1 koxLzx"
         type="image"
       >
         <img
@@ -495,7 +495,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 kbNBYM"
+      className="sc-934236b2-2 ibylni"
       height={
         Object {
           "desktop": 0.475,
@@ -507,11 +507,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 cVFODP"
+        className="sc-934236b2-1 dZOsXB"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           14
         </div>
@@ -520,7 +520,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 biFjZe"
+        className="sc-934236b2-1 JqIUA"
         type="copy"
       >
         <p>
@@ -528,7 +528,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 dqWJBa"
+        className="sc-934236b2-1 cjRIPA"
         type="image"
       >
         <img
@@ -537,7 +537,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 kbNBYM"
+      className="sc-934236b2-2 ibylni"
       height={
         Object {
           "desktop": 0.475,
@@ -549,11 +549,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 jtayKF"
+        className="sc-934236b2-1 jhRfCn"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           15
         </div>
@@ -562,7 +562,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 cHmVFh"
+        className="sc-934236b2-1 ejJLBv"
         type="copy"
       >
         <p>
@@ -570,7 +570,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 bJrEuM"
+        className="sc-934236b2-1 fCfMCK"
         type="image"
       >
         <img
@@ -579,7 +579,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 gPVTwU"
+      className="sc-934236b2-2 cELDRi"
       height={
         Object {
           "desktop": 0.38,
@@ -591,11 +591,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 itiGhG"
+        className="sc-934236b2-1 fATZwg"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           16
         </div>
@@ -604,7 +604,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 jYEmFe"
+        className="sc-934236b2-1 emmLbU"
         type="image"
       >
         <img
@@ -613,7 +613,7 @@ Array [
       </div>
     </div>
     <div
-      className="sc-446f2393-2 fIdZCY"
+      className="sc-934236b2-2 iBetJK"
       height={
         Object {
           "desktop": 0.38,
@@ -625,11 +625,11 @@ Array [
       }
     >
       <div
-        className="sc-446f2393-1 jqwVIX"
+        className="sc-934236b2-1 cnLVTx"
         type="copy"
       >
         <div
-          className="sc-446f2393-0 jRxPmW"
+          className="sc-934236b2-0 iMSoJw"
         >
           17
         </div>
@@ -638,7 +638,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 husREw"
+        className="sc-934236b2-1 foiOC"
         type="copy"
       >
         <p>
@@ -646,7 +646,7 @@ Array [
         </p>
       </div>
       <div
-        className="sc-446f2393-1 kSCHiq"
+        className="sc-934236b2-1 dZmVKI"
         type="image"
       >
         <img
@@ -656,11 +656,11 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-189919d9-2 kkJcfa sc-213fa555-2 jkrlb"
+    className="sc-60e75bb7-2 elEEJs sc-b10bbb1b-2 duyEmn"
     onClick={[Function]}
   >
     <div
-      className="sc-189919d9-0 czelmB"
+      className="sc-60e75bb7-0 kPOjiH"
       color="white"
     >
       <div

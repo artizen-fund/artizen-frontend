@@ -3,24 +3,24 @@
 exports[`SessionShelf renders correctly 1`] = `
 <div>
   <div
-    class="sc-e98d3470-4 ccfmNP"
+    class="sc-91894e3-3 iWqXNi"
   >
     <div
-      class="sc-e98d3470-5 UEdlz"
+      class="sc-91894e3-4 ecIZZ"
     >
       <h1
-        class="sc-e98d3470-6 cmIgXc"
+        class="sc-91894e3-5 fTSCwM"
       >
         Let’s get started by setting up your Artizen account
       </h1>
       <div
-        class="sc-e98d3470-7 iRDciN"
+        class="sc-91894e3-6 jXbMYf"
       >
         <div
-          class="sc-189919d9-2 kkJcfa"
+          class="sc-60e75bb7-2 elEEJs"
         >
           <div
-            class="sc-189919d9-0 fzTocg"
+            class="sc-60e75bb7-0 dkGscC"
             color="night"
           >
             <div
@@ -30,7 +30,7 @@ exports[`SessionShelf renders correctly 1`] = `
           </div>
         </div>
         <p
-          class="sc-e98d3470-8 jXQbMW"
+          class="sc-91894e3-7 iDqyHi"
         >
           Already have an account?
           <br />
@@ -73,7 +73,7 @@ exports[`SessionShelf renders correctly 1`] = `
       </div>
     </div>
     <button
-      class="sc-2a588df4-2 bANZSb sc-e98d3470-0 cgGWFL  disabled"
+      class="sc-2a588df4-2 bANZSb sc-91894e3-0 itOROQ  disabled"
       disabled=""
     >
       <span>
@@ -81,42 +81,10 @@ exports[`SessionShelf renders correctly 1`] = `
       </span>
     </button>
     <div
-      class="sc-e98d3470-1 feCDDK"
+      class="sc-91894e3-8 jZmRGv"
     >
       <div
-        class="sc-e98d3470-9 eFOEhA"
-      />
-      <div
-        class="sc-e98d3470-10 kSQUcl"
-      >
-        <button
-          class="sc-2a588df4-2 ekFgDk undefined "
-        >
-          <span>
-            Phone
-          </span>
-        </button>
-        <button
-          class="sc-2a588df4-2 ekFgDk undefined "
-        >
-          <span>
-            Twitter
-          </span>
-        </button>
-        <button
-          class="sc-2a588df4-2 ekFgDk undefined "
-        >
-          <span>
-            Discord
-          </span>
-        </button>
-      </div>
-    </div>
-    <div
-      class="sc-e98d3470-11 hEWjgo"
-    >
-      <div
-        class="sc-e98d3470-12 gnYoTi"
+        class="sc-91894e3-9 jOehvP"
       >
         <label
           class="sc-dd35d48e-4 dCKwdz"
@@ -138,7 +106,7 @@ exports[`SessionShelf renders correctly 1`] = `
           />
         </label>
         <p
-          class="sc-e98d3470-13 hQIAWR"
+          class="sc-91894e3-10 DnIa-d"
         >
           I agree to Artizen’s
           <a
