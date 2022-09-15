@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink } from '@components'
+import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba, DonationContext } from '@lib'
 
@@ -54,7 +54,7 @@ const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }
           <DonationHelpLink />
         </div>
 
-        <p>todo: insert Leaderboard here</p>
+        <Leaderboard />
 
         <CheckboxControl
           data={hideFromLeaderboard}

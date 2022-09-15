@@ -1,14 +1,13 @@
 import styled from 'styled-components'
-import Leaderboard from './Leaderboard'
 import Perks from './Perks'
 import Countdown from './Countdown'
-import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
+import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba, useCampaign } from '@lib'
 import { monthNames } from '@copy/common'
 
 const Sidebar = () => {
-  const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised, donationsWithUser } = useCampaign()
+  const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised } = useCampaign()
   if (!startDate || !endDate || !totalRaised) return <></>
 
   return (
@@ -42,7 +41,7 @@ const Sidebar = () => {
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ donations: donationsWithUser as Donation[] }} />
+            <Leaderboard />
             <Perks />
           </LargeScreensOnly>
         </Content>

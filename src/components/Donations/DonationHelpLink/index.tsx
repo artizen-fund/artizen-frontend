@@ -5,7 +5,9 @@ import { typography } from '@theme'
 const DonationHelpLink = () => (
   <Wrapper>
     <Icon outline glyph="info" level={2} />
-    <Copy>Need help? We’ve prepared a useful guide to donating.</Copy>
+    <Copy>
+      Need help? Follow this <em>donation guide</em>.
+    </Copy>
   </Wrapper>
 )
 
@@ -18,6 +20,12 @@ const Wrapper = styled.div`
 
 const Copy = styled.p`
   ${typography.label.l1}
+
+  em {
+    font-style: normal;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
 `
 
 export default DonationHelpLink

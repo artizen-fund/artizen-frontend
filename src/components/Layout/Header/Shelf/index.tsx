@@ -1,27 +1,28 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { PagePadding } from '@components'
-import { rgba } from '@lib'
+import { rgba, DonationContext } from '@lib'
 import { breakpoint, palette } from '@theme'
 
 interface IShelf {
-  visible: boolean
+  shelfKey: string
   shadowVisible: boolean
-  hideShelf: () => void
   children: React.ReactNode
 }
 
-const Shelf = ({ visible, shadowVisible, hideShelf, children }: IShelf) => {
+const Shelf = ({ shelfKey, shadowVisible, children }: IShelf) => {
+  const { visibleShelf, toggleShelf } = useContext(DonationContext)
   return (
     <>
-      <Wrapper {...{ visible, shadowVisible }}>
+      <Wrapper {...{ shadowVisible }} visible={shelfKey === visibleShelf}>
         <PagePadding>{children}</PagePadding>
       </Wrapper>
-      <Onionskin className={visible ? 'visible' : ''} onClick={hideShelf} />
+      <Onionskin className={shelfKey === visibleShelf ? 'visible' : ''} onClick={() => toggleShelf?.()} />
     </>
   )
 }
 
-const Wrapper = styled.div<Pick<IShelf, 'visible' | 'shadowVisible'>>`
+const Wrapper = styled.div<Pick<IShelf, 'shadowVisible'> & { visible: boolean }>`
   position: fixed;
   z-index: 101;
   width: 100%;
