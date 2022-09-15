@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import {
   FeaturedArt,
@@ -10,37 +11,12 @@ import {
   AlternatingPanel,
   Sidebar,
 } from '@components'
-import { assert, rgba, useReadContract } from '@lib'
+import { rgba, useCampaign } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
-import { RaffleAbi } from '@contracts'
-import { useEffect } from 'react'
 
 const Home = () => {
-  const FUND_GOAL = 25000
-  const raffleContractAddress = assert(
-    process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
-    'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
-  )
-  const { value: raffleId, loading: loadingRaffleId } = useReadContract(
-    raffleContractAddress,
-    RaffleAbi,
-    'raffleCount',
-    [],
-  )
-
-  const {
-    value: raffle,
-    refetch: refetchRaffle,
-    loading: loadingRaffle,
-  } = useReadContract(raffleContractAddress, RaffleAbi, 'getRaffle', [raffleId], false)
-
-  useEffect(() => {
-    if (raffleId) {
-      refetchRaffle()
-    }
-  }, [raffleId])
-
+  const { raffle, loading } = useCampaign()
   return (
     <Layout>
       <Header>
@@ -57,7 +33,7 @@ const Home = () => {
               </Tab>
             ))}
           </TabbedInfo>
-          {!loadingRaffleId && !loadingRaffle && <Sidebar {...{ raffle, FUND_GOAL }} />}
+          {!loading && <Sidebar />}
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>

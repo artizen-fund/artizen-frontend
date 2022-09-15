@@ -1,99 +1,36 @@
-import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba } from '@lib'
-import { ISidebarDonatorsQuery, IGetDonationFromBlockchainQuery, IGetUsersByPublicAddressQuery } from '@types'
-import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
+import { formatUSDC, rgba, useCampaign } from '@lib'
+import { monthNames } from '@copy/common'
 
-export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
-  FUND_GOAL: number
-  raffle: any
-}
-
-const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-
-const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
-  const raffleId = raffle?.raffleID.toString()
-  const fundDeadline = raffle ? new Date(raffle?.endTime.toNumber() * 1000) : undefined
-  const fundStart = raffle ? new Date(raffle?.startTime.toNumber() * 1000) : undefined
-
-  const { data, loading } = useQuery<IGetDonationFromBlockchainQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
-    variables: { raffleId },
-    skip: !raffleId,
-    onError: error => console.error('error loading donation blockchain', error),
-  })
-
-  const donations = data?.Donation?.donations
-
-  // donations?.map(donation => donation?.userAddress?.toLowercase())
-  const addresses = donations?.map(donation => donation?.userAddress?.toLowerCase())
-
-  const totalRaised = donations?.filter(item => !!item).reduce((total, obj) => Number(obj?.amount) + total, 0)
-
-  const formattedTotalRaised = totalRaised && formatUSDC(totalRaised)
-
-  const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
-    GET_USERS_BY_PUBLIC_ADDRESSES,
-    {
-      skip: !raffleId || loading,
-      variables: { addresses },
-      onError: error => console.error('error ', error),
-    },
-  )
-
-  const donationsWithUser = []
-  if (donations && donations.length > 0 && !loadingDonors) {
-    for (let i = 0; i < donations.length; i++) {
-      const user =
-        donorData &&
-        donorData.User.find(item => item.publicAddress?.toLowerCase() === donations[i]?.userAddress.toLowerCase())
-
-      donationsWithUser.push({ ...donations[i], user })
-    }
-  }
+const Sidebar = () => {
+  const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised, donationsWithUser } = useCampaign()
+  if (!startDate || !endDate || !totalRaised) return <></>
 
   return (
     <StyledStickyCanvas>
       <Wrapper>
         <Header>
-          Join our{' '}
-          <strong>
-            {fundStart ? monthNames[fundStart?.getMonth()] : ''}, {fundStart?.getFullYear()}
-          </strong>{' '}
+          Join our
+          <strong>{` ${monthNames[startDate.getMonth()]}, ${startDate.getFullYear()} `}</strong>
           donation drive
         </Header>
         <Content>
           <FundBlock>
-            {formattedTotalRaised && (
-              <AmountRaised>
-                <span>${formattedTotalRaised.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
-              </AmountRaised>
-            )}
-            {formattedTotalRaised && <ProgressBar>{formattedTotalRaised / FUND_GOAL}</ProgressBar>}
+            <AmountRaised>
+              <span>${formatUSDC(totalRaised).toLocaleString()}</span> raised of ${fundRaisingGoal.toLocaleString()}{' '}
+              goal
+            </AmountRaised>
+            {<ProgressBar>{formatUSDC(totalRaised / fundRaisingGoal)}</ProgressBar>}
             <Row>
-              {fundDeadline && <Countdown date={fundDeadline?.toISOString()} />}
-              {donations && (
-                <DonationCount>
-                  <Glyph glyph="trend" /> <span>{donations.length} donations</span>
-                </DonationCount>
-              )}
+              {<Countdown date={endDate.toISOString()} />}
+              <DonationCount>
+                <Glyph glyph="trend" /> <span>{donationCount} donations</span>
+              </DonationCount>
             </Row>
           </FundBlock>
           <Row>
@@ -105,7 +42,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
             </Button>
           </Row>
           <LargeScreensOnly>
-            {donationsWithUser.length > 0 && <Leaderboard {...{ donations: donationsWithUser as Donation[] }} />}
+            <Leaderboard {...{ donations: donationsWithUser as Donation[] }} />
             <Perks />
           </LargeScreensOnly>
         </Content>

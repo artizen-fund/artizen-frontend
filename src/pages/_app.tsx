@@ -2,7 +2,15 @@ import React from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { ApolloProvider } from '@apollo/client'
-import { isProd, withAuth, MagicProvider, initializeApollo, CourierNotification, DonationContextProvider } from '@lib'
+import {
+  isProd,
+  withAuth,
+  MagicProvider,
+  initializeApollo,
+  CourierNotification,
+  DonationContextProvider,
+  CampaignProvider,
+} from '@lib'
 import packageJson from '../../package.json'
 
 import '@public/styles/reset.css'
@@ -17,9 +25,11 @@ const App = ({ Component, pageProps }: AppProps) => {
     <ApolloProvider client={apolloClient}>
       <MagicProvider>
         <CourierNotification>
-          <DonationContextProvider>
-            <Component {...pageProps} />
-          </DonationContextProvider>
+          <CampaignProvider>
+            <DonationContextProvider>
+              <Component {...pageProps} />
+            </DonationContextProvider>
+          </CampaignProvider>
         </CourierNotification>
       </MagicProvider>
     </ApolloProvider>
