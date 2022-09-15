@@ -1,5 +1,6 @@
 import { SDKBase, InstanceWithExtensions } from '@magic-sdk/provider'
 import { OAuthExtension } from '@magic-ext/oauth'
+import { BigNumber } from 'bignumber.js'
 import { IUser } from './generated'
 
 declare global {
@@ -39,6 +40,23 @@ declare global {
   type DonationStageStatus = 'WAITING' | 'PROCESSING' | 'COMPLETE'
 
   type DonationStageFunction = (setStatus: (s: StageStatus) => void, setMessage: (s: string) => void) => void
+
+  type IRaffle = {
+    cancelled: boolean
+    ended: boolean
+    donationCount: BigNumber
+    endTime: BigNumber
+    startTime: BigNumber
+    minimumDonationAmount: BigNumber
+    nftContract: string
+    nftOwner: string
+    raffleID: BigNumber
+    tokenAllocation: BigNumber
+    tokenBuffer: BigNumber
+    tokenID: BigNumber
+    topDonatedAmount: BigNumber
+    topDonor: string
+  }
 }
 
 export {}
