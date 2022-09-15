@@ -3,13 +3,14 @@ import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { ApolloProvider } from '@apollo/client'
 import { isProd, withAuth, MagicProvider, initializeApollo, CourierNotification, DonationContextProvider } from '@lib'
+import packageJson from '../../package.json'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
 const App = ({ Component, pageProps }: AppProps) => {
   // eslint-disable-next-line
-  console.log('--- version: 0.1.7 ----')
+  console.log(`--- version: ${packageJson.version} ----`)
   const apolloClient = initializeApollo(pageProps?.apolloData || {})
 
   return (
