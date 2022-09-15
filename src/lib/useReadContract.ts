@@ -2,7 +2,7 @@ import { ContractInterface, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import { useMagic } from '@lib'
 
-export const useReadContract = (
+export const useReadContract = <T>(
   contractAddress: string,
   contractAbi: ContractInterface,
   methodName: string,
@@ -11,17 +11,13 @@ export const useReadContract = (
 ) => {
   const { magic } = useMagic()
 
-  const [value, setValue] = useState<any>()
+  const [value, setValue] = useState<T>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
 
   const callContract = async () => {
     if (!magic) return
     setLoading(true)
-    // eslint-disable-next-line
-    console.log('load callContract')
-    // eslint-disable-next-line
-    console.log('magic.rpcProvider  :::    ', magic.rpcProvider)
 
     const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider as any)
 
