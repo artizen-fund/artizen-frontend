@@ -8,6 +8,8 @@ import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
 const App = ({ Component, pageProps }: AppProps) => {
+  // eslint-disable-next-line
+  console.log('--- version: 0.1.5 ----')
   const apolloClient = initializeApollo(pageProps?.apolloData || {})
 
   return (

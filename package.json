@@ -1,6 +1,6 @@
 {
   "name": "artizen-frontend",
-  "version": "0.0.8",
+  "version": "0.1.5",
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
