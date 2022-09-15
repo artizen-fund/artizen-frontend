@@ -3,9 +3,8 @@ import styled from 'styled-components'
 import { Icon } from '@components'
 import { rgba } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
+import { donationGuideMap } from '@copy/home'
 import GuideCell from './GuideCell'
-
-import guideMap from './guide'
 
 interface IDonationGuide {
   visible: boolean
@@ -22,7 +21,7 @@ const DonationGuide = ({ visible, hide }: IDonationGuide) => {
           using web3 — a guide
         </Headline>
 
-        {guideMap.map((item, i) => (
+        {donationGuideMap.map((item, i) => (
           <GuideCell key={`guidecell-${i}`} {...item} step={i} />
         ))}
       </Wrapper>

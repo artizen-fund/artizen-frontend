@@ -1,11 +1,11 @@
 import { ResponsiveSize } from '@theme'
 
-export type GuideCoordinate = Record<ResponsiveSize, { x: number; y: number; w?: number; h?: number }>
+export type DonationGuideCoordinate = Record<ResponsiveSize, { x: number; y: number; w?: number; h?: number }>
 
 type GuideCopy = {
   type: 'copy'
   copy: string
-  coordinates: GuideCoordinate
+  coordinates: DonationGuideCoordinate
 }
 
 type GuideImage = {
@@ -13,7 +13,7 @@ type GuideImage = {
   image: string
   imageDark?: string
   altText?: string
-  coordinates: GuideCoordinate
+  coordinates: DonationGuideCoordinate
 }
 
 type GuideAnimation = {
@@ -21,16 +21,16 @@ type GuideAnimation = {
   lottieJson: string
   lottieJsonDark?: string
   altText?: string
-  coordinates: GuideCoordinate
+  coordinates: DonationGuideCoordinate
 }
 
-export type IGuideCell = {
+export type IDonationGuideCell = {
   columns: Record<ResponsiveSize, number>
   height: Record<ResponsiveSize, number>
   items: Array<GuideCopy | GuideImage | GuideAnimation>
 }
 
-const guideMap: Array<IGuideCell> = [
+export const donationGuideMap: Array<IDonationGuideCell> = [
   {
     columns: {
       desktop: 12,
@@ -1633,5 +1633,3 @@ const guideMap: Array<IGuideCell> = [
     ],
   },
 ]
-
-export default guideMap

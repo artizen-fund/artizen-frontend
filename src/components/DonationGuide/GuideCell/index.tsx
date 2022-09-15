@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { rgba } from '@lib'
 import { palette, breakpoint } from '@theme'
-import { IGuideCell, GuideCoordinate } from '../guide'
+import { IDonationGuideCell, DonationGuideCoordinate } from '@copy/home'
 
-const GuideCell = ({ columns, height, items, step }: IGuideCell & { step: number }) => (
+const GuideCell = ({ columns, height, items, step }: IDonationGuideCell & { step: number }) => (
   <Wrapper {...{ columns, height }}>
     {items.map((item, i) =>
       item.type === 'copy' ? (
@@ -65,7 +65,7 @@ const getWidth = (cellType: string, n?: number) => {
   return `${n}%`
 }
 
-const CellItem = styled.div<{ coordinates: GuideCoordinate; type: string }>`
+const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string }>`
   position: absolute;
   z-index: ${props => (props.type === 'copy' ? 1 : 2)};
 
@@ -148,7 +148,7 @@ const CellItem = styled.div<{ coordinates: GuideCoordinate; type: string }>`
  * I'll come around to this.
  */
 
-const Wrapper = styled.div<Pick<IGuideCell, 'columns' | 'height'>>`
+const Wrapper = styled.div<Pick<IDonationGuideCell, 'columns' | 'height'>>`
   position: relative;
   grid-column-end: span ${props => props.columns.mobile};
   height: calc((100vw - 40px) * ${props => props.height.mobile});
