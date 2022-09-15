@@ -38,7 +38,7 @@ const PagePadding = styled.div<PagePaddingProps>`
     }
 
     @media only screen and (min-width: ${breakpoint.laptop}px) {
-      max-width: calc(100vw - 340px);
+      max-width: calc(100vw - 320px);
     }
 
     @media only screen and (min-width: 1940px) {
