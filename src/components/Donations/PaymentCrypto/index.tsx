@@ -26,7 +26,7 @@ const PaymentCrypto = ({ amount, donationMethod, chains }: IPaymentCrypto) => {
   const { setDonationStage } = useContext(DonationContext)
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
 
-  const { connect } = useConnect()
+  const { connect, isError } = useConnect()
   const { isConnected } = useAccount()
   const chainId = getChainId(donationMethod)
 
@@ -49,6 +49,12 @@ const PaymentCrypto = ({ amount, donationMethod, chains }: IPaymentCrypto) => {
       setDonationStage?.('processCrypto')
     }
   }, [isConnected])
+
+  useEffect(() => {
+    if (isError) {
+      console.error('Error when connecting wallet')
+    }
+  }, [isError])
 
   return (
     <Wrapper>

@@ -11,17 +11,27 @@ export interface IconProps {
   label?: string
   color?: string
   darkColor?: string
+  error?: boolean
 }
 
-const Icon = ({ glyph, level, outline, inverted, color, darkColor, label }: IconProps) => {
-  const calculatedColor = color ? color : (!outline && !inverted) || (outline && inverted) ? 'white' : 'night'
-  const calculatedDarkColor = darkColor ? darkColor : color ? color : outline ? 'moon' : 'night'
+const Icon = ({ glyph, level, outline, inverted, color, darkColor, label, error }: IconProps) => {
+  const calculatedColor =
+    !outline && error ? 'uiAlert' : color ? color : (!outline && !inverted) || (outline && inverted) ? 'white' : 'night'
+  const calculatedDarkColor =
+    !outline && error ? 'uiAlert' : darkColor ? darkColor : color ? color : outline ? 'moon' : 'night'
   return (
     <Wrapper {...{ level }}>
       <Circle {...{ outline, level, inverted }} color={calculatedColor} darkColor={calculatedDarkColor}>
         <Glyph {...{ glyph, level }} color={calculatedColor} darkColor={calculatedDarkColor} />
       </Circle>
-      {label && <Label color={inverted ? 'white' : 'night'}>{label}</Label>}
+      {label && (
+        <Label
+          color={!outline && error ? 'uiAlert' : inverted ? 'white' : 'night'}
+          darkColor={!outline && error ? 'uiAlert' : 'moon'}
+        >
+          {label}
+        </Label>
+      )}
     </Wrapper>
   )
 }
@@ -58,11 +68,11 @@ const Circle = styled.div<CircleProps>`
   background: ${props => (!props.outline ? rgba(palette.moon) : rgba(palette.night))}
 `
 
-const Label = styled.div<{ color: keyof Palette }>`
+const Label = styled.div<{ color: keyof Palette; darkColor: keyof Palette }>`
   ${typography.label.l2}
   color: ${props => rgba(palette[props.color])};
   @media (prefers-color-scheme: dark) {
-    color: ${rgba(palette.moon)};
+    color: ${props => rgba(palette[props.darkColor])};
   }
 `
 
