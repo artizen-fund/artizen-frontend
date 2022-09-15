@@ -1,8 +1,9 @@
 import { useState, useContext, useEffect } from 'react'
-import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Confirmation } from '@components'
+import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Confirmation, Breadcrumbs } from '@components'
 import { WagmiConfig } from 'wagmi'
 import { useLoggedInUser, DonationContext } from '@lib'
 import { getWagmiClient } from '../../../lib/wagmiClient'
+import { BreadcrumbStep } from '../../Breadcrumbs'
 
 const { client, chains } = getWagmiClient()
 
@@ -35,7 +36,21 @@ export const DonationShelf = () => {
         return <DonationAmount {...{ setDonationMethod, donationMethod, setAmount, amount }} />
     }
   }
-  return renderSwitch(donationStage, donationMethod)
+
+  const breadcrumbs: Array<BreadcrumbStep<DonationStage>> = [
+    { key: 'setAmount', label: 'Donation Amount' },
+    { key: 'login', label: 'Account Creation' },
+    { key: 'payment', label: 'Payment Information' },
+    { key: 'processCrypto', label: 'Creating Donation' },
+    { key: 'confirmation', label: 'Confirmation' },
+  ]
+
+  return (
+    <>
+      <Breadcrumbs {...{ breadcrumbs }} currentStep={donationStage} />
+      {renderSwitch(donationStage, donationMethod)}
+    </>
+  )
 }
 
 const DonationShelfWithWagmi = (props: any) => (
