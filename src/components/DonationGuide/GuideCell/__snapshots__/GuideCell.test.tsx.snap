@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GuideCell renders correctly 1`] = `
+<div
+  className="sc-446f2393-2 csvqBM"
+  height={
+    Object {
+      "desktop": 0.48,
+      "laptop": 0.48,
+      "mobile": 1.4,
+      "phablet": 0.7,
+      "tablet": 0.5,
+    }
+  }
+>
+  <div
+    className="sc-446f2393-1 jAqPyk"
+    type="copy"
+  >
+    <div
+      className="sc-446f2393-0 jRxPmW"
+    >
+      NaN
+    </div>
+    <p>
+      First, if you’re stressed about web3, don’t. We got you. It’s easier than you think.
+    </p>
+  </div>
+  <div
+    className="sc-446f2393-1 lFWcA"
+    type="image"
+  >
+    <img
+      src="/assets/illustrations/guide/01.png"
+    />
+  </div>
+</div>
+`;

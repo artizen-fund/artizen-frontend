@@ -3,13 +3,13 @@
 exports[`Sidebar renders Sidebar unchanged 1`] = `
 <div>
   <section
-    class="sc-f67c5638-1 OMake sc-522104b9-0 jRWqmK"
+    class="sc-f67c5638-1 OMake sc-9ca859c7-0 cQlEau"
   >
     <div
-      class="sc-f67c5638-0 cRlpgy sc-522104b9-1 bftMYt"
+      class="sc-f67c5638-0 cRlpgy sc-9ca859c7-1 bTgJDN"
     >
       <h3
-        class="sc-522104b9-7 kATPcK"
+        class="sc-9ca859c7-7 jctbaS"
       >
         Join our
          
@@ -20,10 +20,10 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
         donation drive
       </h3>
       <div
-        class="sc-522104b9-2 flIpuM"
+        class="sc-9ca859c7-2 eGPA-Dc"
       >
         <div
-          class="sc-522104b9-3 fCAqCx"
+          class="sc-9ca859c7-3 gXhMmx"
         >
           <div
             class="sc-2e76876c-0 eZquMO"
@@ -31,10 +31,10 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
             0
           </div>
           <div
-            class="sc-522104b9-6 euksCv"
+            class="sc-9ca859c7-6 bUWRxP"
           >
             <div
-              class="sc-522104b9-5 eRngVS"
+              class="sc-9ca859c7-5 elxzEq"
             >
               <div
                 class="sc-149d3190-0 GzuI"
@@ -48,7 +48,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-522104b9-6 euksCv"
+          class="sc-9ca859c7-6 bUWRxP"
         >
           <button
             class="sc-2a588df4-2 jVJhXF undefined "
@@ -69,7 +69,7 @@ exports[`Sidebar renders Sidebar unchanged 1`] = `
           </button>
         </div>
         <div
-          class="sc-522104b9-8 kgagiP"
+          class="sc-9ca859c7-8 btgtKj"
         >
           <div
             class="sc-ecff4829-0 fMTZxv"

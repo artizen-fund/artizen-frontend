@@ -7,29 +7,47 @@ import GuideCell from './GuideCell'
 
 import guideMap from './guide'
 
-const DonationGuide = () => {
+interface IDonationGuide {
+  visible: boolean
+  hide: () => void
+}
+
+const DonationGuide = ({ visible, hide }: IDonationGuide) => {
   return (
     <>
-      <Wrapper>
-        <Headline>How to donate to grants using web3 — a guide</Headline>
+      <Wrapper {...{ visible }}>
+        <Headline>
+          How to donate to grants
+          <br />
+          using web3 — a guide
+        </Headline>
 
         {guideMap.map((item, i) => (
           <GuideCell key={`guidecell-${i}`} {...item} step={i} />
         ))}
       </Wrapper>
-      <CloseButton glyph="cross" level={1} />
-      <Onionskin />
+      <CloseButton glyph="cross" level={1} onClick={() => hide()} {...{ visible }} />
     </>
   )
 }
 
-const Wrapper = styled.div`
+type VisibilityParam = {
+  visible: boolean
+}
+
+const Wrapper = styled.div<VisibilityParam>`
   position: fixed;
-  z-index: 1001;
-  top: 125px;
-  left: 50px;
-  height: calc(100vh - 125px);
-  width: calc(100vw - 100px);
+  z-index: 102;
+  left: 20px;
+  top: 75px;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 75px);
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    left: 50px;
+    top: 125px;
+    width: calc(100vw - 100px);
+    height: calc(100vh - 125px);
+  }
   overflow-y: scroll;
 
   display: grid;
@@ -60,14 +78,19 @@ const Wrapper = styled.div`
     padding: 80px;
   }
 
-  background: rgba(255, 250, 250, 1);
+  background: white;
+
+  transition: opacity 0.25s ease-in-out, transform 0.3s ease-in-out;
+  opacity: ${props => (props.visible ? 1 : 0)};
+  transform: translateY(${props => (props.visible ? 0 : '100px')};);
+  pointer-events: ${props => (props.visible ? 'all' : 'none')};
 `
 
 const Headline = styled.h1`
   position: absolute;
+  z-index: 3;
   top: 24px;
   left: 24px;
-  max-width: 65%;
 
   @media only screen and (min-width: ${breakpoint.phablet}px) {
     top: 40px;
@@ -83,17 +106,19 @@ const Headline = styled.h1`
   color: ${rgba(palette.black)};
 `
 
-const Onionskin = styled.div`
-  z-index: 1000;
-`
-
-const CloseButton = styled(props => <Icon {...props} />)`
+const CloseButton = styled(props => <Icon {...props} />)<VisibilityParam>`
   position: absolute;
   z-index: 1002;
-  top: 100px;
-  right: 25px;
+  top: 60px;
+  right: 0px;
+  @media only screen and (min-width: ${breakpoint.phablet}px) {
+    top: 100px;
+    right: 25px;
+  }
 
   cursor: pointer;
+  opacity: ${props => (props.visible ? 1 : 0)};
+  pointer-events: ${props => (props.visible ? 'all' : 'none')};
 `
 
 export default DonationGuide

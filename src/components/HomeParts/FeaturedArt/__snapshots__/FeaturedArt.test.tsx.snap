@@ -23,10 +23,10 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
           class="sc-5284f2f8-4 igEtRN"
         >
           <div
-            class="sc-c089a03b-2 ckelpU"
+            class="sc-189919d9-2 kkJcfa"
           >
             <div
-              class="sc-c089a03b-0 iiIkrS"
+              class="sc-189919d9-0 fzTocg"
               color="night"
             >
               <div
@@ -40,10 +40,10 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
           class="sc-5284f2f8-4 igEtRN"
         >
           <div
-            class="sc-c089a03b-2 ckelpU"
+            class="sc-189919d9-2 kkJcfa"
           >
             <div
-              class="sc-c089a03b-0 iiIkrS"
+              class="sc-189919d9-0 fzTocg"
               color="night"
             >
               <div
@@ -52,7 +52,7 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
               />
             </div>
             <div
-              class="sc-c089a03b-1 cAIRSY"
+              class="sc-189919d9-1 cBkZjy"
               color="night"
             >
               Created NaN days ago
@@ -63,10 +63,10 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
           class="sc-5284f2f8-4 igEtRN"
         >
           <div
-            class="sc-c089a03b-2 ckelpU"
+            class="sc-189919d9-2 kkJcfa"
           >
             <div
-              class="sc-c089a03b-0 iiIkrS"
+              class="sc-189919d9-0 fzTocg"
               color="night"
             >
               <div
@@ -75,7 +75,7 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
               />
             </div>
             <div
-              class="sc-c089a03b-1 cAIRSY"
+              class="sc-189919d9-1 cBkZjy"
               color="night"
             >
               Tag Name

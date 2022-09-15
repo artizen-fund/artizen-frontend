@@ -24,13 +24,13 @@ type GuideAnimation = {
   coordinates: GuideCoordinate
 }
 
-export type GuideCell = {
+export type IGuideCell = {
   columns: Record<ResponsiveSize, number>
   height: Record<ResponsiveSize, number>
   items: Array<GuideCopy | GuideImage | GuideAnimation>
 }
 
-const guideMap: Array<GuideCell> = [
+const guideMap: Array<IGuideCell> = [
   {
     columns: {
       desktop: 12,
@@ -42,10 +42,10 @@ const guideMap: Array<GuideCell> = [
 
     height: {
       desktop: 0.48,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
-      mobile: 1,
+      laptop: 0.48,
+      tablet: 0.5,
+      phablet: 0.7,
+      mobile: 1.4,
     },
 
     items: [
@@ -55,24 +55,28 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
-            w: 325,
+            y: 35,
+            w: 350,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 35,
+            w: 450,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 20,
+            w: 350,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 18,
+            w: 200,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 32,
+            w: 200,
           },
         },
       },
@@ -83,25 +87,29 @@ const guideMap: Array<GuideCell> = [
         altText: 'fellow strutting with card and coin',
         coordinates: {
           desktop: {
-            w: 50,
-            x: 50,
-            y: 10,
+            x: -1,
+            y: -1,
+            w: 55,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 55,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 60,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 80,
           },
           mobile: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 90,
           },
         },
       },
@@ -119,10 +127,10 @@ const guideMap: Array<GuideCell> = [
 
     height: {
       desktop: 0.25,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
-      mobile: 1,
+      laptop: 0.25,
+      tablet: 0.4,
+      phablet: 0.45,
+      mobile: 0.9,
     },
 
     items: [
@@ -131,25 +139,29 @@ const guideMap: Array<GuideCell> = [
         copy: 'The grants are funded using crypto. But you can donate using two payment methods:',
         coordinates: {
           desktop: {
-            x: 5,
+            x: 0,
             y: 0,
             w: 490,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 490,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 400,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 270,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 270,
           },
         },
       },
@@ -159,24 +171,28 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 35,
+            y: -10,
             w: 360,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
+            w: 360,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 10,
+            w: 360,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 10,
+            w: 280,
           },
           mobile: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 27,
+            w: 250,
           },
         },
       },
@@ -186,25 +202,29 @@ const guideMap: Array<GuideCell> = [
         imageDark: '02a-dark.png',
         coordinates: {
           desktop: {
-            x: 40,
-            y: 20,
-            w: 30,
+            x: 33,
+            y: -1,
+            w: 35,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: 40,
+            y: -5,
+            w: 30,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: -1,
+            w: 50,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -5,
+            w: 50,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -10,
+            w: 55,
           },
         },
       },
@@ -214,25 +234,29 @@ const guideMap: Array<GuideCell> = [
         imageDark: '02b-dark.png',
         coordinates: {
           desktop: {
-            x: 75,
-            y: 20,
-            w: 25,
+            x: -1,
+            y: 0,
+            w: 30,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -5,
+            w: 27,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 40,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 40,
           },
           mobile: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 45,
           },
         },
       },
@@ -249,11 +273,11 @@ const guideMap: Array<GuideCell> = [
     },
 
     height: {
-      desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
-      mobile: 1,
+      desktop: 0.32,
+      laptop: 0.32,
+      tablet: 0.32,
+      phablet: 0.45,
+      mobile: 0.7,
     },
 
     items: [
@@ -263,24 +287,26 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
-            w: 325,
+            y: 0,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 250,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 200,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 200,
           },
         },
       },
@@ -291,24 +317,25 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 0,
-            w: 100,
+            y: -1,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 90,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           mobile: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 80,
           },
         },
       },
@@ -325,11 +352,11 @@ const guideMap: Array<GuideCell> = [
     },
 
     height: {
-      desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
-      mobile: 1,
+      desktop: 0.32,
+      laptop: 0.34,
+      tablet: 0.32,
+      phablet: 0.45,
+      mobile: 0.95,
     },
 
     items: [
@@ -339,24 +366,24 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
-            w: 325,
+            y: 0,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: 10,
+            y: 0,
+            w: 350,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -367,24 +394,27 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 0,
-            w: 100,
+            y: -1,
+            w: 90,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: 5,
+            y: -1,
+            w: 85,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -10,
+            y: -1,
+            w: 70,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 90,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -401,10 +431,10 @@ const guideMap: Array<GuideCell> = [
     },
 
     height: {
-      desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      desktop: 0.32,
+      laptop: 0.34,
+      tablet: 0.34,
+      phablet: 0.45,
       mobile: 1,
     },
 
@@ -415,24 +445,25 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 25,
-            w: 325,
+            y: 0,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 350,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 250,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -443,24 +474,25 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 0,
-            w: 100,
+            y: -1,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 90,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 80,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -477,10 +509,10 @@ const guideMap: Array<GuideCell> = [
     },
 
     height: {
-      desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      desktop: 0.45,
+      laptop: 0.38,
+      tablet: 0.34,
+      phablet: 0.45,
       mobile: 1,
     },
 
@@ -492,23 +524,24 @@ const guideMap: Array<GuideCell> = [
           desktop: {
             x: 0,
             y: 0,
-            w: 400,
+            w: 450,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 350,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -523,19 +556,20 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: 10,
+            y: -1,
+            w: 80,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -552,10 +586,10 @@ const guideMap: Array<GuideCell> = [
     },
 
     height: {
-      desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      desktop: 0.45,
+      laptop: 0.35,
+      tablet: 0.45,
+      phablet: 0.6,
       mobile: 1,
     },
 
@@ -571,19 +605,22 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 450,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 450,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -594,24 +631,25 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 5,
-            w: 100,
+            y: -1,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 80,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 75,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -621,7 +659,7 @@ const guideMap: Array<GuideCell> = [
   {
     columns: {
       desktop: 6,
-      laptop: 6,
+      laptop: 5,
       tablet: 12,
       phablet: 4,
       mobile: 4,
@@ -629,9 +667,9 @@ const guideMap: Array<GuideCell> = [
 
     height: {
       desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      laptop: 0.38,
+      tablet: 0.4,
+      phablet: 0.45,
       mobile: 1,
     },
 
@@ -647,19 +685,22 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 400,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 400,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -673,20 +714,23 @@ const guideMap: Array<GuideCell> = [
             w: 350,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 300,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -5,
+            y: -1,
+            w: 300,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -702,19 +746,20 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 20,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: 10,
+            y: -1,
+            w: 80,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -724,7 +769,7 @@ const guideMap: Array<GuideCell> = [
   {
     columns: {
       desktop: 6,
-      laptop: 6,
+      laptop: 7,
       tablet: 12,
       phablet: 4,
       mobile: 4,
@@ -732,9 +777,9 @@ const guideMap: Array<GuideCell> = [
 
     height: {
       desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      laptop: 0.38,
+      tablet: 0.4,
+      phablet: 0.55,
       mobile: 1,
     },
 
@@ -746,23 +791,24 @@ const guideMap: Array<GuideCell> = [
           desktop: {
             x: 0,
             y: 0,
-            w: 190,
+            w: 250,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -771,25 +817,28 @@ const guideMap: Array<GuideCell> = [
         copy: 'No, really, it’s fine. It’s how crypto works.',
         coordinates: {
           desktop: {
-            x: 40,
-            y: 0,
-            w: 400,
+            x: -1,
+            y: -1,
+            w: 460,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 0,
+            w: 335,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 0,
+            w: 335,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 0,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -804,19 +853,20 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: 10,
+            y: -1,
+            w: 70,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -826,17 +876,17 @@ const guideMap: Array<GuideCell> = [
   {
     columns: {
       desktop: 6,
-      laptop: 6,
-      tablet: 6,
+      laptop: 5,
+      tablet: 5,
       phablet: 4,
       mobile: 4,
     },
 
     height: {
       desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      laptop: 0.36,
+      tablet: 0.4,
+      phablet: 0.58,
       mobile: 1,
     },
 
@@ -852,19 +902,22 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 400,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 330,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 250,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -880,19 +933,21 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
+            w: 90,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 80,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -903,16 +958,16 @@ const guideMap: Array<GuideCell> = [
     columns: {
       desktop: 6,
       laptop: 6,
-      tablet: 6,
+      tablet: 7,
       phablet: 4,
       mobile: 4,
     },
 
     height: {
       desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      laptop: 0.36,
+      tablet: 0.4,
+      phablet: 0.56,
       mobile: 1,
     },
 
@@ -928,19 +983,22 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 320,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: 10,
+            y: 0,
+            w: 300,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -955,20 +1013,23 @@ const guideMap: Array<GuideCell> = [
             w: 100,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 90,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: 15,
+            y: -1,
+            w: 80,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 90,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -986,9 +1047,9 @@ const guideMap: Array<GuideCell> = [
 
     height: {
       desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      laptop: 0.36,
+      tablet: 0.4,
+      phablet: 0.62,
       mobile: 1,
     },
 
@@ -1004,19 +1065,22 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 350,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 350,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 0,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1025,25 +1089,28 @@ const guideMap: Array<GuideCell> = [
         copy: '(Psst! You can save your wallet connection to not have to go through the process next time.)',
         coordinates: {
           desktop: {
-            x: 0,
-            y: 30,
+            x: -1,
+            y: 20,
             w: 400,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 10,
+            w: 300,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 30,
+            w: 300,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -15,
+            y: 20,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1053,25 +1120,27 @@ const guideMap: Array<GuideCell> = [
         imageDark: '12-dark.png',
         coordinates: {
           desktop: {
-            x: 20,
-            y: 20,
+            x: 0,
+            y: -1,
             w: 80,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
+            w: 80,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 60,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -1089,9 +1158,9 @@ const guideMap: Array<GuideCell> = [
 
     height: {
       desktop: 0.368,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      laptop: 0.36,
+      tablet: 0.4,
+      phablet: 0.61,
       mobile: 1,
     },
 
@@ -1103,23 +1172,25 @@ const guideMap: Array<GuideCell> = [
           desktop: {
             x: 0,
             y: 0,
-            w: 450,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 250,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 250,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 250,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1135,19 +1206,19 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -1165,9 +1236,9 @@ const guideMap: Array<GuideCell> = [
 
     height: {
       desktop: 0.475,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      laptop: 0.36,
+      tablet: 0.4,
+      phablet: 0.6,
       mobile: 1,
     },
 
@@ -1183,19 +1254,22 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 450,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 400,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 400,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1209,20 +1283,23 @@ const guideMap: Array<GuideCell> = [
             w: 250,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 30,
+            w: 200,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: 30,
+            w: 180,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 20,
+            w: 200,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1238,19 +1315,21 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
+            w: 80,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 75,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -1268,9 +1347,9 @@ const guideMap: Array<GuideCell> = [
 
     height: {
       desktop: 0.475,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      laptop: 0.36,
+      tablet: 0.4,
+      phablet: 0.6,
       mobile: 1,
     },
 
@@ -1286,19 +1365,20 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 300,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1312,20 +1392,23 @@ const guideMap: Array<GuideCell> = [
             w: 300,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 250,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: -10,
+            y: -1,
+            w: 250,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 270,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1341,19 +1424,22 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
+            w: 70,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 10,
+            w: 70,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: 5,
+            y: -1,
+            w: 70,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -1362,7 +1448,7 @@ const guideMap: Array<GuideCell> = [
 
   {
     columns: {
-      desktop: 5,
+      desktop: 6,
       laptop: 5,
       tablet: 6,
       phablet: 4,
@@ -1370,10 +1456,10 @@ const guideMap: Array<GuideCell> = [
     },
 
     height: {
-      desktop: 0.493,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      desktop: 0.38,
+      laptop: 0.36,
+      tablet: 0.4,
+      phablet: 0.55,
       mobile: 1,
     },
 
@@ -1389,19 +1475,20 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 400,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1417,19 +1504,20 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: -1,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: 10,
+            y: -1,
+            w: 80,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
@@ -1438,7 +1526,7 @@ const guideMap: Array<GuideCell> = [
 
   {
     columns: {
-      desktop: 7,
+      desktop: 6,
       laptop: 7,
       tablet: 12,
       phablet: 4,
@@ -1446,10 +1534,10 @@ const guideMap: Array<GuideCell> = [
     },
 
     height: {
-      desktop: 0.493,
-      laptop: 1,
-      tablet: 1,
-      phablet: 1,
+      desktop: 0.38,
+      laptop: 0.36,
+      tablet: 0.45,
+      phablet: 0.53,
       mobile: 1,
     },
 
@@ -1465,19 +1553,20 @@ const guideMap: Array<GuideCell> = [
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: 0,
+            w: 200,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1486,25 +1575,27 @@ const guideMap: Array<GuideCell> = [
         copy: 'And of making the world a slightly better place.',
         coordinates: {
           desktop: {
-            x: 60,
-            y: 85,
+            x: -1,
+            y: -1,
             w: 300,
           },
           laptop: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -1,
+            w: 300,
           },
           tablet: {
             x: 0,
-            y: 50,
+            y: 0,
           },
           phablet: {
-            x: 0,
-            y: 50,
+            x: -1,
+            y: -5,
+            w: 150,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: 0,
           },
         },
       },
@@ -1515,24 +1606,27 @@ const guideMap: Array<GuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 15,
+            y: 7,
             w: 100,
           },
           laptop: {
             x: 0,
-            y: 50,
+            y: -1,
+            w: 81,
           },
           tablet: {
-            x: 0,
-            y: 50,
+            x: 10,
+            y: 0,
+            w: 80,
           },
           phablet: {
             x: 0,
-            y: 50,
+            y: -1,
+            w: 80,
           },
           mobile: {
             x: 0,
-            y: 50,
+            y: -1,
           },
         },
       },
