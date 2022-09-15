@@ -17,10 +17,10 @@ exports[`DonationShelf renders correctly 1`] = `
         className="sc-78ba2856-0 fOnoXs"
       >
         <div
-          className="sc-c089a03b-2 ckelpU"
+          className="sc-189919d9-2 kkJcfa"
         >
           <div
-            className="sc-c089a03b-0 hULMLC"
+            className="sc-189919d9-0 cmvyFc"
             color="night"
           >
             <div
@@ -136,10 +136,10 @@ exports[`DonationShelf renders correctly 1`] = `
         selected={true}
       >
         <div
-          className="sc-c089a03b-2 ckelpU"
+          className="sc-189919d9-2 kkJcfa"
         >
           <div
-            className="sc-c089a03b-0 hULMLC"
+            className="sc-189919d9-0 cmvyFc"
             color="night"
           >
             <div
@@ -163,10 +163,10 @@ exports[`DonationShelf renders correctly 1`] = `
         selected={false}
       >
         <div
-          className="sc-c089a03b-2 ckelpU"
+          className="sc-189919d9-2 kkJcfa"
         >
           <div
-            className="sc-c089a03b-0 hULMLC"
+            className="sc-189919d9-0 cmvyFc"
             color="night"
           >
             <div
@@ -190,10 +190,10 @@ exports[`DonationShelf renders correctly 1`] = `
         selected={false}
       >
         <div
-          className="sc-c089a03b-2 ckelpU"
+          className="sc-189919d9-2 kkJcfa"
         >
           <div
-            className="sc-c089a03b-0 hULMLC"
+            className="sc-189919d9-0 cmvyFc"
             color="night"
           >
             <div

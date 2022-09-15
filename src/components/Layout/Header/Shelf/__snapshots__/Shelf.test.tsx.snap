@@ -1,16 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Shelf renders correctly 1`] = `
-Array [
+<div
+  className="sc-a558af5a-0 eKiCTg"
+>
   <div
-    className="sc-c3b1c4c4-0 bBWKjV"
-  >
-    <div
-      className="sc-8d0edb81-0 ddViZJ"
-    />
-  </div>,
-  <div
-    className="sc-c3b1c4c4-1 Onxyd"
-  />,
-]
+    className="sc-8d0edb81-0 ddViZJ"
+  />
+</div>
 `;

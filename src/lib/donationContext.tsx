@@ -3,7 +3,7 @@ import { useLoggedInUser } from '@lib'
 
 export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
 
-export type HeaderShelf = 'session' | 'howItWorks' | 'donate'
+export type HeaderShelf = 'session' | 'howItWorks' | 'donate' | 'donationGuide'
 
 interface IDonationContext {
   donationStatus?: DonationStatus

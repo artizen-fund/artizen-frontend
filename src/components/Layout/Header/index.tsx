@@ -2,12 +2,13 @@ import { useState, useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { Button, Logo, DonationShelf } from '@components'
+import { Button, Logo, DonationShelf, DonationGuide, Onionskin } from '@components'
 import AccountButton from './AccountButton'
 import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
+
 import { rgba, DonationContext } from '@lib'
 
 const Header = () => {
@@ -58,6 +59,8 @@ const Header = () => {
       <Shelf shelfKey="donate" {...{ shadowVisible }}>
         <DonationShelf />
       </Shelf>
+      <DonationGuide />
+      <Onionskin />
     </>
   )
 }
