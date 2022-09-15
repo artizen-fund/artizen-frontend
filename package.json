@@ -92,6 +92,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
+    "@types/bignumber.js": "^5.0.0",
     "@types/cookie": "^0.5.1",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/lodash": "^4.14.184",

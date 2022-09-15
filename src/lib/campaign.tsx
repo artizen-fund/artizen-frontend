@@ -1,25 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { isServer, assert, assertInt, rgba, useReadContract, formatUSDC } from '@lib'
+import { BigNumber } from 'bignumber.js'
+import { isServer, assert, useReadContract } from '@lib'
 import { RaffleAbi } from '@contracts'
-import {
-  ISidebarDonatorsQuery,
-  IGetDonationFromBlockchainQuery,
-  IGetUsersByPublicAddressQuery,
-  IDonationT,
-  IUser,
-} from '@types'
+import { IGetDonationFromBlockchainQuery, IGetUsersByPublicAddressQuery, IDonationT, IUser } from '@types'
 import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
 
 const fundRaisingGoal = 25000 // TODO: environment variable?
 
 type DonationWithUser = IDonationT & {
   user: IUser
-}
-
-type IRaffleId = {
-  _hex: string
-  _isBigNumber: boolean
 }
 
 interface ICampaignContext {
@@ -52,7 +42,7 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
     'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
   )
 
-  const { value: raffleId, loading: loadingRaffleId } = useReadContract<IRaffleId>(
+  const { value: raffleId, loading: loadingRaffleId } = useReadContract<BigNumber>(
     raffleContractAddress,
     RaffleAbi,
     'raffleCount',
@@ -68,31 +58,30 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
     value: raffle,
     refetch: refetchRaffle,
     loading: loadingRaffle,
-  } = useReadContract(raffleContractAddress, RaffleAbi, 'getRaffle', [raffleId], false)
+  } = useReadContract<IRaffle>(raffleContractAddress, RaffleAbi, 'getRaffle', [raffleId], false)
 
   useEffect(() => {
     if (!raffle) return
-    setStartDate(new Date(raffle?.startTime.toNumber() * 1000))
-    setEndDate(new Date(raffle?.endTime.toNumber() * 1000))
+    setStartDate(new Date(raffle.startTime.toNumber() * 1000))
+    setEndDate(new Date(raffle.endTime.toNumber() * 1000))
   }, [raffle])
 
   const { data, loading } = useQuery<IGetDonationFromBlockchainQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
-    variables: { raffleId: raffleId?.['_hex'] },
-    skip: !raffleId?.['_hex'],
+    variables: { raffleId: raffle?.raffleID.toString() },
+    skip: !raffle,
     onError: error => console.error('error loading donation blockchain', error),
   })
 
   const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
     GET_USERS_BY_PUBLIC_ADDRESSES,
     {
-      skip: !raffleId?.['_hex'] || loading,
+      skip: !raffle || loading,
       variables: { addresses },
       onError: error => console.error('error ', error),
     },
   )
 
   useEffect(() => {
-    console.log('data', data, 'donorData', donorData)
     if (!data?.Donation?.donations || !donorData?.User) return
     const { donations } = data.Donation
 
