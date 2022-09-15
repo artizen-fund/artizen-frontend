@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { IconStack, Icon } from '@components'
+import { IconStack, Icon, Button } from '@components'
 import { breakpoint, typography } from '@theme'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
@@ -23,6 +23,7 @@ import { ethers } from 'ethers'
 import { v4 as uuidv4 } from 'uuid'
 import { USDCAbi } from '@contracts'
 import qs from 'qs'
+import { Label } from 'src/components/Table/TableHeader'
 
 interface IProcessCrypto {
   donationMethod: DonationMethod
@@ -33,10 +34,12 @@ interface IProcessCrypto {
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
+type Error = 'Payment Failed' | 'Signature Rejected' | ''
+
 const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCrypto) => {
   const { setDonationStage } = useContext(DonationContext)
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
-  const [error, setError] = useState('')
+  const [error, setError] = useState<Error>('')
 
   const [loggedInUser] = useLoggedInUser()
 
@@ -44,7 +47,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
 
   const courier = useCourier()
   const [initDonation, buildingStatus, buildingMessage, confirmingStatus, confirmingMessage] = useDonation()
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
   const { data: signer, refetch } = useSigner()
   const { switchNetworkAsync } = useSwitchNetwork()
 
@@ -60,8 +63,9 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
   const {
     data: transferUSDCdata,
     isSuccess: hasTrasnferedUSDC,
-    write: transferUSDC,
+    writeAsync: transferUSDC,
     isLoading: isTransferInitLoading,
+    isError: isTransferUSDCError,
   } = useContractWrite({
     mode: 'recklesslyUnprepared',
     addressOrName: usdcContractAddress,
@@ -121,7 +125,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
 
   const processTransaction = async () => {
     if (donationMethod === 'polygon' && !isTransferInitLoading) {
-      transferUSDC?.()
+      await transferUSDC?.()
     } else {
       const baseURL0x = assert(process.env.NEXT_PUBLIC_0X_BASE_URL, 'NEXT_PUBLIC_0X_BASE_URL')
       const params = {
@@ -185,12 +189,18 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
   }, [hasTrasnferedUSDC])
 
   useEffect(() => {
-    if (signer && donationMethod !== 'usd' && cryptoStage !== 'bridging') {
+    if (signer && donationMethod !== 'usd' && cryptoStage !== 'bridging' && isConnected) {
       processTransaction()
     }
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     return () => {}
-  }, [signer])
+  }, [signer, isConnected])
+
+  useEffect(() => {
+    if (isTransferUSDCError) {
+      setError('Signature Rejected')
+    }
+  }, [isTransferUSDCError])
 
   useEffect(() => {
     courier.transport.intercept((message: ICourierMessage) => {
@@ -228,6 +238,10 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
     }
   }, [fundsTransfered])
 
+  const retry = () => {
+    setDonationStage?.('payment')
+  }
+
   return (
     <Wrapper>
       <Information>
@@ -253,29 +267,61 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           {donationMethod === 'ethereum' && (
             <>
               <li>
-                <Icon outline={cryptoStage !== 'swapping'} glyph="swap" label="12% — Exchanging to USDC (est. 2m)" />
+                <Icon
+                  outline={cryptoStage !== 'swapping'}
+                  glyph="swap"
+                  label="12% — Exchanging to USDC (est. 2m)"
+                  error={error ? true : false}
+                />
               </li>
               <li>
-                <Icon outline={cryptoStage !== 'bridging'} glyph="intersect" label="Bridging blockchains (est. 2m)" />
+                <Icon
+                  outline={cryptoStage !== 'bridging'}
+                  glyph="intersect"
+                  label="Bridging blockchains (est. 2m)"
+                  error={error ? true : false}
+                />
               </li>
             </>
           )}
 
           {donationMethod !== 'ethereum' && (
             <li>
-              <Icon outline={cryptoStage !== 'building'} glyph="refresh" label="Building your donation (est. 10m)" />
+              <Icon
+                outline={cryptoStage !== 'building'}
+                glyph="refresh"
+                label="Building your donation (est. 10m)"
+                error={error ? true : false}
+              />
             </li>
           )}
           <li>
-            <Icon outline={cryptoStage !== 'confirming'} glyph="tick" label="Confirming your donation (est. 2m)" />
+            <Icon
+              outline={cryptoStage !== 'confirming'}
+              glyph="tick"
+              label="Confirming your donation (est. 2m)"
+              error={error ? true : false}
+            />
           </li>
           <li>
-            <Icon outline={cryptoStage !== 'complete'} glyph="party" label="Donation Complete" />
+            <Icon
+              outline={cryptoStage !== 'complete'}
+              glyph="party"
+              label="Donation Complete"
+              error={error ? true : false}
+            />
           </li>
         </IconStack>
       </Information>
 
-      <Distractions />
+      <Distractions>
+        {error && (
+          <div>
+            <Label>{error}</Label>
+            <Button onClick={retry}>Retry</Button>
+          </div>
+        )}
+      </Distractions>
     </Wrapper>
   )
 }
@@ -299,6 +345,8 @@ const Subhead = styled.h2`
 const Wrapper = styled.div`
   display: grid;
   gap: 10px;
+  justify-items: start;
+  align-items: center;
   grid-template-areas:
     'copy'
     'distractions';
