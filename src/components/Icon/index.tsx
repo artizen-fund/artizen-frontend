@@ -14,13 +14,13 @@ export interface IconProps {
   error?: boolean
 }
 
-const Icon = ({ glyph, level, outline, inverted, color, darkColor, label, error }: IconProps) => {
+const Icon = ({ glyph, level, outline, inverted, color, darkColor, label, error, ...props }: IconProps) => {
   const calculatedColor =
     !outline && error ? 'uiAlert' : color ? color : (!outline && !inverted) || (outline && inverted) ? 'white' : 'night'
   const calculatedDarkColor =
     !outline && error ? 'uiAlert' : darkColor ? darkColor : color ? color : outline ? 'moon' : 'night'
   return (
-    <Wrapper {...{ level }}>
+    <Wrapper {...{ level }} {...props}>
       <Circle {...{ outline, level, inverted }} color={calculatedColor} darkColor={calculatedDarkColor}>
         <Glyph {...{ glyph, level }} color={calculatedColor} darkColor={calculatedDarkColor} />
       </Circle>

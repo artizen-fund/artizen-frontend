@@ -6,10 +6,10 @@ exports[`Layout renders Layout unchanged 1`] = `
     class="sc-29d73b66-0"
   >
     <header
-      class="sc-c93d3d41-0 cPZzRP"
+      class="sc-9f2980ef-0 zgtVz"
     >
       <div
-        class="sc-c93d3d41-1 gosgiU"
+        class="sc-9f2980ef-1 igUyCE"
       >
         <a
           href="/"
@@ -61,7 +61,7 @@ exports[`Layout renders Layout unchanged 1`] = `
           </div>
         </a>
         <button
-          class="sc-2a588df4-2 gItzDj sc-c93d3d41-3 feBFMS "
+          class="sc-2a588df4-2 gItzDj sc-9f2980ef-3 jpNFli "
         >
           <span>
             Menu
@@ -69,10 +69,10 @@ exports[`Layout renders Layout unchanged 1`] = `
         </button>
       </div>
       <div
-        class="sc-c93d3d41-1 gosgiU"
+        class="sc-9f2980ef-1 igUyCE"
       >
         <div
-          class="sc-c93d3d41-2 kWtdCM"
+          class="sc-9f2980ef-2 iVVxdA"
         >
           <ul>
             <li>
@@ -120,7 +120,7 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </header>
     <div
-      class="sc-c3b1c4c4-0 bBWKjV"
+      class="sc-a558af5a-0 eKiCTg"
     >
       <div
         class="sc-8d0edb81-0 ddViZJ"
@@ -140,10 +140,10 @@ exports[`Layout renders Layout unchanged 1`] = `
               class="sc-e98d3470-7 iRDciN"
             >
               <div
-                class="sc-c089a03b-2 ckelpU"
+                class="sc-189919d9-2 kkJcfa"
               >
                 <div
-                  class="sc-c089a03b-0 iiIkrS"
+                  class="sc-189919d9-0 fzTocg"
                   color="night"
                 >
                   <div
@@ -276,61 +276,58 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-c3b1c4c4-1 Onxyd"
-    />
-    <div
-      class="sc-c3b1c4c4-0 bBWKjV"
+      class="sc-a558af5a-0 eKiCTg"
     >
       <div
         class="sc-8d0edb81-0 ddViZJ"
       >
         <div
-          class="sc-f804dfed-0 dzRLec"
+          class="sc-14ad3020-0 jcdSmk"
         >
           <div
-            class="sc-f804dfed-1 cqSxLt"
+            class="sc-14ad3020-1 eNufMx"
           >
             <div
-              class="sc-f804dfed-3 mCVTj"
+              class="sc-14ad3020-3 gumywn"
             />
             <div
-              class="sc-f804dfed-2 iDzbzu"
+              class="sc-14ad3020-2 fIDFYi"
             >
               <h2
-                class="sc-f804dfed-4 NHBaM"
+                class="sc-14ad3020-4 kwHZEg"
               >
                 About
               </h2>
               <p
-                class="sc-f804dfed-5 bnQOXY"
+                class="sc-14ad3020-5 dFatZY"
               >
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
-              <a
-                class="sc-2a588df4-1 kFiSF undefined "
+              <button
+                class="sc-2a588df4-2 dorpEK undefined "
               >
                 <span>
                   Learn More
                 </span>
-              </a>
+              </button>
             </div>
           </div>
           <div
-            class="sc-f804dfed-1 cqSxLt"
+            class="sc-14ad3020-1 eNufMx"
           >
             <div
-              class="sc-f804dfed-3 iANWAv"
+              class="sc-14ad3020-3 hROOXr"
             />
             <div
-              class="sc-f804dfed-2 iDzbzu"
+              class="sc-14ad3020-2 fIDFYi"
             >
               <h2
-                class="sc-f804dfed-4 NHBaM"
+                class="sc-14ad3020-4 kwHZEg"
               >
                 Grants
               </h2>
               <p
-                class="sc-f804dfed-5 bnQOXY"
+                class="sc-14ad3020-5 dFatZY"
               >
                 Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
               </p>
@@ -344,21 +341,21 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-f804dfed-1 hUcaEE"
+            class="sc-14ad3020-1 ycHGE"
           >
             <div
-              class="sc-f804dfed-3 bjzsmT"
+              class="sc-14ad3020-3 hwDDHH"
             />
             <div
-              class="sc-f804dfed-2 iDzbzu"
+              class="sc-14ad3020-2 fIDFYi"
             >
               <h2
-                class="sc-f804dfed-4 NHBaM"
+                class="sc-14ad3020-4 kwHZEg"
               >
                 Leaderboard
               </h2>
               <p
-                class="sc-f804dfed-5 bnQOXY"
+                class="sc-14ad3020-5 dFatZY"
               >
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
@@ -372,21 +369,21 @@ exports[`Layout renders Layout unchanged 1`] = `
             </div>
           </div>
           <div
-            class="sc-f804dfed-1 cqSxLt"
+            class="sc-14ad3020-1 eNufMx"
           >
             <div
-              class="sc-f804dfed-3 cShpZr"
+              class="sc-14ad3020-3 dWANBz"
             />
             <div
-              class="sc-f804dfed-2 iDzbzu"
+              class="sc-14ad3020-2 fIDFYi"
             >
               <h2
-                class="sc-f804dfed-4 NHBaM"
+                class="sc-14ad3020-4 kwHZEg"
               >
                 FAQs
               </h2>
               <p
-                class="sc-f804dfed-5 bnQOXY"
+                class="sc-14ad3020-5 dFatZY"
               >
                 Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
@@ -403,10 +400,7 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-c3b1c4c4-1 Onxyd"
-    />
-    <div
-      class="sc-c3b1c4c4-0 bBWKjV"
+      class="sc-a558af5a-0 eKiCTg"
     >
       <div
         class="sc-8d0edb81-0 ddViZJ"
@@ -427,10 +421,10 @@ exports[`Layout renders Layout unchanged 1`] = `
                 class="sc-78ba2856-0 fOnoXs"
               >
                 <div
-                  class="sc-c089a03b-2 ckelpU"
+                  class="sc-189919d9-2 kkJcfa"
                 >
                   <div
-                    class="sc-c089a03b-0 hULMLC"
+                    class="sc-189919d9-0 cmvyFc"
                     color="night"
                   >
                     <div
@@ -536,10 +530,10 @@ exports[`Layout renders Layout unchanged 1`] = `
                 class="sc-fa264814-7 hEcMBU"
               >
                 <div
-                  class="sc-c089a03b-2 ckelpU"
+                  class="sc-189919d9-2 kkJcfa"
                 >
                   <div
-                    class="sc-c089a03b-0 hULMLC"
+                    class="sc-189919d9-0 cmvyFc"
                     color="night"
                   >
                     <div
@@ -561,10 +555,10 @@ exports[`Layout renders Layout unchanged 1`] = `
                 class="sc-fa264814-7 gcZSMc"
               >
                 <div
-                  class="sc-c089a03b-2 ckelpU"
+                  class="sc-189919d9-2 kkJcfa"
                 >
                   <div
-                    class="sc-c089a03b-0 hULMLC"
+                    class="sc-189919d9-0 cmvyFc"
                     color="night"
                   >
                     <div
@@ -586,10 +580,10 @@ exports[`Layout renders Layout unchanged 1`] = `
                 class="sc-fa264814-7 gcZSMc"
               >
                 <div
-                  class="sc-c089a03b-2 ckelpU"
+                  class="sc-189919d9-2 kkJcfa"
                 >
                   <div
-                    class="sc-c089a03b-0 hULMLC"
+                    class="sc-189919d9-0 cmvyFc"
                     color="night"
                   >
                     <div
@@ -620,7 +614,537 @@ exports[`Layout renders Layout unchanged 1`] = `
       </div>
     </div>
     <div
-      class="sc-c3b1c4c4-1 Onxyd"
+      class="sc-213fa555-0 dZEntA"
+    >
+      <h1
+        class="sc-213fa555-1 bZKPya"
+      >
+        How to donate to grants
+        <br />
+        using web3 — a guide
+      </h1>
+      <div
+        class="sc-446f2393-2 csvqBM"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 jAqPyk"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            1
+          </div>
+          <p>
+            First, if you’re stressed about web3, don’t. We got you. It’s easier than you think.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 lFWcA"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/01.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 feABgX"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 iVjfef"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            2
+          </div>
+          <p>
+            The grants are funded using crypto. But you can donate using two payment methods:
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 jQjSjI"
+          type="copy"
+        >
+          <p>
+            Your credit card (We’ll take care of turning your money to crypto, no worries) and Crypto (Polygon or Ethereum).
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 cUVFSU"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/02a.png"
+          />
+        </div>
+        <div
+          class="sc-446f2393-1 ftwlKd"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/02b.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 giJrSr"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 eUqgLc"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            3
+          </div>
+          <p>
+            Let’s take a look at donating with credit card first!
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 dwxenl"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/03.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 iyevEe"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 hByJwU"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            4
+          </div>
+          <p>
+            Select your donation amount. 100% goes to the grant but expect payment provider fees on top (we don’t charge any).
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 gYhLOH"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/04.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 jNPiaj"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 hQpMkK"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            5
+          </div>
+          <p>
+            Sign in (the process is exactly the same whether you’ve already donated or not.) There’s no password to set up and remember (phew!).
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 gHkoWV"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/05.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 kIQqJP"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 elHfXM"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            6
+          </div>
+          <p>
+            You’ll get a confirmation email or text with a magic link (super secure!). Click on it.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 gOpMcU"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/06.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 gSUUtU"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 eVGWEt"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            7
+          </div>
+          <p>
+            We’ll automatically create your Artizen wallet for you. So you don’t have to get an external one. (But you can connect another wallet if you have one.)
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 jMDYKX"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/07.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 iWivdU"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 gNCHmk"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            8
+          </div>
+          <p>
+            We’ll convert your donation amount to USDC and transfer it to your wallet.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 bzVwfn"
+          type="copy"
+        >
+          <p>
+            This is where things might get a little unexpected. The transaction’s not instant. It might take anywhere from 10 minutes up to 2 hours.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 fUgCVu"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/08.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 hriDRn"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 iDYbSP"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            9
+          </div>
+          <p>
+            THIS IS FINE.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 dgYpkX"
+          type="copy"
+        >
+          <p>
+            No, really, it’s fine. It’s how crypto works.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 eosUEa"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/09.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 blBSuE"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 hjINtF"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            10
+          </div>
+          <p>
+            You can close the browser window – we’ll send you an email when the donation’s ready to transfer to the Fund.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 eGsSnG"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/10.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 hKXODD"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 feRgCi"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            11
+          </div>
+          <p>
+            Already starting with crypto? You can donate using USDC on Polygon or Ethereum.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 bDMYvU"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/11.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 hGwWys"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 fKqlNv"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            12
+          </div>
+          <p>
+            In that case, sign in and connect your existing wallet to move your coins to your new Artizen wallet.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 lkxiWh"
+          type="copy"
+        >
+          <p>
+            (Psst! You can save your wallet connection to not have to go through the process next time.)
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 hEXoVx"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/12.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 kTeKye"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 kdghYo"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            13
+          </div>
+          <p>
+            Then carefully follow the instructions from your wallet provider.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 gWxrdT"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/13.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 kbNBYM"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 cVFODP"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            14
+          </div>
+          <p>
+            After that, a bit of crypto magic like swapping and bridging will happen in the background so that your donation can safely make its way to the Artizen Fund.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 biFjZe"
+          type="copy"
+        >
+          <p>
+            Don’t forget that this might take some time.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 dqWJBa"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/14.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 kbNBYM"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 jtayKF"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            15
+          </div>
+          <p>
+            Ta-da! The donation’s on its way to the Artizen Fund. A receipt will land in your email inbox
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 cHmVFh"
+          type="copy"
+        >
+          <p>
+            (This may take another few hours, though. You know the drill by now!)
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 bJrEuM"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/15.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 gPVTwU"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 itiGhG"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            16
+          </div>
+          <p>
+            And your name will land on the leaderboard. While you can enjoy all the perks that come along with it.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 jYEmFe"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/16.png"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-446f2393-2 fIdZCY"
+        height="[object Object]"
+      >
+        <div
+          class="sc-446f2393-1 jqwVIX"
+          type="copy"
+        >
+          <div
+            class="sc-446f2393-0 jRxPmW"
+          >
+            17
+          </div>
+          <p>
+            And the satisfaction of supporting a cause that matters.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 husREw"
+          type="copy"
+        >
+          <p>
+            And of making the world a slightly better place.
+          </p>
+        </div>
+        <div
+          class="sc-446f2393-1 kSCHiq"
+          type="image"
+        >
+          <img
+            src="/assets/illustrations/guide/17.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-189919d9-2 kkJcfa sc-213fa555-2 jkrlb"
+    >
+      <div
+        class="sc-189919d9-0 czelmB"
+        color="white"
+      >
+        <div
+          class="sc-149d3190-0 euiYxq"
+          color="white"
+        />
+      </div>
+    </div>
+    <div
+      class="sc-21f922-0 cKfzLz"
     />
     <main
       class="sc-29d73b66-1 bztuVt"

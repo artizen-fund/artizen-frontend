@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { Button, Logo, DonationShelf } from '@components'
+import { Button, Logo, DonationShelf, DonationGuide, Onionskin } from '@components'
 import AccountButton from './AccountButton'
 import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
@@ -10,16 +10,14 @@ import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba, DonationContext, useLoggedInUser } from '@lib'
 
-export type ShelfType = 'session' | 'howItWorks' | 'donate'
-
 const Header = () => {
-  const { donationStage, setDonationStage } = useContext(DonationContext)
+  const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()
+  const { donationStage } = useContext(DonationContext)
   const [loggedInUser] = useLoggedInUser()
-  const [visibleShelf, setVisibleShelf] = useState<ShelfType>()
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 
-  const toggleShelf = (shelf?: ShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
+  const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
   useEffect(() => {
     if (visibleShelf === 'donate' && donationStage === 'login' && !loggedInUser) {
@@ -64,15 +62,17 @@ const Header = () => {
           <AccountButton onClick={() => toggleShelf('session')} />
         </Items>
       </Wrapper>
-      <Shelf visible={visibleShelf === 'session'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
+      <Shelf visible={visibleShelf === 'session'} {...{ shadowVisible }}>
         <SessionShelf hideShelf={() => toggleShelf()} />
       </Shelf>
-      <Shelf visible={visibleShelf === 'howItWorks'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
-        <HowItWorks />
+      <Shelf visible={visibleShelf === 'howItWorks'} {...{ shadowVisible }}>
+        <HowItWorks {...{ toggleShelf }} />
       </Shelf>
-      <Shelf visible={visibleShelf === 'donate'} hideShelf={() => toggleShelf()} {...{ shadowVisible }}>
+      <Shelf visible={visibleShelf === 'donate'} {...{ shadowVisible }}>
         <DonationShelf />
       </Shelf>
+      <DonationGuide visible={visibleShelf === 'donationGuide'} hide={() => toggleShelf()} />
+      <Onionskin className={!!visibleShelf ? 'visible' : ''} onClick={() => toggleShelf()} />
     </>
   )
 }

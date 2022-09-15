@@ -3,14 +3,18 @@ import { Button } from '@components'
 import { rgba } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 
-const HowItWorks = () => {
+interface IHowItWorks {
+  toggleShelf: (shelf: HeaderShelfType) => void
+}
+
+const HowItWorks = ({ toggleShelf }: IHowItWorks) => {
   const cells = [
     {
       illustration: 'how-it-works/about.svg',
       illustrationDark: 'how-it-works/about-dark.svg',
       title: 'About',
       copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
-      destination: '/derp',
+      action: toggleShelf,
     },
     {
       illustration: 'how-it-works/grants.svg',
@@ -43,9 +47,16 @@ const HowItWorks = () => {
           <Under>
             <Title>{cell.title}</Title>
             <Description>{cell.copy}</Description>
-            <Button outline level={2} href={cell.destination}>
-              Learn More
-            </Button>
+            {!!cell.action && (
+              <Button outline level={2} onClick={() => cell.action('donationGuide')}>
+                Learn More
+              </Button>
+            )}
+            {!!cell.destination && (
+              <Button outline level={2} href={cell.destination}>
+                Learn More
+              </Button>
+            )}
           </Under>
         </Cell>
       ))}
