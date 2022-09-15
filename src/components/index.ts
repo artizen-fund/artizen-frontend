@@ -25,4 +25,7 @@ export * from './HomeParts'
 export * from './Layout/StickyContent'
 export * from './SettingsParts'
 export * from './Table'
+export * from './Raffles'
+export * from './Wallet'
+
 export { default as CheckboxControl } from './Form/Controls/BooleanControl/CheckboxControl'

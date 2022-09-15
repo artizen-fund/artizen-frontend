@@ -1,12 +1,13 @@
-import { useContext, useEffect, useState } from 'react'
+import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import Leaderboard from './Leaderboard'
 import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { DonationContext, formatUSDC, rgba } from '@lib'
-import { ISidebarDonatorsQuery } from '@types'
+import { formatUSDC, rgba } from '@lib'
+import { ISidebarDonatorsQuery, IGetDonationFromBlockchainQuery, IGetUsersByPublicAddressQuery } from '@types'
+import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
 
 export type ISidebar = Pick<ISidebarDonatorsQuery, 'onChainDonations'> & {
   FUND_GOAL: number
@@ -29,31 +30,44 @@ const monthNames = [
 ]
 
 const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
-  const { donationStatus } = useContext(DonationContext)
-
-  const [donations, setDonations] = useState<Donation[]>([])
-  const [totalRaised, setTotalRaised] = useState(0)
-
-  const loadDonations = async () => {
-    if (raffle?.raffleID) {
-      const donationsResponse = await fetch(`/api/donations?raffleId=${raffle?.raffleID.toString()}`)
-      const json = await donationsResponse.json()
-      if (json.length > 0) {
-        setTotalRaised(json.reduce((total: number, obj: Donation) => Number(obj.amount) + total, 0))
-      }
-
-      setDonations(json)
-    }
-  }
-
-  useEffect(() => {
-    loadDonations()
-  }, [donationStatus, raffle])
-
-  const formatedTotalRaised = formatUSDC(totalRaised)
-
+  const raffleId = raffle?.raffleID.toString()
   const fundDeadline = raffle ? new Date(raffle?.endTime.toNumber() * 1000) : undefined
   const fundStart = raffle ? new Date(raffle?.startTime.toNumber() * 1000) : undefined
+
+  const { data, loading } = useQuery<IGetDonationFromBlockchainQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
+    variables: { raffleId },
+    skip: !raffleId,
+    onError: error => console.error('error loading donation blockchain', error),
+  })
+
+  const donations = data?.Donation?.donations
+
+  // donations?.map(donation => donation?.userAddress?.toLowercase())
+  const addresses = donations?.map(donation => donation?.userAddress?.toLowerCase())
+
+  const totalRaised = donations?.filter(item => !!item).reduce((total, obj) => Number(obj?.amount) + total, 0)
+
+  const formattedTotalRaised = totalRaised && formatUSDC(totalRaised)
+
+  const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
+    GET_USERS_BY_PUBLIC_ADDRESSES,
+    {
+      skip: !raffleId || loading,
+      variables: { addresses },
+      onError: error => console.error('error ', error),
+    },
+  )
+
+  const donationsWithUser = []
+  if (donations && donations.length > 0 && !loadingDonors) {
+    for (let i = 0; i < donations.length; i++) {
+      const user =
+        donorData &&
+        donorData.User.find(item => item.publicAddress?.toLowerCase() === donations[i]?.userAddress.toLowerCase())
+
+      donationsWithUser.push({ ...donations[i], user })
+    }
+  }
 
   return (
     <StyledStickyCanvas>
@@ -67,17 +81,19 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
         </Header>
         <Content>
           <FundBlock>
-            {donations && donations.length > 0 && (
+            {formattedTotalRaised && (
               <AmountRaised>
-                <span>${formatedTotalRaised.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
+                <span>${formattedTotalRaised.toLocaleString()}</span> raised of ${FUND_GOAL.toLocaleString()} goal
               </AmountRaised>
             )}
-            <ProgressBar>{formatedTotalRaised / FUND_GOAL}</ProgressBar>
+            {formattedTotalRaised && <ProgressBar>{formattedTotalRaised / FUND_GOAL}</ProgressBar>}
             <Row>
               {fundDeadline && <Countdown date={fundDeadline?.toISOString()} />}
-              <DonationCount>
-                <Glyph glyph="trend" /> <span>{donations.length} donations</span>
-              </DonationCount>
+              {donations && (
+                <DonationCount>
+                  <Glyph glyph="trend" /> <span>{donations.length} donations</span>
+                </DonationCount>
+              )}
             </Row>
           </FundBlock>
           <Row>
@@ -89,7 +105,7 @@ const Sidebar = ({ FUND_GOAL, raffle }: ISidebar) => {
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ donations }} />
+            {donationsWithUser.length > 0 && <Leaderboard {...{ donations: donationsWithUser as Donation[] }} />}
             <Perks />
           </LargeScreensOnly>
         </Content>

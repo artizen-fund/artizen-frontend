@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { rgba } from '@lib'
 import { palette, breakpoint } from '@theme'
-import { GuideCell, GuideCoordinate } from '../guide'
+import { IGuideCell, GuideCoordinate } from '../guide'
 
-const GuideCell = ({ columns, height, items, step }: GuideCell & { step: number }) => (
+const GuideCell = ({ columns, height, items, step }: IGuideCell & { step: number }) => (
   <Wrapper {...{ columns, height }}>
     {items.map((item, i) =>
       item.type === 'copy' ? (
@@ -148,7 +148,7 @@ const CellItem = styled.div<{ coordinates: GuideCoordinate; type: string }>`
  * I'll come around to this.
  */
 
-const Wrapper = styled.div<Pick<GuideCell, 'columns' | 'height'>>`
+const Wrapper = styled.div<Pick<IGuideCell, 'columns' | 'height'>>`
   position: relative;
   grid-column-end: span ${props => props.columns.mobile};
   height: calc((100vw - 40px) * ${props => props.height.mobile});

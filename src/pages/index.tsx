@@ -22,18 +22,23 @@ const Home = () => {
     process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
     'NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS',
   )
-  const { value: raffleId } = useReadContract(raffleContractAddress, RaffleAbi, 'raffleCount', [])
-
-  const { value: raffle, refetch: refetchRaffle } = useReadContract(
+  const { value: raffleId, loading: loadingRaffleId } = useReadContract(
     raffleContractAddress,
     RaffleAbi,
-    'getRaffle',
-    [raffleId],
-    false,
+    'raffleCount',
+    [],
   )
 
+  const {
+    value: raffle,
+    refetch: refetchRaffle,
+    loading: loadingRaffle,
+  } = useReadContract(raffleContractAddress, RaffleAbi, 'getRaffle', [raffleId], false)
+
   useEffect(() => {
-    refetchRaffle()
+    if (raffleId) {
+      refetchRaffle()
+    }
   }, [raffleId])
 
   return (
@@ -52,7 +57,7 @@ const Home = () => {
               </Tab>
             ))}
           </TabbedInfo>
-          <Sidebar {...{ raffle, FUND_GOAL }} />
+          {!loadingRaffleId && !loadingRaffle && <Sidebar {...{ raffle, FUND_GOAL }} />}
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>

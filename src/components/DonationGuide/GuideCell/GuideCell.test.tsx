@@ -89,7 +89,7 @@ describe('GuideCell', () => {
   }
 
   it('renders correctly', () => {
-    const tree = renderer.create(<GuideCell {...sampleCell} cell={1} />).toJSON()
+    const tree = renderer.create(<GuideCell {...sampleCell} step={1} />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

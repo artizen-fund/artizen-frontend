@@ -29,6 +29,9 @@ export const createApolloClient = (didToken?: string) => {
       const token = localStorage.getItem('token')
       if (token) {
         newHeaders['Authorization'] = `Bearer ${token}`
+      } else {
+        // Public access
+        newHeaders['x-hasura-unauthorized-role'] = 'public'
       }
     }
     return {

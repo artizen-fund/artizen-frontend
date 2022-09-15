@@ -18,6 +18,10 @@ export const useReadContract = (
   const callContract = async () => {
     if (!magic) return
     setLoading(true)
+    // eslint-disable-next-line
+    console.log('load callContract')
+    // eslint-disable-next-line
+    console.log('magic.rpcProvider  :::    ', magic.rpcProvider)
 
     const magicWeb3 = new ethers.providers.Web3Provider(magic.rpcProvider as any)
 
@@ -27,6 +31,7 @@ export const useReadContract = (
       const newValue = await contract[methodName](...attr)
       setValue(newValue)
     } catch (newError) {
+      console.error('loading contract ', newError)
       setError(newError)
     }
     setLoading(false)

@@ -24,14 +24,16 @@ declare global {
 
   type HeaderShelfType = 'session' | 'howItWorks' | 'donate' | 'donationGuide'
 
-  type DonationStage = 'setAmount' | 'login' | 'paymentFiat' | 'paymentFiatAddress' | 'processCrypto' | 'confirmation'
+  type DonationStage = 'setAmount' | 'login' | 'payment' | 'paymentFiatAddress' | 'processCrypto' | 'confirmation'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
   type Donation = {
+    address: string
     amount: string
-    from: string
+    block_hash: string
     user: IUser
+    userAddress: string
   }
 
   type DonationStageStatus = 'WAITING' | 'PROCESSING' | 'COMPLETE'

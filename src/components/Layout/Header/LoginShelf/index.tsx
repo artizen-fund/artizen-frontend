@@ -80,26 +80,15 @@ const LoginShelf = () => {
             <Icon glyph="tick" outline level={2} color="moss" />
             <div>
               <h1>Done, confirmation sent!</h1>
-              <p>We emailed a magic link to {data.email}. Click the link Sign in or sign up.</p>
+              <p>
+                We emailed a magic link to {data.email}.<br />
+                Click the link Sign in or sign up.
+              </p>
             </div>
             <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
           </Confirmation>
         )}
       </Form>
-      <Alternatives>
-        <OrLine />
-        <Buttons>
-          <Button level={1} outline onClick={() => alert('derp')} stretch>
-            Phone
-          </Button>
-          <Button level={1} outline onClick={() => handleSocialLogin('twitter', magic)} stretch>
-            Twitter
-          </Button>
-          <Button level={1} outline onClick={() => handleSocialLogin('discord', magic)} stretch>
-            Discord
-          </Button>
-        </Buttons>
-      </Alternatives>
       <TocWrapper>
         <TocCheck>
           <CheckboxControl
@@ -122,10 +111,6 @@ const LoginShelf = () => {
 
 const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
-`
-
-const Alternatives = styled.div`
-  grid-area: alternatives;
 `
 
 const Confirmation = styled.div`
@@ -164,7 +149,7 @@ const Wrapper = styled.div`
     grid-template-areas:
       'copy email'
       'copy submit'
-      'tocCheck alternatives';
+      'tocCheck .';
     &.submitted {
       grid-template-areas:
         'copy confirmation'
@@ -185,7 +170,7 @@ const Wrapper = styled.div`
 
   &.submitted {
     *[id='#/properties/email'],
-    ${SubmitButton}, ${Alternatives} {
+    ${SubmitButton} {
       display: none;
     }
     ${Confirmation} {
@@ -216,48 +201,6 @@ const InfoRow = styled.div`
 
 const SignInDirections = styled.p`
   ${typography.label.l1};
-`
-
-const OrLine = styled.div`
-  position: relative;
-  margin: 1em 0;
-
-  text-align: center;
-  ${typography.label.l1}
-  color: ${rgba(palette.barracuda)};
-  text-transform: uppercase;
-
-  &:before {
-    content: ' ';
-    position: absolute;
-    z-index: 0;
-    left: 0;
-    top: 40%;
-    width: 100%;
-    height: 1px;
-    background: ${rgba(palette.stone)};
-    @media (prefers-color-scheme: dark) {
-      background: ${rgba(palette.barracuda, 0.64)};
-    }
-  }
-  &:after {
-    position: relative;
-    z-index: 1;
-    content: ' or ';
-    margin-inline: auto;
-    padding: 0 10px;
-    background: ${rgba(palette.white)};
-    @media (prefers-color-scheme: dark) {
-      background: ${rgba(palette.slate)};
-    }
-  }
-`
-
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
 `
 
 const TocWrapper = styled.div`
