@@ -48,10 +48,12 @@ const Button = ({
   if (!!href) {
     return (
       <Link {...{ href }}>
-        <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-          {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
-          <span>{children}</span>
-        </ButtonLink>
+        <a>
+          <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
+            {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+            {children}
+          </ButtonLink>
+        </a>
       </Link>
     )
   }
@@ -184,7 +186,7 @@ const ButtonTypography = css<Partial<ButtonProps>>`
   ${props => typography.label[props.level === 0 ? 'l0' : props.level === 1 ? 'l1' : 'l2']}
 `
 
-const ButtonLink = styled.a`
+const ButtonLink = styled.div`
   ${() => ButtonStyle}
   ${() => ButtonPalette}
   ${() => ButtonTypography}
