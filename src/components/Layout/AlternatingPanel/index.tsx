@@ -2,15 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
 import { assetPath } from '@lib'
-import { breakpoint, palette, typography } from '@theme'
+import { breakpoint, typography } from '@theme'
 
 export interface IAlternatingPanel {
   image: string
   imageDark?: string
   title: string
   copy: string
-  subtitle: string
   buttonLabel: string
+  destination: string
   imageOnRight?: boolean
 }
 
@@ -19,8 +19,8 @@ const AlternatingPanel = ({
   imageDark,
   title,
   copy,
-  subtitle,
   buttonLabel,
+  destination,
   imageOnRight,
 }: IAlternatingPanel) => {
   return (
@@ -29,8 +29,7 @@ const AlternatingPanel = ({
       <Content>
         <Title>{title}</Title>
         <Copy>{copy}</Copy>
-        <SubTitle>{subtitle}</SubTitle>
-        <Button href="/" level={1}>
+        <Button href={destination} level={1}>
           {buttonLabel}
         </Button>
       </Content>
@@ -91,11 +90,6 @@ const Title = styled.h2`
 
 const Copy = styled.p`
   ${typography.body.l2}
-`
-
-const SubTitle = styled.h3`
-  ${typography.label.l1}
-  color: ${palette.barracuda};
 `
 
 export default AlternatingPanel
