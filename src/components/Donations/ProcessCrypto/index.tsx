@@ -34,7 +34,7 @@ interface IProcessCrypto {
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
-type Error = 'Payment Failed' | 'Signature Rejected' | ''
+type Error = 'Payment Failed' | 'Transaction Rejected' | 'Donation could not complete' | ''
 
 const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCrypto) => {
   const { setDonationStage } = useContext(DonationContext)
@@ -66,6 +66,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
     writeAsync: transferUSDC,
     isLoading: isTransferInitLoading,
     isError: isTransferUSDCError,
+    error: transferUSDCError,
   } = useContractWrite({
     mode: 'recklesslyUnprepared',
     addressOrName: usdcContractAddress,
@@ -97,7 +98,12 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
       if (topUpWalletData.TopUpWallet.length > 0) {
         const { id, amount, fee } = topUpWalletData.TopUpWallet[0]
         setCryptoStage('confirming')
-        await initDonation(amount, donationMethod, fee, id)
+        try {
+          await initDonation(amount, donationMethod, fee, id)
+        } catch (error) {
+          console.error('Donation Error: ', error)
+          setError('Donation could not complete')
+        }
       }
     },
   })
@@ -120,44 +126,54 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
       refreshedSigner = await (await refetch()).data
     }
     const amountInUSDCDecimals = ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()
-    await bridge(address, refreshedSigner?.provider, metadata?.publicAddress!, amountInUSDCDecimals)
+    try {
+      await bridge(address, refreshedSigner?.provider, metadata?.publicAddress!, amountInUSDCDecimals)
+    } catch (error) {
+      console.error('Bridging Error: ', error)
+      setError('Transaction Rejected')
+    }
   }
 
   const processTransaction = async () => {
     if (donationMethod === 'polygon' && !isTransferInitLoading) {
       await transferUSDC?.()
     } else {
-      const baseURL0x = assert(process.env.NEXT_PUBLIC_0X_BASE_URL, 'NEXT_PUBLIC_0X_BASE_URL')
-      const params = {
-        buyToken: 'USDC',
-        sellToken: 'ETH',
-        buyAmount: amountInUSDCDecimals,
-        takerAddress: address,
-      }
+      try {
+        const baseURL0x = assert(process.env.NEXT_PUBLIC_0X_BASE_URL, 'NEXT_PUBLIC_0X_BASE_URL')
+        const params = {
+          buyToken: 'USDC',
+          sellToken: 'ETH',
+          buyAmount: amountInUSDCDecimals,
+          takerAddress: address,
+        }
 
-      const response = await fetch(`${baseURL0x}/swap/v1/quote?${qs.stringify(params)}`)
-      const json = await response.json()
-      json.from = address
+        const response = await fetch(`${baseURL0x}/swap/v1/quote?${qs.stringify(params)}`)
+        const json = await response.json()
+        json.from = address
 
-      const tx = {
-        from: address,
-        to: json.to,
-        value: json.value,
-        data: json.data,
-      }
+        const tx = {
+          from: address,
+          to: json.to,
+          value: json.value,
+          data: json.data,
+        }
 
-      const swapTransaction = await signer?.sendTransaction(tx)
+        const swapTransaction = await signer?.sendTransaction(tx)
 
-      await createSwap({
-        variables: {
-          data: {
-            state: 'INITIATED',
-            amount: amountInUSDCDecimals,
-            userId: loggedInUser?.id,
-            txHash: swapTransaction?.hash,
+        await createSwap({
+          variables: {
+            data: {
+              state: 'INITIATED',
+              amount: amountInUSDCDecimals,
+              userId: loggedInUser?.id,
+              txHash: swapTransaction?.hash,
+            },
           },
-        },
-      })
+        })
+      } catch (error) {
+        console.error('Swapping Error: ', error)
+        setError('Transaction Rejected')
+      }
     }
   }
 
@@ -198,7 +214,8 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
 
   useEffect(() => {
     if (isTransferUSDCError) {
-      setError('Signature Rejected')
+      console.error('USDC Transfer Error: ', transferUSDCError)
+      setError('Transaction Rejected')
     }
   }, [isTransferUSDCError])
 
