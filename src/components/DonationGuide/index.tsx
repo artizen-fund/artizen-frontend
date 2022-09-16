@@ -1,20 +1,16 @@
-import React from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { Icon } from '@components'
-import { rgba } from '@lib'
+import { rgba, DonationContext } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { donationGuideMap } from '@copy/home'
 import GuideCell from './GuideCell'
 
-interface IDonationGuide {
-  visible: boolean
-  hide: () => void
-}
-
-const DonationGuide = ({ visible, hide }: IDonationGuide) => {
+const DonationGuide = () => {
+  const { visibleShelf, toggleShelf } = useContext(DonationContext)
   return (
     <>
-      <Wrapper {...{ visible }}>
+      <Wrapper visible={visibleShelf === 'donationGuide'}>
         <Headline>
           How to donate to grants
           <br />
@@ -25,7 +21,7 @@ const DonationGuide = ({ visible, hide }: IDonationGuide) => {
           <GuideCell key={`guidecell-${i}`} {...item} step={i} />
         ))}
       </Wrapper>
-      <CloseButton glyph="cross" level={1} onClick={() => hide()} {...{ visible }} />
+      <CloseButton glyph="cross" level={1} onClick={() => toggleShelf?.()} visible={visibleShelf === 'donationGuide'} />
     </>
   )
 }

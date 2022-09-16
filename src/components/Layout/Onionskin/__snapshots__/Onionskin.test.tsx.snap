@@ -2,6 +2,7 @@
 
 exports[`Onionskin renders correctly 1`] = `
 <div
-  className="sc-21f922-0 cKfzLz"
+  className="sc-104c23ae-0 dHICok"
+  onClick={[Function]}
 />
 `;

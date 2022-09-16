@@ -1,14 +1,16 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
-import Leaderboard from './Leaderboard'
 import Perks from './Perks'
 import Countdown from './Countdown'
-import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas } from '@components'
+import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba, useCampaign } from '@lib'
+import { formatUSDC, rgba, useCampaign, DonationContext } from '@lib'
 import { monthNames } from '@copy/common'
 
 const Sidebar = () => {
-  const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised, donationsWithUser } = useCampaign()
+  const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised } = useCampaign()
+  const { toggleShelf } = useContext(DonationContext)
+
   if (!startDate || !endDate || !totalRaised) return <></>
 
   return (
@@ -34,7 +36,7 @@ const Sidebar = () => {
             </Row>
           </FundBlock>
           <Row>
-            <Button onClick={() => alert('todo: implement this')} level={1} stretch glyph="donate">
+            <Button onClick={() => toggleShelf?.('donate')} level={1} stretch glyph="donate">
               Donate
             </Button>
             <Button onClick={() => alert('todo: implement this')} level={1} stretch outline>
@@ -42,7 +44,7 @@ const Sidebar = () => {
             </Button>
           </Row>
           <LargeScreensOnly>
-            <Leaderboard {...{ donations: donationsWithUser as Donation[] }} />
+            <Leaderboard />
             <Perks />
           </LargeScreensOnly>
         </Content>

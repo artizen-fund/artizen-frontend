@@ -2,13 +2,14 @@
 
 exports[`DonationHelpLink renders correctly 1`] = `
 <div
-  className="sc-78ba2856-0 fOnoXs"
+  className="sc-74bb4641-0 iFAqPP"
+  onClick={[Function]}
 >
   <div
-    className="sc-189919d9-2 kkJcfa"
+    className="sc-60e75bb7-2 elEEJs"
   >
     <div
-      className="sc-189919d9-0 cmvyFc"
+      className="sc-60e75bb7-0 iVuNTq"
       color="night"
     >
       <div
@@ -18,9 +19,13 @@ exports[`DonationHelpLink renders correctly 1`] = `
     </div>
   </div>
   <p
-    className="sc-78ba2856-1 jZynMh"
+    className="sc-74bb4641-1 jnnXGm"
   >
-    Need help? We’ve prepared a useful guide to donating.
+    Need help? Follow this 
+    <em>
+      donation guide
+    </em>
+    .
   </p>
 </div>
 `;

@@ -3,25 +3,25 @@
 exports[`PaymentFiat renders correctly 1`] = `
 <div>
   <div
-    class="sc-1ee785b1-4 dGBQmQ"
+    class="sc-90fa3a8e-4 llhBIl"
   >
     <div
-      class="sc-1ee785b1-0 faHxzV"
+      class="sc-90fa3a8e-0 eANtRE"
     >
       <div>
         <h1
-          class="sc-1ee785b1-1"
+          class="sc-90fa3a8e-1"
         >
           We require your address because regulation stuff. TODO: rewrite this
         </h1>
         <div
-          class="sc-78ba2856-0 fOnoXs"
+          class="sc-74bb4641-0 iFAqPP"
         >
           <div
-            class="sc-189919d9-2 kkJcfa"
+            class="sc-60e75bb7-2 elEEJs"
           >
             <div
-              class="sc-189919d9-0 cmvyFc"
+              class="sc-60e75bb7-0 iVuNTq"
               color="night"
             >
               <div
@@ -31,9 +31,13 @@ exports[`PaymentFiat renders correctly 1`] = `
             </div>
           </div>
           <p
-            class="sc-78ba2856-1 jZynMh"
+            class="sc-74bb4641-1 jnnXGm"
           >
-            Need help? We’ve prepared a useful guide to donating.
+            Need help? Follow this 
+            <em>
+              donation guide
+            </em>
+            .
           </p>
         </div>
       </div>
@@ -1450,7 +1454,7 @@ exports[`PaymentFiat renders correctly 1`] = `
       </div>
     </div>
     <button
-      class="sc-2a588df4-2 bANZSb sc-1ee785b1-2 iChpEd  disabled"
+      class="sc-2a588df4-2 bANZSb sc-90fa3a8e-2 krFztg  disabled"
       disabled=""
     >
       <span>
@@ -1458,7 +1462,7 @@ exports[`PaymentFiat renders correctly 1`] = `
       </span>
     </button>
     <div
-      class="sc-1ee785b1-3 iqTitY"
+      class="sc-90fa3a8e-3 cVhCTZ"
     >
       hum de dooo
     </div>

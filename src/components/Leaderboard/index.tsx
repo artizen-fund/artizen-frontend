@@ -1,16 +1,15 @@
 import styled from 'styled-components'
 import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
-import { formatUSDC, rgba } from '@lib'
+import { formatUSDC, rgba, useCampaign } from '@lib'
 import _ from 'lodash'
 import { IUser } from '@types'
 import truncateEthAddress from 'truncate-eth-address'
 
-export interface ILeaderboard {
-  donations: Donation[]
-}
+const Leaderboard = () => {
+  const { donationsWithUser } = useCampaign()
+  if (!donationsWithUser) return <></>
 
-const Leaderboard = ({ donations }: ILeaderboard) => {
   const sideItem = (
     <Button onClick={() => alert('do something')} outline level={2}>
       See All
@@ -25,7 +24,7 @@ const Leaderboard = ({ donations }: ILeaderboard) => {
 
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
-      {_.orderBy(donations, item => Number(item.amount), ['desc'])
+      {_.orderBy(donationsWithUser, item => Number(item.amount), ['desc'])
         .slice(0, 3)
         .map((donation: Donation, index) => (
           <TableCell key={`donation-${index}`}>

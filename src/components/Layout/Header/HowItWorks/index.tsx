@@ -1,13 +1,11 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
-import { rgba } from '@lib'
+import { rgba, DonationContext } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 
-interface IHowItWorks {
-  toggleShelf: (shelf: HeaderShelfType) => void
-}
-
-const HowItWorks = ({ toggleShelf }: IHowItWorks) => {
+const HowItWorks = () => {
+  const { toggleShelf } = useContext(DonationContext)
   const cells = [
     {
       illustration: 'how-it-works/about.svg',
@@ -48,7 +46,7 @@ const HowItWorks = ({ toggleShelf }: IHowItWorks) => {
             <Title>{cell.title}</Title>
             <Description>{cell.copy}</Description>
             {!!cell.action && (
-              <Button outline level={2} onClick={() => cell.action('donationGuide')}>
+              <Button outline level={2} onClick={() => cell.action?.('donationGuide')}>
                 Learn More
               </Button>
             )}

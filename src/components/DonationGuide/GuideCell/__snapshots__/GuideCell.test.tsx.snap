@@ -2,7 +2,7 @@
 
 exports[`GuideCell renders correctly 1`] = `
 <div
-  className="sc-446f2393-2 csvqBM"
+  className="sc-934236b2-2 fzamxu"
   height={
     Object {
       "desktop": 0.48,
@@ -14,20 +14,20 @@ exports[`GuideCell renders correctly 1`] = `
   }
 >
   <div
-    className="sc-446f2393-1 jAqPyk"
+    className="sc-934236b2-1 jSgTfe"
     type="copy"
   >
     <div
-      className="sc-446f2393-0 jRxPmW"
+      className="sc-934236b2-0 iMSoJw"
     >
-      NaN
+      2
     </div>
     <p>
       First, if you’re stressed about web3, don’t. We got you. It’s easier than you think.
     </p>
   </div>
   <div
-    className="sc-446f2393-1 lFWcA"
+    className="sc-934236b2-1 jmovNK"
     type="image"
   >
     <img

@@ -2,45 +2,45 @@
 
 exports[`HowItWorks renders correctly 1`] = `
 <div
-  className="sc-14ad3020-0 jcdSmk"
+  className="sc-8ef8168e-0 dQCAro"
 >
   <div
-    className="sc-14ad3020-1 eNufMx"
+    className="sc-8ef8168e-1 chkazZ"
   >
     <div
-      className="sc-14ad3020-3 gumywn"
+      className="sc-8ef8168e-3 gAgQuT"
     />
     <div
-      className="sc-14ad3020-2 fIDFYi"
+      className="sc-8ef8168e-2 dhVFwq"
     >
       <h2
-        className="sc-14ad3020-4 kwHZEg"
+        className="sc-8ef8168e-4 dmUZGM"
       >
         About
       </h2>
       <p
-        className="sc-14ad3020-5 dFatZY"
+        className="sc-8ef8168e-5 idChXc"
       >
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>
     </div>
   </div>
   <div
-    className="sc-14ad3020-1 eNufMx"
+    className="sc-8ef8168e-1 chkazZ"
   >
     <div
-      className="sc-14ad3020-3 hROOXr"
+      className="sc-8ef8168e-3 hwVjNH"
     />
     <div
-      className="sc-14ad3020-2 fIDFYi"
+      className="sc-8ef8168e-2 dhVFwq"
     >
       <h2
-        className="sc-14ad3020-4 kwHZEg"
+        className="sc-8ef8168e-4 dmUZGM"
       >
         Grants
       </h2>
       <p
-        className="sc-14ad3020-5 dFatZY"
+        className="sc-8ef8168e-5 idChXc"
       >
         Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
       </p>
@@ -57,21 +57,21 @@ exports[`HowItWorks renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-14ad3020-1 ycHGE"
+    className="sc-8ef8168e-1 fZfbig"
   >
     <div
-      className="sc-14ad3020-3 hwDDHH"
+      className="sc-8ef8168e-3 bquQfz"
     />
     <div
-      className="sc-14ad3020-2 fIDFYi"
+      className="sc-8ef8168e-2 dhVFwq"
     >
       <h2
-        className="sc-14ad3020-4 kwHZEg"
+        className="sc-8ef8168e-4 dmUZGM"
       >
         Leaderboard
       </h2>
       <p
-        className="sc-14ad3020-5 dFatZY"
+        className="sc-8ef8168e-5 idChXc"
       >
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>
@@ -88,21 +88,21 @@ exports[`HowItWorks renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-14ad3020-1 eNufMx"
+    className="sc-8ef8168e-1 chkazZ"
   >
     <div
-      className="sc-14ad3020-3 dWANBz"
+      className="sc-8ef8168e-3 hAztPz"
     />
     <div
-      className="sc-14ad3020-2 fIDFYi"
+      className="sc-8ef8168e-2 dhVFwq"
     >
       <h2
-        className="sc-14ad3020-4 kwHZEg"
+        className="sc-8ef8168e-4 dmUZGM"
       >
         FAQs
       </h2>
       <p
-        className="sc-14ad3020-5 dFatZY"
+        className="sc-8ef8168e-5 idChXc"
       >
         Nullam id dolor id nibh ultricies vehicula ut id elit.
       </p>

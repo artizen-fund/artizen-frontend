@@ -3,30 +3,30 @@
 exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
 <div>
   <section
-    class="sc-5284f2f8-0 dEIGqQ"
+    class="sc-103a172f-0 gyTnfw"
   >
     <div
       class="sc-4cf5d7c6-0 fQMtff"
     />
     <div
-      class="sc-5284f2f8-1 jNYZio"
+      class="sc-103a172f-1 eNDRzA"
     >
       <div
-        class="sc-5284f2f8-2 cPosCR"
+        class="sc-103a172f-2 fnQEMJ"
       >
         Title of Monthly Featured Artwork
       </div>
       <div
-        class="sc-5284f2f8-3 dcicQU"
+        class="sc-103a172f-3 imRysU"
       >
         <div
-          class="sc-5284f2f8-4 igEtRN"
+          class="sc-103a172f-4 dzKtrV"
         >
           <div
-            class="sc-189919d9-2 kkJcfa"
+            class="sc-60e75bb7-2 elEEJs"
           >
             <div
-              class="sc-189919d9-0 fzTocg"
+              class="sc-60e75bb7-0 dkGscC"
               color="night"
             >
               <div
@@ -37,13 +37,13 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-5284f2f8-4 igEtRN"
+          class="sc-103a172f-4 dzKtrV"
         >
           <div
-            class="sc-189919d9-2 kkJcfa"
+            class="sc-60e75bb7-2 elEEJs"
           >
             <div
-              class="sc-189919d9-0 fzTocg"
+              class="sc-60e75bb7-0 dkGscC"
               color="night"
             >
               <div
@@ -52,7 +52,7 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
               />
             </div>
             <div
-              class="sc-189919d9-1 cBkZjy"
+              class="sc-60e75bb7-1 emyDrY"
               color="night"
             >
               Created NaN days ago
@@ -60,13 +60,13 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
           </div>
         </div>
         <div
-          class="sc-5284f2f8-4 igEtRN"
+          class="sc-103a172f-4 dzKtrV"
         >
           <div
-            class="sc-189919d9-2 kkJcfa"
+            class="sc-60e75bb7-2 elEEJs"
           >
             <div
-              class="sc-189919d9-0 fzTocg"
+              class="sc-60e75bb7-0 dkGscC"
               color="night"
             >
               <div
@@ -75,7 +75,7 @@ exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
               />
             </div>
             <div
-              class="sc-189919d9-1 cBkZjy"
+              class="sc-60e75bb7-1 emyDrY"
               color="night"
             >
               Tag Name

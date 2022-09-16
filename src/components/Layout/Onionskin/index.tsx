@@ -1,6 +1,13 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
+import { DonationContext } from '@lib'
 
-const Onionskin = styled.div`
+const Onionskin = () => {
+  const { visibleShelf, toggleShelf } = useContext(DonationContext)
+  return <Wrapper className={!!visibleShelf ? 'visible' : ''} onClick={() => toggleShelf?.()} />
+}
+
+const Wrapper = styled.div`
   position: fixed;
   z-index: 100;
   left: 0;

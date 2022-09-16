@@ -2,25 +2,26 @@
 
 exports[`DonationAmount renders correctly 1`] = `
 <div
-  className="sc-fa264814-0 kXMtVP"
+  className="sc-97bf92d2-0 dCeXoW"
 >
   <div
-    className="sc-fa264814-1 cssaZW"
+    className="sc-97bf92d2-1 feYvdf"
   >
     <div>
       <h1
-        className="sc-fa264814-2"
+        className="sc-97bf92d2-2"
       >
         Choose your donation amount and payment method
       </h1>
       <div
-        className="sc-78ba2856-0 fOnoXs"
+        className="sc-74bb4641-0 iFAqPP"
+        onClick={[Function]}
       >
         <div
-          className="sc-189919d9-2 kkJcfa"
+          className="sc-60e75bb7-2 elEEJs"
         >
           <div
-            className="sc-189919d9-0 cmvyFc"
+            className="sc-60e75bb7-0 iVuNTq"
             color="night"
           >
             <div
@@ -30,15 +31,16 @@ exports[`DonationAmount renders correctly 1`] = `
           </div>
         </div>
         <p
-          className="sc-78ba2856-1 jZynMh"
+          className="sc-74bb4641-1 jnnXGm"
         >
-          Need help? We’ve prepared a useful guide to donating.
+          Need help? Follow this 
+          <em>
+            donation guide
+          </em>
+          .
         </p>
       </div>
     </div>
-    <p>
-      todo: insert Leaderboard here
-    </p>
     <label
       className="sc-dd35d48e-4 fUZPkX"
     >
@@ -65,7 +67,7 @@ exports[`DonationAmount renders correctly 1`] = `
     </label>
   </div>
   <div
-    className="sc-fa264814-4 ejyLEh"
+    className="sc-97bf92d2-4 dgkxTE"
   >
     <div
       className="sc-cf7cfc90-0 dmSvkC"
@@ -94,7 +96,7 @@ exports[`DonationAmount renders correctly 1`] = `
       />
     </div>
     <div
-      className="sc-fa264814-5 gZwxVK"
+      className="sc-97bf92d2-5 hVWZtX"
     >
       <span>
         Friends of Artizen typically donate:
@@ -127,18 +129,18 @@ exports[`DonationAmount renders correctly 1`] = `
       </div>
     </div>
     <ul
-      className="sc-fa264814-6 yLhfE"
+      className="sc-97bf92d2-6 ctZciV"
     >
       <li
-        className="sc-fa264814-7 gcZSMc"
+        className="sc-97bf92d2-7 hYwjmh"
         onClick={[Function]}
         selected={false}
       >
         <div
-          className="sc-189919d9-2 kkJcfa"
+          className="sc-60e75bb7-2 elEEJs"
         >
           <div
-            className="sc-189919d9-0 cmvyFc"
+            className="sc-60e75bb7-0 iVuNTq"
             color="night"
           >
             <div
@@ -157,15 +159,15 @@ exports[`DonationAmount renders correctly 1`] = `
         </span>
       </li>
       <li
-        className="sc-fa264814-7 gcZSMc"
+        className="sc-97bf92d2-7 hYwjmh"
         onClick={[Function]}
         selected={false}
       >
         <div
-          className="sc-189919d9-2 kkJcfa"
+          className="sc-60e75bb7-2 elEEJs"
         >
           <div
-            className="sc-189919d9-0 cmvyFc"
+            className="sc-60e75bb7-0 iVuNTq"
             color="night"
           >
             <div
@@ -184,15 +186,15 @@ exports[`DonationAmount renders correctly 1`] = `
         </span>
       </li>
       <li
-        className="sc-fa264814-7 gcZSMc"
+        className="sc-97bf92d2-7 hYwjmh"
         onClick={[Function]}
         selected={false}
       >
         <div
-          className="sc-189919d9-2 kkJcfa"
+          className="sc-60e75bb7-2 elEEJs"
         >
           <div
-            className="sc-189919d9-0 cmvyFc"
+            className="sc-60e75bb7-0 iVuNTq"
             color="night"
           >
             <div

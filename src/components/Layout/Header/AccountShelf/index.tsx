@@ -71,7 +71,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
         </div>
       </Commands>
       <AccountStats {...{ stats }} />
-      <Illustration data="/assets/qf-square.svg" />
+      <Illustration src="/assets/qf-square.svg" />
     </Wrapper>
   )
 }
@@ -83,14 +83,22 @@ const Wrapper = styled.div`
   grid-template-areas: 'commands' 'illustration' 'stats';
   gap: 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    grid-template-rows: 2;
-    grid-template-columns: 2;
-    grid-template-areas: 'commands commands' 'illustration stats';
+    grid-template-rows: auto;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 'illustration stats commands';
+    gap: 48px;
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-template-rows: 1;
-    grid-template-columns: 3;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 'illustration stats commands';
+    gap: 64px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 5vw;
+  }
+  @media only screen and (min-width: 1920px) {
+    gap: 96px;
   }
 `
 
@@ -126,14 +134,16 @@ const Buttons = styled.div`
   grid-template-rows: auto;
   grid-template-columns: auto;
   gap: 8px;
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
     grid-template-rows: repeat(2, 1fr);
     grid-template-columns: repeat(2, 1fr);
   }
 `
 
-const Illustration = styled.object`
+const Illustration = styled.img`
   grid-area: illustration;
+  width: auto;
+  max-width: 100%;
   margin: auto;
 `
 
