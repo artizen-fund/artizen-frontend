@@ -7,15 +7,16 @@ import { breakpoint, palette } from '@theme'
 interface IShelf {
   shelfKey: string
   shadowVisible: boolean
+  hasBreadcrumbs?: boolean
   children: React.ReactNode
 }
 
-const Shelf = ({ shelfKey, shadowVisible, children }: IShelf) => {
+const Shelf = ({ shelfKey, shadowVisible, hasBreadcrumbs, children }: IShelf) => {
   const { visibleShelf } = useContext(DonationContext)
   return (
     <>
       <Wrapper {...{ shadowVisible }} visible={shelfKey === visibleShelf}>
-        <PagePadding>{children}</PagePadding>
+        <StyledPagePadding {...{ hasBreadcrumbs }}>{children}</StyledPagePadding>
       </Wrapper>
     </>
   )
@@ -32,11 +33,12 @@ const Wrapper = styled.div<Pick<IShelf, 'shadowVisible'> & { visible: boolean }>
   overflow: scroll;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     top: 72px;
-    max-height: none;
-    overflow: visible;
+    max-height: calc(100vh - 72px);
+    overflow-y: scroll;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     top: 88px;
+    max-height: calc(100vh - 88px);
   }
 
   background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
@@ -56,6 +58,10 @@ const Wrapper = styled.div<Pick<IShelf, 'shadowVisible'> & { visible: boolean }>
 
   will-change: transition, transform;
   pointer-events: ${props => (props.visible ? 'all' : 'none')};
+`
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)<Pick<IShelf, 'hasBreadcrumbs'>>`
+  ${props => props.hasBreadcrumbs && 'padding-top: 0;'}
 `
 
 export default Shelf
