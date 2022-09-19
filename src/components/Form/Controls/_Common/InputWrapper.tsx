@@ -20,6 +20,10 @@ const InputPalette = css`
     border-color: ${rgba(palette.barracuda)};
   }
 
+  &:focus {
+    border-width: 1px 1px 2px 1px;
+  }
+
   &:focus,
   &.hasData,
   &:not([value='']),
@@ -96,11 +100,12 @@ export default styled.div<{
       padding: 22px ${props => (props.hasStatusGlyph ? 88 : 32)}px 0 32px;
     }
 
-    border-width: 1px 1px 4px 1px;
+    border-width: 1px 1px 1px 1px;
     border-style: solid;
-    border-radius: 8px;
+    border-radius: 0px;
 
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, border-width 0.3s ease-in-out,
+      color 0.3s ease-in-out;
     will-change: background, border, color;
     pointer-events: ${props => (props.disabled ? 'none' : 'inherit')};
 
