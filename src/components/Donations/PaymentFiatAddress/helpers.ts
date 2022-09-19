@@ -1,4 +1,4 @@
-import nationCodes from '@forms/nationCodes'
+import { nationCodes } from '@copy/common'
 import supportedNations from './supportedNations'
 import unsupportedUsStates from './unsupportedUsStates'
 
