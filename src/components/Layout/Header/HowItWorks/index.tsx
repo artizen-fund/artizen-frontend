@@ -3,50 +3,21 @@ import styled from 'styled-components'
 import { Button } from '@components'
 import { rgba, DonationContext } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
+import { howItWorks } from '@copy/header'
 
 const HowItWorks = () => {
   const { toggleShelf } = useContext(DonationContext)
-  const cells = [
-    {
-      illustration: 'how-it-works/about.svg',
-      illustrationDark: 'how-it-works/about-dark.svg',
-      title: 'About',
-      copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
-      action: toggleShelf,
-    },
-    {
-      illustration: 'how-it-works/grants.svg',
-      illustrationDark: 'how-it-works/grants-dark.svg',
-      title: 'Grants',
-      copy: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur et.',
-      destination: '/derp',
-    },
-    {
-      illustration: 'leaderboard/trust.svg',
-      illustrationDark: 'leaderboard/trust-dark.svg',
-      title: 'Leaderboard',
-      copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
-      destination: '/derp',
-      mobileOnly: true,
-    },
-    {
-      illustration: 'how-it-works/faq.svg',
-      illustrationDark: 'how-it-works/faq-dark.svg',
-      title: 'FAQs',
-      copy: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
-      destination: '/derp',
-    },
-  ]
+
   return (
     <Wrapper>
-      {cells.map(cell => (
+      {howItWorks.map(cell => (
         <Cell key={`cell-${cell.title}`} mobileOnly={cell.mobileOnly}>
           <Illustration light={cell.illustration} dark={cell.illustrationDark} />
           <Under>
             <Title>{cell.title}</Title>
             <Description>{cell.copy}</Description>
-            {!!cell.action && (
-              <Button outline level={2} onClick={() => cell.action?.('donationGuide')}>
+            {!!cell.shelf && (
+              <Button outline level={2} onClick={() => toggleShelf?.(cell.shelf as HeaderShelfType)}>
                 Learn More
               </Button>
             )}

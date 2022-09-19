@@ -41,6 +41,17 @@ const Home = () => {
           <AlternatingPanel key={`panel-${i}`} {...panel} />
         ))}
       </AlternatingPanels>
+
+      <p>TODO: new addition</p>
+      <h1>Our curators</h1>
+      <h2>Meet the community leaders who review submissions and select finalists </h2>
+      <ul>
+        <li>Nene, Founder</li>
+        <li>Ruben, Founder + CTO</li>
+        <li>Simon, Head of Product</li>
+        <li>Juju, Designer</li>
+      </ul>
+
       <Newsletter />
       <Metrics {...{ metrics }} />
     </Layout>

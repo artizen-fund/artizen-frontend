@@ -184,7 +184,7 @@ const ButtonTypography = css<Partial<ButtonProps>>`
   ${props => typography.label[props.level === 0 ? 'l0' : props.level === 1 ? 'l1' : 'l2']}
 `
 
-const ButtonLink = styled.a`
+const ButtonLink = styled.div`
   ${() => ButtonStyle}
   ${() => ButtonPalette}
   ${() => ButtonTypography}
