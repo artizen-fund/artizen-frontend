@@ -47,13 +47,11 @@ const Button = ({
   const iClassName = `${className} ${props.disabled ? ' disabled' : ''}`
   if (!!href) {
     return (
-      <Link {...{ href }}>
-        <a>
-          <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-            {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
-            {children}
-          </ButtonLink>
-        </a>
+      <Link {...{ href }} passHref>
+        <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
+          {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+          <span>{children}</span>
+        </ButtonLink>
       </Link>
     )
   }

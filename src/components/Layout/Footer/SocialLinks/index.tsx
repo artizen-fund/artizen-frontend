@@ -1,20 +1,22 @@
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
-import { rgba, assetPath } from '@lib'
+import { breakpoint } from '@theme'
+import { Button } from '@components'
+import { socialLinks } from '@copy/common'
 
 const SocialLinks = () => {
-  const networks: Record<string, string> = {
-    twitter: 'https://twitter.com/artizenfund',
-    discord: 'https://artizen.link/discord',
-    github: 'https://github.com/artizen-fund',
-    telegram: 'https://artizen.link/telegram',
-  }
   return (
     <Wrapper>
-      {Object.keys(networks).map(network => (
-        <SocialLink href={networks[network]} icon={network} target="_blank" key={`social-link-${network}`}>
+      {Object.keys(socialLinks).map(network => (
+        <Button
+          key={`social-link-${network}`}
+          glyph={network}
+          glyphOnly
+          alt={network}
+          href={socialLinks[network]}
+          target="_blank"
+        >
           {network}
-        </SocialLink>
+        </Button>
       ))}
     </Wrapper>
   )
@@ -30,28 +32,6 @@ const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
   }
-`
-
-const SocialLink = styled.a<{ icon: string }>`
-  display: block;
-  width: 56px;
-  height: 56px;
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
-    width: 64px;
-    height: 64px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 72px;
-    height: 72px;
-  }
-
-  text-indent: -1000px;
-  overflow: hidden;
-  border-radius: 9999px;
-  background-color: ${rgba(palette.white)};
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-image: url(${assetPath('/socialIcons/${props => props.icon}.svg')});
 `
 
 export default SocialLinks
