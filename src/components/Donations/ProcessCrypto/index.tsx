@@ -255,8 +255,38 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
     }
   }, [fundsTransfered])
 
-  const retry = () => {
-    setDonationStage?.('payment')
+  const handleBuildingDonationRetry = async () => {
+    switch (donationMethod) {
+      case 'ethereum':
+        await handleSwapComplete()
+        break
+      case 'usd':
+      case 'polygon':
+      default:
+        setDonationStage?.('payment')
+        break
+    }
+  }
+
+  const retry = async () => {
+    setError('')
+    switch (cryptoStage) {
+      case 'swapping':
+        setDonationStage?.('payment')
+        break
+      case 'bridging':
+        await handleSwapComplete()
+        break
+      case 'building':
+        await handleBuildingDonationRetry()
+        break
+      case 'confirming':
+        await fetchTopUpWallet()
+        break
+      default:
+        setDonationStage?.('payment')
+        break
+    }
   }
 
   return (
