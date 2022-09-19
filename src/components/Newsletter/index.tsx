@@ -34,7 +34,7 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) =
     <PagePadding black>
       <Wrapper className={submitted ? 'submitted' : ''}>
         <Copy>
-          <Header>Join us in building the world&apos;s largest web3 fund for public goods</Header>
+          <Header>Want to see where this goes? Let’s keep in touch.</Header>
           <Subhead>Sign up for our free newsletter</Subhead>
         </Copy>
         <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
