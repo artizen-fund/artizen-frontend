@@ -74,10 +74,11 @@ export const StringControl = ({
             placeholder={uischema?.options?.placeholder || ' '}
             value={data}
             onChange={(e: string) => handleChange(path, e)}
-            onKeyUp={() => setVirgin(false)}
+            onBlur={() => setVirgin(false)}
             countrySelectProps={{ unicodeFlags: true }}
             defaultCountry="US"
             international={false}
+            className={!!data ? 'hasData' : ''}
           />
         ) : (
           <input
@@ -89,7 +90,7 @@ export const StringControl = ({
             placeholder={uischema?.options?.placeholder || ' '}
             defaultValue={data}
             onChange={e => handleChange(path, e.target.value)}
-            onKeyUp={() => setVirgin(false)}
+            onBlur={() => setVirgin(false)}
           />
         )}
         <InputLabel {...{ hasWidget }}>

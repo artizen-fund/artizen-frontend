@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
@@ -45,11 +45,6 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
     }
   }
 
-  const [disabled, setDisabled] = useState(true)
-  useEffect(() => {
-    setDisabled(!data.street1 || !data.city || !data.zip || countryAndRegionIsSupported(data.country, data.state))
-  }, [data])
-
   return (
     <Wrapper className={processing ? 'processing' : ''}>
       <Information>
@@ -81,7 +76,7 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
         data={data}
         setData={setData}
       >
-        <SubmitButton stretch onClick={saveAndProceed} {...{ disabled }}>
+        <SubmitButton stretch onClick={saveAndProceed}>
           Payment
         </SubmitButton>
         <ProcessingMessage>hum de dooo</ProcessingMessage>
