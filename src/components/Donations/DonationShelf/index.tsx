@@ -36,9 +36,16 @@ export const DonationShelf = () => {
         return <DonationAmount {...{ setDonationMethod, donationMethod, setAmount, amount }} />
     }
   }
+  type DonationStage = 'setAmount' | 'login' | 'payment' | 'paymentFiatAddress' | 'processCrypto' | 'confirmation'
 
   const breadcrumbs: Array<BreadcrumbStep<DonationStage>> = [
-    { key: 'setAmount', label: 'Donation Amount' },
+    {
+      key: 'setAmount',
+      label: 'Donation Amount',
+      onClick: ['payment', 'paymentFiatAddress'].includes(donationStage)
+        ? () => setDonationStage?.('setAmount')
+        : undefined,
+    },
     { key: 'login', label: 'Account Creation' },
     { key: 'payment', label: 'Payment Information' },
     { key: 'processCrypto', label: 'Creating Donation' },

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
-import { useLoggedInUser } from '@lib'
+import { useLoggedInUser, isServer } from '@lib'
 
 export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
 
@@ -29,7 +29,21 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
     if (visibleShelf === 'session' && donationStage === 'login' && !!loggedInUser) {
       setVisibleShelf('donate')
     }
-  }, [donationStage, loggedInUser])
+  }, [donationStage, loggedInUser, visibleShelf])
+
+  useEffect(() => {
+    /* Lock the page scroll if a shelf is open
+     *  Note that the "correct" way to do this would be <body scrollLock={true} /> or something.
+     *  Alas, body is outside the React context, so the only way to do this is via query selectors.
+     */
+    if (isServer()) return
+    const docBody = document.getElementsByTagName('body')?.[0]
+    if (!!visibleShelf) {
+      docBody.classList.add('scrollLock')
+    } else {
+      docBody.classList.remove('scrollLock')
+    }
+  }, [visibleShelf])
 
   return (
     <DonationContext.Provider

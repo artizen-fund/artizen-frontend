@@ -56,7 +56,7 @@ const Header = () => {
       <Shelf shelfKey="howItWorks" {...{ shadowVisible }}>
         <HowItWorks />
       </Shelf>
-      <Shelf shelfKey="donate" {...{ shadowVisible }}>
+      <Shelf shelfKey="donate" {...{ shadowVisible }} hasBreadcrumbs>
         <DonationShelf />
       </Shelf>
       <DonationGuide />
