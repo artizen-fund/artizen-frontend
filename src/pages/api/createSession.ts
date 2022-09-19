@@ -1,7 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Magic } from '@magic-sdk/admin'
 import { withSentry } from '@sentry/nextjs'
-import { setTokenCookie, assert, checkUserProfile, updateUserProfile, createUserProfile } from '@lib'
+import {
+  setTokenCookie,
+  assert,
+  checkUserProfile,
+  updateUserProfile,
+  createUserProfile,
+  createUserCourierProfile,
+} from '@lib'
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
 const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -23,13 +30,19 @@ const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
       throw 'Error creating token'
     }
 
-    const userProfileType = await checkUserProfile(metadata.email, token)
-
+    const currentUser = await checkUserProfile(metadata.email, token)
+    const { type: userProfileType } = currentUser
+    let { id: userId } = currentUser
     if (userProfileType === 'OLD') {
-      await updateUserProfile(metadata, token)
+      const user = await updateUserProfile(metadata, token)
+      userId = user.data?.update_User?.returning[0]?.id
     } else if (userProfileType === 'NEW') {
-      await createUserProfile(metadata, token)
+      const user = await createUserProfile(metadata, token)
+      userId = user.data?.insert_User_one?.id
     }
+
+    // sync courier user
+    await createUserCourierProfile(userId, metadata.email)
 
     setTokenCookie(res, token)
     res.status(200).send({ token, metadata })
