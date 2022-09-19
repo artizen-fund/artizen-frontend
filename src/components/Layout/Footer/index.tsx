@@ -1,10 +1,12 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba } from '@lib'
+import { rgba, DonationContext } from '@lib'
 import { Button, PagePadding } from '@components'
 import SocialLinks from './SocialLinks'
 
 const Footer = () => {
+  const { setVisibleShelf } = useContext(DonationContext)
   return (
     <>
       <PagePadding black>
@@ -25,11 +27,11 @@ const Footer = () => {
           <CTA>
             <Copy>Join the mission to fund public goods.</Copy>
             <Buttons>
-              <Button onClick={() => alert('coming soon')} outline level={1}>
+              <Button onClick={() => setVisibleShelf?.('donate')} stretch inverted level={1} glyph="donate">
                 Donate
               </Button>
-              <Button onClick={() => alert('coming soon')} outline level={1}>
-                Sign In
+              <Button onClick={() => alert('coming soon')} stretch inverted outline level={1}>
+                Share
               </Button>
             </Buttons>
           </CTA>
@@ -52,7 +54,6 @@ const Footer = () => {
 
 const Wrapper = styled.footer`
   display: grid;
-  grid-gap: 18px;
   grid-template-areas:
     'rule1 rule1'
     'bigLinks smallLinks'
@@ -61,18 +62,22 @@ const Wrapper = styled.footer`
     'rule3 rule3'
     'social social';
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 21px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    grid-gap: 24px 48px;
+  }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-gap: 20px 40px;
     grid-template-areas:
       'rule1 rule1 rule2'
       'bigLinks smallLinks cta'
       'rule3 rule3 rule3'
       'social social social';
     grid-template-columns: 2fr 1fr 3fr;
+    grid-gap: 32px 65px;
     /* todo: this grid template is not getting us equal columns */
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    grid-gap: 30px 65px;
+    grid-gap: 40px 65px;
   }
   color: ${rgba(palette.white)};
 `
@@ -83,7 +88,7 @@ const Rule = styled.hr<{ gridSpace: string }>`
   appearance: none;
   width: 100%;
   height: 1px;
-  background-color: ${rgba(palette.barracuda)};
+  background-color: ${rgba(palette.barracuda, 0.64)};
   border: 0px;
   outline: 0px;
 `
@@ -91,15 +96,29 @@ const Rule = styled.hr<{ gridSpace: string }>`
 const BigLinks = styled.ul`
   grid-area: bigLinks;
   ${typography.title.l2}
+  line-height: 155% !important;
 `
 
 const SmallLinks = styled.ul`
   grid-area: smallLinks;
   ${typography.label.l0}
+  line-height: 220% !important;
 `
 
 const CTA = styled.div`
   grid-area: cta;
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    gap: 24px 48px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: 32px 65px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 40px 65px;
+  }
 `
 
 const Copy = styled.div`

@@ -47,7 +47,7 @@ const Button = ({
   const iClassName = `${className} ${props.disabled ? ' disabled' : ''}`
   if (!!href) {
     return (
-      <Link {...{ href }}>
+      <Link {...{ href }} passHref>
         <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
           {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
           <span>{children}</span>
