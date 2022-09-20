@@ -1,7 +1,11 @@
 import ProcessCrypto from './'
-import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
 import { MockedProvider } from '@apollo/client/testing'
+import { WagmiConfig } from 'wagmi'
+import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
 import { CourierNotification } from '@lib'
+import { getWagmiClient } from '../../../lib/wagmiClient'
+
+const { client } = getWagmiClient()
 
 export default {
   title: 'donations/ProcessCrypto',
@@ -15,11 +19,13 @@ export const ProcessCryptoComponent = (props: any) => {
     id: 'abc123',
   }
   return (
-    <MockedProvider>
-      <CourierNotification>
-        <ProcessCrypto {...props} {...{ amount, order }} />
-      </CourierNotification>
-    </MockedProvider>
+    <WagmiConfig client={client}>
+      <MockedProvider>
+        <CourierNotification>
+          <ProcessCrypto {...props} {...{ amount, order }} />
+        </CourierNotification>
+      </MockedProvider>
+    </WagmiConfig>
   )
 }
 

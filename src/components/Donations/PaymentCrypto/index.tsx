@@ -1,12 +1,14 @@
 import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { CheckboxControl } from '@components'
-import { breakpoint, typography } from '@theme'
-import WalletOptions from './WalletOptions'
 import { useConnect, useAccount } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { getChainId, DonationContext } from '@lib'
+import { breakpoint, typography } from '@theme'
+import WalletOptions from './WalletOptions'
+
+/* TODO: something about wagmi is breaking imports from @components */
+import CheckboxControl from '../../Form/Controls/BooleanControl/CheckboxControl'
 
 interface IPaymentCrypto {
   amount: number

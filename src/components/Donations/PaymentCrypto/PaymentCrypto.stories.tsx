@@ -1,4 +1,8 @@
 import PaymentCrypto from './'
+import { WagmiConfig } from 'wagmi'
+import { getWagmiClient } from '../../../lib/wagmiClient'
+
+const { client } = getWagmiClient()
 
 export default {
   title: 'donations/PaymentCrypto',
@@ -8,5 +12,9 @@ export default {
 
 export const PaymentCryptoComponent = (props: any) => {
   const amount = 1000
-  return <PaymentCrypto {...props} {...{ amount }} />
+  return (
+    <WagmiConfig client={client}>
+      <PaymentCrypto {...props} {...{ amount }} />
+    </WagmiConfig>
+  )
 }

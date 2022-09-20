@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard } from '@components'
-import { breakpoint, palette, typography } from '@theme'
+import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
+import { breakpoint, palette, typography, GlyphKey } from '@theme'
 import { rgba, DonationContext } from '@lib'
 
 interface IDonationAmount {
@@ -15,6 +15,7 @@ type MethodSet = {
   key: DonationMethod
   label: string
   min: number
+  glyph: keyof GlyphKey
 }
 
 const methods: Array<MethodSet> = [
@@ -22,16 +23,19 @@ const methods: Array<MethodSet> = [
     key: 'usd',
     label: 'Credit Card',
     min: 10,
+    glyph: 'creditCard',
   },
   {
     key: 'polygon',
     label: 'Polygon',
     min: 10,
+    glyph: 'polygon',
   },
   {
     key: 'ethereum',
     label: 'Ethereum',
     min: 100,
+    glyph: 'ethereum',
   },
 ]
 
@@ -48,26 +52,20 @@ const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }
 
   return (
     <Wrapper>
-      <Information>
+      <Header>
         <div>
           <Title>Choose your donation amount and payment method</Title>
           <DonationHelpLink />
         </div>
+      </Header>
 
-        <Leaderboard />
+      <StyledLeaderboard />
 
-        <CheckboxControl
-          data={hideFromLeaderboard}
-          handleChange={() => setHideFromLeaderboard(!hideFromLeaderboard)}
-          label="Hide my personal details from the leaderboard."
-          path="derp"
-        />
-      </Information>
+      <AmountWidget {...{ amount, setAmount, minClamp }} />
+
       <Form>
-        <AmountWidget {...{ amount, setAmount, minClamp }} />
-
         <SuggestedDonations>
-          <span>Friends of Artizen typically donate:</span>
+          <span>Average donation:</span>
           <div>
             <Button onClick={() => setAmount(200)} level={2} outline>
               $200
@@ -88,49 +86,81 @@ const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }
               onClick={() => setDonationMethod(thisMethod.key)}
               selected={donationMethod === thisMethod.key}
             >
-              <Icon outline level={2} glyph="info" />
+              <Icon
+                outline={donationMethod !== thisMethod.key}
+                level={2}
+                glyph={thisMethod.glyph}
+                color={donationMethod === thisMethod.key ? 'moon' : 'night'}
+                darkColor={donationMethod === thisMethod.key ? 'night' : 'moon'}
+              />
               <div>{thisMethod.label}</div>
-              <span>min ${thisMethod.min}.00</span>
+              <SelectedCheck selected={donationMethod === thisMethod.key} />
             </Method>
           ))}
         </Methods>
-
-        <Button onClick={() => setDonationStage?.('login')} stretch level={1}>
-          Continue
-        </Button>
       </Form>
+
+      <HideCheckbox
+        data={hideFromLeaderboard}
+        handleChange={() => setHideFromLeaderboard(!hideFromLeaderboard)}
+        label="Hide my personal details from the leaderboard."
+        path="derp"
+      />
+
+      <SubmitButton onClick={() => setDonationStage?.('login')} stretch level={1}>
+        Continue
+      </SubmitButton>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  display: grid;
+  grid-template-areas: 'header' 'amountWidget' 'form' 'hideCheckbox' 'submitButton';
+  grid-template-columns: 1;
+  grid-template-rows: repeat(5, auto);
+  gap: 20px;
+
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    gap: 30px;
+  }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    flex-direction: row;
-    gap: 80px;
+    grid-template-areas: 'header amountWidget' 'leaderboard form' 'hideCheckbox submitButton';
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 40px;
   }
 `
 
-const Information = styled.div`
+const Header = styled.div`
+  grid-area: header;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 50px;
 `
 
 const Title = styled.h1``
 
-const InfoLine = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-`
-
 const Form = styled.div`
+  grid-area: form;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    gap: 24px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: 32px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 40px;
+  }
 `
 
 const SuggestedDonations = styled.div`
@@ -138,7 +168,7 @@ const SuggestedDonations = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 1em 0;
+
   div {
     display: flex;
     flex-direction: row;
@@ -152,10 +182,10 @@ const Methods = styled.ul`
   flex-direction: row;
   justify-content: space-between;
   gap: 10px;
-  margin: 1em 0;
 `
 
 const Method = styled.li<{ selected: boolean }>`
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -163,7 +193,6 @@ const Method = styled.li<{ selected: boolean }>`
   align-items: center;
 
   div {
-    margin-top: 0.5em;
     ${typography.label.l1}
   }
 
@@ -180,6 +209,22 @@ const Method = styled.li<{ selected: boolean }>`
   border-radius: 16px;
   padding: 10px 0;
   cursor: pointer;
+`
+
+const HideCheckbox = styled(props => <CheckboxControl {...props} />)`
+  grid-area: hideCheckbox;
+`
+
+const SubmitButton = styled(props => <Button {...props} />)`
+  grid-area: submitButton;
+`
+
+const StyledLeaderboard = styled(props => <Leaderboard {...props} />)`
+  display: none;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    display: block;
+    grid-area: leaderboard;
+  }
 `
 
 export default DonationAmount

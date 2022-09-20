@@ -8,7 +8,7 @@ const DonationHelpLink = () => {
   const { toggleShelf } = useContext(DonationContext)
   return (
     <Wrapper onClick={() => toggleShelf?.('donationGuide')}>
-      <Icon outline glyph="info" level={2} />
+      <Icon outline glyph="infoLarge" level={1} />
       <Copy>
         Need help? Follow this <em>donation guide</em>.
       </Copy>

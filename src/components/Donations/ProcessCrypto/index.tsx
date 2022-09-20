@@ -1,10 +1,14 @@
 import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { IconStack, Icon, Button } from '@components'
-import { breakpoint, typography } from '@theme'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
-import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
+import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
+import { ethers } from 'ethers'
+import qs from 'qs'
+import { v4 as uuidv4 } from 'uuid'
+import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
+import { USDCAbi } from '@contracts'
+import { IconStack, Icon, Button } from '@components'
 import {
   assert,
   getChainId,
@@ -16,14 +20,10 @@ import {
   userMetadataVar,
   getConfirmDonationURL,
   DonationContext,
+  rgba,
 } from '@lib'
 import { useDonation } from '../../../lib/useDonation'
-import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
-import { ethers } from 'ethers'
-import { v4 as uuidv4 } from 'uuid'
-import { USDCAbi } from '@contracts'
-import qs from 'qs'
-import { Label } from 'src/components/Table/TableHeader'
+import { breakpoint, typography, palette } from '@theme'
 
 interface IProcessCrypto {
   donationMethod: DonationMethod
@@ -414,6 +414,15 @@ const Wrapper = styled.div`
 
 const Distractions = styled.article`
   grid-area: distractions;
+`
+
+const Label = styled.div`
+  font-size: 16px;
+  line-height: 23px;
+  color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
 `
 
 export default ProcessCrypto

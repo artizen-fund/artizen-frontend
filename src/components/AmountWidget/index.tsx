@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
+import { Icon, Button } from '@components'
 import { rgba } from '@lib'
 import { palette, typography } from '@theme'
 
@@ -17,27 +18,38 @@ const AmountWidget = ({ amount, setAmount, minClamp }: IAmountWidget) => {
     if (minClamp && amount < minClamp) setAmount(minClamp)
   }, [minClamp, amount])
 
+  const add = (n: number) => setAmount(amount + n)
+
   return (
     <Wrapper>
       <Denomination>
-        <span>USD</span>
+        <Icon outline level={1} glyph="dollar" />
+        <div>USD</div>
       </Denomination>
       <AmountBox>
-        <Amount value={amount} onChange={e => setAmount(parseInt(e.target.value))} type="number" />
+        <Amount value={amount} onChange={e => setAmount(parseInt(e.target.value))} />
         <label>donation total</label>
       </AmountBox>
-      <Buttons></Buttons>
+      <Buttons>
+        <Button level={2} outline glyphOnly glyph="mathPlus" onClick={() => add(10)}>
+          decrease
+        </Button>
+        <Button level={2} outline glyphOnly glyph="mathMinus" onClick={() => add(-10)}>
+          increase
+        </Button>
+      </Buttons>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
+  grid-area: amountWidget;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 20px;
   padding: 20px;
-  border: 1px solid ${rgba(palette.night)};
+  border: 2px solid ${rgba(palette.night)};
   border-radius: 16px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16);
 `
@@ -46,9 +58,9 @@ const Denomination = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  span {
-    margin-top: 0.5em;
-    ${typography.label.l1}
+  gap: 15px;
+  div {
+    ${typography.label.l0}
   }
 `
 

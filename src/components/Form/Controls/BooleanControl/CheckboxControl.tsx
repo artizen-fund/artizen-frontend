@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { breakpoint, palette } from '@theme'
+import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 import { BooleanControlProps } from './'
 
@@ -34,12 +34,10 @@ const Box = styled.div`
   position: relative;
   width: 24px;
   height: 24px;
-  margin-right: 16px;
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 32px;
     height: 32px;
-    margin-right: 24px;
   }
 
   @media only screen and (min-width: ${breakpoint.desktop}px) {
@@ -67,17 +65,13 @@ const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
   transition: background-color 0.25s ease-in-out, box-shadow 0.15s ease-in-out;
 
   background-color: ${props => rgba(props.inverted ? palette.night : palette.white)};
-  border: 1px solid ${props => rgba(props.inverted ? palette.white : palette.slate)};
+  border: 2px solid ${props => rgba(props.inverted ? palette.white : palette.slate)};
   @media (prefers-color-scheme: dark) {
     background-color: ${rgba(palette.slate)};
     border-color ${rgba(palette.moon)};
   }
   /* see [Wrapper -> & input ~ span] for state style changes */
   
-  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi) {
-    border-width: 0.5px;
-  }
-
   &:after {
     position: absolute;
     border-style: solid;
@@ -100,6 +94,7 @@ const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
 
 const Label = styled.span<Pick<BooleanControlProps, 'enabled' | 'inverted'>>`
   display: block;
+  ${typography.label.l2}
   color: ${props => rgba(!props.enabled ? palette.barracuda : props.inverted ? palette.white : palette.night)};
   @media (prefers-color-scheme: dark) {
     color: ${props => rgba(!props.enabled ? palette.barracuda : palette.white)};
@@ -110,8 +105,17 @@ const Wrapper = styled.label<Pick<BooleanControlProps, 'enabled' | 'inverted'> &
   position: relative;
   ${props => props.gridArea && `grid-area: ${props.gridArea};`}
   display: flex;
+  flex-direction: row;
   align-items: center;
   padding: 16px 0;
+  gap: 8px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: 10px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 12px;
+  }
+
   user-select: none;
 
   cursor: ${props => (!props.enabled ? 'not-allowed' : 'pointer')};
