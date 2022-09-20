@@ -1,4 +1,4 @@
-export default [
+export const nationCodes = [
   { name: 'Afghanistan', code: 'AF' },
   { name: 'Åland Islands', code: 'AX' },
   { name: 'Albania', code: 'AL' },

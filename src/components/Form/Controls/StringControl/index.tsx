@@ -5,10 +5,6 @@ import { Wrapper, InputLabel, InputWrapper, Message, InputGlyph } from '../_Comm
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
 
-/* Todo: Trying to decide if schema and uischema should be optional.
- *       Boils down to whether we will ever use these outside of jsonforms.
- */
-
 export interface StringControlProps {
   label: string | Labels
   enabled?: boolean
@@ -43,7 +39,7 @@ export const StringControl = ({
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
   useEffect(() => {
     const splitErrors = errors?.split('\n').filter(e => e !== '') || []
-    if (required && !data) splitErrors.push('* required field')
+    if (required && (!data || data === '')) splitErrors.push('is a required property')
     setParsedErrors(splitErrors)
   }, [errors, required, data])
 
@@ -69,7 +65,7 @@ export const StringControl = ({
   const hasWidget = uischema?.options?.format === 'phone'
 
   return (
-    <Wrapper gridArea={path} hasMessage={!virgin && !!errors} {...props} id={uischema?.scope}>
+    <Wrapper gridArea={path} hasMessage={!!errors && !virgin} {...props} id={uischema?.scope}>
       <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
@@ -82,6 +78,7 @@ export const StringControl = ({
             countrySelectProps={{ unicodeFlags: true }}
             defaultCountry="US"
             international={false}
+            className={!!data ? 'hasData' : ''}
           />
         ) : (
           <input

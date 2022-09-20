@@ -18,6 +18,7 @@ export interface GlyphProps {
   darkColor?: keyof Palette
   rotation?: number
   outline?: boolean
+  animating?: boolean
 }
 
 export const Glyph = styled.div<GlyphProps>`
@@ -63,6 +64,73 @@ export const Glyph = styled.div<GlyphProps>`
         width: var(--iconSize);
         height: var(--iconSize);
       `}
+  
+  @keyframes spin {
+    from {
+      transform: rotateZ(0deg);
+    }
+    to {
+      transform: rotateZ(360deg);
+    }
+  }
+
+  @keyframes throb {
+    0% {
+      transform: scale(1.1);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes wiggle {
+    0% {
+      transform: rotateZ(15deg);
+    }
+    50% {
+      transform: rotateZ(-10deg);
+    }
+    100% {
+      transform: rotateZ(15deg);
+    }
+  }
+
+  @keyframes roll {
+    0% {
+      transform: rotateX(0deg);
+    }
+    100% {
+      transform: rotateX(360deg);
+    }
+  }
+
+  ${props =>
+    props.animating &&
+    ['refresh'].includes(props.glyph) &&
+    `
+    animation: 3s infinite spin;
+  `}
+  ${props =>
+    props.animating &&
+    ['tick', 'intersect'].includes(props.glyph) &&
+    `
+    animation: 1s infinite throb;
+  `}
+  ${props =>
+    props.animating &&
+    ['party'].includes(props.glyph) &&
+    `
+    animation: 1s infinite wiggle;
+  `}
+  ${props =>
+    props.animating &&
+    ['swap'].includes(props.glyph) &&
+    `
+    animation: 1s infinite roll;
+  `}
 `
 
 export default Glyph

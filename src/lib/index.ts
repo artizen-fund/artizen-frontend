@@ -28,6 +28,7 @@ export * from './wagmiClient'
 
 // export * from './useDonation'
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.
+ *  Something to do with a circular import.
  *  Possibly a webpack issue? Investigate… in the meantime, import using relative path (yuck).
  */
 

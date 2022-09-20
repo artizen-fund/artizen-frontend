@@ -11,10 +11,11 @@ export interface IconProps {
   label?: string
   color?: string
   darkColor?: string
+  animating?: boolean
   error?: boolean
 }
 
-const Icon = ({ glyph, level, outline, inverted, color, darkColor, label, error, ...props }: IconProps) => {
+const Icon = ({ glyph, level, outline, inverted, color, darkColor, label, animating, error, ...props }: IconProps) => {
   const calculatedColor =
     !outline && error ? 'uiAlert' : color ? color : (!outline && !inverted) || (outline && inverted) ? 'white' : 'night'
   const calculatedDarkColor =
@@ -22,7 +23,7 @@ const Icon = ({ glyph, level, outline, inverted, color, darkColor, label, error,
   return (
     <Wrapper {...{ level }} {...props}>
       <Circle {...{ outline, level, inverted }} color={calculatedColor} darkColor={calculatedDarkColor}>
-        <Glyph {...{ glyph, level }} color={calculatedColor} darkColor={calculatedDarkColor} />
+        <Glyph {...{ glyph, level, animating }} color={calculatedColor} darkColor={calculatedDarkColor} />
       </Circle>
       {label && (
         <Label

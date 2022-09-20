@@ -104,7 +104,7 @@ export default styled.div<{
     border-style: solid;
     border-radius: 0px;
 
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, border-width 0.3s ease-in-out,
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, border-width 0.1s ease-in-out,
       color 0.3s ease-in-out;
     will-change: background, border, color;
     pointer-events: ${props => (props.disabled ? 'none' : 'inherit')};

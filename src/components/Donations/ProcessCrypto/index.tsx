@@ -4,11 +4,11 @@ import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
 import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
 import { ethers } from 'ethers'
-import qs from 'qs'
 import { v4 as uuidv4 } from 'uuid'
-import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
-import { USDCAbi } from '@contracts'
+import qs from 'qs'
 import { IconStack, Icon, Button } from '@components'
+import { USDCAbi } from '@contracts'
+import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
 import {
   assert,
   getChainId,
@@ -324,6 +324,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
               <li>
                 <Icon
                   outline={cryptoStage !== 'swapping'}
+                  animating={cryptoStage !== 'swapping'}
                   glyph="swap"
                   label="12% — Exchanging to USDC (est. 2m)"
                   error={error ? true : false}
@@ -332,6 +333,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
               <li>
                 <Icon
                   outline={cryptoStage !== 'bridging'}
+                  animating={cryptoStage !== 'bridging'}
                   glyph="intersect"
                   label="Bridging blockchains (est. 2m)"
                   error={error ? true : false}
@@ -344,6 +346,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
             <li>
               <Icon
                 outline={cryptoStage !== 'building'}
+                animating={cryptoStage !== 'building'}
                 glyph="refresh"
                 label="Building your donation (est. 10m)"
                 error={error ? true : false}
@@ -353,6 +356,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           <li>
             <Icon
               outline={cryptoStage !== 'confirming'}
+              animating={cryptoStage !== 'confirming'}
               glyph="tick"
               label="Confirming your donation (est. 2m)"
               error={error ? true : false}
@@ -361,6 +365,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           <li>
             <Icon
               outline={cryptoStage !== 'complete'}
+              animating={cryptoStage !== 'complete'}
               glyph="party"
               label="Donation Complete"
               error={error ? true : false}

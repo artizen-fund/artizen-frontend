@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress, Table, TableCell } from '@components'
