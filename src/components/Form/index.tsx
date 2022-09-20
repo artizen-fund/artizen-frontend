@@ -22,7 +22,7 @@ interface FormProps<TStateInterface> {
   data: TStateInterface
   setData: (input: TStateInterface) => void
   readonly?: boolean
-  children?: Array<React.ReactElement>
+  children?: React.ReactElement | Array<React.ReactElement>
 }
 
 const Form = <TStateInterface extends Record<string, unknown>>({

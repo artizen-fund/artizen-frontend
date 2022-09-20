@@ -20,16 +20,6 @@ const LoginShelf = () => {
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const handleSocialLogin = async (provider: OAuthProvider, magic?: MagicInstance) => {
-    if (!magic) {
-      throw 'Error: magic session not initialized.'
-    }
-    await magic.oauth.loginWithRedirect({
-      provider, // google, apple, etc
-      redirectURI: new URL('/', window.location.origin).href, // required redirect to finish social login
-    })
-  }
-
   const handleEmailLogin = async (apolloClient: ApolloClient<object>, email?: string, magic?: MagicInstance) => {
     if (!magic) {
       throw 'Error: magic session not initialized.'
@@ -75,20 +65,20 @@ const LoginShelf = () => {
         >
           Sign In / Sign Up
         </SubmitButton>
-        {sentEmail && (
-          <Confirmation>
-            <Icon glyph="tick" outline level={2} color="moss" />
-            <div>
-              <h1>Done, confirmation sent!</h1>
-              <p>
-                We emailed a magic link to {data.email}.<br />
-                Click the link Sign in or sign up.
-              </p>
-            </div>
-            <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
-          </Confirmation>
-        )}
       </Form>
+      {sentEmail && (
+        <Confirmation>
+          <Icon glyph="tick" outline level={2} color="moss" />
+          <div>
+            <h1>Done, confirmation sent!</h1>
+            <p>
+              We emailed a magic link to {data.email}.<br />
+              Click the link Sign in or sign up.
+            </p>
+          </div>
+          <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
+        </Confirmation>
+      )}
       <TocWrapper>
         <TocCheck>
           <CheckboxControl
