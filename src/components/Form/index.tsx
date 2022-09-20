@@ -1,7 +1,9 @@
+import { useState, cloneElement } from 'react'
 import { JsonForms } from '@jsonforms/react'
-import { JsonSchema, Layout, ControlElement } from '@jsonforms/core'
+import { JsonSchema, Layout, ControlElement, JsonFormsCore } from '@jsonforms/core'
 import { vanillaRenderers } from '@jsonforms/vanilla-renderers'
-import { debounce, pickBy } from 'lodash'
+import flattenChildren from 'react-keyed-flatten-children'
+import { pickBy } from 'lodash'
 import {
   StringControl,
   stringControlTester,
@@ -20,7 +22,8 @@ interface FormProps<TStateInterface> {
   data: TStateInterface
   setData: (input: TStateInterface) => void
   readonly?: boolean
-  children?: React.ReactNode
+  disabledFromOutside?: boolean
+  children?: React.ReactElement | Array<React.ReactElement>
 }
 
 const Form = <TStateInterface extends Record<string, unknown>>({
@@ -30,18 +33,22 @@ const Form = <TStateInterface extends Record<string, unknown>>({
   data,
   setData,
   readonly,
+  disabledFromOutside,
   children,
 }: FormProps<TStateInterface>) => {
-  const freezeAndSetData = debounce(newData => {
-    setData(newData)
-    if (localStorageKey && typeof localStorage !== 'undefined' && !!newData) {
+  const [disabled, setDisabled] = useState(true)
+
+  const updateFormState = ({ data, errors }: Pick<JsonFormsCore, 'data' | 'errors'>) => {
+    setData(data)
+    if (localStorageKey && typeof localStorage !== 'undefined' && !!data) {
       const safeVars = (uischema.elements as Array<ControlElement>)
         .filter(schemaVar => !schemaVar.options?.unsafeToRetain)
         .map(schemaVar => schemaVar.scope.replace('#/properties/', ''))
-      const safeData = pickBy(newData, (_, key) => safeVars.includes(key))
+      const safeData = pickBy(data, (_, key) => safeVars.includes(key))
       localStorage.setItem(localStorageKey, JSON.stringify(safeData))
     }
-  }, 100)
+    setDisabled(disabledFromOutside || (!!errors && errors.length > 0))
+  }
 
   const renderers = [
     ...vanillaRenderers,
@@ -56,9 +63,9 @@ const Form = <TStateInterface extends Record<string, unknown>>({
       <JsonForms
         {...{ schema, uischema, renderers, data, readonly }}
         config={{ trim: true }}
-        onChange={({ data }) => freezeAndSetData(data)}
+        onChange={formState => updateFormState(formState)}
       />
-      {children}
+      {flattenChildren(children).map(child => cloneElement(child as React.ReactElement, { disabled }))}
     </>
   )
 }

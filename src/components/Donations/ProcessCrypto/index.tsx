@@ -316,6 +316,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
               <li>
                 <Icon
                   outline={cryptoStage !== 'swapping'}
+                  animating={cryptoStage !== 'swapping'}
                   glyph="swap"
                   label="12% — Exchanging to USDC (est. 2m)"
                   error={error ? true : false}
@@ -324,6 +325,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
               <li>
                 <Icon
                   outline={cryptoStage !== 'bridging'}
+                  animating={cryptoStage !== 'bridging'}
                   glyph="intersect"
                   label="Bridging blockchains (est. 2m)"
                   error={error ? true : false}
@@ -336,6 +338,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
             <li>
               <Icon
                 outline={cryptoStage !== 'building'}
+                animating={cryptoStage !== 'building'}
                 glyph="refresh"
                 label="Building your donation (est. 10m)"
                 error={error ? true : false}
@@ -345,6 +348,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           <li>
             <Icon
               outline={cryptoStage !== 'confirming'}
+              animating={cryptoStage !== 'confirming'}
               glyph="tick"
               label="Confirming your donation (est. 2m)"
               error={error ? true : false}
@@ -353,6 +357,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           <li>
             <Icon
               outline={cryptoStage !== 'complete'}
+              animating={cryptoStage !== 'complete'}
               glyph="party"
               label="Donation Complete"
               error={error ? true : false}

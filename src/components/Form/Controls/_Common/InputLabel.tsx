@@ -25,6 +25,7 @@ export default styled.label<{ hasWidget?: boolean }>`
 
   color: ${rgba(palette.barracuda)};
   letter-spacing: 0.5px;
+  white-space: nowrap;
 
   transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   transform-origin: center left;

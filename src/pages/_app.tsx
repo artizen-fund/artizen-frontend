@@ -16,9 +16,15 @@ import packageJson from '../../package.json'
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({
+  Component,
+  pageProps,
+}: AppProps & {
+  pageProps: any
+}) => {
   // eslint-disable-next-line
   console.log(`--- version: ${packageJson.version} ----`)
+
   const apolloClient = initializeApollo(pageProps?.apolloData || {})
 
   return (
