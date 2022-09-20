@@ -14,7 +14,7 @@ export const palette: Palette = {
   gravel: [77, 93, 83],
   coral: [255, 192, 161],
   truffle: [183, 165, 147],
-  barracuda: [114, 124, 140],
+  barracuda: [134, 144, 160],
   lavender: [136, 109, 134],
   uiAlert: [214, 45, 106],
   uiWarning: [214, 197, 45],

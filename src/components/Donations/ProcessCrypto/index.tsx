@@ -1,10 +1,14 @@
 import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { IconStack, Icon, Button } from '@components'
-import { breakpoint, typography } from '@theme'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
-import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
+import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
+import { ethers } from 'ethers'
+import { v4 as uuidv4 } from 'uuid'
+import qs from 'qs'
+import { IconStack, Icon, Button } from '@components'
+import { USDCAbi } from '@contracts'
+import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
 import {
   assert,
   getChainId,
@@ -16,14 +20,10 @@ import {
   userMetadataVar,
   getConfirmDonationURL,
   DonationContext,
+  rgba,
 } from '@lib'
 import { useDonation } from '../../../lib/useDonation'
-import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
-import { ethers } from 'ethers'
-import { v4 as uuidv4 } from 'uuid'
-import { USDCAbi } from '@contracts'
-import qs from 'qs'
-import { Label } from 'src/components/Table/TableHeader'
+import { breakpoint, typography, palette } from '@theme'
 
 interface IProcessCrypto {
   donationMethod: DonationMethod
@@ -316,6 +316,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
               <li>
                 <Icon
                   outline={cryptoStage !== 'swapping'}
+                  animating={cryptoStage !== 'swapping'}
                   glyph="swap"
                   label="12% — Exchanging to USDC (est. 2m)"
                   error={error ? true : false}
@@ -324,6 +325,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
               <li>
                 <Icon
                   outline={cryptoStage !== 'bridging'}
+                  animating={cryptoStage !== 'bridging'}
                   glyph="intersect"
                   label="Bridging blockchains (est. 2m)"
                   error={error ? true : false}
@@ -336,6 +338,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
             <li>
               <Icon
                 outline={cryptoStage !== 'building'}
+                animating={cryptoStage !== 'building'}
                 glyph="refresh"
                 label="Building your donation (est. 10m)"
                 error={error ? true : false}
@@ -345,6 +348,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           <li>
             <Icon
               outline={cryptoStage !== 'confirming'}
+              animating={cryptoStage !== 'confirming'}
               glyph="tick"
               label="Confirming your donation (est. 2m)"
               error={error ? true : false}
@@ -353,6 +357,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           <li>
             <Icon
               outline={cryptoStage !== 'complete'}
+              animating={cryptoStage !== 'complete'}
               glyph="party"
               label="Donation Complete"
               error={error ? true : false}
@@ -414,6 +419,15 @@ const Wrapper = styled.div`
 
 const Distractions = styled.article`
   grid-area: distractions;
+`
+
+const Label = styled.div`
+  font-size: 16px;
+  line-height: 23px;
+  color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
 `
 
 export default ProcessCrypto
