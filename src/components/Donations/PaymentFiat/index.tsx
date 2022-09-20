@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
-import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress } from '@components'
+import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress, Table, TableCell } from '@components'
 import {
   payWithFiat,
   userMetadataVar,
@@ -85,14 +85,20 @@ const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
           <DonationHelpLink />
         </div>
 
-        <div>
-          <p>Donation Summary</p>
-          <ul>
-            <li>Donation: ${amount}</li>
-            <li>Transaction fee: ${TRANSACTION_FEE}</li>
-            <li>Purchase total: ${amount + TRANSACTION_FEE}</li>
-          </ul>
-        </div>
+        <Table title="Donation Summary">
+          <TableCell>
+            <div>Donation: </div>
+            <div>${amount} USD</div>
+          </TableCell>
+          <TableCell>
+            <div>Transaction fee:</div>
+            <div>${TRANSACTION_FEE} USD</div>
+          </TableCell>
+          <TableCell highlight>
+            <div>Purchase total:</div>
+            <div>${amount + TRANSACTION_FEE} USD</div>
+          </TableCell>
+        </Table>
 
         <CheckboxControl
           data={savePaymentInfo}

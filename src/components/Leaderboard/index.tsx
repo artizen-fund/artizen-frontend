@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import truncateEthAddress from 'truncate-eth-address'
-import _ from 'lodash'
-import { Button, Table, TableCell, Icon } from '@components'
+import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
-import { formatUSDC, rgba, useCampaign, sizeForLevel } from '@lib'
+import { formatUSDC, rgba, useCampaign } from '@lib'
+import _ from 'lodash'
 import { IUser } from '@types'
+import truncateEthAddress from 'truncate-eth-address'
 
 const Leaderboard = () => {
   const { donationsWithUser } = useCampaign()
@@ -23,16 +23,15 @@ const Leaderboard = () => {
   }
 
   return (
-    <Table title="Leaderboard Position" {...{ sideItem }}>
+    <Table title="Leaderboard" {...{ sideItem }}>
       {_.orderBy(donationsWithUser, item => Number(item.amount), ['desc'])
         .slice(0, 3)
         .map((donation: Donation, index) => (
-          <TableCell key={`donation-${index}`}>
+          <TableCell key={`donation-${index}`} highlight>
             <div>
               <div>#{index + 1}</div>
               {donation.user?.profileImage && <Avatar profileImage={donation.user?.profileImage} />}
               <Name>
-                {!donation.user?.profileImage && <Icon glyph="face" level={2} />}
                 {getUserIdentifier(donation.user)}
                 {index === 0 && <span>👑</span>}
               </Name>
@@ -59,28 +58,25 @@ const Avatar = styled.div<{
   profileImage: string
 }>`
   display: none;
-  min-width: ${sizeForLevel('mobile', 2)}px;
-  width: ${sizeForLevel('mobile', 2)}px;
-  height: ${sizeForLevel('mobile', 2)}px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: block;
-    min-width: ${sizeForLevel('laptop', 2)}px;
-    width: ${sizeForLevel('laptop', 2)}px;
-    height: ${sizeForLevel('laptop', 2)}px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+
+    background-image: url(${props => props.profileImage});
+    background-size: cover;
+    background-position: center center;
+    border-radius: 9999px;
+    border: 2px solid ${rgba(palette.white)};
+    @media (prefers-color-scheme: dark) {
+      border-color: ${rgba(palette.slate)};
+    }
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    min-width: ${sizeForLevel('desktop', 2)}px;
-    width: ${sizeForLevel('desktop', 2)}px;
-    height: ${sizeForLevel('desktop', 2)}px;
-  }
-
-  background-image: url(${props => props.profileImage});
-  background-size: cover;
-  background-position: center center;
-  border-radius: 9999px;
-  border: 2px solid ${rgba(palette.white)};
-  @media (prefers-color-scheme: dark) {
-    border-color: ${rgba(palette.slate)};
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
   }
 `
 

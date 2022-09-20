@@ -37,6 +37,8 @@ type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'comple
 type Error = 'Payment Failed' | 'Transaction Rejected' | 'Donation could not complete' | ''
 
 const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCrypto) => {
+  /*
+
   const { setDonationStage } = useContext(DonationContext)
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
   const [error, setError] = useState<Error>('')
@@ -288,6 +290,12 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
         break
     }
   }
+
+*/
+
+  const error = false
+  const cryptoStage = 'swapping'
+  const retry = () => alert('derp')
 
   return (
     <Wrapper>

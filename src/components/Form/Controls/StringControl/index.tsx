@@ -69,7 +69,7 @@ export const StringControl = ({
   const hasWidget = uischema?.options?.format === 'phone'
 
   return (
-    <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
+    <Wrapper gridArea={path} hasMessage={!virgin && !!errors} {...props} id={uischema?.scope}>
       <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput

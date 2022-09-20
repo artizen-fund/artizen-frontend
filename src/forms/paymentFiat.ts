@@ -5,24 +5,31 @@ export const schema: JsonSchema = {
   properties: {
     first_name: {
       type: 'string',
+      minLength: 2,
     },
     last_name: {
       type: 'string',
+      minLength: 2,
     },
     number: {
       type: 'string',
+      minLength: 16,
     },
     verification_value: {
       type: 'string',
+      minLength: 3,
     },
     month: {
       type: 'string',
+      minLength: 2,
     },
     year: {
       type: 'string',
+      minLength: 2,
     },
     zip: {
       type: 'string',
+      minLength: 4,
     },
     phone_number: {
       type: 'string',
