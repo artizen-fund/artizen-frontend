@@ -16,7 +16,7 @@ const Shelf = ({ shelfKey, shadowVisible, hasBreadcrumbs, children }: IShelf) =>
   return (
     <>
       <Wrapper {...{ shadowVisible }} visible={shelfKey === visibleShelf}>
-        <StyledPagePadding {...{ hasBreadcrumbs }}>{children}</StyledPagePadding>
+        <PagePadding noTopPadding={hasBreadcrumbs}>{children}</PagePadding>
       </Wrapper>
     </>
   )
@@ -58,10 +58,6 @@ const Wrapper = styled.div<Pick<IShelf, 'shadowVisible'> & { visible: boolean }>
 
   will-change: transition, transform;
   pointer-events: ${props => (props.visible ? 'all' : 'none')};
-`
-
-const StyledPagePadding = styled(props => <PagePadding {...props} />)<Pick<IShelf, 'hasBreadcrumbs'>>`
-  ${props => props.hasBreadcrumbs && 'padding-top: 0;'}
 `
 
 export default Shelf

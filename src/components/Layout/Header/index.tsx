@@ -61,6 +61,7 @@ const Header = () => {
       </Shelf>
       <DonationGuide />
       <Onionskin />
+      <DebugTool />
     </>
   )
 }
@@ -135,6 +136,30 @@ const Nav = styled.div`
     white-space: nowrap;
     li {
       cursor: pointer;
+    }
+  }
+`
+
+const DebugTool = styled.div`
+  position: fixed;
+  z-index: 9999;
+  bottom: 0px;
+  right: 0px;
+  font-size: 8px;
+  font-weight: 300;
+  &:after {
+    content: 'mobile';
+    @media only screen and (min-width: ${breakpoint.phablet}px) {
+      content: 'phablet';
+    }
+    @media only screen and (min-width: ${breakpoint.tablet}px) {
+      content: 'tablet';
+    }
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      content: 'laptop';
+    }
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      content: 'desktop';
     }
   }
 `

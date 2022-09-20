@@ -1,20 +1,24 @@
 import { JsonSchema } from '@jsonforms/core'
-import nationCodes from './nationCodes'
+import { nationCodes } from '@copy/common'
 
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
     street1: {
       type: 'string',
+      minLength: 4,
     },
     city: {
       type: 'string',
+      minLength: 3,
     },
     state: {
       type: 'string',
+      minLength: 2,
     },
     zip: {
       type: 'string',
+      minLength: 4,
     },
     country: {
       type: 'string',
