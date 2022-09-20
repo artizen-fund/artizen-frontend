@@ -25,11 +25,11 @@ const App = ({ Component, pageProps }: AppProps) => {
     <ApolloProvider client={apolloClient}>
       <MagicProvider>
         <CourierNotification>
-          <CampaignProvider>
-            <DonationContextProvider>
+          <DonationContextProvider>
+            <CampaignProvider>
               <Component {...pageProps} />
-            </DonationContextProvider>
-          </CampaignProvider>
+            </CampaignProvider>
+          </DonationContextProvider>
         </CourierNotification>
       </MagicProvider>
     </ApolloProvider>

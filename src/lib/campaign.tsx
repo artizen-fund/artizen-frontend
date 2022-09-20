@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { BigNumber } from 'bignumber.js'
-import { isServer, assert, useReadContract } from '@lib'
+import { isServer, assert, useReadContract, DonationContext } from '@lib'
 import { RaffleAbi } from '@contracts'
 import { IGetDonationFromBlockchainQuery, IGetUsersByPublicAddressQuery, IDonationT, IUser } from '@types'
 import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
@@ -36,6 +36,7 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
   const [donationsWithUser, setDonationsWithUser] = useState<Array<DonationWithUser>>()
   const [donationCount, setDonationCount] = useState(0)
   const [totalRaised, setTotalRaised] = useState(0)
+  const { donationStatus } = useContext(DonationContext)
 
   const raffleContractAddress = assert(
     process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
@@ -72,14 +73,16 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
     onError: error => console.error('error loading donation blockchain', error),
   })
 
-  const { data: donorData, loading: loadingDonors } = useQuery<IGetUsersByPublicAddressQuery>(
-    GET_USERS_BY_PUBLIC_ADDRESSES,
-    {
-      skip: !raffle || loading,
-      variables: { addresses },
-      onError: error => console.error('error ', error),
-    },
-  )
+  const {
+    data: donorData,
+    loading: loadingDonors,
+    refetch,
+  } = useQuery<IGetUsersByPublicAddressQuery>(GET_USERS_BY_PUBLIC_ADDRESSES, {
+    skip: !raffle || loading,
+    variables: { addresses },
+    onError: error => console.error('error ', error),
+    fetchPolicy: 'cache-and-network',
+  })
 
   useEffect(() => {
     if (!data?.Donation?.donations || !donorData?.User) return
@@ -96,6 +99,12 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
       })) as Array<DonationWithUser>,
     )
   }, [data, donorData])
+
+  useEffect(() => {
+    if (donationStatus === 'completed') {
+      refetch()
+    }
+  }, [donationStatus])
 
   return (
     <CampaignContext.Provider
