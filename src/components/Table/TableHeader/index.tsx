@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Label = styled.div`
+export const Label = styled.div`
   font-size: 16px;
   line-height: 23px;
   color: ${rgba(palette.night)};
