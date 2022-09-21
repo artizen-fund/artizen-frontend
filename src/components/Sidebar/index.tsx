@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import styled from 'styled-components'
 import Perks from './Perks'
 import Countdown from './Countdown'
-import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard } from '@components'
+import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba, useCampaign, DonationContext } from '@lib'
 import { monthNames } from '@copy/common'
@@ -11,43 +11,55 @@ const Sidebar = () => {
   const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised } = useCampaign()
   const { toggleShelf } = useContext(DonationContext)
 
-  if (!startDate || !endDate || !totalRaised) return <></>
-
   return (
     <StyledStickyCanvas>
       <Wrapper>
-        <Header>
-          Join our
-          <strong>{` ${monthNames[startDate.getMonth()]}, ${startDate.getFullYear()} `}</strong>
-          donation drive
-        </Header>
-        <Content>
-          <FundBlock>
-            <AmountRaised>
-              <span>${formatUSDC(totalRaised).toLocaleString()}</span> raised of ${fundRaisingGoal.toLocaleString()}{' '}
-              goal
-            </AmountRaised>
-            {<ProgressBar>{formatUSDC(totalRaised / fundRaisingGoal)}</ProgressBar>}
-            <Row>
-              {<Countdown date={endDate.toISOString()} />}
-              <DonationCount>
-                <Glyph glyph="trend" /> <span>{donationCount} donations</span>
-              </DonationCount>
-            </Row>
-          </FundBlock>
-          <Row>
-            <Button onClick={() => toggleShelf?.('donate')} level={1} stretch glyph="donate">
-              Donate
-            </Button>
-            <Button onClick={() => alert('todo: implement this')} level={1} stretch outline>
-              Share Now
-            </Button>
-          </Row>
-          <LargeScreensOnly>
-            <Leaderboard />
-            <Perks />
-          </LargeScreensOnly>
-        </Content>
+        {(!startDate || !endDate) && (
+          <>
+            <Header>Campaign is loading…</Header>
+            <Content>
+              <SpinnerSpace>
+                <Spinner />
+              </SpinnerSpace>
+            </Content>
+          </>
+        )}
+        {!!startDate && !!endDate && (
+          <>
+            <Header>
+              Join our
+              <strong>{` ${monthNames[startDate.getMonth()]}, ${startDate.getFullYear()} `}</strong>
+              donation drive
+            </Header>
+            <Content>
+              <FundBlock>
+                <AmountRaised>
+                  <span>${formatUSDC(totalRaised).toLocaleString()}</span> raised of ${fundRaisingGoal.toLocaleString()}{' '}
+                  goal
+                </AmountRaised>
+                {<ProgressBar>{formatUSDC(totalRaised / fundRaisingGoal)}</ProgressBar>}
+                <Row>
+                  {<Countdown date={endDate.toISOString()} />}
+                  <DonationCount>
+                    <Glyph glyph="trend" /> <span>{donationCount} donations</span>
+                  </DonationCount>
+                </Row>
+              </FundBlock>
+              <Row>
+                <Button onClick={() => toggleShelf?.('donate')} level={1} stretch glyph="donate">
+                  Donate
+                </Button>
+                <Button onClick={() => alert('todo: implement this')} level={1} stretch outline>
+                  Share Now
+                </Button>
+              </Row>
+              <LargeScreensOnly>
+                <Leaderboard />
+                <Perks />
+              </LargeScreensOnly>
+            </Content>
+          </>
+        )}
       </Wrapper>
     </StyledStickyCanvas>
   )
@@ -74,6 +86,18 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     max-width: 498px;
     top: 108px;
+  }
+`
+
+const Header = styled.h3`
+  padding: 19px 32px 0px 32px;
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding: 26px 40px 0px 40px;
+  }
+  ${typography.label.l1}
+  font-weight: 500;
+  strong {
+    font-weight: 600;
   }
 `
 
@@ -134,23 +158,16 @@ const Row = styled.div`
   }
 `
 
-const Header = styled.h3`
-  padding: 19px 32px 0px 32px;
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    padding: 26px 40px 0px 40px;
-  }
-  ${typography.label.l1}
-  font-weight: 500;
-  strong {
-    font-weight: 600;
-  }
-`
-
 const LargeScreensOnly = styled.div`
   display: none;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: contents;
   }
+`
+
+const SpinnerSpace = styled.div`
+  position: relative;
+  min-height: 50px;
 `
 
 export default Sidebar

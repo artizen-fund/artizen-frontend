@@ -14,17 +14,20 @@ type DonationWithUser = IDonationT & {
 
 interface ICampaignContext {
   fundRaisingGoal: number
-  loading?: boolean
+  loading: boolean
   raffle?: any
   startDate?: Date
   endDate?: Date
-  totalRaised?: number
-  donationCount?: number
+  totalRaised: number
+  donationCount: number
   donationsWithUser?: Array<DonationWithUser>
 }
 
 const CampaignContext = createContext<ICampaignContext>({
   fundRaisingGoal,
+  totalRaised: 0,
+  donationCount: 0,
+  loading: true,
 })
 
 export const CampaignProvider = ({ children }: SimpleComponentProps) => {
