@@ -83,7 +83,7 @@ export const NumberControl = ({
         </InputLabel>
         {statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
       </InputWrapper>
-      <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
+      <Message {...{ virgin }} className={!!errors ? 'hasMessage' : ''}>
         {visibleError}
       </Message>
     </Wrapper>

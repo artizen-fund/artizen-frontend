@@ -22,7 +22,7 @@ interface FormProps<TStateInterface> {
   data: TStateInterface
   setData: (input: TStateInterface) => void
   readonly?: boolean
-  disabledFromOutside?: boolean
+  submitDisabledFromOutside?: boolean
   children?: React.ReactElement | Array<React.ReactElement>
 }
 
@@ -33,7 +33,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
   data,
   setData,
   readonly,
-  disabledFromOutside,
+  submitDisabledFromOutside,
   children,
 }: FormProps<TStateInterface>) => {
   const [disabled, setDisabled] = useState(true)
@@ -47,7 +47,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
       const safeData = pickBy(data, (_, key) => safeVars.includes(key))
       localStorage.setItem(localStorageKey, JSON.stringify(safeData))
     }
-    setDisabled(disabledFromOutside || (!!errors && errors.length > 0))
+    setDisabled(submitDisabledFromOutside || (!!errors && errors.length > 0))
   }
 
   const renderers = [

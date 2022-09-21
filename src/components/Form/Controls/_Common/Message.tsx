@@ -24,7 +24,7 @@ const Message = styled.div`
   opacity: 0;
   transform: translateX(-30px);
   transition: opacity 0.3s ease-in-out, transform 0.35s ease-in-out;
-  &.hasErrors {
+  &.hasMessage {
     opacity: 1;
     transform: translateX(0px);
   }

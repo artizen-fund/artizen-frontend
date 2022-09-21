@@ -58,7 +58,7 @@ const LoginShelf = () => {
         </InfoRow>
       </Copy>
       <Form
-        disabledFromOutside={!acceptedToc || submitted}
+        submitDisabledFromOutside={!acceptedToc || submitted}
         localStorageKey={LOCALSTORAGE_KEY}
         {...{ schema, uischema, initialState, data, setData, readonly }}
       >
