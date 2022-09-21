@@ -1,5 +1,6 @@
 export * from './alternatingPanels'
+export * from './curators'
+export * from './donationGuide'
 export * from './header'
 export * from './metrics'
 export * from './tabbedInfo'
-export * from './donationGuide'
