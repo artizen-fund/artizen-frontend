@@ -1,3 +1,7 @@
+/* note: location of glyph SVGs is /public/assets/glyphs
+ *   enter `yarn generate` and pick iconSet to make file templates
+ */
+
 export type GlyphKey = Record<string, string>
 
 export const glyphKey: GlyphKey = {
@@ -9,10 +13,12 @@ export const glyphKey: GlyphKey = {
   certificate: 'certificate',
   coins: 'coins',
   countdown: 'countdown',
+  creditCard: 'creditCard',
   cross: 'cross',
   crown: 'crown',
   currencyDollar: 'currencyDollar',
   discord: 'discord',
+  dollar: 'dollar',
   donate: 'donate',
   ethereum: 'ethereum',
   face: 'face',

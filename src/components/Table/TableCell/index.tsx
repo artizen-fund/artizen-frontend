@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
 
-const TableCell = styled.div`
+const TableCell = styled.div<{ highlight?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -27,10 +27,14 @@ const TableCell = styled.div`
   }
 
   border-radius: 8px;
-  background-color: ${rgba(palette.stone, 0.24)};
-  @media (prefers-color-scheme: dark) {
-    background-color: ${rgba(palette.barracuda, 0.24)};
-  }
+  ${props =>
+    props.highlight &&
+    `
+      background-color: ${rgba(palette.stone, 0.24)};
+      @media (prefers-color-scheme: dark) {
+        background-color: ${rgba(palette.barracuda, 0.24)};
+      }
+    `}
 
   ${typography.label.l1}
 

@@ -25,11 +25,11 @@ export const schema: JsonSchema = {
     },
     year: {
       type: 'string',
-      minLength: 4,
+      minLength: 2,
     },
     zip: {
       type: 'string',
-      minLength: 5,
+      minLength: 4,
     },
     phone_number: {
       type: 'string',

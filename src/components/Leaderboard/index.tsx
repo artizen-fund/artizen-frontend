@@ -27,7 +27,7 @@ const Leaderboard = () => {
       {_.orderBy(donationsWithUser, item => Number(item.amount), ['desc'])
         .slice(0, 3)
         .map((donation: Donation, index) => (
-          <TableCell key={`donation-${index}`}>
+          <TableCell key={`donation-${index}`} highlight>
             <div>
               <div>#{index + 1}</div>
               {donation.user?.profileImage && <Avatar profileImage={donation.user?.profileImage} />}

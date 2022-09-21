@@ -1,12 +1,15 @@
 import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { CheckboxControl } from '@components'
-import { breakpoint, typography } from '@theme'
-import WalletOptions from './WalletOptions'
 import { useConnect, useAccount } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { getChainId, DonationContext } from '@lib'
+import { Table, TableCell, DonationHelpLink } from '@components'
+import { breakpoint, typography } from '@theme'
+import WalletOptions from './WalletOptions'
+
+/* TODO: something about wagmi is breaking imports from @components */
+import CheckboxControl from '../../Form/Controls/BooleanControl/CheckboxControl'
 
 interface IPaymentCrypto {
   amount: number
@@ -60,28 +63,24 @@ const PaymentCrypto = ({ amount, donationMethod, chains }: IPaymentCrypto) => {
     <Wrapper>
       <Information>
         <div>
-          <Title>Let’s connect your wallet and double check the Ethereum balance</Title>
-          <Subhead>
-            Web3 takes longer to process transactions than traditional methods. But don’t worry we’ll keep guiding you
-            through the process.
-          </Subhead>
+          <Title>Choose your preferred Cryptocurrency</Title>
+          <DonationHelpLink />
         </div>
 
-        <div>
-          <p>Donation Summary</p>
-          <ul>
-            <li>Donation: ${amount}</li>
-            <li>Transaction fee: ${TRANSACTION_FEE}</li>
-            <li>Purchase total: ${amount + TRANSACTION_FEE}</li>
-          </ul>
-        </div>
-
-        <CheckboxControl
-          data={savePaymentInfo}
-          handleChange={() => setSavePaymentInfo(!savePaymentInfo)}
-          label="Save payment information for next time."
-          path="derp"
-        />
+        <Table title="Donation Summary">
+          <TableCell>
+            <div>Donation: </div>
+            <div>${amount} USD</div>
+          </TableCell>
+          <TableCell>
+            <div>Transaction fee:</div>
+            <div>${TRANSACTION_FEE} USD</div>
+          </TableCell>
+          <TableCell highlight>
+            <div>Purchase total:</div>
+            <div>${amount + TRANSACTION_FEE} USD</div>
+          </TableCell>
+        </Table>
       </Information>
       {!isConnected && <WalletOptions {...{ connectWallet }} />}
     </Wrapper>

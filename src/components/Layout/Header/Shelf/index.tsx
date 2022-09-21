@@ -14,11 +14,9 @@ interface IShelf {
 const Shelf = ({ shelfKey, shadowVisible, hasBreadcrumbs, children }: IShelf) => {
   const { visibleShelf } = useContext(DonationContext)
   return (
-    <>
-      <Wrapper {...{ shadowVisible }} visible={shelfKey === visibleShelf}>
-        <PagePadding noTopPadding={hasBreadcrumbs}>{children}</PagePadding>
-      </Wrapper>
-    </>
+    <Wrapper {...{ shadowVisible }} visible={shelfKey === visibleShelf}>
+      <StyledPagePadding {...{ hasBreadcrumbs }}>{children}</StyledPagePadding>
+    </Wrapper>
   )
 }
 
@@ -58,6 +56,10 @@ const Wrapper = styled.div<Pick<IShelf, 'shadowVisible'> & { visible: boolean }>
 
   will-change: transition, transform;
   pointer-events: ${props => (props.visible ? 'all' : 'none')};
+`
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)<Pick<IShelf, 'hasBreadcrumbs'>>`
+  ${props => props.hasBreadcrumbs && 'padding-top: 0px !important;'}
 `
 
 export default Shelf

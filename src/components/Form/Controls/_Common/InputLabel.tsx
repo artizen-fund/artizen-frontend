@@ -43,4 +43,6 @@ export default styled.label<{ hasWidget?: boolean }>`
   select:required:valid ~ & {
     transform: translate3d(0, -12px, 0) scale3d(0.8, 0.8, 1);
   }
+
+  white-space: nowrap;
 `

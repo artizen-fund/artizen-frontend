@@ -4,7 +4,6 @@ import { rgba } from '@lib'
 
 interface PagePaddingProps {
   black?: boolean
-  noTopPadding?: boolean
 }
 
 const PagePadding = styled.div<PagePaddingProps>`
@@ -29,8 +28,6 @@ const PagePadding = styled.div<PagePaddingProps>`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     padding: 80px 0;
   }
-
-  ${props => props.noTopPadding && 'padding-top: 0 !important;'}
 
   > * {
     max-width: calc(100vw - 48px);
