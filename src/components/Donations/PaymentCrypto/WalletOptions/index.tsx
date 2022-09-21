@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { rgba } from '@lib'
+import { rgba, assetPath } from '@lib'
 import { palette, typography } from '@theme'
 
 interface IWalletOptions {
@@ -10,12 +10,12 @@ const WalletOptions = ({ connectWallet }: IWalletOptions) => {
   return (
     <Wrapper>
       <WalletOption onClick={() => connectWallet('metamask')}>
-        <img src="/assets/metamask.svg" alt="connect with MetaMask" />
+        <img src={assetPath('/assets/metamask.svg')} alt="connect with MetaMask" />
         <OptionTitle>MetaMask</OptionTitle>
         <OptionSubtitle>Connect via your browser</OptionSubtitle>
       </WalletOption>
       <WalletOption onClick={() => connectWallet('walletconnect')}>
-        <img src="/assets/walletConnect.svg" alt="connect with WalletConnect" />
+        <img src={assetPath('/assets/walletConnect.svg')} alt="connect with WalletConnect" />
         <OptionTitle>WalletConnect</OptionTitle>
         <OptionSubtitle>Choose an alternative wallet</OptionSubtitle>
       </WalletOption>

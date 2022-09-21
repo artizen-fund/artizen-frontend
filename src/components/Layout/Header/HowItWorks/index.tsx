@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
-import { rgba, DonationContext } from '@lib'
+import { rgba, DonationContext, assetPath } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { howItWorks } from '@copy/header'
 
@@ -74,9 +74,9 @@ const Illustration = styled.div<{ light: string; dark: string }>`
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url('/assets/illustrations/${props => props.light}');
+  background-image: url(${props => assetPath(`/assets/illustrations/${props.light}`)}?fm=webp);
   @media (prefers-color-scheme: dark) {
-    background-image: url('/assets/illustrations/${props => props.dark}');
+    background-image: url(${props => assetPath(`/assets/illustrations/${props.dark}`)}?fm=webp);
   }
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     background-position: center center;

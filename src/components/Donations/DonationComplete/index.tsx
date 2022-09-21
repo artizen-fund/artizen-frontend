@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
-import { DonationContext } from '@lib'
+import { DonationContext, assetPath } from '@lib'
 import { typography } from '@theme'
 import { donationComplete } from '@copy/donations'
 
@@ -13,7 +13,7 @@ const DonationComplete = () => {
   }
   return (
     <Wrapper>
-      <Image src={donationComplete.imageUrl} />
+      <Image src={`${assetPath(donationComplete.imageUrl)}?fm=webp`} />
       <Title>{donationComplete.title}</Title>
       <Copy>{donationComplete.copy}</Copy>
       <Button onClick={() => dismiss()} level={2}>
