@@ -64,7 +64,6 @@ export const StringControl = ({
   // Currently just phone.
   const hasWidget = uischema?.options?.format === 'phone'
   const hasMessage = !virgin && !!errors && errors !== ''
-  console.log('render', enabled, data, errors, virgin, hasMessage)
 
   return (
     <Wrapper gridArea={path} {...props} {...{ hasMessage }} id={uischema?.scope}>
