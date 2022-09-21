@@ -6,7 +6,7 @@ import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi
 import { ethers } from 'ethers'
 import { v4 as uuidv4 } from 'uuid'
 import qs from 'qs'
-import { IconStack, Icon, Button } from '@components'
+import { IconStack, Icon, Button, Distraction, DonationComplete } from '@components'
 import { USDCAbi } from '@contracts'
 import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
 import {
@@ -37,8 +37,6 @@ type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'comple
 type Error = 'Payment Failed' | 'Transaction Rejected' | 'Donation could not complete' | ''
 
 const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCrypto) => {
-  /*
-
   const { setDonationStage } = useContext(DonationContext)
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
   const [error, setError] = useState<Error>('')
@@ -291,12 +289,6 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
     }
   }
 
-*/
-
-  const error = false
-  const cryptoStage = 'swapping'
-  const retry = () => alert('derp')
-
   return (
     <Wrapper>
       <Information>
@@ -324,7 +316,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
               <li>
                 <Icon
                   outline={cryptoStage !== 'swapping'}
-                  animating={cryptoStage !== 'swapping'}
+                  animating={cryptoStage === 'swapping'}
                   glyph="swap"
                   label="12% — Exchanging to USDC (est. 2m)"
                   error={error ? true : false}
@@ -333,7 +325,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
               <li>
                 <Icon
                   outline={cryptoStage !== 'bridging'}
-                  animating={cryptoStage !== 'bridging'}
+                  animating={cryptoStage === 'bridging'}
                   glyph="intersect"
                   label="Bridging blockchains (est. 2m)"
                   error={error ? true : false}
@@ -346,7 +338,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
             <li>
               <Icon
                 outline={cryptoStage !== 'building'}
-                animating={cryptoStage !== 'building'}
+                animating={cryptoStage === 'building'}
                 glyph="refresh"
                 label="Building your donation (est. 10m)"
                 error={error ? true : false}
@@ -356,7 +348,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           <li>
             <Icon
               outline={cryptoStage !== 'confirming'}
-              animating={cryptoStage !== 'confirming'}
+              animating={cryptoStage === 'confirming'}
               glyph="tick"
               label="Confirming your donation (est. 2m)"
               error={error ? true : false}
@@ -365,7 +357,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
           <li>
             <Icon
               outline={cryptoStage !== 'complete'}
-              animating={cryptoStage !== 'complete'}
+              animating={cryptoStage === 'complete'}
               glyph="party"
               label="Donation Complete"
               error={error ? true : false}
@@ -374,46 +366,34 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
         </IconStack>
       </Information>
 
-      <Distractions>
-        {error && (
-          <div>
-            <Label>{error}</Label>
-            <Button onClick={retry}>Retry</Button>
-          </div>
+      <Right>
+        {cryptoStage !== 'complete' && (
+          <>
+            <Distraction />
+            {error && (
+              <div>
+                <Label>{error}</Label>
+                <Button onClick={retry}>Retry</Button>
+              </div>
+            )}
+          </>
         )}
-      </Distractions>
+        {cryptoStage === 'complete' && <DonationComplete />}
+      </Right>
     </Wrapper>
   )
 }
 
-const Information = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  grid-area: copy;
-`
-
-const Title = styled.h1`
-  ${typography.title.l2}
-`
-
-const Subhead = styled.h2`
-  ${typography.body.l2}
-`
-
 const Wrapper = styled.div`
   display: grid;
   gap: 10px;
-  justify-items: start;
-  align-items: center;
   grid-template-areas:
     'copy'
-    'distractions';
+    'rightSide';
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 12px;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: 'copy distractions';
+    grid-template-areas: 'copy rightSide';
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
@@ -424,9 +404,25 @@ const Wrapper = styled.div`
     display: contents;
   }
 `
+const Information = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-area: copy;
+  gap: 30px;
+`
 
-const Distractions = styled.article`
-  grid-area: distractions;
+const Title = styled.h1`
+  ${typography.title.l2}
+`
+
+const Subhead = styled.h2`
+  ${typography.body.l2}
+`
+
+const Right = styled.article`
+  grid-area: rightSide;
 `
 
 const Label = styled.div`

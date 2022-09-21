@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { rgba } from '@lib'
-import { palette } from '@theme'
+import { palette, breakpoint } from '@theme'
 
 interface IIconStack {
   children: React.ReactNode
@@ -21,7 +21,7 @@ const Wrapper = styled.ol`
   &:before {
     position: absolute;
     z-index: 0;
-    left: 31px;
+    left: 28px;
     top: 0;
     width: 2px;
     height: 100%;
@@ -29,6 +29,9 @@ const Wrapper = styled.ol`
     background: ${rgba(palette.night)};
     @media (prefers-color-scheme: dark) {
       background: ${rgba(palette.moon)};
+    }
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      left: 35px;
     }
   }
   > * {
