@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { rgba, logout } from '@lib'
+import { rgba, logout, assetPath } from '@lib'
 import { IUser } from '@types'
 import AccountStats from './AccountStats'
 
@@ -71,7 +71,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
         </div>
       </Commands>
       <AccountStats {...{ stats }} />
-      <Illustration src="/assets/qf-square.svg" />
+      <Illustration src={assetPath('/assets/qf-square.svg')} />
     </Wrapper>
   )
 }

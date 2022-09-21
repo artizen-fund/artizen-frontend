@@ -3,7 +3,7 @@
  * svgAssetPath('/assets/glyphs/smileyface.svg') // https://artizen-assets.somecdn.net/glyphs/smileyface.svg
  */
 
-export const assetPath = (assetPath: string) => {
+export const assetPath = (assetPath: string): string => {
   // note: we are not asserting this envVar, as it can be null/undefined in dev and testing environments
   const cdnPath = process.env.NEXT_PUBLIC_ASSET_PATH
   return cdnPath ? cdnPath + assetPath.replace(/assets\//, '') : assetPath

@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { Button } from '@components'
+import { assetPath } from '@lib'
 import { typography } from '@theme'
 import { distraction } from '@copy/donations'
 
 const Distraction = () => {
   return (
     <Wrapper>
-      <Image src={distraction.imageUrl} />
+      <Image src={`${assetPath(distraction.imageUrl)}?fm=webp`} />
       <DistractionTitle>{distraction.title}</DistractionTitle>
       <Copy>{distraction.copy}</Copy>
       <Button href="https://www.google.com" target="_blank" level={2}>

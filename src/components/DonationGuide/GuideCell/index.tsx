@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { rgba } from '@lib'
+import { rgba, assetPath } from '@lib'
 import { palette, breakpoint } from '@theme'
 import { IDonationGuideCell, DonationGuideCoordinate } from '@copy/home'
 
@@ -14,7 +14,7 @@ const GuideCell = ({ columns, height, items, step }: IDonationGuideCell & { step
         </CellItem>
       ) : item.type === 'image' ? (
         <CellItem key={`guide-cell-${step}-${i}`} coordinates={item.coordinates} type={item.type}>
-          <img src={`/assets/illustrations/guide/${item.image}`} />
+          <img src={`${assetPath(`/assets/illustrations/guide/${item.image}`)}?fm=webp`} />
         </CellItem>
       ) : (
         <>{/* todo: Lottie animation support */}</>
@@ -30,7 +30,7 @@ const StepNumber = styled.div`
   min-width: 32px;
   min-height: 32px;
 
-  background-image: url('/assets/step-background.png');
+  background-image: url(${assetPath('/assets/step-background.png')});
   background-repeat: no-repeat;
   background-size: contain;
 
