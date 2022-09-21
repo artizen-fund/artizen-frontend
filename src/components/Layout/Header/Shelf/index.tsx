@@ -61,4 +61,5 @@ const Wrapper = styled.div<Pick<IShelf, 'shadowVisible'> & { visible: boolean }>
 const StyledPagePadding = styled(props => <PagePadding {...props} />)<Pick<IShelf, 'hasBreadcrumbs'>>`
   ${props => props.hasBreadcrumbs && 'padding-top: 0px !important;'}
 `
+
 export default Shelf

@@ -4,11 +4,11 @@ import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
 import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
 import { ethers } from 'ethers'
-import { v4 as uuidv4 } from 'uuid'
 import qs from 'qs'
-import { IconStack, Icon, Button, Distraction, DonationComplete } from '@components'
-import { USDCAbi } from '@contracts'
+import { v4 as uuidv4 } from 'uuid'
 import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
+import { USDCAbi } from '@contracts'
+import { IconStack, Icon, Button, Distraction, DonationComplete } from '@components'
 import {
   assert,
   getChainId,
