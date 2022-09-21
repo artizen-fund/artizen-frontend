@@ -34,17 +34,17 @@ const Stats = styled.ul`
 
   li:nth-of-type(1),
   li:nth-of-type(3) {
-    border-right: 1px solid ${rgba(palette.stone)};
+    border-right: 0.5px solid ${rgba(palette.stone)};
     @media (prefers-color-scheme: dark) {
-      border-right: 1px solid ${rgba(palette.barracuda, 0.64)};
+      border-right: 0.5px solid ${rgba(palette.barracuda, 0.64)};
     }
   }
 
   li:nth-of-type(1),
   li:nth-of-type(2) {
-    border-bottom: 1px solid ${rgba(palette.stone)};
+    border-bottom: 0.5px solid ${rgba(palette.stone)};
     @media (prefers-color-scheme: dark) {
-      border-bottom: 1px solid ${rgba(palette.barracuda, 0.64)};
+      border-bottom: 0.5px solid ${rgba(palette.barracuda, 0.64)};
     }
   }
 `

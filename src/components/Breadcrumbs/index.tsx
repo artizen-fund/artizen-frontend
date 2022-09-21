@@ -54,6 +54,9 @@ const Wrapper = styled.div`
     width: 25px;
     height: 100%;
     background: linear-gradient(270deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+    @media (prefers-color-scheme: dark) {
+      background: linear-gradient(270deg, ${rgba(palette.slate, 1)} 0%, ${rgba(palette.slate, 0)} 100%);
+    }
   }
 
   ol::-webkit-scrollbar {
@@ -79,7 +82,6 @@ const Crumbs = styled.ol`
 `
 
 const Crumb = styled.li<{ active: boolean; completed: boolean; hasAction: boolean }>`
-  color: ${props => rgba(props.active ? palette.night : palette.barracuda)};
   list-style-type: decimal;
   margin-left: 25px;
   margin-right: 25px;
@@ -92,6 +94,12 @@ const Crumb = styled.li<{ active: boolean; completed: boolean; hasAction: boolea
       padding: 0 0 0 10px;
     }
   `}
+
+  color: ${props => rgba(props.active ? palette.night : palette.barracuda)};
+  @media (prefers-color-scheme: dark) {
+    color: ${props => rgba(props.active ? palette.moon : palette.barracuda)};
+  }
+
   transition: color 0.15s ease-in-out;
   white-space: nowrap;
   &:hover {

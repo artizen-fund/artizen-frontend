@@ -40,6 +40,9 @@ const Wrapper = styled.div<ISelected>`
   }
 
   background: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.moon)};
+  }
   border-radius: 9999px;
 
   transform: scale(${props => (props.selected ? 1 : 0)});
