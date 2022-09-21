@@ -13,7 +13,8 @@ const DonationComplete = () => {
   }
   return (
     <Wrapper>
-      <Image src={`${assetPath(donationComplete.imageUrl)}?fm=webp`} />
+      <Image src={assetPath('/assets/illustrations/donations/last-step.png?fm=webp')} />
+      <Image dark src={assetPath('/assets/illustrations/donations/last-step-dark.png?fm=webp')} />
       <Title>{donationComplete.title}</Title>
       <Copy>{donationComplete.copy}</Copy>
       <Button onClick={() => dismiss()} level={2}>
@@ -29,8 +30,14 @@ const Wrapper = styled.div`
   gap: 15px;
 `
 
-const Image = styled.img`
+const Image = styled.img<{ dark?: boolean }>`
   max-width: 100%;
+  @media (prefers-color-scheme: light) {
+    display: ${props => (props.dark ? 'none' : 'block')};
+  }
+  @media (prefers-color-scheme: dark) {
+    display: ${props => (props.dark ? 'block' : 'none')};
+  }
 `
 
 const Title = styled.h3`
