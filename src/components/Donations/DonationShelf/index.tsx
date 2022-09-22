@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Confirmation, Breadcrumbs } from '@components'
+import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Breadcrumbs } from '@components'
 import { WagmiConfig } from 'wagmi'
 import { useLoggedInUser, DonationContext } from '@lib'
 import { getWagmiClient } from '../../../lib/wagmiClient'
@@ -28,9 +28,8 @@ export const DonationShelf = () => {
         if (donationMethod === 'usd') return <PaymentFiat {...{ amount, setOrder }} />
         return <PaymentCrypto {...{ donationMethod, amount, chains }} />
       case 'processCrypto':
-        return <ProcessCrypto {...{ donationMethod, amount, order, setOrder }} />
       case 'confirmation':
-        return <Confirmation />
+        return <ProcessCrypto {...{ donationMethod, amount, order, setOrder }} />
       case 'setAmount':
       default:
         return <DonationAmount {...{ setDonationMethod, donationMethod, setAmount, amount }} />

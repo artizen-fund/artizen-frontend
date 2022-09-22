@@ -1,4 +1,3 @@
-export { default as Confirmation } from './Confirmation'
 export { default as DonationAmount } from './DonationAmount'
 export { default as DonationComplete } from './DonationComplete'
 export { default as DonationHelpLink } from './DonationHelpLink'
