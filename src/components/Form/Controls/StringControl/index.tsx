@@ -91,7 +91,7 @@ export const StringControl = ({
             type={uischema?.options?.format || 'text'}
             placeholder={uischema?.options?.placeholder || ' '}
             defaultValue={data}
-            onChange={e => handleChange(path, e.target.value)}
+            onChange={e => handleChange(path, e.target.value.replace(/[^0-9]/g, ''))}
             onBlur={() => setVirgin(false)}
             value={ccnFormat(data)}
           />

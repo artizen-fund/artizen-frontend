@@ -21,11 +21,13 @@ export const schema: JsonSchema = {
     },
     month: {
       type: 'string',
+      enum: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '11', '12'],
       minLength: 2,
+      maxLength: 2,
     },
     year: {
       type: 'string',
-      minLength: 2,
+      minLength: 4,
     },
     zip: {
       type: 'string',
@@ -49,7 +51,9 @@ export interface FormState extends Record<string, unknown> {
   phone_number?: string
 }
 
-export const initialState: FormState = {}
+export const initialState: FormState = {
+  month: '01',
+}
 
 export const uischema = {
   type: 'VerticalLayout',

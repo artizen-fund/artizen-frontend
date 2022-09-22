@@ -86,7 +86,7 @@ const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
     if (!!data.number && !isValid(data.number)) {
       errors.push({
         instancePath: '/number',
-        message: 'Invalid credit card number!?!@!',
+        message: 'Invalid credit card number',
         schemaPath: '#/properties/number',
         keyword: '',
         params: {},
