@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from '@components'
 import { assetPath } from '@lib'
 import { breakpoint, typography } from '@theme'
 
@@ -9,29 +8,20 @@ export interface IAlternatingPanel {
   imageDark?: string
   title: string
   copy: string
-  buttonLabel: string
-  destination: string
   imageOnRight?: boolean
+  destination?: string
+  buttonLabel?: string
+  children?: React.ReactElement
 }
 
-const AlternatingPanel = ({
-  image,
-  imageDark,
-  title,
-  copy,
-  buttonLabel,
-  destination,
-  imageOnRight,
-}: IAlternatingPanel) => {
+const AlternatingPanel = ({ image, imageDark, title, copy, imageOnRight, children }: IAlternatingPanel) => {
   return (
     <Wrapper {...{ imageOnRight }}>
       <Image {...{ image, imageDark }} />
       <Content>
         <Title>{title}</Title>
         <Copy>{copy}</Copy>
-        <Button href={destination} level={1}>
-          {buttonLabel}
-        </Button>
+        {children}
       </Content>
     </Wrapper>
   )
