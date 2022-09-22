@@ -4,13 +4,22 @@ import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint } from '@theme'
 
-export default styled(props => <Glyph {...props} />)`
+const InputGlyph = (props: any) => (
+  <Wrapper>
+    <Glyph {...props} />
+  </Wrapper>
+)
+
+const Wrapper = styled.div`
   z-index: 2;
   position: absolute;
-  top: 0;
   right: 16px;
-  bottom: 0;
-  margin: auto 0;
+  top: 0;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     right: 24px;
@@ -20,3 +29,5 @@ export default styled(props => <Glyph {...props} />)`
     right: 32px;
   }
 `
+
+export default InputGlyph

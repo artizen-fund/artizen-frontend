@@ -63,9 +63,10 @@ export const StringControl = ({
   // This is for all left-hand-side icons.
   // Currently just phone.
   const hasWidget = uischema?.options?.format === 'phone'
+  const hasMessage = !virgin && !!errors && errors !== ''
 
   return (
-    <Wrapper gridArea={path} hasMessage={!!errors && !virgin} {...props} id={uischema?.scope}>
+    <Wrapper gridArea={path} {...props} {...{ hasMessage }} id={uischema?.scope}>
       <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
@@ -99,7 +100,7 @@ export const StringControl = ({
         </InputLabel>
         {statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
       </InputWrapper>
-      <Message className={!virgin && !!errors ? 'hasErrors' : ''}>{visibleError}</Message>
+      <Message className={hasMessage ? 'hasMessage' : ''}>{visibleError}</Message>
     </Wrapper>
   )
 }

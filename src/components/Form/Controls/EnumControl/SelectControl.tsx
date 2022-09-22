@@ -72,7 +72,7 @@ const SelectControl = ({
           {required ? ' *' : ''}
         </InputLabel>
       </InputWrapper>
-      <Message {...{ virgin }} className={!!errors ? 'hasErrors' : ''}>
+      <Message {...{ virgin }} className={!!errors ? 'hasMessage' : ''}>
         {visibleError}
       </Message>
     </Wrapper>
