@@ -97,9 +97,6 @@ const DownwardArrowPlacer = styled.div`
     bottom: 50%;
     right: 16px;
     background: ${rgba(palette.night)};
-    @media (prefers-color-scheme: dark) {
-      background: ${rgba(palette.moon)};
-    }
     width: 10px;
     height: 6px;
     margin: auto 0;

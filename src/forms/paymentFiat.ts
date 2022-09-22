@@ -78,7 +78,7 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/month',
       label: 'Expiration Month',
-      options: { unsafeToRetain: true },
+      options: {},
     },
     {
       type: 'Control',

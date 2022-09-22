@@ -58,17 +58,22 @@ export const StringControl = ({
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
   const [statusGlyph, setStatusGlyph] = useState<keyof GlyphKey>()
   useEffect(() => {
-    setStatusGlyph(enabled ? undefined : 'lock')
-  }, [enabled])
+    if (!enabled) {
+      setStatusGlyph('lock')
+    } else if (uischema?.options?.format === 'creditCard') {
+      setStatusGlyph('creditCard')
+    } else {
+      setStatusGlyph(undefined)
+    }
+  }, [enabled, uischema])
 
   // This is for all left-hand-side icons.
   // Currently just phone.
-  const hasWidget = uischema?.options?.format === 'phone'
   const hasMessage = !virgin && !!errors && errors !== ''
 
   return (
     <Wrapper gridArea={path} {...props} {...{ hasMessage }} id={uischema?.scope}>
-      <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
+      <InputWrapper disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
             {...{ required, autoComplete }}
@@ -108,11 +113,11 @@ export const StringControl = ({
             onBlur={() => setVirgin(false)}
           />
         )}
-        <InputLabel {...{ hasWidget }}>
+        <InputLabel>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
+        {statusGlyph && <InputGlyph outline color="night" darkColor="night" glyph={statusGlyph} />}
       </InputWrapper>
       <Message className={hasMessage ? 'hasMessage' : ''}>{visibleError}</Message>
     </Wrapper>
