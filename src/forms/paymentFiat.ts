@@ -28,6 +28,7 @@ export const schema: JsonSchema = {
     year: {
       type: 'string',
       minLength: 4,
+      maxLength: 4,
     },
     zip: {
       type: 'string',
