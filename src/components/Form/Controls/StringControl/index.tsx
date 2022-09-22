@@ -2,6 +2,7 @@ import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import { rankWith, schemaMatches, Labels, JsonSchema, ControlElement } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputGlyph } from '../_Common'
+import { ccnFormat } from '@lib'
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
 
@@ -80,6 +81,19 @@ export const StringControl = ({
             defaultCountry="US"
             international={false}
             className={!!data ? 'hasData' : ''}
+          />
+        ) : uischema?.options?.format === 'creditCard' ? (
+          <input
+            {...{ required, autoComplete }}
+            disabled={!enabled || processing}
+            minLength={schema?.minLength}
+            maxLength={schema?.maxLength}
+            type={uischema?.options?.format || 'text'}
+            placeholder={uischema?.options?.placeholder || ' '}
+            defaultValue={data}
+            onChange={e => handleChange(path, e.target.value)}
+            onBlur={() => setVirgin(false)}
+            value={ccnFormat(data)}
           />
         ) : (
           <input

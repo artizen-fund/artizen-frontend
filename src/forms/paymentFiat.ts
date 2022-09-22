@@ -68,7 +68,7 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/number',
       label: 'Card Number',
-      options: { unsafeToRetain: true },
+      options: { unsafeToRetain: true, format: 'creditCard' },
     },
     {
       type: 'Control',
