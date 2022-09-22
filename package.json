@@ -44,6 +44,7 @@
     "@trycourier/react-toast": "^1.43.0",
     "@types/node": "18.7.18",
     "@types/react-phone-number-input": "^3.0.14",
+    "@types/uuid": "^8.3.4",
     "ajv": "^8.11.0",
     "api": "^4.5.2",
     "assert": "^2.0.0",
