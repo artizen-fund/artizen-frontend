@@ -20,15 +20,49 @@ export const buttonColor = (
   },
 ) => {
   return buttonPalette[
-    options.transparent ? 'transparent' : options.inverted ? 'inverted' : scheme === 'dark' ? 'dark' : 'light'
+    options.transparent && scheme === 'light'
+      ? 'transparentLight'
+      : options.transparent
+      ? 'transparentDark'
+      : options.inverted
+      ? 'inverted'
+      : scheme === 'dark'
+      ? 'dark'
+      : 'light'
   ][options.transparent ? 'fill' : options.outline ? 'outline' : 'fill'][options.disabled ? 'disabled' : 'enabled'][key]
 }
 
 const buttonPalette = {
-  transparent: {
+  transparentLight: {
     fill: {
       enabled: {
         foreground: rgba('night'),
+        background: 'transparent',
+        border: 'transparent',
+      },
+      disabled: {
+        foreground: rgba('barracuda'),
+        background: 'transparent',
+        border: 'transparent',
+      },
+    },
+    outline: {
+      enabled: {
+        foreground: rgba('night'),
+        background: 'transparent',
+        border: 'transparent',
+      },
+      disabled: {
+        foreground: rgba('barracuda'),
+        background: 'transparent',
+        border: 'transparent',
+      },
+    },
+  },
+  transparentDark: {
+    fill: {
+      enabled: {
+        foreground: rgba('moon'),
         background: 'transparent',
         border: 'transparent',
       },

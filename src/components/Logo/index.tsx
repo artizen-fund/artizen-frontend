@@ -52,7 +52,7 @@ const Svg = styled.svg`
 `
 
 const AbstractMark = styled.path`
-  fill: ${rgba(palette.moss)};
+  fill: ${rgba(palette.algae)};
 `
 
 const Letter = styled.path`

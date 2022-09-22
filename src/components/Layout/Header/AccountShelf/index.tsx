@@ -2,9 +2,10 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { rgba, logout, assetPath } from '@lib'
+import { rgba, logout } from '@lib'
 import { IUser } from '@types'
 import AccountStats from './AccountStats'
+import QfSquare from './QfSquare'
 
 interface IAccountShelf {
   user: IUser
@@ -71,7 +72,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
         </div>
       </Commands>
       <AccountStats {...{ stats }} />
-      <Illustration src={assetPath('/assets/qf-square.svg')} />
+      <QfSquare />
     </Wrapper>
   )
 }
@@ -150,8 +151,11 @@ const Illustration = styled.img`
 const Rule = styled.hr`
   appearance: none;
   width: 100%;
-  height: 1px;
-  background: ${rgba(palette.barracuda)};
+  height: 0.5px;
+  background: ${rgba(palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.barracuda, 0.64)};
+  }
   border: 0;
   outline: 0;
 `
