@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
 import { breakpoint, palette, typography, GlyphKey } from '@theme'
@@ -44,10 +44,9 @@ const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   // todo: how is this managed?
 
-  const [minClamp, setMinClamp] = useState(10)
-  useEffect(
-    () => setMinClamp(methods.find(thisMethod => thisMethod.key === donationMethod)?.min || minClamp),
-    [donationMethod],
+  const disabled = useMemo(
+    () => amount < (methods.find(method => method.key === donationMethod)?.min || 999999),
+    [amount, donationMethod],
   )
 
   return (
@@ -61,7 +60,7 @@ const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }
 
       <StyledLeaderboard />
 
-      <AmountWidget {...{ amount, setAmount, minClamp }} />
+      <AmountWidget {...{ amount, setAmount }} />
 
       <Form>
         <SuggestedDonations>
@@ -107,7 +106,7 @@ const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }
         path="derp"
       />
 
-      <SubmitButton onClick={() => setDonationStage?.('login')} stretch level={1}>
+      <SubmitButton onClick={() => setDonationStage?.('login')} stretch level={1} {...{ disabled }}>
         Continue
       </SubmitButton>
     </Wrapper>
