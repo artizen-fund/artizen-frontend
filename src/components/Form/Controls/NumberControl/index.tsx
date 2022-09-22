@@ -1,11 +1,11 @@
 import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import { Labels, JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
+import { JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputGlyph, InputWrapper, Message } from '../_Common'
 import { GlyphKey } from '@theme'
 
 export interface NumberControlProps {
-  label: string | Labels
+  label: string | Array<string>
   enabled?: boolean
   processing?: boolean
   onChange?: FormEventHandler<HTMLDivElement>
