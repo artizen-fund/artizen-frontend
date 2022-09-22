@@ -7,18 +7,17 @@ import { palette, typography } from '@theme'
 interface IAmountWidget {
   amount: number
   setAmount: (n: number) => void
-  minClamp?: number
 }
 
-const AmountWidget = ({ amount, setAmount, minClamp }: IAmountWidget) => {
+const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
   // todo: sort out integer or float
   // todo: will we have text/typing input?
 
-  useEffect(() => {
-    if (minClamp && amount < minClamp) setAmount(minClamp)
-  }, [minClamp, amount])
-
   const add = (n: number) => setAmount(amount + n)
+
+  useEffect(() => {
+    if (isNaN(amount) || amount < 0) setAmount(0)
+  }, [amount])
 
   return (
     <Wrapper>
@@ -32,10 +31,10 @@ const AmountWidget = ({ amount, setAmount, minClamp }: IAmountWidget) => {
       </AmountBox>
       <Buttons>
         <Button level={2} outline glyphOnly glyph="mathPlus" onClick={() => add(10)}>
-          decrease
-        </Button>
-        <Button level={2} outline glyphOnly glyph="mathMinus" onClick={() => add(-10)}>
           increase
+        </Button>
+        <Button level={2} outline glyphOnly glyph="mathMinus" onClick={() => add(-10)} disabled={amount < 10}>
+          decrease
         </Button>
       </Buttons>
     </Wrapper>
