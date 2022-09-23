@@ -21,11 +21,14 @@ export const schema: JsonSchema = {
     },
     month: {
       type: 'string',
+      enum: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '11', '12'],
       minLength: 2,
+      maxLength: 2,
     },
     year: {
       type: 'string',
-      minLength: 2,
+      minLength: 4,
+      maxLength: 4,
     },
     zip: {
       type: 'string',
@@ -49,7 +52,9 @@ export interface FormState extends Record<string, unknown> {
   phone_number?: string
 }
 
-export const initialState: FormState = {}
+export const initialState: FormState = {
+  month: '01',
+}
 
 export const uischema = {
   type: 'VerticalLayout',
@@ -68,13 +73,13 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/number',
       label: 'Card Number',
-      options: { unsafeToRetain: true },
+      options: { unsafeToRetain: true, format: 'creditCard' },
     },
     {
       type: 'Control',
       scope: '#/properties/month',
       label: 'Expiration Month',
-      options: { unsafeToRetain: true },
+      options: {},
     },
     {
       type: 'Control',

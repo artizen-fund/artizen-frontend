@@ -1,6 +1,8 @@
-import { useState, useContext, useMemo } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
+import { ErrorObject } from 'ajv'
+import { isValid, isExpirationDateValid, isSecurityCodeValid } from 'creditcard.js'
 import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress, Table, TableCell } from '@components'
 import {
   payWithFiat,
@@ -77,6 +79,40 @@ const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
     return <PaymentFiatAddress {...{ setDonationStage, amount }} />
   }
 
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
+
+  useEffect(() => {
+    const errors: Array<ErrorObject> = []
+    if (!!data.number && !isValid(data.number)) {
+      errors.push({
+        instancePath: '/number',
+        message: 'Invalid credit card number',
+        schemaPath: '#/properties/number',
+        keyword: '',
+        params: {},
+      })
+    }
+    if (!!data.number && !!data.verification_value && !isSecurityCodeValid(data.number, data.verification_value)) {
+      errors.push({
+        instancePath: '/verification_value',
+        message: 'Invalid verification number',
+        schemaPath: '#/properties/verification_value',
+        keyword: '',
+        params: {},
+      })
+    }
+    if (!!data.month && !!data.year && !isExpirationDateValid(data.month, data.year)) {
+      errors.push({
+        instancePath: '/year',
+        message: 'Invalid expiration date',
+        schemaPath: '#/properties/year',
+        keyword: '',
+        params: {},
+      })
+    }
+    setAdditionalErrors(errors)
+  }, [data])
+
   return (
     <Wrapper className={processing ? 'processing' : ''}>
       <Information>
@@ -112,7 +148,7 @@ const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
       ) : (
         <Form
           localStorageKey={LOCALSTORAGE_KEY}
-          {...{ schema, uischema, initialState, data, setData }}
+          {...{ schema, uischema, initialState, data, setData, additionalErrors }}
           readonly={processing}
         >
           <SubmitButton stretch onClick={processTransaction}>

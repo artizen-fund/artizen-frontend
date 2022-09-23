@@ -7,7 +7,7 @@ const StyledPhoneInput = styled(props => <PhoneInput {...props} />)`
     z-index: 1;
     position: absolute;
     top: 50%;
-    left: 0;
+    right: 0;
 
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@ const StyledPhoneInput = styled(props => <PhoneInput {...props} />)`
       width: 80px;
     }
 
-    transform: translateY(-55%);
+    transform: translateY(-50%);
 
     select {
       position: absolute;
@@ -43,16 +43,6 @@ const StyledPhoneInput = styled(props => <PhoneInput {...props} />)`
 
     .PhoneInputCountrySelectArrow {
       /* to-do */
-    }
-  }
-  input.PhoneInputInput {
-    padding-left: 72px;
-
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      padding-left: 76px;
-    }
-    @media only screen and (min-width: ${breakpoint.desktop}px) {
-      padding-left: 80px;
     }
   }
 `

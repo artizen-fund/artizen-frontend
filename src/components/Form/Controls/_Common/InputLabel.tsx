@@ -4,22 +4,20 @@ import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
 
-export default styled.label<{ hasWidget?: boolean }>`
+export default styled.label`
   position: absolute;
   top: 0;
   display: flex;
   align-items: center;
   height: 100%;
-  left: ${props => (props.hasWidget ? 72 : 16)}px;
+  left: 16px;
   width: calc(100% - 88px);
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    left: ${props => (props.hasWidget ? 76 : 16)}px;
     width: calc(100% - 92px);
   }
 
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    left: ${props => (props.hasWidget ? 80 : 16)}px;
     width: calc(100% - 96px);
   }
 

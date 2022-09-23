@@ -35,6 +35,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
   readonly,
   submitDisabledFromOutside,
   children,
+  ...props
 }: FormProps<TStateInterface>) => {
   const [disabled, setDisabled] = useState(true)
 
@@ -62,6 +63,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
     <>
       <JsonForms
         {...{ schema, uischema, renderers, data, readonly }}
+        {...props}
         config={{ trim: true }}
         onChange={formState => updateFormState(formState)}
       />

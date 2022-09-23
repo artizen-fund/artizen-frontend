@@ -1,12 +1,12 @@
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import { Labels, JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
+import { JsonSchema, ControlElement, rankWith, schemaMatches } from '@jsonforms/core'
 import SwitchControl from './SwitchControl'
 import CheckboxControl from './CheckboxControl'
 
 export interface BooleanControlProps {
   inverted?: boolean
   invalid?: boolean
-  label: string | Labels
+  label: string | Array<string>
   enabled?: boolean
   onChange?: (e: any) => void
   required?: boolean

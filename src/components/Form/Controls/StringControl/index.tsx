@@ -1,12 +1,13 @@
 import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import { rankWith, schemaMatches, Labels, JsonSchema, ControlElement } from '@jsonforms/core'
+import { rankWith, schemaMatches, JsonSchema, ControlElement } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputGlyph } from '../_Common'
+import { ccnFormat } from '@lib'
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
 
 export interface StringControlProps {
-  label: string | Labels
+  label: string | Array<string>
   enabled?: boolean
   processing?: boolean
   onChange?: FormEventHandler<HTMLDivElement>
@@ -57,17 +58,22 @@ export const StringControl = ({
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?
   const [statusGlyph, setStatusGlyph] = useState<keyof GlyphKey>()
   useEffect(() => {
-    setStatusGlyph(enabled ? undefined : 'lock')
-  }, [enabled])
+    if (!enabled) {
+      setStatusGlyph('lock')
+    } else if (uischema?.options?.format === 'creditCard') {
+      setStatusGlyph('creditCard')
+    } else {
+      setStatusGlyph(undefined)
+    }
+  }, [enabled, uischema])
 
   // This is for all left-hand-side icons.
   // Currently just phone.
-  const hasWidget = uischema?.options?.format === 'phone'
   const hasMessage = !virgin && !!errors && errors !== ''
 
   return (
     <Wrapper gridArea={path} {...props} {...{ hasMessage }} id={uischema?.scope}>
-      <InputWrapper {...{ hasWidget }} disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
+      <InputWrapper disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
             {...{ required, autoComplete }}
@@ -80,6 +86,19 @@ export const StringControl = ({
             defaultCountry="US"
             international={false}
             className={!!data ? 'hasData' : ''}
+          />
+        ) : uischema?.options?.format === 'creditCard' ? (
+          <input
+            {...{ required, autoComplete }}
+            disabled={!enabled || processing}
+            minLength={schema?.minLength}
+            maxLength={schema?.maxLength}
+            type={uischema?.options?.format || 'text'}
+            placeholder={uischema?.options?.placeholder || ' '}
+            defaultValue={data}
+            onChange={e => handleChange(path, e.target.value.replace(/[^0-9]/g, ''))}
+            onBlur={() => setVirgin(false)}
+            value={ccnFormat(data)}
           />
         ) : (
           <input
@@ -94,11 +113,11 @@ export const StringControl = ({
             onBlur={() => setVirgin(false)}
           />
         )}
-        <InputLabel {...{ hasWidget }}>
+        <InputLabel>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
+        {statusGlyph && <InputGlyph outline color="night" darkColor="night" glyph={statusGlyph} />}
       </InputWrapper>
       <Message className={hasMessage ? 'hasMessage' : ''}>{visibleError}</Message>
     </Wrapper>
