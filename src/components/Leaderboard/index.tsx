@@ -6,12 +6,18 @@ import _ from 'lodash'
 import { IUser } from '@types'
 import truncateEthAddress from 'truncate-eth-address'
 
-const Leaderboard = () => {
+interface ILeaderboard {
+  limit?: number
+}
+
+const Leaderboard = (props: ILeaderboard) => {
   const { donationsWithUser } = useCampaign()
   if (!donationsWithUser) return <></>
 
+  const limit = props.limit || 3
+
   const sideItem = (
-    <Button onClick={() => alert('do something')} outline level={2}>
+    <Button href="/leaderboard" outline level={2}>
       See All
     </Button>
   )
@@ -25,7 +31,7 @@ const Leaderboard = () => {
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
       {_.orderBy(donationsWithUser, item => Number(item.amount), ['desc'])
-        .slice(0, 3)
+        .slice(0, limit)
         .map((donation: Donation, index) => (
           <TableCell key={`donation-${index}`} highlight>
             <div>

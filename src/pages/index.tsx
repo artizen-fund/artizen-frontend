@@ -10,6 +10,7 @@ import {
   AlternatingPanel,
   Sidebar,
   Curators,
+  Button,
 } from '@components'
 import { rgba, useCampaign } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
@@ -38,7 +39,11 @@ const Home = () => {
       </StyledPagePadding>
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (
-          <AlternatingPanel key={`panel-${i}`} {...panel} />
+          <AlternatingPanel key={`panel-${i}`} {...panel}>
+            <Button href={panel.destination} level={1}>
+              {panel.buttonLabel}
+            </Button>
+          </AlternatingPanel>
         ))}
       </AlternatingPanels>
       <Curators />

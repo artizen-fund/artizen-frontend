@@ -18,7 +18,7 @@ const howItWorks = [
     illustrationDark: 'leaderboard/trust-dark.svg',
     title: 'Leaderboard',
     copy: 'See where you are on the leaderboard based on your donation amounts.',
-    destination: '/derp',
+    destination: '/leaderboard',
     mobileOnly: true,
   },
   {

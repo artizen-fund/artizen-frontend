@@ -39,7 +39,7 @@ const Header = () => {
           <Nav>
             <ul>
               <li>
-                <Link href="/">Leaderboard</Link>
+                <Link href="/leaderboard">Leaderboard</Link>
               </li>
               <li onClick={() => toggleShelf?.('howItWorks')}>How it Works</li>
             </ul>
