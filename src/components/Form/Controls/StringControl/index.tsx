@@ -1,13 +1,13 @@
 import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
-import { rankWith, schemaMatches, Labels, JsonSchema, ControlElement } from '@jsonforms/core'
+import { rankWith, schemaMatches, JsonSchema, ControlElement } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputGlyph } from '../_Common'
 import { ccnFormat } from '@lib'
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
 
 export interface StringControlProps {
-  label: string | Labels
+  label: string | Array<string>
   enabled?: boolean
   processing?: boolean
   onChange?: FormEventHandler<HTMLDivElement>
