@@ -2,14 +2,7 @@ import { useState, useEffect, useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
 import { breakpoint, palette, typography, GlyphKey } from '@theme'
-import { rgba, DonationContext } from '@lib'
-
-interface IDonationAmount {
-  amount: number
-  setAmount: (n: number) => void
-  donationMethod: DonationMethod
-  setDonationMethod: (d: DonationMethod) => void
-}
+import { rgba, DonationContext, useProcessDonation } from '@lib'
 
 type MethodSet = {
   key: DonationMethod
@@ -39,8 +32,10 @@ const methods: Array<MethodSet> = [
   },
 ]
 
-const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }: IDonationAmount) => {
+const DonationAmount = () => {
   const { setDonationStage } = useContext(DonationContext)
+  const { amount, setAmount, donationMethod, setDonationMethod } = useProcessDonation()
+
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   // todo: how is this managed?
 

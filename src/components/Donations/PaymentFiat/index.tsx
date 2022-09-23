@@ -13,18 +13,16 @@ import {
   assert,
   sleep,
   DonationContext,
+  useProcessDonation,
 } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
-interface IPaymentFiat {
-  amount: number
-  setOrder: (o: { id: string }) => void
-}
-
 const TRANSACTION_FEE = 42
 
-const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
+const PaymentFiat = () => {
+  const { amount, setOrder } = useProcessDonation()
+
   const { setDonationStage } = useContext(DonationContext)
   const { loggedInUser } = useContext(UserContext)
 

@@ -1,7 +1,7 @@
-import { useState, useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Breadcrumbs } from '@components'
 import { WagmiConfig } from 'wagmi'
-import { UserContext, DonationContext } from '@lib'
+import { DonationContext, useProcessDonation, ProcessDonationProvider, UserContext } from '@lib'
 import { getWagmiClient } from '../../../lib/wagmiClient'
 import { BreadcrumbStep } from '../../Breadcrumbs'
 
@@ -9,9 +9,7 @@ const { client, chains } = getWagmiClient()
 
 export const DonationShelf = () => {
   const { donationStage, setDonationStage } = useContext(DonationContext)
-  const [order, setOrder] = useState<{ id: string }>({ id: '' })
-  const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
-  const [amount, setAmount] = useState(10) // note: sort out integer or float
+  const { donationMethod } = useProcessDonation()
   const { loggedInUser } = useContext(UserContext)
 
   useEffect(() => {
@@ -25,14 +23,14 @@ export const DonationShelf = () => {
       case 'login':
         return <></>
       case 'payment':
-        if (donationMethod === 'usd') return <PaymentFiat {...{ amount, setOrder }} />
-        return <PaymentCrypto {...{ donationMethod, amount, chains }} />
+        if (donationMethod === 'usd') return <PaymentFiat />
+        return <PaymentCrypto {...{ chains }} />
       case 'processCrypto':
       case 'confirmation':
-        return <ProcessCrypto {...{ donationMethod, amount, order, setOrder }} />
+        return <ProcessCrypto />
       case 'setAmount':
       default:
-        return <DonationAmount {...{ setDonationMethod, donationMethod, setAmount, amount }} />
+        return <DonationAmount />
     }
   }
   type DonationStage = 'setAmount' | 'login' | 'payment' | 'paymentFiatAddress' | 'processCrypto' | 'confirmation'
@@ -61,7 +59,9 @@ export const DonationShelf = () => {
 
 const DonationShelfWithWagmi = (props: any) => (
   <WagmiConfig client={client}>
-    <DonationShelf {...props} />
+    <ProcessDonationProvider>
+      <DonationShelf {...props} />
+    </ProcessDonationProvider>
   </WagmiConfig>
 )
 
