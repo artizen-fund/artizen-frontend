@@ -26,7 +26,7 @@ const TRANSACTION_FEE = 42
 
 const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
   const { setDonationStage } = useContext(DonationContext)
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useLoggedInUser()
 
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)

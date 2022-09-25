@@ -18,7 +18,7 @@ export enum intercomEventEnum {
 export const trackEventF = (type: intercomEventEnum, target: object = {}) => trackEvent(type, target)
 
 export function initIntercom() {
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useLoggedInUser()
 
   const appId = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 

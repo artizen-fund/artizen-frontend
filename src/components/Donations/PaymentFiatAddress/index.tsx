@@ -18,7 +18,7 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
   const { setDonationStage } = useContext(DonationContext)
 
   const apolloClient = useApolloClient()
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useLoggedInUser()
 
   const LOCALSTORAGE_KEY = 'fiatPaymentAddress'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)

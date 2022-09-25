@@ -12,7 +12,7 @@ export const DonationShelf = () => {
   const [order, setOrder] = useState<{ id: string }>({ id: '' })
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useLoggedInUser()
 
   useEffect(() => {
     if (donationStage === 'login' && !!loggedInUser) {

@@ -16,7 +16,7 @@ interface IDonationContext {
 export const DonationContext = createContext<IDonationContext>({ donationStage: 'setAmount' })
 
 export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useLoggedInUser()
   const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
   const [donationStage, setDonationStage] = useState<DonationStage>('setAmount')
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()

@@ -17,7 +17,7 @@ import { typography, palette, breakpoint } from '@theme'
 
 const Settings = () => {
   const router = useRouter()
-  const [loggedInUser, loading] = useLoggedInUser()
+  const { loggedInUser, loading } = useLoggedInUser()
   if (!loading && !loggedInUser) {
     router.push('/')
   }

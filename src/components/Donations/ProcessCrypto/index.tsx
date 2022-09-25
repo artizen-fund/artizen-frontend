@@ -41,7 +41,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
   const [error, setError] = useState<Error>('')
 
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useLoggedInUser()
 
   const metadata = useReactiveVar(userMetadataVar)
 

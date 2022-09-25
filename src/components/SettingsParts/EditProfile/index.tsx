@@ -5,14 +5,14 @@ import { Form, Button } from '@components'
 import { useFormLocalStorage, useLoggedInUser } from '@lib'
 import { breakpoint } from '@theme'
 import { UPDATE_USER_PROFILE } from '@gql'
-import { schema, uischema, initialState, FormState } from './form'
+import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
   const LOCALSTORAGE_KEY = 'editprofile'
 
   const apolloClient = useApolloClient()
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
-  const [loggedInUser, loading] = useLoggedInUser()
+  const { loggedInUser, loading } = useLoggedInUser()
   useEffect(() => {
     if (loading || !loggedInUser) return
     setData({

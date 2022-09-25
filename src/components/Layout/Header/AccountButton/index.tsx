@@ -7,7 +7,7 @@ import { rgba, refreshSession, useLoggedInUser, isClient } from '@lib'
 
 const AccountButton = (props: SimpleComponentProps) => {
   const apolloClient = useApolloClient()
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useLoggedInUser()
 
   useEffect(() => {
     if (isClient()) refreshSession(apolloClient)

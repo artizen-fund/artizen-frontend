@@ -12,7 +12,7 @@ export const useDonation = () => {
   const [confirmingStatus, setConfirmingStatus] = useState<DonationStageStatus>('WAITING')
   const [confirmingMessage, setConfirmingMessage] = useState<string>('')
 
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useLoggedInUser()
   const metadata = useReactiveVar(userMetadataVar)
 
   const { callStandardMetaTxMethod, callCustomMetaTxMethod, loading, error } = useMetaContract()
