@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import { Form, Button } from '@components'
-import { useFormLocalStorage, useLoggedInUser } from '@lib'
+import { useFormLocalStorage, UserContext } from '@lib'
 import { breakpoint } from '@theme'
 import { UPDATE_USER_PROFILE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
@@ -12,7 +12,7 @@ const EditProfile = () => {
 
   const apolloClient = useApolloClient()
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
-  const { loggedInUser, loading } = useLoggedInUser()
+  const { loggedInUser, loading } = useContext(UserContext)
   useEffect(() => {
     if (loading || !loggedInUser) return
     setData({
@@ -28,6 +28,7 @@ const EditProfile = () => {
   const [processing, setProcessing] = useState(false)
 
   const saveChanges = async () => {
+    if (!loggedInUser) return
     setProcessing(true)
     await apolloClient.mutate({
       mutation: UPDATE_USER_PROFILE,

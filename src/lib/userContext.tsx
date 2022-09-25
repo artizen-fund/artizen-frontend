@@ -1,12 +1,21 @@
-import { useEffect, useState } from 'react'
-import { useReactiveVar, useQuery, useApolloClient } from '@apollo/client'
-import { userMetadataVar } from '@lib'
+import { createContext, useEffect, useState } from 'react'
+import { useReactiveVar, useQuery, useApolloClient, ApolloError } from '@apollo/client'
+import { userMetadataVar, initIntercom } from '@lib'
 import { GET_USER, UPDATE_NEW_USER_PROFILE } from '@gql'
 import { IUser, IGetUserQuery } from '@types'
 
-// TODO: should this be a context instead of a custom hook?
+interface IUserContext {
+  loggedInUser?: IUser
+  loading?: boolean
+  error?: ApolloError
+  setNewUserData?: (data: NewUserData) => void
+}
 
-export function useLoggedInUser() {
+export const UserContext = createContext<IUserContext>({})
+
+export const UserContextProvider = ({ children }: SimpleComponentProps) => {
+  initIntercom()
+
   const apolloClient = useApolloClient()
   const metadata = useReactiveVar(userMetadataVar)
 
@@ -14,12 +23,12 @@ export function useLoggedInUser() {
     variables: { issuer: metadata?.issuer },
   })
 
-  const [loggedInUser, setLoggedInUser] = useState<Partial<IUser>>()
-  useEffect(() => setLoggedInUser(data?.User[0]), [data])
+  const [loggedInUser, setLoggedInUser] = useState<IUser>()
+  useEffect(() => setLoggedInUser(data?.User[0] as IUser), [data])
 
   const [newUserData, setNewUserData] = useState<NewUserData>()
 
-  const saveNewUserData = async (user: Partial<IUser>, data: NewUserData) => {
+  const saveNewUserData = async (user: IUser, data: NewUserData) => {
     try {
       if (!user.id) {
         throw 'Data returned from Hasura does not include ID.'
@@ -41,5 +50,7 @@ export function useLoggedInUser() {
     }
   }, [loggedInUser, newUserData])
 
-  return { loggedInUser, loading, error, setNewUserData }
+  return (
+    <UserContext.Provider value={{ loggedInUser, loading, error, setNewUserData }}>{children}</UserContext.Provider>
+  )
 }

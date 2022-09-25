@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { useLoggedInUser, useFormLocalStorage, hasRequiredProperties, DonationContext } from '@lib'
+import { UserContext, useFormLocalStorage, hasRequiredProperties, DonationContext } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
 import { UPDATE_USER_ADDRESS } from '@gql'
@@ -18,7 +18,7 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
   const { setDonationStage } = useContext(DonationContext)
 
   const apolloClient = useApolloClient()
-  const { loggedInUser } = useLoggedInUser()
+  const { loggedInUser } = useContext(UserContext)
 
   const LOCALSTORAGE_KEY = 'fiatPaymentAddress'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
@@ -32,6 +32,9 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
 
   const saveAndProceed = async () => {
     try {
+      if (!loggedInUser) {
+        throw new Error('User session missing.')
+      }
       if (!hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], data)) {
         throw new Error('missing parameters')
       }

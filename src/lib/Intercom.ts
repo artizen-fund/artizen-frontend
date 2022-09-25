@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from 'react'
-import { useLoggedInUser, assert } from '@lib'
+import { useCallback, useEffect, useContext } from 'react'
+import { assert, UserContext } from '@lib'
 import { loadIntercom, trackEvent, shutdownIntercom } from 'next-intercom'
 
 export const notifications = []
@@ -18,7 +18,7 @@ export enum intercomEventEnum {
 export const trackEventF = (type: intercomEventEnum, target: object = {}) => trackEvent(type, target)
 
 export function initIntercom() {
-  const { loggedInUser } = useLoggedInUser()
+  const { loggedInUser } = useContext(UserContext)
 
   const appId = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 

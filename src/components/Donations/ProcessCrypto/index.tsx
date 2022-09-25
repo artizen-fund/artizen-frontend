@@ -16,7 +16,7 @@ import {
   sleep,
   USDC_UNIT,
   useBridge,
-  useLoggedInUser,
+  UserContext,
   userMetadataVar,
   getConfirmDonationURL,
   DonationContext,
@@ -41,7 +41,7 @@ const ProcessCrypto = ({ donationMethod, amount, order, setOrder }: IProcessCryp
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
   const [error, setError] = useState<Error>('')
 
-  const { loggedInUser } = useLoggedInUser()
+  const { loggedInUser } = useContext(UserContext)
 
   const metadata = useReactiveVar(userMetadataVar)
 

@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { Icon, Form, CheckboxControl } from '@components'
-import { loginWithEmail, useMagic, useFormLocalStorage, useLoggedInUser } from '@lib'
+import { loginWithEmail, useMagic, useFormLocalStorage, UserContext } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/signup'
 import {
@@ -22,11 +22,11 @@ import {
 
 const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
   const LOCALSTORAGE_KEY = 'signupForm'
-  const { setNewUserData } = useLoggedInUser()
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
 
   const { magic } = useMagic()
   const apolloClient = useApolloClient()
+  const { setNewUserData } = useContext(UserContext)
 
   const [sentEmail, setSentEmail] = useState(false)
   const [submitted, setSubmitted] = useState(false)
