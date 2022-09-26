@@ -55,9 +55,9 @@ const PaymentFiat = () => {
     }
     setProcessing(true)
     try {
-      const { order, authorization } = await payWithFiat(amount, data, loggedInUser, metadata)
+      const { order, authorization } = await payWithFiat(amount as number, data, loggedInUser, metadata)
       setWyreAuthorization(authorization)
-      setOrder(order)
+      setOrder?.(order)
 
       if (authorization.authorization3dsUrl) {
         // TODO: move it to a hook or something
@@ -74,7 +74,7 @@ const PaymentFiat = () => {
   }
 
   if (!!loggedInUser && !hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], loggedInUser)) {
-    return <PaymentFiatAddress {...{ setDonationStage, amount }} />
+    return <PaymentFiatAddress {...{ setDonationStage, amount: amount as number }} />
   }
 
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
@@ -130,7 +130,7 @@ const PaymentFiat = () => {
           </TableCell>
           <TableCell highlight>
             <div>Purchase total:</div>
-            <div>${amount + TRANSACTION_FEE} USD</div>
+            <div>${(amount as number) + TRANSACTION_FEE} USD</div>
           </TableCell>
         </Table>
 
@@ -150,7 +150,7 @@ const PaymentFiat = () => {
           readonly={processing}
         >
           <SubmitButton stretch onClick={processTransaction}>
-            Transfer ${amount + TRANSACTION_FEE}
+            Transfer ${(amount as number) + TRANSACTION_FEE}
           </SubmitButton>
           <ProcessingMessage>hum de dooo</ProcessingMessage>
         </Form>

@@ -31,7 +31,7 @@ const PaymentCrypto = ({ chains }: IPaymentCrypto) => {
 
   const { connect, isError } = useConnect()
   const { isConnected } = useAccount()
-  const chainId = getChainId(donationMethod)
+  const chainId = getChainId(donationMethod as DonationMethod)
 
   const connectWallet = (wallet: string) => {
     if (wallet === 'metamask') {
@@ -78,7 +78,7 @@ const PaymentCrypto = ({ chains }: IPaymentCrypto) => {
           </TableCell>
           <TableCell highlight>
             <div>Purchase total:</div>
-            <div>${amount + TRANSACTION_FEE} USD</div>
+            <div>${(amount as number) + TRANSACTION_FEE} USD</div>
           </TableCell>
         </Table>
       </Information>

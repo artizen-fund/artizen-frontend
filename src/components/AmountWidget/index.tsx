@@ -5,18 +5,18 @@ import { rgba } from '@lib'
 import { palette, typography } from '@theme'
 
 interface IAmountWidget {
-  amount: number
-  setAmount: (n: number) => void
+  amount?: number
+  setAmount?: (n: number) => void
 }
 
 const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
   // todo: sort out integer or float
   // todo: will we have text/typing input?
 
-  const add = (n: number) => setAmount(amount + n)
+  const add = (n: number) => setAmount?.((amount as number) + n)
 
   useEffect(() => {
-    if (isNaN(amount) || amount < 0) setAmount(0)
+    if (!amount || isNaN(amount) || amount < 0) setAmount?.(0)
   }, [amount])
 
   return (
@@ -26,14 +26,21 @@ const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
         <div>USD</div>
       </Denomination>
       <AmountBox>
-        <Amount value={amount} onChange={e => setAmount(parseInt(e.target.value))} />
+        <Amount value={amount} onChange={e => setAmount?.(parseInt(e.target.value))} />
         <label>donation total</label>
       </AmountBox>
       <Buttons>
         <Button level={2} outline glyphOnly glyph="mathPlus" onClick={() => add(10)}>
           increase
         </Button>
-        <Button level={2} outline glyphOnly glyph="mathMinus" onClick={() => add(-10)} disabled={amount < 10}>
+        <Button
+          level={2}
+          outline
+          glyphOnly
+          glyph="mathMinus"
+          onClick={() => add(-10)}
+          disabled={(amount as number) < 10}
+        >
           decrease
         </Button>
       </Buttons>

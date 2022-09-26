@@ -20,17 +20,17 @@ import { sleep } from './sleep'
 import qs from 'qs'
 
 interface IProcessDonationContext {
-  donationMethod: DonationMethod
-  setDonationMethod: (donationMethod: DonationMethod) => void
-  amount: number
-  setAmount: (amount: number) => void
-  order: { id: string }
-  setOrder: (o: { id: string }) => void
-  cryptoStage: CryptoStage
-  setCryptoStage: (cryptoStage: CryptoStage) => void
-  error: Error
-  setError: (error: Error) => void
-  retry: () => void
+  donationMethod?: DonationMethod
+  setDonationMethod?: (donationMethod: DonationMethod) => void
+  amount?: number
+  setAmount?: (amount: number) => void
+  order?: { id: string }
+  setOrder?: (o: { id: string }) => void
+  cryptoStage?: CryptoStage
+  setCryptoStage?: (cryptoStage: CryptoStage) => void
+  error?: Error
+  setError?: (error: Error) => void
+  retry?: () => void
 }
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'

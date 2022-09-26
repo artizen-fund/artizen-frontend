@@ -52,7 +52,7 @@ export const DonationShelf = () => {
   return (
     <>
       <Breadcrumbs {...{ breadcrumbs }} currentStep={donationStage} />
-      {renderSwitch(donationStage, donationMethod)}
+      {renderSwitch(donationStage, donationMethod as DonationMethod)}
     </>
   )
 }

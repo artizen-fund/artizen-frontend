@@ -40,7 +40,7 @@ const DonationAmount = () => {
   // todo: how is this managed?
 
   const disabled = useMemo(
-    () => amount < (methods.find(method => method.key === donationMethod)?.min || 999999),
+    () => (amount as number) < (methods.find(method => method.key === donationMethod)?.min || 999999),
     [amount, donationMethod],
   )
 
@@ -61,13 +61,13 @@ const DonationAmount = () => {
         <SuggestedDonations>
           <span>Average donation:</span>
           <div>
-            <Button onClick={() => setAmount(200)} level={2} outline>
+            <Button onClick={() => setAmount?.(200)} level={2} outline>
               $200
             </Button>
-            <Button onClick={() => setAmount(500)} level={2} outline>
+            <Button onClick={() => setAmount?.(500)} level={2} outline>
               $500
             </Button>
-            <Button onClick={() => setAmount(1000)} level={2} outline>
+            <Button onClick={() => setAmount?.(1000)} level={2} outline>
               $1000
             </Button>
           </div>
@@ -77,7 +77,7 @@ const DonationAmount = () => {
           {methods.map(thisMethod => (
             <Method
               key={thisMethod.key}
-              onClick={() => setDonationMethod(thisMethod.key)}
+              onClick={() => setDonationMethod?.(thisMethod.key)}
               selected={donationMethod === thisMethod.key}
             >
               <Icon
