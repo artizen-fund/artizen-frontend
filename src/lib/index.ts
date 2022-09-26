@@ -24,7 +24,7 @@ export * from './utilsServer'
 export * from './useWriteContract'
 export * from './sleep'
 export * from './useBridge'
-export * from './userContext'
+export * from './UserContext'
 export * from './wagmiClient'
 
 // export * from './useDonation'
