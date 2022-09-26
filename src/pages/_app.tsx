@@ -9,6 +9,7 @@ import {
   initializeApollo,
   CourierNotification,
   DonationContextProvider,
+  UserContextProvider,
   CampaignProvider,
 } from '@lib'
 import packageJson from '../../package.json'
@@ -30,13 +31,15 @@ const App = ({
   return (
     <ApolloProvider client={apolloClient}>
       <MagicProvider>
-        <CourierNotification>
-          <DonationContextProvider>
-            <CampaignProvider>
-              <Component {...pageProps} />
-            </CampaignProvider>
-          </DonationContextProvider>
-        </CourierNotification>
+        <UserContextProvider>
+          <CourierNotification>
+            <DonationContextProvider>
+              <CampaignProvider>
+                <Component {...pageProps} />
+              </CampaignProvider>
+            </DonationContextProvider>
+          </CourierNotification>
+        </UserContextProvider>
       </MagicProvider>
     </ApolloProvider>
   )

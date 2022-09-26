@@ -1,19 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useApolloClient, ApolloClient } from '@apollo/client'
-import { OAuthProvider } from '@magic-ext/oauth'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Button, Icon, Form, CheckboxControl } from '@components'
-import { rgba, loginWithEmail, useMagic, useFormLocalStorage } from '@lib'
-import { palette, typography, breakpoint } from '@theme'
-import { schema, uischema, initialState, FormState } from './form'
+import { Icon, Form, CheckboxControl } from '@components'
+import { loginWithEmail, useMagic, useFormLocalStorage, UserContext } from '@lib'
+import { breakpoint } from '@theme'
+import { schema, uischema, initialState, FormState } from '@forms/signup'
+import {
+  Copy,
+  Headline,
+  SignInDirections,
+  InfoRow,
+  SubmitButton,
+  Confirmation,
+  Reset,
+  CheckWrapper,
+  Check,
+  CheckMessage,
+  ISessionShelf,
+} from '../_common'
 
-const LoginShelf = () => {
-  const LOCALSTORAGE_KEY = 'loginForm'
+const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
+  const LOCALSTORAGE_KEY = 'signupForm'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
 
   const { magic } = useMagic()
   const apolloClient = useApolloClient()
+  const { setNewUserData } = useContext(UserContext)
 
   const [sentEmail, setSentEmail] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -44,17 +57,20 @@ const LoginShelf = () => {
     setReadonly(false)
   }
 
+  useEffect(() => {
+    setNewUserData?.({
+      firstName: data.firstName,
+      lastName: data.lastName,
+    })
+  }, [data])
+
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
       <Copy>
-        <Headline>Let’s get started by setting up your Artizen account</Headline>
-        <InfoRow>
+        <Headline>Let’s get started by setting up your Artizen account </Headline>
+        <InfoRow onClick={() => setCreateMode(false)}>
           <Icon glyph="infoLarge" outline level={1} />
-          <SignInDirections>
-            Already have an account?
-            <br />
-            You can still use this form, it’s magic!
-          </SignInDirections>
+          <SignInDirections>Sign in to your account instead</SignInDirections>
         </InfoRow>
       </Copy>
       <Form
@@ -81,72 +97,39 @@ const LoginShelf = () => {
           )}
         </>
       </Form>
-      <TocWrapper>
-        <TocCheck>
+      <CheckWrapper>
+        <Check>
           <CheckboxControl
             data={acceptedToc}
             path="not-used"
             handleChange={() => setAcceptedToc(!acceptedToc)}
             label=""
           />
-          <TocMessage>
-            I agree to Artizen’s
+          <CheckMessage>
+            I agree to Artizen’s{' '}
             <Link href="/toc">
-              <a> Terms &amp; Conditions</a>
+              <a>Terms &amp; Conditions</a>
             </Link>
-          </TocMessage>
-        </TocCheck>
-      </TocWrapper>
+          </CheckMessage>
+        </Check>
+      </CheckWrapper>
     </Wrapper>
   )
 }
 
-const SubmitButton = styled(props => <Button {...props} />)`
-  grid-area: submit;
-`
-
-const Confirmation = styled.div`
-  display: none;
-  grid-area: confirmation;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  h1 {
-    ${typography.title.l4}
-    color: ${rgba(palette.night)};
-    @media (prefers-color-scheme: dark) {
-      color: ${rgba(palette.moon)};
-    }
-  }
-  p {
-    ${typography.label.l1}
-    color: ${rgba(palette.barracuda)};
-  }
-  text-align: center;
-`
-
-const Reset = styled.p`
-  cursor: pointer;
-  border-bottom: 2px solid ${rgba(palette.night)};
-  @media (prefers-color-scheme: dark) {
-    border-bottom: 2px solid ${rgba(palette.moon)};
-  }
-`
-
 const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     grid-template-areas:
-      'copy email'
-      'copy submit'
-      'tocCheck .';
+      'copy firstName lastName'
+      'copy email email'
+      'tocCheck submit submit';
     &.submitted {
       grid-template-areas:
-        'copy confirmation'
-        'copy confirmation'
-        'tocCheck confirmation';
+        'copy confirmation confirmation'
+        'copy confirmation confirmation'
+        'tocCheck confirmation confirmation';
     }
     gap: 10px;
 
@@ -158,9 +141,17 @@ const Wrapper = styled.div`
     *[id='#/properties/email'] {
       grid-area: email;
     }
+    *[id='#/properties/firstName'] {
+      grid-area: firstName;
+    }
+    *[id='#/properties/lastName'] {
+      grid-area: lastName;
+    }
   }
 
   &.submitted {
+    *[id='#/properties/firstName'],
+    *[id='#/properties/lastName'],
     *[id='#/properties/email'],
     ${SubmitButton} {
       display: none;
@@ -171,57 +162,4 @@ const Wrapper = styled.div`
   }
 `
 
-const Copy = styled.div`
-  grid-area: copy;
-`
-
-const Headline = styled.h1`
-  ${typography.title.l2};
-`
-
-const InfoRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 1em 0 2em 0;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    margin: 1em 0 0 0;
-  }
-`
-
-const SignInDirections = styled.p`
-  ${typography.label.l1};
-`
-
-const TocWrapper = styled.div`
-  display: contents;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    grid-area: tocCheck;
-  }
-`
-
-const TocCheck = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    justify-content: start;
-  }
-  a {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
-`
-
-const TocMessage = styled.p`
-  ${typography.label.l1}
-  color: ${rgba(palette.barracuda)};
-`
-
-export default LoginShelf
+export default SignupShelf

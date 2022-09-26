@@ -8,7 +8,7 @@ import AccountStats from './AccountStats'
 import QfSquare from './QfSquare'
 
 interface IAccountShelf {
-  user: IUser
+  user: Partial<IUser>
   hideShelf: () => void
 }
 

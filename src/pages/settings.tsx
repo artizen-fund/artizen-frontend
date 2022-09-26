@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import {
@@ -12,13 +12,17 @@ import {
   EditCollection,
   PagePadding,
 } from '@components'
-import { useLoggedInUser, rgba } from '@lib'
+import { UserContext, rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 
 const Settings = () => {
   const router = useRouter()
-  const [loggedInUser, loading] = useLoggedInUser()
-  if (!loading && !loggedInUser) {
+  const { loggedInUser, loading } = useContext(UserContext)
+  if (loading === false && !loggedInUser) {
+    /* Why `loading === false` and not `!loading`?
+     * The context starts up in either undefined or false state.
+     * We want to be very clear about the check having happened and the user not being present.
+     */
     router.push('/')
   }
 

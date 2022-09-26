@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginShelf renders correctly 1`] = `
+<div>
+  <div
+    class="sc-91894e3-3 iWqXNi"
+  >
+    <div
+      class="sc-91894e3-4 ecIZZ"
+    >
+      <h1
+        class="sc-91894e3-5 fTSCwM"
+      >
+        Let’s get started by setting up your Artizen account
+      </h1>
+      <div
+        class="sc-91894e3-6 jXbMYf"
+      >
+        <div
+          class="sc-60e75bb7-2 elEEJs"
+        >
+          <div
+            class="sc-60e75bb7-0 dkGscC"
+            color="night"
+          >
+            <div
+              class="sc-149d3190-0 eIDYrK"
+              color="night"
+            />
+          </div>
+        </div>
+        <p
+          class="sc-91894e3-7 iDqyHi"
+        >
+          Already have an account?
+          <br />
+          You can still use this form, it’s magic!
+        </p>
+      </div>
+    </div>
+    <div
+      class="vertical-layout"
+    >
+      <div
+        class="vertical-layout-item"
+      >
+        <div
+          class="sc-2f9d5146-0 jjUILZ"
+          id="#/properties/email"
+        >
+          <div
+            class="sc-dccedff6-0 jjRMSF"
+          >
+            <input
+              placeholder="e.g. rene@artizen.fund"
+              required=""
+              type="text"
+              value=""
+            />
+            <label
+              class="sc-ffdb2e6c-0 cqczZc"
+            >
+              Email Address
+               *
+            </label>
+          </div>
+          <div
+            class="sc-93ba83c0-0 BZJQU"
+          >
+            is a required property
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      class="sc-2a588df4-2 bANZSb sc-91894e3-0 itOROQ  disabled"
+      disabled=""
+    >
+      <span>
+        Sign In / Sign Up
+      </span>
+    </button>
+    <div
+      class="sc-91894e3-8 jZmRGv"
+    >
+      <div
+        class="sc-91894e3-9 jOehvP"
+      >
+        <label
+          class="sc-dd35d48e-4 dCKwdz"
+        >
+          <div
+            class="sc-dd35d48e-0 bkkyVw"
+          >
+            <input
+              checked=""
+              class="sc-dd35d48e-1 clTMzK"
+              type="checkbox"
+            />
+            <span
+              class="sc-dd35d48e-2 dtceeR"
+            />
+          </div>
+          <span
+            class="sc-dd35d48e-3 eAaGSv"
+          />
+        </label>
+        <p
+          class="sc-91894e3-10 DnIa-d"
+        >
+          I agree to Artizen’s
+          <a
+            href="/toc"
+          >
+             Terms & Conditions
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
