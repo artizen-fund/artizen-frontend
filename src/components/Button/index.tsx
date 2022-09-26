@@ -94,6 +94,16 @@ const ButtonStyle = css<Partial<ButtonProps>>`
 
   ${props => props.stretch && 'width: 100%;'}
 
+  span {
+    padding-top: 2px;
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      padding-top: 2.5px;
+    }
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      padding-top: 3.5px;
+    }
+  }
+
   ${props =>
     props.glyphOnly
       ? `
