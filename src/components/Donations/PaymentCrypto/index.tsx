@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useConnect, useAccount } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { getChainId, DonationContext } from '@lib'
+import { getChainId, DonationContext, useProcessDonation } from '@lib'
 import { Table, TableCell, DonationHelpLink } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
@@ -12,8 +12,6 @@ import WalletOptions from './WalletOptions'
 import CheckboxControl from '../../Form/Controls/BooleanControl/CheckboxControl'
 
 interface IPaymentCrypto {
-  amount: number
-  donationMethod: DonationMethod
   chains: any
 }
 
@@ -25,13 +23,15 @@ const walletConnectConnector = new WalletConnectConnector({
   },
 })
 
-const PaymentCrypto = ({ amount, donationMethod, chains }: IPaymentCrypto) => {
+const PaymentCrypto = ({ chains }: IPaymentCrypto) => {
   const { setDonationStage } = useContext(DonationContext)
+  const { amount, donationMethod } = useProcessDonation()
+
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
 
   const { connect, isError } = useConnect()
   const { isConnected } = useAccount()
-  const chainId = getChainId(donationMethod)
+  const chainId = getChainId(donationMethod as DonationMethod)
 
   const connectWallet = (wallet: string) => {
     if (wallet === 'metamask') {
@@ -78,7 +78,7 @@ const PaymentCrypto = ({ amount, donationMethod, chains }: IPaymentCrypto) => {
           </TableCell>
           <TableCell highlight>
             <div>Purchase total:</div>
-            <div>${amount + TRANSACTION_FEE} USD</div>
+            <div>${(amount as number) + TRANSACTION_FEE} USD</div>
           </TableCell>
         </Table>
       </Information>

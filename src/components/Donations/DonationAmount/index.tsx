@@ -2,14 +2,7 @@ import { useState, useEffect, useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
 import { breakpoint, palette, typography, GlyphKey } from '@theme'
-import { rgba, DonationContext } from '@lib'
-
-interface IDonationAmount {
-  amount: number
-  setAmount: (n: number) => void
-  donationMethod: DonationMethod
-  setDonationMethod: (d: DonationMethod) => void
-}
+import { rgba, DonationContext, useProcessDonation } from '@lib'
 
 type MethodSet = {
   key: DonationMethod
@@ -39,13 +32,15 @@ const methods: Array<MethodSet> = [
   },
 ]
 
-const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }: IDonationAmount) => {
+const DonationAmount = () => {
   const { setDonationStage } = useContext(DonationContext)
+  const { amount, setAmount, donationMethod, setDonationMethod } = useProcessDonation()
+
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   // todo: how is this managed?
 
   const disabled = useMemo(
-    () => amount < (methods.find(method => method.key === donationMethod)?.min || 999999),
+    () => (amount as number) < (methods.find(method => method.key === donationMethod)?.min || 999999),
     [amount, donationMethod],
   )
 
@@ -66,13 +61,13 @@ const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }
         <SuggestedDonations>
           <span>Average donation:</span>
           <div>
-            <Button onClick={() => setAmount(200)} level={2} outline>
+            <Button onClick={() => setAmount?.(200)} level={2} outline>
               $200
             </Button>
-            <Button onClick={() => setAmount(500)} level={2} outline>
+            <Button onClick={() => setAmount?.(500)} level={2} outline>
               $500
             </Button>
-            <Button onClick={() => setAmount(1000)} level={2} outline>
+            <Button onClick={() => setAmount?.(1000)} level={2} outline>
               $1000
             </Button>
           </div>
@@ -82,7 +77,7 @@ const DonationAmount = ({ amount, setAmount, donationMethod, setDonationMethod }
           {methods.map(thisMethod => (
             <Method
               key={thisMethod.key}
-              onClick={() => setDonationMethod(thisMethod.key)}
+              onClick={() => setDonationMethod?.(thisMethod.key)}
               selected={donationMethod === thisMethod.key}
             >
               <Icon
