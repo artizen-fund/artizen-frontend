@@ -12,12 +12,12 @@ import { isProd } from './envHelpers'
 import { getChainId } from './getChainId'
 import { useBridge } from './useBridge'
 import { useDonation } from './useDonation'
-import { useLoggedInUser } from './useLoggedInUser'
 import { USDC_UNIT } from './utilsCrypto'
 import { v4 as uuidv4 } from 'uuid'
 import { getConfirmDonationURL } from './confirmDonationUrl'
 import { sleep } from './sleep'
 import qs from 'qs'
+import { UserContext } from './userContext'
 
 interface IProcessDonationContext {
   donationMethod?: DonationMethod
@@ -47,7 +47,7 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
   const [error, setError] = useState<Error>('')
 
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useContext(UserContext)
 
   const metadata = useReactiveVar(userMetadataVar)
 

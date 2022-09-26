@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { Maybe } from '@types'
-import { rgba, refreshSession, useLoggedInUser, isClient, DonationContext } from '@lib'
+import { rgba, refreshSession, isClient, DonationContext, UserContext } from '@lib'
 
 const AccountButton = (props: SimpleComponentProps) => {
   const apolloClient = useApolloClient()
