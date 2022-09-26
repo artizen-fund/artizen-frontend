@@ -11,15 +11,21 @@ export const GET_USER = gql`
       profileImage
       globalTitle
       globalRole
-      website
-      linkedinLink
-      twitterLink
       company
       street1
       city
       state
       zip
       country
+      website
+      linkedinLink
+      twitterLink
+      twitterHandle
+      instagramHandle
+      discordHandle
+      bannerImage
+      artizenHandle
+      created_at
     }
   }
 `
