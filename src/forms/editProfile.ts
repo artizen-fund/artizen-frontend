@@ -12,23 +12,40 @@ export const schema: JsonSchema = {
       type: 'string',
       minLength: 2,
     },
+    artizenHandle: {
+      type: 'string',
+      minLength: 2,
+    },
     email: {
       type: 'string',
       format: 'email',
     },
-    bio: {
+    phoneNumber: {
       type: 'string',
+      format: 'phone',
     },
-    twitterLink: {
+    bio: {
       type: 'string',
     },
     website: {
       type: 'string',
       minLength: 12,
-      // TODO: format: url
+      format: 'url',
+    },
+    twitterHandle: {
+      type: 'string',
+      // todo: regex?
+    },
+    instagramHandle: {
+      type: 'string',
+      // todo: regex?
+    },
+    discordHandle: {
+      type: 'string',
+      // todo: regex?
     },
   },
-  required: ['firstName', 'lastName', 'email'],
+  required: ['firstName', 'lastName', 'artizenHandle', 'email'],
 }
 
 /*
@@ -38,8 +55,10 @@ export const schema: JsonSchema = {
 export interface FormState extends Record<string, unknown> {
   firstName?: string
   lastName?: string
+  artizenHandle?: string
   bio?: string
   email?: string
+  phoneNumber?: string
   twitterLink?: string
   website?: string
 }
@@ -58,6 +77,11 @@ export const uischema = {
   elements: [
     {
       type: 'Control',
+      scope: '#/properties/artizenHandle',
+      label: 'Username',
+    },
+    {
+      type: 'Control',
       scope: '#/properties/firstName',
       label: 'First Name',
     },
@@ -73,18 +97,33 @@ export const uischema = {
     },
     {
       type: 'Control',
+      scope: '#/properties/phoneNumber',
+      label: 'Phone Number',
+    },
+    {
+      type: 'Control',
       scope: '#/properties/bio',
       label: 'Biography',
     },
     {
       type: 'Control',
-      scope: '#/properties/twitterLink',
+      scope: '#/properties/website',
+      label: 'Website',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/twitterHandle',
       label: 'Twitter Handle',
     },
     {
       type: 'Control',
-      scope: '#/properties/website',
-      label: 'Website',
+      scope: '#/properties/instagramHandle',
+      label: 'Instagram Handle',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/discordHandle',
+      label: 'Discord Handle',
     },
   ],
 }

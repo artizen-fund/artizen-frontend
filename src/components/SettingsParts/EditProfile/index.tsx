@@ -16,6 +16,7 @@ const EditProfile = () => {
   useEffect(() => {
     if (loading || !loggedInUser) return
     setData({
+      artizenHandle: loggedInUser.artizenHandle || initialState.artizenHandle,
       firstName: loggedInUser.firstName || initialState.firstName,
       lastName: loggedInUser.lastName || initialState.lastName,
       email: loggedInUser.email || initialState.email,
@@ -39,11 +40,7 @@ const EditProfile = () => {
 
   return (
     <Wrapper>
-      <Form
-        localStorageKey={LOCALSTORAGE_KEY}
-        {...{ schema, uischema, initialState, data, setData }}
-        readonly={processing}
-      >
+      <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
         <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={1}>
           Save Changes
         </StyledButton>
@@ -56,10 +53,15 @@ const Wrapper = styled.div`
   display: grid;
   gap: 10px;
   grid-template-areas:
+    'artizenHandle artizenHandle'
     'firstName lastName'
     'email email'
+    'phoneNumber phoneNumber'
     'bio bio'
-    'twitterLink website'
+    'website website'
+    'twitterHandle twitterHandle'
+    'instagramHandle instagramHandle'
+    'discordHandle discordHandle'
     'saveChanges saveChanges';
 
   @media only screen and (min-width: ${breakpoint.desktop}px) {
@@ -69,6 +71,10 @@ const Wrapper = styled.div`
   .vertical-layout,
   .vertical-layout-item {
     display: contents;
+  }
+
+  *[id='#/properties/artizenHandle'] {
+    grid-area: artizenHandle;
   }
 
   *[id='#/properties/firstName'] {
@@ -83,16 +89,28 @@ const Wrapper = styled.div`
     grid-area: email;
   }
 
+  *[id='#/properties/phoneNumber'] {
+    grid-area: phoneNumber;
+  }
+
   *[id='#/properties/bio'] {
     grid-area: bio;
   }
 
-  *[id='#/properties/twitterLink'] {
-    grid-area: twitterLink;
-  }
-
   *[id='#/properties/website'] {
     grid-area: website;
+  }
+
+  *[id='#/properties/twitterHandle'] {
+    grid-area: twitterHandle;
+  }
+
+  *[id='#/properties/discordHandle'] {
+    grid-area: discordHandle;
+  }
+
+  *[id='#/properties/instagramHandle'] {
+    grid-area: instagramHandle;
   }
 `
 
