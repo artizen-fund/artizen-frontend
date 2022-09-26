@@ -8,9 +8,8 @@ import { rgba, refreshSession, useLoggedInUser, isClient, DonationContext } from
 
 const AccountButton = (props: SimpleComponentProps) => {
   const apolloClient = useApolloClient()
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useContext(UserContext)
   const { visibleShelf } = useContext(DonationContext)
-
   useEffect(() => {
     if (isClient()) refreshSession(apolloClient)
   }, [])

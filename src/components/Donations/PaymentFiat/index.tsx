@@ -7,7 +7,7 @@ import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress, Ta
 import {
   payWithFiat,
   userMetadataVar,
-  useLoggedInUser,
+  UserContext,
   useFormLocalStorage,
   hasRequiredProperties,
   assert,
@@ -26,7 +26,7 @@ const TRANSACTION_FEE = 42
 
 const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
   const { setDonationStage } = useContext(DonationContext)
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useContext(UserContext)
 
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
@@ -75,7 +75,7 @@ const PaymentFiat = ({ amount, setOrder }: IPaymentFiat) => {
     }
   }
 
-  if (!hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], loggedInUser)) {
+  if (!!loggedInUser && !hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], loggedInUser)) {
     return <PaymentFiatAddress {...{ setDonationStage, amount }} />
   }
 

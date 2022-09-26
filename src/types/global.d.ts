@@ -57,6 +57,8 @@ declare global {
     topDonatedAmount: BigNumber
     topDonor: string
   }
+
+  type NewUserData = { firstName?: string; lastName?: string }
 }
 
 export {}

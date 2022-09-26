@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Breadcrumbs } from '@components'
 import { WagmiConfig } from 'wagmi'
-import { useLoggedInUser, DonationContext } from '@lib'
+import { UserContext, DonationContext } from '@lib'
 import { getWagmiClient } from '../../../lib/wagmiClient'
 import { BreadcrumbStep } from '../../Breadcrumbs'
 
@@ -12,7 +12,7 @@ export const DonationShelf = () => {
   const [order, setOrder] = useState<{ id: string }>({ id: '' })
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useContext(UserContext)
 
   useEffect(() => {
     if (donationStage === 'login' && !!loggedInUser) {

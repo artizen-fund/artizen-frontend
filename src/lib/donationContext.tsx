@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from 'react'
-import { useLoggedInUser, isServer } from '@lib'
+import { createContext, useEffect, useState, useContext } from 'react'
+import { UserContext, isServer } from '@lib'
 
 export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
 
@@ -16,7 +16,7 @@ interface IDonationContext {
 export const DonationContext = createContext<IDonationContext>({ donationStage: 'setAmount' })
 
 export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
-  const [loggedInUser] = useLoggedInUser()
+  const { loggedInUser } = useContext(UserContext)
   const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
   const [donationStage, setDonationStage] = useState<DonationStage>('setAmount')
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()

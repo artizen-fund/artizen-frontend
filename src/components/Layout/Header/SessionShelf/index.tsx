@@ -1,5 +1,7 @@
-import { useLoggedInUser, initIntercom } from '@lib'
-import LoginShelf from '../LoginShelf'
+import { useState, useContext } from 'react'
+import { UserContext } from '@lib'
+import LoginShelf from './LoginShelf'
+import SignupShelf from './SignupShelf'
 import AccountShelf from '../AccountShelf'
 
 interface ISessionShelf {
@@ -7,9 +9,16 @@ interface ISessionShelf {
 }
 
 const SessionShelf = ({ hideShelf }: ISessionShelf) => {
-  initIntercom()
-  const [loggedInUser] = useLoggedInUser()
-  return !!loggedInUser ? <AccountShelf user={loggedInUser} {...{ hideShelf }} /> : <LoginShelf />
+  const { loggedInUser } = useContext(UserContext)
+  const [createMode, setCreateMode] = useState(true)
+
+  return !!loggedInUser ? (
+    <AccountShelf user={loggedInUser} {...{ hideShelf }} />
+  ) : createMode ? (
+    <SignupShelf {...{ setCreateMode }} />
+  ) : (
+    <LoginShelf {...{ setCreateMode }} />
+  )
 }
 
 export default SessionShelf
