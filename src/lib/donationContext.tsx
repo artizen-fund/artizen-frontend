@@ -23,11 +23,19 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
   useEffect(() => {
-    if (visibleShelf === 'donate' && donationStage === 'login' && !loggedInUser) {
-      setVisibleShelf('session')
-    }
-    if (visibleShelf === 'session' && donationStage === 'login' && !!loggedInUser) {
-      setVisibleShelf('donate')
+    /* A donation can be initiated before a user is logged in.
+     * This effect initiates the login UI, and then returns the UI to the donation flow.
+     */
+    if (donationStage === 'login') {
+      /* ^ If a donation amount is set but no user is logged in, the donationStage will be set to 'login'. */
+      if (visibleShelf === 'donate' && !loggedInUser) {
+        /* ^ No user? Switch visible header shelf to session for Login/Signup UI. */
+        setVisibleShelf('session')
+      } else if (visibleShelf === 'session' && !!loggedInUser) {
+        /* ^ Once the user is not undefined, flip back to Donation flow. */
+        setDonationStage?.('payment')
+        setVisibleShelf('donate')
+      }
     }
   }, [donationStage, loggedInUser, visibleShelf])
 

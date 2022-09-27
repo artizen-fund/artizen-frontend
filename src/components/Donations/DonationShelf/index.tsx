@@ -12,12 +12,6 @@ export const DonationShelf = () => {
   const { donationMethod } = useProcessDonation()
   const { loggedInUser } = useContext(UserContext)
 
-  useEffect(() => {
-    if (donationStage === 'login' && !!loggedInUser) {
-      setDonationStage?.('payment')
-    }
-  }, [donationStage, loggedInUser])
-
   const renderSwitch = (donationStage: DonationStage, donationMethod: DonationMethod) => {
     switch (donationStage) {
       case 'login':
