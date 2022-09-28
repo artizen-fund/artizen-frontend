@@ -114,7 +114,7 @@ const Wrapper = styled.div`
     'copy copy'
     'street1 street1'
     'city state'
-    'zip countruy'
+    'zip country'
     'submit submit';
   &.submitted {
     grid-template-areas:
