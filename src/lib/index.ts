@@ -27,6 +27,7 @@ export * from './useBridge'
 export * from './userContext'
 export * from './wagmiClient'
 export * from './processDonation'
+export * from './recoverDonation'
 
 // export * from './useDonation'
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.

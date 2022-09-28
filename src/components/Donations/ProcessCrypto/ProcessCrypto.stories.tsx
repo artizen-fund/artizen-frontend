@@ -1,7 +1,7 @@
 import ProcessCrypto from './'
 import { MockedProvider } from '@apollo/client/testing'
 import { WagmiConfig } from 'wagmi'
-import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
+import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_ATTRIBUTE } from '@gql'
 import { CourierNotification } from '@lib'
 import { getWagmiClient } from '../../../lib/wagmiClient'
 
@@ -55,7 +55,7 @@ ProcessCryptoComponent.parameters = {
       },
       {
         request: {
-          query: GET_TOP_UP_WALLET_VIA_TRANSFER_ID,
+          query: GET_TOP_UP_WALLET_VIA_ATTRIBUTE,
         },
         result: {
           data: {
