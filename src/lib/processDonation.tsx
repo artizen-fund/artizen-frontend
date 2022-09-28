@@ -1,6 +1,6 @@
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
 import { USDCAbi } from '@contracts'
-import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
+import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_ATTRIBUTE } from '@gql'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { ethers } from 'ethers'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -94,7 +94,7 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
     },
   })
 
-  const [fetchTopUpWallet] = useLazyQuery(GET_TOP_UP_WALLET_VIA_TRANSFER_ID, {
+  const [fetchTopUpWallet] = useLazyQuery(GET_TOP_UP_WALLET_VIA_ATTRIBUTE, {
     variables: {
       attr: {
         orderId: { _eq: order.id },

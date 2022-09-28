@@ -4,6 +4,7 @@ import { WagmiConfig } from 'wagmi'
 import { DonationContext, useProcessDonation, ProcessDonationProvider, UserContext } from '@lib'
 import { getWagmiClient } from '../../../lib/wagmiClient'
 import { BreadcrumbStep } from '../../Breadcrumbs'
+import { RecoverDonationProvider } from 'src/lib/recoverDonation'
 
 const { client, chains } = getWagmiClient()
 
@@ -60,7 +61,9 @@ export const DonationShelf = () => {
 const DonationShelfWithWagmi = (props: any) => (
   <WagmiConfig client={client}>
     <ProcessDonationProvider>
-      <DonationShelf {...props} />
+      <RecoverDonationProvider>
+        <DonationShelf {...props} />
+      </RecoverDonationProvider>
     </ProcessDonationProvider>
   </WagmiConfig>
 )
