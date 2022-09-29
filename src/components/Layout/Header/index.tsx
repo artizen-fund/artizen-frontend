@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { Button, Logo, DonationShelf, DonationGuide, Onionskin } from '@components'
+import { Button, Logo, DonationShelf, DonationGuide, Share, Onionskin } from '@components'
 import AccountButton from './AccountButton'
 import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
@@ -62,6 +62,7 @@ const Header = () => {
       <DonationGuide />
       <Onionskin />
       <DebugTool />
+      <Share />
     </>
   )
 }

@@ -9,7 +9,7 @@ import { monthNames } from '@copy/common'
 
 const Sidebar = () => {
   const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised } = useCampaign()
-  const { toggleShelf } = useContext(DonationContext)
+  const { toggleShelf, setVisibleShelf } = useContext(DonationContext)
 
   return (
     <StyledStickyCanvas>
@@ -49,7 +49,7 @@ const Sidebar = () => {
                 <Button onClick={() => toggleShelf?.('donate')} level={1} stretch glyph="donate">
                   Donate
                 </Button>
-                <Button onClick={() => alert('todo: implement this')} level={1} stretch outline>
+                <Button onClick={() => setVisibleShelf?.('share')} level={1} stretch outline>
                   Share Now
                 </Button>
               </Row>
