@@ -6,7 +6,7 @@ import { breakpoint, palette, typography } from '@theme'
 import { howItWorks } from '@copy/header'
 
 const HowItWorks = () => {
-  const { toggleShelf } = useContext(DonationContext)
+  const { toggleModal } = useContext(DonationContext)
 
   return (
     <Wrapper>
@@ -16,8 +16,8 @@ const HowItWorks = () => {
           <Under>
             <Title>{cell.title}</Title>
             <Description>{cell.copy}</Description>
-            {!!cell.shelf && (
-              <Button outline level={2} onClick={() => toggleShelf?.(cell.shelf as HeaderShelfType)}>
+            {!!cell.modal && (
+              <Button outline level={2} onClick={() => toggleModal?.(cell.modal as ModalType)}>
                 Learn More
               </Button>
             )}
