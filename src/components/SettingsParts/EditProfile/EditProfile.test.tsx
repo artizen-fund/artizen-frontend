@@ -1,6 +1,5 @@
 import renderer from 'react-test-renderer'
 import { MockedProvider } from '@apollo/client/testing'
-import { UPDATE_USER_PROFILE } from '@gql'
 import EditProfile from './'
 
 describe('EditProfile', () => {

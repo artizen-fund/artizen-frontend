@@ -4,6 +4,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { Icon, Form, CheckboxControl } from '@components'
 import { loginWithEmail, useMagic, useFormLocalStorage, UserContext } from '@lib'
+import { UPDATE_NEW_USER_PROFILE } from '@gql'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/signup'
 import {
@@ -19,6 +20,7 @@ import {
   CheckMessage,
   ISessionShelf,
 } from '../_common'
+import { IUser } from '@types'
 
 const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
   const LOCALSTORAGE_KEY = 'signupForm'
@@ -26,7 +28,7 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
 
   const { magic } = useMagic()
   const apolloClient = useApolloClient()
-  const { setNewUserData } = useContext(UserContext)
+  const { loggedInUser } = useContext(UserContext)
 
   const [sentEmail, setSentEmail] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -57,12 +59,24 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
     setReadonly(false)
   }
 
+  const saveNewUserData = async (user: IUser, data: FormState) => {
+    try {
+      await apolloClient.mutate({
+        mutation: UPDATE_NEW_USER_PROFILE,
+        variables: { id: user.id, firstName: data.firstName, lastName: data.lastName },
+      })
+    } catch (error) {
+      console.error('Error saving new user profile', error)
+    }
+  }
+
   useEffect(() => {
-    setNewUserData?.({
-      firstName: data.firstName,
-      lastName: data.lastName,
-    })
-  }, [data])
+    return () => {
+      if (!!loggedInUser && !!data.firstName && !!data.lastName) {
+        saveNewUserData(loggedInUser, data)
+      }
+    }
+  }, [data, loggedInUser])
 
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>

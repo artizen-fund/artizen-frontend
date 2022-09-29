@@ -5,17 +5,17 @@ import { rgba, assert } from '@lib'
 import { palette, breakpoint } from '@theme'
 
 interface IAvatarForm {
-  setImage: (input: File) => void
+  setFile: (input: File) => void
 }
 
-const AvatarForm = ({ setImage }: IAvatarForm) => {
+const AvatarForm = ({ setFile }: IAvatarForm) => {
   const fileref = useRef<HTMLInputElement>()
   const [preview, setPreview] = useState<string>()
 
   const pickFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pickedFile = e.target.files?.[0]
     if (!pickedFile) return
-    setImage(pickedFile)
+    setFile(pickedFile)
     const reader = new FileReader()
     reader.onloadend = () => setPreview(reader?.result as string)
     reader.readAsDataURL(pickedFile)
@@ -30,7 +30,7 @@ const AvatarForm = ({ setImage }: IAvatarForm) => {
           Take photo
         </Button>
         */}
-        <Button level={2} for="avatarUploadInput" outline>
+        <Button level={2} htmlFor="avatarUploadInput" outline>
           Upload photo
           <FileInput type="file" onChange={pickFile} {...{ fileref }} id="avatarUploadInput" />
         </Button>

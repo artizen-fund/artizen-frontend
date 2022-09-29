@@ -2,8 +2,8 @@ import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import Link from 'next/link'
-import { Form, Button, AvatarForm, CheckboxControl, CloseButton } from '@components'
-import { useFormLocalStorage, UserContext, DonationContext } from '@lib'
+import { Form, AvatarForm, CheckboxControl, CloseButton } from '@components'
+import { UserContext, DonationContext, uploadToCloudinary } from '@lib'
 import { UPDATE_NEW_USER_PROFILE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
 import {
@@ -18,23 +18,32 @@ import {
 import { typography } from '@theme'
 
 const PostDonationData = () => {
+  const { loggedInUser } = useContext(UserContext)
   const { visibleModal, toggleModal } = useContext(DonationContext)
   const apolloClient = useApolloClient()
-  const { loggedInUser } = useContext(UserContext)
   const [data, setData] = useState<FormState>(initialState)
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
 
-  const [image, setImage] = useState<File>()
+  const [imageFile, setImageFile] = useState<File>()
+
+  if (!loggedInUser) return <></>
 
   const submit = async () => {
     setReadonly(true)
     if (!loggedInUser) return
     try {
-      await apolloClient.mutate({
+      let profileImage = undefined
+      if (imageFile) {
+        const cloudinaryResponse = await uploadToCloudinary(imageFile)
+        profileImage = cloudinaryResponse.secure_url
+      }
+      const variables = { id: loggedInUser.id, ...data, profileImage }
+      const derp = await apolloClient.mutate({
         mutation: UPDATE_NEW_USER_PROFILE,
-        variables: { id: loggedInUser.id, ...data },
+        variables,
       })
+      console.log('stored', derp, variables)
       toggleModal?.()
     } catch (error) {
       console.error('Error saving new user profile', error)
@@ -55,10 +64,10 @@ const PostDonationData = () => {
           </SubTitle>
         </Copy>
 
-        <AvatarForm {...{ setImage }} />
+        <AvatarForm setFile={setImageFile} />
         <Form {...{ schema, uischema, initialState, data, setData, readonly }} submitDisabledFromOutside={!acceptedToc}>
           <SubmitButton onClick={() => submit()} stretch>
-            Submit
+            Save Changes
           </SubmitButton>
         </Form>
 
@@ -95,7 +104,7 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   grid-template-areas:
     'copy avatarForm avatarForm'
     'copy firstName lastName'
-    'copy email email'
+    'copy artizenHandle artizenHandle'
     'tocCheck submit submit';
   &.submitted {
     grid-template-areas:
@@ -119,9 +128,9 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     display: ${props => (props.hasLastName ? 'none' : 'block')};
     grid-area: lastName;
   }
-  *[id='#/properties/username'] {
+  *[id='#/properties/artizenHandle'] {
     display: ${props => (props.hasUsername ? 'none' : 'block')};
-    grid-area: email;
+    grid-area: artizenHandle;
   }
 
   &.submitted {

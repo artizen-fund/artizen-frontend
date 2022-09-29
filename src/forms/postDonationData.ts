@@ -11,16 +11,16 @@ export const schema: JsonSchema = {
       type: 'string',
       minLength: 2,
     },
-    username: {
+    artizenHandle: {
       type: 'string',
       minLength: 2,
     },
   },
-  required: ['username', 'firstName', 'lastName'],
+  required: ['artizenHandle', 'firstName', 'lastName'],
 }
 
 export interface FormState extends Record<string, unknown> {
-  username?: string
+  artizenHandle?: string
   firstName?: string
   lastName?: string
 }
@@ -38,11 +38,6 @@ export const uischema = {
   elements: [
     {
       type: 'Control',
-      scope: '#/properties/username',
-      label: 'Choose a Username',
-    },
-    {
-      type: 'Control',
       scope: '#/properties/firstName',
       label: 'First Name',
     },
@@ -50,6 +45,11 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/lastName',
       label: 'Last Name',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/artizenHandle',
+      label: 'Choose a Username',
     },
   ],
 }

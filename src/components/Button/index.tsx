@@ -17,7 +17,7 @@ export interface ButtonProps {
   onClick?: () => void
 
   /* actions for Label button */
-  for?: string
+  htmlFor?: string
 
   /* actions for Link */
   href?: string
@@ -66,7 +66,7 @@ const Button = ({
       </StyledButton>
     )
   }
-  if (!!props.for) {
+  if (!!props.htmlFor) {
     return (
       <StyledLabel className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
         {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
