@@ -39,7 +39,7 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/username',
-      label: 'Username',
+      label: 'Choose a Username',
     },
     {
       type: 'Control',

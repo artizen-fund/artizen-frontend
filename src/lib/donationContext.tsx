@@ -27,7 +27,7 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
-  const [visibleModal, setVisibleModal] = useState<ModalType>()
+  const [visibleModal, setVisibleModal] = useState<ModalType | undefined>('postDonationData')
   const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
 
   useEffect(() => {

@@ -1,10 +1,21 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
-import { Form, Button, AvatarForm } from '@components'
+import Link from 'next/link'
+import { Form, Button, AvatarForm, CheckboxControl, CloseButton } from '@components'
 import { useFormLocalStorage, UserContext, DonationContext } from '@lib'
 import { UPDATE_NEW_USER_PROFILE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
+import {
+  CheckWrapper,
+  Check,
+  CheckMessage,
+  SubmitButton,
+  Confirmation,
+  Copy,
+  Headline,
+} from '../../Layout/Header/SessionShelf/_common'
+import { typography } from '@theme'
 
 const PostDonationData = () => {
   const { visibleModal, toggleModal } = useContext(DonationContext)
@@ -13,6 +24,7 @@ const PostDonationData = () => {
   const { loggedInUser } = useContext(UserContext)
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
   const [readonly, setReadonly] = useState(false)
+  const [acceptedToc, setAcceptedToc] = useState(true)
 
   const submit = async () => {
     setReadonly(true)
@@ -33,44 +45,130 @@ const PostDonationData = () => {
     <Wrapper visible={visibleModal === 'postDonationData'}>
       <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
         <CloseButton onClick={() => toggleModal?.()} />
+
+        <Copy>
+          <Headline>Before we drop you in, let’s complete your profile.</Headline>
+          <SubTitle>
+            Adding a username and profile picture will help people put a face to your name and recognize you in the
+            community.
+          </SubTitle>
+        </Copy>
+
         <AvatarForm />
         <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-          <Button onClick={() => submit()}>Submit</Button>
+          <SubmitButton onClick={() => submit()} stretch>
+            Submit
+          </SubmitButton>
         </Form>
+
+        <CheckWrapper>
+          <Check>
+            <CheckboxControl
+              data={acceptedToc}
+              path="not-used"
+              handleChange={() => setAcceptedToc(!acceptedToc)}
+              label=""
+            />
+            <CheckMessage>
+              I agree to Artizen’s{' '}
+              <Link href="/toc">
+                <a>Terms &amp; Conditions</a>
+              </Link>
+            </CheckMessage>
+          </Check>
+        </CheckWrapper>
       </FormWrapper>
     </Wrapper>
   )
 }
 
+const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean }>`
+  position: relative;
+  z-index: 9999;
+  max-width: calc(100vw - 100px); /* TODO: this is wrong */
+  padding: 50px;
+  background: white;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-areas:
+    'copy avatarForm avatarForm'
+    'copy firstName lastName'
+    'copy email email'
+    'tocCheck submit submit';
+  &.submitted {
+    grid-template-areas:
+      'copy avatarForm avatarForm'
+      'copy confirmation confirmation'
+      'copy confirmation confirmation'
+      'tocCheck confirmation confirmation';
+  }
+  gap: 20px;
+
+  .vertical-layout,
+  .vertical-layout-item {
+    display: contents;
+  }
+
+  *[id='#/properties/email'] {
+    grid-area: email;
+  }
+  *[id='#/properties/firstName'] {
+    grid-area: firstName;
+  }
+  *[id='#/properties/lastName'] {
+    grid-area: lastName;
+  }
+
+  &.submitted {
+    *[id='#/properties/firstName'],
+    *[id='#/properties/lastName'],
+    *[id='#/properties/email'],
+    ${SubmitButton} {
+      display: none;
+    }
+    ${Confirmation} {
+      display: flex;
+    }
+  }
+
+  *[id='#/properties/firstName'] {
+    display: ${props => (props.hasFirstName ? 'none' : 'block')};
+    grid-area: firstName;
+  }
+  *[id='#/properties/lastName'] {
+    display: ${props => (props.hasLastName ? 'none' : 'block')};
+    grid-area: lastName;
+  }
+  *[id='#/properties/username'] {
+    display: ${props => (props.hasUsername ? 'none' : 'block')};
+    grid-area: email;
+  }
+`
+
 const Wrapper = styled.div<{ visible: boolean }>`
+  position: fixed;
+  z-index: 105;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   opacity: ${props => (props.visible ? 1 : 0)};
-  pointer-events: ${props => (props.visible ? 'all' : 'none')};
   transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+
+  ${FormWrapper} {
+    pointer-events: ${props => (props.visible ? 'all' : 'none')};
+  }
 `
 
-const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean }>`
-  position: relative;
-
-  *[id='#/properties/firstName'] {
-    display: ${props => (props.hasFirstName ? 'none' : 'block')};
-    grid-area: email;
-  }
-  *[id='#/properties/lastName'] {
-    display: ${props => (props.hasLastName ? 'none' : 'block')};
-    grid-area: email;
-  }
-  *[id='#/properties/username'] {
-    display: ${props => (props.hasUsername ? 'none' : 'block')};
-    grid-area: email;
-  }
-}
+const SubTitle = styled.h2`
+  ${typography.body.l2}
 `
-
-const CloseButton = styled.div``
 
 export default PostDonationData

@@ -9,6 +9,9 @@ export interface ISessionShelf {
 
 export const Copy = styled.div`
   grid-area: copy;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `
 
 export const Headline = styled.h1`
