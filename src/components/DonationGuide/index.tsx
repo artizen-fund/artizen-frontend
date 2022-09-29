@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { Icon } from '@components'
+import { CloseButton } from '@components'
 import { rgba, DonationContext } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { donationGuideMap } from '@copy/home'
@@ -100,21 +100,6 @@ const Headline = styled.h1`
 
   ${typography.title.l1}
   color: ${rgba(palette.black)};
-`
-
-const CloseButton = styled(props => <Icon {...props} />)<VisibilityParam>`
-  position: absolute;
-  z-index: 1002;
-  top: 60px;
-  right: 0px;
-  @media only screen and (min-width: ${breakpoint.phablet}px) {
-    top: 100px;
-    right: 25px;
-  }
-
-  cursor: pointer;
-  opacity: ${props => (props.visible ? 1 : 0)};
-  pointer-events: ${props => (props.visible ? 'all' : 'none')};
 `
 
 export default DonationGuide
