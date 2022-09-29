@@ -16,6 +16,9 @@ export interface ButtonProps {
   /* actions for Button */
   onClick?: () => void
 
+  /* actions for Label button */
+  for?: string
+
   /* actions for Link */
   href?: string
   alt?: string
@@ -61,6 +64,14 @@ const Button = ({
         {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
         <span>{children}</span>
       </StyledButton>
+    )
+  }
+  if (!!props.for) {
+    return (
+      <StyledLabel className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
+        {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+        <span>{children}</span>
+      </StyledLabel>
     )
   }
   throw 'Error: requires link or button action.'
@@ -201,6 +212,12 @@ const ButtonLink = styled.div`
 `
 
 const StyledButton = styled.button`
+  ${() => ButtonStyle}
+  ${() => ButtonPalette}
+  ${() => ButtonTypography}
+`
+
+const StyledLabel = styled.label`
   ${() => ButtonStyle}
   ${() => ButtonPalette}
   ${() => ButtonTypography}

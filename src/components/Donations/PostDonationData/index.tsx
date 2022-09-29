@@ -19,12 +19,13 @@ import { typography } from '@theme'
 
 const PostDonationData = () => {
   const { visibleModal, toggleModal } = useContext(DonationContext)
-  const LOCALSTORAGE_KEY = 'postdonationdata'
   const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
-  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+  const [data, setData] = useState<FormState>(initialState)
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
+
+  const [image, setImage] = useState<File>()
 
   const submit = async () => {
     setReadonly(true)
@@ -54,8 +55,8 @@ const PostDonationData = () => {
           </SubTitle>
         </Copy>
 
-        <AvatarForm />
-        <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
+        <AvatarForm {...{ setImage }} />
+        <Form {...{ schema, uischema, initialState, data, setData, readonly }} submitDisabledFromOutside={!acceptedToc}>
           <SubmitButton onClick={() => submit()} stretch>
             Submit
           </SubmitButton>
@@ -110,14 +111,17 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     display: contents;
   }
 
-  *[id='#/properties/email'] {
-    grid-area: email;
-  }
   *[id='#/properties/firstName'] {
+    display: ${props => (props.hasFirstName ? 'none' : 'block')};
     grid-area: firstName;
   }
   *[id='#/properties/lastName'] {
+    display: ${props => (props.hasLastName ? 'none' : 'block')};
     grid-area: lastName;
+  }
+  *[id='#/properties/username'] {
+    display: ${props => (props.hasUsername ? 'none' : 'block')};
+    grid-area: email;
   }
 
   &.submitted {
@@ -130,19 +134,6 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     ${Confirmation} {
       display: flex;
     }
-  }
-
-  *[id='#/properties/firstName'] {
-    display: ${props => (props.hasFirstName ? 'none' : 'block')};
-    grid-area: firstName;
-  }
-  *[id='#/properties/lastName'] {
-    display: ${props => (props.hasLastName ? 'none' : 'block')};
-    grid-area: lastName;
-  }
-  *[id='#/properties/username'] {
-    display: ${props => (props.hasUsername ? 'none' : 'block')};
-    grid-area: email;
   }
 `
 
