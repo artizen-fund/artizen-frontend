@@ -1,7 +1,11 @@
 import { createContext, useEffect, useState, useContext } from 'react'
 import { UserContext, isServer } from '@lib'
 
+export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
+
 interface IDonationContext {
+  donationStatus?: DonationStatus
+  setDonationStatus?: (status: DonationStatus) => void
   donationStage: DonationStage
   setDonationStage?: (stage: DonationStage) => void
   visibleShelf?: HeaderShelfType
@@ -17,13 +21,14 @@ export const DonationContext = createContext<IDonationContext>({ donationStage: 
 export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   const { loggedInUser } = useContext(UserContext)
 
+  const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
   const [donationStage, setDonationStage] = useState<DonationStage>('setAmount')
 
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
-  const [visibleModal, setVisibleModal] = useState<HeaderShelfType>()
-  const toggleModal = (modal?: HeaderShelfType) => setVisibleModal(modal === visibleModal ? undefined : modal)
+  const [visibleModal, setVisibleModal] = useState<ModalType>()
+  const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
 
   useEffect(() => {
     /* A donation can be initiated before a user is logged in.
@@ -59,6 +64,8 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   return (
     <DonationContext.Provider
       value={{
+        donationStatus,
+        setDonationStatus,
         donationStage,
         setDonationStage,
         visibleShelf,

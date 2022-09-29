@@ -1,6 +1,7 @@
 export { default as AlternatingPanel } from './Layout/AlternatingPanel'
 export { default as AlternatingPanels } from './Layout/AlternatingPanels'
 export { default as AmountWidget } from './AmountWidget'
+export { default as AvatarForm } from './AvatarForm'
 export { default as Badge } from './Badge'
 export { default as Button } from './Button'
 export { default as Breadcrumbs } from './Breadcrumbs'
