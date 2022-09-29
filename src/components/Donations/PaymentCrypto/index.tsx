@@ -8,44 +8,11 @@ import { Table, TableCell, DonationHelpLink } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
 
-/* TODO: something about wagmi is breaking imports from @components */
-import CheckboxControl from '../../Form/Controls/BooleanControl/CheckboxControl'
-
-interface IPaymentCrypto {
-  chains: any
-}
-
 const TRANSACTION_FEE = 42
 
-const walletConnectConnector = new WalletConnectConnector({
-  options: {
-    qrcode: true,
-  },
-})
-
-const PaymentCrypto = ({ chains }: IPaymentCrypto) => {
+const PaymentCrypto = () => {
   const { setDonationStage } = useContext(DonationContext)
-  const { amount, donationMethod } = useProcessDonation()
-
-  const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-
-  const { connect, isError } = useConnect()
-  const { isConnected } = useAccount()
-  const chainId = getChainId(donationMethod as DonationMethod)
-
-  const connectWallet = (wallet: string) => {
-    if (wallet === 'metamask') {
-      connect({
-        connector: new InjectedConnector({ chains }),
-        chainId,
-      })
-    } else {
-      connect({
-        connector: walletConnectConnector,
-        chainId,
-      })
-    }
-  }
+  const { amount, connectWallet, isConnected, isError } = useProcessDonation()
 
   useEffect(() => {
     if (isConnected) {

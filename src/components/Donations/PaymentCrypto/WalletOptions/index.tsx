@@ -3,18 +3,18 @@ import { rgba, assetPath } from '@lib'
 import { palette, typography } from '@theme'
 
 interface IWalletOptions {
-  connectWallet: (s: string) => void
+  connectWallet?: (wallet: string) => void
 }
 
 const WalletOptions = ({ connectWallet }: IWalletOptions) => {
   return (
     <Wrapper>
-      <WalletOption onClick={() => connectWallet('metamask')}>
+      <WalletOption onClick={() => connectWallet?.('metamask')}>
         <img src={assetPath('/assets/metamask.svg')} alt="connect with MetaMask" />
         <OptionTitle>MetaMask</OptionTitle>
         <OptionSubtitle>Connect via your browser</OptionSubtitle>
       </WalletOption>
-      <WalletOption onClick={() => connectWallet('walletconnect')}>
+      <WalletOption onClick={() => connectWallet?.('walletconnect')}>
         <img src={assetPath('/assets/walletConnect.svg')} alt="connect with WalletConnect" />
         <OptionTitle>WalletConnect</OptionTitle>
         <OptionSubtitle>Choose an alternative wallet</OptionSubtitle>

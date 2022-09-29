@@ -11,3 +11,16 @@ export const CREATE_SWAP = gql`
     }
   }
 `
+
+export const GET_LATEST_SWAP_VIA_ATTRIBUTE = gql`
+  query loadLatestSwap($attr: Swaps_bool_exp) {
+    Swaps(where: $attr, order_by: { timestamp: desc }, limit: 1) {
+      amount
+      id
+      state
+      timestamp
+      txHash
+      userId
+    }
+  }
+`
