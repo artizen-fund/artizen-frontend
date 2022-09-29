@@ -16,16 +16,7 @@ import { UserContext, rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 
 const Settings = () => {
-  const router = useRouter()
   const { loggedInUser } = useContext(UserContext)
-  if (!loggedInUser) {
-    /* Why `loading === false` and not `!loading`?
-     * The context starts up in either undefined or false state.
-     * We want to be very clear about the check having happened and the user not being present.
-     */
-    router.push('/')
-  }
-
   const tabbedInfo: Record<string, React.ReactNode> = {
     Profile: <EditProfile />,
     Wallet: <EditWallet />,
@@ -36,26 +27,30 @@ const Settings = () => {
 
   return (
     <Layout>
-      <Header>
-        <Title>Profile</Title>
-        <Description>
-          Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Praesent commodo cursus magna,
-          vel scelerisque nisl consectetur et.
-        </Description>
-      </Header>
+      {loggedInUser && (
+        <>
+          <Header>
+            <Title>Profile</Title>
+            <Description>
+              Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Praesent commodo cursus
+              magna, vel scelerisque nisl consectetur et.
+            </Description>
+          </Header>
 
-      <Main>
-        <ProfileCard />
-        <EditSpace>
-          <TabbedInfo withHashChanges>
-            {Object.keys(tabbedInfo).map(key => (
-              <Tab key={`tab-${key}`} label={key}>
-                {tabbedInfo[key]}
-              </Tab>
-            ))}
-          </TabbedInfo>
-        </EditSpace>
-      </Main>
+          <Main>
+            <ProfileCard />
+            <EditSpace>
+              <TabbedInfo withHashChanges>
+                {Object.keys(tabbedInfo).map(key => (
+                  <Tab key={`tab-${key}`} label={key}>
+                    {tabbedInfo[key]}
+                  </Tab>
+                ))}
+              </TabbedInfo>
+            </EditSpace>
+          </Main>
+        </>
+      )}
     </Layout>
   )
 }
