@@ -12,9 +12,9 @@ const EditProfile = () => {
 
   const apolloClient = useApolloClient()
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
-  const { loggedInUser, loading } = useContext(UserContext)
+  const { loggedInUser } = useContext(UserContext)
   useEffect(() => {
-    if (loading || !loggedInUser) return
+    if (!loggedInUser) return
     setData({
       artizenHandle: loggedInUser.artizenHandle || initialState.artizenHandle,
       firstName: loggedInUser.firstName || initialState.firstName,
@@ -24,7 +24,7 @@ const EditProfile = () => {
       twitterLink: loggedInUser.twitterLink || initialState.twitterLink,
       website: loggedInUser.website || initialState.website,
     })
-  }, [loading, loggedInUser])
+  }, [loggedInUser])
 
   const [processing, setProcessing] = useState(false)
 

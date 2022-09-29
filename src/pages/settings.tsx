@@ -17,8 +17,8 @@ import { typography, palette, breakpoint } from '@theme'
 
 const Settings = () => {
   const router = useRouter()
-  const { loggedInUser, loading } = useContext(UserContext)
-  if (loading === false && !loggedInUser) {
+  const { loggedInUser } = useContext(UserContext)
+  if (!loggedInUser) {
     /* Why `loading === false` and not `!loading`?
      * The context starts up in either undefined or false state.
      * We want to be very clear about the check having happened and the user not being present.
