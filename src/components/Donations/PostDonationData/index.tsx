@@ -39,11 +39,10 @@ const PostDonationData = () => {
         profileImage = cloudinaryResponse.secure_url
       }
       const variables = { id: loggedInUser.id, ...data, profileImage }
-      const derp = await apolloClient.mutate({
+      await apolloClient.mutate({
         mutation: UPDATE_NEW_USER_PROFILE,
         variables,
       })
-      console.log('stored', derp, variables)
       toggleModal?.()
     } catch (error) {
       console.error('Error saving new user profile', error)
@@ -66,7 +65,7 @@ const PostDonationData = () => {
 
         <AvatarForm setFile={setImageFile} />
         <Form {...{ schema, uischema, initialState, data, setData, readonly }} submitDisabledFromOutside={!acceptedToc}>
-          <SubmitButton onClick={() => submit()} stretch>
+          <SubmitButton onClick={() => submit()} stretch disabled={readonly}>
             Save Changes
           </SubmitButton>
         </Form>
