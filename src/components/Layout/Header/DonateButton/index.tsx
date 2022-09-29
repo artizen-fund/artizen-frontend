@@ -1,7 +1,7 @@
 import { Button } from '@components'
 import { glyphKey } from '@theme'
 
-const DonateButton = ({ active, ...props }: { active: boolean }) => {
+const DonateButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
   return (
     <Button
       glyph={active ? glyphKey.cross : glyphKey.donate}
