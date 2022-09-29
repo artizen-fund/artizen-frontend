@@ -6,10 +6,9 @@ import { breakpoint, palette, typography } from '@theme'
 import { Maybe } from '@types'
 import { rgba, refreshSession, isClient, DonationContext, UserContext } from '@lib'
 
-const AccountButton = (props: SimpleComponentProps) => {
+const AccountButton = ({ active, ...props }: { active: boolean }) => {
   const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
-  const { visibleShelf } = useContext(DonationContext)
   useEffect(() => {
     if (isClient()) refreshSession(apolloClient)
   }, [])
@@ -28,11 +27,11 @@ const AccountButton = (props: SimpleComponentProps) => {
   }, [loggedInUser])
 
   return (
-    <Wrapper loggedIn={!!loggedInUser} visibleShelf={!!visibleShelf} {...props}>
-      <CloseLabel visible={!!visibleShelf}>Close</CloseLabel>
-      <SignInLabel visible={!loggedInUser && !visibleShelf}>Sign In</SignInLabel>
-      <HamburgerGlyph visible={!!loggedInUser && !visibleShelf} color="night" darkColor="moon" glyph="hamburger" />
-      <AvatarWrapper active={!!loggedInUser && !visibleShelf}>
+    <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...props}>
+      <CloseLabel visible={active}>Close</CloseLabel>
+      <SignInLabel visible={!loggedInUser && !active}>Sign In</SignInLabel>
+      <HamburgerGlyph visible={!!loggedInUser && !active} color="night" darkColor="moon" glyph="hamburger" />
+      <AvatarWrapper active={!!loggedInUser && !active}>
         <AvatarImage active={avatarDisplay === 'avatar'} profileImage={loggedInUser?.profileImage} />
         <AvatarImage active={avatarDisplay === 'placeholder'}>
           <Glyph glyph="face" level={1} color="night" darkColor="moon" />
