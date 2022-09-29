@@ -3,9 +3,18 @@ import styled from 'styled-components'
 import { DonationContext } from '@lib'
 
 const Onionskin = () => {
-  const { visibleShelf, toggleShelf } = useContext(DonationContext)
-  return <Wrapper className={!!visibleShelf ? 'visible' : ''} onClick={() => toggleShelf?.()} />
+  const { visibleShelf, toggleShelf, visibleModal, toggleModal } = useContext(DonationContext)
+  const onClick = () => {
+    toggleShelf?.()
+    toggleModal?.()
+  }
+  return <Wrapper className={!!visibleShelf || !!visibleModal ? 'visible' : ''} onClick={onClick} />
 }
+
+/* Note: why do we use classNames instead of props.visibleShelf?
+ * CSS can't dynamically handle timing changes (transition 0s -> 0.15s),
+ *  it can only deal with that via class changes.
+ */
 
 const Wrapper = styled.div`
   position: fixed;

@@ -9,9 +9,11 @@ interface IUserContext {
   loading?: boolean
   error?: ApolloError
   setNewUserData?: (data: NewUserData) => void
+  needsPostDonationData: boolean
+  setNeedsPostDonationData?: (b: boolean) => void
 }
 
-export const UserContext = createContext<IUserContext>({})
+export const UserContext = createContext<IUserContext>({ needsPostDonationData: false })
 
 export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   initIntercom()
@@ -24,9 +26,19 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   })
 
   const [loggedInUser, setLoggedInUser] = useState<IUser>()
-  useEffect(() => setLoggedInUser(data?.User[0] as IUser), [data])
-
   const [newUserData, setNewUserData] = useState<NewUserData>()
+  const [needsPostDonationData, setNeedsPostDonationData] = useState(false)
+  useEffect(() => {
+    if (!data || data.User.length < 0) return
+    const newlyLoggedUser = data.User[0] as IUser
+    setLoggedInUser(newlyLoggedUser)
+    setNeedsPostDonationData(
+      !newlyLoggedUser.firstName ||
+        !newlyLoggedUser.lastName ||
+        !newlyLoggedUser.profileImage ||
+        !newlyLoggedUser.artizenHandle,
+    )
+  }, [data])
 
   const saveNewUserData = async (user: IUser, data: NewUserData) => {
     try {
@@ -51,6 +63,8 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   }, [loggedInUser, newUserData])
 
   return (
-    <UserContext.Provider value={{ loggedInUser, loading, error, setNewUserData }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ loggedInUser, loading, error, setNewUserData, needsPostDonationData }}>
+      {children}
+    </UserContext.Provider>
   )
 }

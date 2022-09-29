@@ -23,7 +23,9 @@ declare global {
 
   type MagicInstance = InstanceWithExtensions<SDKBase, OAuthExtension[]>
 
-  type HeaderShelfType = 'session' | 'howItWorks' | 'donate' | 'donationGuide'
+  type HeaderShelfType = 'session' | 'howItWorks' | 'donate'
+
+  type ModalType = 'donationGuide' | 'PostDonationData'
 
   type DonationStage = 'setAmount' | 'login' | 'payment' | 'paymentFiatAddress' | 'processCrypto' | 'confirmation'
 
