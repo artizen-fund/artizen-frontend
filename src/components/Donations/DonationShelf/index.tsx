@@ -1,7 +1,13 @@
 import { useContext, useEffect } from 'react'
 import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Breadcrumbs } from '@components'
 import { WagmiConfig } from 'wagmi'
-import { DonationContext, useProcessDonation, ProcessDonationProvider, UserContext } from '@lib'
+import {
+  DonationContext,
+  useProcessDonation,
+  ProcessDonationProvider,
+  UserContext,
+  RecoverDonationProvider,
+} from '@lib'
 import { getWagmiClient } from '../../../lib/wagmiClient'
 import { BreadcrumbStep } from '../../Breadcrumbs'
 
@@ -18,7 +24,7 @@ export const DonationShelf = () => {
         return <></>
       case 'payment':
         if (donationMethod === 'usd') return <PaymentFiat />
-        return <PaymentCrypto {...{ chains }} />
+        return <PaymentCrypto />
       case 'processCrypto':
       case 'confirmation':
         return <ProcessCrypto />
@@ -53,8 +59,10 @@ export const DonationShelf = () => {
 
 const DonationShelfWithWagmi = (props: any) => (
   <WagmiConfig client={client}>
-    <ProcessDonationProvider>
-      <DonationShelf {...props} />
+    <ProcessDonationProvider chains={chains}>
+      <RecoverDonationProvider>
+        <DonationShelf {...props} />
+      </RecoverDonationProvider>
     </ProcessDonationProvider>
   </WagmiConfig>
 )

@@ -1,10 +1,10 @@
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
 import { USDCAbi } from '@contracts'
-import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_TRANSFER_ID } from '@gql'
+import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_ATTRIBUTE } from '@gql'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { ethers } from 'ethers'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { useAccount, useContractWrite, useSigner, useSwitchNetwork } from 'wagmi'
+import { useAccount, useConnect, useContractWrite, useSigner } from 'wagmi'
 import { userMetadataVar } from './apollo'
 import { assert } from './assert'
 import { DonationContext } from './donationContext'
@@ -18,6 +18,13 @@ import { getConfirmDonationURL } from './confirmDonationUrl'
 import { sleep } from './sleep'
 import qs from 'qs'
 import { UserContext } from './userContext'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+interface IProcessDonationProvider {
+  children: React.ReactNode
+  chains: any
+}
 
 interface IProcessDonationContext {
   donationMethod?: DonationMethod
@@ -31,7 +38,17 @@ interface IProcessDonationContext {
   error?: Error
   setError?: (error: Error) => void
   retry?: () => void
+  connectWallet?: (wallet: string) => void
+  isConnected?: boolean
+  isError?: boolean
+  setSwapId?: (swapId: string) => void
 }
+
+const walletConnectConnector = new WalletConnectConnector({
+  options: {
+    qrcode: true,
+  },
+})
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
@@ -39,11 +56,12 @@ type Error = 'Payment Failed' | 'Transaction Rejected' | 'Donation could not com
 
 const ProcessDonationContext = createContext<IProcessDonationContext>({})
 
-export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
+export const ProcessDonationProvider = ({ children, chains }: IProcessDonationProvider) => {
   const { setDonationStage } = useContext(DonationContext)
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
   const [order, setOrder] = useState<{ id: string }>({ id: '' })
+  const [swapId, setSwapId] = useState('')
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
   const [error, setError] = useState<Error>('')
 
@@ -54,8 +72,8 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
   const courier = useCourier()
   const [initDonation, buildingStatus, buildingMessage, confirmingStatus, confirmingMessage] = useDonation()
   const { address, isConnected } = useAccount()
+  const { connect, isError } = useConnect()
   const { data: signer, refetch } = useSigner()
-  const { switchNetworkAsync } = useSwitchNetwork()
 
   const { bridge, fundsTransfered } = useBridge()
 
@@ -94,7 +112,7 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
     },
   })
 
-  const [fetchTopUpWallet] = useLazyQuery(GET_TOP_UP_WALLET_VIA_TRANSFER_ID, {
+  const [fetchTopUpWallet] = useLazyQuery(GET_TOP_UP_WALLET_VIA_ATTRIBUTE, {
     variables: {
       attr: {
         orderId: { _eq: order.id },
@@ -114,6 +132,20 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
     },
   })
 
+  const connectWallet = (wallet: string) => {
+    if (wallet === 'metamask') {
+      connect({
+        connector: new MetaMaskConnector({ chains }),
+        chainId,
+      })
+    } else {
+      connect({
+        connector: walletConnectConnector,
+        chainId,
+      })
+    }
+  }
+
   const handleTopUpFailed = async () => {
     setError('Payment Failed')
   }
@@ -125,15 +157,15 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
 
   const handleSwapComplete = async () => {
     setCryptoStage('bridging')
-    // Change to Goerli for testing
-    let refreshedSigner = signer
-    if (!isProd()) {
-      await switchNetworkAsync?.(5)
-      refreshedSigner = await (await refetch()).data
-    }
     const amountInUSDCDecimals = ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()
     try {
-      await bridge(address, refreshedSigner?.provider, metadata?.publicAddress!, amountInUSDCDecimals)
+      const refreshedSigner = await (await refetch()).data
+      await bridge(
+        await refreshedSigner?.getAddress(),
+        refreshedSigner?.provider,
+        metadata?.publicAddress!,
+        amountInUSDCDecimals,
+      )
     } catch (error) {
       console.error('Bridging Error: ', error)
       setError('Transaction Rejected')
@@ -147,7 +179,7 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
       try {
         const baseURL0x = assert(process.env.NEXT_PUBLIC_0X_BASE_URL, 'NEXT_PUBLIC_0X_BASE_URL')
         const params = {
-          buyToken: 'USDC',
+          buyToken: isProd() ? 'USDC' : assert(process.env.NEXT_PUBLIC_0X_BUY_TOKEN, 'NEXT_PUBLIC_0X_BUY_TOKEN'),
           sellToken: 'ETH',
           buyAmount: amountInUSDCDecimals,
           takerAddress: address,
@@ -166,16 +198,23 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
 
         const swapTransaction = await signer?.sendTransaction(tx)
 
-        await createSwap({
+        const createSwapResult = await createSwap({
           variables: {
             data: {
               state: 'INITIATED',
-              amount: amountInUSDCDecimals,
+              amount,
               userId: loggedInUser?.id,
               txHash: swapTransaction?.hash,
             },
           },
         })
+        const {
+          data: {
+            insert_Swaps_one: { id },
+          },
+        } = createSwapResult
+
+        setSwapId(id)
       } catch (error) {
         console.error('Swapping Error: ', error)
         setError('Transaction Rejected')
@@ -183,7 +222,7 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
     }
   }
 
-  const createTopUpOrder = async (txHash: string) => {
+  const createTopUpOrder = async (txHash: string, swapId: string | null) => {
     const orderId = uuidv4()
     await createTopUpWallet({
       variables: {
@@ -197,6 +236,7 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
           txHash,
           url: getConfirmDonationURL(),
           orderId,
+          swapId,
         },
       },
     })
@@ -206,7 +246,7 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
 
   useEffect(() => {
     if (hasTrasnferedUSDC && transferUSDCdata?.hash) {
-      createTopUpOrder(transferUSDCdata?.hash)
+      createTopUpOrder(transferUSDCdata?.hash, null)
     }
   }, [hasTrasnferedUSDC])
 
@@ -257,7 +297,7 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
 
   useEffect(() => {
     if (fundsTransfered && fundsTransfered.statusCode === 2) {
-      createTopUpOrder(fundsTransfered.exitHash)
+      createTopUpOrder(fundsTransfered.exitHash, swapId)
     }
   }, [fundsTransfered])
 
@@ -309,6 +349,10 @@ export const ProcessDonationProvider = ({ children }: SimpleComponentProps) => {
         error,
         setError,
         retry,
+        connectWallet,
+        isConnected,
+        isError,
+        setSwapId,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ const howItWorks = [
     illustrationDark: 'how-it-works/about-dark.svg',
     title: 'About',
     copy: 'Find out who’s behind the Artizen Fund, what we’re all about, and why we’re doing this.',
-    shelf: 'donationGuide',
+    modal: 'donationGuide',
   },
   {
     illustration: 'how-it-works/grants.svg',

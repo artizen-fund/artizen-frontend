@@ -7,10 +7,11 @@ import { donationGuideMap } from '@copy/home'
 import GuideCell from './GuideCell'
 
 const DonationGuide = () => {
-  const { visibleShelf, toggleShelf } = useContext(DonationContext)
+  const { visibleModal, toggleModal } = useContext(DonationContext)
+  const visible = visibleModal === 'donationGuide'
   return (
     <>
-      <Wrapper visible={visibleShelf === 'donationGuide'}>
+      <Wrapper {...{ visible }}>
         <Headline>
           How to donate to grants
           <br />
