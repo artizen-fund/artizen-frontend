@@ -24,3 +24,11 @@ export const GET_LATEST_SWAP_VIA_ATTRIBUTE = gql`
     }
   }
 `
+
+export const UPDATE_SWAP_STATE = gql`
+  mutation updateSwapStateById($state: String, $swapId: uuid!) {
+    update_Swaps_by_pk(pk_columns: { id: $swapId }, _set: { state: $state }) {
+      id
+    }
+  }
+`

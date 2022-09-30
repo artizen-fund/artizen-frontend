@@ -4,7 +4,7 @@ import { rgba, useProcessDonation } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 
 const ProcessCrypto = () => {
-  const { cryptoStage, donationMethod, error, retry } = useProcessDonation()
+  const { cryptoStage, donationMethod, error, restart, retry } = useProcessDonation()
 
   return (
     <Wrapper>
@@ -86,12 +86,14 @@ const ProcessCrypto = () => {
       <Right>
         {cryptoStage !== 'complete' && (
           <>
-            <Distraction />
-            {error && (
+            {error ? (
               <div>
-                <Label>{error}</Label>
+                <Label>There was an error while processing your donation: {error}</Label>
+                {cryptoStage !== 'bridging' && <Button onClick={restart}>Restart</Button>}
                 <Button onClick={retry}>Retry</Button>
               </div>
+            ) : (
+              <Distraction />
             )}
           </>
         )}
@@ -120,6 +122,8 @@ const Wrapper = styled.div`
   .vertical-layout-item {
     display: contents;
   }
+  justify-content: center;
+  align-items: center;
 `
 const Information = styled.div`
   flex: 1;
