@@ -22,12 +22,7 @@ const DonationGuide = () => {
           <GuideCell key={`guidecell-${i}`} {...item} step={i} />
         ))}
       </Wrapper>
-      <StyledCloseButton
-        glyph="cross"
-        level={1}
-        onClick={() => toggleShelf?.()}
-        visible={visibleShelf === 'donationGuide'}
-      />
+      <StyledCloseButton glyph="cross" level={1} onClick={() => toggleModal?.()} {...{ visible }} />
     </>
   )
 }
