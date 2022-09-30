@@ -4,6 +4,8 @@ body {
   margin: 0;
   font-family: 'roc-grotesk', verdana, sans-serif;
   font-weight: 600;
+  -webkit-text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 
   background-color: rgb(250, 250, 250);
   color: rgb(16, 16, 16);

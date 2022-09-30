@@ -53,25 +53,37 @@ const Wrapper = styled.div<VisibilityParam>`
   grid-row-gap: 32px;
   padding: 24px;
 
+  font-size: 13px;
+  line-height: 120%;
+  letter-spacing: -0.4px;
+
   @media only screen and (min-width: ${breakpoint.phablet}px) {
     grid-column-gap: 16px;
     grid-row-gap: 48px;
     padding: 40px;
   }
 
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
+  @media only screen and (min-width: 780px) {
+    width: 700px;
+    left: calc((100vw - 700px) / 2);
     grid-template-columns: repeat(12, 1fr);
+    font-size: 14px;
   }
 
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
+  @media only screen and (min-width: 1044px) {
+    width: 1024px;
+    left: calc((100vw - 1024px) / 2);
     grid-column-gap: 20px;
     grid-row-gap: 72px;
   }
 
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
+  @media only screen and (min-width: 1720px) {
+    width: 1680px;
+    left: calc((100vw - 1680px) / 2);
     grid-column-gap: 25px;
     grid-row-gap: 80px;
     padding: 80px;
+    font-size: 20px;
   }
 
   background: white;
