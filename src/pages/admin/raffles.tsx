@@ -1,17 +1,24 @@
 import { CreateRaffle, Layout, ListRaffle, Wallet } from '@components'
-import { getWagmiClient } from '@lib'
+import { getWagmiClient, UserContext } from '@lib'
+import { useContext } from 'react'
 
 import { WagmiConfig } from 'wagmi'
 
 const { client, chains } = getWagmiClient()
 
 const ManageRaffle = () => {
+  const { loggedInUser } = useContext(UserContext)
+
   return (
     <WagmiConfig client={client}>
       <Layout>
-        <Wallet chains={chains}></Wallet>
-        <ListRaffle></ListRaffle>
-        <CreateRaffle />
+        {loggedInUser && (
+          <>
+            <Wallet chains={chains}></Wallet>
+            <ListRaffle></ListRaffle>
+            <CreateRaffle />
+          </>
+        )}
       </Layout>
     </WagmiConfig>
   )
