@@ -7,7 +7,7 @@ import { leaderboardPage } from '@copy/leaderboard'
 import { metrics } from '@copy/home'
 
 const LeaderboardPage = () => {
-  const { toggleShelf } = useContext(DonationContext)
+  const { toggleShelf, setVisibleModal } = useContext(DonationContext)
   return (
     <Layout>
       <Header>
@@ -21,7 +21,7 @@ const LeaderboardPage = () => {
             <Button onClick={() => toggleShelf?.('donate')} level={1} glyph="donate">
               {leaderboardPage.topBlock.buttonLabel}
             </Button>
-            <Button onClick={() => alert('derp')} outline level={1}>
+            <Button onClick={() => setVisibleModal?.('share')} level={1} stretch outline>
               Share Now
             </Button>
           </Buttons>
@@ -35,7 +35,7 @@ const LeaderboardPage = () => {
             <Button onClick={() => toggleShelf?.('donate')} level={1} glyph="donate" stretch>
               {leaderboardPage.topBlock.buttonLabel}
             </Button>
-            <Button onClick={() => alert('derp')} outline level={1} stretch>
+            <Button onClick={() => setVisibleModal?.('share')} level={1} stretch outline>
               Share Now
             </Button>
           </Buttons>

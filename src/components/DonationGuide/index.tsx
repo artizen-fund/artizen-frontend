@@ -22,7 +22,7 @@ const DonationGuide = () => {
           <GuideCell key={`guidecell-${i}`} {...item} step={i} />
         ))}
       </Wrapper>
-      <CloseButton glyph="cross" level={1} onClick={() => toggleModal?.()} {...{ visible }} />
+      <StyledCloseButton glyph="cross" level={1} onClick={() => toggleModal?.()} {...{ visible }} />
     </>
   )
 }
@@ -100,6 +100,15 @@ const Headline = styled.h1`
 
   ${typography.title.l1}
   color: ${rgba(palette.black)};
+`
+
+const StyledCloseButton = styled(props => <CloseButton {...props} />)`
+  top: 60px;
+  right: 0px;
+  @media only screen and (min-width: ${breakpoint.phablet}px) {
+    top: 100px;
+    right: 25px;
+  }
 `
 
 export default DonationGuide
