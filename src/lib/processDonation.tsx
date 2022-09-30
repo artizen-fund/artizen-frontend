@@ -1,6 +1,12 @@
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client'
 import { USDCAbi } from '@contracts'
-import { CREATE_SWAP, CREATE_TOP_UP_WALLET, GET_TOP_UP_WALLET_VIA_ATTRIBUTE } from '@gql'
+import {
+  CREATE_SWAP,
+  CREATE_TOP_UP_WALLET,
+  GET_TOP_UP_WALLET_VIA_ATTRIBUTE,
+  UPDATE_SWAP_STATE,
+  UPDATE_TOP_UP_WALLET_STATE,
+} from '@gql'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { ethers } from 'ethers'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -37,6 +43,7 @@ interface IProcessDonationContext {
   setCryptoStage?: (cryptoStage: CryptoStage) => void
   error?: Error
   setError?: (error: Error) => void
+  restart?: () => void
   retry?: () => void
   connectWallet?: (wallet: string) => void
   isConnected?: boolean
@@ -52,7 +59,7 @@ const walletConnectConnector = new WalletConnectConnector({
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
-type Error = 'Payment Failed' | 'Transaction Rejected' | 'Donation could not complete' | ''
+type Error = 'Payment Failed' | 'Transaction Rejected' | 'Donation could not complete' | 'Bridging Failed' | ''
 
 const ProcessDonationContext = createContext<IProcessDonationContext>({})
 
@@ -112,6 +119,18 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
     },
   })
 
+  const [updateSwapState] = useMutation(UPDATE_SWAP_STATE, {
+    onError: error => {
+      console.error('updateSwapState result    ', error)
+    },
+  })
+
+  const [updateTopUpWalletState] = useMutation(UPDATE_TOP_UP_WALLET_STATE, {
+    onError: error => {
+      console.error('updateTopUpWalletState result    ', error)
+    },
+  })
+
   const [fetchTopUpWallet] = useLazyQuery(GET_TOP_UP_WALLET_VIA_ATTRIBUTE, {
     variables: {
       attr: {
@@ -168,7 +187,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
       )
     } catch (error) {
       console.error('Bridging Error: ', error)
-      setError('Transaction Rejected')
+      setError('Bridging Failed')
     }
   }
 
@@ -301,7 +320,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
     }
   }, [fundsTransfered])
 
-  const handleBuildingDonationRetry = async () => {
+  const handleBuildingDonationRestart = async () => {
     switch (donationMethod) {
       case 'ethereum':
         await handleSwapComplete()
@@ -314,8 +333,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
     }
   }
 
-  const retry = async () => {
-    setError('')
+  const restart = async () => {
     switch (cryptoStage) {
       case 'swapping':
         setDonationStage?.('payment')
@@ -324,7 +342,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         await handleSwapComplete()
         break
       case 'building':
-        await handleBuildingDonationRetry()
+        await handleBuildingDonationRestart()
         break
       case 'confirming':
         await fetchTopUpWallet()
@@ -333,6 +351,40 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         setDonationStage?.('payment')
         break
     }
+    setError('')
+  }
+
+  const handleBridgingRetry = async () => {
+    await updateSwapState({
+      variables: {
+        swapId,
+        state: 'SKIPPED',
+      },
+    })
+  }
+
+  const handleBuildingRetry = async () => {
+    await updateTopUpWalletState({
+      variables: {
+        orderId: order?.id,
+        state: 'SKIPPED',
+      },
+    })
+  }
+
+  const retry = async () => {
+    switch (cryptoStage) {
+      case 'bridging':
+        await handleBridgingRetry()
+        break
+      case 'building':
+        await handleBuildingRetry()
+        break
+      default:
+        break
+    }
+    setDonationStage?.('setAmount')
+    setError('')
   }
 
   return (
@@ -348,6 +400,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         setCryptoStage,
         error,
         setError,
+        restart,
         retry,
         connectWallet,
         isConnected,

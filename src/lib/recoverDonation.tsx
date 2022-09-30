@@ -26,7 +26,7 @@ export const RecoverDonationProvider = ({ children }: SimpleComponentProps) => {
         setSwapId?.(id)
         setAmount?.(amount)
         setDonationMethod?.('ethereum')
-        setError?.('Transaction Rejected')
+        setError?.('Bridging Failed')
         setCryptoStage?.('bridging')
         setDonationStage?.('payment')
       }
@@ -38,6 +38,7 @@ export const RecoverDonationProvider = ({ children }: SimpleComponentProps) => {
     variables: {
       attr: {
         userId: { _eq: loggedInUser?.id },
+        state: { _eq: 'COMPLETE' },
       },
     },
     onCompleted: async (swap: { Swaps: string | any[] }) => {

@@ -44,3 +44,13 @@ export const GET_LATEST_TOP_UP_WALLET_VIA_ATTRIBUTE = gql`
     }
   }
 `
+
+export const UPDATE_TOP_UP_WALLET_STATE = gql`
+  mutation updateTopUpWalletStateByOrderId($state: String, $orderId: String) {
+    update_TopUpWallet(where: { orderId: { _eq: $orderId } }, _set: { state: $state }) {
+      returning {
+        id
+      }
+    }
+  }
+`
