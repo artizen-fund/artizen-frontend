@@ -6,7 +6,7 @@ import { rgba, DonationContext } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
 
 const Share = () => {
-  const { visibleShelf, toggleShelf } = useContext(DonationContext)
+  const { visibleModal, toggleModal } = useContext(DonationContext)
 
   const link = 'https://artizen.fund'
   const title = 'Artizen'
@@ -21,11 +21,13 @@ const Share = () => {
 
   const [copied, setCopied] = useState(false)
 
+  const visible = visibleModal === 'share'
+
   return (
-    <Wrapper visible={visibleShelf === 'share'}>
-      <ClickToDismiss onClick={() => toggleShelf?.()} />
+    <Wrapper {...{ visible }}>
+      <ClickToDismiss onClick={() => toggleModal?.()} />
       <Modal>
-        <CloseButton glyph="cross" level={1} onClick={() => toggleShelf?.()} visible={visibleShelf === 'share'} />
+        <CloseButton glyph="cross" level={1} onClick={() => toggleModal?.()} {...{ visible }} />
         <Row>
           <Header color="white_always">Sharing is caring, give back with a like, comment or share</Header>
         </Row>
