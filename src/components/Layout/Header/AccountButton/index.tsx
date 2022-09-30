@@ -178,7 +178,10 @@ const AvatarImage = styled.div<{ active: boolean; profileImage?: Maybe<string> }
 
   color: ${rgba(palette.night)};
   background-color: ${rgba(palette.stone)};
-  background-image: ${props => props.profileImage};
+  background-image: url(${props => props.profileImage});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   @media (prefers-color-scheme: dark) {
     color: ${rgba(palette.moon)};
     background-color: ${rgba(palette.barracuda)};

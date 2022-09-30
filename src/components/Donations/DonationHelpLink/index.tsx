@@ -5,9 +5,9 @@ import { typography } from '@theme'
 import { DonationContext } from '@lib'
 
 const DonationHelpLink = () => {
-  const { toggleShelf } = useContext(DonationContext)
+  const { toggleModal } = useContext(DonationContext)
   return (
-    <Wrapper onClick={() => toggleShelf?.('donationGuide')}>
+    <Wrapper onClick={() => toggleModal?.('donationGuide')}>
       <Icon outline glyph="infoLarge" level={1} />
       <Copy>
         Need help? Follow this <em>donation guide</em>.

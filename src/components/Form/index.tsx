@@ -48,7 +48,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
       const safeData = pickBy(data, (_, key) => safeVars.includes(key))
       localStorage.setItem(localStorageKey, JSON.stringify(safeData))
     }
-    setDisabled(submitDisabledFromOutside || (!!errors && errors.length > 0))
+    setDisabled(!!errors && errors.length > 0)
   }
 
   const renderers = [
@@ -67,7 +67,9 @@ const Form = <TStateInterface extends Record<string, unknown>>({
         config={{ trim: true }}
         onChange={formState => updateFormState(formState)}
       />
-      {flattenChildren(children).map(child => cloneElement(child as React.ReactElement, { disabled }))}
+      {flattenChildren(children).map(child =>
+        cloneElement(child as React.ReactElement, { disabled: disabled || submitDisabledFromOutside }),
+      )}
     </>
   )
 }

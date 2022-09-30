@@ -11,16 +11,24 @@ interface IDonationContext {
   visibleShelf?: HeaderShelfType
   setVisibleShelf?: (shelf: HeaderShelfType) => void
   toggleShelf?: (shelf?: HeaderShelfType) => void
+  visibleModal?: ModalType
+  setVisibleModal?: (modal: ModalType) => void
+  toggleModal?: (modal?: ModalType) => void
 }
 
 export const DonationContext = createContext<IDonationContext>({ donationStage: 'setAmount' })
 
 export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   const { loggedInUser } = useContext(UserContext)
+
   const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
   const [donationStage, setDonationStage] = useState<DonationStage>('setAmount')
+
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
+
+  const [visibleModal, setVisibleModal] = useState<ModalType | undefined>()
+  const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
 
   useEffect(() => {
     /* A donation can be initiated before a user is logged in.
@@ -63,6 +71,9 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
         visibleShelf,
         setVisibleShelf,
         toggleShelf,
+        visibleModal,
+        setVisibleModal,
+        toggleModal,
       }}
     >
       {children}

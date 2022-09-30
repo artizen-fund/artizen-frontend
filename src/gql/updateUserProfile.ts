@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
 
+// TODO: missing some stuff
 export const UPDATE_USER_PROFILE = gql`
   mutation UpdateUserProfile(
     $id: uuid
