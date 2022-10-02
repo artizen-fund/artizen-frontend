@@ -5,12 +5,13 @@ import { GET_USER } from '@gql'
 import { IUser, IGetUserQuery } from '@types'
 
 interface IUserContext {
+  loading?: boolean
   loggedInUser?: IUser
   needsPostDonationData: boolean
   setNeedsPostDonationData?: (b: boolean) => void
 }
 
-export const UserContext = createContext<IUserContext>({ needsPostDonationData: false })
+export const UserContext = createContext<IUserContext>({ needsPostDonationData: false, loading: true })
 
 export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   initIntercom()
@@ -19,7 +20,7 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   const [loggedInUser, setLoggedInUser] = useState<IUser>()
   const [needsPostDonationData, setNeedsPostDonationData] = useState(false)
 
-  const [fetchUser] = useLazyQuery<IGetUserQuery>(GET_USER, {
+  const [fetchUser, { loading }] = useLazyQuery<IGetUserQuery>(GET_USER, {
     variables: { issuer: metadata?.issuer },
     onCompleted: async (user: { User: any[] }) => {
       if (!user || user.User.length < 0) return
@@ -38,7 +39,9 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
     if (metadata?.issuer) {
       fetchUser()
     }
-  }, [metadata])
+  }, [metadata?.issuer])
 
-  return <UserContext.Provider value={{ loggedInUser, needsPostDonationData }}>{children}</UserContext.Provider>
+  return (
+    <UserContext.Provider value={{ loggedInUser, loading, needsPostDonationData }}>{children}</UserContext.Provider>
+  )
 }

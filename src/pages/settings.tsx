@@ -1,10 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import {
   Layout,
   TabbedInfo,
-  ProfileCard,
   EditProfile,
   EditWallet,
   EditSettings,
@@ -16,18 +15,15 @@ import { UserContext, rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 
 const Settings = () => {
-  const { loggedInUser } = useContext(UserContext)
-  const tabbedInfo: Record<string, React.ReactNode> = {
-    Profile: <EditProfile />,
-    Wallet: <EditWallet />,
-    Settings: <EditSettings />,
-    Notifications: <EditNotifications />,
-    Collection: <EditCollection />,
-  }
+  const { loading, loggedInUser } = useContext(UserContext)
+
+  useEffect(() => {
+    console.log('settings page: loading?', loading, loggedInUser)
+  }, [loading, loggedInUser])
 
   return (
     <Layout>
-      {loggedInUser && (
+      {!!loggedInUser && (
         <>
           <Header>
             <Title>Profile</Title>
@@ -38,15 +34,8 @@ const Settings = () => {
           </Header>
 
           <Main>
-            <ProfileCard />
             <EditSpace>
-              <TabbedInfo withHashChanges>
-                {Object.keys(tabbedInfo).map(key => (
-                  <Tab key={`tab-${key}`} label={key}>
-                    {tabbedInfo[key]}
-                  </Tab>
-                ))}
-              </TabbedInfo>
+              <EditProfile />
             </EditSpace>
           </Main>
         </>
@@ -88,15 +77,7 @@ const Main = styled.div`
   }
 `
 
-const EditSpace = styled.div`
-  width: 100%;
-
-  padding: 40px;
-  gap: 32px;
-  background: ${rgba(palette.white)};
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
-  border-radius: 16px;
-`
+const EditSpace = styled.div``
 
 const Tab = styled.div<{ label: string }>``
 

@@ -1,30 +1,34 @@
 import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { useApolloClient } from '@apollo/client'
-import { Form, Button } from '@components'
+import { Form, Button, Spinner } from '@components'
 import { useFormLocalStorage, UserContext } from '@lib'
 import { breakpoint } from '@theme'
 import { UPDATE_USER_PROFILE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
-  const LOCALSTORAGE_KEY = 'editprofile'
-
+  const router = useRouter()
   const apolloClient = useApolloClient()
-  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
   const { loggedInUser } = useContext(UserContext)
+
   useEffect(() => {
-    if (!loggedInUser) return
-    setData({
-      artizenHandle: loggedInUser.artizenHandle || initialState.artizenHandle,
-      firstName: loggedInUser.firstName || initialState.firstName,
-      lastName: loggedInUser.lastName || initialState.lastName,
-      email: loggedInUser.email || initialState.email,
-      bio: loggedInUser.bio || initialState.bio,
-      twitterLink: loggedInUser.twitterLink || initialState.twitterLink,
-      website: loggedInUser.website || initialState.website,
-    })
-  }, [loggedInUser])
+    if (!loggedInUser) router.push('/')
+  }, [])
+
+  const [data, setData] = useState<FormState>({
+    artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,
+    firstName: loggedInUser?.firstName || initialState.firstName,
+    lastName: loggedInUser?.lastName || initialState.lastName,
+    email: loggedInUser?.email || initialState.email,
+    bio: loggedInUser?.bio || initialState.bio,
+    twitterLink: loggedInUser?.twitterLink || initialState.twitterLink,
+    twitterHandle: loggedInUser?.twitterHandle || initialState.twitterHandle,
+    instagramHandle: loggedInUser?.instagramHandle || initialState.instagramHandle,
+    discordHandle: loggedInUser?.discordHandle || initialState.discordHandle,
+    website: loggedInUser?.website || initialState.website,
+  })
 
   const [processing, setProcessing] = useState(false)
 
@@ -40,11 +44,15 @@ const EditProfile = () => {
 
   return (
     <Wrapper>
-      <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
-        <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={1}>
-          Save Changes
-        </StyledButton>
-      </Form>
+      {!loggedInUser ? (
+        <Spinner />
+      ) : (
+        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
+          <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={1}>
+            Save Changes
+          </StyledButton>
+        </Form>
+      )}
     </Wrapper>
   )
 }

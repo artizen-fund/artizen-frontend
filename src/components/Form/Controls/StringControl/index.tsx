@@ -117,7 +117,7 @@ export const StringControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusGlyph && <InputGlyph outline color="night" darkColor="night" glyph={statusGlyph} />}
+        {!!statusGlyph && <InputGlyph outline color="night" darkColor="night" glyph={statusGlyph} />}
       </InputWrapper>
       <Message className={hasMessage ? 'hasMessage' : ''}>{visibleError}</Message>
     </Wrapper>
