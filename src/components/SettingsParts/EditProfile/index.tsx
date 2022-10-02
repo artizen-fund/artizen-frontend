@@ -5,9 +5,9 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER_PROFILE } from '@gql'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { Form, Button, Spinner } from '@components'
-import { UserContext } from '@lib'
-import { breakpoint } from '@theme'
+import { Form, Button, Spinner, SettingsFormHeader } from '@components'
+import { UserContext, rgba } from '@lib'
+import { breakpoint, typography, palette } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
@@ -16,11 +16,7 @@ const EditProfile = () => {
 
   const [data, setData] = useState<FormState>({
     artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,
-    firstName: loggedInUser?.firstName || initialState.firstName,
-    lastName: loggedInUser?.lastName || initialState.lastName,
-    email: loggedInUser?.email || initialState.email,
     bio: loggedInUser?.bio || initialState.bio,
-    twitterLink: loggedInUser?.twitterLink || initialState.twitterLink,
     twitterHandle: loggedInUser?.twitterHandle || initialState.twitterHandle,
     instagramHandle: loggedInUser?.instagramHandle || initialState.instagramHandle,
     discordHandle: loggedInUser?.discordHandle || initialState.discordHandle,
@@ -62,28 +58,37 @@ const EditProfile = () => {
 
   return (
     <Wrapper>
-      {!loggedInUser ? (
-        <Spinner />
-      ) : (
-        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
-          <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={1}>
-            Save Changes
-          </StyledButton>
-        </Form>
-      )}
+      <SettingsFormHeader
+        imgPath="/assets/illustrations/donations/donation.png"
+        title="Public Profile"
+        subtitle="Your public profile is visible to everyone"
+      />
+      <FormWrapper>
+        {!loggedInUser ? (
+          <Spinner />
+        ) : (
+          <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
+            <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={0}>
+              Save Changes
+            </StyledButton>
+          </Form>
+        )}
+        <SocialLinksBanner>Social Links</SocialLinksBanner>
+      </FormWrapper>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div``
+
+const FormWrapper = styled.div`
   display: grid;
   gap: 10px;
   grid-template-areas:
     'artizenHandle artizenHandle'
-    'firstName lastName'
     'email email'
-    'phoneNumber phoneNumber'
     'bio bio'
+    'socialLinksBanner socialLinksBanner'
     'website website'
     'twitterHandle twitterHandle'
     'instagramHandle instagramHandle'
@@ -101,22 +106,6 @@ const Wrapper = styled.div`
 
   *[id='#/properties/artizenHandle'] {
     grid-area: artizenHandle;
-  }
-
-  *[id='#/properties/firstName'] {
-    grid-area: firstName;
-  }
-
-  *[id='#/properties/lastName'] {
-    grid-area: lastName;
-  }
-
-  *[id='#/properties/email'] {
-    grid-area: email;
-  }
-
-  *[id='#/properties/phoneNumber'] {
-    grid-area: phoneNumber;
   }
 
   *[id='#/properties/bio'] {
@@ -140,8 +129,15 @@ const Wrapper = styled.div`
   }
 `
 
+const SocialLinksBanner = styled.div`
+  grid-area: socialLinksBanner;
+  margin-top: 20px;
+  ${typography.label.l1}
+`
+
 const StyledButton = styled(props => <Button {...props} />)`
   grid-area: saveChanges;
+  margin-top: 20px;
 `
 
 export default EditProfile

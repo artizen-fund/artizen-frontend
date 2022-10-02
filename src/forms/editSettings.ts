@@ -4,22 +4,24 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    someString: {
+    firstName: {
       type: 'string',
       minLength: 2,
     },
-    someEmail: {
+    lastName: {
+      type: 'string',
+      minLength: 2,
+    },
+    email: {
       type: 'string',
       format: 'email',
     },
-    someNumber: {
-      type: 'number',
-    },
-    someBoolean: {
-      type: 'boolean',
+    phoneNumber: {
+      type: 'string',
+      format: 'phone',
     },
   },
-  required: ['someEmail', 'someBoolean'],
+  required: ['firstName', 'lastName', 'email'],
 }
 
 /*
@@ -27,17 +29,14 @@ export const schema: JsonSchema = {
 	All values must be optional, as an unfilled form will conform to this state.
 */
 export interface FormState extends Record<string, unknown> {
-  someString?: string
-  someEmail?: string
-  someNumber?: number
-  someBoolean?: boolean
+  firstName?: string
+  lastName?: string
+  email?: string
+  phoneNumber?: string
 }
 
 /* This is our local initialState. */
-export const initialState: FormState = {
-  someString: 'Some default value',
-  someBoolean: true,
-}
+export const initialState: FormState = {}
 
 /*
 	This is the JSONForms UI layout. 
@@ -50,25 +49,23 @@ export const uischema = {
   elements: [
     {
       type: 'Control',
-      scope: '#/properties/someString',
-      label: 'Tell us a thing.',
+      scope: '#/properties/firstName',
+      label: 'First Name',
     },
     {
       type: 'Control',
-      scope: '#/properties/someEmail',
-      label: 'Email Address',
-      options: { placeholder: 'your@email.com' },
+      scope: '#/properties/lastName',
+      label: 'Last Name',
     },
     {
       type: 'Control',
-      scope: '#/properties/someNumber',
-      label: 'What is your lucky number?',
+      scope: '#/properties/email',
+      label: 'Email',
     },
     {
       type: 'Control',
-      scope: '#/properties/someBoolean',
-      label: 'Do you like to click checkmarks?',
-      options: { inverted: true },
+      scope: '#/properties/phoneNumber',
+      label: 'Phone Number',
     },
   ],
 }
