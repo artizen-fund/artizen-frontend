@@ -62,16 +62,11 @@ const EditSettings = () => {
         subtitle="Check your settings below."
       />
       <FormWrapper>
-        {!loggedInUser ? (
-          <Spinner />
-        ) : (
-          <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
-            <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={0}>
-              Save Changes
-            </StyledButton>
-          </Form>
-        )}
-        <NotificationsBanner>Receive email notifications for the following</NotificationsBanner>
+        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
+          <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={0}>
+            Save Changes
+          </StyledButton>
+        </Form>
       </FormWrapper>
     </Wrapper>
   )

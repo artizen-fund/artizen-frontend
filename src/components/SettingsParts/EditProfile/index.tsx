@@ -5,9 +5,9 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER_PROFILE } from '@gql'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { Form, Button, Spinner, SettingsFormHeader } from '@components'
-import { UserContext, rgba } from '@lib'
-import { breakpoint, typography, palette } from '@theme'
+import { Form, Button, SettingsFormHeader } from '@components'
+import { UserContext } from '@lib'
+import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
@@ -64,15 +64,11 @@ const EditProfile = () => {
         subtitle="Your public profile is visible to everyone"
       />
       <FormWrapper>
-        {!loggedInUser ? (
-          <Spinner />
-        ) : (
-          <Form {...{ schema, uischema, initialState, data, setData, additionalErrors, readonly }}>
-            <StyledButton onClick={() => saveChanges()} stretch level={0}>
-              Save Changes
-            </StyledButton>
-          </Form>
-        )}
+        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors, readonly }}>
+          <StyledButton onClick={() => saveChanges()} stretch level={0}>
+            Save Changes
+          </StyledButton>
+        </Form>
         <SocialLinksBanner>Social Links</SocialLinksBanner>
       </FormWrapper>
     </Wrapper>

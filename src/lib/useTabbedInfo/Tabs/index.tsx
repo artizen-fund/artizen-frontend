@@ -34,10 +34,17 @@ const Tab = styled.div<{ active: boolean }>`
   ${typography.label.l1}
   color: ${rgba(palette.night)};
   border-bottom: 2px solid ${rgba(palette.night, 0)};
-  transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   &:hover {
     border-color: ${rgba(palette.night, 1)};
   }
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+    border-bottom: 2px solid ${rgba(palette.moon, 0)};
+    &:hover {
+      border-color: ${rgba(palette.moon, 1)};
+    }
+  }
+  transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   ${props =>
     props.active &&
     `

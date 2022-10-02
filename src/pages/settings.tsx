@@ -56,6 +56,10 @@ const Main = styled.div`
 
   background: ${rgba(palette.white)};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.slate)};
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+  }
   border-radius: 16px;
 `
 

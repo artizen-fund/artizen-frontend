@@ -19,7 +19,7 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
   return !loggedInUser ? (
     <></>
   ) : (
-    <Wrapper>
+    <header>
       <PersonalBannerGraphic>
         <ProfileAvatar profileImage={loggedInUser?.profileImage!} />
       </PersonalBannerGraphic>
@@ -84,13 +84,9 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
         </Content>
         {children}
       </Main>
-    </Wrapper>
+    </header>
   )
 }
-
-const Wrapper = styled.header`
-  background: magenta;
-`
 
 const PersonalBannerGraphic = styled.div<{ bannerImage?: string }>`
   position: relative;
@@ -159,6 +155,10 @@ const Main = styled.main`
   padding: 10px;
   background: ${rgba(palette.white)};
   box-shadow: 0px 0.5px 0px #d9dbe0;
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.slate)};
+    box-shadow: 0px 0.5px 0px rgba(114, 124, 140, 0.64);
+  }
 `
 
 const Content = styled.div`
