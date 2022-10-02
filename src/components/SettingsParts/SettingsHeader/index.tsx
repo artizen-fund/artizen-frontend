@@ -5,7 +5,7 @@ import { rgba, UserContext } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { monthNames } from '@copy/common'
 
-const SettingsHeader = () => {
+const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
   const { loggedInUser } = useContext(UserContext)
 
   const [dateJoined, setDateJoined] = useState<string>()
@@ -36,40 +36,45 @@ const SettingsHeader = () => {
           <SocialLinks>
             {!!loggedInUser.twitterHandle && (
               <Button
-                glyph="twitter"
                 glyphOnly
-                level={2}
+                glyph="twitter"
+                level={1}
                 outline
                 href={`https://twitter.com/${loggedInUser.twitterHandle}`}
+                target="_blank"
               >
                 @{loggedInUser.twitterHandle}
               </Button>
             )}
             {!!loggedInUser.discordHandle && (
               <Button
-                glyph="discord"
                 glyphOnly
-                level={2}
+                glyph="discord"
+                level={1}
                 outline
                 href={`https://discordapp.com/users/${loggedInUser.discordHandle}`}
+                target="_blank"
               >
                 @{loggedInUser.discordHandle}
               </Button>
             )}
             {!!loggedInUser.instagramHandle && (
-              <Button
-                glyph="instagram"
-                glyphOnly
-                level={2}
-                outline
-                href={`https://instagram.com/${loggedInUser.instagramHandle}`}
-              >
-                @{loggedInUser.instagramHandle}
-              </Button>
+              <a target="_blank" rel="noreferrer">
+                <Button
+                  glyphOnly
+                  glyph="instagram"
+                  level={1}
+                  outline
+                  href={`https://instagram.com/${loggedInUser.instagramHandle}`}
+                  target="_blank"
+                >
+                  @{loggedInUser.instagramHandle}
+                </Button>
+              </a>
             )}
             {!!loggedInUser.website && (
-              <Button glyph="globe" glyphOnly level={2} outline href={loggedInUser.website}>
-                {loggedInUser.website}
+              <Button glyphOnly glyph="globe" level={1} outline href={loggedInUser.website} target="_blank">
+                website
               </Button>
             )}
           </SocialLinks>
@@ -77,6 +82,7 @@ const SettingsHeader = () => {
             See Public Profile
           </ProfileLink>
         </Content>
+        {children}
       </Main>
     </Wrapper>
   )
@@ -115,6 +121,7 @@ const PersonalBannerGraphic = styled.div<{ bannerImage?: string }>`
 
 const ProfileAvatar = styled.div<{ profileImage?: string }>`
   position: absolute;
+  z-index: 1;
   width: 104px;
   height: 104px;
   left: calc(50% - 52px);
@@ -148,6 +155,7 @@ const ProfileAvatar = styled.div<{ profileImage?: string }>`
 `
 
 const Main = styled.main`
+  position: relative;
   padding: 10px;
   background: ${rgba(palette.white)};
   box-shadow: 0px 0.5px 0px #d9dbe0;

@@ -24,16 +24,16 @@ const EditProfile = () => {
   })
 
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
-  const [processing, setProcessing] = useState(false)
+  const [readonly, setReadonly] = useState(false)
 
   const saveChanges = async () => {
     if (!loggedInUser) return
-    setProcessing(true)
+    setReadonly(true)
     await apolloClient.mutate({
       mutation: UPDATE_USER_PROFILE,
       variables: { id: loggedInUser.id, ...data },
     })
-    setProcessing(false)
+    setReadonly(false)
   }
 
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
@@ -67,8 +67,8 @@ const EditProfile = () => {
         {!loggedInUser ? (
           <Spinner />
         ) : (
-          <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
-            <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={0}>
+          <Form {...{ schema, uischema, initialState, data, setData, additionalErrors, readonly }}>
+            <StyledButton onClick={() => saveChanges()} stretch level={0}>
               Save Changes
             </StyledButton>
           </Form>

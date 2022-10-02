@@ -1,19 +1,9 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import {
-  Layout,
-  SettingsHeader,
-  EditProfile,
-  TabbedInfo,
-  EditWallet,
-  EditSettings,
-  EditNotifications,
-  EditCollection,
-  PagePadding,
-} from '@components'
-import { UserContext, rgba } from '@lib'
-import { typography, palette, breakpoint } from '@theme'
+import { Layout, SettingsHeader, EditProfile, EditSettings } from '@components'
+import { UserContext, rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
+import { palette, breakpoint } from '@theme'
 
 const Settings = () => {
   const router = useRouter()
@@ -27,13 +17,26 @@ const Settings = () => {
     if (!loading && !loggedInUser) router.push('/')
   }, [])
 
+  const tabs = [
+    <Tab label="Profile" key="tab-profile">
+      <EditProfile />
+    </Tab>,
+    <Tab label="Settings" key="tab-settings">
+      <EditSettings />
+    </Tab>,
+  ]
+
+  const { activeTab, setTab } = useTabbedInfo(tabs, true)
+
   return !loggedInUser ? (
     <></>
   ) : (
     <Layout>
-      <SettingsHeader />
+      <SettingsHeader>
+        <StyledTabs {...{ activeTab, setTab, tabs }} />
+      </SettingsHeader>
       <Main>
-        <EditProfile />
+        <TabbedContent {...{ tabs, activeTab }} />
       </Main>
     </Layout>
   )
@@ -42,6 +45,8 @@ const Settings = () => {
 const Main = styled.div`
   max-width: calc(100vw - 48px);
   margin: 75px auto;
+  padding: 40px;
+
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     max-width: 680px;
   }
@@ -49,12 +54,17 @@ const Main = styled.div`
     max-width: 760px;
   }
 
-  padding: 40px;
-
   background: ${rgba(palette.white)};
-
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   border-radius: 16px;
+`
+
+const StyledTabs = styled(props => <Tabs {...props} />)`
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  width: 100%;
+  justify-content: center;
 `
 
 const Tab = styled.div<{ label: string }>``
