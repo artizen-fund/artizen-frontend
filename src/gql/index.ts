@@ -1,5 +1,6 @@
 export * from './sidebar'
 export * from './wallet'
+export * from './checkForExistingArtizenHandle'
 export * from './checkUser'
 export * from './createUser'
 export * from './getUser'

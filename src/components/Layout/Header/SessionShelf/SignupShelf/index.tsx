@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from 'react'
+import styled from 'styled-components'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import Link from 'next/link'
-import styled from 'styled-components'
 import { Icon, Form, CheckboxControl } from '@components'
-import { loginWithEmail, useMagic, useFormLocalStorage, UserContext } from '@lib'
+import { loginWithEmail, useMagic, UserContext } from '@lib'
 import { UPDATE_NEW_USER_PROFILE } from '@gql'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/signup'
@@ -23,8 +23,7 @@ import {
 import { IUser } from '@types'
 
 const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
-  const LOCALSTORAGE_KEY = 'signupForm'
-  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+  const [data, setData] = useState<FormState>(initialState)
 
   const { magic } = useMagic()
   const apolloClient = useApolloClient()
@@ -71,6 +70,8 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
   }
 
   useEffect(() => {
+    // this will save a new user's name after we hear back from MagicLink
+    // "return () => " it runs on component dismount
     return () => {
       if (!!loggedInUser && !!data.firstName && !!data.lastName) {
         saveNewUserData(loggedInUser, data)
@@ -89,7 +90,6 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
       </Copy>
       <Form
         submitDisabledFromOutside={!acceptedToc || submitted}
-        localStorageKey={LOCALSTORAGE_KEY}
         {...{ schema, uischema, initialState, data, setData, readonly }}
       >
         <>

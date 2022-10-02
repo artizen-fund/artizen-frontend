@@ -15,11 +15,16 @@ import { UserContext, rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 
 const Settings = () => {
+  const router = useRouter()
   const { loading, loggedInUser } = useContext(UserContext)
 
   useEffect(() => {
-    console.log('settings page: loading?', loading, loggedInUser)
-  }, [loading, loggedInUser])
+    /* todo: If a user has an active session and lands on this page from "nowhere," it will punt them home.
+     * That isn't a desired action, but all my attempts at "waiting" a moment for a session are causing render glitches.
+     * This makes dev a headache (will forward on every site refresh), but since it's an edge case, I'm punting it.
+     */
+    if (!loading && !loggedInUser) router.push('/')
+  }, [])
 
   return (
     <Layout>

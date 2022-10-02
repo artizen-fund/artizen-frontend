@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useApolloClient, ApolloClient } from '@apollo/client'
-import Link from 'next/link'
 import styled from 'styled-components'
 import { Icon, Form, CheckboxControl } from '@components'
 import { loginWithEmail, useMagic, useFormLocalStorage } from '@lib'

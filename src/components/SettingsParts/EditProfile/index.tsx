@@ -1,21 +1,18 @@
-import { useEffect, useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useQuery } from '@apollo/client'
+import { ErrorObject } from 'ajv'
+import { useDebounce } from 'use-debounce'
+import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER_PROFILE } from '@gql'
+import { ICheckForExistingArtizenHandleQuery } from '@types'
 import { Form, Button, Spinner } from '@components'
-import { useFormLocalStorage, UserContext } from '@lib'
+import { UserContext } from '@lib'
 import { breakpoint } from '@theme'
-import { UPDATE_USER_PROFILE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
-  const router = useRouter()
   const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
-
-  useEffect(() => {
-    if (!loggedInUser) router.push('/')
-  }, [])
 
   const [data, setData] = useState<FormState>({
     artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,
@@ -30,6 +27,7 @@ const EditProfile = () => {
     website: loggedInUser?.website || initialState.website,
   })
 
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   const [processing, setProcessing] = useState(false)
 
   const saveChanges = async () => {
@@ -42,12 +40,32 @@ const EditProfile = () => {
     setProcessing(false)
   }
 
+  const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
+  useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
+    variables: { id: loggedInUser?.id, artizenHandle: newArtizenHandle },
+    onError: error => console.error('error ', error),
+    fetchPolicy: 'no-cache',
+    onCompleted: async ({ User }) => {
+      const errors: Array<ErrorObject> = []
+      if (User.length > 0) {
+        errors.push({
+          instancePath: '/artizenHandle',
+          message: 'Handle is already in use',
+          schemaPath: '#/properties/artizenHandle',
+          keyword: '',
+          params: {},
+        })
+      }
+      setAdditionalErrors(errors)
+    },
+  })
+
   return (
     <Wrapper>
       {!loggedInUser ? (
         <Spinner />
       ) : (
-        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
+        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
           <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={1}>
             Save Changes
           </StyledButton>
