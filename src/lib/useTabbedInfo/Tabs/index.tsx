@@ -50,6 +50,10 @@ const Tab = styled.div<{ active: boolean }>`
     `
     color: ${rgba(palette.black)};
     border-color: ${rgba(palette.black, 1)};
+    @media (prefers-color-scheme: dark) {
+      color: ${rgba(palette.moon)};
+      border-color: ${rgba(palette.moon, 1)};
+    }
   `}
 `
 
