@@ -7,11 +7,13 @@ interface ISettingsFormHeader {
   title: string
   subtitle: string
   imgPath: string
+  darkImgPath: string
 }
 
-const SettingsFormHeader = ({ title, subtitle, imgPath }: ISettingsFormHeader) => (
+const SettingsFormHeader = ({ title, subtitle, imgPath, darkImgPath }: ISettingsFormHeader) => (
   <Wrapper>
-    <img src={`${assetPath(imgPath)}?fm=webp`} alt="header image" />
+    <Img src={`${assetPath(imgPath)}?fm=webp`} alt="header image" />
+    <Img src={`${assetPath(darkImgPath)}?fm=webp`} alt="header image" darkMode />
     <Title>{title}</Title>
     <Subtitle>{subtitle}</Subtitle>
   </Wrapper>
@@ -39,6 +41,13 @@ const Title = styled.h2`
 const Subtitle = styled.p`
   color: ${rgba(palette.barracuda)};
   ${typography.label.l1}
+`
+
+const Img = styled.img<{ darkMode?: boolean }>`
+  display: ${props => (props.darkMode ? 'none' : 'block')};
+  @media (prefers-color-scheme: dark) {
+    display: ${props => (props.darkMode ? 'block' : 'none')};
+  }
 `
 
 export default SettingsFormHeader

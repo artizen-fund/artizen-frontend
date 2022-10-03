@@ -57,7 +57,8 @@ const EditSettings = () => {
   return (
     <Wrapper>
       <SettingsFormHeader
-        imgPath="/assets/illustrations/donations/donation.png"
+        imgPath="/assets/illustrations/settings/profile.png"
+        darkImgPath="/assets/illustrations/settings/profile-dark.png"
         title="Account Settings"
         subtitle="Check your settings below."
       />

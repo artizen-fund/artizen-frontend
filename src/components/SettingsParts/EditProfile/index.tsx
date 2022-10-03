@@ -59,7 +59,8 @@ const EditProfile = () => {
   return (
     <Wrapper>
       <SettingsFormHeader
-        imgPath="/assets/illustrations/donations/donation.png"
+        imgPath="/assets/illustrations/settings/profile.png"
+        darkImgPath="/assets/illustrations/settings/profile-dark.png"
         title="Public Profile"
         subtitle="Your public profile is visible to everyone"
       />
