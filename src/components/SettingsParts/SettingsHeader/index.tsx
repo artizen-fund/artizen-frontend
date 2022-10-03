@@ -106,6 +106,9 @@ const PersonalBannerGraphic = styled.div<{ bannerImage?: string }>`
   }
 
   background-color: ${rgba(palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    background-color: ${rgba(palette.night)};
+  }
   background-size: cover;
   background-position: center center;
   ${props =>
