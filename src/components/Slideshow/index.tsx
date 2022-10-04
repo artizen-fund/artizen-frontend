@@ -18,9 +18,14 @@ const Slideshow = ({ slides }: ISlideshow) => {
 
   return (
     <Wrapper>
-      {slides.map((image: string, index: number) => (
+      {slides.length > 0 && slides[0].length > 0 && (
+        <video loop={true} autoPlay={true} controls={false} muted={true}>
+          <source src={slides[0]} type="video/mp4" />
+        </video>
+      )}
+      {/*slides.map((image: string, index: number) => (
         <Slide key={`slide_${index}`} {...{ image }} className={index === activeProjectIndex ? 'active' : 'inactive'} />
-      ))}
+      ))*/}
     </Wrapper>
   )
 }
