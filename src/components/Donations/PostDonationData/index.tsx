@@ -57,10 +57,7 @@ const PostDonationData = () => {
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
     variables: {
       where: {
-        artizenHandle: { _eq: newArtizenHandle?.toLowerCase() },
-        and: {
-          id: { _neq: loggedInUser?.id },
-        },
+        _and: [{ artizenHandle: { _eq: newArtizenHandle?.toLowerCase() } }, { id: { _neq: loggedInUser?.id } }],
       },
     },
     onError: error => console.error('error ', error),
