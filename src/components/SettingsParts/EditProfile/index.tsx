@@ -29,9 +29,11 @@ const EditProfile = () => {
   const saveChanges = async () => {
     if (!loggedInUser) return
     setReadonly(true)
+    // todo: replace this force-lowercase with a mutation event in hasura
+    const variables = { id: loggedInUser.id, ...data, artizenHandle: data.artizenHandle?.toLowerCase() }
     await apolloClient.mutate({
       mutation: UPDATE_USER_PROFILE,
-      variables: { id: loggedInUser.id, ...data },
+      variables,
     })
     setReadonly(false)
   }
@@ -40,7 +42,7 @@ const EditProfile = () => {
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
     variables: {
       where: {
-        artizenHandle: { _eq: newArtizenHandle },
+        artizenHandle: { _eq: newArtizenHandle?.toLowerCase() },
         and: {
           id: { _neq: loggedInUser?.id },
         },
