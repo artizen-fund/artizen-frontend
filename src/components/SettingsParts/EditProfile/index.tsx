@@ -38,12 +38,19 @@ const EditProfile = () => {
 
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
-    variables: { id: loggedInUser?.id, artizenHandle: newArtizenHandle },
+    variables: {
+      where: {
+        artizenHandle: { _eq: newArtizenHandle },
+        and: {
+          id: { _neq: loggedInUser?.id },
+        },
+      },
+    },
     onError: error => console.error('error ', error),
     fetchPolicy: 'no-cache',
-    onCompleted: async ({ User }) => {
+    onCompleted: async response => {
       const errors: Array<ErrorObject> = []
-      if (User.length > 0) {
+      if (response.User.length > 0) {
         errors.push({
           instancePath: '/artizenHandle',
           message: 'Handle is already in use',
