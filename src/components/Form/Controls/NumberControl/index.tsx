@@ -81,7 +81,7 @@ export const NumberControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
+        {!!statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
       </InputWrapper>
       <Message {...{ virgin }} className={!!errors ? 'hasMessage' : ''}>
         {visibleError}

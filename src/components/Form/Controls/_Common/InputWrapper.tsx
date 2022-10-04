@@ -89,14 +89,11 @@ export default styled.div<{
     align-items: center;
 
     width: 100%;
-    height: 56px;
     padding: 18px ${props => (props.hasStatusGlyph ? 48 : 16)}px 0 16px;
     @media only screen and (min-width: ${breakpoint.laptop}px) {
-      height: 64px;
       padding: 20px ${props => (props.hasStatusGlyph ? 72 : 24)}px 0 24px;
     }
     @media only screen and (min-width: ${breakpoint.desktop}px) {
-      height: 72px;
       padding: 22px ${props => (props.hasStatusGlyph ? 88 : 32)}px 0 32px;
     }
 
@@ -111,6 +108,27 @@ export default styled.div<{
 
     ${() => InputPalette}
     ${() => InputTypography}
+  }
+
+  input,
+  select {
+    height: 56px;
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      height: 64px;
+    }
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      height: 72px;
+    }
+  }
+
+  textarea {
+    height: 168px;
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      height: 192px;
+    }
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      height: 216px;
+    }
   }
 
   input[type='date'] {

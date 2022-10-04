@@ -4,25 +4,9 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    firstName: {
-      type: 'string',
-      minLength: 2,
-    },
-    lastName: {
-      type: 'string',
-      minLength: 2,
-    },
     artizenHandle: {
       type: 'string',
       minLength: 2,
-    },
-    email: {
-      type: 'string',
-      format: 'email',
-    },
-    phoneNumber: {
-      type: 'string',
-      format: 'phone',
     },
     bio: {
       type: 'string',
@@ -45,7 +29,7 @@ export const schema: JsonSchema = {
       // todo: regex?
     },
   },
-  required: ['firstName', 'lastName', 'artizenHandle', 'email'],
+  required: ['artizenHandle'],
 }
 
 /*
@@ -53,14 +37,12 @@ export const schema: JsonSchema = {
 	All values must be optional, as an unfilled form will conform to this state.
 */
 export interface FormState extends Record<string, unknown> {
-  firstName?: string
-  lastName?: string
   artizenHandle?: string
   bio?: string
-  email?: string
-  phoneNumber?: string
-  twitterLink?: string
   website?: string
+  twitterHandle?: string
+  instagramHandle?: string
+  discordHandle?: string
 }
 
 /* This is our local initialState. */
@@ -82,28 +64,11 @@ export const uischema = {
     },
     {
       type: 'Control',
-      scope: '#/properties/firstName',
-      label: 'First Name',
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/lastName',
-      label: 'Last Name',
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/email',
-      label: 'Email',
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/phoneNumber',
-      label: 'Phone Number',
-    },
-    {
-      type: 'Control',
       scope: '#/properties/bio',
-      label: 'Biography',
+      label: 'Bio',
+      options: {
+        format: 'text',
+      },
     },
     {
       type: 'Control',

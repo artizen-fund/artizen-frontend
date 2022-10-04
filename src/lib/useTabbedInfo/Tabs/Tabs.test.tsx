@@ -1,9 +1,9 @@
 import renderer from 'react-test-renderer'
-import ProfileCard from './'
+import Tabs from './'
 
-describe('ProfileCard', () => {
+describe('Tabs', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<ProfileCard />).toJSON()
+    const tree = renderer.create(<Tabs />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

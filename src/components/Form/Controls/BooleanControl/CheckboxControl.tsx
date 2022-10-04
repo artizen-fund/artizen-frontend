@@ -119,7 +119,9 @@ const Wrapper = styled.label<Pick<BooleanControlProps, 'enabled' | 'inverted'> &
   user-select: none;
 
   cursor: ${props => (!props.enabled ? 'not-allowed' : 'pointer')};
-  pointer-events: ${props => (!props.enabled ? 'none' : 'all')};
+  /* TODO: this is overriding the shelf pointer-events:none check 
+    pointer-events: ${props => (!props.enabled ? 'none' : 'all')};
+  */
 
   & input:checked ~ span {
     background-color: ${props => rgba(props.inverted ? palette.white : palette.slate)};

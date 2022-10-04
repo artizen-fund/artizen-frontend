@@ -1,101 +1,74 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import {
-  Layout,
-  TabbedInfo,
-  ProfileCard,
-  EditProfile,
-  EditWallet,
-  EditSettings,
-  EditNotifications,
-  EditCollection,
-  PagePadding,
-} from '@components'
-import { UserContext, rgba } from '@lib'
-import { typography, palette, breakpoint } from '@theme'
+import { Layout, SettingsHeader, EditProfile, EditSettings } from '@components'
+import { UserContext, rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
+import { palette, breakpoint } from '@theme'
 
 const Settings = () => {
-  const { loggedInUser } = useContext(UserContext)
-  const tabbedInfo: Record<string, React.ReactNode> = {
-    Profile: <EditProfile />,
-    Wallet: <EditWallet />,
-    Settings: <EditSettings />,
-    Notifications: <EditNotifications />,
-    Collection: <EditCollection />,
-  }
+  const router = useRouter()
+  const { loading, loggedInUser } = useContext(UserContext)
 
-  return (
+  useEffect(() => {
+    /* todo: If a user has an active session and lands on this page from "nowhere," it will punt them home.
+     * That isn't a desired action, but all my attempts at "waiting" a moment for a session are causing render glitches.
+     * This makes dev a headache (will forward on every site refresh), but since it's an edge case, I'm punting it.
+     */
+    if (!loading && !loggedInUser) router.push('/')
+  }, [])
+
+  const tabs = [
+    <Tab label="Profile" key="tab-profile">
+      <EditProfile />
+    </Tab>,
+    <Tab label="Settings" key="tab-settings">
+      <EditSettings />
+    </Tab>,
+  ]
+
+  const { activeTab, setTab } = useTabbedInfo(tabs, true)
+
+  return !loggedInUser ? (
+    <></>
+  ) : (
     <Layout>
-      {loggedInUser && (
-        <>
-          <Header>
-            <Title>Profile</Title>
-            <Description>
-              Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Praesent commodo cursus
-              magna, vel scelerisque nisl consectetur et.
-            </Description>
-          </Header>
-
-          <Main>
-            <ProfileCard />
-            <EditSpace>
-              <TabbedInfo withHashChanges>
-                {Object.keys(tabbedInfo).map(key => (
-                  <Tab key={`tab-${key}`} label={key}>
-                    {tabbedInfo[key]}
-                  </Tab>
-                ))}
-              </TabbedInfo>
-            </EditSpace>
-          </Main>
-        </>
-      )}
+      <SettingsHeader>
+        <StyledTabs {...{ activeTab, setTab, tabs }} />
+      </SettingsHeader>
+      <Main>
+        <TabbedContent {...{ tabs, activeTab }} />
+      </Main>
     </Layout>
   )
 }
 
-const Header = styled(props => <PagePadding {...props} />)``
-
-const Title = styled.h1`
-  ${typography.title.l1};
-`
-
-const Description = styled.h2`
-  ${typography.body.l1};
-`
-
 const Main = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 75px;
-
   max-width: calc(100vw - 48px);
-  margin: auto;
+  margin: 75px auto;
+  padding: 40px;
 
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    max-width: 688px;
+    max-width: 680px;
   }
-
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    max-width: 944px;
-  }
-
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    max-width: 1600px;
+    max-width: 760px;
   }
-`
 
-const EditSpace = styled.div`
-  width: 100%;
-
-  padding: 40px;
-  gap: 32px;
   background: ${rgba(palette.white)};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.slate)};
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+  }
   border-radius: 16px;
+`
+
+const StyledTabs = styled(props => <Tabs {...props} />)`
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  width: 100%;
+  justify-content: center;
 `
 
 const Tab = styled.div<{ label: string }>``

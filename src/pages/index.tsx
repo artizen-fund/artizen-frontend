@@ -5,19 +5,26 @@ import {
   Metrics,
   Newsletter,
   PagePadding,
-  TabbedInfo,
   AlternatingPanels,
   AlternatingPanel,
   Sidebar,
   Curators,
   Button,
 } from '@components'
-import { rgba, useCampaign } from '@lib'
+import { rgba, useCampaign, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
 const Home = () => {
-  const { raffle, loading } = useCampaign()
+  const { raffle } = useCampaign()
+
+  const tabs = Object.keys(tabbedInfo).map(key => (
+    <Tab key={`tab-${key}`} label={key}>
+      {tabbedInfo[key]}
+    </Tab>
+  ))
+  const { activeTab, setTab } = useTabbedInfo(tabs, true)
+
   return (
     <Layout>
       <Header>
@@ -27,14 +34,11 @@ const Home = () => {
       <StyledPagePadding>
         <Wrapper>
           <FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} tagName="Tag Name" />
-          <TabbedInfo>
-            {Object.keys(tabbedInfo).map(key => (
-              <Tab key={`tab-${key}`} label={key}>
-                {tabbedInfo[key]}
-              </Tab>
-            ))}
-          </TabbedInfo>
-          {!loading && <Sidebar />}
+          <TabbedInfoWrapper>
+            <StyledTabs {...{ activeTab, setTab, tabs }} />
+            <TabbedContent {...{ activeTab, tabs }} />
+          </TabbedInfoWrapper>
+          <Sidebar />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
@@ -99,5 +103,19 @@ const Wrapper = styled.section`
 // todo: above is just a filled-in value, check design
 
 const Tab = styled.div<{ label: string }>``
+
+const TabbedInfoWrapper = styled.div`
+  grid-area: tabbedInfo;
+`
+
+const StyledTabs = styled(props => <Tabs {...props} />)`
+  margin: 40px 0px 35px 0px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    margin: 50px 0px 45px 0px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    margin: 60px 0px 55px 0px;
+  }
+`
 
 export default Home
