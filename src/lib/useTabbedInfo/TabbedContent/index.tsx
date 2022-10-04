@@ -6,8 +6,8 @@ export interface ITabbedContent {
   activeTab?: string
 }
 
-const TabbedContent = ({ tabs, activeTab }: ITabbedContent) => (
-  <Wrapper>{tabs.filter(child => kebabCase(child.props.label) === activeTab)}</Wrapper>
+const TabbedContent = ({ tabs, activeTab, ...props }: ITabbedContent) => (
+  <Wrapper {...props}>{tabs.filter(child => kebabCase(child.props.label) === activeTab)}</Wrapper>
 )
 
 const Wrapper = styled.div``
