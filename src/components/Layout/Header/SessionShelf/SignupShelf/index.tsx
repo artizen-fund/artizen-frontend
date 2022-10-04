@@ -79,6 +79,8 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
     }
   }, [data, loggedInUser])
 
+  const [derp, setDerp] = useState(false)
+
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
       <Copy>
