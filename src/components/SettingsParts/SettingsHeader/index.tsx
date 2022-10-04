@@ -4,6 +4,7 @@ import { Button, AvatarUploadWidget, BannerUploadWidget } from '@components'
 import { rgba, UserContext } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { monthNames } from '@copy/common'
+import { Maybe } from '@types'
 
 const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
   const { loggedInUser } = useContext(UserContext)
@@ -91,7 +92,7 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
   )
 }
 
-const PersonalBannerGraphic = styled.div<{ bannerImage?: string }>`
+const PersonalBannerGraphic = styled.div<{ bannerImage?: Maybe<string> }>`
   position: relative;
   width: 100%;
   height: 128px;
