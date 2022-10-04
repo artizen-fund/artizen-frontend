@@ -1,4 +1,4 @@
-import InvisiFileInput from './'
+import { InvisiFileInput } from './'
 
 export default {
   title: 'components/InvisiFileInput',
