@@ -7,7 +7,7 @@ import { ArtizenERC1155 } from '@contracts'
 import { BigNumber } from 'ethers'
 
 type IFeaturedArt = {
-  tagName: string
+  tagName?: string
   tokenId: BigNumber
   startTime: BigNumber
 }
@@ -51,13 +51,9 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
 
   const getDaysAgoFromDate = (start: number) => {
     const now = new Date()
-
     const oneDay = 1000 * 60 * 60 * 24
-
     const diffInTime = now.getTime() - start * 1000
-
     const diffInDays = Math.round(diffInTime / oneDay)
-
     return diffInDays
   }
 
@@ -78,9 +74,11 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
               label={`Created ${getDaysAgoFromDate(startTime?.toNumber())} days ago`}
             />
           </Metadatum>
-          <Metadatum>
-            <Icon glyph="tag" level={1} outline label={tagName} />
-          </Metadatum>
+          {tagName && (
+            <Metadatum>
+              <Icon glyph="tag" level={1} outline label={tagName} />
+            </Metadatum>
+          )}
         </Metadata>
       </Copy>
     </Wrapper>

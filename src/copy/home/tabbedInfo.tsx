@@ -25,21 +25,9 @@ const tabbedInfo: Record<string, React.ReactNode> = {
       </p>
     </>
   ),
-  Artist: (
+  'Meet the Artist': (
     <>
       <h1>So who’s this guy?</h1>
-      <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
-    </>
-  ),
-  Leaderboard: (
-    <>
-      <h1>Leaderboard leaderboard</h1>
-      <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
-    </>
-  ),
-  Perks: (
-    <>
-      <h1>Perky Perky Perks</h1>
       <p>Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.</p>
     </>
   ),

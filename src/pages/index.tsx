@@ -33,7 +33,7 @@ const Home = () => {
       </Header>
       <StyledPagePadding>
         <Wrapper>
-          <FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} tagName="Tag Name" />
+          <FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} />
           <TabbedInfoWrapper>
             <StyledTabs {...{ activeTab, setTab, tabs }} />
             <TabbedContent {...{ activeTab, tabs }} />
