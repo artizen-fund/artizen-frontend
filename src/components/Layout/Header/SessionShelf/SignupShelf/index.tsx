@@ -140,9 +140,11 @@ const Wrapper = styled.div`
     grid-template-areas:
       'copy firstName lastName'
       'copy email email'
+      'copy . .'
       'tocCheck submit submit';
     &.submitted {
       grid-template-areas:
+        'copy confirmation confirmation'
         'copy confirmation confirmation'
         'copy confirmation confirmation'
         'tocCheck confirmation confirmation';
