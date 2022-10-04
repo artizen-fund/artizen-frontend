@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from 'react'
-import { useReactiveVar, useLazyQuery } from '@apollo/client'
+import { createContext, useState } from 'react'
+import { useReactiveVar, useQuery } from '@apollo/client'
 import { userMetadataVar, initIntercom } from '@lib'
 import { GET_USER } from '@gql'
 import { IUser, IGetUserQuery } from '@types'
@@ -20,11 +20,11 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   const [loggedInUser, setLoggedInUser] = useState<IUser>()
   const [needsPostDonationData, setNeedsPostDonationData] = useState(false)
 
-  const [fetchUser, { loading }] = useLazyQuery<IGetUserQuery>(GET_USER, {
+  const { loading } = useQuery<IGetUserQuery>(GET_USER, {
     variables: { issuer: metadata?.issuer },
-    onCompleted: async (user: { User: any[] }) => {
-      if (!user || user.User.length < 0) return
-      const newlyLoggedUser = user.User[0] as IUser
+    onCompleted: async (data: { User: Array<Partial<IUser>> }) => {
+      if (!data || data.User.length < 0) return
+      const newlyLoggedUser = data.User[0] as IUser
       setLoggedInUser(newlyLoggedUser)
       setNeedsPostDonationData(
         !newlyLoggedUser.firstName ||
@@ -35,13 +35,7 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
     },
   })
 
-  useEffect(() => {
-    if (metadata?.issuer) {
-      fetchUser()
-    }
-  }, [metadata?.issuer])
-
   return (
-    <UserContext.Provider value={{ loggedInUser, loading, needsPostDonationData }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ loading, loggedInUser, needsPostDonationData }}>{children}</UserContext.Provider>
   )
 }
