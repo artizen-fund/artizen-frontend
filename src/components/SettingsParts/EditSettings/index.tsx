@@ -1,13 +1,10 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { useApolloClient, useQuery } from '@apollo/client'
-import { ErrorObject } from 'ajv'
-import { useDebounce } from 'use-debounce'
-import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER_PROFILE } from '@gql'
-import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { Form, Button, Spinner, SettingsFormHeader } from '@components'
-import { UserContext, rgba } from '@lib'
-import { breakpoint, typography, palette } from '@theme'
+import { useApolloClient } from '@apollo/client'
+import { UPDATE_USER_PROFILE } from '@gql'
+import { Form, Button, SettingsFormHeader } from '@components'
+import { UserContext } from '@lib'
+import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editSettings'
 
 const EditSettings = () => {
@@ -21,7 +18,6 @@ const EditSettings = () => {
     phoneNumber: loggedInUser?.phoneNumber || initialState.email,
   })
 
-  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   const [processing, setProcessing] = useState(false)
 
   const saveChanges = async () => {
@@ -34,26 +30,6 @@ const EditSettings = () => {
     setProcessing(false)
   }
 
-  const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
-  useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
-    variables: { id: loggedInUser?.id, artizenHandle: newArtizenHandle },
-    onError: error => console.error('error ', error),
-    fetchPolicy: 'no-cache',
-    onCompleted: async ({ User }) => {
-      const errors: Array<ErrorObject> = []
-      if (User.length > 0) {
-        errors.push({
-          instancePath: '/artizenHandle',
-          message: 'Handle is already in use',
-          schemaPath: '#/properties/artizenHandle',
-          keyword: '',
-          params: {},
-        })
-      }
-      setAdditionalErrors(errors)
-    },
-  })
-
   return (
     <Wrapper>
       <SettingsFormHeader
@@ -63,7 +39,7 @@ const EditSettings = () => {
         subtitle="Check your settings below."
       />
       <FormWrapper>
-        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
+        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
           <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={0}>
             Save Changes
           </StyledButton>

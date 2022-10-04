@@ -40,7 +40,8 @@ const PostDonationData = () => {
         const cloudinaryResponse = await uploadToCloudinary(imageFile)
         profileImage = cloudinaryResponse.secure_url
       }
-      const variables = { id: loggedInUser.id, ...data, profileImage }
+      // todo: replace the force-lowercase with a mutation event in hasura
+      const variables = { id: loggedInUser.id, ...data, artizenHandle: data.artizenHandle?.toLowerCase(), profileImage }
       await apolloClient.mutate({
         mutation: UPDATE_NEW_USER_PROFILE,
         variables,
@@ -54,7 +55,14 @@ const PostDonationData = () => {
 
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
-    variables: { id: loggedInUser?.id, artizenHandle: newArtizenHandle },
+    variables: {
+      where: {
+        artizenHandle: { _eq: newArtizenHandle?.toLowerCase() },
+        and: {
+          id: { _neq: loggedInUser?.id },
+        },
+      },
+    },
     onError: error => console.error('error ', error),
     fetchPolicy: 'no-cache',
     onCompleted: async ({ User }) => {
