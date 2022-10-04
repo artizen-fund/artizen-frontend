@@ -1,3 +1,4 @@
+export { default as AvatarUploadWidget } from './AvatarUploadWidget'
 export { default as EditCollection } from './EditCollection'
 export { default as EditNotifications } from './EditNotifications'
 export { default as EditProfile } from './EditProfile'

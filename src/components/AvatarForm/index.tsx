@@ -1,50 +1,34 @@
-import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Glyph } from '@components'
-import { rgba, assert } from '@lib'
-import { palette, breakpoint } from '@theme'
+import { InvisiFileInput } from '@lib'
+import { breakpoint } from '@theme'
 
 interface IAvatarForm {
   setFile: (input: File) => void
 }
 
 const AvatarForm = ({ setFile }: IAvatarForm) => {
-  const fileref = useRef<HTMLInputElement>()
-  const [preview, setPreview] = useState<string>()
-
-  const pickFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const pickedFile = e.target.files?.[0]
-    if (!pickedFile) return
-    setFile(pickedFile)
-    const reader = new FileReader()
-    reader.onloadend = () => setPreview(reader?.result as string)
-    reader.readAsDataURL(pickedFile)
-  }
-
+  const IMAGE_UPLOAD_BUTTON_ID = 'avatarUploadImage'
   return (
     <Wrapper>
-      <DropZone {...{ preview }}>{!preview && <Glyph glyph="face" />}</DropZone>
+      <InvisiFileInput id={IMAGE_UPLOAD_BUTTON_ID} {...{ setFile }}>
+        <DropZone>
+          <Glyph glyph="face" />
+        </DropZone>
+      </InvisiFileInput>
       <Buttons>
         {/*
         <Button level={2} onClick={() => alert('derp')}>
           Take photo
         </Button>
         */}
-        <Button level={2} htmlFor="avatarUploadInput" outline>
+        <Button level={2} htmlFor={IMAGE_UPLOAD_BUTTON_ID} outline>
           Upload photo
-          <FileInput type="file" onChange={pickFile} {...{ fileref }} id="avatarUploadInput" />
         </Button>
       </Buttons>
     </Wrapper>
   )
 }
-
-const FileInput = styled.input`
-  appearance: none;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-`
 
 const Wrapper = styled.div`
   grid-area: avatarForm;
@@ -82,6 +66,9 @@ const DropZone = styled.div<{ preview?: string }>`
     background-image: url(${props.preview});
     background-size: cover;
     background-position: center center;
+    > * {
+      display: none;
+    }
   `}
   border: 2px dashed black;
   border-radius: 9999px;
