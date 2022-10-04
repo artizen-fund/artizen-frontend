@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { Button, AvatarUploadWidget } from '@components'
+import { Button, AvatarUploadWidget, BannerUploadWidget } from '@components'
 import { rgba, UserContext } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { monthNames } from '@copy/common'
@@ -20,11 +20,9 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
     <></>
   ) : (
     <header>
-      <PersonalBannerGraphic>
+      <PersonalBannerGraphic bannerImage={loggedInUser.bannerImage}>
         <Content>
-          <UploadBannerButton onClick={() => alert('not yet')} level={1} glyph="palette">
-            See Public Profile
-          </UploadBannerButton>
+          <BannerUploadWidget />
         </Content>
         <AvatarUploadWidget />
       </PersonalBannerGraphic>
@@ -199,12 +197,6 @@ const SocialLinks = styled.div`
 const ProfileLink = styled(props => <Button {...props} />)`
   position: absolute;
   top: 0;
-  left: 0;
-`
-
-const UploadBannerButton = styled(props => <Button {...props} />)`
-  position: absolute;
-  top: 10px;
   left: 0;
 `
 
