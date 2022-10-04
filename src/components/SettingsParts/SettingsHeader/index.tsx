@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { Button } from '@components'
+import { Button, AvatarUploadWidget, BannerUploadWidget } from '@components'
 import { rgba, UserContext } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { monthNames } from '@copy/common'
+import { Maybe } from '@types'
 
 const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
   const { loggedInUser } = useContext(UserContext)
@@ -20,8 +21,11 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
     <></>
   ) : (
     <header>
-      <PersonalBannerGraphic>
-        <ProfileAvatar profileImage={loggedInUser?.profileImage!} />
+      <PersonalBannerGraphic bannerImage={loggedInUser.bannerImage}>
+        <Content>
+          <BannerUploadWidget />
+        </Content>
+        <AvatarUploadWidget />
       </PersonalBannerGraphic>
       <Main>
         <Content>
@@ -88,7 +92,7 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
   )
 }
 
-const PersonalBannerGraphic = styled.div<{ bannerImage?: string }>`
+const PersonalBannerGraphic = styled.div<{ bannerImage?: Maybe<string> }>`
   position: relative;
   width: 100%;
   height: 128px;
@@ -116,41 +120,6 @@ const PersonalBannerGraphic = styled.div<{ bannerImage?: string }>`
     `
     background-image: url(${props.bannerImage});
   `}
-`
-
-const ProfileAvatar = styled.div<{ profileImage?: string }>`
-  position: absolute;
-  z-index: 1;
-  width: 104px;
-  height: 104px;
-  left: calc(50% - 52px);
-  bottom: -52px;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    width: 132px;
-    height: 132px;
-    left: calc(50% - 66px);
-    bottom: -66px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 160px;
-    height: 160px;
-    left: calc(50% - 80px);
-    bottom: -80px;
-  }
-
-  border-radius: 9999px;
-  border: 4px solid ${rgba(palette.white)};
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    border-width: 6px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    border-width: 8px;
-  }
-  background: ${rgba(palette.stone)};
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  ${props => `background-image: url('${props.profileImage}');`}
 `
 
 const Main = styled.main`
