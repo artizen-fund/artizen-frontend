@@ -20,6 +20,8 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   const [loggedInUser, setLoggedInUser] = useState<IUser>()
   const [needsPostDonationData, setNeedsPostDonationData] = useState(false)
 
+  // TODO: revisit this for use of getLazyQuery
+  // also, should we be using Apollo State or ReactiveVar instead of this context?
   const { data, loading } = useQuery<IGetUserQuery>(GET_USER, {
     variables: { issuer: metadata?.issuer },
   })
