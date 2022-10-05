@@ -8,6 +8,7 @@ import {
   updateUserProfile,
   createUserProfile,
   createUserCourierProfile,
+  addUserToNewsLetter,
 } from '@lib'
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
@@ -32,17 +33,25 @@ const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const currentUser = await checkUserProfile(metadata.email, token)
     const { type: userProfileType } = currentUser
-    let { id: userId } = currentUser
+    let { id: userId, email: userEmail } = currentUser
+
     if (userProfileType === 'OLD') {
       const user = await updateUserProfile(metadata, token)
       userId = user.data?.update_User?.returning[0]?.id
+      userEmail = user.data?.insert_User_one?.email
     } else if (userProfileType === 'NEW') {
       const user = await createUserProfile(metadata, token)
       userId = user.data?.insert_User_one?.id
+      userEmail = user.data?.insert_User_one?.email
     }
 
     // sync courier user
     await createUserCourierProfile(userId, metadata.email)
+    console.log('userEmail  ', userEmail)
+    const addingUserToNewsletterR = userEmail && (await addUserToNewsLetter(userEmail))
+    // add user to newsletter
+
+    console.log('addingUserToNewsletterR   ', addingUserToNewsletterR)
 
     setTokenCookie(res, token)
     res.status(200).send({ token, metadata })
