@@ -10,12 +10,9 @@ export const addUserToNewsLetter = async (mail: string | null) => {
   }
 
   try {
-    const mailChimpApiKey = assert(process.env.NEXT_PUBLIC_MAILCHIMP_API_KEY, 'NEXT_PUBLIC_MAILCHIMP_API_KEY')
-    const mailChimpPrefix = assert(process.env.NEXT_PUBLIC_MAILCHIMP_PREFIX, 'NEXT_PUBLIC_MAILCHIMP_PREFIX')
-    const mailChimpAudicienId = assert(
-      process.env.NEXT_PUBLIC_MAILCHIMP_AUDIENCE_ID,
-      'NEXT_PUBLIC_MAILCHIMP_AUDIENCE_ID',
-    )
+    const mailChimpApiKey = assert(process.env.NEXT_PUBLIC_MAILCHIMP_API_KEY, 'MAILCHIMP_API_KEY')
+    const mailChimpPrefix = assert(process.env.NEXT_PUBLIC_MAILCHIMP_PREFIX, 'MAILCHIMP_PREFIX')
+    const mailChimpAudicienId = assert(process.env.MAILCHIMP_AUDIENCE_ID, 'MAILCHIMP_AUDIENCE_ID')
     setConfig({
       apiKey: mailChimpApiKey,
       server: mailChimpPrefix,
