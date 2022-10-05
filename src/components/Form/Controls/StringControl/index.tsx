@@ -100,6 +100,18 @@ export const StringControl = ({
             onBlur={() => setVirgin(false)}
             value={ccnFormat(data)}
           />
+        ) : uischema?.options?.format === 'text' ? (
+          <textarea
+            {...{ required, autoComplete }}
+            disabled={!enabled || processing}
+            minLength={schema?.minLength}
+            maxLength={schema?.maxLength}
+            placeholder={uischema?.options?.placeholder || ' '}
+            defaultValue={data}
+            onChange={e => handleChange(path, e.target.value)}
+            onBlur={() => setVirgin(false)}
+            rows={3}
+          />
         ) : (
           <input
             {...{ required, autoComplete }}
@@ -117,7 +129,7 @@ export const StringControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {statusGlyph && <InputGlyph outline color="night" darkColor="night" glyph={statusGlyph} />}
+        {!!statusGlyph && <InputGlyph outline color="night" darkColor="night" glyph={statusGlyph} />}
       </InputWrapper>
       <Message className={hasMessage ? 'hasMessage' : ''}>{visibleError}</Message>
     </Wrapper>

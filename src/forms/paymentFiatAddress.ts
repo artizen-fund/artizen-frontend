@@ -59,7 +59,7 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/zip',
-      label: 'Billing Zip Code',
+      label: 'Postal Code',
     },
     {
       type: 'Control',

@@ -31,11 +31,20 @@ export default styled.label`
   will-change: color, transform;
   pointer-events: none;
 
+  textarea ~ & {
+    align-items: flex-start;
+    margin-top: 20px;
+    height: 40px;
+  }
+
   .PhoneInput:focus-within ~ &,
   .PhoneInput.hasData ~ &,
   input:focus ~ &,
   input:not(:placeholder-shown) ~ &,
   input:required:valid ~ &,
+  textarea:focus ~ &,
+  textarea:not(:placeholder-shown) ~ &,
+  textarea:required:valid ~ &,
   select.hasData ~ &,
   select:focus ~ &,
   select:required:valid ~ & {

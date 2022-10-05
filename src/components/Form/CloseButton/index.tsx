@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Icon } from '@components'
 import { breakpoint } from '@theme'
 
-const CloseButton = styled(props => <Icon {...props} />)<{ visible: boolean }>`
+const CloseButton = styled(props => <Icon {...props} glyph="cross" />)<{ visible: boolean }>`
   position: absolute;
   z-index: 1002;
   top: 60px;

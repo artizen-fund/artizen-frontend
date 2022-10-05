@@ -1,16 +1,17 @@
 import { createContext, useEffect, useState } from 'react'
-import { useReactiveVar, useLazyQuery } from '@apollo/client'
+import { useReactiveVar, useQuery } from '@apollo/client'
 import { userMetadataVar, initIntercom } from '@lib'
 import { GET_USER } from '@gql'
 import { IUser, IGetUserQuery } from '@types'
 
 interface IUserContext {
+  loading?: boolean
   loggedInUser?: IUser
   needsPostDonationData: boolean
   setNeedsPostDonationData?: (b: boolean) => void
 }
 
-export const UserContext = createContext<IUserContext>({ needsPostDonationData: false })
+export const UserContext = createContext<IUserContext>({ needsPostDonationData: false, loading: true })
 
 export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   initIntercom()
@@ -19,26 +20,29 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   const [loggedInUser, setLoggedInUser] = useState<IUser>()
   const [needsPostDonationData, setNeedsPostDonationData] = useState(false)
 
-  const [fetchUser] = useLazyQuery<IGetUserQuery>(GET_USER, {
+  // TODO: revisit this for use of getLazyQuery
+  // also, should we be using Apollo State or ReactiveVar instead of this context?
+  const { data, loading } = useQuery<IGetUserQuery>(GET_USER, {
     variables: { issuer: metadata?.issuer },
-    onCompleted: async (user: { User: any[] }) => {
-      if (!user || user.User.length < 0) return
-      const newlyLoggedUser = user.User[0] as IUser
-      setLoggedInUser(newlyLoggedUser)
-      setNeedsPostDonationData(
-        !newlyLoggedUser.firstName ||
-          !newlyLoggedUser.lastName ||
-          !newlyLoggedUser.profileImage ||
-          !newlyLoggedUser.artizenHandle,
-      )
-    },
   })
 
   useEffect(() => {
-    if (metadata?.issuer) {
-      fetchUser()
+    if (!data || data?.User.length < 0) {
+      setLoggedInUser(undefined)
+      setNeedsPostDonationData(false)
+      return
     }
-  }, [metadata])
+    const newlyLoggedUser = data.User[0] as IUser
+    setLoggedInUser(newlyLoggedUser)
+    setNeedsPostDonationData(
+      !newlyLoggedUser.firstName ||
+        !newlyLoggedUser.lastName ||
+        !newlyLoggedUser.profileImage ||
+        !newlyLoggedUser.artizenHandle,
+    )
+  }, [data])
 
-  return <UserContext.Provider value={{ loggedInUser, needsPostDonationData }}>{children}</UserContext.Provider>
+  return (
+    <UserContext.Provider value={{ loading, loggedInUser, needsPostDonationData }}>{children}</UserContext.Provider>
+  )
 }

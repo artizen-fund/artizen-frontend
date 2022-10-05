@@ -1,10 +1,13 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useQuery } from '@apollo/client'
 import Link from 'next/link'
+import { ErrorObject } from 'ajv'
+import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton } from '@components'
+import { ICheckForExistingArtizenHandleQuery } from '@types'
 import { UserContext, DonationContext, uploadToCloudinary } from '@lib'
-import { UPDATE_NEW_USER_PROFILE } from '@gql'
+import { UPDATE_NEW_USER_PROFILE, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
 import {
   CheckWrapper,
@@ -24,10 +27,9 @@ const PostDonationData = () => {
   const [data, setData] = useState<FormState>(initialState)
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   const [imageFile, setImageFile] = useState<File>()
-
-  if (!loggedInUser) return <></>
 
   const submit = async () => {
     setReadonly(true)
@@ -38,7 +40,8 @@ const PostDonationData = () => {
         const cloudinaryResponse = await uploadToCloudinary(imageFile)
         profileImage = cloudinaryResponse.secure_url
       }
-      const variables = { id: loggedInUser.id, ...data, profileImage }
+      // todo: replace the force-lowercase with a mutation event in hasura
+      const variables = { id: loggedInUser.id, ...data, artizenHandle: data.artizenHandle?.toLowerCase(), profileImage }
       await apolloClient.mutate({
         mutation: UPDATE_NEW_USER_PROFILE,
         variables,
@@ -50,7 +53,33 @@ const PostDonationData = () => {
     setReadonly(false)
   }
 
-  return (
+  const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
+  useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
+    variables: {
+      where: {
+        _and: [{ artizenHandle: { _eq: newArtizenHandle?.toLowerCase() } }, { id: { _neq: loggedInUser?.id } }],
+      },
+    },
+    onError: error => console.error('error ', error),
+    fetchPolicy: 'no-cache',
+    onCompleted: async ({ User }) => {
+      const errors: Array<ErrorObject> = []
+      if (User.length > 0) {
+        errors.push({
+          instancePath: '/artizenHandle',
+          message: 'Handle is already in use',
+          schemaPath: '#/properties/artizenHandle',
+          keyword: '',
+          params: {},
+        })
+      }
+      setAdditionalErrors(errors)
+    },
+  })
+
+  return !loggedInUser ? (
+    <></>
+  ) : (
     <Wrapper visible={visibleModal === 'postDonationData'}>
       <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
         <CloseButton onClick={() => toggleModal?.()} />
@@ -64,7 +93,10 @@ const PostDonationData = () => {
         </Copy>
 
         <AvatarForm setFile={setImageFile} />
-        <Form {...{ schema, uischema, initialState, data, setData, readonly }} submitDisabledFromOutside={!acceptedToc}>
+        <Form
+          {...{ schema, uischema, initialState, data, setData, readonly, additionalErrors }}
+          submitDisabledFromOutside={!acceptedToc}
+        >
           <SubmitButton onClick={() => submit()} stretch disabled={readonly}>
             Save Changes
           </SubmitButton>

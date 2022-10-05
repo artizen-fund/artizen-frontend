@@ -28,7 +28,6 @@ const Slideshow = ({ slides }: ISlideshow) => {
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 400px;
   overflow: hidden;
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -36,7 +35,14 @@ const Wrapper = styled.div`
     will-change: transform; /* necessary to round corners over transformed children */
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: 600px;
+  }
+
+  video {
+    display: block;
+    max-width: 100%;
+    line-height: 0;
+    border-radius: 16px;
+    overflow: hidden;
   }
 `
 

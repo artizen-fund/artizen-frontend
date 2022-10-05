@@ -72,6 +72,7 @@
     "request": "^2.88.2",
     "styled-components": "^5.3.5",
     "truncate-eth-address": "^1.0.2",
+    "use-debounce": "^8.0.4",
     "uuid": "^9.0.0",
     "wagmi": "^0.6.2"
   },
