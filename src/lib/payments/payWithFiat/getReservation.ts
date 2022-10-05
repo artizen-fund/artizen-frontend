@@ -1,4 +1,4 @@
-const getReservation = async (amount: number, walletAddress: string) => {
+const getReservation = async (amount: number, walletAddress: string, country: string) => {
   const reservationResponse = await fetch('/api/onramp/reservation', {
     method: 'POST',
     headers: {
@@ -7,6 +7,7 @@ const getReservation = async (amount: number, walletAddress: string) => {
     body: JSON.stringify({
       amount,
       walletAddress,
+      country,
     }),
   })
   if (!reservationResponse) throw 'Error retrieving reservation'

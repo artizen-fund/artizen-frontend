@@ -6,13 +6,12 @@ import { UserContext, useFormLocalStorage, hasRequiredProperties, DonationContex
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
 import { UPDATE_USER_ADDRESS } from '@gql'
-import { countryAndRegionIsSupported } from './helpers'
 
 interface IPaymentFiat {
   amount: number
 }
 
-const TRANSACTION_FEE = 42
+const TRANSACTION_FEE = 0
 
 const PaymentFiat = ({ amount }: IPaymentFiat) => {
   const { setDonationStage } = useContext(DonationContext)
@@ -60,7 +59,7 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
           <p>Donation Summary</p>
           <ul>
             <li>Donation: ${amount}</li>
-            <li>Transaction fee: ${TRANSACTION_FEE}</li>
+            {/*<li>Transaction fee: ${TRANSACTION_FEE}</li>*/}
             <li>Purchase total: ${amount + TRANSACTION_FEE}</li>
           </ul>
         </div>

@@ -13,11 +13,11 @@ export const payWithFiat = async (
   user?: IUser,
   userMetadata?: MagicUserMetadata,
 ) => {
-  if (!userMetadata || !user || !userMetadata.publicAddress) {
+  if (!userMetadata || !user || !userMetadata.publicAddress || !user.country) {
     throw 'Error: user session not found.'
   }
 
-  const reservation = await getReservation(amount, userMetadata.publicAddress)
+  const reservation = await getReservation(amount, userMetadata.publicAddress, user.country)
 
   trackEventF(intercomEventEnum.DONATION_FIAT_START, {
     amount,
