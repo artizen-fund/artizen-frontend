@@ -33,10 +33,10 @@ const Home = () => {
       </Header>
       <StyledPagePadding>
         <Wrapper>
-          <FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} tagName="Tag Name" />
+          <FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} />
           <TabbedInfoWrapper>
             <StyledTabs {...{ activeTab, setTab, tabs }} />
-            <TabbedContent {...{ activeTab, tabs }} />
+            <StyledTabbedContent {...{ activeTab, tabs }} />
           </TabbedInfoWrapper>
           <Sidebar />
         </Wrapper>
@@ -69,22 +69,6 @@ const Header = styled(props => <PagePadding {...props} />)`
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   position: relative;
   padding: 0;
-  &:before {
-    content: ' ';
-    position: absolute;
-    width: 100%;
-    z-index: 0;
-    top: 65px;
-    height: 475px;
-    @media only screen and (min-width: ${breakpoint.desktop}px) {
-      top: 80px;
-      height: 675px;
-    }
-    background-color: ${rgba(palette.moon)};
-    @media (prefers-color-scheme: dark) {
-      background-color: ${rgba(palette.slate)};
-    }
-  }
 `
 
 const Wrapper = styled.section`
@@ -99,6 +83,32 @@ const Wrapper = styled.section`
     grid-gap: 0px 80px;
   }
   padding-bottom: 100px;
+
+  &:before {
+    content: ' ';
+    position: absolute;
+    z-index: 0;
+    width: 100vw;
+    height: 475px;
+    top: 65px;
+    left: -24px;
+    @media only screen and (min-width: ${breakpoint.phablet}px) {
+      left: -24px;
+    }
+    @media only screen and (min-width: ${breakpoint.tablet}px) {
+      left: calc((100vw - 688px) / 2 * -1);
+    }
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      display: none;
+    }
+    background-color: ${rgba(palette.moon)};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${rgba(palette.slate)};
+      border-width: 0.5px 0px;
+      border-style: solid;
+      border-color: ${rgba(palette.barracuda, 0.4)};
+    }
+  }
 `
 // todo: above is just a filled-in value, check design
 
@@ -106,6 +116,23 @@ const Tab = styled.div<{ label: string }>``
 
 const TabbedInfoWrapper = styled.div`
   grid-area: tabbedInfo;
+`
+
+const StyledTabbedContent = styled(props => <TabbedContent {...props} />)`
+  h1 {
+    ${typography.title.l2}
+    margin-bottom: 0.125em;
+  }
+  h2 {
+    ${typography.label.l1}
+    color: ${rgba(palette.barracuda)};
+    margin-bottom: 1em;
+  }
+  p,
+  li {
+    ${typography.body.l2}
+    margin-bottom: 1em;
+  }
 `
 
 const StyledTabs = styled(props => <Tabs {...props} />)`

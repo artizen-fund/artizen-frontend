@@ -18,14 +18,9 @@ const Slideshow = ({ slides }: ISlideshow) => {
 
   return (
     <Wrapper>
-      {slides.length > 0 && slides[0].length > 0 && (
-        <video loop={true} autoPlay={true} controls={false} muted={true}>
-          <source src={slides[0]} type="video/mp4" />
-        </video>
-      )}
-      {/*slides.map((image: string, index: number) => (
+      {slides.map((image: string, index: number) => (
         <Slide key={`slide_${index}`} {...{ image }} className={index === activeProjectIndex ? 'active' : 'inactive'} />
-      ))*/}
+      ))}
     </Wrapper>
   )
 }
@@ -33,7 +28,6 @@ const Slideshow = ({ slides }: ISlideshow) => {
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 400px;
   overflow: hidden;
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -41,7 +35,14 @@ const Wrapper = styled.div`
     will-change: transform; /* necessary to round corners over transformed children */
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: 600px;
+  }
+
+  video {
+    display: block;
+    max-width: 100%;
+    line-height: 0;
+    border-radius: 16px;
+    overflow: hidden;
   }
 `
 
