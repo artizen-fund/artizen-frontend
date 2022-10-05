@@ -14,11 +14,11 @@ import {
   sleep,
   DonationContext,
   useProcessDonation,
+  getQuote,
+  calculateFee,
 } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
-
-const TRANSACTION_FEE = 42
 
 const PaymentFiat = () => {
   const { amount, setOrder } = useProcessDonation()
@@ -28,6 +28,8 @@ const PaymentFiat = () => {
 
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+  // Init fee with 5 USD which is the minimum
+  const [fee, setFee] = useState(5)
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
   // TODO: ^ where/how is this stored?
@@ -79,6 +81,21 @@ const PaymentFiat = () => {
 
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
+  const getFee = async () => {
+    if (amount && metadata?.publicAddress && loggedInUser?.country) {
+      try {
+        const quote = await getQuote(amount, metadata?.publicAddress, loggedInUser?.country)
+        const {
+          fee: { USD: fee },
+        } = quote
+        setFee(fee)
+      } catch (error) {
+        console.error(error)
+        setFee(calculateFee(amount!, loggedInUser?.country!))
+      }
+    }
+  }
+
   useEffect(() => {
     const errors: Array<ErrorObject> = []
     if (!!data.number && !isValid(data.number)) {
@@ -111,6 +128,10 @@ const PaymentFiat = () => {
     setAdditionalErrors(errors)
   }, [data])
 
+  useEffect(() => {
+    getFee()
+  }, [])
+
   return (
     <Wrapper className={processing ? 'processing' : ''}>
       <Information>
@@ -126,11 +147,11 @@ const PaymentFiat = () => {
           </TableCell>
           <TableCell>
             <div>Transaction fee:</div>
-            <div>${TRANSACTION_FEE} USD</div>
+            <div>${fee} USD</div>
           </TableCell>
           <TableCell highlight>
             <div>Purchase total:</div>
-            <div>${(amount as number) + TRANSACTION_FEE} USD</div>
+            <div>${(amount as number) + fee} USD</div>
           </TableCell>
         </Table>
 
@@ -150,7 +171,7 @@ const PaymentFiat = () => {
           readonly={processing}
         >
           <SubmitButton stretch onClick={processTransaction}>
-            Transfer ${(amount as number) + TRANSACTION_FEE}
+            Transfer ${(amount as number) + fee}
           </SubmitButton>
           <ProcessingMessage>hum de dooo</ProcessingMessage>
         </Form>

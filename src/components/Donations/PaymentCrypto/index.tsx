@@ -8,7 +8,7 @@ import { Table, TableCell, DonationHelpLink } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
 
-const TRANSACTION_FEE = 42
+const TRANSACTION_FEE = 0
 
 const PaymentCrypto = () => {
   const { setDonationStage } = useContext(DonationContext)
@@ -39,10 +39,10 @@ const PaymentCrypto = () => {
             <div>Donation: </div>
             <div>${amount} USD</div>
           </TableCell>
-          <TableCell>
+          {/*<TableCell>
             <div>Transaction fee:</div>
             <div>${TRANSACTION_FEE} USD</div>
-          </TableCell>
+  </TableCell>*/}
           <TableCell highlight>
             <div>Purchase total:</div>
             <div>${(amount as number) + TRANSACTION_FEE} USD</div>
