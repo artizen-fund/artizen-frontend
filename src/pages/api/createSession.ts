@@ -8,6 +8,7 @@ import {
   updateUserProfile,
   createUserProfile,
   createUserCourierProfile,
+  addUserToNewsLetter,
 } from '@lib'
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
@@ -31,18 +32,24 @@ const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const currentUser = await checkUserProfile(metadata.email, token)
-    const { type: userProfileType } = currentUser
-    let { id: userId } = currentUser
+    const { userProfileType } = currentUser
+    let { id: userId, email: userEmail } = currentUser
     if (userProfileType === 'OLD') {
       const user = await updateUserProfile(metadata, token)
-      userId = user.data?.update_User?.returning[0]?.id
+      userId = user.data?.update_User?.returning[0]?.id !== undefined ? user.data?.update_User?.returning[0]?.id : ''
+      userEmail =
+        user.data?.update_User?.returning[0]?.email !== undefined ? user.data?.update_User?.returning[0]?.email : ''
     } else if (userProfileType === 'NEW') {
       const user = await createUserProfile(metadata, token)
-      userId = user.data?.insert_User_one?.id
+      userId = user.data?.insert_User_one?.id !== undefined ? user.data?.insert_User_one?.id : ''
+      userEmail = user.data?.insert_User_one?.email !== undefined ? user.data?.insert_User_one?.email : ''
     }
 
+    //add user to newsletter
+    await addUserToNewsLetter(userEmail)
+
     // sync courier user
-    await createUserCourierProfile(userId, metadata.email)
+    await createUserCourierProfile(userId, userEmail)
 
     setTokenCookie(res, token)
     res.status(200).send({ token, metadata })
