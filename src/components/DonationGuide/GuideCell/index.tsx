@@ -134,7 +134,7 @@ const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string
       padding: 16px;
       font-size: 14px;
     }
-    @media only screen and (min-width: ${breakpoint.desktop}px) {
+    @media only screen and (min-width: 1720px) {
       padding: 32px;
       font-size: 20px;
     }
@@ -157,15 +157,15 @@ const Wrapper = styled.div<Pick<IDonationGuideCell, 'columns' | 'height'>>`
     grid-column-end: span ${props => props.columns.phablet};
     height: calc((100vw - 40px) * ${props => props.height.phablet});
   }
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
+  @media only screen and (min-width: 780px) {
     grid-column-end: span ${props => props.columns.tablet};
     height: ${props => props.height.tablet}px;
   }
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
+  @media only screen and (min-width: 1044px) {
     grid-column-end: span ${props => props.columns.laptop};
     height: ${props => props.height.laptop}px;
   }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
+  @media only screen and (min-width: 1720px) {
     grid-column-end: span ${props => props.columns.desktop};
     height: ${props => props.height.desktop}px;
   }

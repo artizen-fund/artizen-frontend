@@ -111,8 +111,7 @@ const Headline = styled.h1`
   }
 
   ${typography.title.l1}
-  @media only screen and (min-width: ${breakpoint.laptop}px) and (max-width: ${breakpoint.desktop - 1}px) {
-    
+  @media only screen and (min-width: ${breakpoint.laptop}px) and (max-width: 1719px) {
     font-size: 48px;
     line-height: 52px;
   }
