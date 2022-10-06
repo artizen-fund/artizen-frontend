@@ -84,12 +84,12 @@ const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string
     ${props => getCoordinate(props.coordinates.tablet.y, 'y')};
     width: ${props => getWidth(props.type, props.coordinates.tablet.w)};
   }
-  @media only screen and (min-width: ${breakpoint.laptop}px) and (max-width: ${breakpoint.desktop - 1}px) {
+  @media only screen and (min-width: ${breakpoint.laptop}px) and (max-width: 1719px) {
     ${props => getCoordinate(props.coordinates.laptop.x, 'x')};
     ${props => getCoordinate(props.coordinates.laptop.y, 'y')};
     width: ${props => getWidth(props.type, props.coordinates.laptop.w)};
   }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
+  @media only screen and (min-width: 1720px) {
     ${props => getCoordinate(props.coordinates.desktop.x, 'x')};
     ${props => getCoordinate(props.coordinates.desktop.y, 'y')};
     width: ${props => getWidth(props.type, props.coordinates.desktop.w)};
