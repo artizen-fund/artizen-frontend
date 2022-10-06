@@ -111,7 +111,11 @@ const Headline = styled.h1`
   }
 
   ${typography.title.l1}
-  color: ${rgba(palette.black)};
+  @media only screen and (min-width: ${breakpoint.laptop}px) and (max-width: ${breakpoint.desktop - 1}px) {
+    
+    font-size: 48px;
+    line-height: 52px;
+  }
 `
 
 const StyledCloseButton = styled(props => <CloseButton {...props} />)`

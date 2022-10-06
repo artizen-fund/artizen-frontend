@@ -43,8 +43,8 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     /* note: phablet and mobile height are a multiplier of screen width (0.7 = 70% of screen width)
        tablet, laptop and desktop are absolute numbers (100 = 100px) */
     height: {
-      desktop: 800,
-      laptop: 700,
+      desktop: 750,
+      laptop: 510,
       tablet: 600,
       phablet: 0.7,
       mobile: 1.4,
@@ -63,7 +63,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: 0,
             y: 35,
-            w: 350,
+            w: 300,
           },
           tablet: {
             x: 0,
@@ -96,7 +96,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: -1,
             y: -1,
-            w: 55,
+            w: 60,
           },
           tablet: {
             x: -1,
@@ -128,8 +128,8 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
-      laptop: 400,
+      desktop: 360,
+      laptop: 230,
       tablet: 300,
       phablet: 0.45,
       mobile: 0.9,
@@ -173,7 +173,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: -10,
+            y: 40,
             w: 360,
           },
           laptop: {
@@ -205,13 +205,13 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         coordinates: {
           desktop: {
             x: 33,
-            y: -1,
+            y: 0,
             w: 33,
           },
           laptop: {
-            x: 40,
+            x: 36,
             y: -5,
-            w: 30,
+            w: 33,
           },
           tablet: {
             x: 0,
@@ -237,7 +237,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         coordinates: {
           desktop: {
             x: -1,
-            y: -1,
+            y: 0,
             w: 27,
           },
           laptop: {
@@ -276,7 +276,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
 
     height: {
       desktop: 500,
-      laptop: 400,
+      laptop: 320,
       tablet: 300,
       phablet: 0.45,
       mobile: 0.7,
@@ -295,6 +295,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: 0,
             y: 0,
+            w: 200,
           },
           tablet: {
             x: 0,
@@ -325,6 +326,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: 0,
             y: -1,
+            w: 110,
           },
           tablet: {
             x: -1,
@@ -356,7 +358,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
 
     height: {
       desktop: 500,
-      laptop: 400,
+      laptop: 330,
       tablet: 300,
       phablet: 0.45,
       mobile: 0.95,
@@ -370,10 +372,12 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           desktop: {
             x: 0,
             y: 0,
+            w: 488,
           },
           laptop: {
             x: 0,
             y: 0,
+            w: 280,
           },
           tablet: {
             x: 10,
@@ -403,7 +407,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: 5,
             y: -1,
-            w: 85,
+            w: 95,
           },
           tablet: {
             x: -10,
@@ -435,7 +439,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
 
     height: {
       desktop: 500,
-      laptop: 400,
+      laptop: 330,
       tablet: 300,
       phablet: 0.45,
       mobile: 1,
@@ -482,7 +486,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: -1,
             y: -1,
-            w: 90,
+            w: 100,
           },
           tablet: {
             x: -1,
@@ -513,7 +517,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
 
     height: {
       desktop: 500,
-      laptop: 400,
+      laptop: 370,
       tablet: 300,
       phablet: 0.45,
       mobile: 1,
@@ -532,6 +536,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: 0,
             y: 0,
+            w: 300,
           },
           tablet: {
             x: 0,
@@ -559,8 +564,9 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
             w: 90,
           },
           laptop: {
-            x: 0,
+            x: 10,
             y: -1,
+            w: 97,
           },
           tablet: {
             x: 10,
@@ -590,8 +596,8 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
-      laptop: 400,
+      desktop: 610,
+      laptop: 370,
       tablet: 300,
       phablet: 0.6,
       mobile: 1,
@@ -610,7 +616,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: 0,
             y: 0,
-            w: 450,
+            w: 320,
           },
           tablet: {
             x: 0,
@@ -641,7 +647,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: -1,
             y: -1,
-            w: 80,
+            w: 85,
           },
           tablet: {
             x: -1,
@@ -664,14 +670,14 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
   {
     columns: {
       desktop: 6,
-      laptop: 5,
+      laptop: 6,
       tablet: 12,
       phablet: 4,
       mobile: 4,
     },
 
     height: {
-      desktop: 500,
+      desktop: 570,
       laptop: 400,
       tablet: 300,
       phablet: 0.45,
@@ -691,7 +697,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: 0,
             y: 0,
-            w: 400,
+            w: 280,
           },
           tablet: {
             x: 0,
@@ -721,7 +727,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           laptop: {
             x: -1,
             y: -1,
-            w: 300,
+            w: 220,
           },
           tablet: {
             x: -5,
@@ -746,12 +752,13 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         coordinates: {
           desktop: {
             x: 0,
-            y: 15,
+            y: 13,
             w: 100,
           },
           laptop: {
             x: 0,
             y: 20,
+            w: 115,
           },
           tablet: {
             x: 10,
@@ -774,7 +781,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
   {
     columns: {
       desktop: 6,
-      laptop: 7,
+      laptop: 6,
       tablet: 12,
       phablet: 4,
       mobile: 4,
@@ -888,7 +895,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
+      desktop: 600,
       laptop: 400,
       tablet: 300,
       phablet: 0.58,
@@ -934,7 +941,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           desktop: {
             x: 0,
             y: 15,
-            w: 89,
+            w: 80,
           },
           laptop: {
             x: 0,
@@ -1051,8 +1058,8 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
-      laptop: 400,
+      desktop: 600,
+      laptop: 450,
       tablet: 300,
       phablet: 0.62,
       mobile: 1,
@@ -1066,7 +1073,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           desktop: {
             x: 0,
             y: 0,
-            w: 620,
+            w: 600,
           },
           laptop: {
             x: 0,
@@ -1125,9 +1132,10 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         imageDark: '12-dark.png',
         coordinates: {
           desktop: {
-            x: 0,
+            x: 10,
             y: -1,
-            w: 92,
+            w: 80
+            ,
           },
           laptop: {
             x: 0,
@@ -1162,7 +1170,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
+      desktop: 600,
       laptop: 400,
       tablet: 300,
       phablet: 0.61,
@@ -1208,7 +1216,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           desktop: {
             x: -1,
             y: -1,
-            w: 120,
+            w: 110,
           },
           laptop: {
             x: 0,
@@ -1241,7 +1249,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
+      desktop: 560,
       laptop: 400,
       tablet: 300,
       phablet: 0.6,
@@ -1284,9 +1292,9 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         copy: 'Don’t forget that this might take some time.',
         coordinates: {
           desktop: {
-            x: 60,
+            x: -5,
             y: 26,
-            w: 250,
+            w: 220,
           },
           laptop: {
             x: -1,
@@ -1315,9 +1323,9 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         imageDark: '14-dark.png',
         coordinates: {
           desktop: {
-            x: 0,
+            x: 5,
             y: 25,
-            w: 84,
+            w: 80,
           },
           laptop: {
             x: 0,
@@ -1352,7 +1360,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
+      desktop: 560,
       laptop: 400,
       tablet: 300,
       phablet: 0.6,
@@ -1426,7 +1434,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           desktop: {
             x: 10,
             y: -1,
-            w: 70,
+            w: 64,
           },
           laptop: {
             x: 0,
@@ -1462,7 +1470,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
+      desktop: 620,
       laptop: 400,
       tablet: 300,
       phablet: 0.55,
@@ -1540,7 +1548,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
     },
 
     height: {
-      desktop: 500,
+      desktop: 620,
       laptop: 400,
       tablet: 300,
       phablet: 0.53,
@@ -1612,8 +1620,8 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         coordinates: {
           desktop: {
             x: 10,
-            y: -8,
-            w: 80,
+            y: -6,
+            w: 75,
           },
           laptop: {
             x: 0,
