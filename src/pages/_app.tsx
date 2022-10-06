@@ -45,4 +45,6 @@ const App = ({
   )
 }
 
-export default isProd() ? App : dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
+// export default isProd() ? App : dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
+// temporary shim to retain authguard on staging
+export default withAuth()(App)
