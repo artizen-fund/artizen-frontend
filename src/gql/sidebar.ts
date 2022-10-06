@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-
+/*
 export const SIDEBAR_DONATORS = gql`
   query SidebarDonators {
     onChainDonations: onchain {
@@ -18,3 +18,4 @@ export const SIDEBAR_DONATORS = gql`
     }
   }
 `
+*/
