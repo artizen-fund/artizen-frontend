@@ -119,7 +119,7 @@ const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string
     font-family: 'roc-grotesk';
     font-size: 13px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 120%;
     letter-spacing: -0.4px;
     @media only screen and (min-width: ${breakpoint.phablet}px) {
@@ -159,15 +159,15 @@ const Wrapper = styled.div<Pick<IDonationGuideCell, 'columns' | 'height'>>`
   }
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     grid-column-end: span ${props => props.columns.tablet};
-    height: calc((100vw - 40px) * ${props => props.height.tablet});
+    height: ${props => props.height.tablet}px;
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     grid-column-end: span ${props => props.columns.laptop};
-    height: calc((100vw - 40px) * ${props => props.height.laptop});
+    height: ${props => props.height.laptop}px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     grid-column-end: span ${props => props.columns.desktop};
-    height: calc((100vw - 40px) * ${props => props.height.desktop});
+    height: ${props => props.height.desktop}px;
   }
 `
 
