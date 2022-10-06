@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import { ApolloProvider } from '@apollo/client'
 import {
   isProd,
-  withAuth,
   MagicProvider,
   initializeApollo,
   CourierNotification,
@@ -45,4 +44,4 @@ const App = ({
   )
 }
 
-export default isProd() ? App : dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
+export default isProd() ? App : dynamic(() => Promise.resolve(App), { ssr: false })

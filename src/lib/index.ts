@@ -38,9 +38,3 @@ export * from './wagmiClient'
  *  Something to do with a circular import.
  *  Possibly a webpack issue? Investigate… in the meantime, import using relative path (yuck).
  */
-
-export * from './auth'
-/* TODO: There is an error where, if AuthForm is exported before some of these other functions
- *  (most notably rgba() ?!?!?), everything goes bonkers.
- *  Should probably look into this some day!
- */
