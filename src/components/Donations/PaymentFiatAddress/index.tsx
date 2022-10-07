@@ -37,7 +37,7 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   useEffect(() => {
     const errors: Array<ErrorObject> = []
-    if (!!data.nation && !nationIsSupportedByWyre(data.country)) {
+    if (!!data.country && !nationIsSupportedByWyre(data.country)) {
       errors.push({
         instancePath: '/country',
         message: 'Nation is not supported by Wyre',
