@@ -14,7 +14,7 @@ export const schema: JsonSchema = {
     },
     state: {
       type: 'string',
-      enum: americanRegions.map(val => val.const),
+      oneOf: americanRegions,
     },
     zip: {
       type: 'string',
@@ -22,7 +22,7 @@ export const schema: JsonSchema = {
     },
     country: {
       type: 'string',
-      enum: nations.map(val => val.const),
+      oneOf: nations,
     },
   },
   required: ['street1', 'city', 'state', 'zip', 'country'],
