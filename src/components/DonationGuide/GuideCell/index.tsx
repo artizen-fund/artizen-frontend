@@ -27,17 +27,46 @@ const StepNumber = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 32px;
-  min-height: 32px;
 
   background-image: url(${assetPath('/assets/step-background.png')});
   background-repeat: no-repeat;
   background-size: contain;
 
+
+        @media only screen and (min-width: ${breakpoint.mobile}px) {
+      display: none;
+    }
+        @media only screen and (min-width: ${breakpoint.phablet}px) {
+          display: flex;
+      min-width: 24px;
+      min-height: 24px;
+      font-size: 13px;
+    }
+
+        @media only screen and (min-width: ${breakpoint.tablet}px) {
+          display: flex;
+      min-width: 24px;
+      min-height: 24px;
+      font-size: 13px;
+    }
+
+      @media only screen and (min-width: ${breakpoint.laptop}px) {
+      display: flex;
+      min-width: 24px;
+      min-height: 24px;
+    }
+
+      @media only screen and (min-width: 1600px) {
+      display: flex;
+      min-width: 32px;
+      min-height: 32px;
+    }
+
+
   font-family: 'roc-grotesk';
   font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: 600;
+
   letter-spacing: 0.5px;
   color: ${rgba(palette.night)};
 `
@@ -122,6 +151,12 @@ const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string
     font-weight: 600;
     line-height: 120%;
     letter-spacing: -0.4px;
+
+       @media only screen and (min-width: ${breakpoint.mobile}px) {
+      padding: 14px;
+      font-size: 13px;
+      line-height: 17px;
+    }
     @media only screen and (min-width: ${breakpoint.phablet}px) {
       padding: 14px;
       font-size: 13px;
@@ -132,11 +167,13 @@ const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string
     }
     @media only screen and (min-width: ${breakpoint.laptop}px) {
       padding: 16px;
-      font-size: 14px;
+      font-size: 15px;
+      line-height: 19px;
     }
     @media only screen and (min-width: 1720px) {
       padding: 32px;
       font-size: 20px;
+      line-height: 24px;
     }
   }
 

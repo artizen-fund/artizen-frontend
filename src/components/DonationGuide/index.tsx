@@ -38,6 +38,7 @@ const Wrapper = styled.div<VisibilityParam>`
   top: 75px;
   width: calc(100vw - 40px);
   height: calc(100vh - 75px);
+  border-radius: 8px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     left: 50px;
     top: 125px;
@@ -56,6 +57,8 @@ const Wrapper = styled.div<VisibilityParam>`
   font-size: 13px;
   line-height: 120%;
   letter-spacing: -0.4px;
+
+
 
   @media only screen and (min-width: ${breakpoint.phablet}px) {
     grid-column-gap: 16px;
@@ -100,6 +103,12 @@ const Headline = styled.h1`
   top: 24px;
   left: 24px;
 
+     @media only screen and (min-width: ${breakpoint.mobile}px) {
+    top: 40px;
+    font-size: 30px;
+    line-height: 32px;
+  }
+
   @media only screen and (min-width: ${breakpoint.phablet}px) {
     top: 40px;
     left: 40px;
@@ -116,6 +125,7 @@ const Headline = styled.h1`
     font-size: 48px;
     line-height: 52px;
   }
+ 
 `
 
 const StyledCloseButton = styled(props => <CloseButton {...props} />)`
