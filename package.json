@@ -29,7 +29,7 @@
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
     "@biconomy/hyphen": "^1.1.6",
-    "@biconomy/mexa": "3.0.2",
+    "@biconomy/mexa": "3.0.4",
     "@jsonforms/core": "^3.0.0-rc.0",
     "@jsonforms/material-renderers": "^3.0.0-rc.0",
     "@jsonforms/react": "^3.0.0-rc.0",
