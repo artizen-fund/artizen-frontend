@@ -3,7 +3,14 @@ import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { UserContext, hasRequiredProperties, DonationContext, nationIsSupportedByWyre, stateIsSupported } from '@lib'
+import {
+  UserContext,
+  useFormLocalStorage,
+  hasRequiredProperties,
+  DonationContext,
+  nationIsSupportedByWyre,
+  stateIsSupported,
+} from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
 import { UPDATE_USER_ADDRESS } from '@gql'
@@ -39,7 +46,7 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
         params: {},
       })
     }
-    if (!!data.nation && !stateIsSupported(data.state)) {
+    if (!!data.state && !stateIsSupported(data.state)) {
       errors.push({
         instancePath: '/state',
         message: 'State is not supported',

@@ -14,7 +14,7 @@ export const schema: JsonSchema = {
     },
     state: {
       type: 'string',
-      enum: americanRegions,
+      enum: americanRegions.map(val => val.const),
     },
     zip: {
       type: 'string',
@@ -22,10 +22,10 @@ export const schema: JsonSchema = {
     },
     country: {
       type: 'string',
-      enum: nations,
+      enum: nations.map(val => val.const),
     },
   },
-  required: ['street1', 'city', 'zip', 'country'],
+  required: ['street1', 'city', 'state', 'zip', 'country'],
 }
 
 export interface FormState extends Record<string, unknown> {
