@@ -3,14 +3,7 @@ import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import {
-  UserContext,
-  useFormLocalStorage,
-  hasRequiredProperties,
-  DonationContext,
-  nationIsSupportedByWyre,
-  stateIsSupported,
-} from '@lib'
+import { UserContext, hasRequiredProperties, DonationContext, nationIsSupportedByWyre, stateIsSupported } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
 import { UPDATE_USER_ADDRESS } from '@gql'
