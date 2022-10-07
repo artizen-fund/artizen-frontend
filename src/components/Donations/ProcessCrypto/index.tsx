@@ -2,9 +2,14 @@ import styled from 'styled-components'
 import { IconStack, Icon, Button, Distraction, DonationComplete } from '@components'
 import { rgba, useProcessDonation } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
+import { useEffect } from 'react'
 
 const ProcessCrypto = () => {
-  const { cryptoStage, donationMethod, error, restart, retry } = useProcessDonation()
+  const { cryptoStage, setCryptoStage, donationMethod, error, restart, retry } = useProcessDonation()
+
+  useEffect(() => {
+    setCryptoStage?.(donationMethod !== 'ethereum' ? 'building' : 'swapping')
+  }, [])
 
   return (
     <Wrapper>

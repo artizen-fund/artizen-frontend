@@ -10,7 +10,7 @@ import {
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { ethers } from 'ethers'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { useAccount, useConnect, useContractWrite, useSigner } from 'wagmi'
+import { useAccount, useConnect, useContractWrite, useDisconnect, useSigner } from 'wagmi'
 import { userMetadataVar } from './apollo'
 import { assert } from './assert'
 import { DonationContext } from './donationContext'
@@ -59,7 +59,7 @@ const walletConnectConnector = new WalletConnectConnector({
 
 type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'complete'
 
-type Error = 'Payment Failed' | 'Transaction Rejected' | 'Donation could not complete' | 'Bridging Failed' | ''
+type Error = 'Payment Failed' | 'Transaction Failed' | 'Donation could not complete' | 'Bridging Failed' | ''
 
 const ProcessDonationContext = createContext<IProcessDonationContext>({})
 
@@ -69,7 +69,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   const [amount, setAmount] = useState(10) // note: sort out integer or float
   const [order, setOrder] = useState<{ id: string }>({ id: '' })
   const [swapId, setSwapId] = useState('')
-  const [cryptoStage, setCryptoStage] = useState<CryptoStage>(donationMethod === 'ethereum' ? 'swapping' : 'building')
+  const [cryptoStage, setCryptoStage] = useState<CryptoStage>('swapping')
   const [error, setError] = useState<Error>('')
 
   const { loggedInUser } = useContext(UserContext)
@@ -80,6 +80,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   const [initDonation, buildingStatus, buildingMessage, confirmingStatus, confirmingMessage] = useDonation()
   const { address, isConnected } = useAccount()
   const { connect, isError } = useConnect()
+  const { disconnect } = useDisconnect()
   const { data: signer, refetch } = useSigner()
 
   const { bridge, fundsTransfered } = useBridge()
@@ -236,7 +237,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         setSwapId(id)
       } catch (error) {
         console.error('Swapping Error: ', error)
-        setError('Transaction Rejected')
+        setError('Transaction Failed')
       }
     }
   }
@@ -280,7 +281,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   useEffect(() => {
     if (isTransferUSDCError) {
       console.error('USDC Transfer Error: ', transferUSDCError)
-      setError('Transaction Rejected')
+      setError('Transaction Failed')
     }
   }, [isTransferUSDCError])
 
@@ -334,9 +335,10 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   }
 
   const restart = async () => {
+    setError('')
     switch (cryptoStage) {
       case 'swapping':
-        setDonationStage?.('payment')
+        await processTransaction()
         break
       case 'bridging':
         await handleSwapComplete()
@@ -351,7 +353,6 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         setDonationStage?.('payment')
         break
     }
-    setError('')
   }
 
   const handleBridgingRetry = async () => {
@@ -383,6 +384,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
       default:
         break
     }
+    disconnect()
     setDonationStage?.('setAmount')
     setError('')
   }
