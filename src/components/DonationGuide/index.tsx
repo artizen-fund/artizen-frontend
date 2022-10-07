@@ -46,7 +46,7 @@ const Wrapper = styled.div<VisibilityParam>`
     width: calc(100vw - 40px);
     height: calc(100vh - 125px);d
   }
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
+  @media only screen and (min-width: 780px) {
     left: 50px;
     top: 125px;
     width: calc(100vw - 100px);
@@ -56,7 +56,6 @@ const Wrapper = styled.div<VisibilityParam>`
 
   display: grid;
   grid-template-rows: auto;
-  grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 12px;
   grid-row-gap: 32px;
   padding: 24px;
@@ -64,7 +63,6 @@ const Wrapper = styled.div<VisibilityParam>`
   font-size: 13px;
   line-height: 120%;
   letter-spacing: -0.4px;
-
 
 
   @media only screen and (min-width: 480px) {

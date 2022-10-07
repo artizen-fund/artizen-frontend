@@ -36,11 +36,11 @@ const StepNumber = styled.div`
         @media only screen and (min-width: ${breakpoint.mobile}px) {
       display: none;
     }
-        @media only screen and (min-width: ${breakpoint.phablet}px) {
+        @media only screen and (min-width: 480px) {
           display: flex;
-      min-width: 24px;
-      min-height: 24px;
-      font-size: 13px;
+      min-width: 22px;
+      min-height: 22px;
+      font-size: 12px;
     }
 
         @media only screen and (min-width: ${breakpoint.tablet}px) {
@@ -67,7 +67,7 @@ const StepNumber = styled.div`
   font-style: normal;
   font-weight: 600;
 
-  letter-spacing: 0.5px;
+  letter-spacing: 0px;
   color: ${rgba(palette.night)};
 `
 
@@ -103,7 +103,7 @@ const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string
     ${props => getCoordinate(props.coordinates.mobile.y, 'y')};
     width: ${props => getWidth(props.type, props.coordinates.mobile.w)};
   }
-  @media only screen and (min-width: 480px) and (max-width: ${breakpoint.tablet - 1}px) {
+  @media only screen and (min-width: 480px) and (max-width: 780px) {
     ${props => getCoordinate(props.coordinates.phablet.x, 'x')};
     ${props => getCoordinate(props.coordinates.phablet.y, 'y')};
     width: ${props => getWidth(props.type, props.coordinates.phablet.w)};
@@ -194,7 +194,7 @@ const Wrapper = styled.div<Pick<IDonationGuideCell, 'columns' | 'height'>>`
     grid-column-end: span ${props => props.columns.phablet};
     height: calc((100vw - 40px) * ${props => props.height.phablet});
   }
-  @media only screen and (min-width: 780px) {
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
     grid-column-end: span ${props => props.columns.tablet};
     height: ${props => props.height.tablet}px;
   }
