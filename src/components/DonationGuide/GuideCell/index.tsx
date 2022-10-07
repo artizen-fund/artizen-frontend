@@ -98,12 +98,12 @@ const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string
   position: absolute;
   z-index: ${props => (props.type === 'copy' ? 1 : 2)};
 
-  @media only screen and (max-width: ${breakpoint.phablet - 1}px) {
+  @media only screen and (max-width: 480px) {
     ${props => getCoordinate(props.coordinates.mobile.x, 'x')};
     ${props => getCoordinate(props.coordinates.mobile.y, 'y')};
     width: ${props => getWidth(props.type, props.coordinates.mobile.w)};
   }
-  @media only screen and (min-width: ${breakpoint.phablet}px) and (max-width: ${breakpoint.tablet - 1}px) {
+  @media only screen and (min-width: 480px) and (max-width: ${breakpoint.tablet - 1}px) {
     ${props => getCoordinate(props.coordinates.phablet.x, 'x')};
     ${props => getCoordinate(props.coordinates.phablet.y, 'y')};
     width: ${props => getWidth(props.type, props.coordinates.phablet.w)};
@@ -152,7 +152,7 @@ const CellItem = styled.div<{ coordinates: DonationGuideCoordinate; type: string
     line-height: 120%;
     letter-spacing: -0.4px;
 
-       @media only screen and (min-width: ${breakpoint.mobile}px) {
+       @media only screen and (min-width: ${breakpoint.mobile}px)and (max-width: 500px) {
       padding: 14px;
       font-size: 13px;
       line-height: 17px;
@@ -190,7 +190,7 @@ const Wrapper = styled.div<Pick<IDonationGuideCell, 'columns' | 'height'>>`
   grid-column-end: span ${props => props.columns.mobile};
   height: calc((100vw - 40px) * ${props => props.height.mobile});
 
-  @media only screen and (min-width: ${breakpoint.phablet}px) {
+  @media only screen and (min-width: 480px) {
     grid-column-end: span ${props => props.columns.phablet};
     height: calc((100vw - 40px) * ${props => props.height.phablet});
   }

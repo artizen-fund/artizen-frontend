@@ -46,7 +46,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
       desktop: 750,
       laptop: 530,
       tablet: 470,
-      phablet: 0.7,
+      phablet: 0.85,
       mobile: 1.45,
     },
 
@@ -73,7 +73,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           phablet: {
             x: 0,
             y: 18,
-            w: 200,
+            w: 240,
           },
           mobile: {
             x: 0,
@@ -131,7 +131,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
       desktop: 360,
       laptop: 230,
       tablet: 300,
-      phablet: 0.45,
+      phablet: 0.72,
       mobile: 1.2,
     },
 
@@ -158,7 +158,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           phablet: {
             x: 0,
             y: 0,
-            w: 270,
+            w: 240,
           },
           mobile: {
             x: 0,
@@ -178,8 +178,8 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           },
           laptop: {
             x: 0,
-            y: -6,
-            w: 250,
+            y: -5,
+            w: 230,
           },
           tablet: {
             x: -2,
@@ -187,8 +187,8 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
             w: 310,
           },
           phablet: {
-            x: -1,
-            y: 10,
+            x: 20,
+            y: 26,
             w: 280,
           },
           mobile: {

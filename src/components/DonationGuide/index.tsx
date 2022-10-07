@@ -39,6 +39,13 @@ const Wrapper = styled.div<VisibilityParam>`
   width: calc(100vw - 40px);
   height: calc(100vh - 75px);
   border-radius: 8px;
+
+    @media only screen and (min-width: 480px) {
+    left: 20px;
+    top: 125px;
+    width: calc(100vw - 40px);
+    height: calc(100vh - 125px);d
+  }
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     left: 50px;
     top: 125px;
@@ -60,7 +67,7 @@ const Wrapper = styled.div<VisibilityParam>`
 
 
 
-  @media only screen and (min-width: ${breakpoint.phablet}px) {
+  @media only screen and (min-width: 480px) {
     grid-column-gap: 16px;
     grid-row-gap: 48px;
     padding: 40px;
