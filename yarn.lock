@@ -1378,10 +1378,10 @@
     tslint "^6.1.3"
     typescript "^4.1.3"
 
-"@biconomy/mexa@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@biconomy/mexa/-/mexa-3.0.2.tgz#52057a172587e4fe8d248dd3a2fd35869de3a521"
-  integrity sha512-qUi1JHv4+3SzmRSJ8TB2DiTDXNAFjG9jY+rlghMW8IOxUKh9mMq6XgtkmDG021rT13zeS0LTeYvwQHXgt+dJdA==
+"@biconomy/mexa@3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@biconomy/mexa/-/mexa-3.0.4.tgz#821485b430afcb9c35c987b3ca9822b7bacc2b8e"
+  integrity sha512-e+PjFYFWP7Cd7LBKb3Y3GbaTV9tOCDL18dsPewlE+Bb9QmB6ViertRYknfuNRsvPutAF0JJN9Z7IcEi6maRXKQ==
   dependencies:
     "@biconomy/gasless-messaging-sdk" "^0.0.1"
     "@ethersproject/providers" "^5.6.8"

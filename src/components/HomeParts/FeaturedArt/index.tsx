@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { BigNumber } from 'ethers'
-import { Icon, Slideshow } from '@components'
+import { Icon } from '@components'
 import { palette, breakpoint, typography } from '@theme'
 import { rgba, assert, useReadContract } from '@lib'
 import { ArtizenERC1155 } from '@contracts'
