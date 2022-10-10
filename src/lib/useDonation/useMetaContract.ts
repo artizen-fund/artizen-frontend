@@ -1,7 +1,7 @@
 import { Biconomy } from '@biconomy/mexa'
 import { ContractInterface, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { useMagic, assertInt, assert } from '@lib'
+import { useMagic, assertInt, assert, isProd } from '@lib'
 import { JsonFragment } from '@ethersproject/abi'
 import { ExternalProvider } from '@ethersproject/providers'
 
@@ -154,7 +154,13 @@ export const useMetaContract = () => {
       to: contractAddress,
       from: userAddress,
       signatureType: 'EIP712_SIGN',
-      domainName: 'Powered by Biconomy',
+    }
+
+    // add this because Biconomy contract is expecting a different domainName in production
+    if (isProd()) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      txParams.domainName = 'Powered by Biconomy'
     }
 
     // as ethers does not allow providing custom options while sending transaction

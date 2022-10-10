@@ -18,7 +18,7 @@ import { isProd } from './envHelpers'
 import { getChainId } from './getChainId'
 import { useBridge } from './useBridge'
 import { useDonation } from './useDonation'
-import { USDC_UNIT } from './utilsCrypto'
+import { formatUSDC, USDC_UNIT } from './utilsCrypto'
 import { v4 as uuidv4 } from 'uuid'
 import { getConfirmDonationURL } from './confirmDonationUrl'
 import { sleep } from './sleep'
@@ -49,6 +49,7 @@ interface IProcessDonationContext {
   isConnected?: boolean
   isError?: boolean
   setSwapId?: (swapId: string) => void
+  swapId?: string
 }
 
 const walletConnectConnector = new WalletConnectConnector({
@@ -175,17 +176,12 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
     fetchTopUpWallet()
   }
 
-  const handleSwapComplete = async () => {
+  const handleSwapComplete = async (publicAddress: string, amount: number) => {
     setCryptoStage('bridging')
     const amountInUSDCDecimals = ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()
     try {
       const refreshedSigner = await (await refetch()).data
-      await bridge(
-        await refreshedSigner?.getAddress(),
-        refreshedSigner?.provider,
-        metadata?.publicAddress!,
-        amountInUSDCDecimals,
-      )
+      await bridge(await refreshedSigner?.getAddress(), refreshedSigner?.provider, publicAddress, amountInUSDCDecimals)
     } catch (error) {
       console.error('Bridging Error: ', error)
       setError('Bridging Failed')
@@ -242,7 +238,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
     }
   }
 
-  const createTopUpOrder = async (txHash: string, swapId: string | null) => {
+  const createTopUpOrder = async (txHash: string, swapId: string | null, amount: number) => {
     const orderId = uuidv4()
     await createTopUpWallet({
       variables: {
@@ -266,12 +262,12 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
 
   useEffect(() => {
     if (hasTrasnferedUSDC && transferUSDCdata?.hash) {
-      createTopUpOrder(transferUSDCdata?.hash, null)
+      createTopUpOrder(transferUSDCdata?.hash, null, amount)
     }
   }, [hasTrasnferedUSDC])
 
   useEffect(() => {
-    if (signer && donationMethod !== 'usd' && cryptoStage !== 'bridging' && isConnected) {
+    if (signer && donationMethod !== 'usd' && cryptoStage !== 'bridging' && !swapId && isConnected) {
       processTransaction()
     }
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -286,23 +282,25 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   }, [isTransferUSDCError])
 
   useEffect(() => {
-    courier.transport.intercept((message: ICourierMessage) => {
-      switch (message.title) {
-        case 'Payment is COMPLETE':
-          handleTopUpComplete()
-          break
-        case 'Payment is FAILED':
-          handleTopUpFailed()
-          break
-        case 'Swap is COMPLETE':
-          handleSwapComplete()
-          break
-        default:
-          console.error('Ignoring message from courier', message.title)
-          break
-      }
-    })
-  }, [])
+    if (metadata?.publicAddress && amount) {
+      courier.transport.intercept((message: ICourierMessage) => {
+        switch (message.title) {
+          case 'Payment is COMPLETE':
+            handleTopUpComplete()
+            break
+          case 'Payment is FAILED':
+            handleTopUpFailed()
+            break
+          case 'Swap is COMPLETE':
+            handleSwapComplete(metadata?.publicAddress!, amount)
+            break
+          default:
+            console.error('Ignoring message from courier', message.title)
+            break
+        }
+      })
+    }
+  }, [metadata?.publicAddress, amount])
 
   const handleComplete = async () => {
     setCryptoStage('complete')
@@ -317,14 +315,14 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
 
   useEffect(() => {
     if (fundsTransfered && fundsTransfered.statusCode === 2) {
-      createTopUpOrder(fundsTransfered.exitHash, swapId)
+      createTopUpOrder(fundsTransfered.exitHash, swapId, formatUSDC(fundsTransfered.exitAmount))
     }
   }, [fundsTransfered])
 
   const handleBuildingDonationRestart = async () => {
     switch (donationMethod) {
       case 'ethereum':
-        await handleSwapComplete()
+        await handleSwapComplete(metadata?.publicAddress!, amount)
         break
       case 'usd':
       case 'polygon':
@@ -341,7 +339,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         await processTransaction()
         break
       case 'bridging':
-        await handleSwapComplete()
+        await handleSwapComplete(metadata?.publicAddress!, amount)
         break
       case 'building':
         await handleBuildingDonationRestart()
@@ -362,6 +360,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         state: 'SKIPPED',
       },
     })
+    setSwapId('')
   }
 
   const handleBuildingRetry = async () => {
@@ -408,6 +407,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         isConnected,
         isError,
         setSwapId,
+        swapId,
       }}
     >
       {children}
