@@ -44,7 +44,7 @@ export const RecoverDonationProvider = ({ children }: SimpleComponentProps) => {
     onCompleted: async (swap: { Swaps: string | any[] }) => {
       if (swap.Swaps.length > 0) {
         setSwap(swap.Swaps[0])
-        fetchLatestTopUpWalletBySwap()
+        await fetchLatestTopUpWalletBySwap()
       }
     },
     fetchPolicy: 'network-only',
@@ -66,7 +66,7 @@ export const RecoverDonationProvider = ({ children }: SimpleComponentProps) => {
           setError?.('Payment Failed')
           setDonationStage?.('processCrypto')
         } else {
-          fetchLatestSwap()
+          await fetchLatestSwap()
         }
       }
     },
