@@ -613,5 +613,4 @@ const usdcabiContract = [
     type: 'function',
   },
 ]
-
 export default usdcabiContract

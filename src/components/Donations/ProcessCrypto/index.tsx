@@ -2,9 +2,14 @@ import styled from 'styled-components'
 import { IconStack, Icon, Button, Distraction, DonationComplete } from '@components'
 import { rgba, useProcessDonation } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
+import { useEffect } from 'react'
 
 const ProcessCrypto = () => {
-  const { cryptoStage, donationMethod, error, restart, retry } = useProcessDonation()
+  const { cryptoStage, setCryptoStage, donationMethod, error, restart, retry, swapId } = useProcessDonation()
+
+  useEffect(() => {
+    setCryptoStage?.(donationMethod !== 'ethereum' ? 'building' : swapId ? 'bridging' : 'swapping')
+  }, [])
 
   return (
     <Wrapper>
@@ -89,7 +94,7 @@ const ProcessCrypto = () => {
             {error ? (
               <div>
                 <Label>There was an error while processing your donation: {error}</Label>
-                {cryptoStage !== 'bridging' && <Button onClick={restart}>Restart</Button>}
+                <Button onClick={restart}>Restart</Button>
                 <Button onClick={retry}>Retry</Button>
               </div>
             ) : (

@@ -27,7 +27,7 @@ const methods: Array<MethodSet> = [
   {
     key: 'ethereum',
     label: 'Ethereum',
-    min: 100,
+    min: 10,
     glyph: 'ethereum',
   },
 ]

@@ -1,7 +1,7 @@
 import { Biconomy } from '@biconomy/mexa'
 import { ContractInterface, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { useMagic, assertInt, assert } from '@lib'
+import { useMagic, assertInt, assert, isProd } from '@lib'
 import { JsonFragment } from '@ethersproject/abi'
 import { ExternalProvider } from '@ethersproject/providers'
 
@@ -87,10 +87,9 @@ export const useMetaContract = () => {
       salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(NEXT_PUBLIC_CHAIN_ID).toHexString(), 32),
     }
 
-    const nonce = await contract.getNonce(userAddress)
-
+    const nonce = await contract.nonces(userAddress)
     // Create your target method signature
-    const functionSignature = contractInterface.encodeFunctionData(methodName, ...attr)
+    const functionSignature = contractInterface.encodeFunctionData(methodName, attr)
     const message: { nonce: number; from: string; functionSignature: string } = {
       nonce: parseInt(nonce),
       from: userAddress,
@@ -155,6 +154,13 @@ export const useMetaContract = () => {
       to: contractAddress,
       from: userAddress,
       signatureType: 'EIP712_SIGN',
+    }
+
+    // add this because Biconomy contract is expecting a different domainName in production
+    if (isProd()) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      txParams.domainName = 'Powered by Biconomy'
     }
 
     // as ethers does not allow providing custom options while sending transaction
