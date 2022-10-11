@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { CloseButton } from '@components'
-import { rgba } from '@lib'
-import { palette } from '@theme'
 
 interface IVideoPopup {
   src?: string
@@ -12,6 +10,10 @@ interface IVideoPopup {
 
 const VideoPopup = ({ src, visible, setVisible }: IVideoPopup) => {
   const [loaded, setLoaded] = useState<boolean>()
+
+  useEffect(() => {
+    if (!visible) setLoaded(false)
+  }, [visible])
 
   return (
     <>
@@ -62,8 +64,8 @@ const Video = styled.video`
   transform: scale(1.1);
   /* transition out timing */
   transition: opacity 0.15s 0s ease-in-out, transform 0.15s 0s ease-in-out;
-  max-width: 90vmin;
-  max-height: 90vmin;
+  max-width: 96vmin;
+  max-height: 96vmin;
   &.visible {
     opacity: 1;
     transform: scale(1);
