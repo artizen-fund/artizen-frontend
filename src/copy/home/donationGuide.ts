@@ -84,9 +84,42 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
       },
       {
         type: 'image',
-        image: '01.png',
-        imageDark: '01-dark.png',
+        image: '01a.png',
+        imageDark: '01a-dark.png',
         altText: 'fellow strutting with card and coin',
+        coordinates: {
+          desktop: {
+            x: -1,
+            y: -1,
+            w: 55,
+          },
+          laptop: {
+            x: -1,
+            y: -1,
+            w: 60,
+          },
+          tablet: {
+            x: -1,
+            y: -1,
+            w: 73,
+          },
+          phablet: {
+            x: -1,
+            y: -1,
+            w: 80,
+          },
+          mobile: {
+            x: -1,
+            y: -1,
+            w: 100,
+          },
+        },
+      },
+      {
+        type: 'image',
+        image: '01b.png',
+        imageDark: '01b-dark.png',
+        altText: 'two blobbies and a splat',
         coordinates: {
           desktop: {
             x: -1,
@@ -305,7 +338,6 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           phablet: {
             x: 0,
             y: 0,
-            
           },
           mobile: {
             x: 0,
@@ -463,7 +495,6 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           tablet: {
             x: 0,
             y: 0,
-            
           },
           phablet: {
             x: 0,
@@ -988,7 +1019,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
       laptop: 390,
       tablet: 360,
       phablet: 0.7,
-      mobile: .9,
+      mobile: 0.9,
     },
 
     items: [
@@ -1143,8 +1174,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           desktop: {
             x: 10,
             y: -1,
-            w: 80
-            ,
+            w: 80,
           },
           laptop: {
             x: 0,
@@ -1346,7 +1376,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           tablet: {
             x: 0,
             y: -1,
-            w: 103.
+            w: 103,
           },
           phablet: {
             x: -1,
