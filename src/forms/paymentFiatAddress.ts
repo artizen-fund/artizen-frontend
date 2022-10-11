@@ -1,5 +1,5 @@
 import { JsonSchema } from '@jsonforms/core'
-import { nationCodes } from '@copy/common'
+import { nations, americanRegions } from '@lib'
 
 export const schema: JsonSchema = {
   type: 'object',
@@ -14,7 +14,7 @@ export const schema: JsonSchema = {
     },
     state: {
       type: 'string',
-      minLength: 2,
+      oneOf: americanRegions,
     },
     zip: {
       type: 'string',
@@ -22,7 +22,7 @@ export const schema: JsonSchema = {
     },
     country: {
       type: 'string',
-      enum: nationCodes.map(nation => nation.name),
+      oneOf: nations,
     },
   },
   required: ['street1', 'city', 'state', 'zip', 'country'],
