@@ -37,7 +37,7 @@ const Sidebar = () => {
                   <span>${formatUSDC(totalRaised).toLocaleString()}</span> raised of ${fundRaisingGoal.toLocaleString()}{' '}
                   goal
                 </AmountRaised>
-                {<ProgressBar>{formatUSDC(totalRaised / fundRaisingGoal)}</ProgressBar>}
+                {<ProgressBar>{formatUSDC(totalRaised) / formatUSDC(fundRaisingGoal)}</ProgressBar>}
                 <Row>
                   {<Countdown date={endDate.toISOString()} />}
                   <DonationCount>
