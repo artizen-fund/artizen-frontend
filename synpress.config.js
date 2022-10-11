@@ -1,10 +1,13 @@
-const log = require('debug')('synpress:config')
-const { defineConfig } = require('cypress')
+import log from 'debug'
+// const log = require('debug')('synpress:config')
+import { defineConfig } from 'cypress'
+// const { defineConfig } = require('cypress')
 const synpressPath = '@synthetixio/synpress/'
 log(`Detected synpress root path is: ${synpressPath}`)
-const pluginsPath = `${synpressPath}/plugins/index`
+const pluginsPath = '@synthetixio/synpress/plugins/index'
 log(`Detected synpress plugin path is: ${pluginsPath}`)
-const setupNodeEvents = require(pluginsPath)
+// const setupNodeEvents = require(pluginsPath)
+import setupNodeEvents from '@synthetixio/synpress/plugins/index'
 const fixturesFolder = `${synpressPath}/fixtures`
 log(`Detected synpress fixtures path is: ${fixturesFolder}`)
 const supportFile = 'tests/e2e/support.js'
