@@ -1,6 +1,6 @@
 {
   "name": "artizen-frontend",
-  "version": "0.1.17",
+  "version": "0.1.23",
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
@@ -20,7 +20,6 @@
     "test:cypress": "cypress open",
     "test:jest": "jest --watch",
     "test:headless": "cypress run",
-    "e2e:headless": "PORT=3000 start-server-and-test start http://localhost:3000 cypress:headless",
     "codegen": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -30,7 +29,7 @@
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
     "@biconomy/hyphen": "^1.1.6",
-    "@biconomy/mexa": "3.0.2",
+    "@biconomy/mexa": "3.0.4",
     "@jsonforms/core": "^3.0.0-rc.0",
     "@jsonforms/material-renderers": "^3.0.0-rc.0",
     "@jsonforms/react": "^3.0.0-rc.0",

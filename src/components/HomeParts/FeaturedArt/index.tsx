@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { BigNumber } from 'ethers'
-import { Icon, Slideshow } from '@components'
+import { Icon } from '@components'
 import { palette, breakpoint, typography } from '@theme'
 import { rgba, assert, useReadContract } from '@lib'
 import { ArtizenERC1155 } from '@contracts'
@@ -61,10 +61,11 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
   // note: current video NFT ratio is 1:.56
   return (
     <Wrapper>
-      <Video loop={true} autoPlay={true} controls={false} muted={true}>
-        <source src={metadata?.image} type="video/mp4" />
-      </Video>
-
+      {metadata?.image && metadata?.image.length > 0 && (
+        <Video loop={true} autoPlay={true} controls={false} muted={true}>
+          <source src={metadata?.image} type="video/mp4" />
+        </Video>
+      )}
       <Copy>
         <Title>{raffle.title}</Title>
         <Metadata>

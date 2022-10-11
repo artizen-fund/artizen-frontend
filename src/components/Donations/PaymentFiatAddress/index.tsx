@@ -1,8 +1,16 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
+import { ErrorObject } from 'ajv'
 import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { UserContext, useFormLocalStorage, hasRequiredProperties, DonationContext } from '@lib'
+import {
+  UserContext,
+  useFormLocalStorage,
+  hasRequiredProperties,
+  DonationContext,
+  nationIsSupportedByWyre,
+  stateIsSupported,
+} from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
 import { UPDATE_USER_ADDRESS } from '@gql'
@@ -19,16 +27,38 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
   const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
 
-  const LOCALSTORAGE_KEY = 'fiatPaymentAddress'
-  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+  const [data, setData] = useState<FormState>(initialState)
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
   // note: we're storing no more what below…
   // unsure how best to just keep local if not storing it
   // another responsiveVar?
 
-  const [processing, setProcessing] = useState(false)
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
+  useEffect(() => {
+    const errors: Array<ErrorObject> = []
+    if (!!data.nation && !nationIsSupportedByWyre(data.country)) {
+      errors.push({
+        instancePath: '/country',
+        message: 'Nation is not supported by Wyre',
+        schemaPath: '#/properties/country',
+        keyword: '',
+        params: {},
+      })
+    }
+    if (!!data.state && !stateIsSupported(data.state)) {
+      errors.push({
+        instancePath: '/state',
+        message: 'State is not supported',
+        schemaPath: '#/properties/state',
+        keyword: '',
+        params: {},
+      })
+    }
+    setAdditionalErrors(errors)
+  }, [data])
 
+  const [processing, setProcessing] = useState(false)
   const saveAndProceed = async () => {
     try {
       if (!loggedInUser) {
@@ -72,8 +102,7 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
         />
       </Information>
       <Form
-        localStorageKey={LOCALSTORAGE_KEY}
-        {...{ schema, uischema, initialState }}
+        {...{ schema, uischema, initialState, additionalErrors }}
         readonly={processing}
         data={data}
         setData={setData}
