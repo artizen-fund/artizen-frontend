@@ -1,0 +1,1 @@
+(self.webpackChunkartizen_frontend=self.webpackChunkartizen_frontend||[]).push([[179],{24654(){}},e=>{var n=n=>e(e.s=n);e.O(0,[988],()=>(n(37707),n(7967),n(78295),n(15887),n(59288),n(10566),n(50213),n(75259),n(57464),n(10165),n(13457),n(1603),n(81802)));var a=e.O()}]);

@@ -1,0 +1,1 @@
+(self.webpackChunkartizen_frontend=self.webpackChunkartizen_frontend||[]).push([[563],{"?a449"(){}}]);

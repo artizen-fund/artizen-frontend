@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkartizen_frontend=self.webpackChunkartizen_frontend||[]).push([[745],{"./node_modules/react-dom/client.js"(e,t,o){var n=o("./node_modules/react-dom/index.js");t.createRoot=n.createRoot,t.hydrateRoot=n.hydrateRoot}}]);
