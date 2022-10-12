@@ -1,6 +1,10 @@
 {
   "name": "artizen-frontend",
+<<<<<<< HEAD
   "version": "0.1.22",
+=======
+  "version": "0.1.24",
+>>>>>>> 63f57b5a224e9af32e20c5c8e20ec3e00d947e5b
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
@@ -28,7 +32,7 @@
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
     "@biconomy/hyphen": "^1.1.6",
-    "@biconomy/mexa": "3.0.2",
+    "@biconomy/mexa": "3.0.4",
     "@jsonforms/core": "^3.0.0-rc.0",
     "@jsonforms/material-renderers": "^3.0.0-rc.0",
     "@jsonforms/react": "^3.0.0-rc.0",

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// export * from './sidebar'
+>>>>>>> 63f57b5a224e9af32e20c5c8e20ec3e00d947e5b
 export * from './wallet'
 export * from './checkForExistingArtizenHandle'
 export * from './checkUser'

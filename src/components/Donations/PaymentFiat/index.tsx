@@ -25,6 +25,7 @@ const PaymentFiat = () => {
 
   const { setDonationStage } = useContext(DonationContext)
   const { loggedInUser } = useContext(UserContext)
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
@@ -78,8 +79,6 @@ const PaymentFiat = () => {
   if (!!loggedInUser && !hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], loggedInUser)) {
     return <PaymentFiatAddress {...{ setDonationStage, amount: amount as number }} />
   }
-
-  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   const getFee = async () => {
     if (amount && metadata?.publicAddress && loggedInUser?.country) {

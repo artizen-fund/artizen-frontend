@@ -1,5 +1,5 @@
 import { Button, Form } from '@components'
-import { ArtizenERC1155, ArtToken, RaffleAbi } from '@contracts'
+import { ArtizenERC1155, RaffleAbi } from '@contracts'
 import { schema, uischema, initialState, FormState } from '@forms/admin'
 import { assert, USDC_UNIT } from '@lib'
 import { BigNumber, ethers } from 'ethers'
@@ -43,12 +43,6 @@ export const CreateRaffle = () => {
     signerOrProvider: signer,
   })
 
-  const tokenRewardContract = useContract({
-    addressOrName: tokenRewardContractAddress,
-    contractInterface: ArtToken,
-    signerOrProvider: signer,
-  })
-
   if (!isConnected) return <></>
 
   const handleSubmit = async () => {
@@ -84,13 +78,6 @@ export const CreateRaffle = () => {
     await raffleTransaction.wait()
 
     const raffleCount = await raflleContract.raffleCount()
-
-    // Approve tokens to be used by raffle contract for reward
-    const tokenRewardApproveTransaction = await tokenRewardContract.approve(
-      raffleContractAddress,
-      ethers.constants.MaxUint256,
-    )
-    await tokenRewardApproveTransaction.wait()
 
     // Turn on token rewards on the raffle contract
     const tokenRewardTransaction = await raflleContract.turnOnTokenRewards(

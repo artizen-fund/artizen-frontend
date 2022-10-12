@@ -15,6 +15,8 @@ const Onionskin = () => {
 
 /* Note: why do we use classNames instead of props.visibleShelf?
  * CSS can't dynamically handle timing changes (transition 0s -> 0.15s), it can only deal with that via class changes.
+ *
+ * What is isModal? determines whether it is above or below the menu bar
  */
 
 const Wrapper = styled.div<{ isModal?: boolean }>`
