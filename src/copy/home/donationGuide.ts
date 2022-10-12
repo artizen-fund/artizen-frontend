@@ -122,28 +122,28 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         altText: 'two blobbies and a splat',
         coordinates: {
           desktop: {
-            x: -1,
+            x: 15,
             y: -1,
             w: 55,
           },
           laptop: {
-            x: -1,
-            y: -1,
-            w: 60,
+            x: 9,
+            y: -7,
+            w: 30,
           },
           tablet: {
-            x: -1,
+            x: 0,
             y: -1,
-            w: 73,
+            w: 30,
           },
           phablet: {
-            x: -1,
-            y: -1,
+            x: 0,
+            y: 0,
             w: 80,
           },
           mobile: {
-            x: -1,
-            y: -1,
+            x: 0,
+            y: 0,
             w: 100,
           },
         },
@@ -211,7 +211,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           },
           laptop: {
             x: 0,
-            y: -5,
+            y: -3,
             w: 230,
           },
           tablet: {
