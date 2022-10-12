@@ -1,6 +1,13 @@
 import { createContext, useEffect, useState, useContext } from 'react'
 import { UserContext, isServer } from '@lib'
 
+/* TODO: rename this
+ *  candidates:
+ *    - uiContext
+ *    - layoutContext
+ *    - siteLayoutContext
+ */
+
 export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
 
 interface IDonationContext {

@@ -60,9 +60,15 @@ const SelectControl = ({
           placeholder={uischema?.options?.placeholder || ' '}
           className={!!data ? 'hasData' : 'noData'}
         >
+          <option value={undefined} />
           {schema?.enum?.map((option: string, i: number) => (
             <option value={option} key={`${path}-${i}`}>
               {option}
+            </option>
+          ))}
+          {schema?.oneOf?.map((option, i: number) => (
+            <option value={option.const} key={`${path}-${i}`}>
+              {option.title}
             </option>
           ))}
         </select>
