@@ -125,20 +125,20 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         altText: 'two blobbies and a splat',
         coordinates: {
           desktop: {
-            x: -1,
+            x: 15,
             y: -1,
             w: 55,
           },
           laptop: {
-            x: -1,
-            y: -1,
-            w: 60,
+            x: 9,
+            y: -7,
+            w: 30,
           },
           tablet: {
-            x: -1,
+            x: 0,
             y: -1,
-            w: 73,
-            hidden: true,
+            w: 30,
+            
           },
           phablet: {
             x: -1,
