@@ -28,6 +28,13 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.local
+.env.development
+.env.development.*
+.env.test.local
+.env.production
+.env.production.*
+
 
 # vercel
 .vercel
@@ -38,3 +45,6 @@ yarn-error.log*
 
 # Sentry
 .sentryclirc
+
+# storybook
+/storybook-static

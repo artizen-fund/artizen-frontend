@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { BigNumber } from 'ethers'
-import { Icon, Slideshow } from '@components'
+import { Icon, VideoPopup } from '@components'
 import { palette, breakpoint, typography } from '@theme'
-import { rgba, assert, useReadContract } from '@lib'
+import { rgba, assert, useReadContract, assetPath } from '@lib'
 import { ArtizenERC1155 } from '@contracts'
 import { raffle } from '@copy/home'
 
@@ -31,6 +31,7 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
   )
 
   const [metadata, setMetadata] = useState<Metadata>()
+  const [popupVisible, setPopupVisible] = useState(false)
 
   const getMetadataFromUri = async (uri: string) => {
     const response = await fetch(uri)
@@ -60,33 +61,36 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
 
   // note: current video NFT ratio is 1:.56
   return (
-    <Wrapper>
-      <Video loop={true} autoPlay={true} controls={false} muted={true}>
-        <source src={metadata?.image} type="video/mp4" />
-      </Video>
-
-      <Copy>
-        <Title>{raffle.title}</Title>
-        <Metadata>
-          <Metadatum>
-            <Icon glyph="face" level={1} outline label={raffle.artist} />
-          </Metadatum>
-          <Metadatum>
-            <Icon
-              glyph="calendar"
-              level={1}
-              outline
-              label={`Created ${getDaysAgoFromDate(startTime?.toNumber())} days ago`}
-            />
-          </Metadatum>
-          {tagName && (
+    <>
+      <Wrapper>
+        <Poster
+          src={assetPath(`/assets/elliot-lee-nft-poster.jpg?w=1040&fm=webp`)}
+          onClick={() => setPopupVisible(true)}
+        />
+        <Copy>
+          <Title>{raffle.title}</Title>
+          <Metadata>
             <Metadatum>
-              <Icon glyph="tag" level={1} outline label={tagName} />
+              <Icon glyph="face" level={1} outline label={raffle.artist} />
             </Metadatum>
-          )}
-        </Metadata>
-      </Copy>
-    </Wrapper>
+            <Metadatum>
+              <Icon
+                glyph="calendar"
+                level={1}
+                outline
+                label={`Created ${getDaysAgoFromDate(startTime?.toNumber())} days ago`}
+              />
+            </Metadatum>
+            {tagName && (
+              <Metadatum>
+                <Icon glyph="tag" level={1} outline label={tagName} />
+              </Metadatum>
+            )}
+          </Metadata>
+        </Copy>
+      </Wrapper>
+      <VideoPopup src={metadata?.image} visible={popupVisible} setVisible={setPopupVisible} />
+    </>
   )
 }
 
@@ -156,7 +160,7 @@ const Metadatum = styled.div`
   gap: 10px;
 `
 
-const Video = styled.video`
+const Poster = styled.img`
   position: relative;
   z-index: 1;
   max-width: 100%;
@@ -165,6 +169,7 @@ const Video = styled.video`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     border-radius: 16px;
   }
+  cursor: pointer;
 `
 
 export default FeaturedArt

@@ -76,10 +76,12 @@ const Wrapper = styled.section`
   display: grid;
   grid-template-areas: 'featuredArt' 'sidebar' 'tabbedInfo';
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    grid-template-columns: auto 390px;
     grid-template-areas: 'featuredArt sidebar' 'tabbedInfo sidebar';
     grid-gap: 0px 30px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
+    grid-template-columns: auto 480px;
     grid-gap: 0px 80px;
   }
   padding-bottom: 100px;

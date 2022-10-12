@@ -21,6 +21,8 @@ const StickyContent = styled.div`
     position: sticky;
     left: 0;
     top: 72px;
+    width: 100%;
+    max-width: 100%;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     top: 88px;

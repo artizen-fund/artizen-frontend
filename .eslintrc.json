@@ -33,7 +33,7 @@
     "prefer-destructuring": ["error", { "object": true, "array": false }],
 
     /* strings */
-    "quotes": ["error", "single"],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "max-len": [
       "error",
       {
