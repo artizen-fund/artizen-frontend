@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { CloseButton } from '@components'
+import { Icon } from '@components'
 import { rgba, DonationContext } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { donationGuideMap } from '@copy/home'
@@ -12,6 +12,7 @@ const DonationGuide = () => {
   return (
     <>
       <Wrapper {...{ visible }}>
+        <CloseButton glyph="cross" level={1} onClick={() => toggleModal?.()} {...{ visible }} />
         <Headline>
           How to donate to grants
           <br />
@@ -22,7 +23,6 @@ const DonationGuide = () => {
           <GuideCell key={`guidecell-${i}`} {...item} step={i} />
         ))}
       </Wrapper>
-      <StyledCloseButton glyph="cross" level={1} onClick={() => toggleModal?.()} {...{ visible }} />
     </>
   )
 }
@@ -35,22 +35,22 @@ const Wrapper = styled.div<VisibilityParam>`
   position: fixed;
   z-index: 102;
   left: 20px;
-  top: 75px;
+  top: 64px;
   width: calc(100vw - 40px);
-  height: calc(100vh - 75px);
+  height: calc(100vh - 64px);
   border-radius: 8px;
 
-    @media only screen and (min-width: 480px) {
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
     left: 20px;
-    top: 125px;
+    top: 72px;
     width: calc(100vw - 40px);
-    height: calc(100vh - 125px);d
+    height: calc(100vh - 72px);
   }
-  @media only screen and (min-width: 780px) {
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
     left: 50px;
-    top: 125px;
+    top: 88px;
     width: calc(100vw - 100px);
-    height: calc(100vh - 125px);
+    height: calc(100vh - 88px);
   }
   overflow-y: scroll;
 
@@ -63,7 +63,6 @@ const Wrapper = styled.div<VisibilityParam>`
   font-size: 13px;
   line-height: 120%;
   letter-spacing: -0.4px;
-
 
   @media only screen and (min-width: 480px) {
     grid-column-gap: 16px;
@@ -108,7 +107,7 @@ const Headline = styled.h1`
   top: 24px;
   left: 24px;
 
-     @media only screen and (min-width: ${breakpoint.mobile}px) {
+  @media only screen and (min-width: ${breakpoint.mobile}px) {
     top: 40px;
     font-size: 30px;
     line-height: 32px;
@@ -130,16 +129,18 @@ const Headline = styled.h1`
     font-size: 48px;
     line-height: 52px;
   }
- 
 `
 
-const StyledCloseButton = styled(props => <CloseButton {...props} />)`
-  top: 60px;
-  right: 0px;
-  @media only screen and (min-width: ${breakpoint.phablet}px) {
-    top: 100px;
-    right: 25px;
-  }
+const CloseButton = styled(props => <Icon {...props} glyph="cross" />)<{ visible: boolean }>`
+  display: none;
+  position: absolute;
+  z-index: 1002;
+  top: -30px;
+  right: -30px;
+
+  cursor: pointer;
+  opacity: ${props => (props.visible ? 1 : 0)};
+  pointer-events: ${props => (props.visible ? 'all' : 'none')};
 `
 
 export default DonationGuide
