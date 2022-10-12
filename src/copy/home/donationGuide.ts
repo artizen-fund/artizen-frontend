@@ -1,6 +1,9 @@
 import { ResponsiveSize } from '@theme'
 
-export type DonationGuideCoordinate = Record<ResponsiveSize, { x: number; y: number; w?: number; h?: number }>
+export type DonationGuideCoordinate = Record<
+  ResponsiveSize,
+  { x: number; y: number; w?: number; h?: number; hidden?: boolean }
+>
 
 type GuideCopy = {
   type: 'copy'
@@ -135,16 +138,19 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
             x: -1,
             y: -1,
             w: 73,
+            hidden: true,
           },
           phablet: {
             x: -1,
             y: -1,
             w: 80,
+            hidden: true,
           },
           mobile: {
             x: -1,
             y: -1,
             w: 100,
+            hidden: true,
           },
         },
       },
