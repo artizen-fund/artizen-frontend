@@ -138,7 +138,6 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
             x: 0,
             y: -1,
             w: 30,
-            
           },
           phablet: {
             x: -1,

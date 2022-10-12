@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { Icon } from '@components'
-import { rgba, DonationContext } from '@lib'
-import { palette, typography, breakpoint } from '@theme'
-import { donationGuideMap } from '@copy/home'
+import { DonationContext } from '@lib'
+import { typography, breakpoint } from '@theme'
+import { donationGuideMap } from '@copy/donationGuide'
 import GuideCell from './GuideCell'
 
 const DonationGuide = () => {

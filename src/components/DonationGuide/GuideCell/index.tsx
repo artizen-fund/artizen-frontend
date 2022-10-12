@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { rgba, assetPath } from '@lib'
 import { palette, breakpoint } from '@theme'
-import { IDonationGuideCell, DonationGuideCoordinate } from '@copy/home'
+import { IDonationGuideCell, DonationGuideCoordinate } from '@copy/donationGuide'
 
 const GuideCell = ({ columns, height, items, step }: IDonationGuideCell & { step: number }) => (
   <Wrapper {...{ columns, height }}>
