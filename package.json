@@ -1,10 +1,6 @@
 {
   "name": "artizen-frontend",
-<<<<<<< HEAD
-  "version": "0.1.22",
-=======
   "version": "0.1.24",
->>>>>>> 63f57b5a224e9af32e20c5c8e20ec3e00d947e5b
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
@@ -22,10 +18,11 @@
     "start": "next build && next start -p $PORT",
     "lint": "next lint",
     "test:jest": "jest --watch",
-    "test:e2e": "env-cmd -f .env.development synpress run -cf synpress.config.js",
+    "test:e2e": "PORT=3000 start-server-and-test 'yarn start' http-get://localhost:3000 'env-cmd -f .env.development synpress run -cf synpress.config.js'",
     "codegen": "DOTENV_CONFIG_PATH=./.env.development graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
+    
   },
   "dependencies": {
     "@apollo/client": "3.6.9",
@@ -138,6 +135,7 @@
     "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.6.2",
     "react-test-renderer": "^18.1.0",
+    "start-server-and-test": "^1.14.0",
     "storybook-addon-css-user-preferences": "^0.0.3",
     "storybook-addon-swc": "^1.1.8",
     "tsconfig-paths-jest": "^0.0.1",

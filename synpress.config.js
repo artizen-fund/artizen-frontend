@@ -34,8 +34,7 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents,
     experimentalSessionAndOrigin: true,
-    baseUrl: 'https://www.google.com/',
-    // baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://localhost:3000',
     specPattern: 'tests/e2e/specs/**/*.{js,jsx,ts,tsx}',
     supportFile,
   },
