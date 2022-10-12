@@ -1,6 +1,9 @@
 import { ResponsiveSize } from '@theme'
 
-export type DonationGuideCoordinate = Record<ResponsiveSize, { x: number; y: number; w?: number; h?: number }>
+export type DonationGuideCoordinate = Record<
+  ResponsiveSize,
+  { x: number; y: number; w?: number; h?: number; hidden?: boolean }
+>
 
 type GuideCopy = {
   type: 'copy'
@@ -122,29 +125,32 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
         altText: 'two blobbies and a splat',
         coordinates: {
           desktop: {
-            x: 15,
+            x: -1,
             y: -1,
             w: 55,
           },
           laptop: {
-            x: 9,
-            y: -7,
-            w: 30,
+            x: -1,
+            y: -1,
+            w: 60,
           },
           tablet: {
-            x: 0,
+            x: -1,
             y: -1,
-            w: 30,
+            w: 73,
+            hidden: true,
           },
           phablet: {
-            x: 0,
-            y: 0,
+            x: -1,
+            y: -1,
             w: 80,
+            hidden: true,
           },
           mobile: {
-            x: 0,
-            y: 0,
+            x: -1,
+            y: -1,
             w: 100,
+            hidden: true,
           },
         },
       },
@@ -211,7 +217,7 @@ export const donationGuideMap: Array<IDonationGuideCell> = [
           },
           laptop: {
             x: 0,
-            y: -3,
+            y: -5,
             w: 230,
           },
           tablet: {

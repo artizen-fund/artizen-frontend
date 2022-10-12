@@ -1,4 +1,3 @@
-// export * from './sidebar'
 export * from './wallet'
 export * from './checkForExistingArtizenHandle'
 export * from './checkUser'

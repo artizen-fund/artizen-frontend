@@ -10,7 +10,7 @@ import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
 
-import { rgba, DonationContext } from '@lib'
+import { rgba, DonationContext, isProd } from '@lib'
 
 const Header = () => {
   const { visibleShelf, toggleShelf } = useContext(DonationContext)
@@ -58,7 +58,7 @@ const Header = () => {
       <Shelf shelfKey="donate" {...{ shadowVisible }} hasBreadcrumbs>
         <DonationShelf />
       </Shelf>
-      <DebugTool />
+      <DebugTool production={isProd()} />
       <Share />
     </>
   )
@@ -138,7 +138,8 @@ const Nav = styled.div`
   }
 `
 
-const DebugTool = styled.div`
+const DebugTool = styled.div<{ production: boolean }>`
+  display: ${props => (props.production ? 'none' : 'block')};
   position: fixed;
   z-index: 9999;
   bottom: 0px;

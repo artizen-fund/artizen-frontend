@@ -24,7 +24,7 @@ export const EnumControl = (props: EnumControlProps) =>
 
 export const enumControlTester = rankWith(
   3,
-  schemaMatches(schema => schema.type === 'string' && !!schema.enum),
+  schemaMatches(schema => schema.type === 'string' && (!!schema.enum || !!schema.oneOf)),
 )
 
 export default withJsonFormsControlProps(EnumControl)
