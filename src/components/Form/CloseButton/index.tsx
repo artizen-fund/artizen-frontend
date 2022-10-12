@@ -5,11 +5,15 @@ import { breakpoint } from '@theme'
 const CloseButton = styled(props => <Icon {...props} glyph="cross" />)<{ visible: boolean }>`
   position: absolute;
   z-index: 1002;
-  top: 60px;
-  right: 0px;
-  @media only screen and (min-width: ${breakpoint.phablet}px) {
-    top: 100px;
-    right: 25px;
+  top: -28px;
+  right: -28px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    top: -32px;
+    right: -32px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    top: -36px;
+    right: -36px;
   }
 
   cursor: pointer;

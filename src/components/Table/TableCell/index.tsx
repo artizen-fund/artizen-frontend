@@ -38,7 +38,7 @@ const TableCell = styled.div<{ highlight?: boolean }>`
 
   ${typography.label.l1}
 
-  div {
+  > div {
     display: flex;
     flex-direction: row;
     align-items: center;
