@@ -23,6 +23,4 @@ const mockRefreshSessionData = {
   },
 }
 
-console.log('mockRefreshSessionData  ', mockRefreshSessionData)
-
 export { refreshSession, mockRefreshSessionData }
