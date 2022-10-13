@@ -96,7 +96,7 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
       >
         <>
           <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
-            Sign In / Sign Up
+            Sign Up
           </SubmitButton>
           {sentEmail && (
             <Confirmation>
@@ -105,7 +105,7 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
                 <h1>Done, confirmation sent!</h1>
                 <p>
                   We emailed a magic link to {data.email}.<br />
-                  Click the link Sign in or sign up.
+                  Click the link to sign up.
                 </p>
               </div>
               <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
