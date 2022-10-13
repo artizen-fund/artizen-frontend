@@ -10,15 +10,6 @@ const initNotifications = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const computedUserHmac = crypto.createHmac('sha256', NOTIFICATIONS_API).update(userId).digest('hex')
 
-    // const didToken = req.headers.authorization.substr(7)
-
-    // // Validate Magic's DID token
-    // magic.token.validate(didToken)
-
-    // const metadata = await magic.users.getMetadataByToken(didToken)
-
-    // console.log('metadata  ', metadata)
-
     res.status(200).send({ computedUserHmac })
   } catch (error) {
     console.error(error)

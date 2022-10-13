@@ -32,6 +32,7 @@ const checkSession = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     })
   } catch (error) {
+    console.error('error checking session    ', error)
     res.status(200).json({})
   }
 }
