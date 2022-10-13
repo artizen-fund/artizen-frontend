@@ -13,7 +13,7 @@ import {
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
 const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
-  const MAGIC_SECRET_KEY = assert(process.env.NEXT_PUBLIC_MAGIC_SECRET_KEY, 'NEXT_PUBLIC_MAGIC_SECRET_KEY')
+  const MAGIC_SECRET_KEY = assert(process.env.MAGIC_SECRET_KEY, 'MAGIC_SECRET_KEY')
   const magic = new Magic(MAGIC_SECRET_KEY)
 
   try {

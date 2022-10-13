@@ -6,8 +6,9 @@ const SignOut = () => {
   useEffect(() => {
     const logoutAction = async () => {
       const response = await fetch('/api/logout', { method: 'POST' })
+      console.log('logoutAction response  ', response)
       if (response.status === 200) {
-        router.push('/')
+        window.location.assign(`${window.location.protocol}//${window.location.host}/`)
       }
     }
     logoutAction()

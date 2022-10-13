@@ -6,8 +6,11 @@ import jwt from 'jsonwebtoken'
 import { removeTokenCookie, assert } from '@lib'
 
 const endSession = async (req: NextApiRequest, res: NextApiResponse) => {
-  const MAGIC_SECRET_KEY = assert(process.env.NEXT_PUBLIC_MAGIC_SECRET_KEY, 'NEXT_PUBLIC_MAGIC_SECRET_KEY')
+  console.log('gets here', process.env.MAGIC_SECRET_KEY)
+  const MAGIC_SECRET_KEY = assert(process.env.MAGIC_SECRET_KEY, 'MAGIC_SECRET_KEY')
   const magic = new Magic(MAGIC_SECRET_KEY)
+
+  console.log('endSession magic magic ', magic)
 
   try {
     if (!req.cookies.token) return res.status(401).json({ message: 'User is not logged in' })
@@ -18,8 +21,12 @@ const endSession = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Add the try/catch because a user's session may have already expired with Magic (expired 7 days after login)
     try {
-      if (!user.issuer) throw 'Bad JWT payload.'
+      if (!user.issuer) {
+        throw 'Bad JWT payload.'
+      }
       await magic.users.logoutByIssuer(user.issuer)
+
+      console.log('magic.users. here')
     } catch (error) {
       console.error('Users session with Magic already expired')
     }
