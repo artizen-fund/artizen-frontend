@@ -282,7 +282,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   }, [isTransferUSDCError])
 
   useEffect(() => {
-    if (metadata?.publicAddress && amount) {
+    if (metadata?.publicAddress && amount && courier) {
       courier.transport.intercept((message: ICourierMessage) => {
         switch (message.title) {
           case 'Payment is COMPLETE':
