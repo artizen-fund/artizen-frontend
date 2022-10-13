@@ -72,6 +72,7 @@ const PaymentFiat = () => {
       }
       setDonationStage?.('processCrypto')
     } catch (error) {
+      console.error(error)
       setProcessing(false)
     }
   }
@@ -85,7 +86,7 @@ const PaymentFiat = () => {
       try {
         const quote = await getQuote(amount, metadata?.publicAddress, loggedInUser?.country)
         const {
-          fee: { USD: fee },
+          fees: { USD: fee },
         } = quote
         setFee(fee)
       } catch (error) {

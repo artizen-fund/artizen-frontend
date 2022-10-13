@@ -300,7 +300,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         }
       })
     }
-  }, [metadata?.publicAddress, amount])
+  }, [courier, metadata?.publicAddress, amount])
 
   const handleComplete = async () => {
     setCryptoStage('complete')
