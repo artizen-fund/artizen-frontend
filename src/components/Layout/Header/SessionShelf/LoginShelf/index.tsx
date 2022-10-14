@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import styled from 'styled-components'
-import { Icon, Form, CheckboxControl } from '@components'
+import { Icon, Form, CheckboxControl, Button } from '@components'
 import { loginWithEmail, useMagic, useFormLocalStorage } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/login'
@@ -63,9 +63,15 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <>
-          <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
-            Sign In
-          </SubmitButton>
+          <Buttons>
+            <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+              Sign In
+            </SubmitButton>
+            <Button transparent stretch onClick={() => setCreateMode(true)}>
+              Sign Up instead
+            </Button>
+          </Buttons>
+
           {sentEmail && (
             <Confirmation>
               <Icon glyph="tick" outline level={2} color="moss" />
@@ -102,8 +108,8 @@ const Wrapper = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       'copy email'
-      'copy .'
-      'tocCheck submit';
+      'copy buttons'
+      'tocCheck buttons';
     &.submitted {
       grid-template-areas:
         'copy confirmation'
@@ -131,6 +137,12 @@ const Wrapper = styled.div`
       display: flex;
     }
   }
+`
+const Buttons = styled.div`
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `
 
 export default LoginShelf

@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import Link from 'next/link'
-import { Icon, Form, CheckboxControl } from '@components'
+import { Icon, Form, CheckboxControl, Button } from '@components'
 import { loginWithEmail, useMagic, UserContext } from '@lib'
 import { UPDATE_NEW_USER_PROFILE } from '@gql'
 import { breakpoint } from '@theme'
@@ -79,8 +79,6 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
     }
   }, [data, loggedInUser])
 
-  const [derp, setDerp] = useState(false)
-
   return (
     <Wrapper className={submitted ? 'submitted' : ''}>
       <Copy>
@@ -95,9 +93,14 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
         {...{ schema, uischema, initialState, data, setData, readonly }}
       >
         <>
-          <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
-            Sign Up
-          </SubmitButton>
+          <Buttons>
+            <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+              Sign Up
+            </SubmitButton>
+            <Button transparent stretch onClick={() => setCreateMode(false)}>
+              Sign In instead
+            </Button>
+          </Buttons>
           {sentEmail && (
             <Confirmation>
               <Icon glyph="tick" outline level={2} color="moss" />
@@ -140,11 +143,9 @@ const Wrapper = styled.div`
     grid-template-areas:
       'copy firstName lastName'
       'copy email email'
-      'copy . .'
-      'tocCheck submit submit';
+      'tocCheck buttons buttons';
     &.submitted {
       grid-template-areas:
-        'copy confirmation confirmation'
         'copy confirmation confirmation'
         'copy confirmation confirmation'
         'tocCheck confirmation confirmation';
@@ -178,6 +179,11 @@ const Wrapper = styled.div`
       display: flex;
     }
   }
+`
+
+const Buttons = styled.div`
+  grid-area: buttons;
+  margin-top: 10px;
 `
 
 export default SignupShelf
