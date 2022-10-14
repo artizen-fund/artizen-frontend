@@ -12,6 +12,7 @@ declare global {
 
   interface Window {
     Intercom: object
+    location: string
   }
 
   type NextJsInitializedPage = (props: AppProps) => JSX.Element

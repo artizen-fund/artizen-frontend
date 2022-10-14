@@ -1,14 +1,16 @@
 before(() => {
-  cy.setupMetamask(
-    "lawn sheriff burst few list scale crash dynamic orient fetch useless spot",
-    "kovan",
-    "d.I$-R#Mxa8"
-  );
-});
+  cy.setupMetamask('lawn sheriff burst few list scale crash dynamic orient fetch useless spot', 'kovan', 'd.I$-R#Mxa8')
+})
 
-describe("Test User Login", () => {
-  it("Connects with Metamask", () => {
-    // cy.visit("https://dappify.com");
+describe('Start donation', () => {
+  it('login', () => {
+    cy.visit('/')
+    cy.get('input[type=password]').type('2wasdsdd')
+    cy.contains('Submit').click()
+    cy.wait(500)
+    cy.contains('Donate').click()
+    cy.contains('Polygon').click()
+    cy.contains('Continue').click()
     // // cy.contains("Sign").click();
     // // cy.contains("Confirm").click();
     // // cy.contains("Connect Wallet").click();
@@ -29,5 +31,5 @@ describe("Test User Login", () => {
     // cy.confirmMetamaskSignatureRequest();
     // cy.switchToCypressWindow();
     // cy.contains('Add Project').should('be.visible');
-  });
-});
+  })
+})

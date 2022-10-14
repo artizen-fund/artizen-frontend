@@ -33,6 +33,9 @@ export const payWithFiat = async (
 
   const order = await getOrder(amount, user, userMetadata.publicAddress, reservation, token, paymentData)
 
+  if (!order.id) {
+    throw new Error(order.message)
+  }
   // wait 20 seconds before checking Authorization
   await sleep(20000)
 

@@ -26,8 +26,8 @@ const alternatingPanels: Array<IAlternatingPanel> = [
     destination: '/about',
   },
   {
-    image: '/assets/illustrations/home/trust.png',
-    imageDark: '/assets/illustrations/home/trust-dark.png',
+    image: '/assets/illustrations/home/leaderboard.png',
+    imageDark: '/assets/illustrations/home/leaderboard-dark.png',
     title: 'Donate and become an owner',
     copy: 'When you donate, you earn an ownership stake in the Artizen Fund as well as NFT Artifacts from the winning projects. ',
     buttonLabel: 'Here’s how that works',
