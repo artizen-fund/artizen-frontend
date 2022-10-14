@@ -13,7 +13,6 @@ import {
   CheckWrapper,
   Check,
   CheckMessage,
-  SubmitButton,
   Confirmation,
   Copy,
   Headline,
@@ -122,6 +121,10 @@ const PostDonationData = () => {
     </Wrapper>
   )
 }
+
+const SubmitButton = styled.button`
+  grid-area: submit;
+`
 
 const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean }>`
   position: relative;

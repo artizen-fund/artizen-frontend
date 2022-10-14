@@ -28,7 +28,7 @@ export const RecoverDonationProvider = ({ children }: SimpleComponentProps) => {
         setDonationMethod?.('ethereum')
         setError?.('Bridging Failed')
         setCryptoStage?.('bridging')
-        setDonationStage?.('payment')
+        setDonationStage?.('paymentFiatAddress')
       }
     },
     fetchPolicy: 'network-only',

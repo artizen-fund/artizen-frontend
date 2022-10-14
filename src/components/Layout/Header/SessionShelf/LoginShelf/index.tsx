@@ -10,7 +10,6 @@ import {
   Headline,
   SignInDirections,
   InfoRow,
-  SubmitButton,
   Confirmation,
   Reset,
   CheckWrapper,
@@ -64,9 +63,9 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <>
           <Buttons>
-            <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+            <Button stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
               Sign In
-            </SubmitButton>
+            </Button>
             <Button transparent stretch onClick={() => setCreateMode(true)}>
               Sign Up instead
             </Button>
@@ -102,6 +101,13 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
   )
 }
 
+const Buttons = styled.div`
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`
+
 const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: grid;
@@ -130,19 +136,13 @@ const Wrapper = styled.div`
 
   &.submitted {
     *[id='#/properties/email'],
-    ${SubmitButton} {
+    ${Buttons} {
       display: none;
     }
     ${Confirmation} {
       display: flex;
     }
   }
-`
-const Buttons = styled.div`
-  grid-area: buttons;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 `
 
 export default LoginShelf

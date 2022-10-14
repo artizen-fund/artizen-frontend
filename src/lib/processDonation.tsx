@@ -26,6 +26,7 @@ import qs from 'qs'
 import { UserContext } from './userContext'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { getQuote, calculateFee } from '@lib'
 
 interface IProcessDonationProvider {
   children: React.ReactNode
@@ -37,6 +38,7 @@ interface IProcessDonationContext {
   setDonationMethod?: (donationMethod: DonationMethod) => void
   amount?: number
   setAmount?: (amount: number) => void
+  fee?: number
   order?: { id: string }
   setOrder?: (o: { id: string }) => void
   cryptoStage?: CryptoStage
@@ -68,6 +70,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   const { setDonationStage } = useContext(DonationContext)
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
+  const [fee, setFee] = useState<number>()
   const [order, setOrder] = useState<{ id: string }>({ id: '' })
   const [swapId, setSwapId] = useState('')
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>('swapping')
@@ -256,9 +259,31 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         },
       },
     })
-
     setOrder({ id: orderId })
   }
+
+  const getFee = async () => {
+    if (amount && metadata?.publicAddress && loggedInUser?.country) {
+      try {
+        const quote = await getQuote(amount, metadata?.publicAddress, loggedInUser?.country)
+        const {
+          fee: { USD: fee },
+        } = quote
+        setFee(fee)
+      } catch (error) {
+        console.error(error)
+        setFee(calculateFee(amount, loggedInUser?.country))
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (donationMethod !== 'usd') {
+      setFee(undefined)
+      return
+    }
+    getFee()
+  }, [amount, donationMethod, metadata, loggedInUser?.country])
 
   useEffect(() => {
     if (hasTrasnferedUSDC && transferUSDCdata?.hash) {
@@ -325,9 +350,11 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         await handleSwapComplete(metadata?.publicAddress!, amount)
         break
       case 'usd':
+        setDonationStage?.('paymentFiatAddress')
+        break
       case 'polygon':
       default:
-        setDonationStage?.('payment')
+        setDonationStage?.('paymentCrypto')
         break
     }
   }
@@ -348,7 +375,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         await fetchTopUpWallet()
         break
       default:
-        setDonationStage?.('payment')
+        setDonationStage?.('setAmount')
         break
     }
   }
@@ -395,6 +422,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         setDonationMethod,
         amount,
         setAmount,
+        fee,
         order,
         setOrder,
         cryptoStage,
