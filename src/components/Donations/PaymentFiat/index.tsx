@@ -3,25 +3,22 @@ import styled from 'styled-components'
 import { useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { isValid, isExpirationDateValid, isSecurityCodeValid } from 'creditcard.js'
-import { Button, DonationHelpLink, Form, CheckboxControl, PaymentFiatAddress, Table, TableCell } from '@components'
+import { DonationSummary, Button, DonationHelpLink, Form, CheckboxControl } from '@components'
 import {
   payWithFiat,
   userMetadataVar,
   UserContext,
   useFormLocalStorage,
-  hasRequiredProperties,
   assert,
   sleep,
   DonationContext,
   useProcessDonation,
-  getQuote,
-  calculateFee,
 } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 const PaymentFiat = () => {
-  const { amount, setOrder, setError } = useProcessDonation()
+  const { amount, fee, setOrder, setError } = useProcessDonation()
 
   const { setDonationStage } = useContext(DonationContext)
   const { loggedInUser } = useContext(UserContext)
@@ -29,11 +26,10 @@ const PaymentFiat = () => {
 
   const LOCALSTORAGE_KEY = 'fiatPayment'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
-  // Init fee with 5 USD which is the minimum
-  const [fee, setFee] = useState(5)
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-  // TODO: ^ where/how is this stored?
+  // TODO: this absolutely doesn't work
+
   const [processing, setProcessing] = useState(false)
   const [wyreAuthorization, setWyreAuthorization] = useState<{ authorization3dsUrl: string }>({
     authorization3dsUrl: '',
@@ -51,7 +47,6 @@ const PaymentFiat = () => {
     return orderJson.status
   }
 
-  // amount, metadata, data, loggedInUser
   const processTransaction = async () => {
     if (!loggedInUser) {
       return
@@ -76,25 +71,6 @@ const PaymentFiat = () => {
       setError?.('Payment Failed')
     }
     setDonationStage?.('processCrypto')
-  }
-
-  if (!!loggedInUser && !hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], loggedInUser)) {
-    return <PaymentFiatAddress {...{ setDonationStage, amount: amount as number }} />
-  }
-
-  const getFee = async () => {
-    if (amount && metadata?.publicAddress && loggedInUser?.country) {
-      try {
-        const quote = await getQuote(amount, metadata?.publicAddress, loggedInUser?.country)
-        const {
-          fees: { USD: fee },
-        } = quote
-        setFee(fee)
-      } catch (error) {
-        console.error(error)
-        setFee(calculateFee(amount!, loggedInUser?.country!))
-      }
-    }
   }
 
   useEffect(() => {
@@ -129,10 +105,6 @@ const PaymentFiat = () => {
     setAdditionalErrors(errors)
   }, [data])
 
-  useEffect(() => {
-    getFee()
-  }, [])
-
   return (
     <Wrapper className={processing ? 'processing' : ''}>
       <Information>
@@ -141,20 +113,7 @@ const PaymentFiat = () => {
           <DonationHelpLink />
         </div>
 
-        <Table title="Donation Summary">
-          <TableCell>
-            <div>Donation: </div>
-            <div>${amount} USD</div>
-          </TableCell>
-          <TableCell>
-            <div>Transaction fee:</div>
-            <div>${fee} USD</div>
-          </TableCell>
-          <TableCell highlight>
-            <div>Purchase total:</div>
-            <div>${(amount as number) + fee} USD</div>
-          </TableCell>
-        </Table>
+        <DonationSummary />
 
         <CheckboxControl
           data={savePaymentInfo}
@@ -171,10 +130,9 @@ const PaymentFiat = () => {
           {...{ schema, uischema, initialState, data, setData, additionalErrors }}
           readonly={processing}
         >
-          <SubmitButton stretch onClick={processTransaction}>
-            Transfer ${(amount as number) + fee}
+          <SubmitButton stretch onClick={processTransaction} disabled={processing}>
+            Transfer ${(amount as number) + (fee || 0)}
           </SubmitButton>
-          <ProcessingMessage>hum de dooo</ProcessingMessage>
         </Form>
       )}
     </Wrapper>
@@ -211,10 +169,15 @@ const Wrapper = styled.div`
     'zip verification_value'
     'phone_number phone_number'
     'submit submit';
-  &.submitted {
+  &.processing {
     grid-template-areas:
-      'copy'
-      'confirmation';
+      'copy copy'
+      'processing processing'
+      'processing processing'
+      'processing processing'
+      'processing processing'
+      'processing processing'
+      'processing processing';
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 12px;
@@ -225,7 +188,7 @@ const Wrapper = styled.div`
       'copy copy zip verification_value'
       'copy copy phone_number phone_number'
       'copy copy submit submit';
-    &.submitted {
+    &.processing {
       grid-template-areas:
         'copy copy processing processing'
         'copy copy processing processing'

@@ -12,7 +12,6 @@ import {
   Headline,
   SignInDirections,
   InfoRow,
-  SubmitButton,
   Confirmation,
   Reset,
   CheckWrapper,
@@ -94,9 +93,9 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
       >
         <>
           <Buttons>
-            <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+            <Button stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
               Sign Up
-            </SubmitButton>
+            </Button>
             <Button transparent stretch onClick={() => setCreateMode(false)}>
               Sign In instead
             </Button>
@@ -136,6 +135,11 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
   )
 }
 
+const Buttons = styled.div`
+  grid-area: buttons;
+  margin-top: 20px;
+`
+
 const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: grid;
@@ -172,18 +176,13 @@ const Wrapper = styled.div`
     *[id='#/properties/firstName'],
     *[id='#/properties/lastName'],
     *[id='#/properties/email'],
-    ${SubmitButton} {
+    ${Buttons} {
       display: none;
     }
     ${Confirmation} {
       display: flex;
     }
   }
-`
-
-const Buttons = styled.div`
-  grid-area: buttons;
-  margin-top: 10px;
 `
 
 export default SignupShelf

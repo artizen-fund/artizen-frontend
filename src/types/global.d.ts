@@ -28,7 +28,14 @@ declare global {
 
   type ModalType = 'donationGuide' | 'postDonationData' | 'share'
 
-  type DonationStage = 'setAmount' | 'login' | 'payment' | 'paymentFiatAddress' | 'processCrypto' | 'confirmation'
+  type DonationStage =
+    | 'setAmount'
+    | 'login'
+    | 'paymentFiat'
+    | 'paymentCrypto'
+    | 'paymentFiatAddress'
+    | 'processCrypto'
+    | 'confirmation'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
