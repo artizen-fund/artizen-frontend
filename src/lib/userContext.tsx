@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useState } from 'react'
 import { useReactiveVar, useQuery } from '@apollo/client'
 import { userMetadataVar, initIntercom } from '@lib'
 import { GET_USER } from '@gql'
@@ -22,25 +22,25 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
 
   // TODO: revisit this for use of getLazyQuery
   // also, should we be using Apollo State or ReactiveVar instead of this context?
-  const { data, loading } = useQuery<IGetUserQuery>(GET_USER, {
+  const { loading } = useQuery<IGetUserQuery>(GET_USER, {
     variables: { issuer: metadata?.issuer },
-  })
+    onCompleted: ({ User }) => {
+      if (User.length === 0) {
+        setLoggedInUser(undefined)
+        setNeedsPostDonationData(false)
+        return
+      }
 
-  useEffect(() => {
-    if (!data || data?.User.length < 0) {
-      setLoggedInUser(undefined)
-      setNeedsPostDonationData(false)
-      return
-    }
-    const newlyLoggedUser = data.User[0] as IUser
-    setLoggedInUser(newlyLoggedUser)
-    setNeedsPostDonationData(
-      !newlyLoggedUser.firstName ||
-        !newlyLoggedUser.lastName ||
-        !newlyLoggedUser.profileImage ||
-        !newlyLoggedUser.artizenHandle,
-    )
-  }, [data])
+      const newlyLoggedUser = User[0] as IUser
+      setLoggedInUser(newlyLoggedUser)
+      setNeedsPostDonationData(
+        !newlyLoggedUser.firstName ||
+          !newlyLoggedUser.lastName ||
+          !newlyLoggedUser.profileImage ||
+          !newlyLoggedUser.artizenHandle,
+      )
+    },
+  })
 
   return (
     <UserContext.Provider value={{ loading, loggedInUser, needsPostDonationData }}>{children}</UserContext.Provider>

@@ -7,7 +7,7 @@ const SignOut = () => {
     const logoutAction = async () => {
       const response = await fetch('/api/logout', { method: 'POST' })
       if (response.status === 200) {
-        router.push('/')
+        window.location.assign(`${window.location.protocol}//${window.location.host}/`)
       }
     }
     logoutAction()

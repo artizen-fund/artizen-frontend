@@ -140,17 +140,19 @@ export const useMetaContract = () => {
         signatureType: 'EIP712_SIGN',
       }
 
-      biconomy.provider.send({ method: 'eth_sendTransaction', params: [txParams] }, () => {
-        // event emitter methods
-        return new Promise((resolve, reject) => {
-          biconomy.on('error', (data: any) => {
-            // Event emitter to monitor when an error occurs
-            reject(data)
-          })
+      // as ethers does not allow providing custom options while sending transaction
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      await biconomy.provider.send('eth_sendTransaction', [txParams])
 
-          biconomy.on('txMined', (data: { msg: string; id: string; hash: string; receipt: string }) => {
-            resolve(data)
-          })
+      return new Promise((resolve, reject) => {
+        biconomy.on('error', (data: any) => {
+          // Event emitter to monitor when an error occurs
+          reject(data)
+        })
+
+        biconomy.on('txMined', (data: { msg: string; id: string; hash: string; receipt: string }) => {
+          resolve(data)
         })
       })
     } catch (error) {

@@ -21,7 +21,7 @@ import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 const PaymentFiat = () => {
-  const { amount, setOrder } = useProcessDonation()
+  const { amount, setOrder, setError } = useProcessDonation()
 
   const { setDonationStage } = useContext(DonationContext)
   const { loggedInUser } = useContext(UserContext)
@@ -70,10 +70,12 @@ const PaymentFiat = () => {
           orderStatus = await getOrderStatus(order.id)
         }
       }
-      setDonationStage?.('processCrypto')
     } catch (error) {
+      console.error(error)
       setProcessing(false)
+      setError?.('Payment Failed')
     }
+    setDonationStage?.('processCrypto')
   }
 
   if (!!loggedInUser && !hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], loggedInUser)) {
@@ -85,7 +87,7 @@ const PaymentFiat = () => {
       try {
         const quote = await getQuote(amount, metadata?.publicAddress, loggedInUser?.country)
         const {
-          fee: { USD: fee },
+          fees: { USD: fee },
         } = quote
         setFee(fee)
       } catch (error) {
