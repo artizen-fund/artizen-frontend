@@ -23,7 +23,7 @@ const alternatingPanels: Array<IAlternatingPanel> = [
     title: 'What we’re looking for',
     copy: 'You can submit a creative project at any stage of development, from rough idea to released work, and in any medium, from oil paintings to open source code. All we ask is that it’s original, feasible, and makes an impact. Sound like you?',
     buttonLabel: 'Apply for funding',
-    destination: '/about',
+    destination: 'https://artizen.link/apply',
   },
   {
     image: '/assets/illustrations/home/leaderboard.png',
