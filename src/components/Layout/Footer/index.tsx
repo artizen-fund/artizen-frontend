@@ -1,7 +1,8 @@
 import { useContext } from 'react'
+import Link from 'next/link'
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba, DonationContext } from '@lib'
+import { rgba, DonationContext, textCrop } from '@lib'
 import { Button, PagePadding } from '@components'
 import SocialLinks from './SocialLinks'
 
@@ -13,10 +14,12 @@ const Footer = () => {
         <Wrapper>
           <Rule gridSpace="rule1" />
           <BigLinks>
-            <li>Mission</li>
-            <li>Leaderboard</li>
-            <li>How it Works</li>
-            <li>Community</li>
+            <BigLink>Mission</BigLink>
+            <BigLink>
+              <Link href="/leaderboard">Leaderboard</Link>
+            </BigLink>
+            <BigLink>How it Works</BigLink>
+            <BigLink>Community</BigLink>
           </BigLinks>
           <SmallLinks>
             <li>Contact</li>
@@ -95,8 +98,13 @@ const Rule = styled.hr<{ gridSpace: string }>`
 
 const BigLinks = styled.ul`
   grid-area: bigLinks;
-  ${typography.title.l2}
-  line-height: 155% !important;
+`
+
+const BigLink = styled.li`
+  ${textCrop(typography.title.l2)}
+  a:hover {
+    color: magenta;
+  }
 `
 
 const SmallLinks = styled.ul`
