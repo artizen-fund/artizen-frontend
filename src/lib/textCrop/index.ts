@@ -48,6 +48,7 @@ export const textCrop = (typeDefinition: FlattenSimpleInterpolation, options?: I
       display: block;
       height: 0;
       width: 0;
+      pointer-events: none;
     }
 
     &::before {
