@@ -125,6 +125,7 @@ const BottomWrapper = styled.div`
 
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     flex-direction: row;
+    justify-content: space-between;
     gap: 48px;
     height: 56px;
     padding: 0px;
