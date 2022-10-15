@@ -157,6 +157,9 @@ const DebugTool = styled.div<{ production: boolean }>`
     @media only screen and (min-width: ${breakpoint.laptop}px) {
       content: 'laptop';
     }
+    @media only screen and (min-width: ${breakpoint.laptopXL}px) {
+      content: 'laptopXL';
+    }
     @media only screen and (min-width: ${breakpoint.desktop}px) {
       content: 'desktop';
     }

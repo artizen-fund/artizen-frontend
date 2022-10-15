@@ -2,7 +2,7 @@ import { css, FlattenSimpleInterpolation } from 'styled-components'
 
 const rocGroteskSettings = {
   topCrop: 6,
-  bottomCrop: 21,
+  bottomCrop: 22,
   cropFontSize: 80,
   cropLineHeight: 1,
 }

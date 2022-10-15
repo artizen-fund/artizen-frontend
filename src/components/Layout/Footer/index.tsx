@@ -9,162 +9,392 @@ import SocialLinks from './SocialLinks'
 const Footer = () => {
   const { setVisibleShelf } = useContext(DonationContext)
   return (
-    <>
+    <Wrapper>
       <PagePadding black>
-        <Wrapper>
-          <Rule gridSpace="rule1" />
-          <BigLinks>
-            <BigLink>Mission</BigLink>
-            <BigLink>
-              <Link href="/leaderboard">Leaderboard</Link>
-            </BigLink>
-            <BigLink>How it Works</BigLink>
-            <BigLink>Community</BigLink>
-          </BigLinks>
-          <SmallLinks>
-            <li>Contact</li>
-            <li>Careers</li>
-            <li>Press</li>
-          </SmallLinks>
-          <Rule gridSpace="rule2" />
-          <CTA>
-            <Copy>Join the mission to fund public goods.</Copy>
+        <TopWrapper>
+          <Column>
+            <WrapperLists>
+              <Lists>
+                <MainList>
+                  <Item>
+                    <Link href="/leaderboard">Mission</Link>
+                  </Item>
+                  <Item>
+                    <Link href="/leaderboard">Leaderboard</Link>
+                  </Item>
+                  <Item>
+                    <Link href="/leaderboard">How It Works</Link>
+                  </Item>
+                  <Item>
+                    <Link href="/leaderboard">Community</Link>
+                  </Item>
+                </MainList>
+                <SubList>
+                  <Item>
+                    <Link href="/leaderboard">Contact</Link>
+                  </Item>
+                  <Item>
+                    <Link href="/leaderboard">Careers</Link>
+                  </Item>
+                  <Item>
+                    <Link href="/leaderboard">Press</Link>
+                  </Item>
+                </SubList>
+              </Lists>
+            </WrapperLists>
+          </Column>
+          <Column>
+            <Headline>Join the mission to fund human creativity.</Headline>
             <Buttons>
               <Button onClick={() => setVisibleShelf?.('donate')} stretch inverted level={1} glyph="donate">
                 Donate
               </Button>
               <Button onClick={() => alert('coming soon')} stretch inverted outline level={1}>
-                Share
+                Share Now
               </Button>
             </Buttons>
-          </CTA>
-          <Rule gridSpace="rule3" />
-          <SocialLinks />
-        </Wrapper>
+          </Column>
+          <Column>
+            <SocialLinks />
+          </Column>
+        </TopWrapper>
       </PagePadding>
+
       <StyledPagePadding>
-        <Credits>
-          <div>Open source platform made with ❤️ by a globally distributed team</div>
-          <ul>
-            <li>Privacy Policy</li>
-            <li>Terms &amp; Conditions</li>
-          </ul>
-        </Credits>
+        <BottomWrapper>
+          <Credits>Open source platform made with ❤️ by a globally distributed team.</Credits>
+          <Legal>
+            <Item>
+              <Link href="/leaderboard">Privacy Policy</Link>
+            </Item>
+            <Item>
+              <Link href="/leaderboard">Terms &amp; Conditions</Link>
+            </Item>
+          </Legal>
+        </BottomWrapper>
       </StyledPagePadding>
-    </>
+    </Wrapper>
   )
 }
 
-const Wrapper = styled.footer`
-  display: grid;
-  grid-template-areas:
-    'rule1 rule1'
-    'bigLinks smallLinks'
-    'rule2 rule2'
-    'cta cta'
-    'rule3 rule3'
-    'social social';
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 21px;
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
-    grid-gap: 24px 48px;
-  }
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-template-areas:
-      'rule1 rule1 rule2'
-      'bigLinks smallLinks cta'
-      'rule3 rule3 rule3'
-      'social social social';
-    grid-template-columns: 2fr 1fr 3fr;
-    grid-gap: 32px 65px;
-    /* todo: this grid template is not getting us equal columns */
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    grid-gap: 40px 65px;
-  }
-  color: ${rgba(palette.white)};
+/* Scaffolding */
+
+const Wrapper = styled.footer``
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  padding: 0 !important;
 `
 
-const Rule = styled.hr<{ gridSpace: string }>`
-  grid-area: ${props => props.gridSpace};
-  display: block;
-  appearance: none;
-  width: 100%;
-  height: 1px;
-  background-color: ${rgba(palette.barracuda, 0.64)};
-  border: 0px;
-  outline: 0px;
-`
-
-const BigLinks = styled.ul`
-  grid-area: bigLinks;
-`
-
-const BigLink = styled.li`
-  ${textCrop(typography.title.l2)}
-  a:hover {
-    color: magenta;
-  }
-`
-
-const SmallLinks = styled.ul`
-  grid-area: smallLinks;
-  ${typography.label.l0}
-  line-height: 220% !important;
-`
-
-const CTA = styled.div`
-  grid-area: cta;
+const TopWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 21px;
+  flex-wrap: wrap;
+  gap: 40px;
+  width: 100%;
+  color: ${rgba(palette.white)};
+
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
+
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    gap: 24px 48px;
+    flex-direction: row;
+    align-content: flex-start;
+    justify-content: space-between;
+    gap: 48px;
   }
+
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    gap: 32px 65px;
+    gap: 64px;
   }
+
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    gap: 40px 65px;
+    gap: 80px;
   }
 `
 
-const Copy = styled.div`
-  ${typography.title.l2}
+const BottomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 20px 0;
+  color: ${rgba(palette.barracuda)};
+
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex-direction: row;
+    gap: 48px;
+    height: 56px;
+    padding: 0px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: 64px;
+    height: 64px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 80px;
+    height: 72px;
+  }
+`
+
+/* Columns */
+
+const Column = styled.div`
+  flex: 1 1 auto;
+  align-self: stretch;
+  padding-top: 24px;
+  border-top: 1px solid ${rgba(palette.barracuda, 0.64)};
+
+  &:last-of-type {
+    flex: 1 1 100%;
+  }
+
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex: 1 1 calc(50% - 24px);
+    padding-top: 32px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    flex: 1 1 auto;
+    padding-top: 40px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding-top: 48px;
+  }
+`
+
+/* Lists */
+
+const WrapperLists = styled.div`
+  &::before,
+  &::after {
+    display: block;
+    height: 0;
+    width: 0;
+    pointer-events: none;
+    content: '';
+  }
+
+  &::before {
+    margin-bottom: -12px;
+  }
+  &::after {
+    margin-top: -10px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    &::before {
+      margin-bottom: -14px;
+    }
+    &::after {
+      margin-top: -14px;
+    }
+  }
+
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    &::before {
+      margin-bottom: -16px;
+    }
+    &::after {
+      margin-top: -16px;
+    }
+  }
+`
+
+const Lists = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  justify-content: space-between;
+  gap: 20px;
+
+  & > ul {
+    flex: 0 1 auto;
+    min-width: 25%;
+  }
+
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    gap: 24px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: 32px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 40px;
+  }
+`
+
+const MainList = styled.ul`
+  & > li {
+    ${textCrop(typography.title.l2)}
+
+    & a {
+      padding: 10px 0;
+
+      @media only screen and (min-width: ${breakpoint.tablet}px) {
+        &::after {
+          bottom: 8px;
+        }
+
+        &:hover {
+          transform: translate3d(5px, 0, 0);
+        }
+      }
+
+      @media only screen and (min-width: ${breakpoint.laptop}px) {
+        padding: 14px 0;
+        &::after {
+          bottom: 10px;
+        }
+      }
+
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
+        padding: 16px 0;
+        &::after {
+          bottom: 12px;
+        }
+      }
+    }
+  }
+`
+
+const SubList = styled.ul`
+  padding-top: 4px;
+
+  & > li {
+    ${textCrop(typography.label.l1)}
+
+    & a {
+      padding: 7px 0;
+
+      @media only screen and (min-width: ${breakpoint.tablet}px) {
+        &::after {
+          bottom: 6px;
+        }
+        &:hover {
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      @media only screen and (min-width: ${breakpoint.laptop}px) {
+        padding: 8.5px 0;
+      }
+
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
+        padding: 10px 0;
+      }
+    }
+  }
+`
+
+const Item = styled.li`
+  & > a {
+    position: relative;
+    display: block;
+    width: fit-content;
+    overflow: hidden;
+    cursor: pointer;
+    white-space: nowrap;
+    transform: translate3d(0, 0, 0);
+    transition: color 0.25s ease-in-out, transform 0.35s ease-in-out;
+
+    @media only screen and (min-width: ${breakpoint.tablet}px) {
+      &::after {
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        background-color: ${rgba(palette.algae)};
+        width: 100%;
+        height: 2px;
+        border-radius: 1px;
+        transform: translate3d(-100%, 0, 0);
+        transition: color 0.25s ease-in-out, transform 0.35s ease-in-out;
+        content: '';
+        pointer-events: none;
+      }
+
+      &:hover {
+        color: ${rgba(palette.algae)};
+        &::after {
+          transform: translate3d(0, 0, 0);
+        }
+      }
+    }
+  }
+`
+
+/* Styling */
+
+const Headline = styled.div`
+  ${textCrop(typography.title.l2)}
+  overflow-wrap: break-word;
+
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    max-width: 480px;
+  }
 `
 
 const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding-top: 24px;
+
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    padding-top: 32px;
+  }
+
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+    gap: 14px;
+    padding-top: 40px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 16px;
+    max-width: 420px;
+    padding-top: 48px;
   }
 `
 
-const Credits = styled.footer`
+const Credits = styled.div`
+  ${textCrop(typography.label.l2)}
   text-align: center;
-  ${typography.label.l2}
-  color: ${rgba(palette.barracuda)};
-  ul {
-    display: flex;
-    justify-content: space-around;
-    li {
-      display: block;
+
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    text-align: left;
+  }
+`
+
+const Legal = styled.ul`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  & > li {
+    ${textCrop(typography.label.l2)}
+  }
+
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    & > li a {
+      &::after {
+        bottom: 0px;
+      }
     }
   }
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-`
 
-const StyledPagePadding = styled(props => <PagePadding {...props} />)`
-  padding: 15px 0;
-  background-color: ${rgba(palette.white)};
-  @media (prefers-color-scheme: dark) {
-    background-color: ${rgba(palette.black)};
-    color: ${rgba(palette.white)};
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: 14px;
+  }
+
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 16px;
   }
 `
 

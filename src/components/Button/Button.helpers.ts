@@ -1,7 +1,7 @@
 /*
   This helper accepts a description of a button, and returns the correct palette.
-  
-  usage: 
+
+  usage:
     buttonColor( 'light', 'foreground' ) // rgba( 255, 255, 255, 1 )
     buttonColor( 'light', 'foreground', { disabled  ) // rgba( 109, 120, 136, 1 )
     buttonColor( 'dark', 'background', { outline, disabled  ) // rgba( 255, 255, 255, 1 )
@@ -101,12 +101,12 @@ const buttonPalette = {
     outline: {
       enabled: {
         foreground: rgba('night'),
-        background: rgba('white'),
+        background: 'transparent',
         border: rgba('slate'),
       },
       disabled: {
         foreground: rgba('barracuda'),
-        background: rgba('white'),
+        background: 'transparent',
         border: rgba('stone'),
       },
     },

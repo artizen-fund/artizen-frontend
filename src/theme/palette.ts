@@ -2,7 +2,7 @@ export type Palette = Record<string, Array<number>>
 
 export const palette: Palette = {
   black: [0, 0, 0],
-  night: [16, 16, 16],
+  night: [18, 18, 18],
   slate: [32, 34, 34],
   white: [255, 255, 255],
   wash: [250, 250, 250],
