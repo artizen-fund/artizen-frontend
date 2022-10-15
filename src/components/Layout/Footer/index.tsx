@@ -280,7 +280,7 @@ const SubList = styled.ul`
           bottom: 6px;
         }
         &:hover {
-          transform: translate3d(0, 0, 0);
+          transform: translate3d(3px, 0, 0);
         }
       }
 
