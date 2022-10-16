@@ -1,4 +1,4 @@
-export type ResponsiveSize = 'mobile' | 'phablet' | 'tablet' | 'laptop' | 'desktop'
+export type ResponsiveSize = 'mobile' | 'phablet' | 'tablet' | 'laptop' | 'laptopXL' | 'desktop'
 
 type BreakPoint = Record<ResponsiveSize, number>
 
