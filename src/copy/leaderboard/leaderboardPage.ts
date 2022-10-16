@@ -1,5 +1,5 @@
 export const leaderboardPage = {
-  title: 'Help fund public goods to land your place on the Artizen leaderboard',
+  title: 'Help fund human creativity to land your place on the Artizen leaderboard',
   subtitle:
     'This way you can support a cause that matters to your community while getting a chance to win an NFT. So, it’s a win for everyone.',
   topBlock: {
