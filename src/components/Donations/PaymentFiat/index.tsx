@@ -18,11 +18,7 @@ import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 const PaymentFiat = () => {
-<<<<<<< HEAD
   const { amount, fee, setOrder, setError } = useProcessDonation()
-=======
-  const { amount, fee, setOrder } = useProcessDonation()
->>>>>>> 699690526ba5ea0943b71fe94ee849bf06fa8fde
 
   const { setDonationStage } = useContext(DonationContext)
   const { loggedInUser } = useContext(UserContext)
