@@ -4,7 +4,7 @@ import { useApolloClient, useQuery } from '@apollo/client'
 import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { Form, AvatarForm, CheckboxControl, CloseButton } from '@components'
+import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
 import { UserContext, DonationContext, uploadToCloudinary } from '@lib'
 import { UPDATE_NEW_USER_PROFILE, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
@@ -122,7 +122,7 @@ const PostDonationData = () => {
   )
 }
 
-const SubmitButton = styled.button`
+const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
 `
 
