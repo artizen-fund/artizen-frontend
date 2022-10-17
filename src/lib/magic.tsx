@@ -19,6 +19,7 @@ export const MagicProvider = ({ children }: SimpleComponentProps) => {
   const magic = new Magic(magicPublicKey, {
     network: { rpcUrl, chainId },
     extensions: [new OAuthExtension()],
+    // testMode: true,
   })
 
   return <MagicContext.Provider value={{ magic }}>{children}</MagicContext.Provider>
