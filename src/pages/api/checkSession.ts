@@ -17,6 +17,8 @@ const checkSession = async (req: NextApiRequest, res: NextApiResponse) => {
     const { token } = req.cookies
     const metadata = jwt.verify(token, JWT_SECRET) as MagicUserMetadata
 
+    console.log('metadata    ', metadata)
+
     if (!metadata.issuer) throw 'Bad JWT payload.'
 
     // Refresh the JWT for the user each time they send a request to /user so they only get logged out after SESSION_LENGTH_IN_DAYS of inactivity
