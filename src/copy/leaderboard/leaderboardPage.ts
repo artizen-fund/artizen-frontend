@@ -1,7 +1,7 @@
 export const leaderboardPage = {
-  title: 'Help fund human creativity to land your place on the Artizen leaderboard',
+  title: 'Climb the leaderboard to earn rewards and help fund human creativity',
   subtitle:
-    'This way you can support a cause that matters to your community while getting a chance to win an NFT. So, it’s a win for everyone.',
+    'The more you donate, the more rewards you’ll earn, and the more you’ll help fund new projects that transform lives, revitalize communities, and regenerate ecosystems. So, it’s a win for everyone.',
   topBlock: {
     image: '/assets/illustrations/leaderboard/leaderboard.png',
     imageDark: '/assets/illustrations/leaderboard/leaderboard-dark.png',

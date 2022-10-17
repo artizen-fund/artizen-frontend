@@ -41,7 +41,7 @@ const Footer = () => {
       </PagePadding>
       <StyledPagePadding>
         <Credits>
-          <div>Open source platform made with ❤️ by a globally distributed team</div>
+          <div>Open source project made with ❤️ by a globally distributed team</div>
           <ul>
             <li>Privacy Policy</li>
             <li>Terms &amp; Conditions</li>

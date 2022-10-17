@@ -25,7 +25,7 @@ const howItWorks = [
     illustration: 'how-it-works/faq.svg',
     illustrationDark: 'how-it-works/faq-dark.svg',
     title: 'FAQs',
-    copy: 'Got more questions about Artizen, the fund, and the donation process? Go here.',
+    copy: 'Got more questions about the Artizen Fund and the donation process? Go here.',
     destination: 'https://help.artizen.fund/',
   },
 ]

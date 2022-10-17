@@ -34,7 +34,7 @@ const tabbedInfo: Record<string, React.ReactNode> = {
       </p>
     </>
   ),
-  Perks: (
+  Own this Artifact: (
     <>
       <h1>
         Become the owner of <em>Miyazaki’s No Face</em>
@@ -43,7 +43,7 @@ const tabbedInfo: Record<string, React.ReactNode> = {
       <p>
         Each month at Artizen, we award unrestricted grants to artists, scientists, engineers, and designers. And when a
         creator wins, they get to mint an NFT Artifact — an artwork that represents the genesis of their original idea.
-        All the money we raise is pooled and awarded to artists, and donors can win the Artifact.
+        All the money we raise is pooled and awarded to creators, and donors can win the Artifact.
       </p>
       <p>
         <em>Miyazaki’s No Face</em> is our inaugural Artifact, and you can become the owner of one of its four editions
