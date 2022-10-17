@@ -12,7 +12,6 @@ interface ILeaderboard {
 
 const Leaderboard = (props: ILeaderboard) => {
   const { donationsWithUser } = useCampaign()
-  if (!donationsWithUser) return <></>
 
   const limit = props.limit || 3
 
@@ -28,6 +27,7 @@ const Leaderboard = (props: ILeaderboard) => {
       : truncateEthAddress(user?.publicAddress || '')
   }
 
+  if (!donationsWithUser) return <></>
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
       {_.orderBy(donationsWithUser, item => Number(item.amount), ['desc'])

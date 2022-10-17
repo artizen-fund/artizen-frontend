@@ -66,10 +66,6 @@ export const CheckMessage = styled.p`
   color: ${rgba(palette.barracuda)};
 `
 
-export const SubmitButton = styled(props => <Button {...props} />)`
-  grid-area: submit;
-`
-
 export const Confirmation = styled.div`
   display: none;
   grid-area: confirmation;

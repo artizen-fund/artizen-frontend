@@ -1,10 +1,7 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { useConnect, useAccount } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { getChainId, DonationContext, useProcessDonation } from '@lib'
-import { Table, TableCell, DonationHelpLink } from '@components'
+import { DonationContext, useProcessDonation } from '@lib'
+import { Table, TableCell, DonationHelpLink, DonationSummary } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
 
@@ -33,21 +30,7 @@ const PaymentCrypto = () => {
           <Title>Choose your preferred Cryptocurrency</Title>
           <DonationHelpLink />
         </div>
-
-        <Table title="Donation Summary">
-          <TableCell>
-            <div>Donation: </div>
-            <div>${amount} USD</div>
-          </TableCell>
-          {/*<TableCell>
-            <div>Transaction fee:</div>
-            <div>${TRANSACTION_FEE} USD</div>
-  </TableCell>*/}
-          <TableCell highlight>
-            <div>Purchase total:</div>
-            <div>${(amount as number) + TRANSACTION_FEE} USD</div>
-          </TableCell>
-        </Table>
+        <DonationSummary />
       </Information>
       {!isConnected && <WalletOptions {...{ connectWallet }} />}
     </Wrapper>

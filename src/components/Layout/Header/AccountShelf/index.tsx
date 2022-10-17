@@ -2,10 +2,9 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { rgba, logout } from '@lib'
+import { rgba, logout, assetPath } from '@lib'
 import { IUser } from '@types'
 import AccountStats from './AccountStats'
-import QfSquare from './QfSquare'
 
 interface IAccountShelf {
   user: Partial<IUser>
@@ -72,7 +71,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
         </div>
       </Commands>
       <AccountStats {...{ stats }} />
-      <QfSquare />
+      <Illustration />
     </Wrapper>
   )
 }
@@ -141,11 +140,18 @@ const Buttons = styled.div`
   }
 `
 
-const Illustration = styled.img`
+const Illustration = styled.div`
   grid-area: illustration;
-  width: auto;
-  max-width: 100%;
-  margin: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(${assetPath('/assets/illustrations/settings/accountShelf.png')});
+  @media (prefers-color-scheme: dark) {
+    background-image: url(${assetPath('/assets/illustrations/settings/accountShelf-dark.png')});
+  }
 `
 
 const Rule = styled.hr`

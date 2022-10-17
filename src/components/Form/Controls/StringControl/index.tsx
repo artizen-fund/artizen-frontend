@@ -87,7 +87,7 @@ export const StringControl = ({
             international={false}
             className={!!data ? 'hasData' : ''}
           />
-        ) : uischema?.options?.format === 'creditCard' ? (
+        ) : uischema?.options?.format === 'cccreditCard' ? (
           <input
             {...{ required, autoComplete }}
             disabled={!enabled || processing}
@@ -96,9 +96,9 @@ export const StringControl = ({
             type={uischema?.options?.format || 'text'}
             placeholder={uischema?.options?.placeholder || ' '}
             defaultValue={data}
-            onChange={e => handleChange(path, e.target.value.replace(/[^0-9]/g, ''))}
+            onChange={e => handleChange(path, ccnFormat(e.target.value))}
             onBlur={() => setVirgin(false)}
-            value={ccnFormat(data)}
+            value={data}
           />
         ) : uischema?.options?.format === 'text' ? (
           <textarea
