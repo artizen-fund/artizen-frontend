@@ -20,10 +20,11 @@ const PaymentFiatAddress = () => {
   // todo: we're storing no more what below…
   // unsure how best to just keep local if not storing it another responsiveVar?
 
+  const [submitEnabled, setSubmitEnabled] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   useEffect(() => {
     const errors: Array<ErrorObject> = []
-    /* if (!!data.country && !nationIsSupportedByWyre(data.country)) {
+    if (!!data.country && !nationIsSupportedByWyre(data.country)) {
       errors.push({
         instancePath: '/country',
         message: 'Nation is not supported by Wyre',
@@ -31,7 +32,7 @@ const PaymentFiatAddress = () => {
         keyword: '',
         params: {},
       })
-    } */
+    }
     if (!!data.state && data.country === 'US' && !stateIsSupported(data.state)) {
       errors.push({
         instancePath: '/state',
@@ -42,20 +43,19 @@ const PaymentFiatAddress = () => {
       })
     }
     setAdditionalErrors(errors)
+    setSubmitEnabled(errors.length > 0)
   }, [data])
 
   const [processing, setProcessing] = useState(false)
   const saveAndProceed = async () => {
+    const requiredProperties = ['street1', 'city', 'country', 'zip']
+    if (data.country === 'US' && !data.state) requiredProperties.push('state')
     try {
       if (!loggedInUser) {
         throw new Error('User session missing.')
       }
-      if (!hasRequiredProperties(['street1', 'city', 'country', 'zip', 'phone'], data)) {
+      if (!hasRequiredProperties(requiredProperties, data)) {
         throw new Error('missing parameters')
-      }
-      if (data.country === 'US' && !data.state) {
-        // TODO! and state not prohibited
-        throw new Error('missing state')
       }
       await apolloClient.mutate({
         mutation: UPDATE_USER_ADDRESS,
@@ -92,7 +92,7 @@ const PaymentFiatAddress = () => {
         data={data}
         setData={setData}
       >
-        <SubmitButton stretch onClick={saveAndProceed} disabled={processing}>
+        <SubmitButton stretch onClick={saveAndProceed} disabled={processing || !submitEnabled}>
           Payment
         </SubmitButton>
       </Form>
