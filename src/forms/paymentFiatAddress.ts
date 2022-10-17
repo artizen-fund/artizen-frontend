@@ -25,7 +25,7 @@ export const schema: JsonSchema = {
       oneOf: nations,
     },
   },
-  required: ['street1', 'city', 'zip', 'country'],
+  required: ['street1', 'city', 'zip', 'country', 'phone'],
 }
 
 export interface FormState extends Record<string, unknown> {
@@ -55,6 +55,15 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/state',
       label: 'State or Territory',
+      rule: {
+        effect: 'ENABLE',
+        condition: {
+          scope: '#/properties/country',
+          schema: {
+            enum: ['US'],
+          },
+        },
+      },
     },
     {
       type: 'Control',
