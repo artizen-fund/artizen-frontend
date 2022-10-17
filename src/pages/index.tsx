@@ -85,32 +85,6 @@ const Wrapper = styled.section`
     grid-gap: 0px 80px;
   }
   padding-bottom: 100px;
-
-  &:before {
-    content: ' ';
-    position: absolute;
-    z-index: 0;
-    width: 100vw;
-    height: 475px;
-    top: 65px;
-    left: -24px;
-    @media only screen and (min-width: ${breakpoint.phablet}px) {
-      left: -24px;
-    }
-    @media only screen and (min-width: ${breakpoint.tablet}px) {
-      left: calc((100vw - 688px) / 2 * -1);
-    }
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      display: none;
-    }
-    background-color: ${rgba(palette.moon)};
-    @media (prefers-color-scheme: dark) {
-      background-color: ${rgba(palette.slate)};
-      border-width: 0.5px 0px;
-      border-style: solid;
-      border-color: ${rgba(palette.barracuda, 0.4)};
-    }
-  }
 `
 // todo: above is just a filled-in value, check design
 

@@ -151,8 +151,8 @@ const ButtonStyle = css<Partial<ButtonProps>>`
     cursor: not-allowed;
   }
 
-  transition: box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out, color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out;
+  transition: box-shadow 0.25s ease-in-out, background-color 0.25s ease-in-out, color 0.25s ease-in-out,
+    border-color 0.25s ease-in-out;
 `
 
 const ButtonPalette = css<Partial<ButtonProps>>`

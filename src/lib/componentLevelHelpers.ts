@@ -14,6 +14,11 @@ export const sizeForLevel = (responsiveSize: ResponsiveSize, level?: keyof Level
       1: 56,
       2: 40,
     },
+    laptopXL: {
+      0: 64,
+      1: 48,
+      2: 32,
+    },
     laptop: {
       0: 64,
       1: 48,
@@ -44,6 +49,11 @@ export const gapForLevel = (responsiveSize: ResponsiveSize, level?: keyof Level)
       0: 16,
       1: 12,
       2: 12,
+    },
+    laptopXL: {
+      0: 14,
+      1: 10,
+      2: 10,
     },
     laptop: {
       0: 14,

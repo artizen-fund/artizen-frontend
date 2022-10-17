@@ -97,28 +97,48 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
 const Wrapper = styled.section`
   position: relative;
   grid-area: featuredArt;
+
   @media only screen and (max-width: ${breakpoint.laptop - 1}px) {
     border-radius: 16px 16px 0px 0px;
-    overflow: hidden;
     color: ${rgba(palette.white)};
   }
 
   &:before {
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      content: ' ';
-      position: absolute;
-      z-index: 0;
-      width: 100vw;
-      top: 65px;
-      height: calc(100% - 40px);
-      top: 65px;
-      left: -160px;
-    }
-    @media only screen and (min-width: 1940px) {
-      left: calc((100vw - 1600px) / 2 * -1);
-      top: 80px;
-    }
+    z-index: 0;
+    position: absolute;
+    top: 40px;
+    left: -24px;
     background-color: ${rgba(palette.moon)};
+    width: 100vw;
+    height: calc((100% + 247px) - 80px);
+    content: '';
+
+    @media only screen and (min-width: ${breakpoint.phablet}px) {
+      left: calc((100vw - 508px) / 2 * -1);
+    }
+
+    @media only screen and (min-width: ${breakpoint.tablet}px) {
+      top: 48px;
+      left: calc((100vw - 688px) / 2 * -1);
+      height: calc((100% + 247px) - 96px);
+    }
+
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      top: 64px;
+      left: calc((100vw - 944px) / 2 * -1);
+      height: calc(100% - 32px);
+    }
+
+    @media only screen and (min-width: ${breakpoint.laptopXL}px) {
+      left: calc((100vw - 1200px) / 2 * -1);
+    }
+
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      top: 80px;
+      left: calc((100vw - 1600px) / 2 * -1);
+      height: calc(100% - 40px);
+    }
+
     @media (prefers-color-scheme: dark) {
       background-color: ${rgba(palette.slate)};
       border-width: 0.5px 0px;
