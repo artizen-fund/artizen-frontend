@@ -106,7 +106,7 @@ const PaymentFiat = () => {
   }, [data])
 
   return (
-    <Wrapper className={processing ? 'processing' : ''}>
+    <Wrapper className={processing ? 'processing' : wyreAuthorization?.authorization3dsUrl !== '' ? 'authorizing' : ''}>
       <Information>
         <div>
           <Title>Let’s enter your payment information</Title>
@@ -123,7 +123,7 @@ const PaymentFiat = () => {
         />
       </Information>
       {wyreAuthorization?.authorization3dsUrl !== '' ? (
-        <iframe src={wyreAuthorization?.authorization3dsUrl} frameBorder="0"></iframe>
+        <WyreAuthorization src={wyreAuthorization?.authorization3dsUrl} frameBorder="0"></WyreAuthorization>
       ) : (
         <Form
           localStorageKey={LOCALSTORAGE_KEY}
@@ -158,6 +158,10 @@ const ProcessingMessage = styled.div`
   grid-area: processing;
 `
 
+const WyreAuthorization = styled.iframe`
+  grid-area: authorizing;
+`
+
 const Wrapper = styled.div`
   display: grid;
   gap: 10px;
@@ -169,6 +173,16 @@ const Wrapper = styled.div`
     'zip verification_value'
     'phone_number phone_number'
     'submit submit';
+  &.authorizing {
+    grid-template-areas:
+      'copy copy'
+      'authorizing authorizing'
+      'authorizing authorizing'
+      'authorizing authorizing'
+      'authorizing authorizing'
+      'authorizing authorizing'
+      'authorizing authorizing';
+  }
   &.processing {
     grid-template-areas:
       'copy copy'
@@ -188,6 +202,15 @@ const Wrapper = styled.div`
       'copy copy zip verification_value'
       'copy copy phone_number phone_number'
       'copy copy submit submit';
+    &.authorizing {
+      grid-template-areas:
+        'copy copy authorizing authorizing'
+        'copy copy authorizing authorizing'
+        'copy copy authorizing authorizing'
+        'copy copy authorizing authorizing'
+        'copy copy authorizing authorizing'
+        'copy copy authorizing authorizing';
+    }
     &.processing {
       grid-template-areas:
         'copy copy processing processing'
