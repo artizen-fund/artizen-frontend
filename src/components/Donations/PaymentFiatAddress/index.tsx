@@ -67,6 +67,8 @@ const PaymentFiatAddress = () => {
     }
   }
 
+  // TODO! add disabled for state
+
   return (
     <Wrapper className={processing ? 'processing' : ''}>
       <Information>

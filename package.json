@@ -1,6 +1,6 @@
 {
   "name": "artizen-frontend",
-  "version": "0.1.24",
+  "version": "0.1.25",
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
@@ -18,7 +18,7 @@
     "start": "next build && next start -p $PORT",
     "lint": "next lint",
     "test:jest": "jest --watch",
-    "test:quick": "start-server-and-test 'yarn dev' http-get://localhost:3000 'env-cmd -f .env.development synpress run -cf synpress.config.js'",
+    "test:quick": "start-server-and-test 'yarn dev' http-get://localhost:3000 'env-cmd -f .env.development npx synpress run -cf synpress.config.js'",
     "test:e2e": "PORT=3000 start-server-and-test 'yarn start' http-get://localhost:3000 'env-cmd -f .env.development synpress run -cf synpress.config.js'",
     "codegen": "DOTENV_CONFIG_PATH=./.env.development graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "storybook": "start-storybook -p 6006",
