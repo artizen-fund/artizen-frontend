@@ -2759,7 +2759,7 @@
     "@json-rpc-tools/types" "^1.7.6"
     "@pedrouid/environment" "^1.0.1"
 
-"@jsonforms/core@^3.0.0-rc.0":
+"@jsonforms/core@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@jsonforms/core/-/core-3.0.0.tgz#f743c139f2036f461cc52c109e1c3d884bea8e4e"
   integrity sha512-DcUGLNaeAE411oA8d5dPuPEF2/nDmALAfQRsaA3GPAre2D76kJXyBb8TFMjLMRJCVIR0q5LsiRRdmLnuPVHKqA==
@@ -2769,7 +2769,7 @@
     ajv-formats "^2.1.0"
     lodash "^4.17.15"
 
-"@jsonforms/material-renderers@^3.0.0-rc.0":
+"@jsonforms/material-renderers@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@jsonforms/material-renderers/-/material-renderers-3.0.0.tgz#573b5d4a8e28e3eab9130201d90ee14f5ed79f60"
   integrity sha512-M0MgnB473vIAuuPMaUjNa3tBVEv/aTN59DK/Pm0TJrR+6UJgOJsBXfE6I/uQcpFaDbE5o91vK1fbRHHQ47BLZQ==
@@ -2777,14 +2777,14 @@
     "@date-io/dayjs" "1.3.13"
     dayjs "1.10.6"
 
-"@jsonforms/react@^3.0.0-rc.0":
+"@jsonforms/react@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@jsonforms/react/-/react-3.0.0.tgz#73f9f52ec0301d6252b78a1af1c91f51f3da24e6"
   integrity sha512-Fj/L6hjk9uYSEBQrV7Vyj3ocTYGFelSupAJYmlys/37BPgifzPc+cBQj5bMKzx6pfO8YbmI+Sr3HDs2eNA/LkA==
   dependencies:
     lodash "^4.17.15"
 
-"@jsonforms/vanilla-renderers@^3.0.0-rc.0":
+"@jsonforms/vanilla-renderers@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@jsonforms/vanilla-renderers/-/vanilla-renderers-3.0.0.tgz#9014463db5089afc47c0db55b7bbcf8755219c75"
   integrity sha512-KrQzotq3bK7q/1fh2/dH3hYinjt9UaI0N52ep7xSerhtcPf9PSBd1yzWNfTmfTAND872Zl7rvYog9Izdcv4mUA==
