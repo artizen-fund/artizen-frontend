@@ -48,7 +48,7 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
         setVisibleShelf('session')
       } else if (visibleShelf === 'session' && !!loggedInUser) {
         /* ^ Once the user is not undefined, flip back to Donation flow. */
-        setDonationStage?.('payment')
+        setDonationStage?.('paymentFiatAddress')
         setVisibleShelf('donate')
       }
     }

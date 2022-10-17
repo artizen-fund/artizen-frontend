@@ -13,26 +13,20 @@ const Perks = () => {
     <Table title="Additional Perks" {...{ sideItem }}>
       <TableCell highlight>
         <div>
-          <StyledGlyph glyph="badge" outline />
-          Membership in Artizen DAO
+          <StyledGlyph glyph="palette" outline />
+          Chance to win NFT Artifacts
         </div>
       </TableCell>
       <TableCell highlight>
         <div>
           <StyledGlyph glyph="token" outline />
-          0.01% of $ART tokens
+          Share of $ART tokens
         </div>
       </TableCell>
       <TableCell highlight>
         <div>
           <StyledGlyph glyph="certificate" outline />
-          Collectable Receipt
-        </div>
-      </TableCell>
-      <TableCell highlight>
-        <div>
-          <StyledGlyph glyph="face" outline />
-          Custom Discord Avatar
+          Vote for grant winner
         </div>
       </TableCell>
     </Table>
