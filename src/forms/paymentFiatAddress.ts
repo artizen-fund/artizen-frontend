@@ -25,7 +25,7 @@ export const schema: JsonSchema = {
       oneOf: nations,
     },
   },
-  required: ['street1', 'city', 'zip', 'country'],
+  required: ['street1', 'city', 'zip', 'country', 'phone'],
 }
 
 export interface FormState extends Record<string, unknown> {

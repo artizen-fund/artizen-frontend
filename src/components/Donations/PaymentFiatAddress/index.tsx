@@ -50,10 +50,11 @@ const PaymentFiatAddress = () => {
       if (!loggedInUser) {
         throw new Error('User session missing.')
       }
-      if (!hasRequiredProperties(['street1', 'city', 'country', 'zip'], data)) {
+      if (!hasRequiredProperties(['street1', 'city', 'country', 'zip', 'phone'], data)) {
         throw new Error('missing parameters')
       }
       if (data.country === 'US' && !data.state) {
+        // TODO! and state not prohibited
         throw new Error('missing state')
       }
       await apolloClient.mutate({
@@ -65,6 +66,8 @@ const PaymentFiatAddress = () => {
       setProcessing(false)
     }
   }
+
+  // TODO! add disabled for state
 
   return (
     <Wrapper className={processing ? 'processing' : ''}>
