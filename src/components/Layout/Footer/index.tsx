@@ -25,7 +25,7 @@ const Footer = () => {
           </SmallLinks>
           <Rule gridSpace="rule2" />
           <CTA>
-            <Copy>Join the mission to fund public goods.</Copy>
+            <Copy>Join the mission to fund human creativity.</Copy>
             <Buttons>
               <Button onClick={() => setVisibleShelf?.('donate')} stretch inverted level={1} glyph="donate">
                 Donate
@@ -41,7 +41,7 @@ const Footer = () => {
       </PagePadding>
       <StyledPagePadding>
         <Credits>
-          <div>Open source platform made with ❤️ by a globally distributed team</div>
+          <div>Open source project made with ❤️ by a globally distributed team</div>
           <ul>
             <li>Privacy Policy</li>
             <li>Terms &amp; Conditions</li>

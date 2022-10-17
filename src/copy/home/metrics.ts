@@ -4,22 +4,22 @@ const metrics: Array<{
   description: string
 }> = [
   {
-    description: 'total raised',
+    description: 'Total raised',
     image: '/assets/illustrations/metrics/total.svg',
     amount: 1515250,
   },
   {
-    description: 'total raised',
+    description: 'This month',
     image: '/assets/illustrations/metrics/this-month.svg',
     amount: 15250,
   },
   {
-    description: 'total raised',
+    description: 'Avg. donation',
     image: '/assets/illustrations/metrics/average.svg',
     amount: 150,
   },
   {
-    description: 'total raised',
+    description: 'Artizen members',
     image: '/assets/illustrations/metrics/members.svg',
     amount: 8212,
   },
