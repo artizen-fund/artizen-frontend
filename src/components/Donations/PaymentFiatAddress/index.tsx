@@ -17,10 +17,9 @@ const PaymentFiatAddress = () => {
   const [data, setData] = useState<FormState>(initialState)
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-  // todo: we're storing no more what below…
+  // todo: we're storing no matter what below…
   // unsure how best to just keep local if not storing it another responsiveVar?
 
-  const [submitEnabled, setSubmitEnabled] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   useEffect(() => {
     const errors: Array<ErrorObject> = []
@@ -33,7 +32,7 @@ const PaymentFiatAddress = () => {
         params: {},
       })
     }
-    if (!!data.state && data.country === 'US' && !stateIsSupported(data.state)) {
+    if (data.country === 'US' && (!data.state || !stateIsSupported(data.state))) {
       errors.push({
         instancePath: '/state',
         message: 'State is not supported',
@@ -43,7 +42,6 @@ const PaymentFiatAddress = () => {
       })
     }
     setAdditionalErrors(errors)
-    setSubmitEnabled(errors.length > 0)
   }, [data])
 
   const [processing, setProcessing] = useState(false)
@@ -66,8 +64,6 @@ const PaymentFiatAddress = () => {
       setProcessing(false)
     }
   }
-
-  // TODO! add disabled for state
 
   return (
     <Wrapper className={processing ? 'processing' : ''}>
@@ -92,7 +88,7 @@ const PaymentFiatAddress = () => {
         data={data}
         setData={setData}
       >
-        <SubmitButton stretch onClick={saveAndProceed} disabled={processing || !submitEnabled}>
+        <SubmitButton stretch onClick={saveAndProceed}>
           Payment
         </SubmitButton>
       </Form>

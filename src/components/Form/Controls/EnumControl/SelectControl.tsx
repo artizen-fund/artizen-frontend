@@ -18,11 +18,10 @@ const SelectControl = ({
   errors,
   ...props
 }: EnumControlProps) => {
-  /* does Select ever have status icon? */
   const [virgin, setVirgin] = useState(data === undefined)
 
   const ref = useRef<HTMLSelectElement>(null)
-  const [filled, setFilled] = useState(true)
+  const [filled, setFilled] = useState(false)
   useEffect(() => setFilled(data !== '' && data !== undefined), [data])
 
   const handleChangeThenBlur = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -48,8 +47,10 @@ const SelectControl = ({
     }
   }, [visibleError, parsedErrors])
 
+  const hasMessage = !virgin && !!errors && errors !== ''
+
   return (
-    <Wrapper gridArea={path} {...{ filled }} {...props} id={uischema?.scope}>
+    <Wrapper gridArea={path} {...{ filled, hasMessage }} {...props} id={uischema?.scope}>
       <InputWrapper>
         <select
           {...{ required, ref }}
@@ -72,20 +73,18 @@ const SelectControl = ({
             </option>
           ))}
         </select>
-        <DownwardArrowPlacer />
+        <DownwardArrowPlacer {...{ enabled }} />
         <InputLabel className={!!data ? 'hasData' : 'noData'}>
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
       </InputWrapper>
-      <Message {...{ virgin }} className={!!errors ? 'hasMessage' : ''}>
-        {visibleError}
-      </Message>
+      <Message className={hasMessage ? 'hasMessage' : ''}>{visibleError}</Message>
     </Wrapper>
   )
 }
 
-const DownwardArrowPlacer = styled.div`
+const DownwardArrowPlacer = styled.div<{ enabled: boolean }>`
   position: absolute;
   right: 0;
   top: 0;
@@ -102,7 +101,7 @@ const DownwardArrowPlacer = styled.div`
     top: 50%;
     bottom: 50%;
     right: 16px;
-    background: ${rgba(palette.night)};
+    background: ${props => rgba(palette.night, props.enabled ? 1 : 0.5)};
     width: 10px;
     height: 6px;
     margin: auto 0;
