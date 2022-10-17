@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import styled from 'styled-components'
-import { Icon, Form, CheckboxControl } from '@components'
+import { Icon, Form, CheckboxControl, Button } from '@components'
 import { loginWithEmail, useMagic, useFormLocalStorage } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/login'
@@ -10,7 +10,6 @@ import {
   Headline,
   SignInDirections,
   InfoRow,
-  SubmitButton,
   Confirmation,
   Reset,
   CheckWrapper,
@@ -63,9 +62,15 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <>
-          <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
-            Sign In
-          </SubmitButton>
+          <Buttons>
+            <Button stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+              Sign In
+            </Button>
+            <Button transparent stretch onClick={() => setCreateMode(true)}>
+              Sign Up instead
+            </Button>
+          </Buttons>
+
           {sentEmail && (
             <Confirmation>
               <Icon glyph="tick" outline level={2} color="moss" />
@@ -96,14 +101,21 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
   )
 }
 
+const Buttons = styled.div`
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`
+
 const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       'copy email'
-      'copy .'
-      'tocCheck submit';
+      'copy buttons'
+      'tocCheck buttons';
     &.submitted {
       grid-template-areas:
         'copy confirmation'
@@ -124,7 +136,7 @@ const Wrapper = styled.div`
 
   &.submitted {
     *[id='#/properties/email'],
-    ${SubmitButton} {
+    ${Buttons} {
       display: none;
     }
     ${Confirmation} {

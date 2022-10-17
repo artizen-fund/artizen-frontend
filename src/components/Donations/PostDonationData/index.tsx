@@ -4,7 +4,7 @@ import { useApolloClient, useQuery } from '@apollo/client'
 import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { Form, AvatarForm, CheckboxControl, CloseButton } from '@components'
+import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
 import { UserContext, DonationContext, uploadToCloudinary } from '@lib'
 import { UPDATE_NEW_USER_PROFILE, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
@@ -13,7 +13,6 @@ import {
   CheckWrapper,
   Check,
   CheckMessage,
-  SubmitButton,
   Confirmation,
   Copy,
   Headline,
@@ -122,6 +121,10 @@ const PostDonationData = () => {
     </Wrapper>
   )
 }
+
+const SubmitButton = styled(props => <Button {...props} />)`
+  grid-area: submit;
+`
 
 const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean }>`
   position: relative;
