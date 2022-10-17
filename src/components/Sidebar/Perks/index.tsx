@@ -10,7 +10,7 @@ const Perks = () => {
     </Button>
   )
   return (
-    <Table title="Additional Perks" {...{ sideItem }}>
+    <Table title="Donor rewards" {...{ sideItem }}>
       <TableCell highlight>
         <div>
           <StyledGlyph glyph="palette" outline />

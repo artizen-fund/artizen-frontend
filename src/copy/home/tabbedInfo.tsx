@@ -34,7 +34,7 @@ const tabbedInfo: Record<string, React.ReactNode> = {
       </p>
     </>
   ),
-  Own this Artifact: (
+  'Own this Artifact': (
     <>
       <h1>
         Become the owner of <em>Miyazaki’s No Face</em>
