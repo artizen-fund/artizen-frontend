@@ -67,8 +67,6 @@ export const StringControl = ({
     }
   }, [enabled, uischema])
 
-  // This is for all left-hand-side icons.
-  // Currently just phone.
   const hasMessage = !virgin && !!errors && errors !== ''
 
   return (
@@ -87,7 +85,7 @@ export const StringControl = ({
             international={false}
             className={!!data ? 'hasData' : ''}
           />
-        ) : uischema?.options?.format === 'cccreditCard' ? (
+        ) : uischema?.options?.format === 'creditCard' ? (
           <input
             {...{ required, autoComplete }}
             disabled={!enabled || processing}
