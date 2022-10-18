@@ -11,13 +11,15 @@ const Curators = () => (
       <Copy>{curators.copy}</Copy>
       <ul>
         {curators.curators.map((curator, i) => (
-          <Curator key={`curator-${i}`}>
-            <img src={assetPath(`${curator.portrait}?fm=webp`)} alt={curator.name} />
-            <Description>
-              <Name>{curator.name}</Name>
-              <Title>{curator.title}</Title>
-            </Description>
-          </Curator>
+          <a href={curator.link} target="_blank" rel="noreferrer" key={`curator-${i}`}>
+            <Curator>
+              <img src={assetPath(`${curator.portrait}?fm=webp`)} alt={curator.name} />
+              <Description>
+                <Name>{curator.name}</Name>
+                <Title>{curator.title}</Title>
+              </Description>
+            </Curator>
+          </a>
         ))}
       </ul>
     </Wrapper>
@@ -53,6 +55,10 @@ const Copy = styled.p`
 `
 
 const Curator = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
   img {
     max-width: 100%;
   }
@@ -65,11 +71,16 @@ const Curator = styled.div`
   }
   overflow: hidden;
   border-radius: 24px;
+
+  transition: box-shadow 0.25s ease-in-out;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  &:hover {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16);
+  }
 `
 
 const Description = styled.div`
-  padding: 24px 0 24px 0;
+  padding: 22px 16px;
 `
 
 const Name = styled.div`
