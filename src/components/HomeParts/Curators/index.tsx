@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { PagePadding } from '@components'
-import { assetPath } from '@lib'
-import { breakpoint, typeface, typography } from '@theme'
+import { assetPath, rgba } from '@lib'
+import { breakpoint, typeface, typography, palette } from '@theme'
 import { curators } from '@copy/home'
 
 const Curators = () => (
@@ -70,7 +70,12 @@ const Curator = styled.div`
     width: 222px;
   }
   overflow: hidden;
+
   border-radius: 24px;
+  background: ${rgba(palette.white)};
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.slate)};
+  }
 
   transition: box-shadow 0.25s ease-in-out;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
