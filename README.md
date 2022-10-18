@@ -6,7 +6,7 @@ Welcome to Artize Frontend codebase. This repository includes the Artizen design
 
 # Join our community
 
-[![](https://dcbadge.vercel.app/api/server/INVITEID)](https://discord.gg/6ySrvPp9ek)
+[![Discord](https://dcbadge.vercel.app/api/server/INVITEID)](https://discord.gg/6ySrvPp9ek)
 
 # Contributing to Artizen
 
