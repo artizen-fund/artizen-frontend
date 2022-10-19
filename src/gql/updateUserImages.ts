@@ -26,6 +26,7 @@ export const UPDATE_USER_AVATAR = gql`
         discordHandle
         bannerImage
         artizenHandle
+        hideFromLeaderboard
         created_at
       }
     }
@@ -58,6 +59,7 @@ export const UPDATE_USER_BANNER = gql`
         discordHandle
         bannerImage
         artizenHandle
+        hideFromLeaderboard
         created_at
       }
     }

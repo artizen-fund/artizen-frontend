@@ -26,7 +26,6 @@ export const UPDATE_USER_PROFILE = gql`
       returning {
         id
         email
-        artizenHandle
         firstName
         lastName
         bio
@@ -41,9 +40,14 @@ export const UPDATE_USER_PROFILE = gql`
         country
         website
         linkedinLink
+        twitterLink
         twitterHandle
         instagramHandle
         discordHandle
+        bannerImage
+        artizenHandle
+        hideFromLeaderboard
+        created_at
       }
     }
   }

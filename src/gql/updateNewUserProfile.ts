@@ -7,10 +7,17 @@ export const UPDATE_NEW_USER_PROFILE = gql`
     $lastName: String
     $artizenHandle: String
     $profileImage: String
+    $hideFromLeaderboard: Boolean
   ) {
     update_User(
       where: { id: { _eq: $id } }
-      _set: { firstName: $firstName, lastName: $lastName, artizenHandle: $artizenHandle, profileImage: $profileImage }
+      _set: {
+        firstName: $firstName
+        lastName: $lastName
+        artizenHandle: $artizenHandle
+        profileImage: $profileImage
+        hideFromLeaderboard: $hideFromLeaderboard
+      }
     ) {
       returning {
         id
@@ -35,6 +42,7 @@ export const UPDATE_NEW_USER_PROFILE = gql`
         discordHandle
         bannerImage
         artizenHandle
+        hideFromLeaderboard
         created_at
       }
     }

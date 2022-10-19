@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext, useMemo } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
 import { breakpoint, palette, typography, GlyphKey } from '@theme'
-import { rgba, DonationContext, useProcessDonation } from '@lib'
+import { rgba, DonationContext, useProcessDonation, UserContext } from '@lib'
 
 type MethodSet = {
   key: DonationMethod
@@ -33,11 +33,14 @@ const methods: Array<MethodSet> = [
 ]
 
 const DonationAmount = () => {
+  const { loggedInUser } = useContext(UserContext)
   const { setDonationStage } = useContext(DonationContext)
-  const { amount, setAmount, donationMethod, setDonationMethod } = useProcessDonation()
+  const { amount, setAmount, hideFromLeaderboard, setHideFromLeaderboard, donationMethod, setDonationMethod } =
+    useProcessDonation()
 
-  const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
-  // todo: how is this managed?
+  useEffect(() => {
+    if (!loggedInUser) return
+  }, [loggedInUser, hideFromLeaderboard])
 
   const disabled = useMemo(
     () => (amount as number) < (methods.find(method => method.key === donationMethod)?.min || 999999),
@@ -96,7 +99,7 @@ const DonationAmount = () => {
 
       <HideCheckbox
         data={hideFromLeaderboard}
-        handleChange={() => setHideFromLeaderboard(!hideFromLeaderboard)}
+        handleChange={() => setHideFromLeaderboard?.(!hideFromLeaderboard)}
         label="Hide my personal details from the leaderboard."
         path="derp"
       />

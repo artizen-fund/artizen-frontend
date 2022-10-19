@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import Link from 'next/link'
 import { Icon, Form, CheckboxControl, Button } from '@components'
-import { loginWithEmail, useMagic, UserContext } from '@lib'
+import { loginWithEmail, useMagic, UserContext, useProcessDonation } from '@lib'
 import { UPDATE_NEW_USER_PROFILE } from '@gql'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/signup'
@@ -27,6 +27,7 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
   const { magic } = useMagic()
   const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
+  const { hideFromLeaderboard } = useProcessDonation()
 
   const [sentEmail, setSentEmail] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -61,7 +62,7 @@ const SignupShelf = ({ setCreateMode }: ISessionShelf) => {
     try {
       await apolloClient.mutate({
         mutation: UPDATE_NEW_USER_PROFILE,
-        variables: { id: user.id, firstName: data.firstName, lastName: data.lastName },
+        variables: { id: user.id, firstName: data.firstName, lastName: data.lastName, hideFromLeaderboard },
       })
     } catch (error) {
       console.error('Error saving new user profile', error)
