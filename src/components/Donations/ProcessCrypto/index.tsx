@@ -50,7 +50,7 @@ const ProcessCrypto = () => {
                   outline={cryptoStage !== 'bridging'}
                   animating={cryptoStage === 'bridging'}
                   glyph="intersect"
-                  label="Bridging blockchains (est. 2m)"
+                  label="Bridging blockchains (est. 5m)"
                   error={error ? true : false}
                 />
               </li>
