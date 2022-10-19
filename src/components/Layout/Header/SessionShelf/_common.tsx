@@ -19,13 +19,10 @@ export const InfoRow = styled.div`
   gap: 10px;
   justify-content: flex-start;
   align-items: center;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
   margin: 1em 0 2em 0;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     margin: 1em 0 0 0;
   }
-  cursor: pointer;
 `
 
 export const SignInDirections = styled.p`

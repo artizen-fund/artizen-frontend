@@ -54,8 +54,11 @@ const Form = <TStateInterface extends Record<string, unknown>>({
       const safeData = pickBy(data, (_, key) => safeVars.includes(key))
       localStorage.setItem(localStorageKey, JSON.stringify(safeData))
     }
+
     setDisabled(
-      errors === undefined || [errors].flatMap(e => e).length > 0 || [additionalErrors].flatMap(e => e).length > 0,
+      errors === undefined ||
+        [errors].flatMap(e => e).length > 0 ||
+        (!!additionalErrors && [additionalErrors].flatMap(e => e).length > 0),
     )
   }, [formState, additionalErrors])
 
