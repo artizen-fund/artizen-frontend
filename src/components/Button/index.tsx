@@ -152,7 +152,7 @@ const ButtonStyle = css<Partial<ButtonProps>>`
   }
 
   transition: box-shadow 0.25s ease-in-out, background-color 0.25s ease-in-out, color 0.25s ease-in-out,
-    border-color 0.25s ease-in-out;
+    border-color 0.25s ease-in-out, transform 0.25s ease-in-out;
 `
 
 const ButtonPalette = css<Partial<ButtonProps>>`
@@ -187,6 +187,9 @@ const ButtonPalette = css<Partial<ButtonProps>>`
   box-shadow: 0px 2px 8px rgba(0, 0, 0, ${props => (props.outline || props.transparent ? 0 : 0.12)});
   &:hover {
     box-shadow: 0px 4px 16px rgba(0, 0, 0, ${props => (props.transparent ? 0 : 0.16)});
+    @media only screen and (min-width: ${breakpoint.tablet}px) {
+      transform: translateY(50px);
+    }
   }
   @media (prefers-color-scheme: dark) {
     box-shadow: 0px 2px 8px rgba(0, 0, 0, ${props => (props.transparent ? 0 : 0.4)});
