@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client'
+import { USER_PUBLIC, USER_PRIVATE } from '@gql'
 
 export const UPDATE_USER_ADDRESS = gql`
+  ${USER_PUBLIC}
+  ${USER_PRIVATE}
   mutation UpdateUserAddress(
     $id: uuid
     $street1: String
@@ -14,30 +17,8 @@ export const UPDATE_USER_ADDRESS = gql`
       _set: { street1: $street1, city: $city, state: $state, country: $country, zip: $zip }
     ) {
       returning {
-        id
-        email
-        firstName
-        lastName
-        bio
-        profileImage
-        globalTitle
-        globalRole
-        company
-        street1
-        city
-        state
-        zip
-        country
-        website
-        linkedinLink
-        twitterLink
-        twitterHandle
-        instagramHandle
-        discordHandle
-        bannerImage
-        artizenHandle
-        hideFromLeaderboard
-        created_at
+        ...UserPublic
+        ...UserPrivate
       }
     }
   }

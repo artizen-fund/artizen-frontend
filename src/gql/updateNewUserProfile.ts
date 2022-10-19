@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client'
+import { USER_PUBLIC, USER_PRIVATE } from '@gql'
 
 export const UPDATE_NEW_USER_PROFILE = gql`
+  ${USER_PUBLIC}
+  ${USER_PRIVATE}
   mutation UpdateNewUserProfile(
     $id: uuid
     $firstName: String
@@ -20,30 +23,8 @@ export const UPDATE_NEW_USER_PROFILE = gql`
       }
     ) {
       returning {
-        id
-        email
-        firstName
-        lastName
-        bio
-        profileImage
-        globalTitle
-        globalRole
-        company
-        street1
-        city
-        state
-        zip
-        country
-        website
-        linkedinLink
-        twitterLink
-        twitterHandle
-        instagramHandle
-        discordHandle
-        bannerImage
-        artizenHandle
-        hideFromLeaderboard
-        created_at
+        ...UserPublic
+        ...UserPrivate
       }
     }
   }
