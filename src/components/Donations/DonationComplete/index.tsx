@@ -6,8 +6,9 @@ import { typography } from '@theme'
 import { donationComplete } from '@copy/donations'
 
 const DonationComplete = () => {
-  const { toggleShelf, setDonationStage } = useContext(DonationContext)
+  const { toggleShelf, setDonationStage, setDonationStatus } = useContext(DonationContext)
   const dismiss = () => {
+    setDonationStatus?.('completed')
     toggleShelf?.()
     setDonationStage?.('setAmount')
   }
