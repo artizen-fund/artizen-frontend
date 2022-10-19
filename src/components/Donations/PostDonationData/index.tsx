@@ -6,7 +6,7 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { UserContext, DonationContext, uploadToCloudinary } from '@lib'
+import { UserContext, DonationContext, uploadToCloudinary, useProcessDonation } from '@lib'
 import { UPDATE_NEW_USER_PROFILE, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
 import {
@@ -20,9 +20,11 @@ import {
 import { typography } from '@theme'
 
 const PostDonationData = () => {
-  const { loggedInUser } = useContext(UserContext)
-  const { visibleModal, toggleModal } = useContext(DonationContext)
   const apolloClient = useApolloClient()
+  const { loggedInUser } = useContext(UserContext)
+  const { hideFromLeaderboard } = useProcessDonation()
+
+  const { visibleModal, toggleModal } = useContext(DonationContext)
   const [data, setData] = useState<FormState>(initialState)
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
@@ -40,7 +42,13 @@ const PostDonationData = () => {
         profileImage = cloudinaryResponse.secure_url
       }
       // todo: replace the force-lowercase with a mutation event in hasura
-      const variables = { id: loggedInUser.id, ...data, artizenHandle: data.artizenHandle?.toLowerCase(), profileImage }
+      const variables = {
+        id: loggedInUser.id,
+        ...data,
+        artizenHandle: data.artizenHandle?.toLowerCase(),
+        profileImage,
+        hideFromLeaderboard,
+      }
       await apolloClient.mutate({
         mutation: UPDATE_NEW_USER_PROFILE,
         variables,

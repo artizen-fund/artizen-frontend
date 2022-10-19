@@ -1,8 +1,10 @@
 import { useContext, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
+import { useApolloClient } from '@apollo/client'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
 import { breakpoint, palette, typography, GlyphKey } from '@theme'
 import { rgba, DonationContext, useProcessDonation, UserContext } from '@lib'
+import { UPDATE_NEW_USER_PROFILE } from '@gql'
 
 type MethodSet = {
   key: DonationMethod
@@ -33,14 +35,27 @@ const methods: Array<MethodSet> = [
 ]
 
 const DonationAmount = () => {
+  const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
   const { setDonationStage } = useContext(DonationContext)
   const { amount, setAmount, hideFromLeaderboard, setHideFromLeaderboard, donationMethod, setDonationMethod } =
     useProcessDonation()
 
-  useEffect(() => {
+  const saveHideFromLeaderboardPref = async () => {
     if (!loggedInUser) return
-  }, [loggedInUser, hideFromLeaderboard])
+    try {
+      await apolloClient.mutate({
+        mutation: UPDATE_NEW_USER_PROFILE,
+        variables: { id: loggedInUser.id, hideFromLeaderboard },
+      })
+    } catch (error) {
+      console.error('Error saving new user profile', error)
+    }
+  }
+
+  useEffect(() => {
+    saveHideFromLeaderboardPref()
+  }, [hideFromLeaderboard])
 
   const disabled = useMemo(
     () => (amount as number) < (methods.find(method => method.key === donationMethod)?.min || 999999),

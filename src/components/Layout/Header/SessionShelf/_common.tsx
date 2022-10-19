@@ -1,11 +1,6 @@
 import styled from 'styled-components'
-import { Button } from '@components'
 import { rgba } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
-
-export interface ISessionShelf {
-  setCreateMode: (mode: boolean) => void
-}
 
 export const Copy = styled.div`
   grid-area: copy;
