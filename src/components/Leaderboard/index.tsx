@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Button, Table, TableCell } from '@components'
+import { Button, Table, TableCell, Spinner } from '@components'
 import { breakpoint, palette } from '@theme'
 import { formatUSDC, rgba, useCampaign } from '@lib'
 import _ from 'lodash'
@@ -27,8 +27,9 @@ const Leaderboard = (props: ILeaderboard) => {
       : truncateEthAddress(user?.publicAddress || '')
   }
 
-  if (!donationsWithUser) return <></>
-  return (
+  return !donationsWithUser ? (
+    <Spinner />
+  ) : (
     <Table title="Leaderboard" {...{ sideItem }}>
       {_.orderBy(donationsWithUser, item => Number(item.amount), ['desc'])
         .slice(0, limit)

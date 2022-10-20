@@ -12,9 +12,7 @@ const ProcessingSocialLoginShelf = () => {
           <SignInDirections>This will only take a moment…</SignInDirections>
         </InfoRow>
       </Copy>
-      <Processing>
-        <Spinner />
-      </Processing>
+      <StyledSpinner />
     </Wrapper>
   )
 }
@@ -52,12 +50,8 @@ const SignInDirections = styled.p`
   ${typography.label.l1};
 `
 
-const Processing = styled.div`
-  position: relative;
+const StyledSpinner = styled(props => <Spinner {...props} />)`
   grid-area: processing;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `
 
 export default ProcessingSocialLoginShelf
