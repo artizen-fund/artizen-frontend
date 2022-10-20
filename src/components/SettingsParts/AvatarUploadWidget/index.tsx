@@ -23,7 +23,7 @@ const AvatarUploadWidget = () => {
         const cloudinaryResponse = await uploadToCloudinary(newAvatar)
         profileImage = cloudinaryResponse.secure_url
       }
-      const variables = { id: loggedInUser.id, profileImage }
+      const variables = { ...loggedInUser, profileImage }
       await apolloClient.mutate({
         mutation: UPDATE_USER,
         variables,

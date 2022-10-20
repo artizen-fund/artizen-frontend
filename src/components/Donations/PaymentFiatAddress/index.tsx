@@ -57,7 +57,7 @@ const PaymentFiatAddress = () => {
       }
       await apolloClient.mutate({
         mutation: UPDATE_USER,
-        variables: { id: loggedInUser.id, ...data },
+        variables: { ...loggedInUser, ...data },
       })
       setDonationStage?.('paymentFiat')
     } catch {
