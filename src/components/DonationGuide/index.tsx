@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { Icon } from '@components'
-import { DonationContext } from '@lib'
+import { LayoutContext } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { donationGuideMap } from '@copy/donationGuide'
 import GuideCell from './GuideCell'
 
 const DonationGuide = () => {
-  const { visibleModal, toggleModal } = useContext(DonationContext)
+  const { visibleModal, toggleModal } = useContext(LayoutContext)
   const visible = visibleModal === 'donationGuide'
   return (
     <>

@@ -1,14 +1,14 @@
 import { createContext, useEffect, useContext, useState } from 'react'
 import { GET_LATEST_SWAP_VIA_ATTRIBUTE, GET_LATEST_TOP_UP_WALLET_VIA_ATTRIBUTE } from '@gql'
 import { useLazyQuery } from '@apollo/client'
-import { DonationContext } from './donationContext'
+import { LayoutContext } from './donationContext'
 import { useProcessDonation } from './processDonation'
 import { UserContext } from './userContext'
 
-export const RecoverDonationContext = createContext({})
+export const RecoverLayoutContext = createContext({})
 
 export const RecoverDonationProvider = ({ children }: SimpleComponentProps) => {
-  const { setDonationStage } = useContext(DonationContext)
+  const { setDonationStage } = useContext(LayoutContext)
   const { setAmount, setOrder, setDonationMethod, setError, setCryptoStage, setSwapId } = useProcessDonation()
   const { loggedInUser } = useContext(UserContext)
   const [swap, setSwap] = useState<any>()
@@ -77,5 +77,5 @@ export const RecoverDonationProvider = ({ children }: SimpleComponentProps) => {
     fetchLatestTopUpWallet()
   }, [])
 
-  return <RecoverDonationContext.Provider value={{}}>{children}</RecoverDonationContext.Provider>
+  return <RecoverLayoutContext.Provider value={{}}>{children}</RecoverLayoutContext.Provider>
 }

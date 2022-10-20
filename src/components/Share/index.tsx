@@ -2,11 +2,11 @@ import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Button, CloseButton } from '@components'
-import { rgba, DonationContext } from '@lib'
+import { rgba, LayoutContext } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
 
 const Share = () => {
-  const { visibleModal, toggleModal } = useContext(DonationContext)
+  const { visibleModal, toggleModal } = useContext(LayoutContext)
 
   const link = 'https://artizen.fund'
   const title = 'Artizen'

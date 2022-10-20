@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { BigNumber } from 'bignumber.js'
-import { isServer, assert, useReadContract, DonationContext } from '@lib'
+import { isServer, assert, useReadContract, LayoutContext } from '@lib'
 import { RaffleAbi } from '@contracts'
 import { IGetDonationFromBlockchainQuery, IGetUsersForLeadboardQuery, IDonationT, IUser } from '@types'
 import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_FOR_LEADERBOARD } from '@gql'
@@ -39,7 +39,7 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
   const [donationsWithUser, setDonationsWithUser] = useState<Array<DonationWithUser>>()
   const [donationCount, setDonationCount] = useState(0)
   const [totalRaised, setTotalRaised] = useState(0)
-  const { donationStatus } = useContext(DonationContext)
+  const { donationStatus } = useContext(LayoutContext)
 
   const raffleContractAddress = assert(
     process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,

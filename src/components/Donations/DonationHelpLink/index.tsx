@@ -2,10 +2,10 @@ import { useContext } from 'react'
 import styled from 'styled-components'
 import { Icon } from '@components'
 import { typography } from '@theme'
-import { DonationContext } from '@lib'
+import { LayoutContext } from '@lib'
 
 const DonationHelpLink = () => {
-  const { toggleModal } = useContext(DonationContext)
+  const { toggleModal } = useContext(LayoutContext)
   return (
     <Wrapper onClick={() => toggleModal?.('donationGuide')}>
       <Icon outline glyph="infoLarge" level={1} />

@@ -10,10 +10,10 @@ import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
 
-import { rgba, DonationContext, isProd } from '@lib'
+import { rgba, LayoutContext, isProd } from '@lib'
 
 const Header = () => {
-  const { visibleShelf, toggleShelf } = useContext(DonationContext)
+  const { visibleShelf, toggleShelf } = useContext(LayoutContext)
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 

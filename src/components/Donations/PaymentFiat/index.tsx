@@ -4,14 +4,14 @@ import { useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { isValid, isExpirationDateValid, isSecurityCodeValid } from 'creditcard.js'
 import { DonationSummary, Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import { payWithFiat, userMetadataVar, UserContext, assert, sleep, DonationContext, useProcessDonation } from '@lib'
+import { payWithFiat, userMetadataVar, UserContext, assert, sleep, LayoutContext, useProcessDonation } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
 const PaymentFiat = () => {
   const { amount, fee, setOrder, setError } = useProcessDonation()
 
-  const { setDonationStage } = useContext(DonationContext)
+  const { setDonationStage } = useContext(LayoutContext)
   const { loggedInUser } = useContext(UserContext)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 

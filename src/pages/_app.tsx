@@ -8,7 +8,7 @@ import {
   MagicProvider,
   initializeApollo,
   CourierNotification,
-  DonationContextProvider,
+  LayoutContextProvider,
   UserContextProvider,
   CampaignProvider,
 } from '@lib'
@@ -33,11 +33,11 @@ const App = ({
       <MagicProvider>
         <UserContextProvider>
           <CourierNotification>
-            <DonationContextProvider>
+            <LayoutContextProvider>
               <CampaignProvider>
                 <Component {...pageProps} />
               </CampaignProvider>
-            </DonationContextProvider>
+            </LayoutContextProvider>
           </CourierNotification>
         </UserContextProvider>
       </MagicProvider>
