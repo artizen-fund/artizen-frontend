@@ -7,7 +7,7 @@ import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
 import { UserContext, DonationContext, uploadToCloudinary, useProcessDonation } from '@lib'
-import { UPDATE_NEW_USER_PROFILE, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
+import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
 import {
   CheckWrapper,
@@ -43,14 +43,14 @@ const PostDonationData = () => {
       }
       // todo: replace the force-lowercase with a mutation event in hasura
       const variables = {
-        id: loggedInUser.id,
+        ...loggedInUser,
         ...data,
         artizenHandle: data.artizenHandle?.toLowerCase(),
         profileImage,
         hideFromLeaderboard,
       }
       await apolloClient.mutate({
-        mutation: UPDATE_NEW_USER_PROFILE,
+        mutation: UPDATE_USER,
         variables,
       })
       toggleModal?.()
