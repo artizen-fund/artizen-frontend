@@ -4,7 +4,7 @@ import { useApolloClient } from '@apollo/client'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
 import { breakpoint, palette, typography, GlyphKey } from '@theme'
 import { rgba, DonationContext, useProcessDonation, UserContext } from '@lib'
-import { UPDATE_NEW_USER_PROFILE } from '@gql'
+import { UPDATE_USER } from '@gql'
 
 type MethodSet = {
   key: DonationMethod
@@ -45,8 +45,8 @@ const DonationAmount = () => {
     if (!loggedInUser) return
     try {
       await apolloClient.mutate({
-        mutation: UPDATE_NEW_USER_PROFILE,
-        variables: { id: loggedInUser.id, hideFromLeaderboard },
+        mutation: UPDATE_USER,
+        variables: { ...loggedInUser, hideFromLeaderboard },
       })
     } catch (error) {
       console.error('Error saving new user profile', error)
