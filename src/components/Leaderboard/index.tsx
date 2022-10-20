@@ -40,7 +40,7 @@ const Leaderboard = (props: ILeaderboard) => {
               {donation.user?.profileImage && <Avatar profileImage={donation.user?.profileImage} />}
               <Name>
                 {getUserIdentifier(donation.user)}
-                {index === 0 && <span>👑</span>}
+                {index === 0 && <span> 👑</span>}
               </Name>
             </div>
             <Amount>${formatUSDC(Number(donation.amount))}</Amount>
@@ -55,6 +55,9 @@ const Name = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  span {
+    line-height: 1em;
+  }
 `
 
 const Amount = styled.div`
