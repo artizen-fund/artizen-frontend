@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
-import { UPDATE_USER_PROFILE } from '@gql'
+import { UPDATE_USER } from '@gql'
 import { Form, Button, SettingsFormHeader } from '@components'
 import { UserContext } from '@lib'
 import { breakpoint, typography } from '@theme'
@@ -24,7 +24,7 @@ const EditSettings = () => {
     if (!loggedInUser) return
     setProcessing(true)
     await apolloClient.mutate({
-      mutation: UPDATE_USER_PROFILE,
+      mutation: UPDATE_USER,
       variables: { id: loggedInUser.id, ...data },
     })
     setProcessing(false)

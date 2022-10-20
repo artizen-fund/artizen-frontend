@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import { Button } from '@components'
 import { UserContext, uploadToCloudinary, InvisiFileInput } from '@lib'
-import { UPDATE_USER_BANNER } from '@gql'
+import { UPDATE_USER } from '@gql'
 
 const BannerUploadWidget = () => {
   const apolloClient = useApolloClient()
@@ -24,7 +24,7 @@ const BannerUploadWidget = () => {
       }
       const variables = { id: loggedInUser.id, bannerImage }
       await apolloClient.mutate({
-        mutation: UPDATE_USER_BANNER,
+        mutation: UPDATE_USER,
         variables,
       })
     } catch (error) {

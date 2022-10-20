@@ -6,7 +6,7 @@ import { Button, DonationHelpLink, Form, CheckboxControl, DonationSummary } from
 import { UserContext, hasRequiredProperties, DonationContext, nationIsSupportedByWyre, stateIsSupported } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
-import { UPDATE_USER_ADDRESS } from '@gql'
+import { UPDATE_USER } from '@gql'
 
 const PaymentFiatAddress = () => {
   const { setDonationStage } = useContext(DonationContext)
@@ -56,7 +56,7 @@ const PaymentFiatAddress = () => {
         throw new Error('missing parameters')
       }
       await apolloClient.mutate({
-        mutation: UPDATE_USER_ADDRESS,
+        mutation: UPDATE_USER,
         variables: { id: loggedInUser.id, ...data },
       })
       setDonationStage?.('paymentFiat')

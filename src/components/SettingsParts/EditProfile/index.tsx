@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useApolloClient, useQuery } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER_PROFILE } from '@gql'
+import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER } from '@gql'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
 import { Form, Button, SettingsFormHeader } from '@components'
 import { UserContext } from '@lib'
@@ -32,7 +32,7 @@ const EditProfile = () => {
     // todo: replace this force-lowercase with a mutation event in hasura
     const variables = { id: loggedInUser.id, ...data, artizenHandle: data.artizenHandle?.toLowerCase() }
     await apolloClient.mutate({
-      mutation: UPDATE_USER_PROFILE,
+      mutation: UPDATE_USER,
       variables,
     })
     setReadonly(false)

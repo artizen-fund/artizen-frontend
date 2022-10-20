@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useApolloClient } from '@apollo/client'
 import { rgba, UserContext, uploadToCloudinary, InvisiFileInput } from '@lib'
 import { palette, breakpoint } from '@theme'
-import { UPDATE_USER_AVATAR } from '@gql'
+import { UPDATE_USER } from '@gql'
 import { Maybe } from '@types'
 
 const AvatarUploadWidget = () => {
@@ -25,7 +25,7 @@ const AvatarUploadWidget = () => {
       }
       const variables = { id: loggedInUser.id, profileImage }
       await apolloClient.mutate({
-        mutation: UPDATE_USER_AVATAR,
+        mutation: UPDATE_USER,
         variables,
       })
     } catch (error) {
