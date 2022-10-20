@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
@@ -20,7 +20,6 @@ import {
 import { typography } from '@theme'
 
 const PostDonationData = () => {
-  const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
   const { hideFromLeaderboard } = useProcessDonation()
 
@@ -32,6 +31,7 @@ const PostDonationData = () => {
 
   const [imageFile, setImageFile] = useState<File>()
 
+  const [updateUser] = useMutation(UPDATE_USER)
   const submit = async () => {
     setReadonly(true)
     if (!loggedInUser) return
@@ -42,16 +42,14 @@ const PostDonationData = () => {
         profileImage = cloudinaryResponse.secure_url
       }
       // todo: replace the force-lowercase with a mutation event in hasura
-      const variables = {
-        ...loggedInUser,
-        ...data,
-        artizenHandle: data.artizenHandle?.toLowerCase(),
-        profileImage,
-        hideFromLeaderboard,
-      }
-      await apolloClient.mutate({
-        mutation: UPDATE_USER,
-        variables,
+      await updateUser({
+        variables: {
+          ...loggedInUser,
+          ...data,
+          artizenHandle: data.artizenHandle?.toLowerCase(),
+          profileImage,
+          hideFromLeaderboard,
+        },
       })
       toggleModal?.()
     } catch (error) {

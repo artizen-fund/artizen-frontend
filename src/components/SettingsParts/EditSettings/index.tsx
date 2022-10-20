@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { UPDATE_USER } from '@gql'
 import { Form, Button, SettingsFormHeader } from '@components'
 import { UserContext } from '@lib'
@@ -8,7 +8,7 @@ import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editSettings'
 
 const EditSettings = () => {
-  const apolloClient = useApolloClient()
+  const [updateUser] = useMutation(UPDATE_USER)
   const { loggedInUser } = useContext(UserContext)
 
   const [data, setData] = useState<FormState>({
@@ -23,10 +23,7 @@ const EditSettings = () => {
   const saveChanges = async () => {
     if (!loggedInUser) return
     setProcessing(true)
-    await apolloClient.mutate({
-      mutation: UPDATE_USER,
-      variables: { ...loggedInUser, ...data },
-    })
+    await updateUser({ variables: { ...loggedInUser, ...data } })
     setProcessing(false)
   }
 

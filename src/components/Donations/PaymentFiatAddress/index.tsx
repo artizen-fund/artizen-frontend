@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { Button, DonationHelpLink, Form, CheckboxControl, DonationSummary } from '@components'
 import { UserContext, hasRequiredProperties, DonationContext, nationIsSupportedByWyre, stateIsSupported } from '@lib'
@@ -10,8 +10,6 @@ import { UPDATE_USER } from '@gql'
 
 const PaymentFiatAddress = () => {
   const { setDonationStage } = useContext(DonationContext)
-
-  const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
 
   const [data, setData] = useState<FormState>(initialState)
@@ -44,6 +42,7 @@ const PaymentFiatAddress = () => {
     setAdditionalErrors(errors)
   }, [data])
 
+  const [updateUser] = useMutation(UPDATE_USER)
   const [processing, setProcessing] = useState(false)
   const saveAndProceed = async () => {
     const requiredProperties = ['street1', 'city', 'country', 'zip']
@@ -55,10 +54,7 @@ const PaymentFiatAddress = () => {
       if (!hasRequiredProperties(requiredProperties, data)) {
         throw new Error('missing parameters')
       }
-      await apolloClient.mutate({
-        mutation: UPDATE_USER,
-        variables: { ...loggedInUser, ...data },
-      })
+      await updateUser({ variables: { ...loggedInUser, ...data } })
       setDonationStage?.('paymentFiat')
     } catch {
       setProcessing(false)

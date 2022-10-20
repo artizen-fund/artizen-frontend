@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER } from '@gql'
@@ -11,7 +11,7 @@ import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
-  const apolloClient = useApolloClient()
+  const [updateUser] = useMutation(UPDATE_USER)
   const { loggedInUser } = useContext(UserContext)
 
   const [data, setData] = useState<FormState>({
@@ -30,11 +30,7 @@ const EditProfile = () => {
     if (!loggedInUser) return
     setReadonly(true)
     // todo: replace this force-lowercase with a mutation event in hasura
-    const variables = { ...loggedInUser, ...data, artizenHandle: data.artizenHandle?.toLowerCase() }
-    await apolloClient.mutate({
-      mutation: UPDATE_USER,
-      variables,
-    })
+    await updateUser({ variables: { ...loggedInUser, ...data, artizenHandle: data.artizenHandle?.toLowerCase() } })
     setReadonly(false)
   }
 

@@ -1,12 +1,11 @@
 import { useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Button } from '@components'
 import { UserContext, uploadToCloudinary, InvisiFileInput } from '@lib'
 import { UPDATE_USER } from '@gql'
 
 const BannerUploadWidget = () => {
-  const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
 
   const [newBanner, setNewBanner] = useState<File>()
@@ -14,6 +13,7 @@ const BannerUploadWidget = () => {
     if (!!newBanner) uploadBanner(newBanner)
   }, [newBanner])
 
+  const [updateUser] = useMutation(UPDATE_USER)
   const uploadBanner = async (newAvatar: File) => {
     if (!loggedInUser) return
     try {
@@ -22,11 +22,7 @@ const BannerUploadWidget = () => {
         const cloudinaryResponse = await uploadToCloudinary(newAvatar)
         bannerImage = cloudinaryResponse.secure_url
       }
-      const variables = { ...loggedInUser, bannerImage }
-      await apolloClient.mutate({
-        mutation: UPDATE_USER,
-        variables,
-      })
+      await updateUser({ variables: { ...loggedInUser, bannerImage } })
     } catch (error) {
       console.error('Error saving new user profile', error)
     }

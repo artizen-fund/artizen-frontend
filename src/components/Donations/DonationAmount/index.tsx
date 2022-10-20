@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
 import { breakpoint, palette, typography, GlyphKey } from '@theme'
 import { rgba, DonationContext, useProcessDonation, UserContext } from '@lib'
@@ -35,26 +35,14 @@ const methods: Array<MethodSet> = [
 ]
 
 const DonationAmount = () => {
-  const apolloClient = useApolloClient()
+  const [updateUser] = useMutation(UPDATE_USER)
   const { loggedInUser } = useContext(UserContext)
   const { setDonationStage } = useContext(DonationContext)
   const { amount, setAmount, hideFromLeaderboard, setHideFromLeaderboard, donationMethod, setDonationMethod } =
     useProcessDonation()
 
-  const saveHideFromLeaderboardPref = async () => {
-    if (!loggedInUser) return
-    try {
-      await apolloClient.mutate({
-        mutation: UPDATE_USER,
-        variables: { ...loggedInUser, hideFromLeaderboard },
-      })
-    } catch (error) {
-      console.error('Error saving new user profile', error)
-    }
-  }
-
   useEffect(() => {
-    saveHideFromLeaderboardPref()
+    updateUser({ variables: { ...loggedInUser, hideFromLeaderboard } })
   }, [hideFromLeaderboard])
 
   const disabled = useMemo(
