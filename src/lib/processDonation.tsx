@@ -38,6 +38,8 @@ interface IProcessDonationContext {
   setDonationMethod?: (donationMethod: DonationMethod) => void
   amount?: number
   setAmount?: (amount: number) => void
+  hideFromLeaderboard?: boolean
+  setHideFromLeaderboard?: (pref: boolean) => void
   fee?: number
   order?: { id: string }
   setOrder?: (o: { id: string }) => void
@@ -70,6 +72,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   const { setDonationStage } = useContext(DonationContext)
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
+  const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   const [fee, setFee] = useState<number>()
   const [order, setOrder] = useState<{ id: string }>({ id: '' })
   const [swapId, setSwapId] = useState('')
@@ -422,6 +425,8 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         setDonationMethod,
         amount,
         setAmount,
+        hideFromLeaderboard,
+        setHideFromLeaderboard,
         fee,
         order,
         setOrder,

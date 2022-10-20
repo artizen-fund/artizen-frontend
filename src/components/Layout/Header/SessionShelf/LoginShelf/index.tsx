@@ -15,10 +15,9 @@ import {
   CheckWrapper,
   Check,
   CheckMessage,
-  ISessionShelf,
 } from '../_common'
 
-const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
+const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
 
@@ -54,23 +53,21 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
   return (
     <Wrapper className={readonly ? 'submitted' : ''}>
       <Copy>
-        <Headline>Sign in using the email associated with your Artizen account</Headline>
-        <InfoRow onClick={() => setCreateMode(true)}>
+        <Headline>Let’s get started by setting up your Artizen account</Headline>
+        <InfoRow>
           <Icon glyph="infoLarge" outline level={1} />
-          <SignInDirections>Sign up for an account instead</SignInDirections>
+          <SignInDirections>
+            Already have an account?
+            <br />
+            You can still use this form, it’s magic!
+          </SignInDirections>
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <>
-          <Buttons>
-            <Button stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
-              Sign In
-            </Button>
-            <Button transparent stretch onClick={() => setCreateMode(true)}>
-              Sign Up instead
-            </Button>
-          </Buttons>
-
+          <StyledButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+            Sign In
+          </StyledButton>
           {sentEmail && (
             <Confirmation>
               <Icon glyph="tick" outline level={2} color="moss" />
@@ -78,7 +75,7 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
                 <h1>Done, confirmation sent!</h1>
                 <p>
                   We emailed a magic link to {data.email}.<br />
-                  Click the link sign in.
+                  Click the link to sign in or sign up.
                 </p>
               </div>
               <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
@@ -101,11 +98,9 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
   )
 }
 
-const Buttons = styled.div`
+const StyledButton = styled(props => <Button {...props} />)`
   grid-area: buttons;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  margin-top: 15px;
 `
 
 const Wrapper = styled.div`
@@ -136,7 +131,7 @@ const Wrapper = styled.div`
 
   &.submitted {
     *[id='#/properties/email'],
-    ${Buttons} {
+    ${StyledButton} {
       display: none;
     }
     ${Confirmation} {

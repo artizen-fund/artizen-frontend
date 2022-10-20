@@ -3,8 +3,8 @@ import { useQuery } from '@apollo/client'
 import { BigNumber } from 'bignumber.js'
 import { isServer, assert, useReadContract, DonationContext } from '@lib'
 import { RaffleAbi } from '@contracts'
-import { IGetDonationFromBlockchainQuery, IGetUsersByPublicAddressQuery, IDonationT, IUser } from '@types'
-import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
+import { IGetDonationFromBlockchainQuery, IGetUsersForLeadboardQuery, IDonationT, IUser } from '@types'
+import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_FOR_LEADERBOARD } from '@gql'
 
 const fundRaisingGoal = 25000 // TODO: environment variable?
 
@@ -84,7 +84,7 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
     data: donorData,
     loading: loadingDonors,
     refetch,
-  } = useQuery<IGetUsersByPublicAddressQuery>(GET_USERS_BY_PUBLIC_ADDRESSES, {
+  } = useQuery<IGetUsersForLeadboardQuery>(GET_USERS_FOR_LEADERBOARD, {
     skip: !raffle || loading,
     variables: { addresses },
     onError: error => console.error('error ', error),

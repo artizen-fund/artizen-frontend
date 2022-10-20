@@ -4,16 +4,7 @@ import { useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { isValid, isExpirationDateValid, isSecurityCodeValid } from 'creditcard.js'
 import { DonationSummary, Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import {
-  payWithFiat,
-  userMetadataVar,
-  UserContext,
-  useFormLocalStorage,
-  assert,
-  sleep,
-  DonationContext,
-  useProcessDonation,
-} from '@lib'
+import { payWithFiat, userMetadataVar, UserContext, assert, sleep, DonationContext, useProcessDonation } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiat'
 
@@ -25,7 +16,7 @@ const PaymentFiat = () => {
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   const LOCALSTORAGE_KEY = 'fiatPayment'
-  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+  const [data, setData] = useState<FormState>(initialState)
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
   // TODO: this absolutely doesn't work

@@ -1,36 +1,34 @@
 import { useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Button } from '@components'
 import { UserContext, uploadToCloudinary, InvisiFileInput } from '@lib'
-import { UPDATE_USER_BANNER } from '@gql'
+import { UPDATE_USER } from '@gql'
+
+// TODO: look at combining this into a lib with AvatarUploadWidget
 
 const BannerUploadWidget = () => {
-  const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
+  const [updateUser] = useMutation(UPDATE_USER)
 
   const [newBanner, setNewBanner] = useState<File>()
   useEffect(() => {
-    if (!!newBanner) uploadBanner(newBanner)
-  }, [newBanner])
+    if (!newBanner || !loggedInUser) return
+    uploadBanner(newBanner)
+  }, [newBanner, loggedInUser])
 
   const uploadBanner = async (newAvatar: File) => {
-    if (!loggedInUser) return
-    try {
-      let bannerImage = undefined
-      if (newAvatar) {
-        const cloudinaryResponse = await uploadToCloudinary(newAvatar)
-        bannerImage = cloudinaryResponse.secure_url
-      }
-      const variables = { id: loggedInUser.id, bannerImage }
-      await apolloClient.mutate({
-        mutation: UPDATE_USER_BANNER,
-        variables,
-      })
-    } catch (error) {
-      console.error('Error saving new user profile', error)
+    let bannerImage = undefined
+    if (newAvatar) {
+      const cloudinaryResponse = await uploadToCloudinary(newAvatar)
+      bannerImage = cloudinaryResponse.secure_url
     }
+    await updateUser({
+      variables: { ...loggedInUser, bannerImage },
+      onError: error => console.error('Error saving new user profile', error),
+    })
   }
+
   return (
     <InvisiFileInput setFile={setNewBanner}>
       <UploadBannerButton level={1} glyph="palette">

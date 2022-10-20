@@ -4,17 +4,18 @@ import { rgba, assetPath } from '@lib'
 
 export interface SpinnerProps {
   hidden?: boolean
+  absolute?: boolean
 }
 
-const Spinner = ({ hidden = false }: SpinnerProps) => (
-  <Wrapper className={hidden ? 'hidden' : ''}>
+const Spinner = ({ hidden = false, ...props }: SpinnerProps) => (
+  <Wrapper className={hidden ? 'hidden' : ''} {...props}>
     <AnimatedSpinner />
   </Wrapper>
 )
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<SpinnerProps>`
   z-index: 2;
-  position: absolute;
+  position: ${props => (props.absolute ? 'absolute' : 'relative')};
   display: flex;
   align-items: center;
   justify-content: center;
