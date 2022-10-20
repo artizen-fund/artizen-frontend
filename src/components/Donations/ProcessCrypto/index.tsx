@@ -19,7 +19,7 @@ const ProcessCrypto = () => {
           <div>
             <Title>It’s time to create your donation which requires a little extra magic</Title>
             <Subhead>
-              Web3 takes longer to process transactions than traditional methods. You can keep this window open – we’ll
+              Web3 takes longer to process transactions than traditional methods. Please keep this window open – we’ll
               send you an email when it is completed.
             </Subhead>
           </div>
@@ -50,7 +50,7 @@ const ProcessCrypto = () => {
                   outline={cryptoStage !== 'bridging'}
                   animating={cryptoStage === 'bridging'}
                   glyph="intersect"
-                  label="Bridging blockchains (est. 2m)"
+                  label="Bridging blockchains (est. 5m)"
                   error={error ? true : false}
                 />
               </li>

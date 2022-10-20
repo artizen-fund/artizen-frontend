@@ -270,7 +270,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
       try {
         const quote = await getQuote(amount, metadata?.publicAddress, loggedInUser?.country)
         const {
-          fee: { USD: fee },
+          fees: { USD: fee },
         } = quote
         setFee(fee)
       } catch (error) {

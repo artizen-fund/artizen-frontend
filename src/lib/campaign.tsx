@@ -70,7 +70,11 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
     setEndDate(new Date(raffle.endTime.toNumber() * 1000))
   }, [raffle])
 
-  const { data, loading } = useQuery<IGetDonationFromBlockchainQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
+  const {
+    data,
+    loading,
+    refetch: refetchDonation,
+  } = useQuery<IGetDonationFromBlockchainQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
     variables: { raffleId: raffle?.raffleID.toString() },
     skip: !raffle,
     onError: error => console.error('error loading donation blockchain', error),
@@ -105,7 +109,7 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
 
   useEffect(() => {
     if (donationStatus === 'completed') {
-      refetch()
+      refetchDonation()
     }
   }, [donationStatus])
 
