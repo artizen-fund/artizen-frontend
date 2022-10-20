@@ -25,7 +25,7 @@ const EditSettings = () => {
     setProcessing(true)
     await apolloClient.mutate({
       mutation: UPDATE_USER,
-      variables: { id: loggedInUser.id, ...data },
+      variables: { ...loggedInUser, ...data },
     })
     setProcessing(false)
   }

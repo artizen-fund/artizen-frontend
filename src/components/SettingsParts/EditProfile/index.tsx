@@ -30,7 +30,7 @@ const EditProfile = () => {
     if (!loggedInUser) return
     setReadonly(true)
     // todo: replace this force-lowercase with a mutation event in hasura
-    const variables = { id: loggedInUser.id, ...data, artizenHandle: data.artizenHandle?.toLowerCase() }
+    const variables = { ...loggedInUser, ...data, artizenHandle: data.artizenHandle?.toLowerCase() }
     await apolloClient.mutate({
       mutation: UPDATE_USER,
       variables,
