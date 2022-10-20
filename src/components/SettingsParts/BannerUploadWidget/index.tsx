@@ -5,28 +5,30 @@ import { Button } from '@components'
 import { UserContext, uploadToCloudinary, InvisiFileInput } from '@lib'
 import { UPDATE_USER } from '@gql'
 
+// TODO: look at combining this into a lib with AvatarUploadWidget
+
 const BannerUploadWidget = () => {
   const { loggedInUser } = useContext(UserContext)
+  const [updateUser] = useMutation(UPDATE_USER)
 
   const [newBanner, setNewBanner] = useState<File>()
   useEffect(() => {
-    if (!!newBanner) uploadBanner(newBanner)
-  }, [newBanner])
+    if (!newBanner || !loggedInUser) return
+    uploadBanner(newBanner)
+  }, [newBanner, loggedInUser])
 
-  const [updateUser] = useMutation(UPDATE_USER)
   const uploadBanner = async (newAvatar: File) => {
-    if (!loggedInUser) return
-    try {
-      let bannerImage = undefined
-      if (newAvatar) {
-        const cloudinaryResponse = await uploadToCloudinary(newAvatar)
-        bannerImage = cloudinaryResponse.secure_url
-      }
-      await updateUser({ variables: { ...loggedInUser, bannerImage } })
-    } catch (error) {
-      console.error('Error saving new user profile', error)
+    let bannerImage = undefined
+    if (newAvatar) {
+      const cloudinaryResponse = await uploadToCloudinary(newAvatar)
+      bannerImage = cloudinaryResponse.secure_url
     }
+    await updateUser({
+      variables: { ...loggedInUser, bannerImage },
+      onError: error => console.error('Error saving new user profile', error),
+    })
   }
+
   return (
     <InvisiFileInput setFile={setNewBanner}>
       <UploadBannerButton level={1} glyph="palette">

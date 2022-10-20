@@ -43,6 +43,7 @@ const PaymentFiatAddress = () => {
   }, [data])
 
   const [updateUser] = useMutation(UPDATE_USER)
+  // todo: replace processing with [loading] from useMutation
   const [processing, setProcessing] = useState(false)
   const saveAndProceed = async () => {
     const requiredProperties = ['street1', 'city', 'country', 'zip']
@@ -54,6 +55,7 @@ const PaymentFiatAddress = () => {
       if (!hasRequiredProperties(requiredProperties, data)) {
         throw new Error('missing parameters')
       }
+      setProcessing(true)
       await updateUser({ variables: { ...loggedInUser, ...data } })
       setDonationStage?.('paymentFiat')
     } catch {

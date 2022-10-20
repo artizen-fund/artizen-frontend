@@ -32,6 +32,7 @@ const PostDonationData = () => {
   const [imageFile, setImageFile] = useState<File>()
 
   const [updateUser] = useMutation(UPDATE_USER)
+  // todo: replace readOnly with [loading] from useMutation
   const submit = async () => {
     setReadonly(true)
     if (!loggedInUser) return

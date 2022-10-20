@@ -25,6 +25,7 @@ const EditProfile = () => {
 
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   const [readonly, setReadonly] = useState(false)
+  // todo: replace readonly with [loading] from useMutation
 
   const saveChanges = async () => {
     if (!loggedInUser) return

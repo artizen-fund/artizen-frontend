@@ -6,28 +6,30 @@ import { palette, breakpoint } from '@theme'
 import { UPDATE_USER } from '@gql'
 import { Maybe } from '@types'
 
+// TODO: look at combining this into a lib with BannerUploadWidget
+
 const AvatarUploadWidget = () => {
   const { loggedInUser } = useContext(UserContext)
+  const [updateUser] = useMutation(UPDATE_USER)
 
   const [newAvatar, setNewAvatar] = useState<File>()
   useEffect(() => {
-    if (!!newAvatar) uploadAvatar(newAvatar)
-  }, [newAvatar])
+    if (!newAvatar || !loggedInUser) return
+    uploadAvatar(newAvatar)
+  }, [newAvatar, loggedInUser])
 
-  const [updateUser] = useMutation(UPDATE_USER)
   const uploadAvatar = async (newAvatar: File) => {
-    if (!loggedInUser) return
-    try {
-      let profileImage = undefined
-      if (newAvatar) {
-        const cloudinaryResponse = await uploadToCloudinary(newAvatar)
-        profileImage = cloudinaryResponse.secure_url
-      }
-      await updateUser({ variables: { ...loggedInUser, profileImage } })
-    } catch (error) {
-      console.error('Error saving new user profile', error)
+    let profileImage = undefined
+    if (newAvatar) {
+      const cloudinaryResponse = await uploadToCloudinary(newAvatar)
+      profileImage = cloudinaryResponse.secure_url
     }
+    await updateUser({
+      variables: { ...loggedInUser, profileImage },
+      onError: error => console.error('Error saving new user profile', error),
+    })
   }
+
   return (
     <InvisiFileInput setFile={setNewAvatar}>
       <ProfileAvatar profileImage={loggedInUser?.profileImage} />

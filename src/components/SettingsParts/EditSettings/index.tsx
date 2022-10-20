@@ -19,6 +19,7 @@ const EditSettings = () => {
   })
 
   const [processing, setProcessing] = useState(false)
+  // todo: replace processing with [loading] from useMutation
 
   const saveChanges = async () => {
     if (!loggedInUser) return
