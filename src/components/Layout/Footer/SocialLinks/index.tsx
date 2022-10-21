@@ -40,15 +40,15 @@ const Wrapper = styled.div`
 
 const StyledButton = styled(props => <Button {...props} />)`
   transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-  transition: background-color 0.25s ease-in-out, transform 0.4s cubic-bezier(0.42, 0.97, 0.52, 1.49);
+  transition: background-color 0.25s ease-in-out, transform 0.35s ease-in-out;
 
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     &:hover {
       background-color: ${rgba(palette.algae)};
-      transform: translate3d(0, -4px, 0) scale3d(1.08, 1.08, 1);
-      & * {
-        background-color: ${rgba(palette.white)};
-      }
+      transform: translate3d(0, -5px, 0) scale3d(1.04, 1.02, 1);
+    }
+    &:hover > * {
+      background-color: ${rgba(palette.white)};
     }
   }
 `

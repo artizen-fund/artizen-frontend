@@ -13,5 +13,5 @@ export const usePreventTabClose = (initialState?: boolean) => {
       })
     }
   }, [])
-  return [enabled, setEnabled]
+  return setEnabled
 }
