@@ -1,7 +1,7 @@
 import { createContext, useEffect, useContext, useState } from 'react'
 import { GET_LATEST_SWAP_VIA_ATTRIBUTE, GET_LATEST_TOP_UP_WALLET_VIA_ATTRIBUTE } from '@gql'
 import { useLazyQuery } from '@apollo/client'
-import { LayoutContext } from './donationContext'
+import { LayoutContext } from './LayoutContext'
 import { useProcessDonation } from './processDonation'
 import { UserContext } from './userContext'
 

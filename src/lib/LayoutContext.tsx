@@ -31,7 +31,9 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
   const [visibleModal, setVisibleModal] = useState<ModalType | undefined>()
-  const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
+  const toggleModal = (modal?: ModalType) => {
+    setVisibleModal(modal === visibleModal ? undefined : modal)
+  }
 
   useEffect(() => {
     /* A donation can be initiated before a user is logged in.

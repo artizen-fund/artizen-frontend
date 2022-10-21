@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { CloseButton } from '@components'
 import { rgba, LayoutContext } from '@lib'
@@ -12,6 +12,7 @@ interface IAlertModal {
 
 const AlertModal = ({ headline, message, children, ...props }: IAlertModal) => {
   const { visibleModal, toggleModal } = useContext(LayoutContext)
+  useEffect(() => {}, [])
   return (
     <Wrapper {...props}>
       <CloseButton onClick={() => toggleModal?.()} />

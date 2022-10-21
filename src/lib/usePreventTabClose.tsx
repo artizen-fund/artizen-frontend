@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-export const usePreventTabClose = () => {
+export const usePreventTabClose = (initialState?: boolean) => {
+  const [enabled, setEnabled] = useState(initialState)
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (enabled && typeof window !== 'undefined') {
       window.addEventListener('beforeunload', ev => {
         ev.preventDefault()
         /* note: Chrome and Safari display their OS text anyway as custom text is considered a security issue.
@@ -12,4 +13,5 @@ export const usePreventTabClose = () => {
       })
     }
   }, [])
+  return [enabled, setEnabled]
 }

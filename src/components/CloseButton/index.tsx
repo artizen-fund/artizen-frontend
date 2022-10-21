@@ -3,7 +3,7 @@ import { Button } from '@components'
 import { breakpoint } from '@theme'
 
 const CloseButton = styled(props => (
-  <Button {...props} outline glyphOnly>
+  <Button {...props} outline glyphOnly glyph="cross">
     Close
   </Button>
 ))<{ visible: boolean }>`

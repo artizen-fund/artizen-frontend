@@ -60,13 +60,14 @@ const Circle = styled.div<CircleProps>`
   border: 2px solid;
   border-radius: 9999px;
 
-  border-color: ${props => rgba(props.outline ? palette[props.color] : palette.night)};
+  border-color: ${props => rgba(props.outline ? palette[props.color] : 'transparent')};
 
   background: ${props => (!props.inverted && !props.outline ? rgba(palette.night) : rgba(palette.white))};
 
   @media (prefers-color-scheme: dark) {
-    border-color: ${props => rgba(palette[props.darkColor])};
-  background: ${props => (!props.outline ? rgba(palette.moon) : rgba(palette.night))}
+    border-color: ${props => rgba(props.outline ? palette[props.color] : 'transparent')};
+    background: ${props => (!props.outline ? rgba(palette.moon) : rgba(palette.night))};
+  }
 `
 
 const Label = styled.div<{ color: keyof Palette; darkColor: keyof Palette }>`

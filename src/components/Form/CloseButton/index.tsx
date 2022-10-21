@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Icon } from '@components'
 import { breakpoint } from '@theme'
 
-const CloseButton = styled(props => <Icon {...props} glyph="cross" />)<{ visible: boolean }>`
+const CloseButton = styled(props => <Icon level={0} {...props} glyph="cross" />)<{ visible: boolean }>`
   position: absolute;
   z-index: 1002;
   top: -28px;
@@ -17,8 +17,9 @@ const CloseButton = styled(props => <Icon {...props} glyph="cross" />)<{ visible
   }
 
   cursor: pointer;
-  opacity: ${props => (props.visible ? 1 : 0)};
-  pointer-events: ${props => (props.visible ? 'all' : 'none')};
+
+  transform: scale(${props => (props.visible ? 1 : 0)});
+  transition: transform 0.6s cubic-bezier(0.44, 1.86, 0.74, 1);
 `
 
 export default CloseButton

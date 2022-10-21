@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Button, CloseButton } from '@components'
+import { Button } from '@components'
 import { rgba, LayoutContext } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
 
@@ -24,99 +24,54 @@ const Share = () => {
   const visible = visibleModal === 'share'
 
   return (
-    <Wrapper {...{ visible }}>
-      <ClickToDismiss onClick={() => toggleModal?.()} />
-      <Modal>
-        <CloseButton glyph="cross" level={1} onClick={() => toggleModal?.()} {...{ visible }} />
-        <Row>
-          <Header color="white_always">Sharing is caring, give back with a like, comment or share</Header>
-        </Row>
-        <Row>
-          <ButtonWithLabel color="moon">
-            <Button {...{ link, title }} onClick={() => window?.open(twitterLink, '_blank')} glyph="twitter" glyphOnly>
-              Twitter
-            </Button>
-            <SubLabel>Twitter</SubLabel>
-          </ButtonWithLabel>
-          <ButtonWithLabel color="moon">
-            <Button
-              {...{ link, title }}
-              onClick={() => window?.open(facebookLink, '_blank')}
-              glyph="facebook"
-              glyphOnly
-            >
-              Facebook
-            </Button>
-            <SubLabel>Facebook</SubLabel>
-          </ButtonWithLabel>
-          <ButtonWithLabel color="moon">
-            <Button {...{ link, title }} onClick={() => window?.open(redditLink, '_blank')} glyph="share" glyphOnly>
-              Reddit
-            </Button>
-            <SubLabel>Reddit</SubLabel>
-          </ButtonWithLabel>
-          <ButtonWithLabel color="moon">
-            <Button
-              {...{ link, title }}
-              onClick={() => (location.href = `mailto:?subject=${title}&body=${mailLink}`)}
-              glyph="plane"
-              glyphOnly
-            >
-              Plane
-            </Button>
-            <SubLabel>Plane</SubLabel>
-          </ButtonWithLabel>
-        </Row>
-        <Row>
-          <CopyToClipboard text={link} onCopy={() => setCopied(true)}>
-            <Button level={1} stretch>
-              {copied && <span>Copied!</span>}
-              {!copied && <span>Copy Site URL</span>}
-            </Button>
-          </CopyToClipboard>
-        </Row>
-      </Modal>
+    <Wrapper>
+      <Row>
+        <Header color="white_always">Sharing is caring, give back with a like, comment or share</Header>
+      </Row>
+      <Row>
+        <ButtonWithLabel color="moon">
+          <Button {...{ link, title }} onClick={() => window?.open(twitterLink, '_blank')} glyph="twitter" glyphOnly>
+            Twitter
+          </Button>
+          <SubLabel>Twitter</SubLabel>
+        </ButtonWithLabel>
+        <ButtonWithLabel color="moon">
+          <Button {...{ link, title }} onClick={() => window?.open(facebookLink, '_blank')} glyph="facebook" glyphOnly>
+            Facebook
+          </Button>
+          <SubLabel>Facebook</SubLabel>
+        </ButtonWithLabel>
+        <ButtonWithLabel color="moon">
+          <Button {...{ link, title }} onClick={() => window?.open(redditLink, '_blank')} glyph="share" glyphOnly>
+            Reddit
+          </Button>
+          <SubLabel>Reddit</SubLabel>
+        </ButtonWithLabel>
+        <ButtonWithLabel color="moon">
+          <Button
+            {...{ link, title }}
+            onClick={() => (location.href = `mailto:?subject=${title}&body=${mailLink}`)}
+            glyph="plane"
+            glyphOnly
+          >
+            Plane
+          </Button>
+          <SubLabel>Plane</SubLabel>
+        </ButtonWithLabel>
+      </Row>
+      <Row>
+        <CopyToClipboard text={link} onCopy={() => setCopied(true)}>
+          <Button level={1} stretch>
+            {copied && <span>Copied!</span>}
+            {!copied && <span>Copy Site URL</span>}
+          </Button>
+        </CopyToClipboard>
+      </Row>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<{ visible?: boolean }>`
-  position: fixed;
-  z-index: 103;
-  left: 0;
-  width: 100%;
-
-  top: 64px;
-  height: calc(100vh - 64px);
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    top: 72px;
-    height: calc(100vh - 72px);
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    top: 88px;
-    height: calc(100vh - 88px);
-  }
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  transition: opacity 0.25s ease-in-out, transform 0.3s ease-in-out;
-  opacity: ${props => (props.visible ? 1 : 0)};
-  transform: translateY(${props => (props.visible ? 0 : '100px')};);
-  pointer-events: ${props => (props.visible ? 'all' : 'none')};
-`
-
-const ClickToDismiss = styled.div`
-  position: fixed;
-  z-index: 102;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-`
-
-const Modal = styled.div`
+const Wrapper = styled.div`
   position: relative;
   width: 100%;
   display: flex;
