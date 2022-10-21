@@ -13,7 +13,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { useAccount, useConnect, useContractWrite, useDisconnect, useSigner } from 'wagmi'
 import { userMetadataVar } from './apollo'
 import { assert } from './assert'
-import { DonationContext } from './donationContext'
+import { LayoutContext } from './LayoutContext'
 import { isProd } from './envHelpers'
 import { getChainId } from './getChainId'
 import { useBridge } from './useBridge'
@@ -33,7 +33,7 @@ interface IProcessDonationProvider {
   chains: any
 }
 
-interface IProcessDonationContext {
+interface IProcessLayoutContext {
   donationMethod?: DonationMethod
   setDonationMethod?: (donationMethod: DonationMethod) => void
   amount?: number
@@ -66,10 +66,10 @@ type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'comple
 
 type Error = 'Payment Failed' | 'Transaction Failed' | 'Donation could not complete' | 'Bridging Failed' | ''
 
-const ProcessDonationContext = createContext<IProcessDonationContext>({})
+const ProcessLayoutContext = createContext<IProcessLayoutContext>({})
 
 export const ProcessDonationProvider = ({ children, chains }: IProcessDonationProvider) => {
-  const { setDonationStage } = useContext(DonationContext)
+  const { setDonationStage } = useContext(LayoutContext)
   const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
@@ -419,7 +419,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   }
 
   return (
-    <ProcessDonationContext.Provider
+    <ProcessLayoutContext.Provider
       value={{
         donationMethod,
         setDonationMethod,
@@ -444,8 +444,8 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
       }}
     >
       {children}
-    </ProcessDonationContext.Provider>
+    </ProcessLayoutContext.Provider>
   )
 }
 
-export const useProcessDonation = () => useContext(ProcessDonationContext)
+export const useProcessDonation = () => useContext(ProcessLayoutContext)

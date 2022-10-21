@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import { useMutation } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { Button, DonationHelpLink, Form, CheckboxControl, DonationSummary } from '@components'
-import { UserContext, hasRequiredProperties, DonationContext, nationIsSupportedByWyre, stateIsSupported } from '@lib'
+import { UserContext, hasRequiredProperties, LayoutContext, nationIsSupportedByWyre, stateIsSupported } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
 import { UPDATE_USER } from '@gql'
 
 const PaymentFiatAddress = () => {
-  const { setDonationStage } = useContext(DonationContext)
+  const { setDonationStage } = useContext(LayoutContext)
   const { loggedInUser } = useContext(UserContext)
 
   const [data, setData] = useState<FormState>(initialState)

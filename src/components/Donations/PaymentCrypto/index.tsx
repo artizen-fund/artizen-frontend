@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { DonationContext, useProcessDonation } from '@lib'
+import { LayoutContext, useProcessDonation } from '@lib'
 import { Table, TableCell, DonationHelpLink, DonationSummary } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
@@ -8,7 +8,7 @@ import WalletOptions from './WalletOptions'
 const TRANSACTION_FEE = 0
 
 const PaymentCrypto = () => {
-  const { setDonationStage } = useContext(DonationContext)
+  const { setDonationStage } = useContext(LayoutContext)
   const { amount, connectWallet, isConnected, isError } = useProcessDonation()
 
   useEffect(() => {

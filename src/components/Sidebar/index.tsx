@@ -4,12 +4,12 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba, useCampaign, DonationContext } from '@lib'
+import { formatUSDC, rgba, useCampaign, LayoutContext } from '@lib'
 import { monthNames } from '@copy/common'
 
 const Sidebar = () => {
   const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised } = useCampaign()
-  const { toggleShelf, setVisibleModal } = useContext(DonationContext)
+  const { toggleShelf, setVisibleModal } = useContext(LayoutContext)
 
   return (
     <StyledStickyCanvas>

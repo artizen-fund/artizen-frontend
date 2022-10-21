@@ -1,9 +1,9 @@
 import renderer from 'react-test-renderer'
-import CloseButton from './'
+import Modals from './'
 
-describe('CloseButton', () => {
+describe('Modals', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<CloseButton />).toJSON()
+    const tree = renderer.create(<Modals />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

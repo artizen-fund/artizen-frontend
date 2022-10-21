@@ -2,12 +2,12 @@ import { useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba, DonationContext, textCrop } from '@lib'
+import { rgba, LayoutContext, textCrop } from '@lib'
 import { Button, PagePadding } from '@components'
 import SocialLinks from './SocialLinks'
 
 const Footer = () => {
-  const { setVisibleShelf } = useContext(DonationContext)
+  const { setVisibleShelf } = useContext(LayoutContext)
   return (
     <Wrapper>
       <PagePadding black>

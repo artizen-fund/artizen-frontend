@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { Button, Layout, Metrics, Newsletter, PagePadding, AlternatingPanel, Leaderboard, Curators } from '@components'
-import { DonationContext } from '@lib'
+import { LayoutContext } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { leaderboardPage } from '@copy/leaderboard'
 import { metrics } from '@copy/home'
 
 const LeaderboardPage = () => {
-  const { toggleShelf, setVisibleModal } = useContext(DonationContext)
+  const { toggleShelf, setVisibleModal } = useContext(LayoutContext)
   return (
     <Layout>
       <Header>

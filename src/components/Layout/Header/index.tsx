@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { Button, Logo, DonationShelf, Share } from '@components'
+import { Button, Logo, DonationShelf, Modals } from '@components'
 import AccountButton from './AccountButton'
 import DonateButton from './DonateButton'
 import SessionShelf from './SessionShelf'
@@ -10,10 +10,10 @@ import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
 
-import { rgba, DonationContext, isProd } from '@lib'
+import { rgba, LayoutContext, isProd } from '@lib'
 
 const Header = () => {
-  const { visibleShelf, toggleShelf } = useContext(DonationContext)
+  const { visibleShelf, toggleShelf } = useContext(LayoutContext)
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 
@@ -59,7 +59,7 @@ const Header = () => {
         <DonationShelf />
       </Shelf>
       <DebugTool production={isProd()} />
-      <Share />
+      <Modals />
     </>
   )
 }

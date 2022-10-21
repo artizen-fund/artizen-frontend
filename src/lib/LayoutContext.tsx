@@ -10,7 +10,7 @@ import { UserContext, isServer } from '@lib'
 
 export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
 
-interface IDonationContext {
+interface ILayoutContext {
   donationStatus?: DonationStatus
   setDonationStatus?: (status: DonationStatus) => void
   donationStage: DonationStage
@@ -23,9 +23,9 @@ interface IDonationContext {
   toggleModal?: (modal?: ModalType) => void
 }
 
-export const DonationContext = createContext<IDonationContext>({ donationStage: 'setAmount' })
+export const LayoutContext = createContext<ILayoutContext>({ donationStage: 'setAmount' })
 
-export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
+export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const { loggedInUser } = useContext(UserContext)
 
   const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
@@ -69,7 +69,7 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   }, [visibleShelf])
 
   return (
-    <DonationContext.Provider
+    <LayoutContext.Provider
       value={{
         donationStatus,
         setDonationStatus,
@@ -84,6 +84,6 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
       }}
     >
       {children}
-    </DonationContext.Provider>
+    </LayoutContext.Provider>
   )
 }

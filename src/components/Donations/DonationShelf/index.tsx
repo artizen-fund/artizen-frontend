@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react'
 import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Breadcrumbs, PaymentFiatAddress } from '@components'
 import { WagmiConfig } from 'wagmi'
 import {
-  DonationContext,
+  LayoutContext,
   useProcessDonation,
   ProcessDonationProvider,
   UserContext,
@@ -14,7 +14,7 @@ import { BreadcrumbStep } from '../../Breadcrumbs'
 const { client, chains } = getWagmiClient()
 
 export const DonationShelf = () => {
-  const { donationStage, setDonationStage } = useContext(DonationContext)
+  const { donationStage, setDonationStage } = useContext(LayoutContext)
   const { donationMethod } = useProcessDonation()
   const { loggedInUser } = useContext(UserContext)
 

@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { DonationContext } from '@lib'
+import { LayoutContext } from '@lib'
 
 const Onionskin = () => {
-  const { visibleShelf, toggleShelf, visibleModal, toggleModal } = useContext(DonationContext)
+  const { visibleShelf, toggleShelf, visibleModal, toggleModal } = useContext(LayoutContext)
   const onClick = () => {
     toggleShelf?.()
     toggleModal?.()

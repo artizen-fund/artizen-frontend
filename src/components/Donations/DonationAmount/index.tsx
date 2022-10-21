@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useMutation } from '@apollo/client'
 import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
 import { breakpoint, palette, typography, GlyphKey } from '@theme'
-import { rgba, DonationContext, useProcessDonation, UserContext } from '@lib'
+import { rgba, LayoutContext, useProcessDonation, UserContext } from '@lib'
 import { UPDATE_USER } from '@gql'
 
 type MethodSet = {
@@ -37,7 +37,7 @@ const methods: Array<MethodSet> = [
 const DonationAmount = () => {
   const [updateUser] = useMutation(UPDATE_USER)
   const { loggedInUser } = useContext(UserContext)
-  const { setDonationStage } = useContext(DonationContext)
+  const { setDonationStage } = useContext(LayoutContext)
   const { amount, setAmount, hideFromLeaderboard, setHideFromLeaderboard, donationMethod, setDonationMethod } =
     useProcessDonation()
 
