@@ -42,7 +42,9 @@ const DonationAmount = () => {
     useProcessDonation()
 
   useEffect(() => {
-    updateUser({ variables: { ...loggedInUser, hideFromLeaderboard } })
+    if (loggedInUser) {
+      updateUser({ variables: { ...loggedInUser, hideFromLeaderboard } })
+    }
   }, [hideFromLeaderboard])
 
   const disabled = useMemo(
