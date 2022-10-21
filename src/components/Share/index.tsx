@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Button, CloseButton } from '@components'
+import { Button } from '@components'
 import { rgba, LayoutContext } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
+import { sharingModal } from '@copy/common'
 
 const Share = () => {
   const { toggleModal } = useContext(LayoutContext)
@@ -23,31 +24,45 @@ const Share = () => {
 
   return (
     <Wrapper>
-      <Row>
-        <Header color="white_always">Sharing is caring, give back with a like, comment or share</Header>
-      </Row>
+      <Copy>
+        <Header>{sharingModal.headline}</Header>
+        <Subheader>{sharingModal.subhead}</Subheader>
+      </Copy>
       <Row>
         <ButtonWithLabel color="moon">
-          <Button {...{ link, title }} onClick={() => window?.open(twitterLink, '_blank')} glyph="twitter" glyphOnly>
+          <StyledButton
+            {...{ link, title }}
+            onClick={() => window?.open(twitterLink, '_blank')}
+            glyph="twitter"
+            glyphOnly
+          >
             Twitter
-          </Button>
+          </StyledButton>
           <SubLabel>Twitter</SubLabel>
         </ButtonWithLabel>
         <ButtonWithLabel color="moon">
-          <Button {...{ link, title }} onClick={() => window?.open(facebookLink, '_blank')} glyph="facebook" glyphOnly>
+          <StyledButton
+            {...{ link, title }}
+            onClick={() => window?.open(facebookLink, '_blank')}
+            glyph="facebook"
+            glyphOnly
+          >
             Facebook
-          </Button>
+          </StyledButton>
           <SubLabel>Facebook</SubLabel>
         </ButtonWithLabel>
         <ButtonWithLabel color="moon">
-          <Button {...{ link, title }} onClick={() => window?.open(redditLink, '_blank')} glyph="share" glyphOnly>
+          <StyledButton {...{ link, title }} onClick={() => window?.open(redditLink, '_blank')} glyph="share" glyphOnly>
             Reddit
-          </Button>
+          </StyledButton>
           <SubLabel>Reddit</SubLabel>
         </ButtonWithLabel>
       </Row>
       <Row>
-        <Button level={1} stretch onClick={() => console.log('derp')}>
+        <Rule />
+      </Row>
+      <Row>
+        <Button level={1} stretch onClick={() => (location.href = `mailto:?subject=${title}&body=${mailLink}`)}>
           Email Link
         </Button>
         <CopyToClipboard text={link} onCopy={() => setCopied(true)}>
@@ -61,6 +76,17 @@ const Share = () => {
   )
 }
 
+const Rule = styled.hr`
+  height: 1px;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: ${rgba(palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.barracuda, 0.64)};
+  }
+`
+
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
@@ -71,10 +97,15 @@ const Wrapper = styled.div`
 
   padding: 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
+    width: 416px;
     padding: 30px;
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    width: 568px;
     padding: 40px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    width: 680px;
   }
 
   color: ${rgba(palette.night)};
@@ -85,25 +116,42 @@ const Wrapper = styled.div`
     background-color: ${rgba(palette.slate)};
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
   }
-  border-radius: 16px;
+`
+
+const Copy = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `
 
 const Header = styled.header`
   ${typography.title.l3}
 `
 
+const Subheader = styled.p`
+  ${typography.body.l2}
+`
+
 const Row = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 30px;
+  gap: 45px;
 `
 
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 15px;
+const StyledButton = styled(props => <Button {...props} />)`
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  transition: background-color 0.25s ease-in-out, transform 0.4s cubic-bezier(0.42, 0.97, 0.52, 1.49);
+
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    &:hover {
+      background-color: ${rgba(palette.algae)};
+      transform: translate3d(0, -4px, 0) scale3d(1.08, 1.08, 1);
+      & * {
+        background-color: ${rgba(palette.white)};
+      }
+    }
+  }
 `
 
 const ButtonWithLabel = styled.div`
@@ -114,8 +162,11 @@ const ButtonWithLabel = styled.div`
 `
 
 const SubLabel = styled.div`
-  ${typography.label.l2}
-  color: ${rgba(palette.barracuda)};
+  ${typography.title.l4}
+  color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
 `
 
 export default Share
