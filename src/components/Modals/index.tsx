@@ -27,7 +27,7 @@ const Modals = () => {
     }
   }, [visibleModal])
 
-  const setPreventTabClose = usePreventTabClose(true)
+  // const setPreventTabClose = usePreventTabClose(false)
 
   const renderSwitch = (visibleModal?: ModalType) => {
     switch (displayedVisibleModal) {
