@@ -127,7 +127,7 @@ const buttonPalette = {
     outline: {
       enabled: {
         foreground: rgba('white'),
-        background: rgba('night'),
+        background: 'transparent',
         border: rgba('white'),
       },
       disabled: {
@@ -153,7 +153,7 @@ const buttonPalette = {
     outline: {
       enabled: {
         foreground: rgba('white'),
-        background: rgba('slate'),
+        background: 'transparent',
         border: rgba('moon'),
       },
       disabled: {
