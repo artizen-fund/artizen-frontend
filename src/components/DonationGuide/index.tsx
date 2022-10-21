@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { Icon } from '@components'
 import { LayoutContext } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { donationGuideMap } from '@copy/donationGuide'
@@ -12,7 +11,6 @@ const DonationGuide = () => {
   return (
     <>
       <Wrapper {...{ visible }}>
-        <CloseButton glyph="cross" level={1} onClick={() => toggleModal?.()} {...{ visible }} />
         <Headline>
           How to donate to grants
           <br />
@@ -32,23 +30,16 @@ type VisibilityParam = {
 }
 
 const Wrapper = styled.div<VisibilityParam>`
-  position: fixed;
-  z-index: 102;
-  left: 20px;
-  top: 64px;
+  position: relative;
   width: calc(100vw - 40px);
   height: calc(100vh - 64px);
-  border-radius: 8px;
+  border-radius: 8px 8px 0 0;
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    left: 20px;
-    top: 72px;
     width: calc(100vw - 40px);
     height: calc(100vh - 72px);
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    left: 50px;
-    top: 88px;
     width: calc(100vw - 100px);
     height: calc(100vh - 88px);
   }
@@ -72,21 +63,18 @@ const Wrapper = styled.div<VisibilityParam>`
 
   @media only screen and (min-width: 780px) {
     width: 700px;
-    left: calc((100vw - 700px) / 2);
     grid-template-columns: repeat(12, 1fr);
     font-size: 14px;
   }
 
   @media only screen and (min-width: 1044px) {
     width: 1024px;
-    left: calc((100vw - 1024px) / 2);
     grid-column-gap: 20px;
     grid-row-gap: 72px;
   }
 
   @media only screen and (min-width: 1720px) {
     width: 1680px;
-    left: calc((100vw - 1680px) / 2);
     grid-column-gap: 25px;
     grid-row-gap: 80px;
     padding: 80px;
@@ -129,18 +117,6 @@ const Headline = styled.h1`
     font-size: 48px;
     line-height: 52px;
   }
-`
-
-const CloseButton = styled(props => <Icon {...props} glyph="cross" />)<{ visible: boolean }>`
-  display: none;
-  position: absolute;
-  z-index: 1002;
-  top: -30px;
-  right: -30px;
-
-  cursor: pointer;
-  opacity: ${props => (props.visible ? 1 : 0)};
-  pointer-events: ${props => (props.visible ? 'all' : 'none')};
 `
 
 export default DonationGuide

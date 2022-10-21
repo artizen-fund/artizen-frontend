@@ -1,4 +1,4 @@
-import AlertModal from './'
+import { AlertModal } from './'
 
 export default {
   title: 'components/AlertModal',

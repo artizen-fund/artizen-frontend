@@ -1,13 +1,7 @@
 import { useContext, useEffect } from 'react'
 import { DonationAmount, PaymentFiat, PaymentCrypto, ProcessCrypto, Breadcrumbs, PaymentFiatAddress } from '@components'
 import { WagmiConfig } from 'wagmi'
-import {
-  LayoutContext,
-  useProcessDonation,
-  ProcessDonationProvider,
-  UserContext,
-  RecoverDonationProvider,
-} from '@lib'
+import { LayoutContext, useProcessDonation, ProcessDonationProvider, UserContext, RecoverDonationProvider } from '@lib'
 import { getWagmiClient } from '../../../lib/wagmiClient'
 import { BreadcrumbStep } from '../../Breadcrumbs'
 

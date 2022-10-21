@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { CloseButton, DonationGuide, PostDonationData, Share, AlertModal, VideoPopup } from '@components'
-import { LayoutContext, usePreventTabClose } from '@lib'
+import { CloseButton, DonationGuide, PostDonationData, Share, AlertModal, MediaModal } from '@components'
+import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
 
 const ANIMATION_TIMING = 0.6 // seconds
@@ -27,8 +27,6 @@ const Modals = () => {
     }
   }, [visibleModal])
 
-  // const setPreventTabClose = usePreventTabClose(false)
-
   const renderSwitch = (visibleModal?: ModalType) => {
     switch (displayedVisibleModal) {
       case 'donationGuide':
@@ -40,7 +38,7 @@ const Modals = () => {
       case 'alert':
         return <AlertModal headline="derp" message="herp derp derp" />
       case 'media':
-        return <VideoPopup visible={true} setVisible={() => console.log('derp')} />
+        return <MediaModal />
       default:
         return <></>
     }
@@ -58,6 +56,7 @@ const Modals = () => {
 
 const Content = styled.div`
   position: relative;
+  pointer-events: all;
 `
 
 const Wrapper = styled.div<{ visible?: boolean }>`
@@ -84,7 +83,7 @@ const Wrapper = styled.div<{ visible?: boolean }>`
   transition: opacity ${ANIMATION_TIMING}s ease-in-out, transform ${ANIMATION_TIMING}s ease-in-out;
   opacity: ${props => (props.visible ? 1 : 0)};
   transform: translateY(${props => (props.visible ? 0 : '100px')};);
-  pointer-events: ${props => (props.visible ? 'all' : 'none')};
+  pointer-events: none;
 `
 
 export default Modals

@@ -1,51 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { CloseButton } from '@components'
+import { LayoutContext } from '@lib'
 
-interface IVideoPopup {
-  src?: string
-  visible: boolean
-  setVisible: (b: boolean) => void
-}
-
-const VideoPopup = ({ src, visible, setVisible }: IVideoPopup) => {
+const MediaModal = () => {
   const [loaded, setLoaded] = useState<boolean>()
+  const { visibleModal, modalAttrs } = useContext(LayoutContext)
+  // TODO: future enhancement: modalAttrs should include image/video options
 
-  useEffect(() => {
-    if (!visible) setLoaded(false)
-  }, [visible])
+  useEffect(() => setLoaded(visibleModal === 'media'), [visibleModal])
 
   return (
-    <>
-      <Wrapper className={visible ? 'visible' : ''} onClick={() => setVisible(false)}>
-        {visible && (
-          <Content>
-            <Video
-              loop={true}
-              autoPlay={true}
-              controls={false}
-              muted={true}
-              onCanPlay={() => setLoaded(true)}
-              className={loaded ? 'visible' : ''}
-            >
-              <source src={src} type="video/mp4" />
-            </Video>
-            <CloseButton visible={loaded} />
-          </Content>
-        )}
-      </Wrapper>
-      <Onionskin className={visible ? 'visible' : ''} onClick={() => setVisible(false)} />
-    </>
+    <Wrapper className={visibleModal === 'media' ? 'visible' : ''}>
+      {visibleModal === 'media' && (
+        <Content>
+          <Video
+            loop={true}
+            autoPlay={true}
+            controls={false}
+            muted={true}
+            onCanPlay={() => setLoaded(true)}
+            className={loaded ? 'visible' : ''}
+          >
+            <source src={modalAttrs.videoFile} type="video/mp4" />
+          </Video>
+        </Content>
+      )}
+    </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
-  position: fixed;
-  z-index: 104;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,4 +84,4 @@ const Onionskin = styled.div`
   will-change: opacity;
 `
 
-export default VideoPopup
+export default MediaModal

@@ -21,6 +21,9 @@ interface ILayoutContext {
   visibleModal?: ModalType
   setVisibleModal?: (modal: ModalType) => void
   toggleModal?: (modal?: ModalType) => void
+  setVisibleModalWithAttrs?: (modalType: ModalType, options: any) => void
+  modalAttrs?: any
+  // TODO: modalAttrs?: MediaAttrs | whatever-else
 }
 
 export const LayoutContext = createContext<ILayoutContext>({ donationStage: 'setAmount' })
@@ -35,7 +38,12 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
   const [visibleModal, setVisibleModal] = useState<ModalType | undefined>()
+  const [modalAttrs, setModalAttrs] = useState<any>()
   const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
+  const setVisibleModalWithAttrs = (modalType: ModalType, options: any) => {
+    setVisibleModal(modalType)
+    setModalAttrs(options)
+  }
 
   useEffect(() => {
     /* A donation can be initiated before a user is logged in.
@@ -81,6 +89,8 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
         visibleModal,
         setVisibleModal,
         toggleModal,
+        setVisibleModalWithAttrs,
+        modalAttrs,
       }}
     >
       {children}

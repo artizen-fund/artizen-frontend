@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import { BigNumber } from 'ethers'
-import { Icon, VideoPopup } from '@components'
+import { Icon } from '@components'
 import { palette, breakpoint, typography } from '@theme'
-import { rgba, assert, useReadContract, assetPath } from '@lib'
+import { rgba, assert, useReadContract, assetPath, LayoutContext } from '@lib'
 import { ArtizenERC1155 } from '@contracts'
 import { raffle } from '@copy/home'
 
@@ -22,6 +22,8 @@ interface Metadata {
 }
 
 const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+
   const { value: metadataUri, refetch: refetchTokenId } = useReadContract(
     assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS'),
     ArtizenERC1155,
@@ -31,7 +33,6 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
   )
 
   const [metadata, setMetadata] = useState<Metadata>()
-  const [popupVisible, setPopupVisible] = useState(false)
 
   const getMetadataFromUri = async (uri: string) => {
     const response = await fetch(uri)
@@ -61,36 +62,34 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
 
   // note: current video NFT ratio is 1:.56
   return (
-    <>
-      <Wrapper>
-        <Poster
-          src={assetPath(`/assets/elliot-lee-nft-poster.jpg?w=1040&fm=webp`)}
-          onClick={() => setPopupVisible(true)}
-        />
-        <Copy>
-          <Title>{raffle.title}</Title>
-          <Metadata>
+    <Wrapper>
+      {/* this src should come from metadata var */}
+      <Poster
+        src={assetPath(`/assets/elliot-lee-nft-poster.jpg?w=1040&fm=webp`)}
+        onClick={() => setVisibleModalWithAttrs?.('media', { videoFile: metadata?.image })}
+      />
+      <Copy>
+        <Title>{raffle.title}</Title>
+        <Metadata>
+          <Metadatum>
+            <Icon glyph="face" level={1} outline label={raffle.artist} />
+          </Metadatum>
+          <Metadatum>
+            <Icon
+              glyph="calendar"
+              level={1}
+              outline
+              label={`Created ${getDaysAgoFromDate(startTime?.toNumber())} days ago`}
+            />
+          </Metadatum>
+          {tagName && (
             <Metadatum>
-              <Icon glyph="face" level={1} outline label={raffle.artist} />
+              <Icon glyph="tag" level={1} outline label={tagName} />
             </Metadatum>
-            <Metadatum>
-              <Icon
-                glyph="calendar"
-                level={1}
-                outline
-                label={`Created ${getDaysAgoFromDate(startTime?.toNumber())} days ago`}
-              />
-            </Metadatum>
-            {tagName && (
-              <Metadatum>
-                <Icon glyph="tag" level={1} outline label={tagName} />
-              </Metadatum>
-            )}
-          </Metadata>
-        </Copy>
-      </Wrapper>
-      <VideoPopup src={metadata?.image} visible={popupVisible} setVisible={setPopupVisible} />
-    </>
+          )}
+        </Metadata>
+      </Copy>
+    </Wrapper>
   )
 }
 

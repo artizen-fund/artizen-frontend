@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { IconStack, Icon, Button, Distraction, DonationComplete } from '@components'
-import { rgba, useProcessDonation } from '@lib'
+import { IconStack, Icon, Distraction, DonationComplete } from '@components'
+import { rgba, useProcessDonation, usePreventTabClose } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { useEffect } from 'react'
 import ErrorMessage from '../ErrorMessage'
@@ -10,7 +10,10 @@ const ProcessCrypto = () => {
 
   useEffect(() => {
     setCryptoStage?.(donationMethod !== 'ethereum' ? 'building' : swapId ? 'bridging' : 'swapping')
+    setPreventTabClose(cryptoStage !== 'complete')
   }, [])
+
+  const setPreventTabClose = usePreventTabClose(true)
 
   return (
     <Wrapper>

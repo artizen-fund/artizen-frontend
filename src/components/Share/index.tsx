@@ -38,7 +38,7 @@ const Share = () => {
           >
             Twitter
           </StyledButton>
-          <SubLabel>Twitter</SubLabel>
+          <ButtonLabel>Twitter</ButtonLabel>
         </ButtonWithLabel>
         <ButtonWithLabel color="moon">
           <StyledButton
@@ -49,19 +49,19 @@ const Share = () => {
           >
             Facebook
           </StyledButton>
-          <SubLabel>Facebook</SubLabel>
+          <ButtonLabel>Facebook</ButtonLabel>
         </ButtonWithLabel>
         <ButtonWithLabel color="moon">
           <StyledButton {...{ link, title }} onClick={() => window?.open(redditLink, '_blank')} glyph="share" glyphOnly>
             Reddit
           </StyledButton>
-          <SubLabel>Reddit</SubLabel>
+          <ButtonLabel>Reddit</ButtonLabel>
         </ButtonWithLabel>
       </Row>
       <Row>
         <Rule />
       </Row>
-      <Row>
+      <Buttons>
         <Button level={1} stretch onClick={() => (location.href = `mailto:?subject=${title}&body=${mailLink}`)}>
           Email Link
         </Button>
@@ -71,21 +71,10 @@ const Share = () => {
             {!copied && <span>Copy Site URL</span>}
           </Button>
         </CopyToClipboard>
-      </Row>
+      </Buttons>
     </Wrapper>
   )
 }
-
-const Rule = styled.hr`
-  height: 1px;
-  width: 100%;
-  border: 0;
-  outline: 0;
-  background: ${rgba(palette.stone)};
-  @media (prefers-color-scheme: dark) {
-    background: ${rgba(palette.barracuda, 0.64)};
-  }
-`
 
 const Wrapper = styled.div`
   position: relative;
@@ -139,6 +128,10 @@ const Row = styled.div`
   gap: 45px;
 `
 
+const Buttons = styled(props => <Row {...props} />)`
+  gap: 10px;
+`
+
 const StyledButton = styled(props => <Button {...props} />)`
   transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   transition: background-color 0.25s ease-in-out, transform 0.4s cubic-bezier(0.42, 0.97, 0.52, 1.49);
@@ -161,11 +154,22 @@ const ButtonWithLabel = styled.div`
   gap: 15px;
 `
 
-const SubLabel = styled.div`
+const ButtonLabel = styled.div`
   ${typography.title.l4}
   color: ${rgba(palette.night)};
   @media (prefers-color-scheme: dark) {
     color: ${rgba(palette.moon)};
+  }
+`
+
+const Rule = styled.hr`
+  height: 1px;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: ${rgba(palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.barracuda, 0.64)};
   }
 `
 
