@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
-import { EnumControlProps } from './'
+import { EnumControlProps } from '../'
 
 const SegmentedControl = ({
   disabled = false,

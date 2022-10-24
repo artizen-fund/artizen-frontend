@@ -8,7 +8,7 @@ const DonationHelpLink = () => {
   const { toggleModal } = useContext(LayoutContext)
   return (
     <Wrapper onClick={() => toggleModal?.('donationGuide')}>
-      <Icon outline glyph="infoLarge" level={1} />
+      <Icon outline inverted glyph="infoLarge" level={1} />
       <Copy>
         Need help? Follow this <em>donation guide</em>.
       </Copy>
