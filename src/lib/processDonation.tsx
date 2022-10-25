@@ -363,7 +363,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         break
       case 'polygon':
       default:
-        setDonationStage?.('paymentCrypto')
+        setDonationStage?.('paymentCryptoPick')
         break
     }
   }

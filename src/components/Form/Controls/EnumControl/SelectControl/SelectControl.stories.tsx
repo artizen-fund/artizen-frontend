@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import SelectControl from './SelectControl'
-import { EnumControlProps } from './'
+import SelectControl from './'
+import { EnumControlProps } from '../'
 import { glyphKey } from '@theme'
 
 const story = {

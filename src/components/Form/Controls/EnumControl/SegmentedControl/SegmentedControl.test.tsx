@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
 import { render } from '@testing-library/react'
-import SegmentedControl from './SegmentedControl'
+import SegmentedControl from './'
 import { schema, uischema } from '@forms/sample'
 
 describe('SegmentedControl', () => {
