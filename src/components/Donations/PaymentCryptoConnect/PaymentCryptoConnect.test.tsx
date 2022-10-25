@@ -1,9 +1,9 @@
 import renderer from 'react-test-renderer'
 import { WagmiConfig } from 'wagmi'
 import { getWagmiClient } from '../../../lib/wagmiClient'
-import PaymentCrypto from './'
+import PaymentCryptoConnect from './'
 
-describe('PaymentCrypto', () => {
+describe('PaymentCryptoConnect', () => {
   // TODO: it's gonna take a bit of work to mock up a WagmiClient.
   // see https://github.com/tmm/testing-wagmi/blob/main/components/Connect.test.tsx
 
@@ -19,7 +19,7 @@ describe('PaymentCrypto', () => {
   //  const tree = renderer
   //    .create(
   //      <WagmiConfig client={client}>
-  //        <PaymentCrypto {...{ setStage, chains, donationMethod, amount }} />
+  //        <PaymentCryptoConnect {...{ setStage, chains, donationMethod, amount }} />
   //      </WagmiConfig>,
   //    )
   //    .toJSON()

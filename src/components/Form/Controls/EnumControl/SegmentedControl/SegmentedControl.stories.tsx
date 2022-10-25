@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import SegmentedControl from './SegmentedControl'
-import { EnumControlProps } from './'
+import SegmentedControl from './'
+import { EnumControlProps } from '../'
 
 const story = {
   title: 'forms/SegmentedControl',

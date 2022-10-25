@@ -9,7 +9,7 @@ import {
 } from '@gql'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { ethers } from 'ethers'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useMemo } from 'react'
 import { useAccount, useConnect, useContractWrite, useDisconnect, useSigner } from 'wagmi'
 import { userMetadataVar } from './apollo'
 import { assert } from './assert'
@@ -35,7 +35,7 @@ interface IProcessDonationProvider {
 
 interface IProcessLayoutContext {
   donationMethod?: DonationMethod
-  setDonationMethod?: (donationMethod: DonationMethod) => void
+  setDonationMethod?: (donationMethod?: DonationMethod) => void
   amount?: number
   setAmount?: (amount: number) => void
   hideFromLeaderboard?: boolean
@@ -70,7 +70,7 @@ const ProcessLayoutContext = createContext<IProcessLayoutContext>({})
 
 export const ProcessDonationProvider = ({ children, chains }: IProcessDonationProvider) => {
   const { setDonationStage } = useContext(LayoutContext)
-  const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
+  const [donationMethod, setDonationMethod] = useState<DonationMethod | undefined>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
   const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
   const [fee, setFee] = useState<number>()
@@ -96,7 +96,12 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
     process.env.NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS,
     'NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS',
   )
-  const chainId = getChainId(donationMethod)
+  const chainId = useMemo(() => {
+    // TODO: We really should be returning undefined until we have an actual
+    //   method set, but useContractWrite won't take that.
+    // Should find a more-correct way to handle this later.
+    return getChainId(!!donationMethod ? donationMethod : 'ethereum')
+  }, [donationMethod])
   const amountInUSDCDecimals = ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()
 
   const {
@@ -150,7 +155,8 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         const { id, amount, fee } = topUpWalletData.TopUpWallet[0]
         setCryptoStage('confirming')
         try {
-          await initDonation(amount, donationMethod, fee, id)
+          await initDonation(amount, donationMethod!, fee, id)
+          // note: non-null assertion, it should be impossible to get this far without one
         } catch (error) {
           console.error('Donation Error: ', error)
           setError('Donation could not complete')
@@ -357,7 +363,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         break
       case 'polygon':
       default:
-        setDonationStage?.('paymentCrypto')
+        setDonationStage?.('paymentCryptoPick')
         break
     }
   }

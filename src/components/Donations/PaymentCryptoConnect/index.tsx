@@ -1,15 +1,13 @@
 import { useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { LayoutContext, useProcessDonation } from '@lib'
-import { Table, TableCell, DonationHelpLink, DonationSummary } from '@components'
+import { DonationHelpLink, DonationSummary } from '@components'
 import { breakpoint, typography } from '@theme'
 import WalletOptions from './WalletOptions'
 
-const TRANSACTION_FEE = 0
-
-const PaymentCrypto = () => {
+const PaymentCryptoConnect = () => {
   const { setDonationStage } = useContext(LayoutContext)
-  const { amount, connectWallet, isConnected, isError } = useProcessDonation()
+  const { connectWallet, isConnected, isError } = useProcessDonation()
 
   useEffect(() => {
     if (isConnected) {
@@ -27,7 +25,7 @@ const PaymentCrypto = () => {
     <Wrapper>
       <Information>
         <div>
-          <Title>Choose your preferred Cryptocurrency</Title>
+          <Title>Connect your preferred wallet</Title>
           <DonationHelpLink />
         </div>
         <DonationSummary />
@@ -47,10 +45,6 @@ const Information = styled.div`
 
 const Title = styled.h1`
   ${typography.title.l2}
-`
-
-const Subhead = styled.h2`
-  ${typography.body.l2}
 `
 
 const Wrapper = styled.div`
@@ -73,4 +67,4 @@ const Wrapper = styled.div`
     display: contents;
   }
 `
-export default PaymentCrypto
+export default PaymentCryptoConnect

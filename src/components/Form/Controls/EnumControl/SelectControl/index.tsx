@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba } from '@lib'
-import { Wrapper, InputLabel, InputWrapper, Message } from '../_Common'
-import { EnumControlProps } from './'
+import { Wrapper, InputLabel, InputWrapper, Message } from '../../_Common'
+import { EnumControlProps } from '../'
 
 const SelectControl = ({
   label,

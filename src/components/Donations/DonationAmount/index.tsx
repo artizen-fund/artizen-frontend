@@ -1,38 +1,13 @@
-import { useContext, useEffect, useMemo } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useMutation } from '@apollo/client'
-import { Button, Icon, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, SelectedCheck } from '@components'
-import { breakpoint, palette, typography, GlyphKey } from '@theme'
-import { rgba, LayoutContext, useProcessDonation, UserContext } from '@lib'
+import { Button, AmountWidget, CheckboxControl, DonationHelpLink, Leaderboard, Form } from '@components'
+import { breakpoint } from '@theme'
+import { LayoutContext, useProcessDonation, UserContext } from '@lib'
 import { UPDATE_USER } from '@gql'
+import { schema, uischema, initialState, FormState } from '@forms/pickUsdOrCrypto'
 
-type MethodSet = {
-  key: DonationMethod
-  label: string
-  min: number
-  glyph: keyof GlyphKey
-}
-
-const methods: Array<MethodSet> = [
-  {
-    key: 'usd',
-    label: 'Credit Card',
-    min: 10,
-    glyph: 'creditCard',
-  },
-  {
-    key: 'polygon',
-    label: 'Polygon',
-    min: 10,
-    glyph: 'polygon',
-  },
-  {
-    key: 'ethereum',
-    label: 'Ethereum',
-    min: 10,
-    glyph: 'ethereum',
-  },
-]
+const MIN_DONATION_AMOUNT = 10
 
 const DonationAmount = () => {
   const [updateUser] = useMutation(UPDATE_USER)
@@ -47,9 +22,13 @@ const DonationAmount = () => {
     }
   }, [hideFromLeaderboard])
 
-  const disabled = useMemo(
-    () => (amount as number) < (methods.find(method => method.key === donationMethod)?.min || 999999),
-    [amount, donationMethod],
+  const disabled = useMemo(() => (amount as number) < MIN_DONATION_AMOUNT, [amount, donationMethod])
+
+  const [data, setData] = useState<FormState>(initialState)
+
+  useEffect(
+    () => setDonationMethod?.(data.donationMethod === '' ? undefined : (data.donationMethod as DonationMethod)),
+    [data],
   )
 
   return (
@@ -65,7 +44,7 @@ const DonationAmount = () => {
 
       <AmountWidget {...{ amount, setAmount }} />
 
-      <Form>
+      <TheForm>
         <SuggestedDonations>
           <span>Average donation:</span>
           <div>
@@ -81,26 +60,8 @@ const DonationAmount = () => {
           </div>
         </SuggestedDonations>
 
-        <Methods>
-          {methods.map(thisMethod => (
-            <Method
-              key={thisMethod.key}
-              onClick={() => setDonationMethod?.(thisMethod.key)}
-              selected={donationMethod === thisMethod.key}
-            >
-              <Icon
-                outline={donationMethod !== thisMethod.key}
-                level={2}
-                glyph={thisMethod.glyph}
-                color={donationMethod === thisMethod.key ? 'moon' : 'night'}
-                darkColor={donationMethod === thisMethod.key ? 'night' : 'moon'}
-              />
-              <div>{thisMethod.label}</div>
-              <SelectedCheck selected={donationMethod === thisMethod.key} />
-            </Method>
-          ))}
-        </Methods>
-      </Form>
+        <Form {...{ schema, uischema, initialState }} data={data} setData={setData} />
+      </TheForm>
 
       <HideCheckbox
         data={hideFromLeaderboard}
@@ -147,7 +108,7 @@ const Header = styled.div`
 
 const Title = styled.h1``
 
-const Form = styled.div`
+const TheForm = styled.div`
   grid-area: form;
   flex: 1;
   display: flex;
@@ -177,40 +138,6 @@ const SuggestedDonations = styled.div`
     align-items: center;
     gap: 8px;
   }
-`
-
-const Methods = styled.ul`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
-`
-
-const Method = styled.li<{ selected: boolean }>`
-  position: relative;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  div {
-    ${typography.label.l1}
-  }
-
-  span {
-    ${typography.label.l2}
-    color: ${rgba(palette.barracuda)};
-  }
-
-  border: 0.5px solid ${props => rgba(props.selected ? palette.night : palette.stone)};
-  @media (prefers-color-scheme: dark) {
-    border: 0.5px solid ${props => rgba(props.selected ? palette.moon : palette.barracuda)};
-  }
-  transition: border 0.3s ease-in-out;
-  border-radius: 16px;
-  padding: 10px 0;
-  cursor: pointer;
 `
 
 const HideCheckbox = styled(props => <CheckboxControl {...props} />)`
