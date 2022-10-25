@@ -1,12 +1,12 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
-import { DonationContext, assetPath } from '@lib'
+import { LayoutContext, assetPath } from '@lib'
 import { typography } from '@theme'
 import { donationComplete } from '@copy/donations'
 
 const DonationComplete = () => {
-  const { toggleShelf, setDonationStage, setDonationStatus } = useContext(DonationContext)
+  const { toggleShelf, setDonationStage, setDonationStatus } = useContext(LayoutContext)
   const dismiss = () => {
     setDonationStatus?.('completed')
     toggleShelf?.()

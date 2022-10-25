@@ -10,7 +10,7 @@ import { UserContext, isServer } from '@lib'
 
 export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
 
-interface IDonationContext {
+interface ILayoutContext {
   donationStatus?: DonationStatus
   setDonationStatus?: (status: DonationStatus) => void
   donationStage: DonationStage
@@ -21,11 +21,14 @@ interface IDonationContext {
   visibleModal?: ModalType
   setVisibleModal?: (modal: ModalType) => void
   toggleModal?: (modal?: ModalType) => void
+  setVisibleModalWithAttrs?: (modalType: ModalType, options: any) => void
+  modalAttrs?: any
+  // TODO: modalAttrs?: MediaAttrs | whatever-else
 }
 
-export const DonationContext = createContext<IDonationContext>({ donationStage: 'setAmount' })
+export const LayoutContext = createContext<ILayoutContext>({ donationStage: 'setAmount' })
 
-export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
+export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const { loggedInUser } = useContext(UserContext)
 
   const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
@@ -35,7 +38,12 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
   const [visibleModal, setVisibleModal] = useState<ModalType | undefined>()
+  const [modalAttrs, setModalAttrs] = useState<any>()
   const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
+  const setVisibleModalWithAttrs = (modalType: ModalType, options: any) => {
+    setVisibleModal(modalType)
+    setModalAttrs(options)
+  }
 
   useEffect(() => {
     /* A donation can be initiated before a user is logged in.
@@ -69,7 +77,7 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
   }, [visibleShelf])
 
   return (
-    <DonationContext.Provider
+    <LayoutContext.Provider
       value={{
         donationStatus,
         setDonationStatus,
@@ -81,9 +89,11 @@ export const DonationContextProvider = ({ children }: SimpleComponentProps) => {
         visibleModal,
         setVisibleModal,
         toggleModal,
+        setVisibleModalWithAttrs,
+        modalAttrs,
       }}
     >
       {children}
-    </DonationContext.Provider>
+    </LayoutContext.Provider>
   )
 }

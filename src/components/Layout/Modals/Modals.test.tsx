@@ -1,9 +1,9 @@
 import renderer from 'react-test-renderer'
-import VideoPopup from './'
+import Modals from './'
 
-describe('VideoPopup', () => {
+describe('Modals', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<VideoPopup />).toJSON()
+    const tree = renderer.create(<Modals />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

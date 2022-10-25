@@ -2,12 +2,12 @@ import { useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba, DonationContext, textCrop } from '@lib'
+import { rgba, LayoutContext, textCrop } from '@lib'
 import { Button, PagePadding } from '@components'
 import SocialLinks from './SocialLinks'
 
 const Footer = () => {
-  const { setVisibleShelf } = useContext(DonationContext)
+  const { setVisibleShelf, setVisibleModal } = useContext(LayoutContext)
   return (
     <Wrapper>
       <PagePadding black>
@@ -49,7 +49,7 @@ const Footer = () => {
               <Button onClick={() => setVisibleShelf?.('donate')} stretch inverted level={1} glyph="donate">
                 Donate
               </Button>
-              <Button onClick={() => alert('coming soon')} stretch inverted outline level={1}>
+              <Button onClick={() => setVisibleModal?.('share')} stretch inverted outline level={1}>
                 Share Now
               </Button>
             </Buttons>

@@ -3,7 +3,6 @@ import { breakpoint } from '@theme'
 import Header from './Header'
 import Footer from './Footer'
 import Onionskin from './Onionskin'
-import { DonationGuide, PostDonationData } from '@components'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -15,8 +14,6 @@ const Layout = ({ children }: LayoutProps) => (
     <Main>{children}</Main>
     <Footer />
     <Onionskin />
-    <DonationGuide />
-    <PostDonationData />
   </Wrapper>
 )
 
