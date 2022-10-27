@@ -43,8 +43,6 @@ export const CreateRaffle = () => {
     signerOrProvider: signer,
   })
 
-  if (!isConnected) return <></>
-
   const handleSubmit = async () => {
     // Mint a new NFT
     const mintTransaction = await nftContract.mint(address, 4, '0x', data.tokenURI)
@@ -90,6 +88,7 @@ export const CreateRaffle = () => {
     reload()
   }
 
+  if (!isConnected) return <></>
   return (
     <Wrapper>
       <Form {...{ schema, uischema, data, setData }} />

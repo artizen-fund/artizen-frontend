@@ -1,11 +1,6 @@
 import styled from 'styled-components'
-import { Button } from '@components'
 import { rgba } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
-
-export interface ISessionShelf {
-  setCreateMode: (mode: boolean) => void
-}
 
 export const Copy = styled.div`
   grid-area: copy;
@@ -24,13 +19,10 @@ export const InfoRow = styled.div`
   gap: 10px;
   justify-content: flex-start;
   align-items: center;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
   margin: 1em 0 2em 0;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     margin: 1em 0 0 0;
   }
-  cursor: pointer;
 `
 
 export const SignInDirections = styled.p`
@@ -64,10 +56,6 @@ export const Check = styled.div`
 export const CheckMessage = styled.p`
   ${typography.label.l1}
   color: ${rgba(palette.barracuda)};
-`
-
-export const SubmitButton = styled(props => <Button {...props} />)`
-  grid-area: submit;
 `
 
 export const Confirmation = styled.div`

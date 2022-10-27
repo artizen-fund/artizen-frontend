@@ -1,19 +1,18 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { Form, AvatarForm, CheckboxControl, CloseButton } from '@components'
+import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { UserContext, DonationContext, uploadToCloudinary } from '@lib'
-import { UPDATE_NEW_USER_PROFILE, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
+import { UserContext, LayoutContext, uploadToCloudinary, useProcessDonation } from '@lib'
+import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
 import {
   CheckWrapper,
   Check,
   CheckMessage,
-  SubmitButton,
   Confirmation,
   Copy,
   Headline,
@@ -22,8 +21,9 @@ import { typography } from '@theme'
 
 const PostDonationData = () => {
   const { loggedInUser } = useContext(UserContext)
-  const { visibleModal, toggleModal } = useContext(DonationContext)
-  const apolloClient = useApolloClient()
+  const { hideFromLeaderboard } = useProcessDonation()
+
+  const { visibleModal, toggleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)
   const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
@@ -31,6 +31,8 @@ const PostDonationData = () => {
 
   const [imageFile, setImageFile] = useState<File>()
 
+  const [updateUser] = useMutation(UPDATE_USER)
+  // todo: replace readOnly with [loading] from useMutation
   const submit = async () => {
     setReadonly(true)
     if (!loggedInUser) return
@@ -41,10 +43,14 @@ const PostDonationData = () => {
         profileImage = cloudinaryResponse.secure_url
       }
       // todo: replace the force-lowercase with a mutation event in hasura
-      const variables = { id: loggedInUser.id, ...data, artizenHandle: data.artizenHandle?.toLowerCase(), profileImage }
-      await apolloClient.mutate({
-        mutation: UPDATE_NEW_USER_PROFILE,
-        variables,
+      await updateUser({
+        variables: {
+          ...loggedInUser,
+          ...data,
+          artizenHandle: data.artizenHandle?.toLowerCase(),
+          profileImage,
+          hideFromLeaderboard,
+        },
       })
       toggleModal?.()
     } catch (error) {
@@ -122,6 +128,10 @@ const PostDonationData = () => {
     </Wrapper>
   )
 }
+
+const SubmitButton = styled(props => <Button {...props} />)`
+  grid-area: submit;
+`
 
 const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean }>`
   position: relative;

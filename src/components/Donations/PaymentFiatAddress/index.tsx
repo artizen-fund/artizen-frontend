@@ -1,38 +1,22 @@
 import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { ErrorObject } from 'ajv'
-import { Button, DonationHelpLink, Form, CheckboxControl } from '@components'
-import {
-  UserContext,
-  useFormLocalStorage,
-  hasRequiredProperties,
-  DonationContext,
-  nationIsSupportedByWyre,
-  stateIsSupported,
-} from '@lib'
+import { Button, DonationHelpLink, Form, CheckboxControl, DonationSummary } from '@components'
+import { UserContext, hasRequiredProperties, LayoutContext, nationIsSupportedByWyre, stateIsSupported } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/paymentFiatAddress'
-import { UPDATE_USER_ADDRESS } from '@gql'
+import { UPDATE_USER } from '@gql'
 
-interface IPaymentFiat {
-  amount: number
-}
-
-const TRANSACTION_FEE = 0
-
-const PaymentFiat = ({ amount }: IPaymentFiat) => {
-  const { setDonationStage } = useContext(DonationContext)
-
-  const apolloClient = useApolloClient()
+const PaymentFiatAddress = () => {
+  const { setDonationStage } = useContext(LayoutContext)
   const { loggedInUser } = useContext(UserContext)
 
   const [data, setData] = useState<FormState>(initialState)
 
   const [savePaymentInfo, setSavePaymentInfo] = useState(false)
-  // note: we're storing no more what below…
-  // unsure how best to just keep local if not storing it
-  // another responsiveVar?
+  // todo: we're storing no matter what below…
+  // unsure how best to just keep local if not storing it another responsiveVar?
 
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   useEffect(() => {
@@ -46,7 +30,7 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
         params: {},
       })
     }
-    if (!!data.state && !stateIsSupported(data.state)) {
+    if (data.country === 'US' && (!data.state || !stateIsSupported(data.state))) {
       errors.push({
         instancePath: '/state',
         message: 'State is not supported',
@@ -58,20 +42,22 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
     setAdditionalErrors(errors)
   }, [data])
 
+  const [updateUser] = useMutation(UPDATE_USER)
+  // todo: replace processing with [loading] from useMutation
   const [processing, setProcessing] = useState(false)
   const saveAndProceed = async () => {
+    const requiredProperties = ['street1', 'city', 'country', 'zip']
+    if (data.country === 'US' && !data.state) requiredProperties.push('state')
     try {
       if (!loggedInUser) {
         throw new Error('User session missing.')
       }
-      if (!hasRequiredProperties(['street1', 'city', 'state', 'country', 'zip'], data)) {
+      if (!hasRequiredProperties(requiredProperties, data)) {
         throw new Error('missing parameters')
       }
-      await apolloClient.mutate({
-        mutation: UPDATE_USER_ADDRESS,
-        variables: { id: loggedInUser.id, ...data },
-      })
-      setDonationStage?.('payment')
+      setProcessing(true)
+      await updateUser({ variables: { ...loggedInUser, ...data } })
+      setDonationStage?.('paymentFiat')
     } catch {
       setProcessing(false)
     }
@@ -81,18 +67,11 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
     <Wrapper className={processing ? 'processing' : ''}>
       <Information>
         <div>
-          <Title>We require your address because regulation stuff. TODO: rewrite this</Title>
+          <Title>Enter your billing address</Title>
           <DonationHelpLink />
         </div>
 
-        <div>
-          <p>Donation Summary</p>
-          <ul>
-            <li>Donation: ${amount}</li>
-            {/*<li>Transaction fee: ${TRANSACTION_FEE}</li>*/}
-            <li>Purchase total: ${amount + TRANSACTION_FEE}</li>
-          </ul>
-        </div>
+        <DonationSummary />
 
         <CheckboxControl
           data={savePaymentInfo}
@@ -110,7 +89,6 @@ const PaymentFiat = ({ amount }: IPaymentFiat) => {
         <SubmitButton stretch onClick={saveAndProceed}>
           Payment
         </SubmitButton>
-        <ProcessingMessage>hum de dooo</ProcessingMessage>
       </Form>
     </Wrapper>
   )
@@ -128,11 +106,7 @@ const Title = styled.h1``
 
 const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
-`
-
-const ProcessingMessage = styled.div`
-  display: none;
-  grid-area: processing;
+  margin-top: 20px;
 `
 
 const Wrapper = styled.div`
@@ -153,18 +127,10 @@ const Wrapper = styled.div`
     gap: 12px;
     grid-template-areas:
       'copy copy street1 street1'
-      'copy copy city state'
-      'copy copy zip country'
+      'copy copy city city'
+      'copy copy state zip'
+      'copy copy country country'
       'copy copy submit submit';
-    &.submitted {
-      grid-template-areas:
-        'copy copy processing processing'
-        'copy copy processing processing'
-        'copy copy processing processing'
-        'copy copy processing processing'
-        'copy copy processing processing'
-        'copy copy processing processing';
-    }
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
@@ -194,20 +160,6 @@ const Wrapper = styled.div`
   *[id='#/properties/zip'] {
     grid-area: zip;
   }
-
-  &.processing {
-    *[id='#/properties/street1'],
-    *[id='#/properties/city'],
-    *[id='#/properties/state'],
-    *[id='#/properties/country'],
-    *[id='#/properties/zip'],
-    ${SubmitButton} {
-      display: none;
-    }
-    ${ProcessingMessage} {
-      display: flex;
-    }
-  }
 `
 
-export default PaymentFiat
+export default PaymentFiatAddress

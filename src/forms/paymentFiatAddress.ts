@@ -1,4 +1,4 @@
-import { JsonSchema } from '@jsonforms/core'
+import { JsonSchema, RuleEffect, Condition } from '@jsonforms/core'
 import { nations, americanRegions } from '@lib'
 
 export const schema: JsonSchema = {
@@ -25,7 +25,7 @@ export const schema: JsonSchema = {
       oneOf: nations,
     },
   },
-  required: ['street1', 'city', 'state', 'zip', 'country'],
+  required: ['street1', 'city', 'zip', 'country'],
 }
 
 export interface FormState extends Record<string, unknown> {
@@ -55,6 +55,13 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/state',
       label: 'State or Territory',
+      rule: {
+        effect: RuleEffect.ENABLE,
+        condition: {
+          scope: '#/properties/country',
+          schema: { enum: ['US'] },
+        } as Condition,
+      },
     },
     {
       type: 'Control',

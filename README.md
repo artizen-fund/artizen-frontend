@@ -4,6 +4,10 @@ Welcome to Artize Frontend codebase. This repository includes the Artizen design
 
 ![Screenshot 2022-06-22 at 16 24 55](https://user-images.githubusercontent.com/1488156/175069661-b0f6e6f0-2e3e-430f-9058-c1f5955e628d.png)
 
+# Join our community
+
+[![Discord](https://dcbadge.vercel.app/api/server/INVITEID)](https://discord.gg/6ySrvPp9ek)
+
 # Contributing to Artizen
 
 Check [CONTRIBUTING.md](https://github.com/artizen-fund/artizen-frontend/blob/main/CONTRIBUTING.md) before open an issue or PR

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Button, Table, TableCell } from '@components'
+import { Button, Table, TableCell, Spinner } from '@components'
 import { breakpoint, palette } from '@theme'
 import { formatUSDC, rgba, useCampaign } from '@lib'
 import _ from 'lodash'
@@ -12,7 +12,6 @@ interface ILeaderboard {
 
 const Leaderboard = (props: ILeaderboard) => {
   const { donationsWithUser } = useCampaign()
-  if (!donationsWithUser) return <></>
 
   const limit = props.limit || 3
 
@@ -28,7 +27,9 @@ const Leaderboard = (props: ILeaderboard) => {
       : truncateEthAddress(user?.publicAddress || '')
   }
 
-  return (
+  return !donationsWithUser ? (
+    <Spinner />
+  ) : (
     <Table title="Leaderboard" {...{ sideItem }}>
       {_.orderBy(donationsWithUser, item => Number(item.amount), ['desc'])
         .slice(0, limit)
@@ -39,7 +40,7 @@ const Leaderboard = (props: ILeaderboard) => {
               {donation.user?.profileImage && <Avatar profileImage={donation.user?.profileImage} />}
               <Name>
                 {getUserIdentifier(donation.user)}
-                {index === 0 && <span>👑</span>}
+                {index === 0 && <span> 👑</span>}
               </Name>
             </div>
             <Amount>${formatUSDC(Number(donation.amount))}</Amount>
@@ -54,6 +55,9 @@ const Name = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  span {
+    line-height: 1em;
+  }
 `
 
 const Amount = styled.div`

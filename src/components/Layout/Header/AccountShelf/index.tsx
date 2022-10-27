@@ -147,6 +147,7 @@ const Illustration = styled.div`
   align-items: center;
   background-position: center;
   background-repeat: no-repeat;
+  background-size: contain;
   background-image: url(${assetPath('/assets/illustrations/settings/accountShelf.png')});
   @media (prefers-color-scheme: dark) {
     background-image: url(${assetPath('/assets/illustrations/settings/accountShelf-dark.png')});

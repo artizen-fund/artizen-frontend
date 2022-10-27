@@ -8,6 +8,11 @@ export const responsiveGlyphSize = (responsiveSize: ResponsiveSize, level?: keyo
       1: 20,
       2: 16,
     },
+    laptopXL: {
+      0: 20,
+      1: 16,
+      2: 16,
+    },
     laptop: {
       0: 20,
       1: 16,

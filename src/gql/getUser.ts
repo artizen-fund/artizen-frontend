@@ -1,31 +1,13 @@
 import { gql } from '@apollo/client'
+import { USER_PUBLIC, USER_PRIVATE } from '@gql'
 
 export const GET_USER = gql`
+  ${USER_PUBLIC}
+  ${USER_PRIVATE}
   query getUser($issuer: String) {
     User(where: { issuer: { _eq: $issuer } }) {
-      id
-      email
-      firstName
-      lastName
-      bio
-      profileImage
-      globalTitle
-      globalRole
-      company
-      street1
-      city
-      state
-      zip
-      country
-      website
-      linkedinLink
-      twitterLink
-      twitterHandle
-      instagramHandle
-      discordHandle
-      bannerImage
-      artizenHandle
-      created_at
+      ...UserPublic
+      ...UserPrivate
     }
   }
 `
@@ -66,6 +48,7 @@ export const mockGetUserData = [
             bannerImage: 'https://images.com/rene.jpg',
             artizenHandle: 'nene',
             created_at: 'nene',
+            hideFromLeaderboard: false,
           },
         ],
       },

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import styled from 'styled-components'
-import { Icon, Form, CheckboxControl } from '@components'
+import { Icon, Form, CheckboxControl, Button } from '@components'
 import { loginWithEmail, useMagic, useFormLocalStorage } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/login'
@@ -10,16 +10,14 @@ import {
   Headline,
   SignInDirections,
   InfoRow,
-  SubmitButton,
   Confirmation,
   Reset,
   CheckWrapper,
   Check,
   CheckMessage,
-  ISessionShelf,
 } from '../_common'
 
-const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
+const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
 
@@ -55,17 +53,21 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
   return (
     <Wrapper className={readonly ? 'submitted' : ''}>
       <Copy>
-        <Headline>Sign in using the email associated with your Artizen account</Headline>
-        <InfoRow onClick={() => setCreateMode(true)}>
+        <Headline>Let’s get started by setting up your Artizen account</Headline>
+        <InfoRow>
           <Icon glyph="infoLarge" outline level={1} />
-          <SignInDirections>Sign up for an account instead</SignInDirections>
+          <SignInDirections>
+            Already have an account?
+            <br />
+            You can still use this form, it’s magic!
+          </SignInDirections>
         </InfoRow>
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <>
-          <SubmitButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+          <StyledButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
             Sign In
-          </SubmitButton>
+          </StyledButton>
           {sentEmail && (
             <Confirmation>
               <Icon glyph="tick" outline level={2} color="moss" />
@@ -73,7 +75,7 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
                 <h1>Done, confirmation sent!</h1>
                 <p>
                   We emailed a magic link to {data.email}.<br />
-                  Click the link sign in.
+                  Click the link to sign in or sign up.
                 </p>
               </div>
               <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
@@ -96,14 +98,19 @@ const LoginShelf = ({ setCreateMode }: ISessionShelf) => {
   )
 }
 
+const StyledButton = styled(props => <Button {...props} />)`
+  grid-area: buttons;
+  margin-top: 15px;
+`
+
 const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       'copy email'
-      'copy .'
-      'tocCheck submit';
+      'copy buttons'
+      'tocCheck buttons';
     &.submitted {
       grid-template-areas:
         'copy confirmation'
@@ -124,7 +131,7 @@ const Wrapper = styled.div`
 
   &.submitted {
     *[id='#/properties/email'],
-    ${SubmitButton} {
+    ${StyledButton} {
       display: none;
     }
     ${Confirmation} {

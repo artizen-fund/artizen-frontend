@@ -9,11 +9,11 @@ import {
 } from '@gql'
 import { ICourierMessage, useCourier } from '@trycourier/react-provider'
 import { ethers } from 'ethers'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useMemo } from 'react'
 import { useAccount, useConnect, useContractWrite, useDisconnect, useSigner } from 'wagmi'
 import { userMetadataVar } from './apollo'
 import { assert } from './assert'
-import { DonationContext } from './donationContext'
+import { LayoutContext } from './LayoutContext'
 import { isProd } from './envHelpers'
 import { getChainId } from './getChainId'
 import { useBridge } from './useBridge'
@@ -26,17 +26,21 @@ import qs from 'qs'
 import { UserContext } from './userContext'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { getQuote, calculateFee } from '@lib'
 
 interface IProcessDonationProvider {
   children: React.ReactNode
   chains: any
 }
 
-interface IProcessDonationContext {
+interface IProcessLayoutContext {
   donationMethod?: DonationMethod
-  setDonationMethod?: (donationMethod: DonationMethod) => void
+  setDonationMethod?: (donationMethod?: DonationMethod) => void
   amount?: number
   setAmount?: (amount: number) => void
+  hideFromLeaderboard?: boolean
+  setHideFromLeaderboard?: (pref: boolean) => void
+  fee?: number
   order?: { id: string }
   setOrder?: (o: { id: string }) => void
   cryptoStage?: CryptoStage
@@ -62,12 +66,14 @@ type CryptoStage = 'swapping' | 'bridging' | 'building' | 'confirming' | 'comple
 
 type Error = 'Payment Failed' | 'Transaction Failed' | 'Donation could not complete' | 'Bridging Failed' | ''
 
-const ProcessDonationContext = createContext<IProcessDonationContext>({})
+const ProcessLayoutContext = createContext<IProcessLayoutContext>({})
 
 export const ProcessDonationProvider = ({ children, chains }: IProcessDonationProvider) => {
-  const { setDonationStage } = useContext(DonationContext)
-  const [donationMethod, setDonationMethod] = useState<DonationMethod>('usd')
+  const { setDonationStage } = useContext(LayoutContext)
+  const [donationMethod, setDonationMethod] = useState<DonationMethod | undefined>('usd')
   const [amount, setAmount] = useState(10) // note: sort out integer or float
+  const [hideFromLeaderboard, setHideFromLeaderboard] = useState(false)
+  const [fee, setFee] = useState<number>()
   const [order, setOrder] = useState<{ id: string }>({ id: '' })
   const [swapId, setSwapId] = useState('')
   const [cryptoStage, setCryptoStage] = useState<CryptoStage>('swapping')
@@ -90,7 +96,12 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
     process.env.NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS,
     'NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS',
   )
-  const chainId = getChainId(donationMethod)
+  const chainId = useMemo(() => {
+    // TODO: We really should be returning undefined until we have an actual
+    //   method set, but useContractWrite won't take that.
+    // Should find a more-correct way to handle this later.
+    return getChainId(!!donationMethod ? donationMethod : 'ethereum')
+  }, [donationMethod])
   const amountInUSDCDecimals = ethers.utils.parseUnits(amount.toString(), USDC_UNIT).toString()
 
   const {
@@ -144,7 +155,8 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         const { id, amount, fee } = topUpWalletData.TopUpWallet[0]
         setCryptoStage('confirming')
         try {
-          await initDonation(amount, donationMethod, fee, id)
+          await initDonation(amount, donationMethod!, fee, id)
+          // note: non-null assertion, it should be impossible to get this far without one
         } catch (error) {
           console.error('Donation Error: ', error)
           setError('Donation could not complete')
@@ -256,9 +268,31 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         },
       },
     })
-
     setOrder({ id: orderId })
   }
+
+  const getFee = async () => {
+    if (amount && metadata?.publicAddress && loggedInUser?.country) {
+      try {
+        const quote = await getQuote(amount, metadata?.publicAddress, loggedInUser?.country)
+        const {
+          fees: { USD: fee },
+        } = quote
+        setFee(fee)
+      } catch (error) {
+        console.error(error)
+        setFee(calculateFee(amount, loggedInUser?.country))
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (donationMethod !== 'usd') {
+      setFee(undefined)
+      return
+    }
+    getFee()
+  }, [amount, donationMethod, metadata, loggedInUser?.country])
 
   useEffect(() => {
     if (hasTrasnferedUSDC && transferUSDCdata?.hash) {
@@ -325,9 +359,11 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         await handleSwapComplete(metadata?.publicAddress!, amount)
         break
       case 'usd':
+        setDonationStage?.('paymentFiatAddress')
+        break
       case 'polygon':
       default:
-        setDonationStage?.('payment')
+        setDonationStage?.('paymentCryptoPick')
         break
     }
   }
@@ -348,7 +384,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         await fetchTopUpWallet()
         break
       default:
-        setDonationStage?.('payment')
+        setDonationStage?.('setAmount')
         break
     }
   }
@@ -389,12 +425,15 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
   }
 
   return (
-    <ProcessDonationContext.Provider
+    <ProcessLayoutContext.Provider
       value={{
         donationMethod,
         setDonationMethod,
         amount,
         setAmount,
+        hideFromLeaderboard,
+        setHideFromLeaderboard,
+        fee,
         order,
         setOrder,
         cryptoStage,
@@ -411,8 +450,8 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
       }}
     >
       {children}
-    </ProcessDonationContext.Provider>
+    </ProcessLayoutContext.Provider>
   )
 }
 
-export const useProcessDonation = () => useContext(ProcessDonationContext)
+export const useProcessDonation = () => useContext(ProcessLayoutContext)

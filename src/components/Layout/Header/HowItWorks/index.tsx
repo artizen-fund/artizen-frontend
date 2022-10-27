@@ -1,12 +1,12 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
-import { rgba, DonationContext, assetPath } from '@lib'
+import { rgba, LayoutContext, assetPath } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { howItWorks } from '@copy/header'
 
 const HowItWorks = () => {
-  const { toggleModal } = useContext(DonationContext)
+  const { toggleModal } = useContext(LayoutContext)
 
   return (
     <Wrapper>

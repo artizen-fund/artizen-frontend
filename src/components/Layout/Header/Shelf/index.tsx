@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { PagePadding } from '@components'
-import { rgba, DonationContext } from '@lib'
+import { rgba, LayoutContext } from '@lib'
 import { breakpoint, palette } from '@theme'
 
 interface IShelf {
@@ -12,7 +12,7 @@ interface IShelf {
 }
 
 const Shelf = ({ shelfKey, shadowVisible, hasBreadcrumbs, children }: IShelf) => {
-  const { visibleShelf } = useContext(DonationContext)
+  const { visibleShelf } = useContext(LayoutContext)
   return (
     <Wrapper {...{ shadowVisible }} visible={shelfKey === visibleShelf}>
       <StyledPagePadding {...{ hasBreadcrumbs }}>{children}</StyledPagePadding>

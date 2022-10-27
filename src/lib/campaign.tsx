@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { BigNumber } from 'bignumber.js'
-import { isServer, assert, useReadContract, DonationContext } from '@lib'
+import { isServer, assert, useReadContract, LayoutContext } from '@lib'
 import { RaffleAbi } from '@contracts'
-import { IGetDonationFromBlockchainQuery, IGetUsersByPublicAddressQuery, IDonationT, IUser } from '@types'
-import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_BY_PUBLIC_ADDRESSES } from '@gql'
+import { IGetDonationFromBlockchainQuery, IGetUsersForLeadboardQuery, IDonationT, IUser } from '@types'
+import { GET_DONATIONS_FROM_BLOCKCHAIN, GET_USERS_FOR_LEADERBOARD } from '@gql'
 
 const fundRaisingGoal = 25000 // TODO: environment variable?
 
@@ -39,7 +39,7 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
   const [donationsWithUser, setDonationsWithUser] = useState<Array<DonationWithUser>>()
   const [donationCount, setDonationCount] = useState(0)
   const [totalRaised, setTotalRaised] = useState(0)
-  const { donationStatus } = useContext(DonationContext)
+  const { donationStatus } = useContext(LayoutContext)
 
   const raffleContractAddress = assert(
     process.env.NEXT_PUBLIC_RAFFLE_CONTRACT_ADDRESS,
@@ -70,7 +70,11 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
     setEndDate(new Date(raffle.endTime.toNumber() * 1000))
   }, [raffle])
 
-  const { data, loading } = useQuery<IGetDonationFromBlockchainQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
+  const {
+    data,
+    loading,
+    refetch: refetchDonation,
+  } = useQuery<IGetDonationFromBlockchainQuery>(GET_DONATIONS_FROM_BLOCKCHAIN, {
     variables: { raffleId: raffle?.raffleID.toString() },
     skip: !raffle,
     onError: error => console.error('error loading donation blockchain', error),
@@ -80,7 +84,7 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
     data: donorData,
     loading: loadingDonors,
     refetch,
-  } = useQuery<IGetUsersByPublicAddressQuery>(GET_USERS_BY_PUBLIC_ADDRESSES, {
+  } = useQuery<IGetUsersForLeadboardQuery>(GET_USERS_FOR_LEADERBOARD, {
     skip: !raffle || loading,
     variables: { addresses },
     onError: error => console.error('error ', error),
@@ -105,7 +109,7 @@ export const CampaignProvider = ({ children }: SimpleComponentProps) => {
 
   useEffect(() => {
     if (donationStatus === 'completed') {
-      refetch()
+      refetchDonation()
     }
   }, [donationStatus])
 

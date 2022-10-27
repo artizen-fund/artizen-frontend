@@ -24,7 +24,7 @@ module.exports = defineConfig({
   videosFolder: 'tests/e2e/videos',
   chromeWebSecurity: true,
   viewportWidth: 1920,
-  viewportHeight: 3080,
+  viewportHeight: 1580,
   env: {
     coverage: false,
   },

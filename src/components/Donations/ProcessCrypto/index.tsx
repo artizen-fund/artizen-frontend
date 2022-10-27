@@ -1,15 +1,19 @@
 import styled from 'styled-components'
-import { IconStack, Icon, Button, Distraction, DonationComplete } from '@components'
-import { rgba, useProcessDonation } from '@lib'
+import { IconStack, Icon, Distraction, DonationComplete } from '@components'
+import { rgba, useProcessDonation, usePreventTabClose } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { useEffect } from 'react'
+import ErrorMessage from '../ErrorMessage'
 
 const ProcessCrypto = () => {
-  const { cryptoStage, setCryptoStage, donationMethod, error, restart, retry, swapId } = useProcessDonation()
+  const { cryptoStage, setCryptoStage, donationMethod, error, swapId } = useProcessDonation()
 
   useEffect(() => {
     setCryptoStage?.(donationMethod !== 'ethereum' ? 'building' : swapId ? 'bridging' : 'swapping')
+    setPreventTabClose(cryptoStage !== 'complete')
   }, [])
+
+  const setPreventTabClose = usePreventTabClose(true)
 
   return (
     <Wrapper>
@@ -18,16 +22,16 @@ const ProcessCrypto = () => {
           <div>
             <Title>It’s time to create your donation which requires a little extra magic</Title>
             <Subhead>
-              Web3 takes longer to process transactions than traditional methods. You can keep this window open –
-              we&apos;ll send you an email when it is completed.
+              Web3 takes longer to process transactions than traditional methods. Please keep this window open – we’ll
+              send you an email when it is completed.
             </Subhead>
           </div>
         ) : (
           <div>
             <Title>Uh oh, looks like something went wrong</Title>
             <Subhead>
-              Don&apos;t worry you haven&apos;t been charged! Unfortunately Web3 is still in it&apos;s infancy and
-              unusual issues can pop up from time-to-time.
+              Don’t worry you haven’t been charged! Unfortunately Web3 is still in it&apos;s infancy and unusual issues
+              can pop up from time-to-time.
             </Subhead>
           </div>
         )}
@@ -49,7 +53,7 @@ const ProcessCrypto = () => {
                   outline={cryptoStage !== 'bridging'}
                   animating={cryptoStage === 'bridging'}
                   glyph="intersect"
-                  label="Bridging blockchains (est. 2m)"
+                  label="Bridging blockchains (est. 5m)"
                   error={error ? true : false}
                 />
               </li>
@@ -89,19 +93,7 @@ const ProcessCrypto = () => {
       </Information>
 
       <Right>
-        {cryptoStage !== 'complete' && (
-          <>
-            {error ? (
-              <div>
-                <Label>There was an error while processing your donation: {error}</Label>
-                <Button onClick={restart}>Restart</Button>
-                <Button onClick={retry}>Retry</Button>
-              </div>
-            ) : (
-              <Distraction />
-            )}
-          </>
-        )}
+        {cryptoStage !== 'complete' && <>{error ? <ErrorMessage /> : <Distraction />}</>}
         {cryptoStage === 'complete' && <DonationComplete />}
       </Right>
     </Wrapper>

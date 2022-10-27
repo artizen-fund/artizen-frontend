@@ -4,62 +4,60 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba, useCampaign, DonationContext } from '@lib'
+import { formatUSDC, rgba, useCampaign, LayoutContext } from '@lib'
 import { monthNames } from '@copy/common'
 
 const Sidebar = () => {
   const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised } = useCampaign()
-  const { toggleShelf, setVisibleModal } = useContext(DonationContext)
+  const { toggleShelf, setVisibleModal } = useContext(LayoutContext)
 
   return (
     <StyledStickyCanvas>
       <Wrapper>
-        {(!startDate || !endDate) && (
-          <>
-            <Header>Campaign is loading…</Header>
-            <Content>
-              <SpinnerSpace>
-                <Spinner />
-              </SpinnerSpace>
-            </Content>
-          </>
-        )}
-        {!!startDate && !!endDate && (
-          <>
+        <>
+          {!!startDate && !!endDate ? (
             <Header>
               Join our
               <strong>{` ${monthNames[startDate.getMonth()]}, ${startDate.getFullYear()} `}</strong>
               donation drive
             </Header>
-            <Content>
-              <FundBlock>
-                <AmountRaised>
-                  <span>${formatUSDC(totalRaised).toLocaleString()}</span> raised of ${fundRaisingGoal.toLocaleString()}{' '}
-                  goal
-                </AmountRaised>
-                {<ProgressBar>{formatUSDC(totalRaised) / formatUSDC(fundRaisingGoal)}</ProgressBar>}
+          ) : (
+            <Header>Campaign is loading…</Header>
+          )}
+          <Content>
+            <FundBlock>
+              <AmountRaised>
+                <span>${formatUSDC(totalRaised).toLocaleString()}</span> raised of ${fundRaisingGoal.toLocaleString()}{' '}
+                goal
+              </AmountRaised>
+              {<ProgressBar>{formatUSDC(totalRaised) / formatUSDC(fundRaisingGoal)}</ProgressBar>}
+              {!!startDate && !!endDate ? (
                 <Row>
                   {<Countdown date={endDate.toISOString()} />}
                   <DonationCount>
                     <Glyph glyph="trend" /> <span>{donationCount} donations</span>
                   </DonationCount>
                 </Row>
-              </FundBlock>
-              <Row>
-                <Button onClick={() => toggleShelf?.('donate')} level={1} stretch glyph="donate">
-                  Donate
-                </Button>
-                <Button onClick={() => setVisibleModal?.('share')} level={1} stretch outline>
-                  Share Now
-                </Button>
-              </Row>
-              <LargeScreensOnly>
-                <Leaderboard />
-                <Perks />
-              </LargeScreensOnly>
-            </Content>
-          </>
-        )}
+              ) : (
+                <Row>
+                  <Spinner />
+                </Row>
+              )}
+            </FundBlock>
+            <Row>
+              <Button onClick={() => toggleShelf?.('donate')} level={1} stretch glyph="donate">
+                Donate
+              </Button>
+              <Button onClick={() => setVisibleModal?.('share')} level={1} stretch outline>
+                Share Now
+              </Button>
+            </Row>
+            <LargeScreensOnly>
+              <Leaderboard />
+              <Perks />
+            </LargeScreensOnly>
+          </Content>
+        </>
       </Wrapper>
     </StyledStickyCanvas>
   )

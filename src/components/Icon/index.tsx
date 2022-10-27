@@ -5,6 +5,7 @@ import { rgba, gapForLevel, sizeForLevel } from '@lib'
 
 export interface IconProps {
   glyph: keyof GlyphKey
+  glyphOutline?: boolean
   level?: keyof Level
   outline?: boolean
   inverted?: boolean
@@ -15,7 +16,19 @@ export interface IconProps {
   error?: boolean
 }
 
-const Icon = ({ glyph, level, outline, inverted, color, darkColor, label, animating, error, ...props }: IconProps) => {
+const Icon = ({
+  glyph,
+  glyphOutline,
+  level,
+  outline,
+  inverted,
+  color,
+  darkColor,
+  label,
+  animating,
+  error,
+  ...props
+}: IconProps) => {
   const calculatedColor =
     !outline && error ? 'uiAlert' : color ? color : (!outline && !inverted) || (outline && inverted) ? 'white' : 'night'
   const calculatedDarkColor =
@@ -23,7 +36,12 @@ const Icon = ({ glyph, level, outline, inverted, color, darkColor, label, animat
   return (
     <Wrapper {...{ level }} {...props}>
       <Circle {...{ outline, level, inverted }} color={calculatedColor} darkColor={calculatedDarkColor}>
-        <Glyph {...{ glyph, level, animating }} color={calculatedColor} darkColor={calculatedDarkColor} />
+        <Glyph
+          {...{ glyph, level, animating }}
+          outline={glyphOutline}
+          color={calculatedColor}
+          darkColor={calculatedDarkColor}
+        />
       </Circle>
       {label && (
         <Label
@@ -60,13 +78,14 @@ const Circle = styled.div<CircleProps>`
   border: 2px solid;
   border-radius: 9999px;
 
-  border-color: ${props => rgba(props.outline ? palette[props.color] : palette.night)};
+  border-color: ${props => rgba(props.outline ? palette[props.color] : 'transparent')};
 
   background: ${props => (!props.inverted && !props.outline ? rgba(palette.night) : rgba(palette.white))};
 
   @media (prefers-color-scheme: dark) {
-    border-color: ${props => rgba(palette[props.darkColor])};
-  background: ${props => (!props.outline ? rgba(palette.moon) : rgba(palette.night))}
+    border-color: ${props => rgba(props.outline ? palette[props.color] : 'transparent')};
+    background: ${props => (!props.outline ? rgba(palette.moon) : rgba(palette.night))};
+  }
 `
 
 const Label = styled.div<{ color: keyof Palette; darkColor: keyof Palette }>`
