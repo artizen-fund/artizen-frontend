@@ -54,6 +54,7 @@ interface IProcessLayoutContext {
   isError?: boolean
   setSwapId?: (swapId: string) => void
   swapId?: string
+  disconnect?: () => void
 }
 
 const walletConnectConnector = new WalletConnectConnector({
@@ -447,6 +448,7 @@ export const ProcessDonationProvider = ({ children, chains }: IProcessDonationPr
         isError,
         setSwapId,
         swapId,
+        disconnect,
       }}
     >
       {children}
