@@ -1,0 +1,23 @@
+
+
+Thu Oct 27 2022 15:32:13:876 GMT+0100 (BST) -- Binary semantic version is v8.8.3
+Thu Oct 27 2022 15:32:13:877 GMT+0100 (BST) -- Setting output as extra verbose with request parsing
+Thu Oct 27 2022 15:32:14:613 GMT+0100 (BST) -- Starting configuration console on http://localhost:45454
+Thu Oct 27 2022 15:32:15:640 GMT+0100 (BST) -- [INFO] Started the BrowserStack Binary server on 45691, PID: 25331
+Thu Oct 27 2022 15:32:15:744 GMT+0100 (BST) -- [SUCCESS] You can now access your local server(s) in our remote browser
+
+Thu Oct 27 2022 15:32:15:806 GMT+0100 (BST) -- Connecting to BrowserStack using WebSocket protocol...
+Thu Oct 27 2022 15:32:15:806 GMT+0100 (BST) -- Platform supports WebSocket connections.
+
+Thu Oct 27 2022 15:32:15:909 GMT+0100 (BST) -- Press Ctrl-C to exit
+
+
+Thu Oct 27 2022 15:32:23:984 GMT+0100 (BST) -- Request to: 127.0.0.1:45691
+Thu Oct 27 2022 15:32:23:987 GMT+0100 (BST) -- Connecting to: 127.0.0.1:45691
+Thu Oct 27 2022 15:32:24:6 GMT+0100 (BST) -- Connected to: 127.0.0.1
+Thu Oct 27 2022 15:32:24:159 GMT+0100 (BST) -- Writing response from: 127.0.0.1:45691
+Thu Oct 27 2022 15:32:24:350 GMT+0100 (BST) -- Writing response from: 127.0.0.1:45691
+Thu Oct 27 2022 15:32:26:584 GMT+0100 (BST) -- Request to: 127.0.0.1:45691
+Thu Oct 27 2022 15:32:26:585 GMT+0100 (BST) -- Connecting to: 127.0.0.1:45691
+Thu Oct 27 2022 15:32:26:589 GMT+0100 (BST) -- Connected to: 127.0.0.1
+Thu Oct 27 2022 15:32:26:725 GMT+0100 (BST) -- Writing response from: 127.0.0.1:45691

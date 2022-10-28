@@ -22,7 +22,9 @@
     "test:e2e": "PORT=3000 start-server-and-test 'yarn start' http-get://localhost:3000 'env-cmd -f .env.development synpress run -cf synpress.config.js'",
     "codegen": "DOTENV_CONFIG_PATH=./.env.development graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "sample-test": "browserstack-node-sdk mocha test/sample_test.js --timeout=60000",
+    "sample-local-test": "browserstack-node-sdk mocha test/sample_local_test.js --timeout=60000"
   },
   "dependencies": {
     "@apollo/client": "3.7.0",
@@ -74,7 +76,10 @@
     "truncate-eth-address": "^1.0.2",
     "use-debounce": "^8.0.4",
     "uuid": "^9.0.0",
-    "wagmi": "^0.6.2"
+    "wagmi": "^0.6.2",
+    "browserstack-local": "^1.4.8",
+    "mocha": "^9.2.2",
+    "selenium-webdriver": "4.1.2"
   },
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",
@@ -94,7 +99,6 @@
     "@storybook/manager-webpack5": "^6.5.12",
     "@storybook/react": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
-    "@synthetixio/synpress": "^2.4.1-beta.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@types/bignumber.js": "^5.0.0",
@@ -140,7 +144,8 @@
     "storybook-addon-swc": "^1.1.8",
     "tsconfig-paths-jest": "^0.0.1",
     "typescript": "4.8.4",
-    "webpack": "5"
+    "webpack": "5",
+    "browserstack-node-sdk": "latest"
   },
   "resolutions": {
     "@storybook/{app}/webpack": "^5"

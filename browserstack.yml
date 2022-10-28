@@ -1,0 +1,14 @@
+userName: rubencampos_UPW4vr
+accessKey: AcBASHQTi5Q4nqKkP1Rg
+platforms:
+  - os: Windows
+    osVersion: 11
+    browserName: Chrome
+    browserVersion: 103.0
+parallelsPerPlatform: 1
+browserstackLocal: true
+buildName: browserstack-build-1
+projectName: BrowserStack Sample
+debug: false
+networkLogs: false
+consoleLogs: errors
