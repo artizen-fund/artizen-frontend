@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { useApolloClient, ApolloClient } from '@apollo/client'
 import styled from 'styled-components'
+import { useApolloClient, ApolloClient } from '@apollo/client'
+import { RPCError } from 'magic-sdk'
+import { ErrorObject } from 'ajv'
 import { Icon, Form, CheckboxControl, Button } from '@components'
 import { loginWithEmail, useMagic, useFormLocalStorage } from '@lib'
 import { breakpoint } from '@theme'
@@ -16,12 +18,14 @@ import {
   Check,
   CheckMessage,
 } from '../_common'
+import { loginCopy, loginErrors } from '@copy/common'
 
 const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const { magic } = useMagic()
+  const { magic, handleMagicError } = useMagic()
   const apolloClient = useApolloClient()
 
   const [sentEmail, setSentEmail] = useState(false)
@@ -41,44 +45,47 @@ const LoginShelf = () => {
       await loginWithEmail(apolloClient, magic, email)
       setReadonly(false)
     } catch (error) {
-      console.error(error)
+      console.error('error', error)
+      setAdditionalErrors([
+        {
+          instancePath: '/email',
+          message: handleMagicError?.(error as RPCError) || loginErrors.unknown,
+          schemaPath: '#/properties/email',
+          keyword: '',
+          params: {},
+        },
+      ])
       setReadonly(false)
     }
   }
 
-  const reset = () => {
-    setReadonly(false)
-  }
+  const reset = () => setReadonly(false)
 
   return (
     <Wrapper className={readonly ? 'submitted' : ''}>
       <Copy>
-        <Headline>Let’s get started by setting up your Artizen account</Headline>
+        <Headline>{loginCopy.headline}</Headline>
         <InfoRow>
           <Icon glyph="infoLarge" outline level={1} />
-          <SignInDirections>
-            Already have an account?
-            <br />
-            You can still use this form, it’s magic!
-          </SignInDirections>
+          <SignInDirections>{loginCopy.directions}</SignInDirections>
         </InfoRow>
       </Copy>
-      <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
+      <Form
+        localStorageKey={LOCALSTORAGE_KEY}
+        {...{ schema, uischema, initialState, data, setData, readonly, additionalErrors }}
+      >
         <>
           <StyledButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
-            Sign In
+            {loginCopy.signinButton}
           </StyledButton>
           {sentEmail && (
             <Confirmation>
               <Icon glyph="tick" outline level={2} color="moss" />
               <div>
-                <h1>Done, confirmation sent!</h1>
-                <p>
-                  We emailed a magic link to {data.email}.<br />
-                  Click the link to sign in or sign up.
-                </p>
+                <h1>{loginCopy.confirmationHeadline}</h1>
+                <p>{loginCopy.confirmationCopy(data.email!)}</p>
               </div>
-              <Reset onClick={() => reset()}>Didn’t receive an email?</Reset>
+              <Reset onClick={() => reset()}>{loginCopy.resetButton}</Reset>
             </Confirmation>
           )}
         </>
@@ -91,7 +98,7 @@ const LoginShelf = () => {
             handleChange={() => setRecordEmail(!recordEmail)}
             label=""
           />
-          <CheckMessage>Remember my email address.</CheckMessage>
+          <CheckMessage>{loginCopy.rememberEmailCheck}</CheckMessage>
         </Check>
       </CheckWrapper>
     </Wrapper>
