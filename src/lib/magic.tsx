@@ -1,12 +1,13 @@
 import { createContext, useContext } from 'react'
 import { Magic, RPCError, RPCErrorCode } from 'magic-sdk'
+import { ErrorObject } from 'ajv'
 import { OAuthExtension } from '@magic-ext/oauth'
 import { isServer, assert, assertInt } from '@lib'
 import { loginErrors } from '@copy/common'
 
 interface IMagicContext {
   magic?: MagicInstance
-  handleMagicError?: (err: RPCError) => string
+  handleMagicError?: (err: RPCError) => Array<ErrorObject>
 }
 
 const MagicContext = createContext<IMagicContext>({})
@@ -24,17 +25,25 @@ export const MagicProvider = ({ children }: SimpleComponentProps) => {
     // testMode: true,
   })
 
-  const handleMagicError = (err: RPCError) => {
-    switch (err.code) {
+  const handleMagicError = (error: RPCError) => {
+    const errorObject: ErrorObject = {
+      instancePath: '/email',
+      message: '',
+      schemaPath: '#/properties/email',
+      keyword: '',
+      params: {},
+    }
+
+    switch (error.code) {
       case RPCErrorCode.InvalidParams:
       case RPCErrorCode.UpdateEmailFailed:
-        return loginErrors.invalidEmail
-      // note: ^ This is only error we have encountered thus far;
-      //       the other messages are here just to cover our bases.
+        // This is only error we have encountered thus far.
+        return [{ ...errorObject, message: loginErrors.invalidEmail }]
       case RPCErrorCode.MagicLinkExpired:
-        return loginErrors.linkExpired
+        // This mistakenly fires on successful logins
+        break
       case RPCErrorCode.UserAlreadyLoggedIn:
-        return loginErrors.alreadyLoggedIn
+        return [{ ...errorObject, message: loginErrors.alreadyLoggedIn }]
       case RPCErrorCode.MagicLinkFailedVerification:
       case RPCErrorCode.MagicLinkRateLimited:
       case RPCErrorCode.MagicLinkInvalidRedirectURL:
@@ -44,8 +53,9 @@ export const MagicProvider = ({ children }: SimpleComponentProps) => {
       case RPCErrorCode.InvalidRequest:
       case RPCErrorCode.InternalError:
       default:
-        return loginErrors.unknown
+        return [{ ...errorObject, message: loginErrors.unknown }]
     }
+    return []
   }
 
   return <MagicContext.Provider value={{ magic, handleMagicError }}>{children}</MagicContext.Provider>

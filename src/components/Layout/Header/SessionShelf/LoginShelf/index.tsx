@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useApolloClient, ApolloClient } from '@apollo/client'
 import { RPCError } from 'magic-sdk'
@@ -18,7 +18,7 @@ import {
   Check,
   CheckMessage,
 } from '../_common'
-import { loginCopy, loginErrors } from '@copy/common'
+import { loginCopy } from '@copy/common'
 
 const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
@@ -45,19 +45,15 @@ const LoginShelf = () => {
       await loginWithEmail(apolloClient, magic, email)
       setReadonly(false)
     } catch (error) {
-      console.error('error', error)
-      setAdditionalErrors([
-        {
-          instancePath: '/email',
-          message: handleMagicError?.(error as RPCError) || loginErrors.unknown,
-          schemaPath: '#/properties/email',
-          keyword: '',
-          params: {},
-        },
-      ])
       setReadonly(false)
+      setAdditionalErrors(handleMagicError?.(error as RPCError) || [])
     }
   }
+
+  useEffect(() => {
+    // unset above error upon input change
+    setAdditionalErrors([])
+  }, [data.email])
 
   const reset = () => setReadonly(false)
 
