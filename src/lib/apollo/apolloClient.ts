@@ -8,6 +8,8 @@ import { cache } from './'
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 export const createApolloClient = (didToken?: string) => {
+  // eslint-disable-next-line
+  console.log('process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL:::', process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL)
   const httpLink = createHttpLink({
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
     headers: {},
@@ -20,6 +22,8 @@ export const createApolloClient = (didToken?: string) => {
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
       // server request (usually for SSR)
+      // eslint-disable-next-line
+      console.log('process.env.HASURA_ADMIN_SECRET:::', process.env.HASURA_ADMIN_SECRET)
       newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
     } else if (isServer()) {
       // server request on behalf of user via MagicLink DecentralizedID token
