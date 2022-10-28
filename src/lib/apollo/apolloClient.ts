@@ -9,6 +9,8 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 
 export const createApolloClient = (didToken?: string) => {
   // eslint-disable-next-line
+  console.log("didToken   :::::", didToken)
+  // eslint-disable-next-line
   console.log('process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL:::', process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL)
   const httpLink = createHttpLink({
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
@@ -21,14 +23,20 @@ export const createApolloClient = (didToken?: string) => {
   const authLink = setContext((_, { headers }) => {
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
+      // eslint-disable-next-line
+      console.log('isServer() && !didToken  :::: ')
       // server request (usually for SSR)
       // eslint-disable-next-line
       console.log('process.env.HASURA_ADMIN_SECRET:::', process.env.HASURA_ADMIN_SECRET)
       newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
     } else if (isServer()) {
+      // eslint-disable-next-line
+      console.log('isServer() ')
       // server request on behalf of user via MagicLink DecentralizedID token
       newHeaders['Authorization'] = `Bearer ${didToken}`
     } else {
+      // eslint-disable-next-line
+      console.log('client() ')
       // client request
       const token = localStorage.getItem('token')
       if (token) {
