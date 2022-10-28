@@ -13,6 +13,10 @@ import {
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
 const createSession = async (req: NextApiRequest, res: NextApiResponse) => {
+  // eslint-disable-next-line
+  console.log('process.env.MAGIC_SECRET_KEY:::::', process.env.MAGIC_SECRET_KEY)
+  // eslint-disable-next-line
+  console.log('JWT_SECRET :::', process.env.JWT_SECRET)
   const MAGIC_SECRET_KEY = assert(process.env.MAGIC_SECRET_KEY, 'MAGIC_SECRET_KEY')
   const magic = new Magic(MAGIC_SECRET_KEY)
 
