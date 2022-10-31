@@ -1,9 +1,9 @@
 export const loginErrors = {
-  invalidEmail: 'Invalid email, please check and try again.',
-  linkExpired: 'Login attempt with an expired link. Please click Sign In to retrieve a fresh link.',
-  alreadyLoggedIn: 'User is already logged in. You may need to refresh your browser.',
+  invalidEmail: 'This email’s invalid. Double-check and try again.',
+  linkExpired: 'This login link is expired. Click “Sign in” to retrieve a fresh link.',
+  alreadyLoggedIn: 'Looks like you’re already logged in. Try refreshing your browser.',
   unknown:
-    'There was an error with your login. Please refresh and try again. If the error persists, please contact us for assistance.',
+    'There was an error with your login. Refresh your browser and try again. If the error persists, contact us for assistance.',
 }
 
 export const loginCopy = {
