@@ -37,10 +37,10 @@ describe("BStack's Cart Functionality", async function () {
     await driver.get('https://dev.artizen.fund/')
     const input = await driver.findElement(By.tagName('input'))
     await input.sendKeys('d.I$-R#Mxa8')
-    await driver.findElement(By.className('sc-f329505a-2')).click()
-    const PAGE_TITLE = 'We’ve Successfully Raised $1,515,250 For Human Creativity'
+    await driver.findElement(By.tagName('button')).click()
+    const PAGE_TITLE = 'We’ve successfully raised $1,515,250 for human creativity'
     const titlePage = await driver.findElement(
-      By.xpath(`//*[contains(text(),"We’ve Successfully Raised $1,515,250 For Human Creativity")]`),
+      By.xpath(`//*[contains(text(),"We’ve successfully raised $1,515,250 for human creativity")]`),
     )
 
     const tiile = await titlePage.getText()
@@ -48,8 +48,12 @@ describe("BStack's Cart Functionality", async function () {
     // located element with contains()
 
     assert.strictEqual(tiile, PAGE_TITLE)
-
-    await driver.findElement(By.className('sc-1a293e1b-0 vBQSs')).click()
+    // review this
+    //const buttonClick = await driver.findElement(By.css('AccountButton__Wrapper-sc-1a293e1b-0.dopKVM'))
+    const buttonClick = await driver.findElement(
+      By.xpath("//div[@class='AccountButton__Wrapper-sc-1a293e1b-0 dopKVM']"),
+    )
+    buttonClick.click()
   })
 
   after(async function () {

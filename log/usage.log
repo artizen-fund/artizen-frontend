@@ -21,3 +21,177 @@
 {"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-27T14:32:15.908Z"}
 {"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-27T14:32:16.936Z"}
 {"level":"info","message":"Local binary stopped","timestamp":"2022-10-27T14:32:29.366Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:22:34.792Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:22:40.257Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:22:40.264Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:22:40.264Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:22:40.727Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:22:55.753Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:32:30.929Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:32:37.054Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:32:37.061Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:32:37.061Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:32:37.659Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:32:49.693Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:33:56.377Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:34:01.139Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:34:01.143Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:34:01.143Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:34:01.440Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:34:27.587Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:35:42.312Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:35:46.704Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:35:46.709Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:35:46.709Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:35:47.000Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:36:17.497Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:39:48.557Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:39:54.196Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:39:54.202Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:39:54.202Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:39:54.585Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:40:17.653Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:40:49.813Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:40:54.152Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:40:54.156Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:40:54.156Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:40:54.453Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:41:08.373Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:42:14.879Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:42:20.916Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:42:20.921Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:42:20.921Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:42:21.320Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:42:47.027Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:56:40.216Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:56:46.913Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:56:47.027Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:56:47.027Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:56:47.480Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:57:04.825Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T12:58:11.230Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T12:58:15.782Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T12:58:15.789Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T12:58:15.789Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T12:58:16.127Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T12:58:30.865Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:02:29.186Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:02:33.701Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:02:33.706Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:02:33.706Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:02:34.011Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:03:08.767Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:03:16.666Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:03:21.287Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:03:21.292Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:03:21.292Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:03:21.611Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:03:48.893Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:04:32.290Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:04:37.009Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:04:37.015Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:04:37.015Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:04:37.314Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:04:58.784Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:06:13.584Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:06:18.288Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:06:18.293Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:06:18.293Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:06:18.597Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:06:37.049Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:07:23.574Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:07:28.239Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:07:28.244Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:07:28.244Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:07:28.559Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:07:54.293Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:10:20.069Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:10:25.053Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:10:25.065Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:10:25.065Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:10:25.572Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:10:48.854Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:12:00.902Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:12:06.724Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:12:06.730Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:12:06.730Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:12:08.002Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:12:28.097Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:13:58.385Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:14:03.008Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:14:03.012Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:14:03.012Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:14:03.317Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:14:27.470Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:14:39.746Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:14:44.753Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:14:44.759Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:14:44.759Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:14:45.104Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:15:02.396Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T13:15:51.446Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T13:15:56.397Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T13:15:56.401Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T13:15:56.402Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T13:15:56.729Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T13:16:14.568Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T14:20:42.621Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T14:20:49.783Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T14:20:49.790Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T14:20:49.790Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T14:20:50.232Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T14:21:08.892Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T14:22:05.878Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T14:22:15.140Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T14:22:15.151Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T14:22:15.152Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T14:22:16.660Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T14:22:37.843Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T14:23:33.714Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T14:23:39.048Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T14:23:39.061Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T14:23:39.061Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T14:23:39.497Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T14:24:00.827Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T14:24:16.962Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T14:24:21.779Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T14:24:21.785Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T14:24:21.785Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T14:24:22.227Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T14:24:42.367Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T14:25:20.968Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T14:25:26.770Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T14:25:26.782Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T14:25:26.782Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T14:25:27.253Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T14:25:58.706Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T14:27:21.176Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T14:27:26.738Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T14:27:26.778Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T14:27:26.778Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T14:27:27.342Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T14:27:50.288Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T14:28:33.050Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T14:28:43.909Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T14:28:43.979Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T14:28:43.979Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T14:28:49.501Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T14:29:46.373Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-28T14:30:15.589Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-28T14:30:52.089Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-28T14:30:52.214Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-28T14:30:52.214Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-28T14:30:57.158Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-28T14:31:22.335Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-31T10:43:42.709Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-31T10:43:59.644Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-31T10:43:59.786Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-31T10:43:59.786Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-31T10:44:03.010Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-31T10:44:15.382Z"}
+{"level":"info","message":"Reading configs from /Users/rubencamposdeteba/Documents/projects/artizen/artizen-frontend/browserstack.yml","timestamp":"2022-10-31T10:45:31.660Z"}
+{"level":"info","message":"Local binary started successfully","timestamp":"2022-10-31T10:45:45.194Z"}
+{"level":"info","message":"Running your mocha tests across 1 platforms","timestamp":"2022-10-31T10:45:45.212Z"}
+{"level":"info","message":"Now, showing logs from mocha","timestamp":"2022-10-31T10:45:45.212Z"}
+{"level":"info","message":"Configuring to run tests on BrowserStack","timestamp":"2022-10-31T10:45:46.467Z"}
+{"level":"info","message":"Local binary stopped","timestamp":"2022-10-31T10:46:12.054Z"}
