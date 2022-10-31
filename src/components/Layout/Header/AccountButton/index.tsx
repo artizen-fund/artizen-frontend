@@ -28,8 +28,12 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
 
   return (
     <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...props}>
-      <CloseLabel visible={active}>Close</CloseLabel>
-      <SignInLabel visible={!loggedInUser && !active}>Sign In</SignInLabel>
+      <CloseLabel id="close-bt" visible={active}>
+        Close
+      </CloseLabel>
+      <SignInLabel id="signin-bt" visible={!loggedInUser && !active}>
+        Sign In
+      </SignInLabel>
       <HamburgerGlyph visible={!!loggedInUser && !active} color="night" darkColor="moon" glyph="hamburger" />
       <AvatarWrapper active={!!loggedInUser && !active}>
         <AvatarImage active={avatarDisplay === 'avatar'} profileImage={loggedInUser?.profileImage} />
