@@ -65,7 +65,7 @@ const LoginShelf = () => {
       </Copy>
       <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
         <>
-          <StyledButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+          <StyledButton id="signin-from-bt" stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
             Sign In
           </StyledButton>
           {sentEmail && (
