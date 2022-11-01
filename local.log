@@ -1,14 +1,14 @@
 
 
-Mon Oct 31 2022 12:53:45:938 GMT+0000 (GMT) -- Binary semantic version is v8.8.3
-Mon Oct 31 2022 12:53:45:939 GMT+0000 (GMT) -- Setting output as extra verbose with request parsing
-Mon Oct 31 2022 12:53:46:530 GMT+0000 (GMT) -- Starting configuration console on http://localhost:45454
-Mon Oct 31 2022 12:53:47:475 GMT+0000 (GMT) -- [INFO] Started the BrowserStack Binary server on 45691, PID: 11926
-Mon Oct 31 2022 12:53:47:604 GMT+0000 (GMT) -- Connecting to BrowserStack using WebSocket protocol...
-Mon Oct 31 2022 12:53:47:605 GMT+0000 (GMT) -- Platform supports WebSocket connections.
+Tue Nov 01 2022 11:50:15:293 GMT+0000 (GMT) -- Binary semantic version is v8.8.3
+Tue Nov 01 2022 11:50:15:294 GMT+0000 (GMT) -- Setting output as extra verbose with request parsing
+Tue Nov 01 2022 11:50:15:680 GMT+0000 (GMT) -- Starting configuration console on http://localhost:45454
+Tue Nov 01 2022 11:50:16:531 GMT+0000 (GMT) -- [INFO] Started the BrowserStack Binary server on 45691, PID: 16659
+Tue Nov 01 2022 11:50:16:638 GMT+0000 (GMT) -- [SUCCESS] You can now access your local server(s) in our remote browser
 
-Mon Oct 31 2022 12:53:47:679 GMT+0000 (GMT) -- [SUCCESS] You can now access your local server(s) in our remote browser
+Tue Nov 01 2022 11:50:16:717 GMT+0000 (GMT) -- Connecting to BrowserStack using WebSocket protocol...
+Tue Nov 01 2022 11:50:16:717 GMT+0000 (GMT) -- Platform supports WebSocket connections.
 
-Mon Oct 31 2022 12:53:47:706 GMT+0000 (GMT) -- Press Ctrl-C to exit
+Tue Nov 01 2022 11:50:16:819 GMT+0000 (GMT) -- Press Ctrl-C to exit
 
 

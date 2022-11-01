@@ -50,11 +50,15 @@ describe("BStack's Cart Functionality", async function () {
     assert.strictEqual(tiile, PAGE_TITLE)
     // review this
     //const buttonClick = await driver.findElement(By.css('AccountButton__Wrapper-sc-1a293e1b-0.dopKVM'))
-    const buttonClick = await driver.findElement(By.id('signin-bt'))
+    const buttonClick = await driver.findElement(By.id('accountButton'))
     buttonClick.click()
 
     const emailInput = await driver.findElement(By.tagName('input'))
     await emailInput.sendKeys('rubelux@email.ghostinspector.com')
+
+    await driver.takeScreenshot()
+
+    await driver.findElement(By.tagName('button')).click()
   })
 
   after(async function () {
