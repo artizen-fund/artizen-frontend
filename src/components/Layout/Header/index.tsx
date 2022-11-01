@@ -46,7 +46,11 @@ const Header = () => {
             </ul>
           </Nav>
           <DonateButton onClick={() => toggleShelf?.('donate')} active={visibleShelf === 'donate'} />
-          <AccountButton onClick={() => toggleShelf?.('session')} active={visibleShelf === 'session'} />
+          <AccountButton
+            id="accountButton"
+            onClick={() => toggleShelf?.('session')}
+            active={visibleShelf === 'session'}
+          />
         </Items>
       </Wrapper>
       <Shelf shelfKey="session" {...{ shadowVisible }}>
