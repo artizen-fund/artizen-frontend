@@ -1,11 +1,8 @@
 export * from './userFragments'
 
-export * from './wallet'
 export * from './checkForExistingArtizenHandle'
 export * from './checkUser'
 export * from './createUser'
 export * from './getUser'
 export * from './getUsersForLeadboard'
 export * from './updateUser'
-export * from './donation'
-export * from './swap'

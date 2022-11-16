@@ -34,9 +34,7 @@ const App = ({
         <UserContextProvider>
           <CourierNotification>
             <LayoutContextProvider>
-              <CampaignProvider>
-                <Component {...pageProps} />
-              </CampaignProvider>
+              <Component {...pageProps} />
             </LayoutContextProvider>
           </CourierNotification>
         </UserContextProvider>

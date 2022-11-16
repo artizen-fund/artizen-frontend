@@ -4,7 +4,6 @@ import { assert, USDC_UNIT, userMetadataVar, UserContext, useReadContract, useWr
 import { USDCAbi, RaffleAbi } from '@contracts'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { useMetaContract } from './useMetaContract'
-import { CREATE_DONATION } from '@gql'
 
 export const useDonation = () => {
   const [buildingStatus, setBuildingStatus] = useState<DonationStageStatus>('WAITING')
@@ -31,11 +30,11 @@ export const useDonation = () => {
 
   const { value: raffleId } = useReadContract(raffleContractAddress, RaffleAbi, 'raffleCount', [])
 
-  const [createDonation] = useMutation(CREATE_DONATION, {
-    onError: error => {
-      console.error('createDonation result    ', error)
-    },
-  })
+  // const [createDonation] = useMutation(CREATE_DONATION, {
+  //   onError: error => {
+  //     console.error('createDonation result    ', error)
+  //   },
+  // })
 
   useEffect(() => {
     if (loading) {
@@ -88,20 +87,20 @@ export const useDonation = () => {
         [donation],
       )
 
-      await createDonation({
-        variables: {
-          data: {
-            userId: loggedInUser?.id,
-            amount,
-            fee,
-            type: donationMethod,
-            state: 'INITIATED',
-            txHash: donateReceipt.hash,
-            topUpId,
-            timestamp: new Date().getTime(),
-          },
-        },
-      })
+      // await createDonation({
+      //   variables: {
+      //     data: {
+      //       userId: loggedInUser?.id,
+      //       amount,
+      //       fee,
+      //       type: donationMethod,
+      //       state: 'INITIATED',
+      //       txHash: donateReceipt.hash,
+      //       topUpId,
+      //       timestamp: new Date().getTime(),
+      //     },
+      //   },
+      // })
 
       setConfirmingStatus('COMPLETE')
       setConfirmingMessage('Donation Confirmed')

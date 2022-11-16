@@ -26,7 +26,7 @@ declare global {
 
   type HeaderShelfType = 'session' | 'howItWorks' | 'donate'
 
-  type ModalType = 'donationGuide' | 'postDonationData' | 'share' | 'alert' | 'media'
+  type ModalType = 'postDonationData' | 'share' | 'alert' | 'media'
 
   type DonationStage =
     | 'setAmount'

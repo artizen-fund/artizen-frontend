@@ -4,8 +4,8 @@ import { USER_PUBLIC, USER_PRIVATE } from '@gql'
 export const UPDATE_USER_FROM_SERVER = gql`
   ${USER_PUBLIC}
   ${USER_PRIVATE}
-  mutation UpdateUserServer($email: String, $issuer: String, $publicAddress: String) {
-    update_User(where: { email: { _eq: $email } }, _set: { issuer: $issuer, publicAddress: $publicAddress }) {
+  mutation UpdateUserServer($email: String, $publicAddress: String) {
+    update_Users(where: { email: { _eq: $email } }, _set: { publicAddress: $publicAddress }) {
       returning {
         ...UserPublic
         ...UserPrivate
@@ -17,45 +17,34 @@ export const UPDATE_USER_FROM_SERVER = gql`
 export const UPDATE_USER = gql`
   ${USER_PUBLIC}
   ${USER_PRIVATE}
-  mutation UpdateUser(
+  mutation UpdateUsers(
     $id: uuid!
     $firstName: String
     $lastName: String
-    $street1: String
-    $city: String
-    $state: String
-    $country: String
-    $zip: String
-    $bio: String
-    $email: String
-    $website: String
+    $profileImage: String
     $twitterHandle: String
-    $instagramHandle: String
     $discordHandle: String
     $artizenHandle: String
-    $profileImage: String
-    $bannerImage: String
     $hideFromLeaderboard: Boolean
+    $website: String
+    $instagramHandle: String
+    $bannerImage: String
+    $bio: String
   ) {
-    update_User(
+    update_Users(
       where: { id: { _eq: $id } }
       _set: {
         firstName: $firstName
         lastName: $lastName
-        street1: $street1
-        city: $city
-        state: $state
-        country: $country
-        zip: $zip
-        bio: $bio
-        website: $website
+        profileImage: $profileImage
         twitterHandle: $twitterHandle
-        instagramHandle: $instagramHandle
         discordHandle: $discordHandle
         artizenHandle: $artizenHandle
-        profileImage: $profileImage
-        bannerImage: $bannerImage
         hideFromLeaderboard: $hideFromLeaderboard
+        website: $website
+        instagramHandle: $instagramHandle
+        bannerImage: $bannerImage
+        bio: $bio
       }
     ) {
       returning {
