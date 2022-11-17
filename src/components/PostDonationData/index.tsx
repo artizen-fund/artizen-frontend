@@ -109,10 +109,7 @@ const PostDonationData = () => {
               label=""
             />
             <CheckMessage>
-              I agree to Artizen’s{' '}
-              <Link href="/toc">
-                <a>Terms &amp; Conditions</a>
-              </Link>
+              I agree to Artizen’s <Link href="/toc">Terms &amp; Conditions</Link>
             </CheckMessage>
           </Check>
         </CheckWrapper>
