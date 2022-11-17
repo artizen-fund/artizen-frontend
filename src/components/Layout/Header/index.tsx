@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { Button, Logo, DonationShelf, Modals } from '@components'
+import { Button, Logo, Modals } from '@components'
 import AccountButton from './AccountButton'
 import DonateButton from './DonateButton'
 import SessionShelf from './SessionShelf'
@@ -40,7 +40,7 @@ const Header = () => {
           <Nav>
             <ul>
               <li>
-                <Link href="/leaderboard">Leaderboard</Link>
+                <Link href="/apply">Apply</Link>
               </li>
               <li onClick={() => toggleShelf?.('howItWorks')}>How it Works</li>
             </ul>
@@ -54,9 +54,6 @@ const Header = () => {
       </Shelf>
       <Shelf shelfKey="howItWorks" {...{ shadowVisible }}>
         <HowItWorks />
-      </Shelf>
-      <Shelf shelfKey="donate" {...{ shadowVisible }} hasBreadcrumbs>
-        <DonationShelf />
       </Shelf>
       <DebugTool production={isProd()} />
       <Modals />

@@ -16,10 +16,6 @@ export const schema: JsonSchema = {
       type: 'string',
       format: 'email',
     },
-    phoneNumber: {
-      type: 'string',
-      format: 'phone',
-    },
   },
   required: ['firstName', 'lastName', 'email'],
 }
@@ -32,7 +28,6 @@ export interface FormState extends Record<string, unknown> {
   firstName?: string
   lastName?: string
   email?: string
-  phoneNumber?: string
 }
 
 /* This is our local initialState. */
@@ -61,11 +56,6 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/email',
       label: 'Email',
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/phoneNumber',
-      label: 'Phone Number',
     },
   ],
 }

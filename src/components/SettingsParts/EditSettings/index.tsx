@@ -15,7 +15,6 @@ const EditSettings = () => {
     firstName: loggedInUser?.firstName || initialState.firstName,
     lastName: loggedInUser?.lastName || initialState.lastName,
     email: loggedInUser?.email || initialState.email,
-    phoneNumber: loggedInUser?.phoneNumber || initialState.email,
   })
 
   const [processing, setProcessing] = useState(false)

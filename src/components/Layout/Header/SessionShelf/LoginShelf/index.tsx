@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useApolloClient, ApolloClient } from '@apollo/client'
-import { RPCError } from 'magic-sdk'
 import { ErrorObject } from 'ajv'
 import { Icon, Form, CheckboxControl, Button } from '@components'
-import { loginWithEmail, useMagic, useFormLocalStorage } from '@lib'
+import { useFormLocalStorage } from '@lib'
 import { breakpoint } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/login'
 import {
@@ -25,30 +24,11 @@ const LoginShelf = () => {
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const { magic, handleMagicError } = useMagic()
   const apolloClient = useApolloClient()
 
   const [sentEmail, setSentEmail] = useState(false)
   const [readonly, setReadonly] = useState(false)
   const [recordEmail, setRecordEmail] = useState(true)
-
-  const handleEmailLogin = async (apolloClient: ApolloClient<object>, email?: string, magic?: MagicInstance) => {
-    if (!magic) {
-      throw 'Error: magic session not initialized.'
-    }
-    if (!email) {
-      throw 'Error: email is missing'
-    }
-    setReadonly(true)
-    try {
-      setSentEmail(true)
-      await loginWithEmail(apolloClient, magic, email)
-      setReadonly(false)
-    } catch (error) {
-      setReadonly(false)
-      setAdditionalErrors(handleMagicError?.(error as RPCError) || [])
-    }
-  }
 
   useEffect(() => {
     // unset above error upon input change
@@ -71,7 +51,7 @@ const LoginShelf = () => {
         {...{ schema, uischema, initialState, data, setData, readonly, additionalErrors }}
       >
         <>
-          <StyledButton stretch onClick={() => handleEmailLogin(apolloClient, data.email, magic)}>
+          <StyledButton stretch onClick={() => alert('todo: login')}>
             {loginCopy.signinButton}
           </StyledButton>
           {sentEmail && (

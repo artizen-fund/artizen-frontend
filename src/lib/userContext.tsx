@@ -2,11 +2,11 @@ import { createContext, useState } from 'react'
 import { useReactiveVar, useQuery } from '@apollo/client'
 import { userMetadataVar, initIntercom } from '@lib'
 import { GET_USER } from '@gql'
-import { IUser, IGetUserQuery } from '@types'
+import { IUsers, IGetUserQuery } from '@types'
 
 interface IUserContext {
   loading?: boolean
-  loggedInUser?: IUser
+  loggedInUser?: IUsers
   needsPostDonationData: boolean
   setNeedsPostDonationData?: (b: boolean) => void
 }
@@ -16,22 +16,20 @@ export const UserContext = createContext<IUserContext>({ needsPostDonationData: 
 export const UserContextProvider = ({ children }: SimpleComponentProps) => {
   initIntercom()
 
-  const metadata = useReactiveVar(userMetadataVar)
-  const [loggedInUser, setLoggedInUser] = useState<IUser>()
+  const [loggedInUser, setLoggedInUser] = useState<IUsers>()
   const [needsPostDonationData, setNeedsPostDonationData] = useState(false)
 
   // TODO: revisit this for use of getLazyQuery
   // also, should we be using Apollo State or ReactiveVar instead of this context?
   const { loading } = useQuery<IGetUserQuery>(GET_USER, {
-    variables: { issuer: metadata?.issuer },
-    onCompleted: ({ User }) => {
-      if (User.length === 0) {
+    onCompleted: ({ Users }) => {
+      if (Users.length === 0) {
         setLoggedInUser(undefined)
         setNeedsPostDonationData(false)
         return
       }
 
-      const newlyLoggedUser = User[0] as IUser
+      const newlyLoggedUser = Users[0] as IUsers
       setLoggedInUser(newlyLoggedUser)
       setNeedsPostDonationData(
         !newlyLoggedUser.firstName ||

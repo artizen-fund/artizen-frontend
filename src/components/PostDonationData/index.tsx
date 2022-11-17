@@ -6,22 +6,14 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { UserContext, LayoutContext, uploadToCloudinary, useProcessDonation } from '@lib'
+import { UserContext, LayoutContext, uploadToCloudinary } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
-import {
-  CheckWrapper,
-  Check,
-  CheckMessage,
-  Confirmation,
-  Copy,
-  Headline,
-} from '../../Layout/Header/SessionShelf/_common'
+import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
 import { typography } from '@theme'
 
 const PostDonationData = () => {
   const { loggedInUser } = useContext(UserContext)
-  const { hideFromLeaderboard } = useProcessDonation()
 
   const { visibleModal, toggleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)
@@ -43,13 +35,13 @@ const PostDonationData = () => {
         profileImage = cloudinaryResponse.secure_url
       }
       // todo: replace the force-lowercase with a mutation event in hasura
+      // todo: insert hideFromLeaderboard preference if we have it already
       await updateUser({
         variables: {
           ...loggedInUser,
           ...data,
           artizenHandle: data.artizenHandle?.toLowerCase(),
           profileImage,
-          hideFromLeaderboard,
         },
       })
       toggleModal?.()
@@ -68,9 +60,9 @@ const PostDonationData = () => {
     },
     onError: error => console.error('error ', error),
     fetchPolicy: 'no-cache',
-    onCompleted: async ({ User }) => {
+    onCompleted: async ({ Users }) => {
       const errors: Array<ErrorObject> = []
-      if (User.length > 0) {
+      if (Users.length > 0) {
         errors.push({
           instancePath: '/artizenHandle',
           message: 'Handle is already in use',

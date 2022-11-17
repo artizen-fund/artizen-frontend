@@ -13,7 +13,7 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
   useEffect(() => {
     if (!loggedInUser) return
     // todo: this is some jank ass typescript :\
-    const dateJoinedAsDate = new Date(loggedInUser.created_at as unknown as string)
+    const dateJoinedAsDate = new Date(loggedInUser.createdAt as unknown as string)
     setDateJoined(`${monthNames[dateJoinedAsDate.getMonth()]} ${dateJoinedAsDate.getFullYear()}`)
   }, [loggedInUser])
 

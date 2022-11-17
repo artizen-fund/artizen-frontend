@@ -49,7 +49,7 @@ const EditProfile = () => {
     fetchPolicy: 'no-cache',
     onCompleted: async response => {
       const errors: Array<ErrorObject> = []
-      if (response.User.length > 0) {
+      if (response.Users.length > 0) {
         errors.push({
           instancePath: '/artizenHandle',
           message: 'Handle is already in use',

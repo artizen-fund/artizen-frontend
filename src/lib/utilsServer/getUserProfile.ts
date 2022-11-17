@@ -5,7 +5,7 @@ import { ICheckUserQuery } from '@types'
 export const getUserProfile = async (issuer: string, token: string) => {
   const apolloClient = createApolloClient(token)
   const {
-    data: { User },
+    data: { Users },
   } = await apolloClient.query<ICheckUserQuery>({ query: GET_USER, variables: { issuer } })
-  return User[0]
+  return Users[0]
 }

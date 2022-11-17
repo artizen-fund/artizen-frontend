@@ -3,11 +3,11 @@ import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
 import { rgba, logout, assetPath } from '@lib'
-import { IUser } from '@types'
+import { IUsers } from '@types'
 import AccountStats from './AccountStats'
 
 interface IAccountShelf {
-  user: Partial<IUser>
+  user: Partial<IUsers>
   hideShelf: () => void
 }
 
