@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSentry } from '@sentry/nextjs'
 import jwt from 'jsonwebtoken'
 import { setTokenCookie, assert } from '@lib'
-import type { MagicUserMetadata } from 'magic-sdk'
 import { createNewToken } from '../../lib/utilsServer/createNewToken'
 
 const checkSession = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -15,9 +14,7 @@ const checkSession = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const { token } = req.cookies
-    const metadata = jwt.verify(token, JWT_SECRET) as MagicUserMetadata
-
-    if (!metadata.issuer) throw 'Bad JWT payload.'
+    const metadata = jwt.verify(token, JWT_SECRET) as UserBundle
 
     // Refresh the JWT for the user each time they send a request to /user so they only get logged out after SESSION_LENGTH_IN_DAYS of inactivity
     const newToken = createNewToken(metadata)
@@ -26,7 +23,6 @@ const checkSession = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({
       token: newToken,
       metadata: {
-        issuer: metadata.issuer,
         email: metadata.email,
         publicAddress: metadata.publicAddress,
       },

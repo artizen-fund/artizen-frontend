@@ -4,21 +4,20 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba, useCampaign, LayoutContext } from '@lib'
+import { formatUSDC, rgba, LayoutContext } from '@lib'
 import { monthNames } from '@copy/common'
 
 const Sidebar = () => {
-  const { fundRaisingGoal, startDate, endDate, donationCount, totalRaised } = useCampaign()
   const { toggleShelf, setVisibleModal } = useContext(LayoutContext)
-
+  const loading = false
   return (
     <StyledStickyCanvas>
       <Wrapper>
         <>
-          {!!startDate && !!endDate ? (
+          {!loading ? (
             <Header>
               Join our
-              <strong>{` ${monthNames[startDate.getMonth()]}, ${startDate.getFullYear()} `}</strong>
+              <strong>monthNames[startDate.getMonth()], startDate.getFullYear()</strong>
               donation drive
             </Header>
           ) : (
@@ -27,15 +26,14 @@ const Sidebar = () => {
           <Content>
             <FundBlock>
               <AmountRaised>
-                <span>${formatUSDC(totalRaised).toLocaleString()}</span> raised of ${fundRaisingGoal.toLocaleString()}{' '}
-                goal
+                <span>formatUSDC(totalRaised).toLocaleString()</span> raised of fundRaisingGoal.toLocaleString() goal
               </AmountRaised>
-              {<ProgressBar>{formatUSDC(totalRaised) / formatUSDC(fundRaisingGoal)}</ProgressBar>}
-              {!!startDate && !!endDate ? (
+              {/*<ProgressBar>formatUSDC(totalRaised) / formatUSDC(fundRaisingGoal)</ProgressBar>*/}
+              {!loading ? (
                 <Row>
-                  {<Countdown date={endDate.toISOString()} />}
+                  {/* <Countdown date={endDate.toISOString()} /> */}
                   <DonationCount>
-                    <Glyph glyph="trend" /> <span>{donationCount} donations</span>
+                    <Glyph glyph="trend" /> <span>donationCount donations</span>
                   </DonationCount>
                 </Row>
               ) : (

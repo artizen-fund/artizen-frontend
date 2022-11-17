@@ -5,12 +5,10 @@ import { ApolloProvider } from '@apollo/client'
 import {
   isProd,
   withAuth,
-  MagicProvider,
   initializeApollo,
   CourierNotification,
   LayoutContextProvider,
   UserContextProvider,
-  CampaignProvider,
 } from '@lib'
 import packageJson from '../../package.json'
 
@@ -30,15 +28,13 @@ const App = ({
 
   return (
     <ApolloProvider client={apolloClient}>
-      <MagicProvider>
-        <UserContextProvider>
-          <CourierNotification>
-            <LayoutContextProvider>
-              <Component {...pageProps} />
-            </LayoutContextProvider>
-          </CourierNotification>
-        </UserContextProvider>
-      </MagicProvider>
+      <UserContextProvider>
+        <CourierNotification>
+          <LayoutContextProvider>
+            <Component {...pageProps} />
+          </LayoutContextProvider>
+        </CourierNotification>
+      </UserContextProvider>
     </ApolloProvider>
   )
 }

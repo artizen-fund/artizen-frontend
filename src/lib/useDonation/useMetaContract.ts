@@ -1,15 +1,13 @@
 import { Biconomy } from '@biconomy/mexa'
 import { ContractInterface, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { useMagic, assertInt, assert, isProd } from '@lib'
+import { assertInt, assert, isProd } from '@lib'
 import { JsonFragment } from '@ethersproject/abi'
 import { ExternalProvider } from '@ethersproject/providers'
 
 // NOTE: this is untested with useMagicLink()
 
 export const useMetaContract = () => {
-  const { magic } = useMagic()
-
   const [biconomy, setBiconomy] = useState<Biconomy>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>()
@@ -25,18 +23,16 @@ export const useMetaContract = () => {
       process.env.NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS,
       'NEXT_PUBLIC_USDC_MATIC_CONTRACT_ADDRESS',
     )
-    if (magic) {
-      setLoading(true)
-      const biconomy = new Biconomy(magic?.rpcProvider as unknown as ExternalProvider, {
-        apiKey,
-        debug: true,
-        contractAddresses: [raffleContractAddress, usdcContractAddress],
-      })
+    setLoading(true)
+    // const biconomy = new Biconomy(magic?.rpcProvider as unknown as ExternalProvider, {
+    // apiKey,
+    // debug: true,
+    // contractAddresses: [raffleContractAddress, usdcContractAddress],
+    // })
 
-      await biconomy.init()
-      setBiconomy(biconomy)
-      setLoading(false)
-    }
+    // await biconomy.init()
+    setBiconomy(biconomy)
+    setLoading(false)
   }
 
   useEffect(() => {

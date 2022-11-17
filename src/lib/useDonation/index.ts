@@ -72,20 +72,20 @@ export const useDonation = () => {
     }
 
     if (approveReceipt.hash || approveReceipt.transactionHash) {
-      const donation = {
-        donor: metadata?.publicAddress as string,
-        raffleID: raffleId,
-        amount: amountInUSDC,
-        timestamp: Math.round(new Date().getTime() / 1000),
-      }
-
-      const donateReceipt = await callStandardMetaTxMethod(
-        raffleContractAddress,
-        RaffleAbi,
-        metadata?.publicAddress as string,
-        'donate',
-        [donation],
-      )
+      //       const donation = {
+      //         donor: metadata?.publicAddress as string,
+      //         raffleID: raffleId,
+      //         amount: amountInUSDC,
+      //         timestamp: Math.round(new Date().getTime() / 1000),
+      //       }
+      //
+      //       const donateReceipt = await callStandardMetaTxMethod(
+      //         raffleContractAddress,
+      //         RaffleAbi,
+      //         metadata?.publicAddress as string,
+      //         'donate',
+      //         [donation],
+      //       )
 
       // await createDonation({
       //   variables: {

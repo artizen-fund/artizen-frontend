@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import { Button, Table, TableCell, Spinner } from '@components'
 import { breakpoint, palette } from '@theme'
-import { formatUSDC, rgba, useCampaign } from '@lib'
-import _ from 'lodash'
-import { IUser } from '@types'
+import { formatUSDC, rgba } from '@lib'
+import { IUsers } from '@types'
 import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
@@ -11,8 +10,6 @@ interface ILeaderboard {
 }
 
 const Leaderboard = (props: ILeaderboard) => {
-  const { donationsWithUser } = useCampaign()
-
   const limit = props.limit || 3
 
   const sideItem = (
@@ -21,19 +18,16 @@ const Leaderboard = (props: ILeaderboard) => {
     </Button>
   )
 
-  const getUserIdentifier = (user: IUser) => {
+  const getUserIdentifier = (user: IUsers) => {
     return user?.firstName || user?.lastName
       ? `${user.firstName} ${user.lastName}`
       : truncateEthAddress(user?.publicAddress || '')
   }
 
-  return !donationsWithUser ? (
-    <Spinner />
-  ) : (
+  return (
     <Table title="Leaderboard" {...{ sideItem }}>
-      {_.orderBy(donationsWithUser, item => Number(item.amount), ['desc'])
-        .slice(0, limit)
-        .map((donation: Donation, index) => (
+      {/*
+        {donations.map((donation, index) => (
           <TableCell key={`donation-${index}`} highlight>
             <div>
               <div>#{index + 1}</div>
@@ -45,7 +39,8 @@ const Leaderboard = (props: ILeaderboard) => {
             </div>
             <Amount>${formatUSDC(Number(donation.amount))}</Amount>
           </TableCell>
-        ))}
+        )}
+      */}
     </Table>
   )
 }

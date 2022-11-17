@@ -19,7 +19,7 @@ export const createSession = async (apolloClient: ApolloClient<object>, didToken
   localStorage.setItem('token', token)
 
   const { data } = await apolloClient.query<IGetUserQuery>({ query: GET_USER, variables: { issuer: metadata.issuer } })
-  if (data.User.length < 1) throw 'Error retrieving user'
+  if (data.Users.length < 1) throw 'Error retrieving user'
 
   trackEventF(intercomEventEnum.USER_LOGIN)
 }
