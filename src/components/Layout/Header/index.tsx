@@ -22,9 +22,7 @@ const Header = () => {
       <Wrapper {...{ shadowVisible }} className={visibleShelf ? 'visibleShelf' : ''}>
         <Items>
           <Link href="/">
-            <a>
-              <Logo />
-            </a>
+            <Logo />
           </Link>
           <MobileNavButton
             onClick={() => toggleShelf?.('howItWorks')}
