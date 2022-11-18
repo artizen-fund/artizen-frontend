@@ -35,6 +35,7 @@ describe("BStack's Cart Functionality", async function () {
 
   it('open website', async function () {
     await driver.get('https://dev.artizen.fund/')
+    const artizenDevPageHandle = driver.getWindowHandle()
     const input = await driver.findElement(By.tagName('input'))
     await input.sendKeys('d.I$-R#Mxa8')
     await driver.findElement(By.tagName('button')).click()
@@ -58,7 +59,31 @@ describe("BStack's Cart Functionality", async function () {
 
     await driver.takeScreenshot()
 
-    await driver.findElement(By.tagName('button')).click()
+    await driver.findElement(By.id('signin-from-bt')).click()
+
+    // await driver.manage().setTimeouts({ implicit: 30000, pageLoad: 30000, script: 30000 })
+
+    // await driver.get('https://email.ghostinspector.com/rubelux')
+    //open a new tab
+    await driver.switchTo().newWindow('tab')
+
+    await driver.get('https://email.ghostinspector.com/rubelux')
+
+    await driver.findElement(By.css('.message:first-child .subject>a'))
+
+    // const btInEmail = await driver.findElement(By.xpath(`//*[contains(text(),"Log in to Artizen_dev")]`))
+
+    const btInEmail = await driver.findElement(By.xpath('//a[@class=login-button bg-null]'))
+
+    console.log('element    ', btInEmail)
+
+    btInEmail.click()
+
+    await driver.takeScreenshot()
+
+    // await driver.findElement(By.css('.message:first-child>a')).click()
+
+    // await driver.takeScreenshot()
   })
 
   after(async function () {
