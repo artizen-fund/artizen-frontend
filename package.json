@@ -53,6 +53,7 @@
     "next-auth": "^4.17.0",
     "next-intercom": "^0.1.4",
     "next-plugin-graphql": "^0.0.2",
+    "nft.storage": "^7.0.0",
     "qs": "^6.11.0",
     "react": "18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
