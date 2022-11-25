@@ -29,7 +29,6 @@ export * from './useWriteContract'
 export * from './utilsCrypto'
 export * from './utilsServer'
 export * from './wagmiClient'
-export * from './nftPublisher'
 
 // export * from './useDonation'
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.

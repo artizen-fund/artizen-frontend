@@ -12,9 +12,6 @@ import path from 'path'
 
 import { assert } from '@lib'
 
-// Paste your NFT.Storage API key into the quotes:
-const NFT_STORAGE_KEY = assert(process.env.NFT_STORAGE_KEY, 'NFT_STORAGE_KEY')
-
 /**
  * Reads an image file from `imagePath` and stores an NFT with the given name and description.
  * @param {string} imagePath the path to an image file
@@ -22,6 +19,8 @@ const NFT_STORAGE_KEY = assert(process.env.NFT_STORAGE_KEY, 'NFT_STORAGE_KEY')
  * @param {string} description a text description for the NFT
  */
 export async function storeNFTFromFile(imagePath: string, name: string, description: string) {
+  const NFT_STORAGE_KEY = assert(process.env.NFT_STORAGE_KEY, 'NFT_STORAGE_KEY')
+
   // load the file from disk
   const image = await fileFromPath(imagePath)
 
@@ -43,6 +42,8 @@ export async function storeNFTFromFile(imagePath: string, name: string, descript
  * @param {string} description a text description for the NFT
  */
 export async function storeNFTFromContent(image: string, name: string, description: string) {
+  const NFT_STORAGE_KEY = assert(process.env.NFT_STORAGE_KEY, 'NFT_STORAGE_KEY')
+
   // create a new NFTStorage client using our API key
   const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY })
 

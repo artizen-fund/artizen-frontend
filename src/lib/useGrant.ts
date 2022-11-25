@@ -102,6 +102,7 @@ export const useGrant = () => {
   const publish = async (grantId: string) => {
     const metadataUris = generateMetadata(grantId)
 
+    console.log(metadataUris)
     // Mint a new NFT
     /*const mintTransaction = await nftContract.mint(address, 4, '0x', data.tokenURI)
     await mintTransaction.wait()
