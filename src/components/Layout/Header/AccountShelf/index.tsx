@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { rgba, logout, assetPath } from '@lib'
+import { rgba, assetPath } from '@lib'
 import { IUsers } from '@types'
 import AccountStats from './AccountStats'
 
@@ -65,7 +65,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
         </Top>
         <div>
           <Rule />
-          <Button onClick={logout} stretch level={1} glyph="power" transparent>
+          <Button onClick={() => alert('Sign out')} stretch level={1} glyph="power" transparent>
             Sign Out
           </Button>
         </div>

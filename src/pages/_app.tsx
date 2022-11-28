@@ -1,41 +1,53 @@
 import React from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
-import { ApolloProvider } from '@apollo/client'
+import { ApolloClient, ApolloLink, ApolloProvider } from '@apollo/client'
 import {
-  isProd,
   withAuth,
-  initializeApollo,
   CourierNotification,
   LayoutContextProvider,
   UserContextProvider,
+  getWagmiClient,
+  authLink,
+  httpLink,
+  cache,
 } from '@lib'
 import packageJson from '../../package.json'
 
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
+import { WagmiConfig } from 'wagmi'
+import { SessionProvider } from 'next-auth/react'
+
+const { client, chains } = getWagmiClient()
 
 const App = ({
   Component,
-  pageProps,
+  pageProps: { session, ...pageProps },
 }: AppProps & {
   pageProps: any
 }) => {
   // eslint-disable-next-line
   console.log(`--- version: ${packageJson.version} ----`)
 
-  const apolloClient = initializeApollo(pageProps?.apolloData || {})
-
+  const apolloClient = new ApolloClient({
+    link: ApolloLink.from([authLink, httpLink]),
+    cache,
+  })
   return (
-    <ApolloProvider client={apolloClient}>
-      <UserContextProvider>
-        <CourierNotification>
-          <LayoutContextProvider>
-            <Component {...pageProps} />
-          </LayoutContextProvider>
-        </CourierNotification>
-      </UserContextProvider>
-    </ApolloProvider>
+    <WagmiConfig client={client}>
+      <SessionProvider session={session}>
+        <ApolloProvider client={apolloClient}>
+          <UserContextProvider>
+            <CourierNotification>
+              <LayoutContextProvider>
+                <Component {...pageProps} chains={chains} />
+              </LayoutContextProvider>
+            </CourierNotification>
+          </UserContextProvider>
+        </ApolloProvider>
+      </SessionProvider>
+    </WagmiConfig>
   )
 }
 
