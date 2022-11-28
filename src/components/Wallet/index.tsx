@@ -18,19 +18,12 @@ export const Wallet = ({ chains }: WalletProps) => {
   const { signMessageAsync } = useSignMessage()
   const { push } = useRouter()
 
+  // this should query a locally stored publicAddress instead of an ID
   const [loadUser, { called, loading, data, error }] = useLazyQuery<IGetUserQuery>(GET_USER, {
     variables: {
       id: '9ddf4806-0f2c-4f62-8e52-838e89b43f3d ',
     },
   })
-
-  if (data) {
-    console.log(data)
-  }
-
-  if (error) {
-    console.log(error)
-  }
 
   const connectWallet = async () => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
@@ -54,13 +47,9 @@ export const Wallet = ({ chains }: WalletProps) => {
     const signature = await signMessageAsync({ message })
 
     // redirect user after success authentication to '/user' page
-    const { url } = await signIn('credentials', { message, signature, redirect: false, callbackUrl: '/' })
-    /**
-     * instead of using signIn(..., redirect: "/user")
-     * we get the url from callback and push it to the router to avoid page refreshing
-     */
-    //push(url)
-    loadUser()
+    const loginResponse = await signIn('credentials', { message, signature, redirect: false, callbackUrl: '/' })
+    console.log('loginResponse', loginResponse)
+    // loadUser()
   }
 
   return <div>{!isConnected ? <Button onClick={connectWallet}>Connect Metamask</Button> : 'Metamask Connected'}</div>

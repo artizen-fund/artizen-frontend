@@ -1,14 +1,16 @@
-import NextAuth from 'next-auth'
+import NextAuth, { User, Session } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
+import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
 
-const session = async function session(params: { session: Session; user: User; token: JWT }) {
+const session = async ({ session, token }: { session: Session; token: JWT }) => {
   const secret = process.env.JWT_SECRET || ''
-  const encodedToken = jsonwebtoken.sign(params.token, secret, { algorithm: 'HS256' })
-  params.session.token = encodedToken
-
-  return params.session
+  const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
+  return {
+    ...session,
+    token: encodedToken,
+  }
 }
 
 export default NextAuth({
@@ -34,17 +36,20 @@ export default NextAuth({
     session,
   },
   jwt: {
-    encode: ({ secret, token }) => {
-      const encodedToken = jsonwebtoken.sign(token, secret, {
+    encode: ({ secret, token }: JWTEncodeParams) => {
+      const encodedToken = jsonwebtoken.sign(token as object, secret, {
         algorithm: 'HS256',
       })
       return encodedToken
     },
-    decode: async ({ secret, token }) => {
+    decode: async ({ secret, token }: JWTDecodeParams) => {
+      if (!token) {
+        throw new Error('Error decoding JWT: missing token')
+      }
       const decodedToken = jsonwebtoken.verify(token, secret, {
         algorithms: ['HS256'],
       })
-      return decodedToken
+      return decodedToken as JWT
     },
   },
   debug: true,
