@@ -1,8 +1,4 @@
-export * from './checkUserProfile'
-export * from './createUserProfile'
-export * from './getUserProfile'
 export * from './queryHasura'
-export * from './updateUserProfile'
 export * from './syncCourierUser'
 
 // export * from './createNewToken'

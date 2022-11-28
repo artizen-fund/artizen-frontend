@@ -16,7 +16,7 @@ import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
-const Home = ({ chains }) => {
+const Home = ({ chains }: { chains: any }) => {
   const tabs = Object.keys(tabbedInfo).map(key => (
     <Tab key={`tab-${key}`} label={key}>
       {tabbedInfo[key]}

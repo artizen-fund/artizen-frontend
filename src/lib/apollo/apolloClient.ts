@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloLink, createHttpLink, NormalizedCacheObject } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { assert, isServer } from '@lib'
+import { Session } from 'next-auth'
 import { getSession } from 'next-auth/react'
 
 export const httpLink = createHttpLink({
@@ -12,9 +13,9 @@ export const httpLink = createHttpLink({
 // This sets up a middleware that circumstantially uses the correct query token.
 // https://www.apollographql.com/docs/react/networking/authentication/#header
 export const authLink: ApolloLink = setContext(async (_, { headers }) => {
-  const session = await getSession()
+  const session: any = await getSession()
   const newHeaders: Record<string, string> = {}
-  newHeaders['Authorization'] = `Bearer ${session?.token}`
+  newHeaders['Authorization'] = `Bearer ${session.token}`
 
   if (isServer()) {
     // server request (usually for SSR)

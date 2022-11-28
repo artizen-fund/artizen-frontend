@@ -1,5 +1,4 @@
 import React from 'react'
-import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { ApolloClient, ApolloLink, ApolloProvider } from '@apollo/client'
@@ -18,6 +17,7 @@ import packageJson from '../../package.json'
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 import { WagmiConfig } from 'wagmi'
+import { SessionProvider } from 'next-auth/react'
 
 const { client, chains } = getWagmiClient()
 
