@@ -39,7 +39,7 @@ export const Wallet = ({ chains }: WalletProps) => {
 
     // todo: Apollo.getUser( { publicAddress: address from above } )
 
-    console.log('signInResponse', signInResponse)
+    // console.log('signInResponse', signInResponse)
   }
 
   return <div>{!isConnected ? <Button onClick={connectWallet}>Connect Metamask</Button> : 'Metamask Connected'}</div>
