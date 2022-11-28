@@ -37,6 +37,8 @@ export const Wallet = ({ chains }: WalletProps) => {
 
     const signInResponse = await signIn('credentials', { message, signature, redirect: false })
 
+    // todo: Apollo.getUser( { publicAddress: address from above } )
+
     console.log('signInResponse', signInResponse)
   }
 
