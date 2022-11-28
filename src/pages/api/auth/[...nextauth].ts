@@ -3,6 +3,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
+import { createApolloClient } from '@lib'
+import { CREATE_USER } from '@gql'
+import { ICreateUserMutation } from '@types'
 
 export default NextAuth({
   session: {
@@ -83,7 +86,11 @@ export default NextAuth({
 
         const user = { id: address, address, profileId, expirationTime, signature: credentials?.signature }
 
-        // todo: check/insert user
+        const apolloClient = createApolloClient()
+        const insertion = await apolloClient.mutate<ICreateUserMutation>({
+          mutation: CREATE_USER,
+          variables: { publicAddress: address.toLowerCase() },
+        })
 
         return user
       },

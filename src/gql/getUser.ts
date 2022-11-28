@@ -4,8 +4,8 @@ import { USER_PUBLIC, USER_PRIVATE } from '@gql'
 export const GET_USER = gql`
   ${USER_PUBLIC}
   ${USER_PRIVATE}
-  query getUser($id: uuid) {
-    Users(where: { id: { _eq: $id } }) {
+  query getUser($publicAddress: String) {
+    Users(where: { publicAddress: { _eq: $publicAddress } }) {
       ...UserPublic
       ...UserPrivate
     }

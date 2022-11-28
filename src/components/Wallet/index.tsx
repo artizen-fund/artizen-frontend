@@ -1,15 +1,25 @@
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react'
+import { useQuery } from '@apollo/client'
+import { useAccount, useConnect, useSignMessage, Chain } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 import { Button } from '@components'
 import { assertInt } from '@lib'
-import { useRouter } from 'next/router'
-import { useAccount, useConnect, useSignMessage } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { signIn } from 'next-auth/react'
+import { IGetUserQuery } from '@types'
+import { GET_USER } from '@gql'
 
-interface WalletProps {
-  chains: any
-}
+export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
+  const [publicAddress, setPublicAddress] = useState<string>()
+  const { data } = useQuery<IGetUserQuery>(GET_USER, {
+    variables: { publicAddress },
+  })
 
-export const Wallet = ({ chains }: WalletProps) => {
+  useEffect(() => {
+    // todo: this is turning up empty, why?
+    console.log('user', data)
+  }, [data])
+
   const { connectAsync } = useConnect()
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
@@ -35,11 +45,10 @@ export const Wallet = ({ chains }: WalletProps) => {
     const { message } = await response.json()
     const signature = await signMessageAsync({ message })
 
-    const signInResponse = await signIn('credentials', { message, signature, redirect: false })
+    const signinResponse = await signIn('credentials', { message, signature, redirect: false, callbackUrl: '/' })
+    console.log('TODO: are we supposed to be doing something with this?', signinResponse)
 
-    // todo: Apollo.getUser( { publicAddress: address from above } )
-
-    // console.log('signInResponse', signInResponse)
+    setPublicAddress(account)
   }
 
   return <div>{!isConnected ? <Button onClick={connectWallet}>Connect Metamask</Button> : 'Metamask Connected'}</div>
