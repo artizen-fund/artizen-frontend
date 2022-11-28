@@ -61,8 +61,8 @@ export const useGrant = () => {
         name: grant.project.title,
         description: grant.project.description,
         background_color: '000000',
-        image: image.url,
-        animation_url: video.url,
+        image: `ipfs://${image.IpfsHash}`,
+        animation_url: `ipfs://${video.IpfsHash}`,
         external_url: 'https://artizen.fund/artifacts',
         attributes: [
           {

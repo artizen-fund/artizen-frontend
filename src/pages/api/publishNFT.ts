@@ -1,14 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSentry } from '@sentry/nextjs'
-import { storeNFTFromContent, storeNFTFromFile } from '@lib'
+import { storeNFTFromContent, storeNFTFromUrl } from '@lib'
 
 const publishNFT = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { imagePath, name, description, metadata } = req.body
+    const { imagePath, name, metadata } = req.body
     if (metadata) {
-      await storeNFTFromContent(metadata, name, description)
+      const result = storeNFTFromContent(metadata, name)
+      return res.json(result)
     } else if (imagePath) {
-      await storeNFTFromFile(imagePath, name, description)
+      const result = await storeNFTFromUrl(imagePath, name)
+      return res.json(result)
     }
 
     throw new Error('Missing imagePath or metadata!')

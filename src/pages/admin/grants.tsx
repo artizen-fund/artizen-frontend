@@ -1,4 +1,4 @@
-import { Layout, Wallet } from '@components'
+import { Grants, Layout, Wallet } from '@components'
 import { getWagmiClient } from '@lib'
 
 import { WagmiConfig } from 'wagmi'
@@ -10,6 +10,7 @@ const ManageGrants = () => {
     <WagmiConfig client={client}>
       <Layout>
         <Wallet chains={chains}></Wallet>
+        <Grants />
       </Layout>
     </WagmiConfig>
   )
