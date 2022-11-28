@@ -1,17 +1,8 @@
-import NextAuth, { Session } from 'next-auth'
+import NextAuth, { User, Session } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
-
-const session = async ({ session, token }: { session: Session; token: JWT }) => {
-  const secret = process.env.JWT_SECRET || ''
-  const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
-  return {
-    ...session,
-    token: encodedToken,
-  }
-}
 
 export default NextAuth({
   session: {
@@ -30,12 +21,16 @@ export default NextAuth({
           'x-hasura-user-id': user.id,
         }
       }
-
       return token
     },
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    session,
+    session: async ({ session, token }: { session: Session; token: JWT }) => {
+      const secret = process.env.JWT_SECRET || ''
+      const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
+      return {
+        ...session,
+        token: encodedToken,
+      }
+    },
   },
   jwt: {
     encode: ({ secret, token }: JWTEncodeParams) => {
@@ -75,7 +70,7 @@ export default NextAuth({
           placeholder: '0x0',
         },
       },
-      async authorize(credentials) {
+      authorize: async credentials => {
         await Moralis.start({ apiKey: process.env.MORALIS_API_KEY })
 
         const { address, profileId, expirationTime } = (
@@ -87,6 +82,8 @@ export default NextAuth({
         ).raw
 
         const user = { id: address, address, profileId, expirationTime, signature: credentials?.signature }
+
+        // todo: check/insert user
 
         return user
       },

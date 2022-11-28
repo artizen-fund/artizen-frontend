@@ -33,18 +33,11 @@ export const Wallet = ({ chains }: WalletProps) => {
     })
 
     const { message } = await response.json()
-
     const signature = await signMessageAsync({ message })
 
-    // redirect user after success authentication to '/user' page
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const { url } = await signIn('credentials', { message, signature, redirect: false, callbackUrl: '/' })
-    /**
-     * instead of using signIn(..., redirect: "/user")
-     * we get the url from callback and push it to the router to avoid page refreshing
-     */
-    push(url)
+    const signInResponse = await signIn('credentials', { message, signature, redirect: false })
+
+    console.log('signInResponse', signInResponse)
   }
 
   return <div>{!isConnected ? <Button onClick={connectWallet}>Connect Metamask</Button> : 'Metamask Connected'}</div>
