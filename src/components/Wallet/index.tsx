@@ -33,6 +33,9 @@ export const Wallet = ({ chains }: WalletProps) => {
     })
 
     const { message } = await response.json()
+
+    console.log('message ', message)
+
     const signature = await signMessageAsync({ message })
 
     const signInResponse = await signIn('credentials', { message, signature, redirect: false })

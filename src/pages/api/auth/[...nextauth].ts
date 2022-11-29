@@ -3,6 +3,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
+import { createApolloClient } from '@lib'
+import { ICheckUserQuery } from '@types'
+import { GET_USER } from '@gql'
 
 export default NextAuth({
   session: {
@@ -24,6 +27,17 @@ export default NextAuth({
       return token
     },
     session: async ({ session, token }: { session: Session; token: JWT }) => {
+      console.log('token ', token)
+
+      const apolloClient = createApolloClient()
+
+      const hasuraUserCheck = await apolloClient.query<ICheckUserQuery>({
+        query: GET_USER,
+        variables: { where: { publicAddress: { _eq: token.id } } },
+      })
+
+      console.log('user from hasuraUserCheck ', hasuraUserCheck)
+
       const secret = process.env.JWT_SECRET || ''
       const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
       return {

@@ -8,6 +8,7 @@ import {
   LayoutContextProvider,
   UserContextProvider,
   getWagmiClient,
+  initializeApollo,
   authLink,
   httpLink,
   cache,
@@ -30,10 +31,13 @@ const App = ({
   // eslint-disable-next-line
   console.log(`--- version: ${packageJson.version} ----`)
 
-  const apolloClient = new ApolloClient({
-    link: ApolloLink.from([authLink, httpLink]),
-    cache,
-  })
+  // const apolloClient = new ApolloClient({
+  //   link: ApolloLink.from([authLink, httpLink]),
+  //   cache,
+  // })
+
+  const apolloClient = initializeApollo(pageProps?.apolloData || {})
+
   return (
     <WagmiConfig client={client}>
       <SessionProvider session={session}>
