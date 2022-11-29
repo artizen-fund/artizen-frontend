@@ -1,18 +1,11 @@
 import { Grants, Layout, Wallet } from '@components'
-import { getWagmiClient } from '@lib'
 
-import { WagmiConfig } from 'wagmi'
-
-const { client, chains } = getWagmiClient()
-
-const ManageGrants = () => {
+const ManageGrants = ({ chains }: { chains: any }) => {
   return (
-    <WagmiConfig client={client}>
-      <Layout>
-        <Wallet chains={chains}></Wallet>
-        <Grants />
-      </Layout>
-    </WagmiConfig>
+    <Layout>
+      <Wallet chains={chains}></Wallet>
+      <Grants />
+    </Layout>
   )
 }
 

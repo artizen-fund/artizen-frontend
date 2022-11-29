@@ -1,11 +1,12 @@
 import { ArtizenArtifactsAbi, GrantsAbi } from '@contracts'
+import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
 import { mockGrants } from './mock-grants'
 
 export const useGrant = () => {
-  const { address, isConnected } = useAccount()
-  const { data: signer, isError, isLoading } = useSigner()
+  const { address } = useAccount()
+  const { data: signer } = useSigner()
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
   const grantContractAddress = assert(
@@ -19,7 +20,7 @@ export const useGrant = () => {
     signerOrProvider: signer,
   })
 
-  const raflleContract = useContract({
+  const grantsContract = useContract({
     addressOrName: grantContractAddress,
     contractInterface: GrantsAbi,
     signerOrProvider: signer,
@@ -92,47 +93,48 @@ export const useGrant = () => {
           description: artifact.description,
         }),
       )
-
-      return metadata.url
+      return metadata
     })
 
-    return metadataUris
+    return Promise.all(metadataUris)
   }
 
   const publish = async (grantId: string) => {
-    const metadataUris = generateMetadata(grantId)
+    const grant = mockGrants[0]
 
-    console.log(metadataUris)
-    // Mint a new NFT
-    /*const mintTransaction = await nftContract.mint(address, 4, '0x', data.tokenURI)
-    await mintTransaction.wait()
+    const metadataUris = await generateMetadata(grantId)
 
-    const latestTokenId = await nftContract.tokenIds()
+    // Mint a new NFTs
+    for (let i = 0; i < metadataUris.length; i++) {
+      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadataUris[i].IpfsHash}`)
+      await mintTransaction.wait()
+    }
+
+    const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
 
     // Approve Grant contract to use the new NFT
     const approvalTransaction = await nftContract.setApprovalForAll(grantContractAddress, true)
     await approvalTransaction.wait()
 
-    const grant = {
+    const grantTuple = {
       nftContract: nftContractAddress,
       nftOwner: address,
-      grantID: 0,
-      tokenID: latestTokenId,
-      startTime: Math.round(new Date(data.startTime).getTime() / 1000), // must be timestamp in seconds
-      endTime: Math.round(new Date(data.endTime).getTime() / 1000), // must be timestamp in seconds
-      donationCount: 0,
-      minimumDonationAmount: ethers.utils.parseUnits(data.mimDonationAmount.toString(), USDC_UNIT),
+      grantsID: 0,
+      tokenID1: latestTokenId.sub(3),
+      tokenID2: latestTokenId.sub(2),
+      tokenID3: latestTokenId.sub(1),
+      startTime: grant.startTime, // must be timestamp in seconds
+      endTime: (Number(grant.startTime) + 60 * 60 * 24).toString(), // must be timestamp in seconds
+      minimumDonationAmount: ethers.utils.parseEther('10'),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
-      tokenAllocation: ethers.utils.parseUnits(data.tokenAllocation.toString()),
-      tokenBuffer: ethers.utils.parseUnits(data.tokenAllocation.toString()),
       cancelled: false,
       ended: false,
     }
 
     // Create a new Grant
-    const grantTransaction = await raflleContract.createGrant(grant)
-    await grantTransaction.wait()*/
+    const grantTransaction = await grantsContract.createGrant(grantTuple)
+    await grantTransaction.wait()
   }
 
   return { publish }

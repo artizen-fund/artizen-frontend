@@ -28,10 +28,10 @@ export async function storeNFTFromUrl(imageUrl: string, name: string) {
 
 /**
  * Stores a metadata of an NFT with the given name.
- * @param {string} metadata the url to an image file
+ * @param {any} metadata the medatada
  * @param {string} name a name for the NFT
  */
-export async function storeNFTFromContent(metadata: string, name: string) {
+export async function storeNFTFromContent(metadata: any, name: string) {
   const pinataJWTKey = assert(assert(process.env.PINATA_JWT_KEY, 'PINATA_JWT_KEY'))
   const pinata = new pinataSDK({
     pinataJWTKey,

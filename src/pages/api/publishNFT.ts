@@ -6,7 +6,7 @@ const publishNFT = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { imagePath, name, metadata } = req.body
     if (metadata) {
-      const result = storeNFTFromContent(metadata, name)
+      const result = await storeNFTFromContent(metadata, name)
       return res.json(result)
     } else if (imagePath) {
       const result = await storeNFTFromUrl(imagePath, name)
