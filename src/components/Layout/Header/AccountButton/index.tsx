@@ -1,17 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
-import { useApolloClient } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { Maybe } from '@types'
-import { rgba, refreshSession, isClient, UserContext } from '@lib'
+import { rgba, UserContext } from '@lib'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
-  const apolloClient = useApolloClient()
   const { loggedInUser } = useContext(UserContext)
-  useEffect(() => {
-    if (isClient()) refreshSession(apolloClient)
-  }, [])
 
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
   useEffect(() => {

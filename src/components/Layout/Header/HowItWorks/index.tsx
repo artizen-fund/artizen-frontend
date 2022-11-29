@@ -1,13 +1,10 @@
-import { useContext } from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
-import { rgba, LayoutContext, assetPath } from '@lib'
+import { rgba, assetPath } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { howItWorks } from '@copy/header'
 
 const HowItWorks = () => {
-  const { toggleModal } = useContext(LayoutContext)
-
   return (
     <Wrapper>
       {howItWorks.map(cell => (
@@ -16,11 +13,6 @@ const HowItWorks = () => {
           <Under>
             <Title>{cell.title}</Title>
             <Description>{cell.copy}</Description>
-            {!!cell.modal && (
-              <Button outline level={2} onClick={() => toggleModal?.(cell.modal as ModalType)}>
-                Learn More
-              </Button>
-            )}
             {!!cell.destination && (
               <Button outline level={2} href={cell.destination}>
                 Learn More

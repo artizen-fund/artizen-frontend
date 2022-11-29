@@ -1,7 +1,5 @@
-import { SDKBase, InstanceWithExtensions } from '@magic-sdk/provider'
-import { OAuthExtension } from '@magic-ext/oauth'
 import { BigNumber } from 'bignumber.js'
-import { IUser } from './generated'
+import { IUsers } from './generated'
 
 declare global {
   interface SimpleComponentProps {
@@ -16,18 +14,16 @@ declare global {
     location: string
   }
 
-  type NextJsInitializedPage = (props: AppProps) => JSX.Element
-
-  type TokenAndMetadataBundle = {
-    token: string
-    metadata: MagicUserMetadata
+  type UserBundle = {
+    publicAddress: string
+    email: string
   }
 
-  type MagicInstance = InstanceWithExtensions<SDKBase, OAuthExtension[]>
+  type NextJsInitializedPage = (props: AppProps) => JSX.Element
 
   type HeaderShelfType = 'session' | 'howItWorks' | 'donate'
 
-  type ModalType = 'donationGuide' | 'postDonationData' | 'share' | 'alert' | 'media'
+  type ModalType = 'postDonationData' | 'share' | 'alert' | 'media'
 
   type DonationStage =
     | 'setAmount'
@@ -45,7 +41,7 @@ declare global {
     address: string
     amount: string
     block_hash: string
-    user: IUser
+    user: IUsers
     userAddress: string
   }
 

@@ -10,14 +10,13 @@ import {
   Sidebar,
   Curators,
   Button,
+  Wallet,
 } from '@components'
-import { rgba, useCampaign, useTabbedInfo, Tabs, TabbedContent } from '@lib'
+import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
-const Home = () => {
-  const { raffle } = useCampaign()
-
+const Home = ({ chains }: { chains: any }) => {
   const tabs = Object.keys(tabbedInfo).map(key => (
     <Tab key={`tab-${key}`} label={key}>
       {tabbedInfo[key]}
@@ -27,13 +26,14 @@ const Home = () => {
 
   return (
     <Layout>
+      <Wallet chains={chains}></Wallet>
       <Header>
         <h1>{header.title}</h1>
         <h2>{header.subtitle}</h2>
       </Header>
       <StyledPagePadding>
         <Wrapper>
-          <FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} />
+          {/*<FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} /> */}
           <TabbedInfoWrapper>
             <StyledTabs {...{ activeTab, setTab, tabs }} />
             <StyledTabbedContent {...{ activeTab, tabs }} />
