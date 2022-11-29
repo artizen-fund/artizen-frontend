@@ -8,7 +8,7 @@ import { cache } from './'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-export const createApolloClient = didToken => {
+export const createApolloClient = (didToken?: string) => {
   const httpLink = createHttpLink({
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
     headers: {},
@@ -18,11 +18,12 @@ export const createApolloClient = didToken => {
   // This sets up a middleware that circumstantially uses the correct query token.
   // https://www.apollographql.com/docs/react/networking/authentication/#header
   const authLink = setContext(async (_, { headers }) => {
+    // todo: fix this any
     const session: any = await getSession()
     const token = session ? session.token : undefined
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
-      console.log('its loafing token', process.env.HASURA_ADMIN_SECRET)
+      console.log('loading token', process.env.HASURA_ADMIN_SECRET)
       // server request (usually for SSR)
       newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
     } else if (isServer() && didToken) {

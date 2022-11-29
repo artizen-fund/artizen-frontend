@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { signIn } from 'next-auth/react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 import { useQuery } from '@apollo/client'
 import { useAccount, useConnect, useSignMessage, Chain } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -15,9 +15,14 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
     variables: { publicAddress },
   })
 
+  const { data: session } = useSession()
+  useEffect(() => {
+    console.log('session', session)
+  }, [session])
+
   useEffect(() => {
     // todo: this is turning up empty, why?
-    console.log('user', data)
+    console.log('data', data)
   }, [data])
 
   const { connectAsync } = useConnect()
@@ -45,13 +50,19 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
     const { message } = await response.json()
     const signature = await signMessageAsync({ message })
 
-    const signinResponse = await signIn('credentials', { message, signature, redirect: false, callbackUrl: '/' })
-    console.log('TODO: are we supposed to be doing something with this?', signinResponse)
+    const signinResponse = await signIn('credentials', { message, signature, redirect: false })
 
     setPublicAddress(account)
   }
 
-  return <div>{!isConnected ? <Button onClick={connectWallet}>Connect Metamask</Button> : 'Metamask Connected'}</div>
+  return (
+    <div>
+      <Button onClick={connectWallet} disabled={isConnected && !session}>
+        {!isConnected ? 'Connect Metamask' : !session ? 'Connecting…' : 'Donate'}
+      </Button>
+      {!!session && <p onClick={() => signOut()}>sign out</p>}
+    </div>
+  )
 }
 
 export default Wallet

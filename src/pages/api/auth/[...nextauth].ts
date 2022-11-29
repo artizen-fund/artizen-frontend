@@ -4,8 +4,8 @@ import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
 import { GET_USER, CREATE_USER } from '@gql'
-import { ICheckUserQuery, ICreateUserMutation } from '@types'
-import { createApolloClient } from '@lib'
+import { ICreateUserMutation } from '@types'
+import { createApolloClient, assert } from '@lib'
 
 export default NextAuth({
   session: {
@@ -26,7 +26,10 @@ export default NextAuth({
       }
       return token
     },
-    session: async ({ session, token }: { session: Session; token: JWT }) => {
+    session: async ({ session, token, user }: { session: Session; token: JWT; user: User }) => {
+      console.log('requested session', session)
+      console.log('requested token', token)
+      console.log('user?', user)
       const secret = process.env.JWT_SECRET || ''
       const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
       return {
@@ -74,57 +77,45 @@ export default NextAuth({
         },
       },
       authorize: async credentials => {
-        await Moralis.start({ apiKey: process.env.MORALIS_API_KEY })
-
-        const { address, profileId, expirationTime } = (
-          await Moralis.Auth.verify({
-            message: credentials?.message || '',
-            signature: credentials?.signature || '',
-            network: 'evm',
-          })
-        ).raw
-
-        const lowerCasedAddress = address.toLowerCase()
-
-        const user = {
-          id: undefined,
-          publicAddress: lowerCasedAddress,
-          profileId,
-          expirationTime,
-          signature: credentials?.signature,
-        }
-
         const apolloClient = createApolloClient()
-        const userFromDB = await apolloClient.query<ICheckUserQuery>({
-          query: GET_USER,
-          variables: { where: { publicAddress: { _eq: lowerCasedAddress } } },
-        })
 
-        const needToAddUser = userFromDB.data.Users.length === 0
+        try {
+          const moralisApiKey = assert(process.env.MORALIS_API_KEY, 'MORALIS_API_KEY')
+          await Moralis.start({ apiKey: moralisApiKey })
 
-        console.log('user id ', address)
-        console.log('UserRecordDB ', userFromDB)
-        console.log('needToAddUser   ', needToAddUser)
+          const { address, profileId, expirationTime } = (
+            await Moralis.Auth.verify({
+              message: credentials?.message || '',
+              signature: credentials?.signature || '',
+              network: 'evm',
+            })
+          ).raw
 
-        if (!needToAddUser) {
-          user.id = userFromDB.data.Users[0].id
+          const userFromDB = await apolloClient.mutate<ICreateUserMutation>({
+            mutation: CREATE_USER,
+            variables: { publicAddress: address.toLowerCase() },
+          })
+
+          if (!userFromDB.data?.insert_Users_one?.id) {
+            throw new Error('Could not retrieve ID from database upsert.')
+          }
+
+          const user = {
+            id: userFromDB.data?.insert_Users_one?.id,
+            publicAddress: address.toLowerCase(),
+            profileId,
+            expirationTime,
+            signature: credentials?.signature,
+            herp: 'derp',
+          }
+
+          console.log('returning user', user)
+
           return user
+        } catch (error) {
+          console.error(error)
+          return null
         }
-
-        console.log('adding user.......', lowerCasedAddress)
-
-        const createUserDB = await apolloClient.mutate({
-          mutation: CREATE_USER,
-          variables: { publicAddress: lowerCasedAddress },
-        })
-
-        const isThereACreatedUserDB = createUserDB && createUserDB.data && createUserDB.data.insert_Users_one
-
-        if (isThereACreatedUserDB) {
-          user.id = createUserDB.data.insert_Users_one.id
-        }
-
-        return user
       },
     }),
     // ...add more providers here
