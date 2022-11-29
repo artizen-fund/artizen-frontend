@@ -3,9 +3,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
+import { GET_USER, CREATE_USER } from '@gql'
+import { ICheckUserQuery, ICreateUserMutation } from '@types'
 import { createApolloClient } from '@lib'
-import { CREATE_USER } from '@gql'
-import { ICreateUserMutation } from '@types'
 
 export default NextAuth({
   session: {
@@ -84,13 +84,45 @@ export default NextAuth({
           })
         ).raw
 
-        const user = { id: address, address, profileId, expirationTime, signature: credentials?.signature }
+        const lowerCasedAddress = address.toLowerCase()
+
+        const user = {
+          id: undefined,
+          publicAddress: lowerCasedAddress,
+          profileId,
+          expirationTime,
+          signature: credentials?.signature,
+        }
 
         const apolloClient = createApolloClient()
-        const insertion = await apolloClient.mutate<ICreateUserMutation>({
-          mutation: CREATE_USER,
-          variables: { publicAddress: address.toLowerCase() },
+        const userFromDB = await apolloClient.query<ICheckUserQuery>({
+          query: GET_USER,
+          variables: { where: { publicAddress: { _eq: lowerCasedAddress } } },
         })
+
+        const needToAddUser = userFromDB.data.Users.length === 0
+
+        console.log('user id ', address)
+        console.log('UserRecordDB ', userFromDB)
+        console.log('needToAddUser   ', needToAddUser)
+
+        if (!needToAddUser) {
+          user.id = userFromDB.data.Users[0].id
+          return user
+        }
+
+        console.log('adding user.......', lowerCasedAddress)
+
+        const createUserDB = await apolloClient.mutate({
+          mutation: CREATE_USER,
+          variables: { publicAddress: lowerCasedAddress },
+        })
+
+        const isThereACreatedUserDB = createUserDB && createUserDB.data && createUserDB.data.insert_Users_one
+
+        if (isThereACreatedUserDB) {
+          user.id = createUserDB.data.insert_Users_one.id
+        }
 
         return user
       },
