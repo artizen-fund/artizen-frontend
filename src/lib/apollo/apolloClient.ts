@@ -18,12 +18,10 @@ export const createApolloClient = (didToken?: string) => {
   // This sets up a middleware that circumstantially uses the correct query token.
   // https://www.apollographql.com/docs/react/networking/authentication/#header
   const authLink = setContext(async (_, { headers }) => {
-    // todo: fix this any
-    const session: any = await getSession()
+    const session = await getSession()
     const token = session ? session.token : undefined
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
-      console.log('loading token', process.env.HASURA_ADMIN_SECRET)
       // server request (usually for SSR)
       newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
     } else if (isServer() && didToken) {
@@ -52,7 +50,7 @@ export const createApolloClient = (didToken?: string) => {
   })
 }
 
-export function initializeApollo(initialState?: any, didToken?): ApolloClient<NormalizedCacheObject> {
+export function initializeApollo(initialState?: unknown, didToken?: string): ApolloClient<NormalizedCacheObject> {
   const newApolloClient = createApolloClient(didToken)
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here.
   if (initialState) {
