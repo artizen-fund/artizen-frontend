@@ -4,7 +4,7 @@ import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
 import { GET_USER, CREATE_USER } from '@gql'
-import { ICreateUserMutation, IGetUsersQuery } from '@types'
+import { ICreateUserMutation, IGetUserQuery } from '@types'
 import { createApolloClient, assert } from '@lib'
 
 export default NextAuth({
@@ -32,7 +32,7 @@ export default NextAuth({
       const secret = process.env.JWT_SECRET || ''
       const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
 
-      const userFromDB = await apolloClient.query<IGetUsersQuery>({
+      const userFromDB = await apolloClient.query<IGetUserQuery>({
         query: GET_USER,
         variables: { id: token.id },
       })
