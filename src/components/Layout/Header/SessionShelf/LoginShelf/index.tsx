@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useApolloClient, ApolloClient } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { Icon, Form, CheckboxControl, Button } from '@components'
 import { useFormLocalStorage } from '@lib'

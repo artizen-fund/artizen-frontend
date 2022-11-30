@@ -1,19 +1,15 @@
+import { useSession, signIn, signOut } from 'next-auth/react'
+import { useAccount, useConnect, useSignMessage, Chain } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 import { Button } from '@components'
 import { assertInt } from '@lib'
-import { useRouter } from 'next/router'
-import { useAccount, useConnect, useSignMessage } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { signIn } from 'next-auth/react'
 
-interface WalletProps {
-  chains: any
-}
+export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
+  const { data: session } = useSession()
 
-export const Wallet = ({ chains }: WalletProps) => {
   const { connectAsync } = useConnect()
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
-  const { push } = useRouter()
 
   const connectWallet = async () => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
@@ -35,14 +31,17 @@ export const Wallet = ({ chains }: WalletProps) => {
     const { message } = await response.json()
     const signature = await signMessageAsync({ message })
 
-    const signInResponse = await signIn('credentials', { message, signature, redirect: false })
-
-    // todo: Apollo.getUser( { publicAddress: address from above } )
-
-    // console.log('signInResponse', signInResponse)
+    await signIn('credentials', { message, signature, redirect: false })
   }
 
-  return <div>{!isConnected ? <Button onClick={connectWallet}>Connect Metamask</Button> : 'Metamask Connected'}</div>
+  return (
+    <div>
+      <Button onClick={connectWallet} disabled={isConnected && !session}>
+        {!isConnected ? 'Connect Metamask' : !session ? 'Connecting…' : 'Donate'}
+      </Button>
+      {!!session && <p onClick={() => signOut()}>sign out</p>}
+    </div>
+  )
 }
 
 export default Wallet

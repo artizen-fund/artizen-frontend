@@ -3,6 +3,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
+import { GET_USER, CREATE_USER } from '@gql'
+import { ICreateUserMutation, IGetUserQuery } from '@types'
+import { createApolloClient, assert } from '@lib'
 
 export default NextAuth({
   session: {
@@ -23,11 +26,20 @@ export default NextAuth({
       }
       return token
     },
-    session: async ({ session, token }: { session: Session; token: JWT }) => {
+    session: async ({ session, token }: { session: Session; token: JWT; user: User }) => {
+      const apolloClient = createApolloClient()
+
       const secret = process.env.JWT_SECRET || ''
       const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
+
+      const userFromDB = await apolloClient.query<IGetUserQuery>({
+        query: GET_USER,
+        variables: { id: token.id },
+      })
+
       return {
         ...session,
+        user: userFromDB.data.Users[0],
         token: encodedToken,
       }
     },
@@ -71,21 +83,42 @@ export default NextAuth({
         },
       },
       authorize: async credentials => {
-        await Moralis.start({ apiKey: process.env.MORALIS_API_KEY })
+        const apolloClient = createApolloClient()
 
-        const { address, profileId, expirationTime } = (
-          await Moralis.Auth.verify({
-            message: credentials?.message || '',
-            signature: credentials?.signature || '',
-            network: 'evm',
+        try {
+          const moralisApiKey = assert(process.env.MORALIS_API_KEY, 'MORALIS_API_KEY')
+          await Moralis.start({ apiKey: moralisApiKey })
+
+          const { address, profileId, expirationTime } = (
+            await Moralis.Auth.verify({
+              message: credentials?.message || '',
+              signature: credentials?.signature || '',
+              network: 'evm',
+            })
+          ).raw
+
+          const userFromDB = await apolloClient.mutate<ICreateUserMutation>({
+            mutation: CREATE_USER,
+            variables: { publicAddress: address.toLowerCase() },
           })
-        ).raw
 
-        const user = { id: address, address, profileId, expirationTime, signature: credentials?.signature }
+          if (!userFromDB.data?.insert_Users_one?.id) {
+            throw new Error('Could not retrieve ID from database upsert.')
+          }
 
-        // todo: check/insert user
+          const user = {
+            id: userFromDB.data?.insert_Users_one?.id,
+            publicAddress: address.toLowerCase(),
+            profileId,
+            expirationTime,
+            signature: credentials?.signature,
+          }
 
-        return user
+          return user
+        } catch (error) {
+          console.error(error)
+          return null
+        }
       },
     }),
     // ...add more providers here

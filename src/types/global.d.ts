@@ -3,6 +3,7 @@ import { IUsers } from './generated'
 
 declare global {
   interface SimpleComponentProps {
+    id?: string
     children?: React.ReadNode
     className?: string
     onClick?: (input?: any) => void
