@@ -3,7 +3,6 @@ import { AbiItem } from 'web3-utils'
 import { provider } from 'web3-core'
 import { isServer } from '@lib'
 import { ethers } from 'ethers'
-import { USDCAbi } from '@contracts'
 
 export const getUSDCBalance = async (address: string) => {
   if (isServer()) return
