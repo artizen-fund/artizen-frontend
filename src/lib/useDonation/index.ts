@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
 import { assert, USDC_UNIT, userMetadataVar, UserContext, useReadContract, useWriteContract } from '@lib'
-import { USDCAbi, RaffleAbi } from '@contracts'
+import { GrantsAbi } from '@contracts'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { useMetaContract } from './useMetaContract'
 
@@ -28,7 +28,7 @@ export const useDonation = () => {
 
   const [callWriteContract] = useWriteContract()
 
-  const { value: raffleId } = useReadContract(raffleContractAddress, RaffleAbi, 'raffleCount', [])
+  const { value: raffleId } = useReadContract(raffleContractAddress, GrantsAbi, 'raffleCount', [])
 
   // const [createDonation] = useMutation(CREATE_DONATION, {
   //   onError: error => {
@@ -51,60 +51,8 @@ export const useDonation = () => {
     setConfirmingStatus('PROCESSING')
     setConfirmingMessage('Confirming Donation')
 
-    const amountInUSDC = ethers.utils.parseUnits(amount.toString(), USDC_UNIT)
-    const chainID = assert(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
-
-    let approveReceipt = null
-    // check if it is MATIC mainnet
-    if (chainID === '137') {
-      approveReceipt = await callCustomMetaTxMethod(
-        usdcContractAddress,
-        USDCAbi,
-        metadata?.publicAddress as string,
-        'approve',
-        [raffleContractAddress, amountInUSDC],
-      )
-    } else {
-      approveReceipt = await callWriteContract(usdcContractAddress, USDCAbi, 'approve', [
-        raffleContractAddress,
-        amountInUSDC,
-      ])
-    }
-
-    if (approveReceipt.hash || approveReceipt.transactionHash) {
-      //       const donation = {
-      //         donor: metadata?.publicAddress as string,
-      //         raffleID: raffleId,
-      //         amount: amountInUSDC,
-      //         timestamp: Math.round(new Date().getTime() / 1000),
-      //       }
-      //
-      //       const donateReceipt = await callStandardMetaTxMethod(
-      //         raffleContractAddress,
-      //         RaffleAbi,
-      //         metadata?.publicAddress as string,
-      //         'donate',
-      //         [donation],
-      //       )
-
-      // await createDonation({
-      //   variables: {
-      //     data: {
-      //       userId: loggedInUser?.id,
-      //       amount,
-      //       fee,
-      //       type: donationMethod,
-      //       state: 'INITIATED',
-      //       txHash: donateReceipt.hash,
-      //       topUpId,
-      //       timestamp: new Date().getTime(),
-      //     },
-      //   },
-      // })
-
-      setConfirmingStatus('COMPLETE')
-      setConfirmingMessage('Donation Confirmed')
-    }
+    setConfirmingStatus('COMPLETE')
+    setConfirmingMessage('Donation Confirmed')
   }
 
   return [initDonation, buildingStatus, buildingMessage, confirmingStatus, confirmingMessage] as const
