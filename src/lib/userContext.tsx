@@ -1,8 +1,8 @@
 import { createContext, useState } from 'react'
-import { useReactiveVar, useQuery } from '@apollo/client'
-import { userMetadataVar, initIntercom } from '@lib'
+import { useQuery } from '@apollo/client'
+import { initIntercom } from '@lib'
 import { GET_USER } from '@gql'
-import { IUsers, IGetUsersQuery } from '@types'
+import { IUsers, IGetUserQuery } from '@types'
 
 interface IUserContext {
   loading?: boolean
