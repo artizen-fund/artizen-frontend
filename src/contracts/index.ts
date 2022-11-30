@@ -1,4 +1,2 @@
-export { default as RaffleAbi } from './RaffleAbi'
-export { default as ArtizenERC1155 } from './ArtizenERC1155Abi'
-export { default as USDCAbi } from './USDCAbi'
-export { default as ArtToken } from './ArtToken'
+export { default as GrantsAbi } from './GrantsAbi'
+export { default as ArtizenArtifactsAbi } from './ArtizenArtifactsAbi'

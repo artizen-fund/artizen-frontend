@@ -4,8 +4,8 @@ import { BigNumber } from 'ethers'
 import { Icon } from '@components'
 import { palette, breakpoint, typography } from '@theme'
 import { rgba, assert, useReadContract, assetPath, LayoutContext } from '@lib'
-import { ArtizenERC1155 } from '@contracts'
 import { raffle } from '@copy/home'
+import { ArtizenArtifactsAbi } from '@contracts'
 
 type IFeaturedArt = {
   tagName?: string
@@ -26,7 +26,7 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
 
   const { value: metadataUri, refetch: refetchTokenId } = useReadContract(
     assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS'),
-    ArtizenERC1155,
+    ArtizenArtifactsAbi,
     'uri',
     [tokenId],
     false,
