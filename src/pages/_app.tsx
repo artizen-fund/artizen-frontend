@@ -1,16 +1,14 @@
 import React from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
-import { ApolloClient, ApolloLink, ApolloProvider } from '@apollo/client'
+import { ApolloProvider } from '@apollo/client'
 import {
   withAuth,
   CourierNotification,
   LayoutContextProvider,
   UserContextProvider,
   getWagmiClient,
-  authLink,
-  httpLink,
-  cache,
+  initializeApollo,
 } from '@lib'
 import packageJson from '../../package.json'
 
@@ -30,10 +28,7 @@ const App = ({
   // eslint-disable-next-line
   console.log(`--- version: ${packageJson.version} ----`)
 
-  const apolloClient = new ApolloClient({
-    link: ApolloLink.from([authLink, httpLink]),
-    cache,
-  })
+  const apolloClient = initializeApollo(pageProps?.apolloData || {})
   return (
     <WagmiConfig client={client}>
       <SessionProvider session={session}>
