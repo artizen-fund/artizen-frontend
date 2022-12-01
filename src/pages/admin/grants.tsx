@@ -1,10 +1,11 @@
-import { Grants, Layout, Wallet } from '@components'
+import { Grants, Layout, Wallet, CreateGrants } from '@components'
 
 const ManageGrants = ({ chains }: { chains: any }) => {
   return (
     <Layout>
       <Wallet chains={chains}></Wallet>
-      <Grants />
+      <CreateGrants />
+      {/* <Grants /> */}
     </Layout>
   )
 }
