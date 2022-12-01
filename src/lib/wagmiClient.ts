@@ -1,5 +1,6 @@
 import { configureChains, chain, createClient } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { assert } from '@lib'
 import { ethers } from 'ethers'
 
@@ -20,6 +21,15 @@ export const getWagmiClient = () => {
 
   const { chains, provider, webSocketProvider } = getWagmiChains()
   const client = createClient({
+    autoConnect: true,
+    // connectors: [
+    //   new WalletConnectConnector({
+    //     chains,
+    //     options: {
+    //       qrcode: true,
+    //     },
+    //   }),
+    // ],
     provider: ethProvider,
     webSocketProvider,
   })
