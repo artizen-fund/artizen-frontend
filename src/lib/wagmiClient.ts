@@ -20,6 +20,7 @@ export const getWagmiClient = () => {
 
   const { chains, provider, webSocketProvider } = getWagmiChains()
   const client = createClient({
+    autoConnect: true,
     provider: ethProvider,
     webSocketProvider,
   })
