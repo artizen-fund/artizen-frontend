@@ -1,8 +1,9 @@
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { useAccount, useConnect, useSignMessage, Chain } from 'wagmi'
+import { useAccount, useConnect, useSignMessage, Chain, Connector } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { Button } from '@components'
 import { assertInt } from '@lib'
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
 export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
   const { data: session } = useSession()
@@ -11,10 +12,10 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
 
-  const connectWallet = async () => {
+  const connectWallet = async (connector: Connector) => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
     const { account, chain } = await connectAsync({
-      connector: new InjectedConnector({ chains }),
+      connector,
       chainId,
     })
 
@@ -36,8 +37,23 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
 
   return (
     <div>
-      <Button onClick={connectWallet} disabled={isConnected && !session}>
+      <Button onClick={() => connectWallet(new InjectedConnector({ chains }))} disabled={isConnected && !session}>
         {!isConnected ? 'Connect Metamask' : !session ? 'Connecting…' : 'Donate'}
+      </Button>
+      <Button
+        onClick={() =>
+          connectWallet(
+            new WalletConnectConnector({
+              chains,
+              options: {
+                qrcode: true,
+              },
+            }),
+          )
+        }
+        disabled={isConnected && !session}
+      >
+        {!isConnected ? 'Connect With WalletConnect' : !session ? 'Connecting…' : 'Donate'}
       </Button>
       {!!session && <p onClick={() => signOut()}>sign out</p>}
     </div>
