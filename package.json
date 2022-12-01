@@ -12,7 +12,7 @@
   "scripts": {
     "clean": "rm -rf .next",
     "generate": "node ./tools/generate.js",
-    "dev": "next dev",
+    "dev": "SECRET_ENV=DevSecrets op run --env-file='.env.local' -- next dev",
     "develop": "yarn codegen && next dev",
     "build": "yarn codegen && next build",
     "start": "next build && next start -p $PORT",
@@ -26,8 +26,6 @@
   },
   "dependencies": {
     "@apollo/client": "3.7.1",
-    "@biconomy/hyphen": "^1.1.6",
-    "@biconomy/mexa": "3.0.5",
     "@jsonforms/core": "^3.0.0",
     "@jsonforms/react": "^3.0.0",
     "@jsonforms/vanilla-renderers": "^3.0.0",

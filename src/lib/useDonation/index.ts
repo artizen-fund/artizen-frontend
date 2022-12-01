@@ -1,8 +1,7 @@
-import { ethers } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
-import { assert, USDC_UNIT, userMetadataVar, UserContext, useReadContract, useWriteContract } from '@lib'
+import { assert, userMetadataVar, UserContext, useReadContract, useWriteContract } from '@lib'
 import { GrantsAbi } from '@contracts'
-import { useMutation, useReactiveVar } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import { useMetaContract } from './useMetaContract'
 
 export const useDonation = () => {
