@@ -1,10 +1,14 @@
 import { useSession, signIn, signOut } from 'next-auth/react'
+import { useApolloClient } from '@apollo/client'
 import { useAccount, useConnect, useSignMessage, Chain } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { Button } from '@components'
-import { assertInt } from '@lib'
+import { assertInt, loggedInUserVar } from '@lib'
+import { IGetUserQuery } from '@types'
+import { GET_USER } from '@gql'
 
 export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
+  const apolloClient = useApolloClient()
   const { data: session } = useSession()
 
   const { connectAsync } = useConnect()
@@ -13,12 +17,12 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
 
   const connectWallet = async () => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
-    const { account, chain } = await connectAsync({
+    const { account: publicAddress, chain } = await connectAsync({
       connector: new InjectedConnector({ chains }),
       chainId,
     })
 
-    const userData = { address: account, chain: chain.id, network: 'evm' }
+    const userData = { address: publicAddress, chain: chain.id, network: 'evm' }
 
     const response = await fetch('/api/auth/request-message', {
       method: 'POST',
@@ -27,11 +31,17 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
         'content-type': 'application/json',
       },
     })
-
     const { message } = await response.json()
     const signature = await signMessageAsync({ message })
 
     await signIn('credentials', { message, signature, redirect: false })
+
+    const userFromDB = await apolloClient.query<IGetUserQuery>({
+      query: GET_USER,
+      variables: { publicAddress },
+    })
+
+    loggedInUserVar(userFromDB.data.Users[0])
   }
 
   return (

@@ -1,6 +1,6 @@
 import { InMemoryCache } from '@apollo/client'
 import { isEqual } from 'lodash'
-import { userMetadataVar } from './localState'
+import { loggedInUserVar } from './localState'
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -42,9 +42,9 @@ export const cache: InMemoryCache = new InMemoryCache({
                 ]
           },
         },
-        userMetadata: {
+        loggedInUser: {
           read() {
-            return userMetadataVar()
+            return loggedInUserVar()
           },
         },
       },
