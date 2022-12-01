@@ -22,7 +22,7 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
       chainId,
     })
 
-    const userData = { address: publicAddress, chain: chain.id, network: 'evm' }
+    const userData = { address: publicAddress.toLowerCase(), chain: chain.id, network: 'evm' }
 
     const response = await fetch('/api/auth/request-message', {
       method: 'POST',
@@ -38,8 +38,12 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
 
     const userFromDB = await apolloClient.query<IGetUserQuery>({
       query: GET_USER,
-      variables: { publicAddress },
+      variables: { publicAddress: publicAddress.toLowerCase() },
     })
+
+    if (userFromDB.data.Users.length < 1) {
+      throw new Error('Error: user record not found')
+    }
 
     loggedInUserVar(userFromDB.data.Users[0])
   }

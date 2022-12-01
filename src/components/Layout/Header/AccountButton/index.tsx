@@ -10,6 +10,10 @@ import { rgba, loggedInUserVar } from '@lib'
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
+  useEffect(() => {
+    console.log('loggedInUser', loggedInUser)
+  }, [loggedInUser])
+
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
   useEffect(() => {
     setAvatarDisplay(
