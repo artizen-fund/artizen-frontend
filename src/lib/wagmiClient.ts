@@ -1,7 +1,6 @@
 import { configureChains, chain, createClient } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { assert } from '@lib'
-import { ethers } from 'ethers'
 
 export const getWagmiChains = () => {
   const alchemyApiKey = assert(process.env.NEXT_PUBLIC_ALCHEMY_API, 'NEXT_PUBLIC_ALCHEMY_API')
@@ -13,14 +12,10 @@ export const getWagmiChains = () => {
 }
 
 export const getWagmiClient = () => {
-  const ethProvider = new ethers.providers.JsonRpcProvider(
-    'http://127.0.0.1:8545/',
-    ethers.providers.getNetwork('31337'),
-  )
-
   const { chains, provider, webSocketProvider } = getWagmiChains()
   const client = createClient({
-    provider: ethProvider,
+    autoConnect: true,
+    provider,
     webSocketProvider,
   })
   return { client, chains }
