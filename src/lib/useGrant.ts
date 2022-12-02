@@ -125,7 +125,7 @@ export const useGrant = () => {
       tokenID3: latestTokenId.sub(1),
       startTime: grant.startTime, // must be timestamp in seconds
       endTime: (Number(grant.startTime) + 60 * 60 * 24).toString(), // must be timestamp in seconds
-      minimumDonationAmount: ethers.utils.parseEther('10'),
+      minimumDonationAmount: ethers.utils.parseEther('0.008'),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
       cancelled: false,
