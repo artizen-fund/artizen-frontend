@@ -135,7 +135,23 @@ export const useGrant = () => {
     // Create a new Grant
     const grantTransaction = await grantsContract.createGrant(grantTuple)
     await grantTransaction.wait()
+
+    alert('Grant created')
   }
 
-  return { publish }
+  const endGrant = async (grantId: number) => {
+    const grantTransaction = await grantsContract.sendRewards(grantId)
+    await grantTransaction.wait()
+
+    alert('Grant ended')
+  }
+
+  const cancelGrant = async (grantId: number) => {
+    const grantTransaction = await grantsContract.cancelGrant(grantId)
+    await grantTransaction.wait()
+
+    alert('Grant canceled')
+  }
+
+  return { publish, endGrant, cancelGrant }
 }
