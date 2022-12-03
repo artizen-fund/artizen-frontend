@@ -1,13 +1,13 @@
 import { Grants, Layout, Wallet, CreateGrants } from '@components'
 
-const ManageGrants = ({ chains }: { chains: any }) => {
+const grantDetails = ({ chains }: { chains: any }) => {
   return (
     <Layout>
       <Wallet chains={chains}></Wallet>
       <CreateGrants />
-      {/* <Grants /> */}
+      <Grants />
     </Layout>
   )
 }
 
-export default ManageGrants
+export default grantDetails

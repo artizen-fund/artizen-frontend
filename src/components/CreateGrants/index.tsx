@@ -28,58 +28,44 @@ const CreateGrants = () => {
   }
 
   return (
-    <Wrapper>
-      <SettingsFormHeader
-        imgPath="/assets/illustrations/settings/profile.png"
-        darkImgPath="/assets/illustrations/settings/profile-dark.png"
-        title="Account Settings"
-        subtitle="Check your settings below."
-      />
-      <FormWrapper>
-        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
-          <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={0}>
-            Save Changes
-          </StyledButton>
-        </Form>
-      </FormWrapper>
-    </Wrapper>
+    <FormWrapper>
+      <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
+        <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={0}>
+          Save Changes
+        </StyledButton>
+      </Form>
+    </FormWrapper>
   )
 }
 
 const Wrapper = styled.div``
 
 const FormWrapper = styled.div`
-  display: grid;
-  gap: 10px;
-  grid-template-areas:
-    'firstName lastName'
-    'email email'
-    'phoneNumber phoneNumber'
-    'saveChanges saveChanges';
-
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    gap: 16px;
+  padding: 100px;
+  .group-layout legend {
+    display: block;
+    margin: 0 0 10px;
+    font-size: 30px;
+  }
+  // display: grid;
+  // justify-items: stretch;
+  // gap: 10px;
+  // grid-template-areas:
+  //   'startDate startDate'
+  //   'season season'
+  //   @media only screen and (min-width: ${breakpoint.desktop}px) {
+  //   gap: 16px;
+  // }
+  // .vertical-layout,
+  // .vertical-layout-item {
+  //   display: contents;
+  // }
+  * [id='#/properties/startDate'] {
+    grid-area: startDate;
   }
 
-  .vertical-layout,
-  .vertical-layout-item {
-    display: contents;
-  }
-
-  *[id='#/properties/firstName'] {
-    grid-area: firstName;
-  }
-
-  *[id='#/properties/lastName'] {
-    grid-area: lastName;
-  }
-
-  *[id='#/properties/email'] {
-    grid-area: email;
-  }
-
-  *[id='#/properties/phoneNumber'] {
-    grid-area: phoneNumber;
+  *[id='#/properties/season'] {
+    grid-area: season;
   }
 `
 

@@ -4,16 +4,48 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    startDate: {
-      type: 'string',
-      minLength: 2,
+    person: {
+      title: 'Person',
+      type: 'object',
+      properties: {
+        firstName: {
+          type: 'string',
+        },
+        lastName: {
+          type: 'string',
+        },
+        age: {
+          description: 'Age in years',
+          type: 'integer',
+          minimum: 0,
+        },
+        shippingAddress: {
+          $ref: '#/properties/address/properties/addressId',
+        },
+      },
+      required: ['firstName', 'lastName'],
     },
-    season: {
-      type: 'number',
-      minLength: 1,
+    address: {
+      title: 'Order',
+      type: 'object',
+      properties: {
+        addressId: {
+          type: 'string',
+          label: 'Address Type',
+          enum: ['Home Address 1', 'Home Address 2', 'Workplace'],
+        },
+        street: {
+          type: 'string',
+        },
+        city: {
+          type: 'string',
+        },
+        zipCode: {
+          type: 'string',
+        },
+      },
     },
   },
-  required: ['startDate', 'season'],
 }
 
 /*
@@ -38,14 +70,69 @@ export const uischema = {
   type: 'VerticalLayout',
   elements: [
     {
-      type: 'Control',
-      scope: '#/properties/startDate',
-      label: 'Start Date',
+      type: 'Group',
+      label: 'Person',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/person/properties/firstName',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/person/properties/lastName',
+            },
+          ],
+        },
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/person/properties/age',
+            },
+            {
+              type: 'Control',
+              label: 'Address',
+              scope: '#/properties/person/properties/shippingAddress',
+            },
+          ],
+        },
+      ],
     },
     {
-      type: 'Control',
-      scope: '#/properties/season',
-      label: 'Season',
+      type: 'Group',
+      label: 'Address',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/person/properties/shippingAddress',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/address/properties/street',
+            },
+          ],
+        },
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/address/properties/city',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/address/properties/zipCode',
+            },
+          ],
+        },
+      ],
     },
   ],
 }
