@@ -10,7 +10,7 @@ export const schema: JsonSchema = {
       properties: {
         startingDate: {
           type: 'string',
-          format: 'date',
+          format: 'date-time',
         },
         season: {
           type: 'integer',
@@ -145,7 +145,7 @@ export const uischema = {
             {
               type: 'Control',
               scope: '#/properties/grant/properties/startingDate',
-              label: 'Start Date, format 2022-12-03',
+              label: 'Start Date, format: 2022-12-03',
             },
             {
               type: 'Control',

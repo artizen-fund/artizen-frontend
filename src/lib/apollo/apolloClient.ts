@@ -19,7 +19,11 @@ export const createApolloClient = (didToken?: string) => {
   // https://www.apollographql.com/docs/react/networking/authentication/#header
   const authLink = setContext(async (_, { headers }) => {
     const session = await getSession()
+
     const token = session ? session.token : undefined
+
+    console.log('session   from authLink    ', session)
+
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
       // server request (usually for SSR)

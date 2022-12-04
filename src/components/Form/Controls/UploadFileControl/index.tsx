@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
-import { JsonSchema, ControlElement } from '@jsonforms/core'
 // import { uploadToCloudinary } from '@lib'
 
 export interface UploadFileProps {

@@ -8,6 +8,8 @@ import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
   const { data: session } = useSession()
 
+  console.log('user session')
+
   const { connectAsync } = useConnect()
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
@@ -31,14 +33,14 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
 
     const { message } = await response.json()
     const signature = await signMessageAsync({ message })
-
+    console.log('user is signing to next-auth/react ')
     await signIn('credentials', { message, signature, redirect: false })
   }
 
   return (
     <div>
       <Button onClick={() => connectWallet(new InjectedConnector({ chains }))} disabled={isConnected && !session}>
-        {!isConnected ? 'Connect Metamask' : !session ? 'Connecting…' : 'Donate'}
+        {!isConnected ? 'Connect Metamask' : !session ? 'Connecting…' : 'Connected'}
       </Button>
       <Button
         onClick={() =>
@@ -53,7 +55,7 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
         }
         disabled={isConnected && !session}
       >
-        {!isConnected ? 'Connect With WalletConnect' : !session ? 'Connecting…' : 'Donate'}
+        {!isConnected ? 'Connect With WalletConnect' : !session ? 'Connecting…' : 'Connected'}
       </Button>
       {!!session && <p onClick={() => signOut()}>sign out</p>}
     </div>

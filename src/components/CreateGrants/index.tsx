@@ -25,15 +25,19 @@ const CreateGrants = () => {
       grantVar: {
         status: 'draft',
         season: grant.season,
-        startDate: `${grant.startingDate} ${PST_DIFFERENCE}`,
+        startingDate: `${grant.startingDate}${PST_DIFFERENCE}`,
       },
     }
 
+    // 2022-12-05T04:08:18.913+00:00
+
     console.log('newGrantVars  ', newGrantVars)
 
-    await createGrant({
+    const createdGrantData = await createGrant({
       variables: newGrantVars,
     })
+
+    console.log('createGrantData     ', createdGrantData)
 
     console.log('grantVariable ', newGrantVars)
     // if (!loggedInUser) return
