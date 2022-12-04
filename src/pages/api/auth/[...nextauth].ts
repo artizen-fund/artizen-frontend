@@ -13,7 +13,6 @@ export default NextAuth({
   },
   callbacks: {
     jwt: ({ token, user }) => {
-      console.log('user ', token)
       if (user) {
         token.id = user.id
         token.iat = Date.now() / 1000

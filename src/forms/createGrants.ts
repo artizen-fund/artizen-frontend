@@ -4,47 +4,113 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    person: {
-      title: 'Person',
+    grant: {
+      title: 'Grant',
       type: 'object',
       properties: {
-        firstName: {
+        startingDate: {
           type: 'string',
+          format: 'date',
         },
-        lastName: {
-          type: 'string',
-        },
-        age: {
-          description: 'Age in years',
+        season: {
           type: 'integer',
-          minimum: 0,
-        },
-        shippingAddress: {
-          $ref: '#/properties/address/properties/addressId',
         },
       },
-      required: ['firstName', 'lastName'],
+      required: ['startingDate', 'season'],
     },
-    address: {
-      title: 'Order',
-      type: 'object',
-      properties: {
-        addressId: {
-          type: 'string',
-          label: 'Address Type',
-          enum: ['Home Address 1', 'Home Address 2', 'Workplace'],
-        },
-        street: {
-          type: 'string',
-        },
-        city: {
-          type: 'string',
-        },
-        zipCode: {
-          type: 'string',
-        },
-      },
-    },
+    // artifacts: {
+    //   title: 'Artifacts Assets',
+    //   type: 'object',
+    //   properties: {
+    //     artworkPatron: {
+    //       type: 'string',
+    //     },
+    //     videoPatron: {
+    //       type: 'string',
+    //     },
+    //     artworkCreator: {
+    //       type: 'string',
+    //     },
+    //     videoCreator: {
+    //       type: 'string',
+    //     },
+    //     artworkCommunity: {
+    //       type: 'string',
+    //     },
+    //     videoCommunity: {
+    //       type: 'string',
+    //     },
+    //   },
+    //   required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
+    // },
+    // project: {
+    //   title: 'Project',
+    //   type: 'object',
+    //   properties: {
+    //     title: {
+    //       type: 'string',
+    //     },
+    //     longline: {
+    //       type: 'string',
+    //     },
+    //     description: {
+    //       type: 'string',
+    //     },
+    //     impact: {
+    //       type: 'string',
+    //     },
+    //     impactTags: {
+    //       type: 'string',
+    //     },
+    //     creationDate: {
+    //       type: 'string',
+    //       format: 'date',
+    //       description: 'schema-based time picker',
+    //     },
+    //     completitionDate: {
+    //       type: 'string',
+    //       format: 'date',
+    //     },
+    //     wallet: {
+    //       type: 'string',
+    //     },
+    //   },
+    //   required: [
+    //     'title',
+    //     'longline',
+    //     'description',
+    //     'impact',
+    //     'impactTags',
+    //     'creationDate',
+    //     'completitionDate',
+    //     'wallet',
+    //   ],
+    // },
+    // projectMembers: {
+    //   title: 'Project',
+    //   type: 'object',
+    //   properties: {
+    //     firstName: {
+    //       type: 'string',
+    //     },
+    //     lastName: {
+    //       type: 'string',
+    //     },
+    //     externalLink: {
+    //       type: 'string',
+    //     },
+    //     email: {
+    //       type: 'string',
+    //     },
+    //     wallet: {
+    //       type: 'string',
+    //     },
+    //     type: {
+    //       type: 'string',
+    //     },
+    //   },
+    //   required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
+    // },
   },
 }
 
@@ -71,68 +137,142 @@ export const uischema = {
   elements: [
     {
       type: 'Group',
-      label: 'Person',
+      label: 'Grant',
       elements: [
         {
           type: 'HorizontalLayout',
           elements: [
             {
               type: 'Control',
-              scope: '#/properties/person/properties/firstName',
+              scope: '#/properties/grant/properties/startingDate',
+              label: 'Start Date, format 2022-12-03',
             },
             {
               type: 'Control',
-              scope: '#/properties/person/properties/lastName',
-            },
-          ],
-        },
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/person/properties/age',
-            },
-            {
-              type: 'Control',
-              label: 'Address',
-              scope: '#/properties/person/properties/shippingAddress',
+              scope: '#/properties/grant/properties/season',
             },
           ],
         },
       ],
     },
-    {
-      type: 'Group',
-      label: 'Address',
-      elements: [
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/person/properties/shippingAddress',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/address/properties/street',
-            },
-          ],
-        },
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/address/properties/city',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/address/properties/zipCode',
-            },
-          ],
-        },
-      ],
-    },
+    // {
+    //   type: 'Group',
+    //   label: 'Artifacts Assets',
+    //   elements: [
+    //     {
+    //       type: 'HorizontalLayout',
+    //       elements: [
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/artifacts/properties/artworkPatron',
+    //           options: { format: 'uploadFile' },
+    //         },
+    //         // {
+    //         //   type: 'Control',
+    //         //   scope: '#/properties/artifacts/properties/videoPatron',
+    //         //   options: { format: 'uploadFile' },
+    //         // },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/artifacts/properties/artworkCreator',
+    //           options: { unsafeToRetain: true, format: 'uploadFile' },
+    //         },
+    //         // {
+    //         //   type: 'Control',
+    //         //   scope: '#/properties/artifacts/properties/videoCreator',
+    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
+    //         // },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/artifacts/properties/artworkCommunity',
+    //           options: { unsafeToRetain: true, format: 'uploadFile' },
+    //         },
+    //         // {
+    //         //   type: 'Control',
+    //         //   scope: '#/properties/artifacts/properties/videoCommunity',
+    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
+    //         // },
+    //       ],
+    //     },
+    //   ],
+    // },
+    // {
+    //   type: 'Group',
+    //   label: 'Project',
+    //   elements: [
+    //     {
+    //       type: 'HorizontalLayout',
+    //       elements: [
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/title',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/longline',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/description',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/impact',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/impactTags',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/creationDate',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/completitionDate',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/wallet',
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
+    // {
+    //   type: 'Group',
+    //   label: 'Project Members',
+    //   elements: [
+    //     {
+    //       type: 'HorizontalLayout',
+    //       elements: [
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/firstName',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/lastName',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/externalLink',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/email',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/wallet',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/type',
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
   ],
 }
