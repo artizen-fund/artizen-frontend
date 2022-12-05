@@ -4,45 +4,45 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    grant: {
-      title: 'Grant',
-      type: 'object',
-      properties: {
-        startingDate: {
-          type: 'string',
-          format: 'date-time',
-        },
-        season: {
-          type: 'integer',
-        },
-      },
-      required: ['startingDate', 'season'],
-    },
-    // artifacts: {
-    //   title: 'Artifacts Assets',
+    // grant: {
+    //   title: 'Grant',
     //   type: 'object',
     //   properties: {
-    //     artworkPatron: {
+    //     date: {
     //       type: 'string',
+    //       format: 'date',
     //     },
-    //     videoPatron: {
-    //       type: 'string',
-    //     },
-    //     artworkCreator: {
-    //       type: 'string',
-    //     },
-    //     videoCreator: {
-    //       type: 'string',
-    //     },
-    //     artworkCommunity: {
-    //       type: 'string',
-    //     },
-    //     videoCommunity: {
-    //       type: 'string',
+    //     season: {
+    //       type: 'integer',
     //     },
     //   },
-    //   required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
+    //   required: ['date', 'season'],
     // },
+    artifacts: {
+      title: 'Artifacts Assets',
+      type: 'object',
+      properties: {
+        artworkPatron: {
+          type: 'string',
+        },
+        videoPatron: {
+          type: 'string',
+        },
+        artworkCreator: {
+          type: 'string',
+        },
+        videoCreator: {
+          type: 'string',
+        },
+        artworkCommunity: {
+          type: 'string',
+        },
+        videoCommunity: {
+          type: 'string',
+        },
+      },
+      required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
+    },
     // project: {
     //   title: 'Project',
     //   type: 'object',
@@ -135,67 +135,67 @@ export const initialState: FormState = {}
 export const uischema = {
   type: 'VerticalLayout',
   elements: [
-    {
-      type: 'Group',
-      label: 'Grant',
-      elements: [
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/grant/properties/startingDate',
-              label: 'Start Date, format: 2022-12-03',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/grant/properties/season',
-            },
-          ],
-        },
-      ],
-    },
     // {
     //   type: 'Group',
-    //   label: 'Artifacts Assets',
+    //   label: 'Grant',
     //   elements: [
     //     {
     //       type: 'HorizontalLayout',
     //       elements: [
     //         {
     //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkPatron',
-    //           options: { format: 'uploadFile' },
+    //           scope: '#/properties/grant/properties/date',
+    //           label: 'Date, format: 2022-12-03',
     //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoPatron',
-    //         //   options: { format: 'uploadFile' },
-    //         // },
     //         {
     //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkCreator',
-    //           options: { unsafeToRetain: true, format: 'uploadFile' },
+    //           scope: '#/properties/grant/properties/season',
     //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoCreator',
-    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         // },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkCommunity',
-    //           options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoCommunity',
-    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         // },
     //       ],
     //     },
     //   ],
     // },
+    {
+      type: 'Group',
+      label: 'Artifacts Assets',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkPatron',
+              options: { format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoPatron',
+            //   options: { format: 'uploadFile' },
+            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkCreator',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoCreator',
+            //   options: { unsafeToRetain: true, format: 'uploadFile' },
+            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkCommunity',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoCommunity',
+            //   options: { unsafeToRetain: true, format: 'uploadFile' },
+            // },
+          ],
+        },
+      ],
+    },
     // {
     //   type: 'Group',
     //   label: 'Project',

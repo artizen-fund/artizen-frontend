@@ -9,8 +9,13 @@ const grantDetails = ({ chains }: { chains: any }) => {
   return (
     <Layout>
       <Wallet chains={chains}></Wallet>
-      <CreateGrants />
-      <Grants />
+      {status !== 'authenticated' && <div>Login with Metamask</div>}
+      {status === 'authenticated' && (
+        <>
+          <CreateGrants />
+          <Grants />
+        </>
+      )}
     </Layout>
   )
 }

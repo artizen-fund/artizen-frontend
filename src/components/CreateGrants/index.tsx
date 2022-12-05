@@ -1,49 +1,100 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useMutation, useQuery } from '@apollo/client'
-import { CREATE_GRANTS } from '@gql'
+import { uploadToCloudinary } from '@lib'
+import { CREATE_GRANTS, LOAD_GRANTS } from '@gql'
 import { Form, Button } from '@components'
 import { breakpoint, typography } from '@theme'
+import { useRouter } from 'next/router'
 
 import { schema, uischema, initialState, FormState } from '@forms/createGrants'
 
-const PST_DIFFERENCE = '+08.00'
+//TODO: startingDate is set by publishing function
+//TODO: closingDate is set by ending function
 
 const CreateGrants = () => {
-  const [createGrant, { data: newGrantData, loading, error: errorCreatingGrant }] = useMutation(CREATE_GRANTS)
+  const {
+    push,
+    query: { id },
+  } = useRouter()
 
-  console.log('errorCreatingGrant ', errorCreatingGrant)
+  const [createGrant] = useMutation(CREATE_GRANTS)
+  const {
+    loading,
+    data: loadedGrantData,
+    error: errorLoadingGrant,
+  } = useQuery(LOAD_GRANTS, {
+    skip: id === undefined || id === 'new',
+    variables: {
+      where: {
+        date: {
+          _eq: id,
+        },
+      },
+    },
+  })
 
   const [data, setData] = useState<FormState>({})
 
   const [processing, setProcessing] = useState(false)
-  // todo: replace processing with [loading] from useMutation
 
-  const saveChanges = async ({ grant }) => {
-    console.log('variables from form', grant)
-    const newGrantVars = {
-      grantVar: {
-        status: 'draft',
-        season: grant.season,
-        startingDate: `${grant.startingDate}${PST_DIFFERENCE}`,
-      },
-    }
+  if (errorLoadingGrant) {
+    return <div>Error loading grant</div>
+  }
 
-    // 2022-12-05T04:08:18.913+00:00
+  const saveChanges = async ({ grant, artifacts, project, projectMembers }) => {
+    console.log('variables from form', artifacts)
+    // const newGrantVars = {
+    //   grantVar: {
+    //     status: 'draft',
+    //     season: grant.season,
+    //     date: grant.date,
+    //   },
+    // }
 
-    console.log('newGrantVars  ', newGrantVars)
+    // const artifactsWeb2Data = await createArtifacts(artifacts)
 
-    const createdGrantData = await createGrant({
-      variables: newGrantVars,
-    })
+    // 2022-12-04T20:08:18.913Z
 
-    console.log('createGrantData     ', createdGrantData)
+    // console.log('newGrantVars  ', newGrantVars)
 
-    console.log('grantVariable ', newGrantVars)
+    // const createdGrantData = await createGrant({
+    //   variables: newGrantVars,
+    // })
+
+    // console.log('createGrantData     ', createdGrantData)
+
+    // const date: string | null = createdGrantData.data?.insert_Grants_one?.date
+
+    // console.log('date       ', date)
+
+    // date && push(`/admin/grants/${date}`)
+
+    return
+
     // if (!loggedInUser) return
     // setProcessing(true)
     // await updateUser({ variables: { ...loggedInUser, ...data } })
     // setProcessing(false)
+  }
+
+  //TODO: This should be break down into smaller units
+  const createArtifact = async (target: string, imageFile: File) => {
+    const cloudinaryResponse = await uploadToCloudinary(imageFile)
+    console.log('cloudinaryResponse ', cloudinaryResponse)
+    // return cloudinaryResponse.secure_url
+  }
+
+  const createArtifacts = async artifactsData => {
+    Object.keys(artifactsData).forEach(async (key, index) => {
+      console.log('artifactsData ', artifactsData[key])
+      console.log('key ', key)
+      // myObject[key] *= 2
+
+      // const link = await createArtifact(key, artifactsData[key])
+
+      console.log('link ', link)
+    })
   }
 
   // const mapVar = data => {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
-// import { uploadToCloudinary } from '@lib'
+import { uploadToCloudinary } from '@lib'
 
 export interface UploadFileProps {
   onChange?: (fileUrl: string) => void
@@ -25,14 +25,20 @@ const UploadFileControl = ({ required, placeholder, onChange, path, value, class
       return
     }
 
-    const objectUrl: string = URL.createObjectURL(selectedFile)
+    const uploadImg = async (img: File) => {
+      const cloudinaryResponse = await uploadToCloudinary(img)
+      console.log('cloudinaryResponse ', cloudinaryResponse)
+      const link = cloudinaryResponse.secure_url
 
-    settempImg(objectUrl)
+      settempImg(link)
 
-    onChange && onChange(objectUrl)
+      onChange && onChange(link)
+    }
+
+    uploadImg(selectedFile)
 
     // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl)
+    // return () => URL.revokeObjectURL(objectUrl)
   }, [selectedFile])
 
   const isThereImg = value !== undefined || tempImg !== ''
@@ -68,7 +74,15 @@ const UploadFileControl = ({ required, placeholder, onChange, path, value, class
       )}
       {isThereImg && (
         <ImageWrapper>
-          <Image width={300} height={300} src={tempImg} alt="preview" />
+          {/* eslint-disable-next-line no-use-before-define */}
+          <div
+            style={{
+              width: 300,
+              height: 300,
+              backgroundImage: `url("${tempImg}");`,
+            }}
+          ></div>
+          {/* <img width={300} height={300} src={tempImg} alt="preview" /> */}
         </ImageWrapper>
       )}
     </UploadWrapper>
@@ -88,8 +102,6 @@ const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  
 `
 
 const UploadWrapper = styled.div`
