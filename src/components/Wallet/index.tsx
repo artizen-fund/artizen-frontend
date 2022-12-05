@@ -1,4 +1,5 @@
 import { useSession, signIn, signOut } from 'next-auth/react'
+<<<<<<< HEAD
 import { useApolloClient } from '@apollo/client'
 import { useAccount, useConnect, useSignMessage, Chain } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -6,6 +7,13 @@ import { Button } from '@components'
 import { assertInt, loggedInUserVar } from '@lib'
 import { IGetUserQuery } from '@types'
 import { GET_USER } from '@gql'
+=======
+import { useAccount, useConnect, useSignMessage, Chain, Connector } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { Button } from '@components'
+import { assertInt } from '@lib'
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+>>>>>>> dev
 
 export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
   const apolloClient = useApolloClient()
@@ -15,10 +23,15 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
 
-  const connectWallet = async () => {
+  const connectWallet = async (connector: Connector) => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+<<<<<<< HEAD
     const { account: publicAddress, chain } = await connectAsync({
       connector: new InjectedConnector({ chains }),
+=======
+    const { account, chain } = await connectAsync({
+      connector,
+>>>>>>> dev
       chainId,
     })
 
@@ -50,8 +63,23 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
 
   return (
     <div>
-      <Button onClick={connectWallet} disabled={isConnected && !session}>
+      <Button onClick={() => connectWallet(new InjectedConnector({ chains }))} disabled={isConnected && !session}>
         {!isConnected ? 'Connect Metamask' : !session ? 'Connecting…' : 'Donate'}
+      </Button>
+      <Button
+        onClick={() =>
+          connectWallet(
+            new WalletConnectConnector({
+              chains,
+              options: {
+                qrcode: true,
+              },
+            }),
+          )
+        }
+        disabled={isConnected && !session}
+      >
+        {!isConnected ? 'Connect With WalletConnect' : !session ? 'Connecting…' : 'Donate'}
       </Button>
       {!!session && <p onClick={() => signOut()}>sign out</p>}
     </div>
