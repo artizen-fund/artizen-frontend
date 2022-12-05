@@ -5,11 +5,7 @@ import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
 import { CREATE_USER } from '@gql'
 import { ICreateUserMutation } from '@types'
-<<<<<<< HEAD
-import { createApolloClient, assert } from '@lib'
-=======
 import { assert, createApolloClient } from '@lib'
->>>>>>> dev
 
 export default NextAuth({
   session: {
@@ -37,10 +33,7 @@ export default NextAuth({
 
       return {
         ...session,
-<<<<<<< HEAD
-=======
         user: token.user,
->>>>>>> dev
         token: encodedToken,
       }
     },
