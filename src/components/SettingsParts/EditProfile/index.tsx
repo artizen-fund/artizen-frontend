@@ -1,18 +1,18 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER } from '@gql'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
 import { Form, Button, SettingsFormHeader } from '@components'
-import { UserContext } from '@lib'
+import { loggedInUserVar } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
   const [updateUser] = useMutation(UPDATE_USER)
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const [data, setData] = useState<FormState>({
     artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,

@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import { UserContext } from '@lib'
+import { useReactiveVar } from '@apollo/client'
+import { loggedInUserVar } from '@lib'
 import LoginShelf from './LoginShelf'
 import AccountShelf from '../AccountShelf'
 
@@ -8,7 +8,7 @@ interface ISessionShelf {
 }
 
 const SessionShelf = ({ hideShelf }: ISessionShelf) => {
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   return !!loggedInUser ? <AccountShelf user={loggedInUser} {...{ hideShelf }} /> : <LoginShelf />
 }

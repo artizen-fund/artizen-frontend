@@ -1,14 +1,14 @@
 import { useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
-import { useMutation } from '@apollo/client'
+import { useMutation, useReactiveVar } from '@apollo/client'
 import { Button } from '@components'
-import { UserContext, uploadToCloudinary, InvisiFileInput } from '@lib'
+import { uploadToCloudinary, InvisiFileInput, loggedInUserVar } from '@lib'
 import { UPDATE_USER } from '@gql'
 
 // TODO: look at combining this into a lib with AvatarUploadWidget
 
 const BannerUploadWidget = () => {
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
   const [updateUser] = useMutation(UPDATE_USER)
 
   const [newBanner, setNewBanner] = useState<File>()

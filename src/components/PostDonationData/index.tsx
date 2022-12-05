@@ -1,19 +1,19 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { UserContext, LayoutContext, uploadToCloudinary } from '@lib'
+import { loggedInUserVar, LayoutContext, uploadToCloudinary } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
 import { typography } from '@theme'
 
 const PostDonationData = () => {
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const { visibleModal, toggleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)

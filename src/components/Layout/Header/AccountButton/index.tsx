@@ -1,12 +1,14 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import { useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { Maybe } from '@types'
-import { rgba, UserContext } from '@lib'
+import { rgba, loggedInUserVar } from '@lib'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
   useEffect(() => {

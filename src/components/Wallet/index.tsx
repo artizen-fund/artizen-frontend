@@ -1,11 +1,15 @@
 import { useSession, signIn, signOut } from 'next-auth/react'
+import { useApolloClient } from '@apollo/client'
 import { useAccount, useConnect, useSignMessage, Chain, Connector } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { Button } from '@components'
-import { assertInt } from '@lib'
+import { assertInt, loggedInUserVar } from '@lib'
+import { IGetUserQuery } from '@types'
+import { GET_USER } from '@gql'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
 export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
+  const apolloClient = useApolloClient()
   const { data: session } = useSession()
 
   const { connectAsync } = useConnect()
@@ -14,12 +18,12 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
 
   const connectWallet = async (connector: Connector) => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
-    const { account, chain } = await connectAsync({
+    const { account: publicAddress, chain } = await connectAsync({
       connector,
       chainId,
     })
 
-    const userData = { address: account, chain: chain.id, network: 'evm' }
+    const userData = { address: publicAddress.toLowerCase(), chain: chain.id, network: 'evm' }
 
     const response = await fetch('/api/auth/request-message', {
       method: 'POST',
@@ -28,11 +32,21 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
         'content-type': 'application/json',
       },
     })
-
     const { message } = await response.json()
     const signature = await signMessageAsync({ message })
 
     await signIn('credentials', { message, signature, redirect: false })
+
+    const userFromDB = await apolloClient.query<IGetUserQuery>({
+      query: GET_USER,
+      variables: { publicAddress: publicAddress.toLowerCase() },
+    })
+
+    if (userFromDB.data.Users.length < 1) {
+      throw new Error('Error: user record not found')
+    }
+
+    loggedInUserVar(userFromDB.data.Users[0])
   }
 
   return (
