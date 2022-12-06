@@ -10,13 +10,12 @@ import {
   Sidebar,
   Curators,
   Button,
-  Wallet,
 } from '@components'
 import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
-const Home = ({ chains }: { chains: any }) => {
+const Home = () => {
   const tabs = Object.keys(tabbedInfo).map(key => (
     <Tab key={`tab-${key}`} label={key}>
       {tabbedInfo[key]}
@@ -26,7 +25,6 @@ const Home = ({ chains }: { chains: any }) => {
 
   return (
     <Layout>
-      <Wallet chains={chains}></Wallet>
       <Header>
         <h1>{header.title}</h1>
         <h2>{header.subtitle}</h2>
