@@ -1,22 +1,19 @@
-import { useContext, useEffect, useState } from 'react'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useContext, useState } from 'react'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { useAccount, useConnect, useSignMessage, Chain, Connector } from 'wagmi'
+import { useConnect, useSignMessage, Connector } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 import { CloseButton, CheckboxControl } from '@components'
+import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
 import { rgba, LayoutContext, assertInt, getWagmiClient, assetPath } from '@lib'
 import { palette, typography } from '@theme'
-import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
 
 const LoginModal = ({ ...props }) => {
   const { toggleModal } = useContext(LayoutContext)
 
-  const { data: session } = useSession()
-
   const { connectAsync } = useConnect()
-  const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
   const { chains } = getWagmiClient()
 
@@ -24,12 +21,12 @@ const LoginModal = ({ ...props }) => {
 
   const connectWallet = async (connector: Connector) => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
-    const { account, chain } = await connectAsync({
+    const { account: publicAddress, chain } = await connectAsync({
       connector,
       chainId,
     })
 
-    const userData = { address: account, chain: chain.id, network: 'evm' }
+    const userData = { address: publicAddress, chain: chain.id, network: 'evm' }
 
     const response = await fetch('/api/auth/request-message', {
       method: 'POST',
@@ -43,6 +40,10 @@ const LoginModal = ({ ...props }) => {
     const signature = await signMessageAsync({ message })
 
     await signIn('credentials', { message, signature, redirect: false })
+    // note: AccountButton component is the real session watcher;
+    //       it'll pick up useSession and get the user from Hasura.
+
+    toggleModal?.()
   }
 
   return (

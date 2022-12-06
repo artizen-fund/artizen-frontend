@@ -4,8 +4,8 @@ import { USER_PUBLIC, USER_PRIVATE } from '@gql'
 export const GET_USER = gql`
   ${USER_PUBLIC}
   ${USER_PRIVATE}
-  query getUser($id: uuid) {
-    Users(where: { id: { _eq: $id } }) {
+  query getUser($publicAddress: String) {
+    Users(where: { publicAddress: { _eq: $publicAddress } }) {
       ...UserPublic
       ...UserPrivate
     }
@@ -25,6 +25,7 @@ export const mockGetUserData = [
         Users: [
           {
             id: '1',
+            publicAddress: '0x0000000',
             email: 'rene@artizen.fund',
             firstName: 'René',
             lastName: 'Pinnell',

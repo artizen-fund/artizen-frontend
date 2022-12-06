@@ -4,11 +4,11 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba, LayoutContext, UserContext } from '@lib'
+import { formatUSDC, rgba, LayoutContext, loggedInUserVar } from '@lib'
 import { monthNames } from '@copy/common'
 
 const Sidebar = () => {
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = loggedInUserVar()
   const { setVisibleModal } = useContext(LayoutContext)
   const loading = false
 

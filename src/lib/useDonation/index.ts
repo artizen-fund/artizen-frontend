@@ -1,8 +1,8 @@
-import { ethers } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
-import { assert, USDC_UNIT, userMetadataVar, UserContext, useReadContract, useWriteContract } from '@lib'
-import { GrantsAbi } from '@contracts'
+import { ethers } from 'ethers'
 import { useMutation, useReactiveVar } from '@apollo/client'
+import { assert, USDC_UNIT, loggedInUserVar, useReadContract, useWriteContract } from '@lib'
+import { GrantsAbi } from '@contracts'
 import { useMetaContract } from './useMetaContract'
 
 export const useDonation = () => {
@@ -11,8 +11,7 @@ export const useDonation = () => {
   const [confirmingStatus, setConfirmingStatus] = useState<DonationStageStatus>('WAITING')
   const [confirmingMessage, setConfirmingMessage] = useState<string>('')
 
-  const { loggedInUser } = useContext(UserContext)
-  const metadata = useReactiveVar(userMetadataVar)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const { callStandardMetaTxMethod, callCustomMetaTxMethod, loading, error } = useMetaContract()
 

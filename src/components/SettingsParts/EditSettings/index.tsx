@@ -1,15 +1,15 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { useMutation } from '@apollo/client'
+import { useMutation, useReactiveVar } from '@apollo/client'
 import { UPDATE_USER } from '@gql'
 import { Form, Button, SettingsFormHeader } from '@components'
-import { UserContext } from '@lib'
+import { loggedInUserVar } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editSettings'
 
 const EditSettings = () => {
   const [updateUser] = useMutation(UPDATE_USER)
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const [data, setData] = useState<FormState>({
     firstName: loggedInUser?.firstName || initialState.firstName,
