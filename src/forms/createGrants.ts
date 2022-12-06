@@ -18,74 +18,74 @@ export const schema: JsonSchema = {
     //   },
     //   required: ['date', 'season'],
     // },
-    artifacts: {
-      title: 'Artifacts Assets',
-      type: 'object',
-      properties: {
-        artworkPatron: {
-          type: 'string',
-        },
-        videoPatron: {
-          type: 'string',
-        },
-        artworkCreator: {
-          type: 'string',
-        },
-        videoCreator: {
-          type: 'string',
-        },
-        artworkCommunity: {
-          type: 'string',
-        },
-        videoCommunity: {
-          type: 'string',
-        },
-      },
-      required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
-    },
-    // project: {
-    //   title: 'Project',
+    // artifacts: {
+    //   title: 'Artifacts Assets',
     //   type: 'object',
     //   properties: {
-    //     title: {
+    //     artworkPatron: {
     //       type: 'string',
     //     },
-    //     longline: {
+    //     videoPatron: {
     //       type: 'string',
     //     },
-    //     description: {
+    //     artworkCreator: {
     //       type: 'string',
     //     },
-    //     impact: {
+    //     videoCreator: {
     //       type: 'string',
     //     },
-    //     impactTags: {
+    //     artworkCommunity: {
     //       type: 'string',
     //     },
-    //     creationDate: {
-    //       type: 'string',
-    //       format: 'date',
-    //       description: 'schema-based time picker',
-    //     },
-    //     completitionDate: {
-    //       type: 'string',
-    //       format: 'date',
-    //     },
-    //     wallet: {
+    //     videoCommunity: {
     //       type: 'string',
     //     },
     //   },
-    //   required: [
-    //     'title',
-    //     'longline',
-    //     'description',
-    //     'impact',
-    //     'impactTags',
-    //     'creationDate',
-    //     'completitionDate',
-    //     'wallet',
-    //   ],
+    //   required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
     // },
+    project: {
+      title: 'Project',
+      type: 'object',
+      properties: {
+        title: {
+          type: 'string',
+        },
+        longline: {
+          type: 'string',
+        },
+        description: {
+          type: 'string',
+        },
+        impact: {
+          type: 'string',
+        },
+        impactTags: {
+          type: 'string',
+        },
+        creationDate: {
+          type: 'string',
+          format: 'date',
+          description: 'schema-based time picker',
+        },
+        completitionDate: {
+          type: 'string',
+          format: 'date',
+        },
+        wallet: {
+          type: 'string',
+        },
+      },
+      required: [
+        'title',
+        'longline',
+        'description',
+        'impact',
+        'impactTags',
+        'creationDate',
+        'completitionDate',
+        'wallet',
+      ],
+    },
     // projectMembers: {
     //   title: 'Project',
     //   type: 'object',
@@ -155,90 +155,90 @@ export const uischema = {
     //     },
     //   ],
     // },
-    {
-      type: 'Group',
-      label: 'Artifacts Assets',
-      elements: [
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/artworkPatron',
-              options: { format: 'uploadFile' },
-            },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoPatron',
-            //   options: { format: 'uploadFile' },
-            // },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/artworkCreator',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
-            },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoCreator',
-            //   options: { unsafeToRetain: true, format: 'uploadFile' },
-            // },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/artworkCommunity',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
-            },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoCommunity',
-            //   options: { unsafeToRetain: true, format: 'uploadFile' },
-            // },
-          ],
-        },
-      ],
-    },
     // {
     //   type: 'Group',
-    //   label: 'Project',
+    //   label: 'Artifacts Assets',
     //   elements: [
     //     {
     //       type: 'HorizontalLayout',
     //       elements: [
     //         {
     //           type: 'Control',
-    //           scope: '#/properties/project/properties/title',
+    //           scope: '#/properties/artifacts/properties/artworkPatron',
+    //           options: { format: 'uploadFile' },
     //         },
+    //         // {
+    //         //   type: 'Control',
+    //         //   scope: '#/properties/artifacts/properties/videoPatron',
+    //         //   options: { format: 'uploadFile' },
+    //         // },
     //         {
     //           type: 'Control',
-    //           scope: '#/properties/project/properties/longline',
+    //           scope: '#/properties/artifacts/properties/artworkCreator',
+    //           options: { unsafeToRetain: true, format: 'uploadFile' },
     //         },
+    //         // {
+    //         //   type: 'Control',
+    //         //   scope: '#/properties/artifacts/properties/videoCreator',
+    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
+    //         // },
     //         {
     //           type: 'Control',
-    //           scope: '#/properties/project/properties/description',
+    //           scope: '#/properties/artifacts/properties/artworkCommunity',
+    //           options: { unsafeToRetain: true, format: 'uploadFile' },
     //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/impact',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/impactTags',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/creationDate',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/completitionDate',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/wallet',
-    //         },
+    //         // {
+    //         //   type: 'Control',
+    //         //   scope: '#/properties/artifacts/properties/videoCommunity',
+    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
+    //         // },
     //       ],
     //     },
     //   ],
     // },
+    {
+      type: 'Group',
+      label: 'Project',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/title',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/longline',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/description',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/impact',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/impactTags',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/creationDate',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/completitionDate',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/wallet',
+            },
+          ],
+        },
+      ],
+    },
     // {
     //   type: 'Group',
     //   label: 'Project Members',

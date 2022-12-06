@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import Image from 'next/image'
 import { uploadToCloudinary } from '@lib'
 
 export interface UploadFileProps {
@@ -27,7 +26,6 @@ const UploadFileControl = ({ required, placeholder, onChange, path, value, class
 
     const uploadImg = async (img: File) => {
       const cloudinaryResponse = await uploadToCloudinary(img)
-      console.log('cloudinaryResponse ', cloudinaryResponse)
       const link = cloudinaryResponse.secure_url
 
       settempImg(link)
@@ -79,10 +77,13 @@ const UploadFileControl = ({ required, placeholder, onChange, path, value, class
             style={{
               width: 300,
               height: 300,
-              backgroundImage: `url("${tempImg}");`,
+              borderStyle: 'dotted',
+              borderWidth: '2px',
+              borderColor: '#000',
+
+              background: `url("${tempImg}") no-repeat center center / contain`,
             }}
           ></div>
-          {/* <img width={300} height={300} src={tempImg} alt="preview" /> */}
         </ImageWrapper>
       )}
     </UploadWrapper>

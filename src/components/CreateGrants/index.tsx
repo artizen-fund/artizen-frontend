@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useMutation, useQuery } from '@apollo/client'
 import { uploadToCloudinary } from '@lib'
-import { CREATE_GRANTS, LOAD_GRANTS } from '@gql'
+import { CREATE_GRANTS, LOAD_GRANTS, CREATE_ARTIFACTS } from '@gql'
 import { Form, Button } from '@components'
 import { breakpoint, typography } from '@theme'
 import { useRouter } from 'next/router'
@@ -19,6 +19,7 @@ const CreateGrants = () => {
   } = useRouter()
 
   const [createGrant] = useMutation(CREATE_GRANTS)
+  const [createArtifactsInDB] = useMutation(CREATE_ARTIFACTS)
   const {
     loading,
     data: loadedGrantData,
@@ -43,7 +44,7 @@ const CreateGrants = () => {
   }
 
   const saveChanges = async ({ grant, artifacts, project, projectMembers }) => {
-    console.log('variables from form', artifacts)
+    console.log('variables from form', project)
     // const newGrantVars = {
     //   grantVar: {
     //     status: 'draft',
@@ -51,10 +52,9 @@ const CreateGrants = () => {
     //     date: grant.date,
     //   },
     // }
-
-    // const artifactsWeb2Data = await createArtifacts(artifacts)
-
-    // 2022-12-04T20:08:18.913Z
+    if (artifacts && artifacts.length > 0) {
+      const artifactDBId = await createArtifactDB(artifacts)
+    }
 
     // console.log('newGrantVars  ', newGrantVars)
 
@@ -79,23 +79,43 @@ const CreateGrants = () => {
   }
 
   //TODO: This should be break down into smaller units
-  const createArtifact = async (target: string, imageFile: File) => {
-    const cloudinaryResponse = await uploadToCloudinary(imageFile)
-    console.log('cloudinaryResponse ', cloudinaryResponse)
+  const createArtifactDB = async artifactsData => {
+    // check there is 3 values in array
+
+    TODO: console.log('artifactsData ', artifactsData)
+
+    const artifactsDBCreationReturn = await createArtifactsInDB({
+      variables: {
+        objects: artifactsData,
+      },
+    })
+
+    console.log('artifactsDBCreationReturn ', artifactsDBCreationReturn)
+
+    if (
+      artifactsDBCreationReturn.data?.insert_Artifacts?.returning ||
+      artifactsDBCreationReturn.data?.insert_Artifacts?.returning.length === 0
+    ) {
+      throw new Error('error creating artifacts in DB')
+    }
+
+    return artifactsDBCreationReturn.data?.insert_Artifacts?.returning[0].id
+
+    // console.log('cloudinaryResponse ', cloudinaryResponse)
     // return cloudinaryResponse.secure_url
   }
 
-  const createArtifacts = async artifactsData => {
-    Object.keys(artifactsData).forEach(async (key, index) => {
-      console.log('artifactsData ', artifactsData[key])
-      console.log('key ', key)
-      // myObject[key] *= 2
+  // const createArtifacts = async artifactsData => {
+  //   Object.keys(artifactsData).forEach(async (key, index) => {
+  //     console.log('artifactsData ', artifactsData[key])
+  //     console.log('key ', key)
+  //     // myObject[key] *= 2
 
-      // const link = await createArtifact(key, artifactsData[key])
+  //     // const link = await createArtifact(key, artifactsData[key])
 
-      console.log('link ', link)
-    })
-  }
+  //     // console.log('link ', link)
+  //   })
+  // }
 
   // const mapVar = data => {
 
@@ -126,6 +146,14 @@ const FooterWrapper = styled.div`
   display: flex;
 `
 
+/*
+grid-template-areas: `firstname lastname, email email, submit submit`
+
+const Email = styled.div`
+  grid-area: email;
+`
+*/
+
 const FormWrapper = styled.div`
   padding: 100px;
   .group-layout legend {
@@ -136,19 +164,33 @@ const FormWrapper = styled.div`
   }
 
   // display: grid;
-  // justify-items: stretch;
-  // gap: 10px;
+
   // grid-template-areas:
-  //   'startDate startDate'
-  //   'season season'
-  //   @media only screen and (min-width: ${breakpoint.desktop}px) {
-  //   gap: 16px;
-  // }
-  // .vertical-layout,
-  // .vertical-layout-item {
+  //   'artworkPatron ' 'artworkCreator' 'artworkCommunity'
+  //   .vertical-layout-item {
   //   display: contents;
   // }
-  * [id='#/properties/startDate'] {
+  * [id='#/properties/artifacts/properties/artworkPatron'] {
+    display: block;
+    grid-area: artworkPatron;
+  }
+
+  *[id='#/properties/artifacts/properties/artworkCreator'] {
+    display: block;
+    grid-area: artworkCreator;
+  }
+
+  *[id='#/properties/artifacts/properties/artworkCommunity'] {
+    display: block;
+    grid-area: artworkCommunity;
+  }
+
+  // display: grid;
+  // justify-items: stretch;
+  // gap: 10px;
+  grid-template-areas:
+    'startDate startDate'
+    * [id= '#/properties/startDate' ] {
     grid-area: startDate;
   }
 
