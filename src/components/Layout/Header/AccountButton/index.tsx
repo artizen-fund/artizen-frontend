@@ -4,7 +4,7 @@ import { useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGetUserQuery } from '@types'
+import { IGetUserQuery, Maybe } from '@types'
 import { rgba, loggedInUserVar, LayoutContext } from '@lib'
 import { GET_USER } from '@gql'
 

@@ -1,18 +1,19 @@
-import { useContext } from 'react'
-import { Grants, Layout, Button } from '@components'
-import { LayoutContext, UserContext } from '@lib'
+import { useEffect } from 'react'
+import { useReactiveVar } from '@apollo/client'
+import { Grants, Layout } from '@components'
+import { loggedInUserVar } from '@lib'
+import { useRouter } from 'next/router'
 
 const ManageGrants = () => {
-  const { setVisibleModal } = useContext(LayoutContext)
-  const { loggedInUser } = useContext(UserContext)
+  const router = useRouter()
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  // todo: use instead?
-  // const { data: session } = useSession()
-  // const { isConnected } = useAccount()
+  useEffect(() => {
+    if (!loggedInUser) router.push('/')
+  }, [loggedInUser])
 
   return (
     <Layout>
-      {!loggedInUser && <Button onClick={() => setVisibleModal?.('login')}>Login</Button>}
       <Grants />
     </Layout>
   )
