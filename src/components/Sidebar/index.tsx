@@ -4,12 +4,19 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba, LayoutContext } from '@lib'
+import { formatUSDC, rgba, LayoutContext, UserContext } from '@lib'
 import { monthNames } from '@copy/common'
 
 const Sidebar = () => {
-  const { toggleShelf, setVisibleModal } = useContext(LayoutContext)
+  const { loggedInUser } = useContext(UserContext)
+  const { setVisibleModal } = useContext(LayoutContext)
   const loading = false
+
+  const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : donate())
+  // todo: need to automatically start donation after modal appears
+
+  const donate = () => alert('start donation')
+
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -43,7 +50,7 @@ const Sidebar = () => {
               )}
             </FundBlock>
             <Row>
-              <Button onClick={() => toggleShelf?.('donate')} level={1} stretch glyph="donate">
+              <Button onClick={onClick} level={1} stretch glyph="donate">
                 Donate
               </Button>
               <Button onClick={() => setVisibleModal?.('share')} level={1} stretch outline>

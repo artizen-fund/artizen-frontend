@@ -21,6 +21,10 @@ export const UserContextProvider = ({ children }: SimpleComponentProps) => {
 
   // TODO: revisit this for use of getLazyQuery
   // also, should we be using Apollo State or ReactiveVar instead of this context?
+  // also these things…
+  // const { data: session } = useSession()
+  // const { isConnected } = useAccount()
+
   const { loading } = useQuery<IGetUserQuery>(GET_USER, {
     onCompleted: ({ Users }) => {
       if (Users.length === 0) {

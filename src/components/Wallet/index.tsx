@@ -2,15 +2,16 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import { useAccount, useConnect, useSignMessage, Chain, Connector } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { Button } from '@components'
-import { assertInt } from '@lib'
+import { assertInt, getWagmiClient } from '@lib'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
-export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
+export const Wallet = () => {
   const { data: session } = useSession()
 
   const { connectAsync } = useConnect()
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
+  const { chains } = getWagmiClient()
 
   const connectWallet = async (connector: Connector) => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')

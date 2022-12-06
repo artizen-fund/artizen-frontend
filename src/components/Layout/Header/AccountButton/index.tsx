@@ -3,10 +3,13 @@ import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { Maybe } from '@types'
-import { rgba, UserContext } from '@lib'
+import { rgba, UserContext, LayoutContext } from '@lib'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
+  const { setVisibleModal, toggleShelf } = useContext(LayoutContext)
   const { loggedInUser } = useContext(UserContext)
+
+  const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : toggleShelf?.('session'))
 
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
   useEffect(() => {
@@ -22,7 +25,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   }, [loggedInUser])
 
   return (
-    <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...props}>
+    <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...{ onClick }} {...props}>
       <CloseLabel id="close-bt" visible={active}>
         Close
       </CloseLabel>
