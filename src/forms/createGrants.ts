@@ -1,48 +1,52 @@
 import { JsonSchema } from '@jsonforms/core'
 
 /* This is the data schema. See JSONForms documentation for more options. */
+//date, goal,season, artworkPatron, videoPatron, artworkCreator, artworkCommunity, videoCommunity,  properties
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    // grant: {
-    //   title: 'Grant',
-    //   type: 'object',
-    //   properties: {
-    //     date: {
-    //       type: 'string',
-    //       format: 'date',
-    //     },
-    //     season: {
-    //       type: 'integer',
-    //     },
-    //   },
-    //   required: ['date', 'season'],
-    // },
-    // artifacts: {
-    //   title: 'Artifacts Assets',
-    //   type: 'object',
-    //   properties: {
-    //     artworkPatron: {
-    //       type: 'string',
-    //     },
-    //     videoPatron: {
-    //       type: 'string',
-    //     },
-    //     artworkCreator: {
-    //       type: 'string',
-    //     },
-    //     videoCreator: {
-    //       type: 'string',
-    //     },
-    //     artworkCommunity: {
-    //       type: 'string',
-    //     },
-    //     videoCommunity: {
-    //       type: 'string',
-    //     },
-    //   },
-    //   required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
-    // },
+    grant: {
+      title: 'Grant',
+      type: 'object',
+      properties: {
+        date: {
+          type: 'string',
+          format: 'date',
+        },
+        goal: {
+          type: 'integer',
+        },
+        season: {
+          type: 'integer',
+        },
+      },
+      required: ['date', 'season', 'goal'],
+    },
+    artifacts: {
+      title: 'Artifacts Assets',
+      type: 'object',
+      properties: {
+        artworkPatron: {
+          type: 'string',
+        },
+        videoPatron: {
+          type: 'string',
+        },
+        artworkCreator: {
+          type: 'string',
+        },
+        videoCreator: {
+          type: 'string',
+        },
+        artworkCommunity: {
+          type: 'string',
+        },
+        videoCommunity: {
+          type: 'string',
+        },
+      },
+      required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
+    },
     project: {
       title: 'Project',
       type: 'object',
@@ -59,19 +63,19 @@ export const schema: JsonSchema = {
         impact: {
           type: 'string',
         },
-        impactTags: {
-          type: 'string',
-        },
+        // impactTags: {
+        //   type: 'string',
+        // },
         creationDate: {
           type: 'string',
           format: 'date',
           description: 'schema-based time picker',
         },
-        completitionDate: {
+        completionDate: {
           type: 'string',
           format: 'date',
         },
-        wallet: {
+        walletAddress: {
           type: 'string',
         },
       },
@@ -80,10 +84,10 @@ export const schema: JsonSchema = {
         'longline',
         'description',
         'impact',
-        'impactTags',
+        // 'impactTags',
         'creationDate',
-        'completitionDate',
-        'wallet',
+        'completionDate',
+        'walletAddress',
       ],
     },
     // projectMembers: {
@@ -135,67 +139,71 @@ export const initialState: FormState = {}
 export const uischema = {
   type: 'VerticalLayout',
   elements: [
-    // {
-    //   type: 'Group',
-    //   label: 'Grant',
-    //   elements: [
-    //     {
-    //       type: 'HorizontalLayout',
-    //       elements: [
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/grant/properties/date',
-    //           label: 'Date, format: 2022-12-03',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/grant/properties/season',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
-    // {
-    //   type: 'Group',
-    //   label: 'Artifacts Assets',
-    //   elements: [
-    //     {
-    //       type: 'HorizontalLayout',
-    //       elements: [
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkPatron',
-    //           options: { format: 'uploadFile' },
-    //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoPatron',
-    //         //   options: { format: 'uploadFile' },
-    //         // },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkCreator',
-    //           options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoCreator',
-    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         // },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkCommunity',
-    //           options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoCommunity',
-    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         // },
-    //       ],
-    //     },
-    //   ],
-    // },
+    {
+      type: 'Group',
+      label: 'Grant',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/date',
+              label: 'Date, format: 2022-12-03',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/goal',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/season',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'Group',
+      label: 'Artifacts Assets',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkPatron',
+              options: { format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoPatron',
+            //   options: { format: 'uploadFile' },
+            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkCreator',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoCreator',
+            //   options: { unsafeToRetain: true, format: 'uploadFile' },
+            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkCommunity',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoCommunity',
+            //   options: { unsafeToRetain: true, format: 'uploadFile' },
+            // },
+          ],
+        },
+      ],
+    },
     {
       type: 'Group',
       label: 'Project',
@@ -219,21 +227,21 @@ export const uischema = {
               type: 'Control',
               scope: '#/properties/project/properties/impact',
             },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/impactTags',
-            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/project/properties/impactTags',
+            // },
             {
               type: 'Control',
               scope: '#/properties/project/properties/creationDate',
             },
             {
               type: 'Control',
-              scope: '#/properties/project/properties/completitionDate',
+              scope: '#/properties/project/properties/completionDate',
             },
             {
               type: 'Control',
-              scope: '#/properties/project/properties/wallet',
+              scope: '#/properties/project/properties/walletAddress',
             },
           ],
         },

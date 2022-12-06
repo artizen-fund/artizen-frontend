@@ -1,10 +1,12 @@
 import { gql } from '@apollo/client'
 
-export const CREATE_GRANTS = gql`
-  mutation insert_Grants_one($grantVar: Grants_insert_input!) {
-    insert_Grants_one(object: $grantVar) {
-      id
-      date
+export const INSERT_GRANTS = gql`
+  mutation insert_Grants($objects: [Grants_insert_input!]!) {
+    insert_Grants(objects: $objects) {
+      returning {
+        id
+        date
+      }
     }
   }
 `

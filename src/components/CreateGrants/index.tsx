@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { useMutation, useQuery } from '@apollo/client'
-import { uploadToCloudinary } from '@lib'
-import { CREATE_GRANTS, LOAD_GRANTS, CREATE_ARTIFACTS } from '@gql'
+
+import { INSERT_GRANTS, LOAD_GRANTS, INSERT_ARTIFACTS, INSERT_PROJECTS, INSERT_PROJECTS_MEMBERS } from '@gql'
 import { Form, Button } from '@components'
-import { breakpoint, typography } from '@theme'
+import { typography } from '@theme'
 import { useRouter } from 'next/router'
 
 import { schema, uischema, initialState, FormState } from '@forms/createGrants'
@@ -18,8 +18,10 @@ const CreateGrants = () => {
     query: { id },
   } = useRouter()
 
-  const [createGrant] = useMutation(CREATE_GRANTS)
-  const [createArtifactsInDB] = useMutation(CREATE_ARTIFACTS)
+  const [insertGrantsM] = useMutation(INSERT_GRANTS)
+  const [insertArtifactsM] = useMutation(INSERT_ARTIFACTS)
+  const [insertProjectsM] = useMutation(INSERT_PROJECTS)
+  const [insertProjectMemberInDB] = useMutation(INSERT_PROJECTS_MEMBERS)
   const {
     loading,
     data: loadedGrantData,
@@ -44,49 +46,31 @@ const CreateGrants = () => {
   }
 
   const saveChanges = async ({ grant, artifacts, project, projectMembers }) => {
-    console.log('variables from form', project)
-    // const newGrantVars = {
-    //   grantVar: {
-    //     status: 'draft',
-    //     season: grant.season,
-    //     date: grant.date,
-    //   },
-    // }
-    if (artifacts && artifacts.length > 0) {
-      const artifactDBId = await createArtifactDB(artifacts)
-    }
+    setProcessing(true)
 
-    //TODO: Create project
+    const artifactId = await insertArtifactF(artifacts)
 
-    // console.log('newGrantVars  ', newGrantVars)
+    const projectId = await insertProjectsF(project)
 
-    // const createdGrantData = await createGrant({
-    //   variables: newGrantVars,
-    // })
+    await insertProjecttMembers(projectMembers, projectId)
 
-    // console.log('createGrantData     ', createdGrantData)
+    //finally insert grants
+    const newgGrantDBDate = await insertGrants({ grantData: grant, artifactId, projectId })
 
-    // const date: string | null = createdGrantData.data?.insert_Grants_one?.date
+    console.log('grantDBId     ', newgGrantDBDate)
 
-    // console.log('date       ', date)
+    push(`/admin/grants/${newgGrantDBDate}`)
 
-    // date && push(`/admin/grants/${date}`)
-
-    return
-
-    // if (!loggedInUser) return
-    // setProcessing(true)
-    // await updateUser({ variables: { ...loggedInUser, ...data } })
-    // setProcessing(false)
+    setProcessing(false)
   }
 
   //TODO: This should be break down into smaller units
-  const createArtifactDB = async artifactsData => {
+  const insertArtifactF = async artifactsData => {
     // check there is 3 values in array
 
     TODO: console.log('artifactsData ', artifactsData)
 
-    const artifactsDBCreationReturn = await createArtifactsInDB({
+    const artifactsDBCreationReturn = await insertArtifactsM({
       variables: {
         objects: artifactsData,
       },
@@ -94,10 +78,7 @@ const CreateGrants = () => {
 
     console.log('artifactsDBCreationReturn ', artifactsDBCreationReturn)
 
-    if (
-      artifactsDBCreationReturn.data?.insert_Artifacts?.returning ||
-      artifactsDBCreationReturn.data?.insert_Artifacts?.returning.length === 0
-    ) {
+    if (artifactsDBCreationReturn.data?.insert_Artifacts === undefined) {
       throw new Error('error creating artifacts in DB')
     }
 
@@ -107,38 +88,95 @@ const CreateGrants = () => {
     // return cloudinaryResponse.secure_url
   }
 
-  // const createArtifacts = async artifactsData => {
-  //   Object.keys(artifactsData).forEach(async (key, index) => {
-  //     console.log('artifactsData ', artifactsData[key])
-  //     console.log('key ', key)
-  //     // myObject[key] *= 2
+  const insertProjectsF = async projectsData => {
+    const projectDBCreationReturn = await insertProjectsM({
+      variables: {
+        objects: projectsData,
+      },
+    })
 
-  //     // const link = await createArtifact(key, artifactsData[key])
+    console.log('projectDBCreationReturn     ', projectDBCreationReturn)
 
-  //     // console.log('link ', link)
-  //   })
-  // }
+    if (projectDBCreationReturn.data?.insert_Projects === undefined) {
+      throw new Error('error creating project in DB')
+    }
 
-  // const mapVar = data => {
+    return projectDBCreationReturn.data?.insert_Projects?.returning[0].id
+  }
 
-  //   return data
-  // }
+  const insertProjecttMembers = async (projectMemberData, projectId) => {
+    //insertProjectMemberInDB
+
+    const insertProjectMembersReturn = await insertProjectMemberInDB({
+      variables: {
+        objects: [
+          {
+            projectId,
+            type: 'lead',
+            user: {
+              data: {
+                publicAddress: '0x000000002',
+                artizenHandle: 'user8',
+                email: 'user8@email.com',
+              },
+            },
+          },
+        ],
+      },
+    })
+
+    console.log('insertProjectMembersReturn         ', insertProjectMembersReturn)
+  }
+
+  const insertGrants = async ({ grantData, artifactId, projectId }) => {
+    const insertGrantsMReturn = await insertGrantsM({
+      variables: {
+        objects: [
+          {
+            status: 'draft',
+            submissions: {
+              data: [
+                {
+                  artifactId,
+                  projectId,
+                },
+              ],
+            },
+            ...grantData,
+          },
+        ],
+      },
+    })
+
+    if (insertGrantsMReturn.data?.insert_Grants === undefined) {
+      throw new Error('error creating grant in DB')
+    }
+
+    return insertGrantsMReturn.data?.insert_Grants?.returning[0].date
+  }
 
   return (
     <FormWrapper>
-      <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
-        <StyledButton disabled={processing || loading} onClick={() => saveChanges(data)} stretch level={0}>
-          {loading ? 'Saving...' : 'Save Draft'}
-        </StyledButton>
-        <FooterWrapper>
-          <StyledButton disabled={true} stretch onClick={() => {}} level={0}>
-            Publish Grant
+      {!loadedGrantData && (
+        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
+          <StyledButton disabled={processing || loading} onClick={() => saveChanges(data)} stretch level={0}>
+            {loading ? 'Saving...' : 'Save Draft'}
           </StyledButton>
-          <StyledButton disabled={true} onClick={() => {}} stretch level={0}>
-            End Grant
-          </StyledButton>
-        </FooterWrapper>
-      </Form>
+        </Form>
+      )}
+      {loadedGrantData && (
+        <>
+          {loadedGrantData.Grants[0].title}
+          <FooterWrapper>
+            <StyledButton disabled={true} stretch onClick={() => {}} level={0}>
+              Publish Grant
+            </StyledButton>
+            <StyledButton disabled={true} onClick={() => {}} stretch level={0}>
+              End Grant
+            </StyledButton>
+          </FooterWrapper>
+        </>
+      )}
     </FormWrapper>
   )
 }
