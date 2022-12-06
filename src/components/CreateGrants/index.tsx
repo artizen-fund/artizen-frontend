@@ -56,6 +56,8 @@ const CreateGrants = () => {
       const artifactDBId = await createArtifactDB(artifacts)
     }
 
+    //TODO: Create project
+
     // console.log('newGrantVars  ', newGrantVars)
 
     // const createdGrantData = await createGrant({

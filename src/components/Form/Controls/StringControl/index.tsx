@@ -96,6 +96,19 @@ export const StringControl = ({
             className={!!data ? 'hasData' : ''}
             path={path}
           />
+        ) : schema?.format === 'date' ? (
+          <input
+            {...{ required, autoComplete }}
+            disabled={!enabled || processing}
+            minLength={schema?.minLength}
+            maxLength={schema?.maxLength}
+            type="date"
+            placeholder={uischema?.options?.placeholder || ' '}
+            defaultValue={data}
+            onChange={e => handleChange(path, ccnFormat(e.target.value))}
+            onBlur={() => setVirgin(false)}
+            value={data}
+          />
         ) : uischema?.options?.format === 'creditCard' ? (
           <input
             {...{ required, autoComplete }}
