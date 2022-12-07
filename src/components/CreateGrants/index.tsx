@@ -116,17 +116,28 @@ const CreateGrants = () => {
   const insertProjecttMembers = async (projectMemberData: ProjectMembers, projectId: string) => {
     //insertProjectMemberInDB
 
+    /*
+     firstName: undefined,
+    lastName: undefined,
+    externalLink: undefined,
+    email: undefined,
+    wallet: undefined,
+    type: undefined,
+    */
+
     const insertProjectMembersReturn = await insertProjecstMemberInDB({
       variables: {
         objects: [
           {
             projectId,
-            type: 'lead',
+            type: projectMemberData.type,
             user: {
               data: {
-                publicAddress: '0x000000002',
-                artizenHandle: 'user8',
-                email: 'user8@email.com',
+                firstName: projectMemberData.firstName,
+                lastName: projectMemberData.lastName,
+                publicAddress: projectMemberData.wallet,
+                externalLink: projectMemberData.externalLink,
+                email: projectMemberData.email,
               },
             },
           },
@@ -180,10 +191,24 @@ const CreateGrants = () => {
           <GrantContentWrapper>Grant Date: {loadedGrantData.Grants[0].date}</GrantContentWrapper>
           <GrantContentWrapper>Status: {loadedGrantData.Grants[0].status}</GrantContentWrapper>
           <FooterWrapper>
-            <StyledButton disabled={true} stretch level={0}>
+            <StyledButton
+              disabled={true}
+              stretch
+              onClick={() => {
+                //publish
+              }}
+              level={0}
+            >
               Publish Grant
             </StyledButton>
-            <StyledButton disabled={true} stretch level={0}>
+            <StyledButton
+              disabled={true}
+              stretch
+              onClick={() => {
+                //end
+              }}
+              level={0}
+            >
               End Grant
             </StyledButton>
           </FooterWrapper>

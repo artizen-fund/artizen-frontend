@@ -90,32 +90,31 @@ export const schema: JsonSchema = {
         'walletAddress',
       ],
     },
-
-    // projectMembers: {
-    //   title: 'Project',
-    //   type: 'object',
-    //   properties: {
-    //     firstName: {
-    //       type: 'string',
-    //     },
-    //     lastName: {
-    //       type: 'string',
-    //     },
-    //     externalLink: {
-    //       type: 'string',
-    //     },
-    //     email: {
-    //       type: 'string',
-    //     },
-    //     wallet: {
-    //       type: 'string',
-    //     },
-    //     type: {
-    //       type: 'string',
-    //     },
-    //   },
-    //   required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
-    // },
+    projectMembers: {
+      title: 'Project',
+      type: 'object',
+      properties: {
+        firstName: {
+          type: 'string',
+        },
+        lastName: {
+          type: 'string',
+        },
+        externalLink: {
+          type: 'string',
+        },
+        email: {
+          type: 'string',
+        },
+        wallet: {
+          type: 'string',
+        },
+        type: {
+          type: 'string',
+        },
+      },
+      required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
+    },
   },
 }
 
@@ -131,31 +130,31 @@ export interface Grant {
 }
 
 export interface Artifacts {
-  artworkPatron: string
-  artworkCreator: string
-  artworkCommunity: string
+  artworkPatron?: string
+  artworkCreator?: string
+  artworkCommunity?: string
   videoPatron?: string
   videCreator?: string
   videoCommunity?: string
 }
 
 export interface Project {
-  title: string
-  longline: string
-  description: string
-  impact: string
-  creationDate: string
-  completionDate: string
-  walletAddress: string
+  title?: string
+  longline?: string
+  description?: string
+  impact?: string
+  creationDate?: string
+  completionDate?: string
+  walletAddress?: string
 }
 
 export interface ProjectMembers {
-  firstName: string
-  lastName: string
-  externalLink: string
-  email: string
-  wallet: string
-  type: string
+  firstName?: string
+  lastName?: string
+  externalLink?: string
+  email?: string
+  wallet?: string
+  type?: string
 }
 
 export interface FormState extends Record<string, unknown> {
@@ -173,29 +172,29 @@ export const initialState: FormState = {
     season: 0,
   },
   artifacts: {
-    artworkPatron: '',
-    artworkCreator: '',
-    artworkCommunity: '',
-    videoPatron: '',
-    videCreator: '',
-    videoCommunity: '',
+    artworkPatron: undefined,
+    artworkCreator: undefined,
+    artworkCommunity: undefined,
+    videoPatron: undefined,
+    videCreator: undefined,
+    videoCommunity: undefined,
   },
   project: {
-    title: '',
-    longline: '',
-    description: '',
-    impact: '',
-    creationDate: '',
-    completionDate: '',
-    walletAddress: '',
+    title: undefined,
+    longline: undefined,
+    description: undefined,
+    impact: undefined,
+    creationDate: undefined,
+    completionDate: undefined,
+    walletAddress: undefined,
   },
   projectMembers: {
-    firstName: '',
-    lastName: '',
-    externalLink: '',
-    email: '',
-    wallet: '',
-    type: '',
+    firstName: undefined,
+    lastName: undefined,
+    externalLink: undefined,
+    email: undefined,
+    wallet: undefined,
+    type: undefined,
   },
 }
 
@@ -316,40 +315,40 @@ export const uischema = {
         },
       ],
     },
-    // {
-    //   type: 'Group',
-    //   label: 'Project Members',
-    //   elements: [
-    //     {
-    //       type: 'HorizontalLayout',
-    //       elements: [
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/projectMembers/properties/firstName',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/projectMembers/properties/lastName',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/projectMembers/properties/externalLink',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/projectMembers/properties/email',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/projectMembers/properties/wallet',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/projectMembers/properties/type',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
+    {
+      type: 'Group',
+      label: 'Project Members',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/projectMembers/properties/firstName',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/projectMembers/properties/lastName',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/projectMembers/properties/externalLink',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/projectMembers/properties/email',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/projectMembers/properties/wallet',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/projectMembers/properties/type',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }
