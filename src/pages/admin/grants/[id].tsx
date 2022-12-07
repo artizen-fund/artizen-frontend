@@ -1,7 +1,7 @@
-import { Grants, Layout, CreateGrants } from '@components'
+import { Layout, CreateGrants } from '@components'
 import { useSession } from 'next-auth/react'
 
-const grantDetails = ({ chains }: { chains: any }) => {
+const grantDetails = () => {
   const { status } = useSession()
 
   return (
@@ -10,7 +10,6 @@ const grantDetails = ({ chains }: { chains: any }) => {
       {status === 'authenticated' && (
         <>
           <CreateGrants />
-          <Grants />
         </>
       )}
     </Layout>

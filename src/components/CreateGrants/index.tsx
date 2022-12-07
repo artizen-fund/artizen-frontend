@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { useMutation, useQuery } from '@apollo/client'
+import { useGrant } from '@lib'
 
 import { INSERT_GRANTS, LOAD_GRANTS, INSERT_ARTIFACTS, INSERT_PROJECTS, INSERT_PROJECTS_MEMBERS } from '@gql'
 import {
@@ -25,6 +26,8 @@ import {
   ProjectMembers,
 } from '@forms/createGrants'
 
+//<Grants />
+
 //TODO: startingDate is set by publishing function
 //TODO: closingDate is set by ending function
 
@@ -33,6 +36,7 @@ const CreateGrants = () => {
     push,
     query: { id },
   } = useRouter()
+  const { publish } = useGrant()
 
   const [insertGrantsM] = useMutation<IInsert_GrantsMutation>(INSERT_GRANTS)
   const [insertArtifactsM] = useMutation<IInsert_ArtifactsMutation>(INSERT_ARTIFACTS)
@@ -195,7 +199,7 @@ const CreateGrants = () => {
               disabled={true}
               stretch
               onClick={() => {
-                //publish
+                publish
               }}
               level={0}
             >
