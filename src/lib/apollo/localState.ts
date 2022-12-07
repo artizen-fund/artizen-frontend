@@ -1,3 +1,4 @@
 import { makeVar } from '@apollo/client'
+import { IUsers } from '@types'
 
-export const userMetadataVar = makeVar<UserBundle | undefined>(undefined)
+export const loggedInUserVar = makeVar<Partial<IUsers> | undefined>(undefined)

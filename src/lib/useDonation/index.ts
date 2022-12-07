@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
-import { assert, userMetadataVar, UserContext, useReadContract, useWriteContract } from '@lib'
-import { GrantsAbi } from '@contracts'
+import { useEffect, useState } from 'react'
 import { useReactiveVar } from '@apollo/client'
+import { assert, loggedInUserVar, useReadContract, useWriteContract } from '@lib'
+import { GrantsAbi } from '@contracts'
 import { useMetaContract } from './useMetaContract'
 
 export const useDonation = () => {
@@ -9,9 +9,6 @@ export const useDonation = () => {
   const [buildingMessage, setBuildingMessage] = useState<string>('')
   const [confirmingStatus, setConfirmingStatus] = useState<DonationStageStatus>('WAITING')
   const [confirmingMessage, setConfirmingMessage] = useState<string>('')
-
-  const { loggedInUser } = useContext(UserContext)
-  const metadata = useReactiveVar(userMetadataVar)
 
   const { callStandardMetaTxMethod, callCustomMetaTxMethod, loading, error } = useMetaContract()
 

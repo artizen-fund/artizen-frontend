@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { CloseButton, PostDonationData, Share, AlertModal, MediaModal } from '@components'
+import { CloseButton, PostDonationData, Share, AlertModal, MediaModal, LoginModal } from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
 
@@ -29,6 +29,8 @@ const Modals = () => {
 
   const renderSwitch = (visibleModal?: ModalType) => {
     switch (displayedVisibleModal) {
+      case 'login':
+        return <LoginModal />
       case 'postDonationData':
         return <PostDonationData />
       case 'share':
