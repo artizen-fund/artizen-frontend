@@ -13,14 +13,14 @@ export interface UploadFileProps {
 }
 
 const UploadFileControl = ({ required, placeholder, onChange, path, value, className, disabled }: UploadFileProps) => {
-  const [tempImg, settempImg] = useState<string>('')
-  const [selectedFile, setSelectedFile] = useState<File | null>()
+  const [tempImg, setTempImg] = useState<string>('')
+  const [selectedFile, setSelectedFile] = useState<File>()
 
   // create a preview as a side effect, whenever selected file is changed
   // preventing memory leaks with createObjectURL
   useEffect(() => {
     if (!selectedFile) {
-      settempImg('')
+      setTempImg('')
       return
     }
 
@@ -28,9 +28,9 @@ const UploadFileControl = ({ required, placeholder, onChange, path, value, class
       const cloudinaryResponse = await uploadToCloudinary(img)
       const link = cloudinaryResponse.secure_url
 
-      settempImg(link)
+      setTempImg(link)
 
-      onChange && onChange(link)
+      onChange?.(link)
     }
 
     uploadImg(selectedFile)
