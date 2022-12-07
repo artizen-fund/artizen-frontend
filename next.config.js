@@ -9,6 +9,15 @@ const moduleExports = {
 
     return config
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/grants/12-12-2022',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 const sentryWebpackPluginOptions = {
