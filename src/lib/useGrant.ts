@@ -145,11 +145,14 @@ export const useGrant = () => {
     alert('Grant ended')
   }
 
-  const donate = async (grantId: number, amount: number) => {
-    const grantTransaction = await grantsContract.donate(8, 9000000000000000)
+  const donate = async (grantId: number, amount: string) => {
+    console.log('it gets here', ethers.utils.parseUnits('1', 'ether'))
+    const grantTransaction = await grantsContract.donate(9, ethers.utils.parseEther(amount), {
+      value: ethers.utils.parseEther(amount),
+    })
     await grantTransaction.wait()
 
-    alert('Grant donate happens')
+    console.log('it gets finsihed')
   }
 
   const cancelGrant = async (grantId: number) => {

@@ -1,11 +1,10 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import Perks from './Perks'
-import Countdown from './Countdown'
-import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
+// import Countdown from './Countdown'
+import { Glyph, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba, LayoutContext, loggedInUserVar, useGrant } from '@lib'
-import { monthNames } from '@copy/common'
+import { rgba, LayoutContext, loggedInUserVar, useGrant } from '@lib'
 
 interface ISidebar {
   blockchainId: string | undefined
@@ -22,10 +21,7 @@ const Sidebar = (props: ISidebar) => {
 
   const donateFn = async () => {
     if (props.blockchainId) {
-      console.log('parseInt(props.blockchainId) . ', parseInt(props.blockchainId))
-      const donationToBlockchainRt = await donate(parseInt(props.blockchainId), 9000000000000000)
-
-      console.log('donationToBlockchainRt     ', donationToBlockchainRt)
+      await donate(parseInt(props.blockchainId), '0.9')
     }
   }
 
