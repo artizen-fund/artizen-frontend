@@ -17,6 +17,7 @@ export const LOAD_GRANTS = gql`
       id
       date
       status
+      blockchainId
     }
   }
 `

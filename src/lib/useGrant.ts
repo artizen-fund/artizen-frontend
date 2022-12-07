@@ -145,6 +145,13 @@ export const useGrant = () => {
     alert('Grant ended')
   }
 
+  const donate = async (grantId: number, amount: number) => {
+    const grantTransaction = await grantsContract.donate(8, 9000000000000000)
+    await grantTransaction.wait()
+
+    alert('Grant donate happens')
+  }
+
   const cancelGrant = async (grantId: number) => {
     const grantTransaction = await grantsContract.cancelGrant(grantId)
     await grantTransaction.wait()
@@ -152,5 +159,5 @@ export const useGrant = () => {
     alert('Grant canceled')
   }
 
-  return { publish, endGrant, cancelGrant }
+  return { publish, endGrant, cancelGrant, donate }
 }

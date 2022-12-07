@@ -13,8 +13,8 @@ const moduleExports = {
     return [
       {
         source: '/',
-        destination: '/grants/12-12-2022',
-        permanent: true,
+        destination: '/grants/2022-12-11',
+        permanent: false,
       },
     ]
   },

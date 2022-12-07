@@ -4,18 +4,30 @@ import Perks from './Perks'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba, LayoutContext, loggedInUserVar } from '@lib'
+import { formatUSDC, rgba, LayoutContext, loggedInUserVar, useGrant } from '@lib'
 import { monthNames } from '@copy/common'
 
-const Sidebar = () => {
+interface ISidebar {
+  blockchainId: string | undefined
+}
+
+const Sidebar = (props: ISidebar) => {
   const loggedInUser = loggedInUserVar()
+  const { donate } = useGrant()
   const { setVisibleModal } = useContext(LayoutContext)
   const loading = false
 
-  const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : donate())
+  const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : donateFn())
   // todo: need to automatically start donation after modal appears
 
-  const donate = () => alert('start donation')
+  const donateFn = async () => {
+    if (props.blockchainId) {
+      console.log('parseInt(props.blockchainId) . ', parseInt(props.blockchainId))
+      const donationToBlockchainRt = await donate(parseInt(props.blockchainId), 9000000000000000)
+
+      console.log('donationToBlockchainRt     ', donationToBlockchainRt)
+    }
+  }
 
   return (
     <StyledStickyCanvas>
@@ -32,10 +44,6 @@ const Sidebar = () => {
           )}
           <Content>
             <FundBlock>
-              <AmountRaised>
-                <span>formatUSDC(totalRaised).toLocaleString()</span> raised of fundRaisingGoal.toLocaleString() goal
-              </AmountRaised>
-              {/*<ProgressBar>formatUSDC(totalRaised) / formatUSDC(fundRaisingGoal)</ProgressBar>*/}
               {!loading ? (
                 <Row>
                   {/* <Countdown date={endDate.toISOString()} /> */}
@@ -50,7 +58,7 @@ const Sidebar = () => {
               )}
             </FundBlock>
             <Row>
-              <Button onClick={onClick} level={1} stretch glyph="donate">
+              <Button onClick={onClick} level={1} disabled={!props.blockchainId} stretch glyph="donate">
                 Donate
               </Button>
               <Button onClick={() => setVisibleModal?.('share')} level={1} stretch outline>
