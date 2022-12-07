@@ -101,7 +101,6 @@ export const useGrant = () => {
 
   const publish = async (grantId: string) => {
     const grant = mockGrants[0]
-
     const metadataUris = await generateMetadata(grantId)
 
     // Mint a new NFTs

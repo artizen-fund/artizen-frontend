@@ -43,7 +43,12 @@ const Header = () => {
               <li onClick={() => toggleShelf?.('howItWorks')}>How it Works</li>
             </ul>
           </Nav>
-          <DonateButton onClick={() => toggleShelf?.('donate')} active={visibleShelf === 'donate'} />
+          <DonateButton
+            onClick={() => {
+              //test
+            }}
+            active={visibleShelf === 'donate'}
+          />
           <AccountButton id="accountButton" active={visibleShelf === 'session'} />
         </Items>
       </Wrapper>
