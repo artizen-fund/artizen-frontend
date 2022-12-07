@@ -1,7 +1,7 @@
 import { JsonSchema } from '@jsonforms/core'
 
 /* This is the data schema. See JSONForms documentation for more options. */
-//date, goal,season, artworkPatron, videoPatron, artworkCreator, artworkCommunity, videoCommunity,  properties
+//  properties
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
@@ -90,6 +90,7 @@ export const schema: JsonSchema = {
         'walletAddress',
       ],
     },
+
     // projectMembers: {
     //   title: 'Project',
     //   type: 'object',
@@ -122,13 +123,81 @@ export const schema: JsonSchema = {
 	This is the local state that our useState() bundle will conform to. 
 	All values must be optional, as an unfilled form will conform to this state.
 */
+
+export interface Grant {
+  date: string
+  goal: number
+  season: number
+}
+
+export interface Artifacts {
+  artworkPatron: string
+  artworkCreator: string
+  artworkCommunity: string
+  videoPatron?: string
+  videCreator?: string
+  videoCommunity?: string
+}
+
+export interface Project {
+  title: string
+  longline: string
+  description: string
+  impact: string
+  creationDate: string
+  completionDate: string
+  walletAddress: string
+}
+
+export interface ProjectMembers {
+  firstName: string
+  lastName: string
+  externalLink: string
+  email: string
+  wallet: string
+  type: string
+}
+
 export interface FormState extends Record<string, unknown> {
-  startDate?: string
-  type?: number
+  grant: Grant
+  artifacts: Artifacts
+  project: Project
+  projectMembers: ProjectMembers
 }
 
 /* This is our local initialState. */
-export const initialState: FormState = {}
+export const initialState: FormState = {
+  grant: {
+    date: '',
+    goal: 0,
+    season: 0,
+  },
+  artifacts: {
+    artworkPatron: '',
+    artworkCreator: '',
+    artworkCommunity: '',
+    videoPatron: '',
+    videCreator: '',
+    videoCommunity: '',
+  },
+  project: {
+    title: '',
+    longline: '',
+    description: '',
+    impact: '',
+    creationDate: '',
+    completionDate: '',
+    walletAddress: '',
+  },
+  projectMembers: {
+    firstName: '',
+    lastName: '',
+    externalLink: '',
+    email: '',
+    wallet: '',
+    type: '',
+  },
+}
 
 /*
 	This is the JSONForms UI layout. 

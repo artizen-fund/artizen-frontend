@@ -3,11 +3,27 @@ import styled from 'styled-components'
 import { useMutation, useQuery } from '@apollo/client'
 
 import { INSERT_GRANTS, LOAD_GRANTS, INSERT_ARTIFACTS, INSERT_PROJECTS, INSERT_PROJECTS_MEMBERS } from '@gql'
+import {
+  IInsert_GrantsMutation,
+  IInsert_ArtifactsMutation,
+  IInsert_ProjectsMutation,
+  IInsert_ProjectMembersMutation,
+} from '@types'
+
 import { Form, Button } from '@components'
-import { typography } from '@theme'
+// import { typography } from '@theme'
 import { useRouter } from 'next/router'
 
-import { schema, uischema, initialState, FormState } from '@forms/createGrants'
+import {
+  schema,
+  uischema,
+  initialState,
+  FormState,
+  Grant,
+  Artifacts,
+  Project,
+  ProjectMembers,
+} from '@forms/createGrants'
 
 //TODO: startingDate is set by publishing function
 //TODO: closingDate is set by ending function
@@ -18,10 +34,10 @@ const CreateGrants = () => {
     query: { id },
   } = useRouter()
 
-  const [insertGrantsM] = useMutation(INSERT_GRANTS)
-  const [insertArtifactsM] = useMutation(INSERT_ARTIFACTS)
-  const [insertProjectsM] = useMutation(INSERT_PROJECTS)
-  const [insertProjectMemberInDB] = useMutation(INSERT_PROJECTS_MEMBERS)
+  const [insertGrantsM] = useMutation<IInsert_GrantsMutation>(INSERT_GRANTS)
+  const [insertArtifactsM] = useMutation<IInsert_ArtifactsMutation>(INSERT_ARTIFACTS)
+  const [insertProjectsM] = useMutation<IInsert_ProjectsMutation>(INSERT_PROJECTS)
+  const [insertProjecstMemberInDB] = useMutation<IInsert_ProjectMembersMutation>(INSERT_PROJECTS_MEMBERS)
   const {
     loading,
     data: loadedGrantData,
@@ -37,27 +53,26 @@ const CreateGrants = () => {
     },
   })
 
-  const [data, setData] = useState<FormState>({})
+  const [data, setData] = useState<FormState>(initialState)
 
   const [processing, setProcessing] = useState(false)
 
   if (errorLoadingGrant) {
+    console.error('errorLoadingGrant ', errorLoadingGrant)
     return <div>Error loading grant</div>
   }
 
-  const saveChanges = async ({ grant, artifacts, project, projectMembers }) => {
+  const saveChanges = async (formData: FormState) => {
     setProcessing(true)
 
-    const artifactId = await insertArtifactF(artifacts)
+    const artifactId = await insertArtifactF(formData.artifacts)
 
-    const projectId = await insertProjectsF(project)
+    const projectId = await insertProjectsF(formData.project)
 
-    await insertProjecttMembers(projectMembers, projectId)
+    await insertProjecttMembers(formData.projectMembers, projectId)
 
     //finally insert grants
-    const newgGrantDBDate = await insertGrants({ grantData: grant, artifactId, projectId })
-
-    console.log('grantDBId     ', newgGrantDBDate)
+    const newgGrantDBDate = await insertGrants(formData.grant, artifactId, projectId)
 
     push(`/admin/grants/${newgGrantDBDate}`)
 
@@ -65,18 +80,14 @@ const CreateGrants = () => {
   }
 
   //TODO: This should be break down into smaller units
-  const insertArtifactF = async artifactsData => {
+  const insertArtifactF = async (artifactsData: Artifacts) => {
     // check there is 3 values in array
-
-    TODO: console.log('artifactsData ', artifactsData)
 
     const artifactsDBCreationReturn = await insertArtifactsM({
       variables: {
         objects: artifactsData,
       },
     })
-
-    console.log('artifactsDBCreationReturn ', artifactsDBCreationReturn)
 
     if (artifactsDBCreationReturn.data?.insert_Artifacts === undefined) {
       throw new Error('error creating artifacts in DB')
@@ -88,14 +99,12 @@ const CreateGrants = () => {
     // return cloudinaryResponse.secure_url
   }
 
-  const insertProjectsF = async projectsData => {
+  const insertProjectsF = async (projectsData: Project) => {
     const projectDBCreationReturn = await insertProjectsM({
       variables: {
         objects: projectsData,
       },
     })
-
-    console.log('projectDBCreationReturn     ', projectDBCreationReturn)
 
     if (projectDBCreationReturn.data?.insert_Projects === undefined) {
       throw new Error('error creating project in DB')
@@ -104,10 +113,10 @@ const CreateGrants = () => {
     return projectDBCreationReturn.data?.insert_Projects?.returning[0].id
   }
 
-  const insertProjecttMembers = async (projectMemberData, projectId) => {
+  const insertProjecttMembers = async (projectMemberData: ProjectMembers, projectId: string) => {
     //insertProjectMemberInDB
 
-    const insertProjectMembersReturn = await insertProjectMemberInDB({
+    const insertProjectMembersReturn = await insertProjecstMemberInDB({
       variables: {
         objects: [
           {
@@ -125,10 +134,12 @@ const CreateGrants = () => {
       },
     })
 
-    console.log('insertProjectMembersReturn         ', insertProjectMembersReturn)
+    if (insertProjectMembersReturn?.data?.insert_ProjectMembers === undefined) {
+      throw new Error('error adding project members to project in DB')
+    }
   }
 
-  const insertGrants = async ({ grantData, artifactId, projectId }) => {
+  const insertGrants = async (grantData: Grant, artifactId: string, projectId: string) => {
     const insertGrantsMReturn = await insertGrantsM({
       variables: {
         objects: [
@@ -166,12 +177,13 @@ const CreateGrants = () => {
       )}
       {loadedGrantData && (
         <>
-          {loadedGrantData.Grants[0].title}
+          <GrantContentWrapper>Grant Date: {loadedGrantData.Grants[0].date}</GrantContentWrapper>
+          <GrantContentWrapper>Status: {loadedGrantData.Grants[0].status}</GrantContentWrapper>
           <FooterWrapper>
-            <StyledButton disabled={true} stretch onClick={() => {}} level={0}>
+            <StyledButton disabled={true} stretch level={0}>
               Publish Grant
             </StyledButton>
-            <StyledButton disabled={true} onClick={() => {}} stretch level={0}>
+            <StyledButton disabled={true} stretch level={0}>
               End Grant
             </StyledButton>
           </FooterWrapper>
@@ -180,6 +192,11 @@ const CreateGrants = () => {
     </FormWrapper>
   )
 }
+
+const GrantContentWrapper = styled.div`
+  width: 80%;
+  display: block;
+`
 
 const FooterWrapper = styled.div`
   width: 80%;
@@ -237,12 +254,6 @@ const FormWrapper = styled.div`
   *[id='#/properties/season'] {
     grid-area: season;
   }
-`
-
-const NotificationsBanner = styled.div`
-  grid-area: socialLinksBanner;
-  margin-top: 20px;
-  ${typography.label.l1}
 `
 
 const StyledButton = styled(props => <Button {...props} />)`

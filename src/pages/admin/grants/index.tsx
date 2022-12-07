@@ -1,4 +1,4 @@
-import { Grants, Layout, Wallet, CreateGrants } from '@components'
+import { Layout, Wallet } from '@components'
 
 const ManageGrants = ({ chains }: { chains: any }) => {
   return (

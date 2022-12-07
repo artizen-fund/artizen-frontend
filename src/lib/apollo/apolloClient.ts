@@ -22,8 +22,6 @@ export const createApolloClient = (didToken?: string) => {
 
     const token = session ? session.token : undefined
 
-    console.log('session   from authLink    ', session)
-
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
       // server request (usually for SSR)

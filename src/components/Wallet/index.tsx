@@ -8,8 +8,6 @@ import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
   const { data: session } = useSession()
 
-  console.log('user session')
-
   const { connectAsync } = useConnect()
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
@@ -33,7 +31,6 @@ export const Wallet = ({ chains }: { chains: Array<Chain> }) => {
 
     const { message } = await response.json()
     const signature = await signMessageAsync({ message })
-    console.log('user is signing to next-auth/react ')
     await signIn('credentials', { message, signature, redirect: false })
   }
 

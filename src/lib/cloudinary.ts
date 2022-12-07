@@ -1,7 +1,6 @@
 import { assert } from '@lib'
 
 export const uploadToCloudinary = async (file: File) => {
-  console.log('NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET ', process.env.NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET)
   try {
     const UPLOAD_PRESET = assert(
       process.env.NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET,
