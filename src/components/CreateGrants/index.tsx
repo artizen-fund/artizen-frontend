@@ -57,8 +57,6 @@ const CreateGrants = () => {
     },
   })
 
-  console.log('loadedGrantData.    ', loadedGrantData)
-
   const [data, setData] = useState<FormState>(initialState)
 
   const [processing, setProcessing] = useState(false)
