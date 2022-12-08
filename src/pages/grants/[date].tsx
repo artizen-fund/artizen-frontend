@@ -1,4 +1,52 @@
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
+import { useQuery } from '@apollo/client'
+
+import { LOAD_GRANTS } from '@gql'
+// import {
+//   IInsert_GrantsMutation,
+//   IInsert_ArtifactsMutation,
+//   IInsert_ProjectsMutation,
+//   IInsert_ProjectMembersMutation,
+// } from '@types'
+
+// const GrantPage = () => {
+//   const {
+//     push,
+//     query: { date },
+//   } = useRouter()
+
+//   const {
+//     loading,
+//     data: loadedGrantData,
+//     error: errorLoadingGrant,
+//   } = useQuery(LOAD_GRANTS, {
+//     skip: date === undefined,
+//     variables: {
+//       where: {
+//         date: {
+//           _eq: date,
+//         },
+//       },
+//     },
+//   })
+
+//   console.log('errorLoadingGrant    ', errorLoadingGrant)
+//   console.log('loadedGrantData ', loadedGrantData)
+
+//   if (loadedGrantData) {
+//     return <div>loading</div>
+//   }
+
+//   if (errorLoadingGrant) {
+//     return <div>errorLoadingGrant</div>
+//   }
+
+//   return <>grant</>
+// }
+
+// export default GrantPage
+
 import {
   FeaturedArt,
   Layout,
@@ -7,6 +55,7 @@ import {
   PagePadding,
   AlternatingPanels,
   AlternatingPanel,
+  GrantsExplorer,
   Curators,
   Button,
 } from '@components'
@@ -14,7 +63,7 @@ import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
-const Home = () => {
+const GrantPage = () => {
   const tabs = Object.keys(tabbedInfo).map(key => (
     <Tab key={`tab-${key}`} label={key}>
       {tabbedInfo[key]}
@@ -30,11 +79,11 @@ const Home = () => {
       </Header>
       <StyledPagePadding>
         <Wrapper>
-          {/*<FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} /> */}
           <TabbedInfoWrapper>
             <StyledTabs {...{ activeTab, setTab, tabs }} />
             <StyledTabbedContent {...{ activeTab, tabs }} />
           </TabbedInfoWrapper>
+          <GrantsExplorer />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
@@ -72,12 +121,12 @@ const Wrapper = styled.section`
   display: grid;
   grid-template-areas: 'featuredArt' 'sidebar' 'tabbedInfo';
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-template-columns: auto 390px;
+    grid-template-columns: repeat(2, 1fr);
     grid-template-areas: 'featuredArt sidebar' 'tabbedInfo sidebar';
     grid-gap: 0px 30px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    grid-template-columns: auto 480px;
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 0px 80px;
   }
   padding-bottom: 100px;
@@ -117,4 +166,4 @@ const StyledTabs = styled(props => <Tabs {...props} />)`
   }
 `
 
-export default Home
+export default GrantPage

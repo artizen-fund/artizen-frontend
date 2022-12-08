@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Button, Table, TableCell, Spinner } from '@components'
+import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
 import { formatUSDC, rgba } from '@lib'
 import { IUsers } from '@types'
@@ -7,9 +7,14 @@ import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
   limit?: number
+  donations: Array<{
+    __typename?: 'Donations'
+    amount: number
+    user?: { __typename?: 'Users'; profileImage?: string | null; artizenHandle?: string | null } | null
+  }>
 }
 
-const Leaderboard = (props: ILeaderboard) => {
+const Leaderboard = ({ donations, ...props }: ILeaderboard) => {
   const limit = props.limit || 3
 
   const sideItem = (
@@ -26,21 +31,19 @@ const Leaderboard = (props: ILeaderboard) => {
 
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
-      {/*
-        {donations.map((donation, index) => (
-          <TableCell key={`donation-${index}`} highlight>
-            <div>
-              <div>#{index + 1}</div>
-              {donation.user?.profileImage && <Avatar profileImage={donation.user?.profileImage} />}
-              <Name>
-                {getUserIdentifier(donation.user)}
-                {index === 0 && <span> 👑</span>}
-              </Name>
-            </div>
-            <Amount>${formatUSDC(Number(donation.amount))}</Amount>
-          </TableCell>
-        )}
-      */}
+      {donations?.map((donation, index) => (
+        <TableCell key={`donation-${index}`} highlight>
+          <div>
+            <div>#{index + 1}</div>
+            {donation.user?.profileImage && <Avatar profileImage={donation.user.profileImage} />}
+            <Name>
+              {donation.user?.artizenHandle}
+              {index === 0 && <span> 👑</span>}
+            </Name>
+          </div>
+          <Amount>${formatUSDC(Number(donation.amount))}</Amount>
+        </TableCell>
+      ))}
     </Table>
   )
 }

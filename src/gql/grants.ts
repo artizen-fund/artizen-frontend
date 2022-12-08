@@ -17,6 +17,16 @@ export const LOAD_GRANTS = gql`
       id
       date
       status
+      blockchainId
+      goal
+      closingDate
+      donations {
+        amount
+        user {
+          profileImage
+          artizenHandle
+        }
+      }
     }
   }
 `
