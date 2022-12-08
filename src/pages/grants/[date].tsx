@@ -55,7 +55,7 @@ import {
   PagePadding,
   AlternatingPanels,
   AlternatingPanel,
-  Sidebar,
+  GrantsExplorer,
   Curators,
   Button,
 } from '@components'
@@ -64,28 +64,6 @@ import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
 
 const GrantPage = () => {
-  const {
-    push,
-    query: { date },
-  } = useRouter()
-
-  const {
-    loading,
-    data: loadedGrantData,
-    error: errorLoadingGrant,
-  } = useQuery(LOAD_GRANTS, {
-    skip: date === undefined,
-    variables: {
-      where: {
-        date: {
-          _eq: date,
-        },
-      },
-    },
-  })
-
-  console.log('loadedGrantData ', loadedGrantData)
-
   const tabs = Object.keys(tabbedInfo).map(key => (
     <Tab key={`tab-${key}`} label={key}>
       {tabbedInfo[key]}
@@ -105,7 +83,7 @@ const GrantPage = () => {
             <StyledTabs {...{ activeTab, setTab, tabs }} />
             <StyledTabbedContent {...{ activeTab, tabs }} />
           </TabbedInfoWrapper>
-          <Sidebar blockchainId={loadedGrantData?.Grants[0].blockchainId} />
+          <GrantsExplorer />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
@@ -143,12 +121,12 @@ const Wrapper = styled.section`
   display: grid;
   grid-template-areas: 'featuredArt' 'sidebar' 'tabbedInfo';
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-template-columns: auto 390px;
+    grid-template-columns: repeat(2, 1fr);
     grid-template-areas: 'featuredArt sidebar' 'tabbedInfo sidebar';
     grid-gap: 0px 30px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    grid-template-columns: auto 480px;
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 0px 80px;
   }
   padding-bottom: 100px;
