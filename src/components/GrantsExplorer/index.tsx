@@ -45,7 +45,7 @@ const GrantsExplorer = () => {
     },
   })
 
-  console.log('error', errorLoadingGrant)
+  // console.log('error', errorLoadingGrant)
 
   const [activeGrant, setActiveGrant] = useState<Grant>()
   useEffect(() => {
