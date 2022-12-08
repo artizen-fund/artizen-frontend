@@ -45,6 +45,8 @@ const GrantsExplorer = () => {
     },
   })
 
+  console.log('error', errorLoadingGrant)
+
   const [activeGrant, setActiveGrant] = useState<Grant>()
   useEffect(() => {
     setActiveGrant(loadedGrantData?.Grants[0])
@@ -88,7 +90,7 @@ const GrantsExplorer = () => {
           </div>
         </GrantData>
 
-        {/* activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} /> */}
+        {activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} />}
 
         <Leaderboard donations={activeGrant.donations} />
 
