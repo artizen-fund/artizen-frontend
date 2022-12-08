@@ -7,7 +7,6 @@ import {
   PagePadding,
   AlternatingPanels,
   AlternatingPanel,
-  Sidebar,
   Curators,
   Button,
 } from '@components'
@@ -36,7 +35,6 @@ const Home = () => {
             <StyledTabs {...{ activeTab, setTab, tabs }} />
             <StyledTabbedContent {...{ activeTab, tabs }} />
           </TabbedInfoWrapper>
-          <Sidebar />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
