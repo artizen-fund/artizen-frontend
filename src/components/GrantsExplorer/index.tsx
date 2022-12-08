@@ -10,7 +10,20 @@ import { LOAD_GRANTS } from '@gql'
 import { ILoadGrantsQuery } from '@types'
 import { useRouter } from 'next/router'
 
-type Grant = { __typename?: 'Grants'; id: any; date: any; status: string; blockchainId?: string | null }
+type Grant = {
+  __typename?: 'Grants'
+  id: any
+  date: any
+  status: string
+  blockchainId?: string | null
+  goal?: number | null
+  closingDate?: any | null
+  donations: Array<{
+    __typename?: 'Donations'
+    amount: number
+    user?: { __typename?: 'Users'; profileImage?: string | null; artizenHandle?: string | null } | null
+  }>
+}
 
 const GrantsExplorer = () => {
   const {
@@ -37,8 +50,6 @@ const GrantsExplorer = () => {
     setActiveGrant(loadedGrantData?.Grants[0])
   }, [loadedGrantData])
 
-  console.log('loadedGrantData ', loadedGrantData, errorLoadingGrant)
-
   return !activeGrant ? (
     <Spinner />
   ) : (
@@ -49,7 +60,7 @@ const GrantsExplorer = () => {
             previous
           </Button>
           <Copy>
-            <Date>Dec 8, 2022</Date>
+            <Date>{activeGrant.date}</Date>
             <Description>Today’s Grant</Description>
           </Copy>
           <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2}>
@@ -65,25 +76,25 @@ const GrantsExplorer = () => {
           <div>
             <DataLabel>Raised</DataLabel>
             <Glyph glyph="ethereum" />
-            <AmountRaised>totalRaised.toLocaleString()</AmountRaised>
-            <Goal>fundRaisingGoal.toLocaleString() goal</Goal>
+            <AmountRaised>{activeGrant.donations.reduce((accum, obj) => accum + obj.amount, 0)}</AmountRaised>
+            <Goal>{activeGrant.goal} goal</Goal>
           </div>
 
           <div>
             <DataLabel>Ends in</DataLabel>
             <AmountRaised>
-              <Countdown date="2022-12-09" />
+              <Countdown date={activeGrant.closingDate} />
             </AmountRaised>
           </div>
         </GrantData>
 
-        {activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} />}
+        {/* activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} /> */}
 
-        <Leaderboard />
+        <Leaderboard donations={activeGrant.donations} />
 
         <Sponsors>
-          <img src="/assets/microsoft.svg" alt="Microsoft" />
-          <img src="/assets/extended-reality.svg" alt="Extended Reality" />
+          <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />
+          <ExtendedReality src="/assets/extended-reality.svg" alt="Extended Reality" />
         </Sponsors>
       </Wrapper>
     </StyledStickyCanvas>
@@ -119,6 +130,7 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `
 
 const Copy = styled.header`
@@ -156,6 +168,15 @@ const Sponsors = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+`
+
+const Microsoft = styled.img`
+  max-width: 150px;
+`
+
+const ExtendedReality = styled.img`
+  max-width: 275px;
 `
 
 export default GrantsExplorer
