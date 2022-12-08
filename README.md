@@ -29,6 +29,13 @@ Check [CONTRIBUTING.md](https://github.com/artizen-fund/artizen-frontend/blob/ma
 
 ## Getting Started
 
+### Load the ENV VARS
+
+#### Using 1Password
+
+- Install [1Password CLI](https://developer.1password.com/docs/cli/get-started#install)
+- Add variables links to the .env.local
+
 ### Run the development server:
 
 ```bash
