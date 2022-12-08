@@ -35,6 +35,7 @@ Check [CONTRIBUTING.md](https://github.com/artizen-fund/artizen-frontend/blob/ma
 
 - Install [1Password CLI](https://developer.1password.com/docs/cli/get-started#install)
 - Add variables links to the .env.local
+- Variable links follow this pattern: "op://<1Password Vault Name>/<Environment Var Name>/notesPlain"
 
 ### Run the development server:
 
