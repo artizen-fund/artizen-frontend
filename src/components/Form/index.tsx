@@ -5,6 +5,7 @@ import { JsonSchema, Layout, ControlElement, JsonFormsCore } from '@jsonforms/co
 import { vanillaRenderers } from '@jsonforms/vanilla-renderers'
 import flattenChildren from 'react-keyed-flatten-children'
 import { pickBy } from 'lodash'
+
 import {
   StringControl,
   stringControlTester,
@@ -43,10 +44,14 @@ const Form = <TStateInterface extends Record<string, unknown>>({
   const [disabled, setDisabled] = useState(true)
   const [formState, setFormState] = useState<Pick<JsonFormsCore, 'data' | 'errors'>>()
 
+  const formData = formState?.data
+  const formErrors = formState?.errors
+
   useEffect(() => {
-    if (!formState) return
-    const { data, errors } = formState
-    setData(data)
+    if (!formData) return
+
+    setData(formData)
+
     if (localStorageKey && typeof localStorage !== 'undefined' && !!data) {
       const safeVars = (uischema.elements as Array<ControlElement>)
         .filter(schemaVar => !schemaVar.options?.unsafeToRetain)
@@ -56,11 +61,11 @@ const Form = <TStateInterface extends Record<string, unknown>>({
     }
 
     setDisabled(
-      errors === undefined ||
-        [errors].flatMap(e => e).length > 0 ||
+      formErrors === undefined ||
+        [formErrors].flatMap(e => e).length > 0 ||
         (!!additionalErrors && [additionalErrors].flatMap(e => e).length > 0),
     )
-  }, [formState, additionalErrors])
+  }, [formData, formErrors, additionalErrors])
 
   const renderers = [
     ...vanillaRenderers,

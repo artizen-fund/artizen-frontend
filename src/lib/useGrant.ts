@@ -146,13 +146,21 @@ export const useGrant = () => {
   }
 
   const donate = async (grantId: number, amount: string) => {
-    // console.log('it gets here', ethers.utils.parseUnits('1', 'ether'))
-    const grantTransaction = await grantsContract.donate(1, ethers.utils.parseEther(amount), {
-      value: ethers.utils.parseEther(amount),
-    })
-    await grantTransaction.wait()
+    console.log('it gets here.   ', amount)
+    try {
+      const grantTransaction = await grantsContract.donate(1, ethers.utils.parseEther(amount), {
+        value: ethers.utils.parseEther(amount),
+      })
+      const returnValue = await grantTransaction.wait()
 
-    // console.log('it gets finsihed')
+      console.log('it gets finsihed', returnValue)
+    } catch (e) {
+      console.error('error tx', e.code)
+
+      if (e.code === 'INSUFFICIENT_FUNDS') {
+        alert('Insufficient funds')
+      }
+    }
   }
 
   const cancelGrant = async (grantId: number) => {

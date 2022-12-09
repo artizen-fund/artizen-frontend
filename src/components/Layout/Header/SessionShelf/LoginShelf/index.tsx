@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { Icon, Form, CheckboxControl, Button } from '@components'
 import { useFormLocalStorage } from '@lib'
@@ -23,8 +22,6 @@ const LoginShelf = () => {
   const LOCALSTORAGE_KEY = 'loginForm'
   const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
-
-  const apolloClient = useApolloClient()
 
   const [sentEmail, setSentEmail] = useState(false)
   const [readonly, setReadonly] = useState(false)

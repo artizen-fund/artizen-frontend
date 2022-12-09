@@ -70,6 +70,7 @@ const UploadFileControl = ({ required, placeholder, onChange, path, value, class
           <label htmlFor={path}>Upload</label>
         </>
       )}
+
       {isThereImg && (
         <ImageWrapper>
           {/* eslint-disable-next-line no-use-before-define */}

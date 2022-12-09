@@ -16,6 +16,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
   const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : donateFn())
 
   const donateFn = async () => {
+    console.log('it gets here')
     if (!blockchainId || !data.donationAmount) return
     await donate(parseInt(blockchainId), data.donationAmount.toString())
   }

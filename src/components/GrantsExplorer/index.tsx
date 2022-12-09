@@ -45,12 +45,9 @@ const GrantsExplorer = () => {
     },
   })
 
-  // console.log('error', errorLoadingGrant)
+  const activeGrant = loadedGrantData?.Grants[0]
 
-  const [activeGrant, setActiveGrant] = useState<Grant>()
-  useEffect(() => {
-    setActiveGrant(loadedGrantData?.Grants[0])
-  }, [loadedGrantData])
+  console.log('in here', activeGrant)
 
   return !activeGrant ? (
     <Spinner />
