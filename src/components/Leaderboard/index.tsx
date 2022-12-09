@@ -7,45 +7,43 @@ import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
   limit?: number
-  donations: Array<{
-    __typename?: 'Donations'
-    amount: number
-    user?: { __typename?: 'Users'; profileImage?: string | null; artizenHandle?: string | null } | null
-  }>
+  grantId: string
 }
 
-const Leaderboard = ({ donations, ...props }: ILeaderboard) => {
+//TODO Leaderboard needs to subscribe to the donation table, so it receives live updates
+
+const Leaderboard = ({ grantId, ...props }: ILeaderboard) => {
   const limit = props.limit || 3
 
-  const sideItem = (
-    <Button href="/leaderboard" outline level={2}>
-      See All
-    </Button>
-  )
+  // const sideItem = (
+  //   <Button href="/leaderboard" outline level={2}>
+  //     See All
+  //   </Button>
+  // )
 
-  const getUserIdentifier = (user: IUsers) => {
-    return user?.firstName || user?.lastName
-      ? `${user.firstName} ${user.lastName}`
-      : truncateEthAddress(user?.publicAddress || '')
-  }
+  // const getUserIdentifier = (user: IUsers) => {
+  //   return user?.firstName || user?.lastName
+  //     ? `${user.firstName} ${user.lastName}`
+  //     : truncateEthAddress(user?.publicAddress || '')
+  // }
 
-  return (
-    <Table title="Leaderboard" {...{ sideItem }}>
-      {donations?.map((donation, index) => (
-        <TableCell key={`donation-${index}`} highlight>
-          <div>
-            <div>#{index + 1}</div>
-            {donation.user?.profileImage && <Avatar profileImage={donation.user.profileImage} />}
-            <Name>
-              {donation.user?.artizenHandle}
-              {index === 0 && <span> 👑</span>}
-            </Name>
-          </div>
-          <Amount>${formatUSDC(Number(donation.amount))}</Amount>
-        </TableCell>
-      ))}
-    </Table>
-  )
+  // return (
+  //   <Table title="Leaderboard" {...{ sideItem }}>
+  //     {donations?.map((donation, index) => (
+  //       <TableCell key={`donation-${index}`} highlight>
+  //         <div>
+  //           <div>#{index + 1}</div>
+  //           {donation.user?.profileImage && <Avatar profileImage={donation.user.profileImage} />}
+  //           <Name>
+  //             {donation.user?.artizenHandle}
+  //             {index === 0 && <span> 👑</span>}
+  //           </Name>
+  //         </div>
+  //         <Amount>${formatUSDC(Number(donation.amount))}</Amount>
+  //       </TableCell>
+  //     ))}
+  //   </Table>
+  // )
 }
 
 const Name = styled.div`

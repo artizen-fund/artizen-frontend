@@ -89,7 +89,7 @@ const GrantsExplorer = () => {
 
         {activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} />}
 
-        <Leaderboard donations={activeGrant.donations} />
+        <Leaderboard id={activeGrant.id} />
 
         <Sponsors>
           <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />
