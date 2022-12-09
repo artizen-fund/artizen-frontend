@@ -20,9 +20,40 @@ export const LOAD_GRANTS = gql`
       blockchainId
       goal
       closingDate
+      season
+      goal
+      submission {
+        id
+        artifacts {
+          id
+          artworkPatron
+          artworkCreator
+          artworkCommunity
+        }
+        project {
+          id
+          impact
+          longline
+          description
+          members {
+            id
+            type
+            user {
+              id
+              firstName
+              lastName
+              artizenHandle
+              twitterHandle
+              website
+            }
+          }
+          title
+        }
+      }
       donations {
         amount
         user {
+          id
           profileImage
           artizenHandle
         }

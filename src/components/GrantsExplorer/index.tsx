@@ -1,60 +1,18 @@
-import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useQuery } from '@apollo/client'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { formatUSDC, rgba } from '@lib'
-import { monthNames } from '@copy/common'
-import { LOAD_GRANTS } from '@gql'
-import { ILoadGrantsQuery } from '@types'
-import { useRouter } from 'next/router'
 
-type Grant = {
-  __typename?: 'Grants'
-  id: any
-  date: any
-  status: string
-  blockchainId?: string | null
-  goal?: number | null
-  closingDate?: any | null
-  donations: Array<{
-    __typename?: 'Donations'
-    amount: number
-    user?: { __typename?: 'Users'; profileImage?: string | null; artizenHandle?: string | null } | null
-  }>
+interface IGrantsExplorer {
+  grant?: Grant
 }
 
-const GrantsExplorer = () => {
-  const {
-    query: { date },
-  } = useRouter()
+const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
+  if (!grant) return <Spinner />
+  const amountRaised = grant.donations.reduce((accum, obj) => accum + obj.amount, 0)
 
-  const {
-    loading,
-    data: loadedGrantData,
-    error: errorLoadingGrant,
-  } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
-    skip: date === undefined,
-    variables: {
-      where: {
-        date: {
-          _eq: date,
-        },
-      },
-    },
-  })
-
-  // console.log('error', errorLoadingGrant)
-
-  const [activeGrant, setActiveGrant] = useState<Grant>()
-  useEffect(() => {
-    setActiveGrant(loadedGrantData?.Grants[0])
-  }, [loadedGrantData])
-
-  return !activeGrant ? (
-    <Spinner />
-  ) : (
+  return (
     <StyledStickyCanvas>
       <Wrapper>
         <Nav>
@@ -62,38 +20,37 @@ const GrantsExplorer = () => {
             previous
           </Button>
           <Copy>
-            <Date>{activeGrant.date}</Date>
+            <Date>{grant.date}</Date>
             <Description>Today’s Grant</Description>
           </Copy>
           <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2}>
             next
           </Button>
         </Nav>
-
         <Body>
-          <Header>Title of Project</Header>
+          <ProgressBar>{amountRaised / (grant.goal || 1)}</ProgressBar>
 
-          <ProgressBar>{0.5}</ProgressBar>
+          <Header>{grant.submission?.project?.title}</Header>
 
           <GrantData>
             <div>
               <DataLabel>Raised</DataLabel>
               <Glyph glyph="ethereum" />
-              <AmountRaised>{activeGrant.donations.reduce((accum, obj) => accum + obj.amount, 0)}</AmountRaised>
-              <Goal>{activeGrant.goal} goal</Goal>
+              <AmountRaised>{amountRaised}</AmountRaised>
+              <Goal>{grant.goal} goal</Goal>
             </div>
 
             <div>
               <DataLabel>Ends in</DataLabel>
               <AmountRaised>
-                <Countdown date={activeGrant.closingDate} />
+                <Countdown date={grant.closingDate} />
               </AmountRaised>
             </div>
           </GrantData>
 
-          {activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} />}
+          {grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
 
-          <Leaderboard donations={activeGrant.donations} />
+          <Leaderboard grantId={grant.id} />
 
           <Sponsors>
             <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />

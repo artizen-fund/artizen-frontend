@@ -9,6 +9,7 @@ import {
   IInsert_ArtifactsMutation,
   IInsert_ProjectsMutation,
   IInsert_ProjectMembersMutation,
+  ILoadGrantsQuery,
 } from '@types'
 
 import { Form, Button } from '@components'
@@ -46,7 +47,7 @@ const CreateGrants = () => {
     loading,
     data: loadedGrantData,
     error: errorLoadingGrant,
-  } = useQuery(LOAD_GRANTS, {
+  } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
     skip: id === undefined || id === 'new',
     variables: {
       where: {
@@ -71,16 +72,22 @@ const CreateGrants = () => {
 
     const artifactId = await insertArtifactF(formData.artifacts)
 
+    // console.log('artifactId       ', artifactId)
+
     const projectId = await insertProjectsF(formData.project)
+
+    // console.log('projectId       ', projectId)
 
     await insertProjecttMembers(formData.projectMembers, projectId)
 
     //finally insert grants
     const newgGrantDBDate = await insertGrants(formData.grant, artifactId, projectId)
 
+    setProcessing(false)
+
     push(`/admin/grants/${newgGrantDBDate}`)
 
-    setProcessing(false)
+    return
   }
 
   //TODO: This should be break down into smaller units
@@ -118,16 +125,7 @@ const CreateGrants = () => {
   }
 
   const insertProjecttMembers = async (projectMemberData: ProjectMembers, projectId: string) => {
-    //insertProjectMemberInDB
-
-    /*
-     firstName: undefined,
-    lastName: undefined,
-    externalLink: undefined,
-    email: undefined,
-    wallet: undefined,
-    type: undefined,
-    */
+    console.log('projectMemberData     ', projectMemberData)
 
     const insertProjectMembersReturn = await insertProjecstMemberInDB({
       variables: {
@@ -186,7 +184,7 @@ const CreateGrants = () => {
       {!loadedGrantData && (
         <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
           <StyledButton disabled={processing || loading} onClick={() => saveChanges(data)} stretch level={0}>
-            {loading ? 'Saving...' : 'Save Draft'}
+            {processing ? 'Saving...' : 'Save Draft'}
           </StyledButton>
         </Form>
       )}
@@ -195,24 +193,10 @@ const CreateGrants = () => {
           <GrantContentWrapper>Grant Date: {loadedGrantData.Grants[0].date}</GrantContentWrapper>
           <GrantContentWrapper>Status: {loadedGrantData.Grants[0].status}</GrantContentWrapper>
           <FooterWrapper>
-            <StyledButton
-              disabled={true}
-              stretch
-              onClick={() => {
-                publish
-              }}
-              level={0}
-            >
+            <StyledButton disabled={true} stretch onClick={() => alert('TODO')} level={0}>
               Publish Grant
             </StyledButton>
-            <StyledButton
-              disabled={true}
-              stretch
-              onClick={() => {
-                //end
-              }}
-              level={0}
-            >
+            <StyledButton disabled={true} stretch onClick={() => alert('TODO')} level={0}>
               End Grant
             </StyledButton>
           </FooterWrapper>
