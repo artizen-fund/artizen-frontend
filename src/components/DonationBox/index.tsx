@@ -20,7 +20,7 @@ const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
   const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : donateFn())
 
   const donateFn = async () => {
-    console.log('it gets here', loggedInUser)
+    // console.log('it gets here', loggedInUser)
     if (!blockchainId || !data.donationAmount) return
     const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
     // TODO it'll only work when EK remove remve the tx from the server
