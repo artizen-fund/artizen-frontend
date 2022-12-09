@@ -40,8 +40,14 @@ export const LOAD_GRANTS = gql`
             type
             user {
               id
+              firstName
+              lastName
+              artizenHandle
+              twitterHandle
+              website
             }
           }
+          title
         }
       }
       donations {
