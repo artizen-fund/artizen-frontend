@@ -70,34 +70,36 @@ const GrantsExplorer = () => {
           </Button>
         </Nav>
 
-        <ProgressBar>{0.5}</ProgressBar>
+        <Body>
+          <Header>Title of Project</Header>
 
-        <Header>Title of Project</Header>
+          <ProgressBar>{0.5}</ProgressBar>
 
-        <GrantData>
-          <div>
-            <DataLabel>Raised</DataLabel>
-            <Glyph glyph="ethereum" />
-            <AmountRaised>{activeGrant.donations.reduce((accum, obj) => accum + obj.amount, 0)}</AmountRaised>
-            <Goal>{activeGrant.goal} goal</Goal>
-          </div>
+          <GrantData>
+            <div>
+              <DataLabel>Raised</DataLabel>
+              <Glyph glyph="ethereum" />
+              <AmountRaised>{activeGrant.donations.reduce((accum, obj) => accum + obj.amount, 0)}</AmountRaised>
+              <Goal>{activeGrant.goal} goal</Goal>
+            </div>
 
-          <div>
-            <DataLabel>Ends in</DataLabel>
-            <AmountRaised>
-              <Countdown date={activeGrant.closingDate} />
-            </AmountRaised>
-          </div>
-        </GrantData>
+            <div>
+              <DataLabel>Ends in</DataLabel>
+              <AmountRaised>
+                <Countdown date={activeGrant.closingDate} />
+              </AmountRaised>
+            </div>
+          </GrantData>
 
-        {activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} />}
+          {activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} />}
 
-        <Leaderboard donations={activeGrant.donations} />
+          <Leaderboard donations={activeGrant.donations} />
 
-        <Sponsors>
-          <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />
-          <ExtendedReality src="/assets/extended-reality.svg" alt="Extended Reality" />
-        </Sponsors>
+          <Sponsors>
+            <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />
+            <ExtendedReality src="/assets/extended-reality.svg" alt="Extended Reality" />
+          </Sponsors>
+        </Body>
       </Wrapper>
     </StyledStickyCanvas>
   )
@@ -128,20 +130,31 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
 `
 
 const Nav = styled.nav`
-  border: 1px dashed ${rgba(palette.uiAlert)};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  padding: 24px;
+  border: 1px dashed ${rgba(palette.uiAlert)};
 `
 
 const Copy = styled.header`
   text-align: center;
 `
 
-const Date = styled.div``
+const Date = styled.div`
+  ${typography.title.l4}
+`
 
-const Description = styled.div``
+const Description = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+`
+
+const Body = styled.div`
+  padding: 24px;
+`
 
 const GrantData = styled.div`
   display: flex;
@@ -152,7 +165,9 @@ const DataLabel = styled.div``
 
 const Goal = styled.div``
 
-const Header = styled.h3``
+const Header = styled.h3`
+  ${typography.title.l2}
+`
 
 const AmountRaised = styled.div`
   ${typography.label.l1}
@@ -168,9 +183,12 @@ const AmountRaised = styled.div`
 
 const Sponsors = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   justify-content: space-around;
   align-items: center;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex-direction: row;
+  }
 `
 
 const Microsoft = styled.img`

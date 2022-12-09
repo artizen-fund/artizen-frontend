@@ -1,51 +1,4 @@
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/client'
-
-import { LOAD_GRANTS } from '@gql'
-// import {
-//   IInsert_GrantsMutation,
-//   IInsert_ArtifactsMutation,
-//   IInsert_ProjectsMutation,
-//   IInsert_ProjectMembersMutation,
-// } from '@types'
-
-// const GrantPage = () => {
-//   const {
-//     push,
-//     query: { date },
-//   } = useRouter()
-
-//   const {
-//     loading,
-//     data: loadedGrantData,
-//     error: errorLoadingGrant,
-//   } = useQuery(LOAD_GRANTS, {
-//     skip: date === undefined,
-//     variables: {
-//       where: {
-//         date: {
-//           _eq: date,
-//         },
-//       },
-//     },
-//   })
-
-//   console.log('errorLoadingGrant    ', errorLoadingGrant)
-//   console.log('loadedGrantData ', loadedGrantData)
-
-//   if (loadedGrantData) {
-//     return <div>loading</div>
-//   }
-
-//   if (errorLoadingGrant) {
-//     return <div>errorLoadingGrant</div>
-//   }
-
-//   return <>grant</>
-// }
-
-// export default GrantPage
 
 import {
   FeaturedArt,
@@ -79,7 +32,9 @@ const GrantPage = () => {
       </Header>
       <StyledPagePadding>
         <Wrapper>
+          <FeaturedArt />
           <TabbedInfoWrapper>
+            <FeaturedArt />
             <StyledTabs {...{ activeTab, setTab, tabs }} />
             <StyledTabbedContent {...{ activeTab, tabs }} />
           </TabbedInfoWrapper>
@@ -107,13 +62,15 @@ const Header = styled(props => <PagePadding {...props} />)`
     ${typography.title.l1};
   }
   h2 {
+    margin-top: 0.5em;
     ${typography.body.l1};
   }
 `
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   position: relative;
-  padding: 0;
+  padding: 40px 24px;
+  background: ${rgba(palette.moon)};
 `
 
 const Wrapper = styled.section`
@@ -167,3 +124,47 @@ const StyledTabs = styled(props => <Tabs {...props} />)`
 `
 
 export default GrantPage
+
+// import {
+//   IInsert_GrantsMutation,
+//   IInsert_ArtifactsMutation,
+//   IInsert_ProjectsMutation,
+//   IInsert_ProjectMembersMutation,
+// } from '@types'
+
+// const GrantPage = () => {
+//   const {
+//     push,
+//     query: { date },
+//   } = useRouter()
+
+//   const {
+//     loading,
+//     data: loadedGrantData,
+//     error: errorLoadingGrant,
+//   } = useQuery(LOAD_GRANTS, {
+//     skip: date === undefined,
+//     variables: {
+//       where: {
+//         date: {
+//           _eq: date,
+//         },
+//       },
+//     },
+//   })
+
+//   console.log('errorLoadingGrant    ', errorLoadingGrant)
+//   console.log('loadedGrantData ', loadedGrantData)
+
+//   if (loadedGrantData) {
+//     return <div>loading</div>
+//   }
+
+//   if (errorLoadingGrant) {
+//     return <div>errorLoadingGrant</div>
+//   }
+
+//   return <>grant</>
+// }
+
+// export default GrantPage
