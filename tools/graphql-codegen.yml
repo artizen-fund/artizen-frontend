@@ -2,7 +2,7 @@ overwrite: true
 schema:
   - ${NEXT_PUBLIC_HASURA_GRAPHQL_URL}:
       headers:
-        'x-hasura-admin-secret': ${HASURA_ADMIN_SECRET}
+        'x-hasura-admin-secret': ${HASURA_GRAPHQL_ADMIN_SECRET}
 documents: 'src/gql/*.ts'
 generates:
   src/types/generated.ts:

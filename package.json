@@ -13,7 +13,7 @@
     "clean": "rm -rf .next",
     "generate": "node ./tools/generate.js",
     "dev": "SECRET_ENV=DevSecrets op run --no-masking --env-file='.env.local' -- next dev",
-    "develop": "yarn codegen && next dev",
+    "develop": "yarn codegen-local && next dev",
     "build": "yarn codegen && next build",
     "start": "next build && next start -p $PORT",
     "lint": "next lint",
