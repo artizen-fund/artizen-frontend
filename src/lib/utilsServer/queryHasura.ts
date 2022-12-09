@@ -32,7 +32,7 @@ export const queryHasura = async (query: any, token: string) => {
 
 export const queryHasuraAsAdmin = async (query: any) => {
   try {
-    const HASURA_ADMIN_SECRET = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
+    const HASURA_GRAPHQL_ADMIN_SECRET = assert(process.env.HASURA_GRAPHQL_ADMIN_SECRET, 'HASURA_GRAPHQL_ADMIN_SECRET')
     const HASURA_GRAPHQL_URL = assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL')
 
     const headers = new Headers()
