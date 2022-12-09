@@ -1,52 +1,7 @@
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-
 import { LOAD_GRANTS } from '@gql'
-// import {
-//   IInsert_GrantsMutation,
-//   IInsert_ArtifactsMutation,
-//   IInsert_ProjectsMutation,
-//   IInsert_ProjectMembersMutation,
-// } from '@types'
-
-// const GrantPage = () => {
-//   const {
-//     push,
-//     query: { date },
-//   } = useRouter()
-
-//   const {
-//     loading,
-//     data: loadedGrantData,
-//     error: errorLoadingGrant,
-//   } = useQuery(LOAD_GRANTS, {
-//     skip: date === undefined,
-//     variables: {
-//       where: {
-//         date: {
-//           _eq: date,
-//         },
-//       },
-//     },
-//   })
-
-//   console.log('errorLoadingGrant    ', errorLoadingGrant)
-//   console.log('loadedGrantData ', loadedGrantData)
-
-//   if (loadedGrantData) {
-//     return <div>loading</div>
-//   }
-
-//   if (errorLoadingGrant) {
-//     return <div>errorLoadingGrant</div>
-//   }
-
-//   return <>grant</>
-// }
-
-// export default GrantPage
-
 import {
   FeaturedArt,
   Layout,
@@ -62,14 +17,29 @@ import {
 import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
+import { ILoadGrantsQuery } from '@types'
 
 const GrantPage = () => {
-  const tabs = Object.keys(tabbedInfo).map(key => (
-    <Tab key={`tab-${key}`} label={key}>
-      {tabbedInfo[key]}
-    </Tab>
-  ))
-  const { activeTab, setTab } = useTabbedInfo(tabs, true)
+  const {
+    query: { date },
+  } = useRouter()
+
+  const {
+    loading,
+    data: loadedGrantData,
+    error: errorLoadingGrant,
+  } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
+    skip: date === undefined,
+    variables: {
+      where: {
+        date: {
+          _eq: date,
+        },
+      },
+    },
+  })
+
+  const activeGrant = loadedGrantData?.Grants[0]
 
   return (
     <Layout>
@@ -79,11 +49,42 @@ const GrantPage = () => {
       </Header>
       <StyledPagePadding>
         <Wrapper>
+          <FeaturedArt grant={activeGrant} />
           <TabbedInfoWrapper>
-            <StyledTabs {...{ activeTab, setTab, tabs }} />
-            <StyledTabbedContent {...{ activeTab, tabs }} />
+            <p>{activeGrant?.submission?.project?.description}</p>
+            <h6>Impact</h6>
+            <p>{activeGrant?.submission?.project?.impact}</p>
+
+            <h6>Project</h6>
+            <dl>
+              <dt>Season One</dt>
+              <dd>??</dd>
+              <dt>Started</dt>
+              <dd>creationDate</dd>
+              <dt>Completed</dt>
+              <dd>completionDate</dd>
+            </dl>
+
+            <h6>Project</h6>
+            <dl>
+              <dt>Minted</dt>
+              <dd>createdAt</dd>
+              <dt>Token</dt>
+              <dd></dd>
+              <dt>Address</dt>
+              <dd></dd>
+            </dl>
+
+            <h6>Contributors</h6>
+            <ul>
+              {activeGrant?.submission?.project?.members.map((member, index) => (
+                <li key={`member-${index}`}>
+                  {member?.user?.firstName} {member?.user?.lastName}, {member.type}
+                </li>
+              ))}
+            </ul>
           </TabbedInfoWrapper>
-          <GrantsExplorer />
+          <GrantsExplorer grant={activeGrant} />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
@@ -167,3 +168,47 @@ const StyledTabs = styled(props => <Tabs {...props} />)`
 `
 
 export default GrantPage
+
+// import {
+//   IInsert_GrantsMutation,
+//   IInsert_ArtifactsMutation,
+//   IInsert_ProjectsMutation,
+//   IInsert_ProjectMembersMutation,
+// } from '@types'
+
+// const GrantPage = () => {
+//   const {
+//     push,
+//     query: { date },
+//   } = useRouter()
+
+//   const {
+//     loading,
+//     data: loadedGrantData,
+//     error: errorLoadingGrant,
+//   } = useQuery(LOAD_GRANTS, {
+//     skip: date === undefined,
+//     variables: {
+//       where: {
+//         date: {
+//           _eq: date,
+//         },
+//       },
+//     },
+//   })
+
+//   console.log('errorLoadingGrant    ', errorLoadingGrant)
+//   console.log('loadedGrantData ', loadedGrantData)
+
+//   if (loadedGrantData) {
+//     return <div>loading</div>
+//   }
+
+//   if (errorLoadingGrant) {
+//     return <div>errorLoadingGrant</div>
+//   }
+
+//   return <>grant</>
+// }
+
+// export default GrantPage

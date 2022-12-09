@@ -8,49 +8,11 @@ import { raffle } from '@copy/home'
 import { ArtizenArtifactsAbi } from '@contracts'
 
 type IFeaturedArt = {
-  tagName?: string
-  tokenId: BigNumber
-  startTime: BigNumber
+  grant?: Grant
 }
 
-interface Metadata {
-  name: string
-  description: string
-  artist: string
-  image: string
-  attributes: Array<unknown>
-}
-
-const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
+const FeaturedArt = ({ grant }: IFeaturedArt) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-
-  const { value: metadataUri, refetch: refetchTokenId } = useReadContract(
-    assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS'),
-    ArtizenArtifactsAbi,
-    'uri',
-    [tokenId],
-    false,
-  )
-
-  const [metadata, setMetadata] = useState<Metadata>()
-
-  const getMetadataFromUri = async (uri: string) => {
-    const response = await fetch(uri)
-    const json = await response.json()
-    setMetadata(json)
-  }
-
-  useEffect(() => {
-    if (metadataUri) {
-      getMetadataFromUri(metadataUri as string)
-    }
-  }, [metadataUri])
-
-  useEffect(() => {
-    if (tokenId) {
-      refetchTokenId?.()
-    }
-  }, [tokenId])
 
   const getDaysAgoFromDate = (start: number) => {
     const now = new Date()
@@ -60,33 +22,28 @@ const FeaturedArt = ({ tokenId, startTime, tagName }: IFeaturedArt) => {
     return diffInDays
   }
 
+  if (!grant?.submission?.artifacts || grant.submission.artifacts.length < 1) return <></>
+
+  const artifact = grant?.submission?.artifacts[0]
+  const artist = grant?.submission?.project?.members?.filter(m => m.type === 'lead')[0]
+
+  const artifactNumber = 1
+
   // note: current video NFT ratio is 1:.56
   return (
     <Wrapper>
-      {/* this src should come from metadata var */}
-      <Poster
-        src={assetPath(`/assets/elliot-lee-nft-poster.jpg?w=1040&fm=webp`)}
-        onClick={() => setVisibleModalWithAttrs?.('media', { videoFile: metadata?.image })}
-      />
+      <Poster src={artifact.artworkCommunity!} />
       <Copy>
-        <Title>{raffle.title}</Title>
         <Metadata>
           <Metadatum>
-            <Icon glyph="face" level={1} outline label={raffle.artist} />
+            <Icon glyph="crown" level={1} outline label="Top Donor Prize" />
           </Metadatum>
           <Metadatum>
-            <Icon
-              glyph="calendar"
-              level={1}
-              outline
-              label={`Created ${getDaysAgoFromDate(startTime?.toNumber())} days ago`}
-            />
+            <Icon glyph="palette" level={1} outline label="Artifact 27" />
           </Metadatum>
-          {tagName && (
-            <Metadatum>
-              <Icon glyph="tag" level={1} outline label={tagName} />
-            </Metadatum>
-          )}
+          <Metadatum>
+            <Icon glyph="face" level={1} outline label={`${artist?.user?.firstName} ${artist?.user?.lastName}`} />
+          </Metadatum>
         </Metadata>
       </Copy>
     </Wrapper>

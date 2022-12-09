@@ -22,31 +22,6 @@ export const schema: JsonSchema = {
       },
       required: ['date', 'season', 'goal'],
     },
-    artifacts: {
-      title: 'Artifacts Assets',
-      type: 'object',
-      properties: {
-        artworkPatron: {
-          type: 'string',
-        },
-        videoPatron: {
-          type: 'string',
-        },
-        artworkCreator: {
-          type: 'string',
-        },
-        videoCreator: {
-          type: 'string',
-        },
-        artworkCommunity: {
-          type: 'string',
-        },
-        videoCommunity: {
-          type: 'string',
-        },
-      },
-      required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
-    },
     project: {
       title: 'Project',
       type: 'object',
@@ -91,7 +66,7 @@ export const schema: JsonSchema = {
       ],
     },
     projectMembers: {
-      title: 'Project',
+      title: 'Project Member',
       type: 'object',
       properties: {
         firstName: {
@@ -114,6 +89,31 @@ export const schema: JsonSchema = {
         },
       },
       required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
+    },
+    artifacts: {
+      title: 'Artifacts Assets',
+      type: 'object',
+      properties: {
+        artworkPatron: {
+          type: 'string',
+        },
+        videoPatron: {
+          type: 'string',
+        },
+        artworkCreator: {
+          type: 'string',
+        },
+        videoCreator: {
+          type: 'string',
+        },
+        artworkCommunity: {
+          type: 'string',
+        },
+        videoCommunity: {
+          type: 'string',
+        },
+      },
+      required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
     },
   },
 }
@@ -231,47 +231,7 @@ export const uischema = {
         },
       ],
     },
-    {
-      type: 'Group',
-      label: 'Artifacts Assets',
-      elements: [
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/artworkPatron',
-              options: { format: 'uploadFile' },
-            },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoPatron',
-            //   options: { format: 'uploadFile' },
-            // },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/artworkCreator',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
-            },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoCreator',
-            //   options: { unsafeToRetain: true, format: 'uploadFile' },
-            // },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/artworkCommunity',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
-            },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoCommunity',
-            //   options: { unsafeToRetain: true, format: 'uploadFile' },
-            // },
-          ],
-        },
-      ],
-    },
+
     {
       type: 'Group',
       label: 'Project',
@@ -346,6 +306,47 @@ export const uischema = {
               type: 'Control',
               scope: '#/properties/projectMembers/properties/type',
             },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'Group',
+      label: 'Artifacts Assets',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkPatron',
+              options: { format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoPatron',
+            //   options: { format: 'uploadFile' },
+            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkCreator',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoCreator',
+            //   options: { unsafeToRetain: true, format: 'uploadFile' },
+            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkCommunity',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoCommunity',
+            //   options: { unsafeToRetain: true, format: 'uploadFile' },
+            // },
           ],
         },
       ],
