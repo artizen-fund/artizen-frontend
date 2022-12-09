@@ -7,7 +7,7 @@ import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
   limit?: number
-  grantId: string
+  grantId: any
 }
 
 //TODO Leaderboard needs to subscribe to the donation table, so it receives live updates
@@ -44,6 +44,7 @@ const Leaderboard = ({ grantId, ...props }: ILeaderboard) => {
   //     ))}
   //   </Table>
   // )
+  return <></>
 }
 
 const Name = styled.div`

@@ -8,6 +8,7 @@ import { INSERT_DONATIONS } from '@gql'
 
 interface IDonationBox {
   blockchainId: string | undefined
+  grantId: any
 }
 
 const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
