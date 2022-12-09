@@ -6,7 +6,7 @@ import { mockGrants } from './mock-grants'
 
 export const useGrant = () => {
   const { address } = useAccount()
-  const { data: signer } = useSigner()
+  const { data: signer, isError, isLoading } = useSigner()
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
   const grantContractAddress = assert(
@@ -147,7 +147,7 @@ export const useGrant = () => {
 
   const donate = async (grantId: number, amount: string) => {
     // console.log('it gets here', ethers.utils.parseUnits('1', 'ether'))
-    const grantTransaction = await grantsContract.donate(9, ethers.utils.parseEther(amount), {
+    const grantTransaction = await grantsContract.donate(1, ethers.utils.parseEther(amount), {
       value: ethers.utils.parseEther(amount),
     })
     await grantTransaction.wait()

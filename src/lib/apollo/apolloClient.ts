@@ -25,7 +25,7 @@ export const createApolloClient = (didToken?: string) => {
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
       // server request (usually for SSR)
-      newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_ADMIN_SECRET, 'HASURA_ADMIN_SECRET')
+      newHeaders['x-hasura-admin-secret'] = assert(process.env.HASURA_GRAPHQL_ADMIN_SECRET, 'HASURA_GRAPHQL_ADMIN_SECRET')
     } else if (isServer() && didToken) {
       // server request on behalf of user via MagicLink DecentralizedID token
       newHeaders['Authorization'] = `Bearer ${didToken}`
