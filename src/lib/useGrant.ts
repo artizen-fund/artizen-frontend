@@ -157,7 +157,7 @@ export const useGrant = () => {
       returnTx = await grantTransaction.wait()
 
       console.log('it gets finsihed', returnTx)
-    } catch (e) {
+    } catch (e: any) {
       console.error('error tx', e)
 
       if (e.code === 'INSUFFICIENT_FUNDS') {

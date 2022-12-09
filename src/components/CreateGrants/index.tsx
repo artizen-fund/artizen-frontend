@@ -72,11 +72,11 @@ const CreateGrants = () => {
 
     const artifactId = await insertArtifactF(formData.artifacts)
 
-    console.log('artifactId       ', artifactId)
+    // console.log('artifactId       ', artifactId)
 
     const projectId = await insertProjectsF(formData.project)
 
-    console.log('projectId       ', projectId)
+    // console.log('projectId       ', projectId)
 
     await insertProjecttMembers(formData.projectMembers, projectId)
 
