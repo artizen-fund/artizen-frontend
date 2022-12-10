@@ -8,11 +8,11 @@ import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@compone
 import { ICheckForExistingArtizenHandleQuery } from '@types'
 import { loggedInUserVar, LayoutContext, uploadToCloudinary } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
-import { schema, uischema, initialState, FormState } from '@forms/postDonationData'
+import { schema, uischema, initialState, FormState } from '@forms/createProfile'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
 import { typography } from '@theme'
 
-const PostDonationData = () => {
+const CreateProfile = () => {
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const { visibleModal, toggleModal } = useContext(LayoutContext)
@@ -78,7 +78,7 @@ const PostDonationData = () => {
   return !loggedInUser ? (
     <></>
   ) : (
-    <Wrapper visible={visibleModal === 'postDonationData'}>
+    <Wrapper visible={visibleModal === 'createProfile'}>
       <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
         <CloseButton onClick={() => toggleModal?.()} />
 
@@ -204,4 +204,4 @@ const SubTitle = styled.h2`
   ${typography.body.l2}
 `
 
-export default PostDonationData
+export default CreateProfile
