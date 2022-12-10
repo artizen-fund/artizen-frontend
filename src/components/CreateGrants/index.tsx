@@ -184,17 +184,10 @@ const CreateGrants = () => {
           <GrantContentWrapper>Grant Date: {loadedGrantData.Grants[0].date}</GrantContentWrapper>
           <GrantContentWrapper>Status: {loadedGrantData.Grants[0].status}</GrantContentWrapper>
           <FooterWrapper>
-            <StyledButton disabled={true} stretch onClick={() => {}} level={0}>
+            <StyledButton disabled={true} stretch onClick={() => alert('TODO')} level={0}>
               Publish Grant
             </StyledButton>
-            <StyledButton
-              disabled={true}
-              stretch
-              onClick={() => {
-                //end
-              }}
-              level={0}
-            >
+            <StyledButton disabled={true} stretch onClick={() => alert('TODO')} level={0}>
               End Grant
             </StyledButton>
           </FooterWrapper>
