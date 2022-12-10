@@ -14,6 +14,7 @@ import {
   Button,
   Icon,
   ApplyForFundingBlurb,
+  Faq,
 } from '@components'
 import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
@@ -138,6 +139,7 @@ const GrantPage = () => {
       </AlternatingPanels>
       <Newsletter />
       <ApplyForFundingBlurb />
+      <Faq />
       <Metrics {...{ metrics }} />
     </Layout>
   )

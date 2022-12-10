@@ -1,19 +1,6 @@
 import { GlyphKey } from '@theme'
 
-const alternatingPanels: Array<{
-  image: string
-  imageDark?: string
-  title: string
-  copy: string
-  list: Array<{
-    label: string
-    glyph: keyof GlyphKey
-  }>
-  imageOnRight?: boolean
-  destination?: string
-  buttonLabel?: string
-  children?: React.ReactElement
-}> = [
+const alternatingPanels: Array<IAlternatingPanel> = [
   {
     image: '/assets/illustrations/home/about.png',
     imageDark: '/assets/illustrations/home/about-dark.png',
