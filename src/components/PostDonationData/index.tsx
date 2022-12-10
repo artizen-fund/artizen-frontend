@@ -75,9 +75,13 @@ const PostDonationData = () => {
     },
   })
 
-  return (
+  return !loggedInUser ? (
+    <></>
+  ) : (
     <Wrapper visible={visibleModal === 'postDonationData'}>
       <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
+        <CloseButton onClick={() => toggleModal?.()} />
+
         <Copy>
           <Headline>Before we drop you in, let’s complete your profile.</Headline>
           <SubTitle>
@@ -131,10 +135,12 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     'copy avatarForm avatarForm'
     'copy firstName lastName'
     'copy artizenHandle artizenHandle'
+    'copy email email'
     'tocCheck submit submit';
   &.submitted {
     grid-template-areas:
       'copy avatarForm avatarForm'
+      'copy confirmation confirmation'
       'copy confirmation confirmation'
       'copy confirmation confirmation'
       'tocCheck confirmation confirmation';
@@ -147,22 +153,23 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   }
 
   *[id='#/properties/firstName'] {
-    display: ${props => (props.hasFirstName ? 'none' : 'block')};
     grid-area: firstName;
   }
   *[id='#/properties/lastName'] {
-    display: ${props => (props.hasLastName ? 'none' : 'block')};
     grid-area: lastName;
   }
   *[id='#/properties/artizenHandle'] {
-    display: ${props => (props.hasUsername ? 'none' : 'block')};
     grid-area: artizenHandle;
+  }
+  *[id='#/properties/email'] {
+    grid-area: email;
   }
 
   &.submitted {
     *[id='#/properties/firstName'],
     *[id='#/properties/lastName'],
     *[id='#/properties/email'],
+    *[id='#/properties/artizenHandle'],
     ${SubmitButton} {
       display: none;
     }

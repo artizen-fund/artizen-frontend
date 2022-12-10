@@ -24,8 +24,8 @@ interface ILayoutContext {
   toggleModal?: (modal?: ModalType) => void
   setVisibleModalWithAttrs?: (modalType: ModalType, options: any) => void
   modalAttrs?: any
-  locked?: boolean
-  setLocked?: (b: boolean) => void
+  locked: boolean
+  setLocked: (b: boolean) => void
   // TODO: modalAttrs?: MediaAttrs | whatever-else
 }
 

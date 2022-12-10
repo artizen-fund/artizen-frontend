@@ -7,7 +7,7 @@ import { breakpoint } from '@theme'
 const ANIMATION_TIMING = 0.6 // seconds
 
 const Modals = () => {
-  const { visibleModal, toggleModal, locked, setLocked } = useContext(LayoutContext)
+  const { visibleModal, toggleModal, setLocked, locked } = useContext(LayoutContext)
   /* In order for the modal to have any kind of fade-out effect, it needs
    *   to persist even when visibleModal is changed in the LayoutContext.
    *
@@ -21,11 +21,11 @@ const Modals = () => {
     if (!visibleModal) {
       setVisible(false)
       setTimeout(() => setDisplayedVisibleModal(undefined), ANIMATION_TIMING * 1000)
-      setLocked?.(false)
+      setLocked(false)
     } else {
       setVisible(true)
       setDisplayedVisibleModal(visibleModal)
-      setLocked?.(displayedVisibleModal === 'postDonationData')
+      setLocked(visibleModal === 'postDonationData')
     }
   }, [visibleModal])
 
