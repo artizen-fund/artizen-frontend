@@ -24,6 +24,8 @@ interface ILayoutContext {
   toggleModal?: (modal?: ModalType) => void
   setVisibleModalWithAttrs?: (modalType: ModalType, options: any) => void
   modalAttrs?: any
+  locked?: boolean
+  setLocked?: (b: boolean) => void
   // TODO: modalAttrs?: MediaAttrs | whatever-else
 }
 
@@ -38,6 +40,7 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
+  const [locked, setLocked] = useState(false)
   const [visibleModal, setVisibleModal] = useState<ModalType | undefined>()
   const [modalAttrs, setModalAttrs] = useState<any>()
   const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
@@ -92,6 +95,8 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
         toggleModal,
         setVisibleModalWithAttrs,
         modalAttrs,
+        locked,
+        setLocked,
       }}
     >
       {children}

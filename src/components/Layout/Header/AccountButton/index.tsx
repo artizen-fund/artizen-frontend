@@ -44,6 +44,9 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         ? 'initials'
         : 'placeholder',
     )
+    if (!!loggedInUser && (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName)) {
+      setVisibleModal?.('postDonationData')
+    }
   }, [loggedInUser])
 
   return (
