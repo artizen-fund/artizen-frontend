@@ -6,6 +6,7 @@ export type GlyphKey = Record<string, string>
 
 export const glyphKey: GlyphKey = {
   arrow: 'arrow',
+  artToken: 'artToken',
   badge: 'badge',
   bell: 'bell',
   cake: 'cake',
@@ -21,6 +22,7 @@ export const glyphKey: GlyphKey = {
   dollar: 'dollar',
   donate: 'donate',
   ethereum: 'ethereum',
+  eye: 'eye',
   face: 'face',
   facebook: 'facebook',
   gear: 'gear',
