@@ -149,13 +149,11 @@ const CreateGrants = () => {
         objects: [
           {
             status: 'draft',
-            submissions: {
-              data: [
-                {
-                  artifactId,
-                  projectId,
-                },
-              ],
+            submission: {
+              data: {
+                artifactId,
+                projectId,
+              },
             },
             ...grantData,
           },
