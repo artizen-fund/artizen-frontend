@@ -29,7 +29,10 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
   const donateFn = async () => {
     if (!blockchainId || !data.donationAmount) return
     setSending(true)
+    console.log('get to donateFn', error)
     const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
+
+    console.log('after returnTx', returnTx)
     // TODO it'll only work when EK remove remve the tx from the server
     //if thre is transationhash add a record
     const tx = returnTx?.transactionHash
@@ -52,6 +55,7 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
       })
     } catch (error) {
       //updateDonation
+      console.log('error insertDonation', error)
       await updateDonation({
         variables: {
           _set: {
