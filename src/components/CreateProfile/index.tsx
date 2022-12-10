@@ -6,7 +6,7 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { loggedInUserVar, LayoutContext, uploadToCloudinary } from '@lib'
+import { loggedInUserVar, LayoutContext, uploadToCloudinary, createUserCourierProfile } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/createProfile'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
@@ -44,6 +44,7 @@ const CreateProfile = () => {
           profileImage,
         },
       })
+      createUserCourierProfile(loggedInUser.id!, data.email)
       toggleModal?.()
     } catch (error) {
       console.error('Error saving new user profile', error)
