@@ -80,7 +80,7 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
   return (
     <Wrapper>
       <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
-      <Button {...{ onClick }} disabled={!data.donationAmount || data.donationAmount <= 0} stretch>
+      <Button level={0} {...{ onClick }} disabled={!data.donationAmount || data.donationAmount <= 0} stretch>
         {sending ? 'Sending' : 'Donate'}
       </Button>
     </Wrapper>

@@ -22,6 +22,7 @@ export const glyphKey: GlyphKey = {
   dollar: 'dollar',
   donate: 'donate',
   ethereum: 'ethereum',
+  external: 'external',
   eye: 'eye',
   face: 'face',
   facebook: 'facebook',

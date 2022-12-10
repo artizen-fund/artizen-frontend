@@ -1,4 +1,5 @@
 export * from './alternatingPanels'
+export * from './applyForFundingBlurb'
 export * from './header'
 export * from './metrics'
 export * from './raffle'
