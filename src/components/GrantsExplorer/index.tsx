@@ -19,48 +19,49 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
     <StyledStickyCanvas>
       <Wrapper>
         <Nav>
-          <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2}>
+          {/* <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2}>
             previous
-          </Button>
+          </Button> */}
           <Copy>
             <Date>{grant.date}</Date>
             <Description>Today’s Grant</Description>
           </Copy>
-          <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2}>
+          {/* <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2}>
             next
-          </Button>
+          </Button> */}
         </Nav>
+        <Body>
+          <Header>{grant.submission?.project?.title}</Header>
 
-        <ProgressBar>{amountRaised / (grant.goal || 1)}</ProgressBar>
+          <ProgressBar>{amountRaised / (grant.goal || 1)}</ProgressBar>
 
-        <Header>{grant.submission?.project?.title}</Header>
+          <GrantData>
+            <div>
+              <DataLabel>Raised</DataLabel>
+              <AmountRaisedRow>
+                <Glyph glyph="ethereum" level={2} />
+                <AmountRaised>{amountRaised}</AmountRaised>
+                <Goal>&nbsp;/ {grant.goal} goal</Goal>
+              </AmountRaisedRow>
+            </div>
 
-        <GrantData>
-          <div>
-            <DataLabel>Raised</DataLabel>
-            <Glyph glyph="ethereum" />
-            <AmountRaised>{amountRaised}</AmountRaised>
-            <Goal>{grant.goal} goal</Goal>
-          </div>
-
-          <div>
-            <DataLabel>Ends in</DataLabel>
-            <AmountRaised>
+            <div>
+              <DataLabel>Ends in</DataLabel>
               <Countdown date={grant.closingDate} />
-            </AmountRaised>
-          </div>
-        </GrantData>
+            </div>
+          </GrantData>
 
-        {grant.blockchainId && (
-          <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} updatefn={setUpdateLeaderBoard} />
-        )}
+          {grant.blockchainId && (
+            <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} updatefn={setUpdateLeaderBoard} />
+          )}
 
-        <Leaderboard grantId={grant.id} forceUpdate={updateLeaderBoard} />
+          <Leaderboard grantId={grant.id} forceUpdate={updateLeaderBoard} />
 
-        <Sponsors>
-          <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />
-          <ExtendedReality src="/assets/extended-reality.svg" alt="Extended Reality" />
-        </Sponsors>
+          <Sponsors>
+            <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />
+            <ExtendedReality src="/assets/extended-reality.svg" alt="Extended Reality" />
+          </Sponsors>
+        </Body>
       </Wrapper>
     </StyledStickyCanvas>
   )
@@ -91,57 +92,99 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
 `
 
 const Nav = styled.nav`
-  border: 1px dashed ${rgba(palette.uiAlert)};
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+
+  padding: 24px;
 `
 
 const Copy = styled.header`
   text-align: center;
 `
 
-const Date = styled.div``
+const Date = styled.div`
+  ${typography.title.l4}
+`
 
-const Description = styled.div``
+const Description = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+`
+
+const Body = styled.div`
+  padding: 24px;
+`
 
 const GrantData = styled.div`
   display: flex;
   flex-direction: row;
-`
-
-const DataLabel = styled.div``
-
-const Goal = styled.div``
-
-const Header = styled.h3``
-
-const AmountRaised = styled.div`
-  ${typography.label.l1}
-  color: ${rgba(palette.barracuda)};
-  span {
-    ${typography.title.l3}
-    color: ${rgba(palette.night)};
-    @media (prefers-color-scheme: dark) {
-      color: ${rgba(palette.moon)};
+  gap: 30px;
+  margin-bottom: 25px;
+  > div:first-child {
+    position: relative;
+    &:after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      right: -15px;
+      width: 1px;
+      height: 100%;
+      background: ${rgba(palette.stone)};
     }
   }
 `
 
-const Sponsors = styled.div`
+const DataLabel = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+  margin-bottom: 0.5em;
+`
+
+const Goal = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+`
+
+const Header = styled.h3`
+  ${typography.title.l2}
+`
+
+const AmountRaisedRow = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   align-items: center;
 `
 
+const AmountRaised = styled.div`
+  ${typography.title.l4}
+`
+
+const Sponsors = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+  align-items: center;
+  gap: 15px;
+  margin-top: 24px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex-direction: row;
+  }
+`
+
 const Microsoft = styled.img`
-  max-width: 150px;
+  max-width: 94px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    max-width: 150px;
+  }
 `
 
 const ExtendedReality = styled.img`
-  max-width: 275px;
+  max-width: 200px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    max-width: 275px;
+  }
 `
 
 export default GrantsExplorer

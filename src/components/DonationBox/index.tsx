@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from './form'
 import { loggedInUserVar, LayoutContext, useGrant } from '@lib'
+import { breakpoint } from '@theme'
 import { useMutation } from '@apollo/client'
 import { INSERT_DONATIONS, UPDATE_DONATIONS } from '@gql'
 import { alternatingPanels } from '@copy/home'
@@ -78,18 +79,23 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
 
   return (
     <Wrapper>
-      <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <Button {...{ onClick }}>{sending ? 'Sending' : 'Submit'}</Button>
-      </Form>
+      <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
+      <Button {...{ onClick }} disabled={!data.donationAmount || data.donationAmount <= 0} stretch>
+        {sending ? 'Sending' : 'Donate'}
+      </Button>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 15px;
   width: 100%;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 
 export default DonationBox

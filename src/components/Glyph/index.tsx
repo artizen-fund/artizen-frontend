@@ -60,7 +60,7 @@ export const Glyph = styled.div<GlyphProps>`
           --iconSize: ${responsiveGlyphSize('desktop', props.level)}px;
           mask-image: url(${maskPath('desktop', props.glyph, props.level, props.outline)});
         }
-        mask-size: var(--iconSize);
+        mask-size: var(--iconSize) var(--iconSize);
         width: var(--iconSize);
         height: var(--iconSize);
       `}

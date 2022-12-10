@@ -13,6 +13,7 @@ import {
   GrantsExplorer,
   Curators,
   Button,
+  Icon,
 } from '@components'
 import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
@@ -41,6 +42,10 @@ const GrantPage = () => {
 
   const activeGrant = loadedGrantData?.Grants[0]
 
+  const artist = activeGrant?.submission?.project?.members?.filter(m => m.type === 'lead')[0]
+
+  const artifactNumber = 1
+
   return (
     <Layout>
       <Header>
@@ -50,40 +55,75 @@ const GrantPage = () => {
       <StyledPagePadding>
         <Wrapper>
           <FeaturedArt grant={activeGrant} />
-          <TabbedInfoWrapper>
-            <p>{activeGrant?.submission?.project?.description}</p>
-            <h6>Impact</h6>
-            <p>{activeGrant?.submission?.project?.impact}</p>
+          <DescriptionBlock>
+            <Copy>
+              <Metadata>
+                <Metadatum>
+                  <Icon glyph="crown" level={2} outline glyphOutline label="Top Donor Prize" />
+                </Metadatum>
+                <Metadatum>
+                  <Icon glyph="palette" level={2} outline glyphOutline label="Artifact 27" />
+                </Metadatum>
+                <Metadatum>
+                  <Icon
+                    glyph="face"
+                    level={2}
+                    outline
+                    glyphOutline
+                    label={`${artist?.user?.firstName} ${artist?.user?.lastName}`}
+                  />
+                </Metadatum>
+              </Metadata>
+            </Copy>
+            <P>{activeGrant?.submission?.project?.description}</P>
+            <Impact>Impact</Impact>
+            <P>{activeGrant?.submission?.project?.impact}</P>
 
-            <h6>Project</h6>
-            <dl>
-              <dt>Season One</dt>
-              <dd>??</dd>
-              <dt>Started</dt>
-              <dd>creationDate</dd>
-              <dt>Completed</dt>
-              <dd>completionDate</dd>
-            </dl>
+            <ListHeader>Project</ListHeader>
+            <List>
+              <div>
+                <dt>Season One</dt>
+                <dd>Extended Reality</dd>
+              </div>
+              <div>
+                <dt>Started</dt>
+                <dd>creationDate</dd>
+              </div>
+              <div>
+                <dt>Completed</dt>
+                <dd>completionDate</dd>
+              </div>
+            </List>
 
-            <h6>Project</h6>
-            <dl>
-              <dt>Minted</dt>
-              <dd>createdAt</dd>
-              <dt>Token</dt>
-              <dd></dd>
-              <dt>Address</dt>
-              <dd></dd>
-            </dl>
+            <ListHeader>Artifact</ListHeader>
+            <List>
+              <div>
+                <dt>Minted</dt>
+                <dd>createdAt</dd>
+              </div>
+              <div>
+                <dt>Token</dt>
+                <dd></dd>
+              </div>
+              <div>
+                <dt>Address</dt>
+                <dd></dd>
+              </div>
+            </List>
 
-            <h6>Contributors</h6>
-            <ul>
+            <ListHeader>Contributors</ListHeader>
+            <List>
               {activeGrant?.submission?.project?.members.map((member, index) => (
-                <li key={`member-${index}`}>
-                  {member?.user?.firstName} {member?.user?.lastName}, {member.type}
-                </li>
+                <div key={`member-${index}`}>
+                  <dt>
+                    <Avatar profileImage={member.user?.profileImage} />
+                    {member?.user?.firstName} {member?.user?.lastName}
+                  </dt>
+                  <dd>{member.type}</dd>
+                </div>
               ))}
-            </ul>
-          </TabbedInfoWrapper>
+            </List>
+          </DescriptionBlock>
           <GrantsExplorer grant={activeGrant} />
         </Wrapper>
       </StyledPagePadding>
@@ -108,13 +148,15 @@ const Header = styled(props => <PagePadding {...props} />)`
     ${typography.title.l1};
   }
   h2 {
+    margin-top: 0.5em;
     ${typography.body.l1};
   }
 `
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   position: relative;
-  padding: 0;
+  padding: 40px 24px;
+  background: ${rgba(palette.moon)};
 `
 
 const Wrapper = styled.section`
@@ -134,36 +176,97 @@ const Wrapper = styled.section`
 `
 // todo: above is just a filled-in value, check design
 
-const Tab = styled.div<{ label: string }>``
-
-const TabbedInfoWrapper = styled.div`
+const DescriptionBlock = styled.div`
   grid-area: tabbedInfo;
+  margin-top: 30px;
 `
 
-const StyledTabbedContent = styled(props => <TabbedContent {...props} />)`
-  h1 {
-    ${typography.title.l2}
-    margin-bottom: 0.125em;
-  }
-  h2 {
-    ${typography.label.l1}
-    color: ${rgba(palette.barracuda)};
-    margin-bottom: 1em;
-  }
-  p,
-  li {
-    ${typography.body.l2}
-    margin-bottom: 1em;
+const Copy = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`
+
+const Title = styled.div`
+  ${typography.title.l4}
+  margin: 1em 0;
+`
+
+const Metadata = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px 15px;
+  ${typography.label.l1}
+  margin-bottom: 24px;
+`
+
+const Metadatum = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+`
+
+const P = styled.p`
+  ${typography.body.l2}
+`
+
+const Impact = styled.h4`
+  margin-top: 1em;
+  ${typography.title.l4}
+`
+
+const ListHeader = styled.h4`
+  ${typography.label.l1}
+  margin: 1em 0;
+`
+
+const List = styled.dl`
+  ${typography.label.l1}
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  > div {
+    background: ${rgba(palette.stone, 0.24)};
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding: 0 15px;
+    dt {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+    }
   }
 `
 
-const StyledTabs = styled(props => <Tabs {...props} />)`
-  margin: 40px 0px 35px 0px;
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
-    margin: 50px 0px 45px 0px;
+const Avatar = styled.div<{
+  profileImage?: any
+}>`
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+
+  background-image: url(${props => props.profileImage || '/assets/glyphs/face/20/outline.svg'});
+  background-size: ${props => (props.profileImage ? 'cover' : 'auto')};
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 9999px;
+  border: 2px solid ${rgba(palette.white)};
+  @media (prefers-color-scheme: dark) {
+    border-color: ${rgba(palette.slate)};
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    margin: 60px 0px 55px 0px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
   }
 `
 
