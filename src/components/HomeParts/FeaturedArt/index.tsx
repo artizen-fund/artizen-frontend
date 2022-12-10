@@ -29,7 +29,7 @@ const FeaturedArt = ({ grant }: IFeaturedArt) => {
   // note: current video NFT ratio is 1:.56
   return (
     <Wrapper>
-      <Poster src={artworkCommunity} />
+      <Poster src={artworkCommunity as string} />
     </Wrapper>
   )
 }
