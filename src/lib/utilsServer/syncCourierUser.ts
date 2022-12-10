@@ -1,7 +1,7 @@
 import { CourierClient } from '@trycourier/courier'
 import { assert } from '@lib'
 
-export const createUserCourierProfile = async (recipientId: string, email: string) => {
+export const createUserCourierProfile = async (recipientId: any, email: string) => {
   const courier = CourierClient({
     authorizationToken: assert(process.env.COURIER_API_KEY, 'COURIER_API_KEY'),
   })

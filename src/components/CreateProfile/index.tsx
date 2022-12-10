@@ -44,7 +44,7 @@ const CreateProfile = () => {
           profileImage,
         },
       })
-      createUserCourierProfile(loggedInUser.id!, data.email)
+      createUserCourierProfile(loggedInUser?.id, data.email as string)
       toggleModal?.()
     } catch (error) {
       console.error('Error saving new user profile', error)
