@@ -80,13 +80,13 @@ declare global {
     submission?: {
       __typename?: 'Submissions'
       id: any
-      artifacts: Array<{
+      artifact?: {
         __typename?: 'Artifacts'
         id: any
         artworkPatron?: string | null
         artworkCreator?: string | null
         artworkCommunity?: string | null
-      }>
+      } | null
       project?: {
         __typename?: 'Projects'
         id: any
@@ -104,6 +104,8 @@ declare global {
             firstName?: string | null
             lastName?: string | null
             artizenHandle?: string | null
+            twitterHandle?: string | null
+            website?: string | null
             profileImage?: string | null
           } | null
         }>
@@ -111,7 +113,7 @@ declare global {
     } | null
     donations: Array<{
       __typename?: 'Donations'
-      amount: number
+      amount: any
       user?: { __typename?: 'Users'; id: any; profileImage?: string | null; artizenHandle?: string | null } | null
     }>
   }

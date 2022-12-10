@@ -17,12 +17,13 @@ interface ILeaderboard {
 //TODO Leaderboard needs to subscribe to the donation table, so it receives live updates
 
 const Leaderboard = ({ grantId, forceUpdate, ...props }: ILeaderboard) => {
-  // const limit = props.limit || 3
+  const limit = props.limit || 3
 
   const [loadSubcription, { data, error: errorSubcribingDonations }] = useLazyQuery<IDonationsQuery>(
     SUBSCRIBE_DONATIONS,
     {
       variables: {
+        limit,
         where: {
           _and: [
             {

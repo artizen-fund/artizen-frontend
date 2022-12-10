@@ -149,7 +149,7 @@ export const useGrant = () => {
     let returnTx
 
     try {
-      const grantTransaction = await grantsContract.donate(1, ethers.utils.parseEther(amount), {
+      const grantTransaction = await grantsContract.donate(grantId, ethers.utils.parseEther(amount), {
         value: ethers.utils.parseEther(amount),
       })
       returnTx = await grantTransaction.wait()

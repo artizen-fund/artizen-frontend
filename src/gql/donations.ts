@@ -23,8 +23,8 @@ export const UPDATE_DONATIONS = gql`
 //TODO: replace query for subscription after adding WS transporter to link
 // https://www.apollographql.com/docs/react/api/link/apollo-link-subscriptions
 export const SUBSCRIBE_DONATIONS = gql`
-  query donations($where: Donations_bool_exp) {
-    Donations(where: $where, order_by: [{ amount: desc }]) {
+  query donations($where: Donations_bool_exp, $limit: Int!) {
+    Donations(where: $where, order_by: [{ amount: desc }], limit: $limit) {
       id
       amount
       user {

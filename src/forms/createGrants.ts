@@ -5,91 +5,91 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    grant: {
-      title: 'Grant',
-      type: 'object',
-      properties: {
-        date: {
-          type: 'string',
-          format: 'date',
-        },
-        goal: {
-          type: 'integer',
-        },
-        season: {
-          type: 'integer',
-        },
-      },
-      required: ['date', 'season', 'goal'],
-    },
-    project: {
-      title: 'Project',
-      type: 'object',
-      properties: {
-        title: {
-          type: 'string',
-        },
-        longline: {
-          type: 'string',
-        },
-        description: {
-          type: 'string',
-        },
-        impact: {
-          type: 'string',
-        },
-        // impactTags: {
-        //   type: 'string',
-        // },
-        creationDate: {
-          type: 'string',
-          format: 'date',
-          description: 'schema-based time picker',
-        },
-        completionDate: {
-          type: 'string',
-          format: 'date',
-        },
-        walletAddress: {
-          type: 'string',
-        },
-      },
-      required: [
-        'title',
-        'longline',
-        'description',
-        'impact',
-        // 'impactTags',
-        'creationDate',
-        'completionDate',
-        'walletAddress',
-      ],
-    },
-    projectMembers: {
-      title: 'Project Member',
-      type: 'object',
-      properties: {
-        firstName: {
-          type: 'string',
-        },
-        lastName: {
-          type: 'string',
-        },
-        externalLink: {
-          type: 'string',
-        },
-        email: {
-          type: 'string',
-        },
-        wallet: {
-          type: 'string',
-        },
-        type: {
-          type: 'string',
-        },
-      },
-      required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
-    },
+    // grant: {
+    //   title: 'Grant',
+    //   type: 'object',
+    //   properties: {
+    //     date: {
+    //       type: 'string',
+    //       format: 'date',
+    //     },
+    //     goal: {
+    //       type: 'integer',
+    //     },
+    //     season: {
+    //       type: 'integer',
+    //     },
+    //   },
+    //   required: ['date', 'season', 'goal'],
+    // },
+    // project: {
+    //   title: 'Project',
+    //   type: 'object',
+    //   properties: {
+    //     title: {
+    //       type: 'string',
+    //     },
+    //     longline: {
+    //       type: 'string',
+    //     },
+    //     description: {
+    //       type: 'string',
+    //     },
+    //     impact: {
+    //       type: 'string',
+    //     },
+    //     // impactTags: {
+    //     //   type: 'string',
+    //     // },
+    //     creationDate: {
+    //       type: 'string',
+    //       format: 'date',
+    //       description: 'schema-based time picker',
+    //     },
+    //     completionDate: {
+    //       type: 'string',
+    //       format: 'date',
+    //     },
+    //     walletAddress: {
+    //       type: 'string',
+    //     },
+    //   },
+    //   required: [
+    //     'title',
+    //     'longline',
+    //     'description',
+    //     'impact',
+    //     // 'impactTags',
+    //     'creationDate',
+    //     'completionDate',
+    //     'walletAddress',
+    //   ],
+    // },
+    // projectMembers: {
+    //   title: 'Project Member',
+    //   type: 'object',
+    //   properties: {
+    //     firstName: {
+    //       type: 'string',
+    //     },
+    //     lastName: {
+    //       type: 'string',
+    //     },
+    //     externalLink: {
+    //       type: 'string',
+    //     },
+    //     email: {
+    //       type: 'string',
+    //     },
+    //     wallet: {
+    //       type: 'string',
+    //     },
+    //     type: {
+    //       type: 'string',
+    //     },
+    //   },
+    //   required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
+    // },
     artifacts: {
       title: 'Artifacts Assets',
       type: 'object',
@@ -207,109 +207,109 @@ export const initialState: FormState = {
 export const uischema = {
   type: 'VerticalLayout',
   elements: [
-    {
-      type: 'Group',
-      label: 'Grant',
-      elements: [
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/grant/properties/date',
-              label: 'Date, format: 2022-12-03',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/grant/properties/goal',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/grant/properties/season',
-            },
-          ],
-        },
-      ],
-    },
+    // {
+    //   type: 'Group',
+    //   label: 'Grant',
+    //   elements: [
+    //     {
+    //       type: 'HorizontalLayout',
+    //       elements: [
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/grant/properties/date',
+    //           label: 'Date, format: 2022-12-03',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/grant/properties/goal',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/grant/properties/season',
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
 
-    {
-      type: 'Group',
-      label: 'Project',
-      elements: [
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/title',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/longline',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/description',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/impact',
-            },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/project/properties/impactTags',
-            // },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/creationDate',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/completionDate',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/walletAddress',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      type: 'Group',
-      label: 'Project Members',
-      elements: [
-        {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/firstName',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/lastName',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/externalLink',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/email',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/wallet',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/type',
-            },
-          ],
-        },
-      ],
-    },
+    // {
+    //   type: 'Group',
+    //   label: 'Project',
+    //   elements: [
+    //     {
+    //       type: 'HorizontalLayout',
+    //       elements: [
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/title',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/longline',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/description',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/impact',
+    //         },
+    //         // {
+    //         //   type: 'Control',
+    //         //   scope: '#/properties/project/properties/impactTags',
+    //         // },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/creationDate',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/completionDate',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/project/properties/walletAddress',
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
+    // {
+    //   type: 'Group',
+    //   label: 'Project Members',
+    //   elements: [
+    //     {
+    //       type: 'HorizontalLayout',
+    //       elements: [
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/firstName',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/lastName',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/externalLink',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/email',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/wallet',
+    //         },
+    //         {
+    //           type: 'Control',
+    //           scope: '#/properties/projectMembers/properties/type',
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
     {
       type: 'Group',
       label: 'Artifacts Assets',

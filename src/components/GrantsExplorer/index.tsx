@@ -11,6 +11,7 @@ interface IGrantsExplorer {
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
+  console.log('grant    ', grant)
   const [updateLeaderBoard, setUpdateLeaderBoard] = useState<boolean>(false)
   if (!grant) return <Spinner />
   const amountRaised = grant.donations.reduce((accum, obj) => accum + obj.amount, 0)
