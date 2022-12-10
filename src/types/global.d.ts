@@ -115,6 +115,21 @@ declare global {
       user?: { __typename?: 'Users'; id: any; profileImage?: string | null; artizenHandle?: string | null } | null
     }>
   }
+
+  interface IAlternatingPanel {
+    image: string
+    imageDark?: string
+    title: string
+    copy: string
+    list: Array<{
+      label: string
+      glyph: string
+    }>
+    imageOnRight?: boolean
+    destination?: string
+    buttonLabel?: string
+    children?: React.ReactElement
+  }
 }
 
 export {}

@@ -1,6 +1,5 @@
 import { cloneElement, Children } from 'react'
 import styled from 'styled-components'
-import { IAlternatingPanel } from '../AlternatingPanel'
 import { PagePadding } from '@components'
 import { breakpoint } from '@theme'
 
