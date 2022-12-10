@@ -1,6 +1,5 @@
 export * from './alternatingPanels'
-export * from './curators'
+export * from './applyForFundingBlurb'
 export * from './header'
 export * from './metrics'
-export * from './tabbedInfo'
 export * from './raffle'

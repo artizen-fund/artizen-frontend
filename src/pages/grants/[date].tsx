@@ -11,13 +11,13 @@ import {
   AlternatingPanels,
   AlternatingPanel,
   GrantsExplorer,
-  Curators,
   Button,
   Icon,
+  ApplyForFundingBlurb,
 } from '@components'
-import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
+import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
+import { header, alternatingPanels, metrics } from '@copy/home'
 import { ILoadGrantsQuery } from '@types'
 
 const GrantPage = () => {
@@ -136,8 +136,8 @@ const GrantPage = () => {
           </AlternatingPanel>
         ))}
       </AlternatingPanels>
-      <Curators />
       <Newsletter />
+      <ApplyForFundingBlurb />
       <Metrics {...{ metrics }} />
     </Layout>
   )

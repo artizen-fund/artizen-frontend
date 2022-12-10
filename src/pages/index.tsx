@@ -7,21 +7,13 @@ import {
   PagePadding,
   AlternatingPanels,
   AlternatingPanel,
-  Curators,
   Button,
 } from '@components'
 import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels, metrics, tabbedInfo } from '@copy/home'
+import { header, alternatingPanels, metrics } from '@copy/home'
 
 const Home = () => {
-  const tabs = Object.keys(tabbedInfo).map(key => (
-    <Tab key={`tab-${key}`} label={key}>
-      {tabbedInfo[key]}
-    </Tab>
-  ))
-  const { activeTab, setTab } = useTabbedInfo(tabs, true)
-
   return (
     <Layout>
       <Header>
@@ -31,10 +23,7 @@ const Home = () => {
       <StyledPagePadding>
         <Wrapper>
           {/*<FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} /> */}
-          <TabbedInfoWrapper>
-            <StyledTabs {...{ activeTab, setTab, tabs }} />
-            <StyledTabbedContent {...{ activeTab, tabs }} />
-          </TabbedInfoWrapper>
+          <TabbedInfoWrapper></TabbedInfoWrapper>
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
@@ -46,7 +35,6 @@ const Home = () => {
           </AlternatingPanel>
         ))}
       </AlternatingPanels>
-      <Curators />
       <Newsletter />
       <Metrics {...{ metrics }} />
     </Layout>
