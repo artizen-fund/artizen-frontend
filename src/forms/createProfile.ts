@@ -27,6 +27,7 @@ export interface FormState extends Record<string, unknown> {
   artizenHandle?: string
   firstName?: string
   lastName?: string
+  email?: string
 }
 
 export const initialState: FormState = {}
