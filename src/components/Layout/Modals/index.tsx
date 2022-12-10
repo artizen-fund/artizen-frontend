@@ -21,11 +21,11 @@ const Modals = () => {
     if (!visibleModal) {
       setVisible(false)
       setTimeout(() => setDisplayedVisibleModal(undefined), ANIMATION_TIMING * 1000)
-      setLocked(false)
+      setLocked?.(false)
     } else {
       setVisible(true)
       setDisplayedVisibleModal(visibleModal)
-      setLocked(visibleModal === 'postDonationData')
+      setLocked?.(visibleModal === 'postDonationData')
     }
   }, [visibleModal])
 
