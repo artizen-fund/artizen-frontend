@@ -247,7 +247,7 @@ const List = styled.dl`
 `
 
 const Avatar = styled.div<{
-  profileImage?: string
+  profileImage?: any
 }>`
   display: inline-block;
   width: 32px;
