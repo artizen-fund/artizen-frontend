@@ -104,6 +104,7 @@ declare global {
             firstName?: string | null
             lastName?: string | null
             artizenHandle?: string | null
+            profileImage?: string | null
           } | null
         }>
       } | null
