@@ -1,27 +1,12 @@
-import { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { BigNumber } from 'ethers'
-import { Icon } from '@components'
-import { palette, breakpoint, typography } from '@theme'
-import { rgba, assert, useReadContract, assetPath, LayoutContext } from '@lib'
-import { raffle } from '@copy/home'
-import { ArtizenArtifactsAbi } from '@contracts'
+import { palette, breakpoint } from '@theme'
+import { rgba } from '@lib'
 
 type IFeaturedArt = {
   grant?: Grant
 }
 
 const FeaturedArt = ({ grant }: IFeaturedArt) => {
-  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-
-  const getDaysAgoFromDate = (start: number) => {
-    const now = new Date()
-    const oneDay = 1000 * 60 * 60 * 24
-    const diffInTime = now.getTime() - start * 1000
-    const diffInDays = Math.round(diffInTime / oneDay)
-    return diffInDays
-  }
-
   if (!grant?.submission?.artifact) return <></>
 
   const artworkCommunity = grant?.submission?.artifact ? grant?.submission?.artifact?.artworkCommunity : ''
@@ -29,7 +14,7 @@ const FeaturedArt = ({ grant }: IFeaturedArt) => {
   // note: current video NFT ratio is 1:.56
   return (
     <Wrapper>
-      <Poster src={artworkCommunity} />
+      <Poster src={artworkCommunity as string} />
     </Wrapper>
   )
 }
