@@ -7,7 +7,7 @@ type IFeaturedArt = {
 }
 
 const FeaturedArt = ({ grant }: IFeaturedArt) => {
-  if (!grant?.submission?.artifact) return <></>
+  if (!grant?.submission?.artifact) return <> </>
 
   const artworkCommunity = grant?.submission?.artifact ? grant?.submission?.artifact?.artworkCommunity : ''
 
