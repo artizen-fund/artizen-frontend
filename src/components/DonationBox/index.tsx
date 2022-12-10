@@ -49,9 +49,10 @@ const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
 
   return (
     <Wrapper>
-      <Form {...{ schema, uischema, initialState, data, setData, readonly }}>
-        <Button {...{ onClick }}>Submit</Button>
-      </Form>
+      <Form {...{ schema, uischema, initialState, data, setData, readonly }} />
+      <Button {...{ onClick }} disabled={data.donationAmount === undefined || data.donationAmount <= 0}>
+        Donate
+      </Button>
     </Wrapper>
   )
 }

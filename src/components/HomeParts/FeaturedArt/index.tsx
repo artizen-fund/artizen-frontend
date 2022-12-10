@@ -25,27 +25,11 @@ const FeaturedArt = ({ grant }: IFeaturedArt) => {
   if (!grant?.submission?.artifacts || grant.submission.artifacts.length < 1) return <></>
 
   const artifact = grant?.submission?.artifacts[0]
-  const artist = grant?.submission?.project?.members?.filter(m => m.type === 'lead')[0]
-
-  const artifactNumber = 1
 
   // note: current video NFT ratio is 1:.56
   return (
     <Wrapper>
       <Poster src={artifact.artworkCommunity!} />
-      <Copy>
-        <Metadata>
-          <Metadatum>
-            <Icon glyph="crown" level={1} outline label="Top Donor Prize" />
-          </Metadatum>
-          <Metadatum>
-            <Icon glyph="palette" level={1} outline label="Artifact 27" />
-          </Metadatum>
-          <Metadatum>
-            <Icon glyph="face" level={1} outline label={`${artist?.user?.firstName} ${artist?.user?.lastName}`} />
-          </Metadatum>
-        </Metadata>
-      </Copy>
     </Wrapper>
   )
 }
@@ -57,6 +41,15 @@ const Wrapper = styled.section`
   @media only screen and (max-width: ${breakpoint.laptop - 1}px) {
     border-radius: 16px 16px 0px 0px;
     color: ${rgba(palette.white)};
+    &:after {
+      content: ' ';
+      position: absolute;
+      z-index: 1;
+      bottom: -4px;
+      height: 4px;
+      width: 100%;
+      background: linear-gradient(90deg, #c2b6dc 0%, #c2b6dc 27.07%, #1acc6c 100%);
+    }
   }
 
   &:before {
@@ -102,38 +95,6 @@ const Wrapper = styled.section`
       border-color: ${rgba(palette.barracuda, 0.4)};
     }
   }
-`
-
-const Copy = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  @media only screen and (max-width: ${breakpoint.laptop - 1}px) {
-    position: absolute;
-    right: 25px;
-    bottom: 20px;
-  }
-`
-
-const Title = styled.div`
-  ${typography.title.l4}
-  margin: 1em 0;
-`
-
-const Metadata = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 30px;
-  ${typography.label.l1}
-`
-
-const Metadatum = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 10px;
 `
 
 const Poster = styled.img`

@@ -16,35 +16,35 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
     <StyledStickyCanvas>
       <Wrapper>
         <Nav>
-          <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2}>
+          {/* <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2}>
             previous
-          </Button>
+          </Button> */}
           <Copy>
             <Date>{grant.date}</Date>
             <Description>Today’s Grant</Description>
           </Copy>
-          <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2}>
+          {/* <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2}>
             next
-          </Button>
+          </Button> */}
         </Nav>
         <Body>
-          <ProgressBar>{amountRaised / (grant.goal || 1)}</ProgressBar>
-
           <Header>{grant.submission?.project?.title}</Header>
+
+          <ProgressBar>{amountRaised / (grant.goal || 1)}</ProgressBar>
 
           <GrantData>
             <div>
               <DataLabel>Raised</DataLabel>
-              <Glyph glyph="ethereum" />
-              <AmountRaised>{amountRaised}</AmountRaised>
-              <Goal>{grant.goal} goal</Goal>
+              <AmountRaisedRow>
+                <Glyph glyph="ethereum" level={2} />
+                <AmountRaised>{amountRaised}</AmountRaised>
+                <Goal>&nbsp;/ {grant.goal} goal</Goal>
+              </AmountRaisedRow>
             </div>
 
             <div>
               <DataLabel>Ends in</DataLabel>
-              <AmountRaised>
-                <Countdown date={grant.closingDate} />
-              </AmountRaised>
+              <Countdown date={grant.closingDate} />
             </div>
           </GrantData>
 
@@ -89,11 +89,10 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
 const Nav = styled.nav`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   padding: 24px;
-  border: 1px dashed ${rgba(palette.uiAlert)};
 `
 
 const Copy = styled.header`
@@ -116,26 +115,45 @@ const Body = styled.div`
 const GrantData = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 30px;
+  margin-bottom: 25px;
+  > div:first-child {
+    position: relative;
+    &:after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      right: -15px;
+      width: 1px;
+      height: 100%;
+      background: ${rgba(palette.stone)};
+    }
+  }
 `
 
-const DataLabel = styled.div``
+const DataLabel = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+  margin-bottom: 0.5em;
+`
 
-const Goal = styled.div``
+const Goal = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+`
 
 const Header = styled.h3`
   ${typography.title.l2}
 `
 
+const AmountRaisedRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
 const AmountRaised = styled.div`
-  ${typography.label.l1}
-  color: ${rgba(palette.barracuda)};
-  span {
-    ${typography.title.l3}
-    color: ${rgba(palette.night)};
-    @media (prefers-color-scheme: dark) {
-      color: ${rgba(palette.moon)};
-    }
-  }
+  ${typography.title.l4}
 `
 
 const Sponsors = styled.div`
@@ -143,17 +161,25 @@ const Sponsors = styled.div`
   flex-direction: column-reverse;
   justify-content: space-around;
   align-items: center;
+  gap: 15px;
+  margin-top: 24px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     flex-direction: row;
   }
 `
 
 const Microsoft = styled.img`
-  max-width: 150px;
+  max-width: 94px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    max-width: 150px;
+  }
 `
 
 const ExtendedReality = styled.img`
-  max-width: 275px;
+  max-width: 200px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    max-width: 275px;
+  }
 `
 
 export default GrantsExplorer
