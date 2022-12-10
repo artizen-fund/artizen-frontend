@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { LayoutContext } from '@lib'
 
 const Onionskin = () => {
-  const { visibleShelf, toggleShelf, visibleModal, toggleModal } = useContext(LayoutContext)
+  const { visibleShelf, toggleShelf, visibleModal, toggleModal, locked } = useContext(LayoutContext)
   const onClick = () => {
+    if (locked) return
     toggleShelf?.()
     toggleModal?.()
   }

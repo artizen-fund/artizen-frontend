@@ -75,13 +75,9 @@ const PostDonationData = () => {
     },
   })
 
-  return !loggedInUser ? (
-    <></>
-  ) : (
+  return (
     <Wrapper visible={visibleModal === 'postDonationData'}>
       <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
-        <CloseButton onClick={() => toggleModal?.()} />
-
         <Copy>
           <Headline>Before we drop you in, let’s complete your profile.</Headline>
           <SubTitle>
