@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { CloseButton, PostDonationData, Share, AlertModal, MediaModal, LoginModal } from '@components'
+import { CloseButton, CreateProfile, Share, AlertModal, MediaModal, LoginModal } from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
 
@@ -25,16 +25,18 @@ const Modals = () => {
     } else {
       setVisible(true)
       setDisplayedVisibleModal(visibleModal)
-      setLocked?.(visibleModal === 'postDonationData')
+      setLocked?.(visibleModal === 'createProfile')
     }
   }, [visibleModal])
 
   const renderSwitch = (visibleModal?: ModalType) => {
-    switch (displayedVisibleModal) {
+    // TODO: the animation timing above isn't working, so instead of switching on
+    // displayedVisibleModal, I'm just gonna go off the real thing for now.
+    switch (visibleModal) {
       case 'login':
         return <LoginModal />
-      case 'postDonationData':
-        return <PostDonationData />
+      case 'createProfile':
+        return <CreateProfile />
       case 'share':
         return <Share />
       case 'alert':

@@ -10,7 +10,7 @@ import { GET_USER } from '@gql'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
   const apolloClient = useApolloClient()
-  const { setVisibleModal, toggleShelf, setLocked } = useContext(LayoutContext)
+  const { setVisibleModal, toggleShelf } = useContext(LayoutContext)
   const { data: session } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
@@ -48,7 +48,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       !!loggedInUser &&
       (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName || !loggedInUser.artizenHandle)
     ) {
-      setVisibleModal?.('postDonationData')
+      setVisibleModal?.('createProfile')
     }
   }, [loggedInUser])
 
