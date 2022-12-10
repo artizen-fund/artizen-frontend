@@ -22,7 +22,7 @@
     "test:quick": "start-server-and-test 'yarn dev' http-get://localhost:3000 'env-cmd -f .env.development npx synpress run -cf synpress.config.js'",
     "test:e2e": "PORT=3000 start-server-and-test 'yarn start' http-get://localhost:3000 'env-cmd -f .env.development synpress run -cf synpress.config.js'",
     "codegen": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
-    "codegen-local": "DOTENV_CONFIG_PATH=./.env.local SECRET_ENV=DevSecrets op run --env-file='.env.local' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
+    "codegen-local": "SECRET_ENV=DevSecrets op run --env-file='.env.local' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

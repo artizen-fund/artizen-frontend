@@ -24,7 +24,7 @@ export const LOAD_GRANTS = gql`
       goal
       submission {
         id
-        artifacts {
+        artifact {
           id
           artworkPatron
           artworkCreator
