@@ -76,7 +76,7 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
   return (
     <Wrapper>
       <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
-      <Button {...{ onClick }} disabled={!data.donationAmount || data.donationAmount <= 0}>
+      <Button {...{ onClick }} disabled={!data.donationAmount || data.donationAmount <= 0} stretch>
         {sending ? 'Sending' : 'Donate'}
       </Button>
     </Wrapper>
@@ -89,7 +89,8 @@ const Wrapper = styled.div`
   gap: 15px;
   width: 100%;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 `
 
