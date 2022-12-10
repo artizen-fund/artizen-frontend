@@ -1,25 +1,67 @@
 import styled from 'styled-components'
+import { useEffect } from 'react'
 import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
+import { useLazyQuery } from '@apollo/client'
 import { formatUSDC, rgba } from '@lib'
-import { IUsers } from '@types'
-import truncateEthAddress from 'truncate-eth-address'
+// import { IUsers } from '@types'
+import { SUBSCRIBE_DONATIONS } from '@gql'
+// import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
   limit?: number
   grantId: string
+  forceUpdate: boolean
 }
 
 //TODO Leaderboard needs to subscribe to the donation table, so it receives live updates
 
-const Leaderboard = ({ grantId, ...props }: ILeaderboard) => {
+const Leaderboard = ({ grantId, forceUpdate, ...props }: ILeaderboard) => {
   const limit = props.limit || 3
 
-  // const sideItem = (
-  //   <Button href="/leaderboard" outline level={2}>
-  //     See All
-  //   </Button>
-  // )
+  console.log('grantId   ', grantId)
+
+  const [loadSubcription, { data, error: errorSubcribingDonations }] = useLazyQuery(SUBSCRIBE_DONATIONS, {
+    variables: {
+      where: {
+        _and: [
+          {
+            grantId: {
+              _eq: grantId,
+            },
+            // userId: {
+            //   _eq: '8e849aa3-7521-4bd4-80df-82446c513ca2',
+            // },
+            status: {
+              _eq: 'confirmed',
+            },
+          },
+        ],
+      },
+    },
+  })
+
+  useEffect(() => {
+    loadSubcription()
+  }, [])
+
+  useEffect(() => {
+    forceUpdate && loadSubcription()
+  }, [forceUpdate])
+
+  const loadedDonations = data && data.Donations ? data.Donations : []
+
+  console.log('loadedDonations  ', loadedDonations)
+
+  if (errorSubcribingDonations) {
+    console.error('error donation subscription   ', errorSubcribingDonations)
+  }
+
+  const sideItem = (
+    <Button href="/leaderboard" outline level={2}>
+      See All
+    </Button>
+  )
 
   // const getUserIdentifier = (user: IUsers) => {
   //   return user?.firstName || user?.lastName
@@ -27,23 +69,23 @@ const Leaderboard = ({ grantId, ...props }: ILeaderboard) => {
   //     : truncateEthAddress(user?.publicAddress || '')
   // }
 
-  // return (
-  //   <Table title="Leaderboard" {...{ sideItem }}>
-  //     {donations?.map((donation, index) => (
-  //       <TableCell key={`donation-${index}`} highlight>
-  //         <div>
-  //           <div>#{index + 1}</div>
-  //           {donation.user?.profileImage && <Avatar profileImage={donation.user.profileImage} />}
-  //           <Name>
-  //             {donation.user?.artizenHandle}
-  //             {index === 0 && <span> 👑</span>}
-  //           </Name>
-  //         </div>
-  //         <Amount>${formatUSDC(Number(donation.amount))}</Amount>
-  //       </TableCell>
-  //     ))}
-  //   </Table>
-  // )
+  return (
+    <Table title="Leaderboard" {...{ sideItem }}>
+      {loadedDonations.map((donation, index: number) => (
+        <TableCell key={`donation-${index}`} highlight>
+          <div>
+            <div>#{index + 1}</div>
+            {donation.user?.profileImage && <Avatar profileImage={donation.user.profileImage} />}
+            <Name>
+              {donation.user?.artizenHandle}
+              {index === 0 && <span> 👑</span>}
+            </Name>
+          </div>
+          <Amount>${formatUSDC(Number(donation.amount))}</Amount>
+        </TableCell>
+      ))}
+    </Table>
+  )
 }
 
 const Name = styled.div`

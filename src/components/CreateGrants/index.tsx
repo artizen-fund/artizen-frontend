@@ -52,7 +52,7 @@ const CreateGrants = () => {
     variables: {
       where: {
         id: {
-          _eq: '77f81cea-93e6-4038-aa93-86b39d80b269',
+          _eq: id,
         },
       },
     },

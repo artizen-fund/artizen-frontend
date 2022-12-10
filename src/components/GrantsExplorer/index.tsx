@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import Countdown from './Countdown'
@@ -30,10 +30,12 @@ const GrantsExplorer = () => {
     query: { date },
   } = useRouter()
 
+  const [updateLeaderBoard, setUpdateLeaderBoard] = useState<boolean>(false)
+
   const {
-    loading,
+    // loading,
     data: loadedGrantData,
-    error: errorLoadingGrant,
+    // error: errorLoadingGrant,
   } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
     skip: date === undefined,
     variables: {
@@ -46,8 +48,6 @@ const GrantsExplorer = () => {
   })
 
   const activeGrant = loadedGrantData?.Grants[0]
-
-  console.log('in here', activeGrant)
 
   return !activeGrant ? (
     <Spinner />
@@ -87,9 +87,15 @@ const GrantsExplorer = () => {
           </div>
         </GrantData>
 
-        {activeGrant.blockchainId && <DonationBox blockchainId={activeGrant.blockchainId} />}
+        {activeGrant.blockchainId && (
+          <DonationBox
+            grantId={activeGrant.id}
+            blockchainId={activeGrant.blockchainId}
+            updatefn={setUpdateLeaderBoard}
+          />
+        )}
 
-        <Leaderboard id={activeGrant.id} />
+        <Leaderboard grantId={activeGrant.id} forceUpdate={updateLeaderBoard} />
 
         <Sponsors>
           <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />

@@ -33,11 +33,9 @@ export const createApolloClient = (didToken?: string) => {
       // server request on behalf of user via MagicLink DecentralizedID token
       newHeaders['Authorization'] = `Bearer ${didToken}`
     } else if (!isServer() && token) {
-      console.log('its client and user')
       // client request
       newHeaders['Authorization'] = `Bearer ${token}`
     } else {
-      console.log('its public')
       // Public access
       newHeaders['x-hasura-unauthorized-role'] = 'public'
     }
