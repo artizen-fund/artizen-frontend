@@ -31,8 +31,6 @@ export default NextAuth({
       const secret = process.env.JWT_SECRET || ''
       const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
 
-      console.log('token     ', token)
-
       return {
         ...session,
         user: token.user,
@@ -98,8 +96,6 @@ export default NextAuth({
             variables: { publicAddress: address.toLowerCase() },
           })
 
-          console.log('  userFromDB       ', userFromDB)
-
           if (!userFromDB.data?.insert_Users_one?.id) {
             throw new Error('Could not retrieve ID from database upsert.')
           }
@@ -114,9 +110,9 @@ export default NextAuth({
             signature: credentials?.signature,
           }
 
-          // createUserCourierProfile(userId, )
-
           return user
+
+          // window.location.assign(`${window.location.protocol}//${window.location.host}/`)
         } catch (error) {
           console.error('error adding user in nextAuth authorize     ', error)
           return null

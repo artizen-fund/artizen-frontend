@@ -52,7 +52,7 @@ const CreateGrants = () => {
     variables: {
       where: {
         id: {
-          _eq: '77f81cea-93e6-4038-aa93-86b39d80b269',
+          _eq: id,
         },
       },
     },
@@ -72,11 +72,7 @@ const CreateGrants = () => {
 
     const artifactId = await insertArtifactF(formData.artifacts)
 
-    // console.log('artifactId       ', artifactId)
-
     const projectId = await insertProjectsF(formData.project)
-
-    // console.log('projectId       ', projectId)
 
     await insertProjecttMembers(formData.projectMembers, projectId)
 
@@ -105,9 +101,6 @@ const CreateGrants = () => {
     }
 
     return artifactsDBCreationReturn.data?.insert_Artifacts?.returning[0].id
-
-    // console.log('cloudinaryResponse ', cloudinaryResponse)
-    // return cloudinaryResponse.secure_url
   }
 
   const insertProjectsF = async (projectsData: Project) => {
@@ -125,8 +118,6 @@ const CreateGrants = () => {
   }
 
   const insertProjecttMembers = async (projectMemberData: ProjectMembers, projectId: string) => {
-    console.log('projectMemberData     ', projectMemberData)
-
     const insertProjectMembersReturn = await insertProjecstMemberInDB({
       variables: {
         objects: [

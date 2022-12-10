@@ -5,6 +5,7 @@ import { breakpoint, typography, palette } from '@theme'
 import { rgba, assetPath } from '@lib'
 import { IUsers } from '@types'
 import AccountStats from './AccountStats'
+import { signOut } from 'next-auth/react'
 
 interface IAccountShelf {
   user: Partial<IUsers>
@@ -65,7 +66,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
         </Top>
         <div>
           <Rule />
-          <Button onClick={() => alert('Sign out')} stretch level={1} glyph="power" transparent>
+          <Button onClick={() => signOut()} stretch level={1} glyph="power" transparent>
             Sign Out
           </Button>
         </div>

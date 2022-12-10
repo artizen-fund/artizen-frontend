@@ -10,34 +10,27 @@ export const INSERT_DONATIONS = gql`
   }
 `
 
-export const SUBSCRIBE_DONATIONS = gql`
-  mutation updateGrant($_set: Grants_set_input, $where: Grants_bool_exp!) {
-    update_Grants(_set: $_set, where: $where) {
+export const UPDATE_DONATIONS = gql`
+  mutation updateDonation($_set: Donations_set_input, $where: Donations_bool_exp!) {
+    update_Donations(_set: $_set, where: $where) {
       returning {
         id
-        goal
-        blockchainId
       }
     }
   }
+`
 
-  subscription donations {
-    Donations(
-      where: {
-        _and: [
-          {
-            grantId: { _eq: "84894c9a-f533-401b-8080-c43ffb6cc2f9" }
-            userId: { _eq: "8e849aa3-7521-4bd4-80df-82446c513ca2" }
-            status: { _eq: "confirmed" }
-          }
-        ]
-      }
-    ) {
+//TODO: replace query for subscription after adding WS transporter to link
+// https://www.apollographql.com/docs/react/api/link/apollo-link-subscriptions
+export const SUBSCRIBE_DONATIONS = gql`
+  query donations($where: Donations_bool_exp) {
+    Donations(where: $where, order_by: [{ amount: desc }]) {
       id
       user {
         id
         artizenHandle
         profileImage
+        publicAddress
       }
     }
   }
