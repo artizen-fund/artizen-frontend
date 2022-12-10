@@ -123,7 +123,7 @@ declare global {
     copy: string
     list: Array<{
       label: string
-      glyph: keyof GlyphKey
+      glyph: string
     }>
     imageOnRight?: boolean
     destination?: string
