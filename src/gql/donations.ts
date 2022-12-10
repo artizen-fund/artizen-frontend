@@ -26,6 +26,7 @@ export const SUBSCRIBE_DONATIONS = gql`
   query donations($where: Donations_bool_exp) {
     Donations(where: $where, order_by: [{ amount: desc }]) {
       id
+      amount
       user {
         id
         artizenHandle

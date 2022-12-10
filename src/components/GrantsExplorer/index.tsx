@@ -19,16 +19,16 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
     <StyledStickyCanvas>
       <Wrapper>
         <Nav>
-          {/* <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2}>
+          <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2} disabled>
             previous
-          </Button> */}
+          </Button>
           <Copy>
             <Date>{grant.date}</Date>
             <Description>Today’s Grant</Description>
           </Copy>
-          {/* <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2}>
+          <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2} disabled>
             next
-          </Button> */}
+          </Button>
         </Nav>
         <Body>
           <Header>{grant.submission?.project?.title}</Header>
@@ -94,7 +94,7 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
 const Nav = styled.nav`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   padding: 24px;
