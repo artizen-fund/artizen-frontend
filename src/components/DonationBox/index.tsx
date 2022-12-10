@@ -66,8 +66,6 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
       })
     }
 
-    console.log('error adding this', error)
-
     setSending(false)
     updatefn(true)
 

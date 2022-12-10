@@ -146,8 +146,6 @@ export const useGrant = () => {
   }
 
   const donate = async (grantId: number, amount: string) => {
-    console.log('it gets here.   ', amount)
-
     let returnTx
 
     try {
@@ -155,11 +153,7 @@ export const useGrant = () => {
         value: ethers.utils.parseEther(amount),
       })
       returnTx = await grantTransaction.wait()
-
-      console.log('it gets finsihed', returnTx)
-    } catch (e) {
-      console.error('error tx', e)
-
+    } catch (e: any) {
       if (e.code === 'INSUFFICIENT_FUNDS') {
         alert('Insufficient funds')
       }
