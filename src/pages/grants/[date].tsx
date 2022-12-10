@@ -157,6 +157,12 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   position: relative;
   padding: 40px 24px;
   background: ${rgba(palette.moon)};
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.slate, 0.64)};
+    border-width: 0.5px 0px;
+    border-style: solid;
+    border-color: rgba(114, 124, 140, 0.4);
+  }
 `
 
 const Wrapper = styled.section`

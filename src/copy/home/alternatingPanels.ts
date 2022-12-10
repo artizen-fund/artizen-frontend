@@ -1,36 +1,68 @@
-import { IAlternatingPanel } from '../../components/Layout/AlternatingPanel'
-
 const alternatingPanels: Array<IAlternatingPanel> = [
   {
     image: '/assets/illustrations/home/about.png',
     imageDark: '/assets/illustrations/home/about-dark.png',
-    title: 'About the Artizen Fund',
-    copy: 'We’re on a mission to unlock human creativity. By empowering our community to crowdfund new grants, curate the awards, and earn NFTs and rewards, the Artizen Fund radically expands support for creators of every kind.',
-    buttonLabel: 'Read more about our mission',
-    destination: '/about',
-  },
-  {
-    image: '/assets/illustrations/home/how-it-works.png',
-    imageDark: '/assets/illustrations/home/how-it-works-dark.png',
-    title: 'How it works',
-    copy: 'The leaderboard lists all the donors to our current grant cycle. Your position depends on the amount you’ve contributed. The more you donate, the higher you’ll rank. All donors earn $ART tokens, but only the top donor is guaranteed to win this month’s NFT Artifact.',
-    buttonLabel: 'Here’s the whole story',
+    title: 'Earn Artifacts from Winners',
+    copy: 'Artifacts are unique works of art that capture the spark of inspiration behind a project. Every day, a new series of three Artifacts is minted by our grant winner and awarded to:',
+    list: [
+      {
+        label: 'The Top Donor',
+        glyph: 'trend',
+      },
+      {
+        label: 'The Project Creator',
+        glyph: 'palette',
+      },
+      {
+        label: 'Our Community Treasury',
+        glyph: 'artToken',
+      },
+    ],
+    buttonLabel: 'Learn More',
     destination: '/about',
   },
   {
     image: '/assets/illustrations/home/trust.png',
     imageDark: '/assets/illustrations/home/trust-dark.png',
-    title: 'What we’re looking for',
-    copy: 'You can submit a creative project at any stage of development, from rough idea to released work, and in any medium, from oil paintings to open source code. All we ask is that it’s original, feasible, and makes an impact. Sound like you?',
-    buttonLabel: 'Apply for funding',
-    destination: 'https://artizen.link/apply',
+    title: 'Curate Our Grants',
+    copy: 'Artifacts give you the power to curate our grants. Every day, a new grant winner is selected by our community of Artifact holders. Join us to vote for your favorite projects and champion the creators you love.',
+    list: [
+      {
+        label: 'Review Submissions',
+        glyph: 'eye',
+      },
+      {
+        label: 'Vote for Projects You Love',
+        glyph: 'tick',
+      },
+      {
+        label: 'New Winner Selected Every Day',
+        glyph: 'crown',
+      },
+    ],
+    buttonLabel: 'Learn More',
+    destination: '/about',
   },
   {
-    image: '/assets/illustrations/home/leaderboard.png',
-    imageDark: '/assets/illustrations/home/leaderboard-dark.png',
-    title: 'Donate and become an owner',
-    copy: 'When you donate, you earn $ART tokens giving you an ownership stake in the Artizen Fund as well as the chance to collect NFT Artifacts from our grant winners.',
-    buttonLabel: 'Here’s how that works',
+    image: '/assets/illustrations/home/about.png',
+    imageDark: '/assets/illustrations/home/about-dark.png',
+    title: 'Join Our Movement',
+    copy: 'Artizen is built by our community of Artifact holders. Together we’re on a mission to unlock human creativity and reinvent how the world funds art, science, and public goods of every kind.',
+    list: [
+      {
+        label: 'Support Creators',
+        glyph: 'donate',
+      },
+      {
+        label: 'Reinvent Grant Funding',
+        glyph: 'intersect',
+      },
+      {
+        label: 'Unlock Human Creativity',
+        glyph: 'globe',
+      },
+    ],
+    buttonLabel: 'Learn More',
     destination: '/about',
   },
 ]

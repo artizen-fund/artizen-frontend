@@ -51,50 +51,6 @@ const Wrapper = styled.section`
       background: linear-gradient(90deg, #c2b6dc 0%, #c2b6dc 27.07%, #1acc6c 100%);
     }
   }
-
-  &:before {
-    z-index: 0;
-    position: absolute;
-    top: 40px;
-    left: -24px;
-    background-color: ${rgba(palette.moon)};
-    width: 100vw;
-    height: calc((100% + 247px) - 80px);
-    content: '';
-
-    @media only screen and (min-width: ${breakpoint.phablet}px) {
-      left: calc((100vw - 508px) / 2 * -1);
-    }
-
-    @media only screen and (min-width: ${breakpoint.tablet}px) {
-      top: 48px;
-      left: calc((100vw - 688px) / 2 * -1);
-      height: calc((100% + 247px) - 96px);
-    }
-
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      top: 64px;
-      left: calc((100vw - 944px) / 2 * -1);
-      height: calc(100% - 32px);
-    }
-
-    @media only screen and (min-width: ${breakpoint.laptopXL}px) {
-      left: calc((100vw - 1200px) / 2 * -1);
-    }
-
-    @media only screen and (min-width: ${breakpoint.desktop}px) {
-      top: 80px;
-      left: calc((100vw - 1600px) / 2 * -1);
-      height: calc(100% - 40px);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      background-color: ${rgba(palette.slate)};
-      border-width: 0.5px 0px;
-      border-style: solid;
-      border-color: ${rgba(palette.barracuda, 0.4)};
-    }
-  }
 `
 
 const Poster = styled.img`

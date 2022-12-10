@@ -1,26 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
+import { IconStack, Icon } from '@components'
 import { assetPath } from '@lib'
 import { breakpoint, typography } from '@theme'
 
-export interface IAlternatingPanel {
-  image: string
-  imageDark?: string
-  title: string
-  copy: string
-  imageOnRight?: boolean
-  destination?: string
-  buttonLabel?: string
-  children?: React.ReactElement
-}
-
-const AlternatingPanel = ({ image, imageDark, title, copy, imageOnRight, children }: IAlternatingPanel) => {
+const AlternatingPanel = ({ list, image, imageDark, title, copy, imageOnRight, children }: IAlternatingPanel) => {
   return (
     <Wrapper {...{ imageOnRight }}>
       <Image {...{ image, imageDark }} />
       <Content>
         <Title>{title}</Title>
         <Copy>{copy}</Copy>
+        <IconStack>
+          {list.map((item, index) => (
+            <Icon outline glyphOutline key={`rand-${index}`} glyph={item.glyph!} label={item.label} />
+          ))}
+        </IconStack>
         {children}
       </Content>
     </Wrapper>
