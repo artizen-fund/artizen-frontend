@@ -45,6 +45,7 @@ export const LOAD_GRANTS = gql`
               artizenHandle
               twitterHandle
               website
+              profileImage
             }
           }
           title
