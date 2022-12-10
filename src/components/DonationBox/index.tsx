@@ -92,7 +92,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 15px;
   width: 100%;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }

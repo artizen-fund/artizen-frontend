@@ -4,7 +4,7 @@ import { Button, Table, TableCell } from '@components'
 import { breakpoint, palette } from '@theme'
 import { useLazyQuery } from '@apollo/client'
 import { formatUSDC, rgba } from '@lib'
-// import { IUsers } from '@types'
+import { IDonationsQuery } from '@types'
 import { SUBSCRIBE_DONATIONS } from '@gql'
 // import truncateEthAddress from 'truncate-eth-address'
 
@@ -19,25 +19,25 @@ interface ILeaderboard {
 const Leaderboard = ({ grantId, forceUpdate, ...props }: ILeaderboard) => {
   // const limit = props.limit || 3
 
-  const [loadSubcription, { data, error: errorSubcribingDonations }] = useLazyQuery(SUBSCRIBE_DONATIONS, {
-    variables: {
-      where: {
-        _and: [
-          {
-            grantId: {
-              _eq: grantId,
+  const [loadSubcription, { data, error: errorSubcribingDonations }] = useLazyQuery<IDonationsQuery>(
+    SUBSCRIBE_DONATIONS,
+    {
+      variables: {
+        where: {
+          _and: [
+            {
+              grantId: {
+                _eq: grantId,
+              },
+              status: {
+                _eq: 'confirmed',
+              },
             },
-            // userId: {
-            //   _eq: '8e849aa3-7521-4bd4-80df-82446c513ca2',
-            // },
-            status: {
-              _eq: 'confirmed',
-            },
-          },
-        ],
+          ],
+        },
       },
     },
-  })
+  )
 
   useEffect(() => {
     loadSubcription()
@@ -64,7 +64,7 @@ const Leaderboard = ({ grantId, forceUpdate, ...props }: ILeaderboard) => {
   //     ? `${user.firstName} ${user.lastName}`
   //     : truncateEthAddress(user?.publicAddress || '')
   // }
-
+  console.log('data', data)
   return (
     <Table title="Leaderboard" {...{ sideItem }}>
       {loadedDonations.map((donation: any, index: number) => (
@@ -77,7 +77,7 @@ const Leaderboard = ({ grantId, forceUpdate, ...props }: ILeaderboard) => {
               {index === 0 && <span> 👑</span>}
             </Name>
           </div>
-          <Amount>${formatUSDC(Number(donation.amount))}</Amount>
+          <Amount>{donation.amount} ETH</Amount>
         </TableCell>
       ))}
     </Table>
