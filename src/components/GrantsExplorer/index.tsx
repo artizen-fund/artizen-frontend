@@ -1,14 +1,17 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { formatUSDC, rgba } from '@lib'
+
+import { rgba } from '@lib'
 
 interface IGrantsExplorer {
   grant?: Grant
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
+  const [updateLeaderBoard, setUpdateLeaderBoard] = useState<boolean>(false)
   if (!grant) return <Spinner />
   const amountRaised = grant.donations.reduce((accum, obj) => accum + obj.amount, 0)
 
@@ -48,9 +51,11 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
             </div>
           </GrantData>
 
-          {grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
+          {grant.blockchainId && (
+            <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} updatefn={setUpdateLeaderBoard} />
+          )}
 
-          <Leaderboard grantId={grant.id} />
+          <Leaderboard grantId={grant.id} forceUpdate={updateLeaderBoard} />
 
           <Sponsors>
             <Microsoft src="/assets/microsoft.svg" alt="Microsoft" />

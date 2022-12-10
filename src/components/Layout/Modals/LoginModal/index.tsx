@@ -21,25 +21,32 @@ const LoginModal = ({ ...props }) => {
 
   const connectWallet = async (connector: Connector) => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
-    const { account: publicAddress, chain } = await connectAsync({
-      connector,
-      chainId,
-    })
 
-    const userData = { address: publicAddress, chain: chain.id, network: 'evm' }
+    try {
+      const { account: publicAddress, chain } = await connectAsync({
+        connector,
+        chainId,
+      })
 
-    const response = await fetch('/api/auth/request-message', {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers: {
-        'content-type': 'application/json',
-      },
-    })
+      const userData = { address: publicAddress, chain: chain.id, network: 'evm' }
 
-    const { message } = await response.json()
-    const signature = await signMessageAsync({ message })
+      const response = await fetch('/api/auth/request-message', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+        headers: {
+          'content-type': 'application/json',
+        },
+      })
 
-    await signIn('credentials', { message, signature, redirect: false })
+      const { message } = await response.json()
+      const signature = await signMessageAsync({ message })
+
+      await signIn('credentials', { message, signature, redirect: false })
+    } catch (e) {
+      console.error('error deleting user ', e)
+      alert('disconnect Metamask')
+    }
+
     // note: AccountButton component is the real session watcher;
     //       it'll pick up useSession and get the user from Hasura.
 
