@@ -24,9 +24,6 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       query: GET_USER,
       variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
     })
-    if (userFromDB.data.Users.length < 1) {
-      throw new Error('Error: user record not found')
-    }
     loggedInUserVar(userFromDB.data.Users[0])
   }
 

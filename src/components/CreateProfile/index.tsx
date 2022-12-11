@@ -5,12 +5,12 @@ import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
-import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { loggedInUserVar, LayoutContext, uploadToCloudinary, createUserCourierProfile } from '@lib'
+import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation } from '@types'
+import { rgba, loggedInUserVar, LayoutContext, uploadToCloudinary } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/createProfile'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
-import { typography } from '@theme'
+import { typography, palette } from '@theme'
 
 const CreateProfile = () => {
   const loggedInUser = useReactiveVar(loggedInUserVar)
@@ -23,7 +23,7 @@ const CreateProfile = () => {
 
   const [imageFile, setImageFile] = useState<File>()
 
-  const [updateUser] = useMutation(UPDATE_USER)
+  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USER)
   // todo: replace readOnly with [loading] from useMutation
   const submit = async () => {
     setReadonly(true)
@@ -44,7 +44,19 @@ const CreateProfile = () => {
           profileImage,
         },
       })
-      createUserCourierProfile(loggedInUser?.id, data.email as string)
+
+      await fetch('/api/syncCourier', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: loggedInUser.id,
+          email: data.email,
+        }),
+      })
+
       toggleModal?.()
     } catch (error) {
       console.error('Error saving new user profile', error)
@@ -129,6 +141,9 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   max-width: calc(100vw - 100px); /* TODO: this is wrong */
   padding: 50px;
   background: white;
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.black)};
+  }
 
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
