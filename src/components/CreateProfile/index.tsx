@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
-import { ICheckForExistingArtizenHandleQuery } from '@types'
+import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation } from '@types'
 import { loggedInUserVar, LayoutContext, uploadToCloudinary, createUserCourierProfile } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/createProfile'
@@ -23,7 +23,7 @@ const CreateProfile = () => {
 
   const [imageFile, setImageFile] = useState<File>()
 
-  const [updateUser] = useMutation(UPDATE_USER)
+  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USER)
   // todo: replace readOnly with [loading] from useMutation
   const submit = async () => {
     setReadonly(true)
@@ -44,7 +44,17 @@ const CreateProfile = () => {
           profileImage,
         },
       })
-      createUserCourierProfile(loggedInUser?.id, data.email as string)
+
+      await fetch('/api/syncCourier', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          email: JSON.stringify(data.email),
+        },
+      })
+
       toggleModal?.()
     } catch (error) {
       console.error('Error saving new user profile', error)
