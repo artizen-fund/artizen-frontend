@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import TableHeader from './TableHeader'
 import TableCell from './TableCell'
+import TableAvatar from './TableAvatar'
 
 export interface TableProps {
   title: string
@@ -25,4 +26,4 @@ const Wrapper = styled.div`
   width: 100%;
 `
 
-export { Table, TableCell, TableHeader }
+export { Table, TableCell, TableHeader, TableAvatar }

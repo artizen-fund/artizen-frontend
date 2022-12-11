@@ -1,11 +1,11 @@
 import styled from 'styled-components'
+import { IGrantsWithProjectAndDonationsFragment } from '@types'
 
 interface IGrantLayout {
-  grant: Grant
+  grant: IGrantsWithProjectAndDonationsFragment
 }
 
 const GrantLayout = ({ grant }: IGrantLayout) => {
-  console.log('grant  ', grant)
   const artifact = grant.submission?.artifact
   return (
     <>

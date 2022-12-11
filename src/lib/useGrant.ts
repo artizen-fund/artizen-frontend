@@ -3,6 +3,7 @@ import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
 import { mockGrants } from './mock-grants'
+import { IGrantsWithProjectAndDonationsFragment } from '@types'
 
 export const useGrant = () => {
   const { address } = useAccount()
@@ -38,13 +39,23 @@ export const useGrant = () => {
     return response.json()
   }
 
-  const generateMetadata = async grantData => {
+  const generateMetadata = async (grantData: IGrantsWithProjectAndDonationsFragment) => {
     // const grant = mockGrants[0]
     console.log('grant.submission', grantData)
     //map artifacts data
     const grant = grantData
-    const { project } = grantData.submission
+
+    if (!grant.submission) {
+      throw new Error('Grant cannot be pubish because it is missing submission')
+    }
+
     const { artifact } = grant.submission
+    const { project } = grant.submission
+
+    if (!artifact || !project) {
+      return
+    }
+
     //TODO: Artifacts need be an array
     const artifacts = [
       {
@@ -69,8 +80,8 @@ export const useGrant = () => {
 
     const metadataUris = artifacts.map(async artifact => {
       const metadataObject: Record<string, any> = {
-        name: project.title,
-        description: project.description,
+        name: project?.title,
+        description: project?.description,
         image: '',
         background_color: '000000',
         external_url: 'https://artizen.fund/artifacts',
