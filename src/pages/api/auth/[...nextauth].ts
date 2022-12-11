@@ -1,4 +1,4 @@
-import NextAuth, { User, Session } from 'next-auth'
+import NextAuth, { User, Session, NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
@@ -7,7 +7,7 @@ import { CREATE_USER } from '@gql'
 import { ICreateUserMutation } from '@types'
 import { assert, createApolloClient } from '@lib'
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -83,6 +83,8 @@ export default NextAuth({
           const moralisApiKey = assert(process.env.MORALIS_API_KEY, 'MORALIS_API_KEY')
           await Moralis.start({ apiKey: moralisApiKey })
 
+          console.log('authorize  starts  ', moralisApiKey)
+
           const { address, profileId, expirationTime } = (
             await Moralis.Auth.verify({
               message: credentials?.message || '',
@@ -91,10 +93,15 @@ export default NextAuth({
             })
           ).raw
 
+          console.log('authorize  address  ', address)
+          console.log('authorize  profileId  ', profileId)
+
           const userFromDB = await apolloClient.mutate<ICreateUserMutation>({
             mutation: CREATE_USER,
             variables: { publicAddress: address.toLowerCase() },
           })
+
+          console.log('authorize  userFromDB  ', userFromDB)
 
           if (!userFromDB.data?.insert_Users_one?.id) {
             throw new Error('Could not retrieve ID from database upsert.')
@@ -110,6 +117,8 @@ export default NextAuth({
             signature: credentials?.signature,
           }
 
+          console.log('authorize  user  ', user)
+
           return user
 
           // window.location.assign(`${window.location.protocol}//${window.location.host}/`)
@@ -121,4 +130,6 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
-})
+}
+
+export default NextAuth(authOptions)

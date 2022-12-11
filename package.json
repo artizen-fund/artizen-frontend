@@ -1,6 +1,6 @@
 {
   "name": "artizen-frontend",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
@@ -13,7 +13,7 @@
     "clean": "rm -rf .next",
     "generate": "node ./tools/generate.js",
     "dev": "SECRET_ENV=DevSecrets op run --env-file='.env.local' -- next dev",
-    "develop": "yarn codegen-local && next dev",
+    "develop": "yarn codegen-local && yarn dev",
     "build": "yarn codegen && next build",
     "build-local": "SECRET_ENV=DevSecrets op run --env-file='.env.local' -- yarn build",
     "start": "next build && next start -p $PORT",

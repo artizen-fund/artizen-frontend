@@ -41,6 +41,10 @@ const GrantPage = () => {
     },
   })
 
+  if (errorLoadingGrant) {
+    console.error('Error loading grant error   ', errorLoadingGrant)
+  }
+
   const activeGrant = loadedGrantData?.Grants[0]
 
   return (

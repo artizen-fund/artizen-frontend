@@ -19,6 +19,7 @@ export const LOAD_GRANTS = gql`
     blockchainId
     goal
     closingDate
+    startingDate
     season
     goal
     submission {
@@ -31,6 +32,8 @@ export const LOAD_GRANTS = gql`
         video
         edition
         blockchainAddress
+        dateMinting
+        token
       }
       project {
         id
@@ -50,6 +53,7 @@ export const LOAD_GRANTS = gql`
             twitterHandle
             website
             profileImage
+            publicAddress
           }
         }
         title
