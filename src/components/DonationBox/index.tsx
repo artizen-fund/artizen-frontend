@@ -30,6 +30,8 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
     if (!blockchainId || !data.donationAmount) return
     setSending(true)
     console.log('get to donateFn', error)
+    console.log('blockchainId    ', blockchainId)
+    console.log('data.donationAmount    ', data.donationAmount)
     const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
     console.log('after returnTx', returnTx)
     // TODO: it'll only work when EK removes the transaction from the server

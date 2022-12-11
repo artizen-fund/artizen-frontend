@@ -23,9 +23,9 @@ const FeaturedArt = ({ grant }: IFeaturedArt) => {
     return diffInDays
   }
 
-  if (!grant?.submission?.artifact) return <></>
-
-  const artworkCommunity = grant?.submission?.artifact ? grant?.submission?.artifact?.artworkCommunity : ''
+  if (!grant?.submission?.artifacts) return <></>
+  //TODO: MEssage for EricJ, You got now 3 artifacts, one per edition
+  const artworkCommunity = grant?.submission?.artifacts ? grant?.submission?.artifacts[0].artwork : ''
 
   // note: current video NFT ratio is 1:.56
   return (
