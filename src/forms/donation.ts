@@ -22,7 +22,7 @@ export interface FormState extends Record<string, unknown> {
 
 /* This is our local initialState. */
 export const initialState: FormState = {
-  donationAmount: 1,
+  donationAmount: 0.1,
 }
 
 /*
