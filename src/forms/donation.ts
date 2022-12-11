@@ -40,7 +40,6 @@ export const uischema = {
       label: 'Enter Your Donation (ETH)',
       options: {
         precision: 0.01,
-        minimum: 0.001,
       },
     },
   ],
