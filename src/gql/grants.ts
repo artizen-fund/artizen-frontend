@@ -23,15 +23,14 @@ export const LOAD_GRANTS = gql`
     goal
     submission {
       id
-      artifact {
+      artifacts {
         id
         name
-        artworkPatron
-        artworkCreator
-        artworkCommunity
-        videoPatron
-        videoCreator
-        videoCommunity
+        description
+        artwork
+        video
+        edition
+        blockchainAddress
       }
       project {
         id
