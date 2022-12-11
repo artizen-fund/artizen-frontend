@@ -18,12 +18,13 @@ interface ILeaderboard {
 
 const DEFAULT_LIMIT = 3
 
-const Leaderboard = ({ grantId, forceUpdate, ...props }: ILeaderboard) => {
+const Leaderboard = ({ grantId, forceUpdate }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
   const [loadSubcription, { data, error: errorSubcribingDonations }] = useLazyQuery<IDonationsQuery>(
     SUBSCRIBE_DONATIONS,
     {
+      fetchPolicy: 'no-cache',
       variables: {
         limit,
         where: {
@@ -46,6 +47,8 @@ const Leaderboard = ({ grantId, forceUpdate, ...props }: ILeaderboard) => {
       },
     },
   )
+
+  console.log(data)
 
   useEffect(() => {
     loadSubcription()
