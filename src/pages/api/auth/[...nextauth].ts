@@ -1,4 +1,4 @@
-import NextAuth, { User, Session } from 'next-auth'
+import NextAuth, { User, Session, NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
@@ -7,7 +7,7 @@ import { CREATE_USER } from '@gql'
 import { ICreateUserMutation } from '@types'
 import { assert, createApolloClient } from '@lib'
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -130,4 +130,6 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
-})
+}
+
+export default NextAuth(authOptions)
