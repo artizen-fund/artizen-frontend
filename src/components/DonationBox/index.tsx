@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { Form, Button } from '@components'
-import { schema, uischema, initialState, FormState } from './form'
+import { schema, uischema, initialState, FormState } from '@forms/donation'
 import { loggedInUserVar, LayoutContext, useGrant } from '@lib'
 import { breakpoint } from '@theme'
 import { useMutation } from '@apollo/client'
