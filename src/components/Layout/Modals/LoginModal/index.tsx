@@ -50,7 +50,6 @@ const LoginModal = ({ ...props }) => {
       router.reload()
     } catch (e) {
       console.error('error deleting user ', e)
-      alert('disconnect Metamask')
     }
 
     // note: AccountButton component is the real session watcher;
