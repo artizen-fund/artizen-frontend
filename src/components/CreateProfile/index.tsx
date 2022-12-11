@@ -6,11 +6,11 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation } from '@types'
-import { loggedInUserVar, LayoutContext, uploadToCloudinary, createUserCourierProfile } from '@lib'
+import { rgba, loggedInUserVar, LayoutContext, uploadToCloudinary } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/createProfile'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
-import { typography } from '@theme'
+import { typography, palette } from '@theme'
 
 const CreateProfile = () => {
   const loggedInUser = useReactiveVar(loggedInUserVar)
@@ -48,11 +48,13 @@ const CreateProfile = () => {
       await fetch('/api/syncCourier', {
         method: 'POST',
         headers: {
+          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: {
-          email: JSON.stringify(data.email),
-        },
+        body: JSON.stringify({
+          id: loggedInUser.id,
+          email: data.email,
+        }),
       })
 
       toggleModal?.()
@@ -139,6 +141,9 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   max-width: calc(100vw - 100px); /* TODO: this is wrong */
   padding: 50px;
   background: white;
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.black)};
+  }
 
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
