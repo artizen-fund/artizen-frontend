@@ -83,6 +83,8 @@ export default NextAuth({
           const moralisApiKey = assert(process.env.MORALIS_API_KEY, 'MORALIS_API_KEY')
           await Moralis.start({ apiKey: moralisApiKey })
 
+          console.log('authorize  starts  ', moralisApiKey)
+
           const { address, profileId, expirationTime } = (
             await Moralis.Auth.verify({
               message: credentials?.message || '',
@@ -91,10 +93,15 @@ export default NextAuth({
             })
           ).raw
 
+          console.log('authorize  address  ', address)
+          console.log('authorize  profileId  ', profileId)
+
           const userFromDB = await apolloClient.mutate<ICreateUserMutation>({
             mutation: CREATE_USER,
             variables: { publicAddress: address.toLowerCase() },
           })
+
+          console.log('authorize  userFromDB  ', userFromDB)
 
           if (!userFromDB.data?.insert_Users_one?.id) {
             throw new Error('Could not retrieve ID from database upsert.')
@@ -109,6 +116,8 @@ export default NextAuth({
             expirationTime,
             signature: credentials?.signature,
           }
+
+          console.log('authorize  user  ', user)
 
           return user
 

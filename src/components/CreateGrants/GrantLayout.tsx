@@ -6,58 +6,39 @@ interface IGrantLayout {
 }
 
 const GrantLayout = ({ grant }: IGrantLayout) => {
-  return <div>Layout</div>
+  const artifacts = grant.submission?.artifacts
+
+  console.log('artifacts   ', artifacts)
+  return (
+    <>
+      <GrantContentWrapper>
+        <TextCntainer>
+          Grant Date: <span> {grant.date}</span>
+        </TextCntainer>
+        <TextCntainer>
+          Status: <span> {grant.status}</span>{' '}
+        </TextCntainer>
+        <ArtifactsContainer>
+          {artifacts?.map(({ edition, artwork, description, name }) => (
+            <ArtifactItem key={edition}>
+              <span>Artwork {edition} </span>
+              <span>{description}</span>
+              <span>{name} </span>
+              <div
+                style={{
+                  width: 200,
+                  height: 200,
+                  margin: '5 5 5 5',
+                  background: `url("${artwork}") no-repeat center center / contain`,
+                }}
+              ></div>
+            </ArtifactItem>
+          ))}
+        </ArtifactsContainer>
+      </GrantContentWrapper>
+    </>
+  )
 }
-
-// const GrantLayout = ({ grant }: IGrantLayout) => {
-//   const artifact = grant.submission?.artifact
-//   return (
-//     <>
-//       <GrantContentWrapper>
-//         <TextCntainer>
-//           Grant Date: <span> {grant.date}</span>
-//         </TextCntainer>
-//         <TextCntainer>
-//           Status: <span> {grant.status}</span>{' '}
-//         </TextCntainer>
-//         <ArtifactsContainer>
-//           <ArtifactItem>
-//             <span>Artwork Community </span>
-//             <div
-//               style={{
-//                 width: 200,
-//                 height: 200,
-//                 margin: '5 5 5 5',
-//                 background: `url("${artifact?.artworkCommunity}") no-repeat center center / contain`,
-//               }}
-//             ></div>
-//           </ArtifactItem>
-
-//           <ArtifactItem>
-//             <span>Artwork Creator </span>
-//             <div
-//               style={{
-//                 width: 200,
-//                 height: 200,
-//                 background: `url("${artifact?.artworkCreator}") no-repeat center center / contain`,
-//               }}
-//             ></div>
-//           </ArtifactItem>
-//           <ArtifactItem>
-//             <span>Artwork Patron </span>
-//             <div
-//               style={{
-//                 width: 200,
-//                 height: 200,
-//                 background: `url("${artifact?.artworkPatron}") no-repeat center center / contain`,
-//               }}
-//             ></div>
-//           </ArtifactItem>
-//         </ArtifactsContainer>
-//       </GrantContentWrapper>
-//     </>
-//   )
-// }
 
 const GrantContentWrapper = styled.div`
   width: 80%;
@@ -67,6 +48,7 @@ const GrantContentWrapper = styled.div`
 const TextCntainer = styled.div`
   span {
     font-weight: 100;
+    display: block;
   }
 `
 
