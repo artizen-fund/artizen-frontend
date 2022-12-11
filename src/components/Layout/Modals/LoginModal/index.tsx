@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useConnect, useSignMessage, Connector } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -11,6 +12,7 @@ import { rgba, LayoutContext, assertInt, getWagmiClient, assetPath } from '@lib'
 import { palette, typography } from '@theme'
 
 const LoginModal = ({ ...props }) => {
+  const router = useRouter()
   const { toggleModal } = useContext(LayoutContext)
 
   const { connectAsync } = useConnect()
@@ -42,6 +44,10 @@ const LoginModal = ({ ...props }) => {
       const signature = await signMessageAsync({ message })
 
       await signIn('credentials', { message, signature, redirect: false })
+
+      // NOTE: this is necessary because of some Metamask logout bug that I don't understand.
+      // Ruben: please document. -EJ
+      router.reload()
     } catch (e) {
       console.error('error deleting user ', e)
       alert('disconnect Metamask')
