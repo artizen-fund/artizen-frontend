@@ -97,7 +97,7 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   );
   backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
 
-  border-bottom: 0.5px solid ${rgba(palette.stone)};
+  border-bottom: 0.5px solid transparent;
   transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
     backdrop-filter 0.3s ease-in-out;
   &.visibleShelf {
