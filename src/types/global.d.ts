@@ -68,56 +68,6 @@ declare global {
 
   type NewUserData = { firstName?: string; lastName?: string }
 
-  type Grant = {
-    __typename?: 'Grants'
-    id: any
-    date: any
-    status: string
-    blockchainId?: string | null
-    goal?: number | null
-    closingDate?: any | null
-    season?: number | null
-    submission?: {
-      __typename?: 'Submissions'
-      id: any
-      artifact?: {
-        __typename?: 'Artifacts'
-        id: any
-        artworkPatron?: string | null
-        artworkCreator?: string | null
-        artworkCommunity?: string | null
-      } | null
-      project?: {
-        __typename?: 'Projects'
-        id: any
-        impact?: string | null
-        longline?: string | null
-        description?: string | null
-        title?: string | null
-        members: Array<{
-          __typename?: 'ProjectMembers'
-          id: any
-          type: string
-          user?: {
-            __typename?: 'Users'
-            id: any
-            firstName?: string | null
-            lastName?: string | null
-            artizenHandle?: string | null
-            twitterHandle?: string | null
-            website?: string | null
-            profileImage?: string | null
-          } | null
-        }>
-      } | null
-    } | null
-    donations: Array<{
-      __typename?: 'Donations'
-      amount: any
-      user?: { __typename?: 'Users'; id: any; profileImage?: string | null; artizenHandle?: string | null } | null
-    }>
-  }
-
   interface IAlternatingPanel {
     image: string
     imageDark?: string
