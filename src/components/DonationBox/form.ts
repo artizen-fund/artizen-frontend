@@ -6,6 +6,7 @@ export const schema: JsonSchema = {
   properties: {
     donationAmount: {
       type: 'number',
+      minimum: 0.0001,
     },
   },
   required: ['donationAmount'],
@@ -37,6 +38,10 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/donationAmount',
       label: 'Enter Your Donation (ETH)',
+      options: {
+        precision: 0.01,
+        minimum: 0.001,
+      },
     },
   ],
 }

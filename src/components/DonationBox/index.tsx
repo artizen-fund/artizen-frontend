@@ -6,7 +6,6 @@ import { loggedInUserVar, LayoutContext, useGrant } from '@lib'
 import { breakpoint } from '@theme'
 import { useMutation } from '@apollo/client'
 import { INSERT_DONATIONS, UPDATE_DONATIONS } from '@gql'
-import { alternatingPanels } from '@copy/home'
 
 interface IDonationBox {
   blockchainId: string | undefined
@@ -32,12 +31,12 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
     setSending(true)
     console.log('get to donateFn', error)
     const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
-
     console.log('after returnTx', returnTx)
-    // TODO it'll only work when EK remove remve the tx from the server
-    //if thre is transationhash add a record
+    // TODO: it'll only work when EK removes the transaction from the server
+    // if there is transaction hash add a record
     const tx = returnTx?.transactionHash
     if (!tx) {
+      // todo: should we throw an error here?
       return
     }
 
@@ -55,7 +54,6 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
         },
       })
     } catch (error) {
-      //updateDonation
       console.log('error insertDonation', error)
       await updateDonation({
         variables: {

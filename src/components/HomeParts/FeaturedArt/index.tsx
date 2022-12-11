@@ -6,9 +6,10 @@ import { palette, breakpoint, typography } from '@theme'
 import { rgba, assert, useReadContract, assetPath, LayoutContext } from '@lib'
 import { raffle } from '@copy/home'
 import { ArtizenArtifactsAbi } from '@contracts'
+import { IGrantsWithProjectAndDonationsFragment } from '@types'
 
 type IFeaturedArt = {
-  grant?: Grant
+  grant?: IGrantsWithProjectAndDonationsFragment
 }
 
 const FeaturedArt = ({ grant }: IFeaturedArt) => {
