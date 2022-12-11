@@ -5,6 +5,7 @@ export const INSERT_GRANTS = gql`
     insert_Grants(objects: $objects) {
       returning {
         id
+        date
       }
     }
   }
