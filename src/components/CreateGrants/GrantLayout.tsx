@@ -38,14 +38,6 @@ const GrantLayout = ({ grant }: IGrantLayout) => {
                 background: `url("${artifact?.artworkCreator}") no-repeat center center / contain`,
               }}
             ></div>
-            {/* <ArtifactItem>
-            <span>Artwork Creator </span>
-            {artifact?.artworkCreator}
-          </ArtifactItem>
-          <ArtifactItem>
-            <span>Artwork Patron </span>
-            {artifact?.artworkPatron}
-          </ArtifactItem> */}
           </ArtifactItem>
           <ArtifactItem>
             <span>Artwork Patron </span>

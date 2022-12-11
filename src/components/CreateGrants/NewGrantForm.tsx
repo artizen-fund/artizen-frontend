@@ -171,29 +171,34 @@ const Email = styled.div`
 */
 
 const FormWrapper = styled.div`
-  // padding: 100px;
-  // .group-layout legend {
-  //   font-size: 30px;
+  padding: 100px;
+  .group-layout legend {
+    font-size: 30px;
+  }
+  .group-layout {
+    margin: 40px 0;
+  }
+  //TODO: It does not work f*****!"!!
+  // display: grid;
+  // grid-template-columns: 1fr 1fr 1fr;
+  // .horizontal-layout,
+  // .horizontal-layout-item {
+  //   display: contents;
   // }
-  // .group-layout {
-  //   margin: 40px 0;
+
+  // grid-template-areas: 'artworkPatron';
+
+  // *[id='#/properties/artifacts/properties/artworkPatron'] {
+  //   grid-area: artworkPatron;
   // }
 
-  display: grid;
+  // *[id='#/properties/artifacts/properties/artworkCreator'] {
+  //   grid-area: artworkCreator;
+  // }
 
-  grid-template-areas: 'artworkPatron ' 'artworkCreator' 'artworkCommunity';
-
-  *[id='#/properties/artifacts/properties/artworkPatron'] {
-    grid-area: artworkPatron;
-  }
-
-  *[id='#/properties/artifacts/properties/artworkCreator'] {
-    grid-area: artworkCreator;
-  }
-
-  *[id='#/properties/artifacts/properties/artworkCommunity'] {
-    grid-area: artworkCommunity;
-  }
+  // *[id='#/properties/artifacts/properties/artworkCommunity'] {
+  //   grid-area: artworkCommunity;
+  // }
 `
 
 const StyledButton = styled(props => <Button {...props} />)`

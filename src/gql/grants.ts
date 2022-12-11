@@ -26,15 +26,21 @@ export const LOAD_GRANTS = gql`
         id
         artifact {
           id
+          name
           artworkPatron
           artworkCreator
           artworkCommunity
+          videoPatron
+          videoCreator
+          videoCommunity
         }
         project {
           id
           impact
           longline
           description
+          creationDate
+          completionDate
           members {
             id
             type

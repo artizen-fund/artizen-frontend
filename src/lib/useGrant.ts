@@ -38,75 +38,119 @@ export const useGrant = () => {
     return response.json()
   }
 
-  const generateMetadata = async (grantId: string) => {
-    const grant = mockGrants[0]
+  const generateMetadata = async grantData => {
+    // const grant = mockGrants[0]
+    console.log('grant.submission', grantData)
+    //map artifacts data
+    const grant = grantData
+    const { project } = grantData.submission
+    const { artifact } = grant.submission
+    //TODO: Artifacts need be an array
+    const artifacts = [
+      {
+        edition: 'Community',
+        img: artifact.artworkCommunity,
+        video: artifact.videoCommunity,
+        name: artifact.name,
+      },
+      {
+        edition: 'Creator',
+        img: artifact.artworkCreator,
+        video: artifact.videoCreator,
+        name: artifact.name,
+      },
+      {
+        edition: 'Creator',
+        img: artifact.artworkPatron,
+        video: artifact.videoPatron,
+        name: artifact.name,
+      },
+    ]
 
-    const metadataUris = grant.artifacts.map(async artifact => {
-      const image = await publishNFTRequest(
-        JSON.stringify({
-          imagePath: artifact.imageUri,
-          name: `${artifact.name}-image`,
-          description: artifact.description,
-        }),
-      )
-
-      const video = await publishNFTRequest(
-        JSON.stringify({
-          imagePath: artifact.videoUri,
-          name: `${artifact.name}-video`,
-          description: artifact.description,
-        }),
-      )
-
-      const metadataObject = {
-        name: grant.project.title,
-        description: grant.project.description,
+    const metadataUris = artifacts.map(async artifact => {
+      const metadataObject: Record<string, any> = {
+        name: project.title,
+        description: project.description,
+        image: '',
         background_color: '000000',
-        image: `ipfs://${image.IpfsHash}`,
-        animation_url: `ipfs://${video.IpfsHash}`,
         external_url: 'https://artizen.fund/artifacts',
         attributes: [
           {
             trait_type: 'Project Created',
-            value: grant.project.creationDate,
+            value: project.creationDate,
             display_type: 'date',
           },
           {
             trait_type: 'Project Completed',
-            value: grant.project.completionDate,
+            value: project.completionDate,
             display_type: 'date',
           },
           { trait_type: 'Limited Series', value: artifact.edition },
           { trait_type: 'Minted', value: grant.season },
-          { trait_type: 'Project', value: grant.project.title },
-          { trait_type: 'Lead Creator', value: `${grant.project.lead.firstName} ${grant.project.lead.lastName} ` },
-          ...grant.project.tags.map(tag => {
-            return { trait_type: 'Impact', value: tag }
-          }),
+          { trait_type: 'Project', value: project.title },
+          //TODO: ADD memmber
+          // { trait_type: 'Lead Creator', value: `${grant.project.lead.firstName} ${grant.project.lead.lastName} ` },
+          // ...grant.project.tags.map(tag => {
+          //   return { trait_type: 'Impact', value: tag }
+          // }),
         ],
+      }
+
+      console.log('metadataObject    ', metadataObject)
+
+      const image = await publishNFTRequest(
+        JSON.stringify({
+          imagePath: artifact.img,
+          name: `${artifact.name}-image`,
+          // description: artifact.description,
+        }),
+      )
+
+      console.log('image publishNFTRequest ', image)
+
+      metadataObject.image = `ipfs://${image.IpfsHash}`
+
+      if (artifact.video) {
+        console.log('it goes to video')
+        const video = await publishNFTRequest(
+          JSON.stringify({
+            imagePath: artifact.video,
+            name: `${artifact.name}-video`,
+            // description: artifact.description,
+          }),
+        )
+
+        metadataObject.animation_url = `ipfs://${video.IpfsHash}`
       }
 
       const metadata = await publishNFTRequest(
         JSON.stringify({
           metadata: metadataObject,
           name: `${artifact.name}-metadata`,
-          description: artifact.description,
+          //TODO: get the description
+          description: 'artifact.description',
         }),
       )
+
+      console.log('it print the metadata    ', metadata)
       return metadata
     })
 
     return Promise.all(metadataUris)
   }
 
-  const publish = async (grantId: string) => {
+  const publish = async grantData => {
     const grant = mockGrants[0]
-    const metadataUris = await generateMetadata(grantId)
+    const metadataUris = await generateMetadata(grantData)
+
+    console.log('metadataUris    ', metadataUris)
 
     // Mint a new NFTs
     for (let i = 0; i < metadataUris.length; i++) {
       const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadataUris[i].IpfsHash}`)
       await mintTransaction.wait()
+
+      console.log('mintTransaction   ', mintTransaction)
     }
 
     const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
@@ -149,7 +193,7 @@ export const useGrant = () => {
     let returnTx
 
     try {
-      const grantTransaction = await grantsContract.donate(grantId, ethers.utils.parseEther(amount), {
+      const grantTransaction = await grantsContract.donate(1, ethers.utils.parseEther(amount), {
         value: ethers.utils.parseEther(amount),
       })
       returnTx = await grantTransaction.wait()

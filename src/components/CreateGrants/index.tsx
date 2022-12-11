@@ -47,8 +47,15 @@ const CreateGrants = () => {
       {!loading && loadedGrantData && (
         <>
           <GrantLayout grant={loadedGrantData.Grants[0]} />
+
           <FooterWrapper>
-            <StyledButton disabled={true} stretch onClick={() => alert('TODO')} level={0}>
+            <StyledButton
+              stretch
+              onClick={() => {
+                publish(loadedGrantData.Grants[0])
+              }}
+              level={0}
+            >
               Publish Grant
             </StyledButton>
             <StyledButton disabled={true} stretch onClick={() => alert('TODO')} level={0}>
