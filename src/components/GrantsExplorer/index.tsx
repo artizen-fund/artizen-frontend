@@ -4,7 +4,7 @@ import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGrantsWithProjectAndDonationsFragment } from '@types'
-import { rgba, dumbDateToString } from '@lib'
+import { rgba, formatStringDate } from '@lib'
 import { Sponsors } from '../HomeParts'
 
 interface IGrantsExplorer {
@@ -15,9 +15,6 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const [updateLeaderBoard, setUpdateLeaderBoard] = useState<boolean>(false)
   if (!grant) return <Spinner />
   const amountRaised = grant.donations.reduce((accum, obj) => accum + obj.amount * 1000000000, 0) / 1000000000
-
-  console.log('closingDate', grant.closingDate)
-
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -26,7 +23,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
             previous
           </Button>
           <Copy>
-            <Date>{dumbDateToString(grant.date)}</Date>
+            <Date>{formatStringDate(grant.date)}</Date>
             <Description>Today’s Grant</Description>
           </Copy>
           <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2} disabled>

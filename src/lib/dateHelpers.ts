@@ -1,7 +1,7 @@
 import { monthNames } from '@copy/common'
 
 // we're storing some dates as yyyy-mm-dd, convert to pretty string
-const dumbDateToString = (dumbDate: string) => {
+const formatStringDate = (dumbDate: string) => {
   const realDate = new Date(dumbDate)
   const stringDate = `${monthNames[realDate.getMonth()]} ${realDate.getDate()}, ${realDate.getFullYear()}`
   return stringDate
@@ -15,4 +15,4 @@ const getDaysAgoFromDate = (start: number) => {
   return diffInDays
 }
 
-export { dumbDateToString, getDaysAgoFromDate }
+export { formatStringDate, getDaysAgoFromDate }

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Icon, TableAvatar } from '@components'
-import { rgba } from '@lib'
+import { rgba, formatStringDate } from '@lib'
 import { palette, typography } from '@theme'
 import { IGrantsWithProjectAndDonationsFragment } from '@types'
 
@@ -11,7 +11,10 @@ type IFeaturedArtPanel = {
 
 const FeaturedArtPanel = ({ grant }: IFeaturedArtPanel) => {
   const artist = grant?.submission?.project?.members?.filter(m => m.type === 'lead')[0]
-  return (
+
+  return !grant ? (
+    <></>
+  ) : (
     <Wrapper>
       <Copy>
         <Metadata>
@@ -33,26 +36,27 @@ const FeaturedArtPanel = ({ grant }: IFeaturedArtPanel) => {
           </Metadatum>
         </Metadata>
       </Copy>
-      <P>{grant?.submission?.project?.description}</P>
+      <P>{grant.submission?.project?.description}</P>
       <Impact>Impact</Impact>
-      <P>{grant?.submission?.project?.impact}</P>
+      <P>{grant.submission?.project?.impact}</P>
 
       <ListHeader>Project</ListHeader>
       <List>
         <div>
-          <dt>Season One</dt>
+          <dt>Season {grant.season}</dt>
           <dd>Extended Reality</dd>
         </div>
         <div>
           <dt>Started</dt>
-          <dd>creationDate</dd>
+          <dd>{formatStringDate(grant.submission?.project?.creationDate)}</dd>
         </div>
         <div>
           <dt>Completed</dt>
-          <dd>completionDate</dd>
+          <dd>{formatStringDate(grant.submission?.project?.completionDate)}</dd>
         </div>
       </List>
 
+      {/* todo: waiting on @EK for data
       <ListHeader>Artifact</ListHeader>
       <List>
         <div>
@@ -61,13 +65,10 @@ const FeaturedArtPanel = ({ grant }: IFeaturedArtPanel) => {
         </div>
         <div>
           <dt>Token</dt>
-          <dd></dd>
-        </div>
-        <div>
-          <dt>Address</dt>
-          <dd></dd>
+          <dd>{grant.submission?.artifacts[0]?.blockchainAddress}</dd>
         </div>
       </List>
+      */}
 
       <ListHeader>Contributors</ListHeader>
       <List>
