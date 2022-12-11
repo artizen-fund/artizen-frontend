@@ -26,6 +26,9 @@ export const SUBSCRIBE_DONATIONS = gql`
   fragment DonationWithUser on Donations {
     id
     amount
+    grant {
+      blockchainId
+    }
     user {
       id
       artizenHandle
@@ -35,7 +38,7 @@ export const SUBSCRIBE_DONATIONS = gql`
   }
 
   query donations($where: Donations_bool_exp, $limit: Int!) {
-    Donations(where: $where, order_by: [{ amount: desc }], limit: $limit) {
+    Donations(where: $where, order_by: [{ amount: desc_nulls_first }], limit: $limit) {
       ...DonationWithUser
     }
   }
