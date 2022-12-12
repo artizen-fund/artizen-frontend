@@ -23,6 +23,8 @@ const ProgressBar = styled.div<ProgressBarProps>`
   border-radius: 9999px;
   color: transparent;
 
+  margin: 15px 0;
+
   &:after {
     position: absolute;
     display: block;
@@ -34,7 +36,7 @@ const ProgressBar = styled.div<ProgressBarProps>`
 
     content: '${props => props.children * 100}%';
     border-radius: 9999px;
-    background-color: ${rgba(palette.algae)};
+    background-color: linear-gradient(90deg, #c2b6dc 0%, #c2b6dc 27.07%, #1acc6c 100%);
     ${props =>
       !props.noSmoothing &&
       `

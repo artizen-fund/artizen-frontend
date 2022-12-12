@@ -23,7 +23,7 @@ declare global {
 
   type HeaderShelfType = 'session' | 'howItWorks' | 'donate'
 
-  type ModalType = 'postDonationData' | 'share' | 'alert' | 'media'
+  type ModalType = 'createProfile' | 'share' | 'alert' | 'media' | 'login'
 
   type DonationStage =
     | 'setAmount'
@@ -67,6 +67,21 @@ declare global {
   }
 
   type NewUserData = { firstName?: string; lastName?: string }
+
+  interface IAlternatingPanel {
+    image: string
+    imageDark?: string
+    title: string
+    copy: string
+    list: Array<{
+      label: string
+      glyph: string
+    }>
+    imageOnRight?: boolean
+    destination?: string
+    buttonLabel?: string
+    children?: React.ReactElement
+  }
 }
 
 export {}

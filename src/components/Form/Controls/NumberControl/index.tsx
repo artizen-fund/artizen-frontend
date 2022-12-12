@@ -68,8 +68,8 @@ export const NumberControl = ({
           {...{ required }}
           disabled={!enabled || processing}
           defaultValue={data}
-          minLength={schema.minimum}
-          maxLength={schema.maximum}
+          min={schema.minimum}
+          max={schema.maximum}
           type="number"
           step={step}
           placeholder={uischema.options?.placeholder || ' '}

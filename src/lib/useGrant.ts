@@ -3,10 +3,11 @@ import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
 import { mockGrants } from './mock-grants'
+import { IGrantsWithProjectAndDonationsFragment } from '@types'
 
 export const useGrant = () => {
   const { address } = useAccount()
-  const { data: signer } = useSigner()
+  const { data: signer, isError, isLoading } = useSigner()
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
   const grantContractAddress = assert(
@@ -38,52 +39,87 @@ export const useGrant = () => {
     return response.json()
   }
 
-  const generateMetadata = async (grantId: string) => {
-    const grant = mockGrants[0]
+  const generateMetadata = async (grant: IGrantsWithProjectAndDonationsFragment) => {
+    // const grant = mockGrants[0]
+    console.log('grant.submission', grant)
+    //map artifacts data
 
-    const metadataUris = grant.artifacts.map(async artifact => {
+    if (!grant.submission) {
+      throw new Error('Grant cannot be pubish because it is missing submission')
+    }
+
+    const { artifacts } = grant.submission
+    const { project } = grant.submission
+    const members = grant.submission?.project?.members
+
+    const leadMemberTraitType = project?.members.map(({ user, type }) => {
+      console.log('user type, ', type === 'lead')
+      console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
+      if (type === 'lead') {
+        return `${user?.firstName} ${user?.lastName}`
+      }
+      return null
+    })[0]
+
+    console.log('leadMemberTraitType  ', leadMemberTraitType)
+
+    if (!artifacts || !project) {
+      return
+    }
+
+    const metadataUris = artifacts.map(async artifact => {
+      const metadataObject: Record<string, any> = {
+        name: project?.title,
+        description: project?.description,
+        image: '',
+        background_color: '000000',
+        external_url: 'https://artizen.fund/artifacts',
+        attributes: [
+          {
+            trait_type: 'Project Created',
+            value: project.creationDate,
+            display_type: 'date',
+          },
+          {
+            trait_type: 'Project Completed',
+            value: project.completionDate,
+            display_type: 'date',
+          },
+          { trait_type: 'Limited Series', value: artifact.edition },
+          { trait_type: 'Minted', value: grant.season },
+          { trait_type: 'Project', value: project.title },
+
+          { trait_type: 'Lead Creator', value: leadMemberTraitType },
+          //TODO: ADD impact tags
+          // ...grant.project.tags.map(tag => {
+          //   return { trait_type: 'Impact', value: tag }
+          // }),
+        ],
+      }
+
+      console.log('metadataObject    ', metadataObject)
+
       const image = await publishNFTRequest(
         JSON.stringify({
-          imagePath: artifact.imageUri,
+          imagePath: artifact.artwork,
           name: `${artifact.name}-image`,
           description: artifact.description,
         }),
       )
 
-      const video = await publishNFTRequest(
-        JSON.stringify({
-          imagePath: artifact.videoUri,
-          name: `${artifact.name}-video`,
-          description: artifact.description,
-        }),
-      )
+      metadataObject.image = `ipfs://${image.IpfsHash}`
 
-      const metadataObject = {
-        name: grant.project.title,
-        description: grant.project.description,
-        background_color: '000000',
-        image: `ipfs://${image.IpfsHash}`,
-        animation_url: `ipfs://${video.IpfsHash}`,
-        external_url: 'https://artizen.fund/artifacts',
-        attributes: [
-          {
-            trait_type: 'Project Created',
-            value: grant.project.creationDate,
-            display_type: 'date',
-          },
-          {
-            trait_type: 'Project Completed',
-            value: grant.project.completionDate,
-            display_type: 'date',
-          },
-          { trait_type: 'Limited Series', value: artifact.edition },
-          { trait_type: 'Minted', value: grant.season },
-          { trait_type: 'Project', value: grant.project.title },
-          { trait_type: 'Lead Creator', value: `${grant.project.lead.firstName} ${grant.project.lead.lastName} ` },
-          ...grant.project.tags.map(tag => {
-            return { trait_type: 'Impact', value: tag }
+      if (artifact.video) {
+        console.log('it goes to video')
+        const video = await publishNFTRequest(
+          JSON.stringify({
+            imagePath: artifact.video,
+            name: `${artifact.name}-video`,
+            // description: artifact.description,
           }),
-        ],
+        )
+
+        metadataObject.animation_url = `ipfs://${video.IpfsHash}`
       }
 
       const metadata = await publishNFTRequest(
@@ -93,21 +129,30 @@ export const useGrant = () => {
           description: artifact.description,
         }),
       )
+
+      console.log('Metadata IPFS    ', metadata)
       return metadata
     })
 
     return Promise.all(metadataUris)
   }
 
-  const publish = async (grantId: string) => {
-    const grant = mockGrants[0]
+  const publish = async (grant: IGrantsWithProjectAndDonationsFragment) => {
+    // const grant = mockGrants[0]
+    const metadataUris = await generateMetadata(grant)
 
-    const metadataUris = await generateMetadata(grantId)
+    console.log('metadataUris    ', metadataUris)
+
+    if (!metadataUris) {
+      throw new Error('Non metadataUris from NFTs publish')
+    }
 
     // Mint a new NFTs
     for (let i = 0; i < metadataUris.length; i++) {
       const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadataUris[i].IpfsHash}`)
       await mintTransaction.wait()
+
+      console.log('mintTransaction   ', mintTransaction)
     }
 
     const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
@@ -116,6 +161,8 @@ export const useGrant = () => {
     const approvalTransaction = await nftContract.setApprovalForAll(grantContractAddress, true)
     await approvalTransaction.wait()
 
+    console.log('grant.startTime   ', grant.startingDate)
+
     const grantTuple = {
       nftContract: nftContractAddress,
       nftOwner: address,
@@ -123,8 +170,8 @@ export const useGrant = () => {
       tokenID1: latestTokenId.sub(3),
       tokenID2: latestTokenId.sub(2),
       tokenID3: latestTokenId.sub(1),
-      startTime: grant.startTime, // must be timestamp in seconds
-      endTime: (Number(grant.startTime) + 60 * 60 * 24).toString(), // must be timestamp in seconds
+      startTime: '1670775237', // must be timestamp in seconds
+      endTime: (Number(1670775237) + 60 * 60 * 48).toString(), // must be timestamp in seconds
       minimumDonationAmount: ethers.utils.parseEther('0.008'),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
@@ -132,11 +179,13 @@ export const useGrant = () => {
       ended: false,
     }
 
-    // Create a new Grant
+    //Create a new Grant
     const grantTransaction = await grantsContract.createGrant(grantTuple)
     await grantTransaction.wait()
 
-    alert('Grant created')
+    console.log('Grant publish tx data      ', grantTransaction)
+
+    alert('Grant publish')
   }
 
   const endGrant = async (grantId: number) => {
@@ -146,6 +195,23 @@ export const useGrant = () => {
     alert('Grant ended')
   }
 
+  const donate = async (grantId: number, amount: string) => {
+    let returnTx
+
+    try {
+      const grantTransaction = await grantsContract.donate(grantId, ethers.utils.parseEther(amount), {
+        value: ethers.utils.parseEther(amount),
+      })
+      returnTx = await grantTransaction.wait()
+    } catch (e: any) {
+      if (e.code === 'INSUFFICIENT_FUNDS') {
+        alert('Insufficient funds')
+      }
+    }
+
+    return returnTx
+  }
+
   const cancelGrant = async (grantId: number) => {
     const grantTransaction = await grantsContract.cancelGrant(grantId)
     await grantTransaction.wait()
@@ -153,5 +219,5 @@ export const useGrant = () => {
     alert('Grant canceled')
   }
 
-  return { publish, endGrant, cancelGrant }
+  return { publish, endGrant, cancelGrant, donate }
 }

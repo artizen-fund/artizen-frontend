@@ -96,10 +96,10 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-first-prop-new-line": [2, "multiline"],
     "react/jsx-max-props-per-line": [2, { "maximum": 5, "when": "multiline" }],
-    "react/prop-types": "off",
+    "react/prop-types": "off"
 
     /* misc */
-    "no-console": ["error", { "allow": ["warn", "error"] }]
+    /* "no-console": ["error", { "allow": ["warn", "error"] }] */
   },
   "overrides": [
     {

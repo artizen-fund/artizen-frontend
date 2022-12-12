@@ -2,14 +2,7 @@ import React from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { ApolloProvider } from '@apollo/client'
-import {
-  withAuth,
-  CourierNotification,
-  LayoutContextProvider,
-  UserContextProvider,
-  getWagmiClient,
-  initializeApollo,
-} from '@lib'
+import { withAuth, CourierNotification, LayoutContextProvider, getWagmiClient, initializeApollo } from '@lib'
 import packageJson from '../../package.json'
 
 import '@public/styles/reset.css'
@@ -17,7 +10,7 @@ import '@public/styles/globals.css'
 import { WagmiConfig } from 'wagmi'
 import { SessionProvider } from 'next-auth/react'
 
-const { client, chains } = getWagmiClient()
+const { client } = getWagmiClient()
 
 const App = ({
   Component,
@@ -33,13 +26,11 @@ const App = ({
     <WagmiConfig client={client}>
       <SessionProvider session={session}>
         <ApolloProvider client={apolloClient}>
-          <UserContextProvider>
-            <CourierNotification>
-              <LayoutContextProvider>
-                <Component {...pageProps} chains={chains} />
-              </LayoutContextProvider>
-            </CourierNotification>
-          </UserContextProvider>
+          <CourierNotification>
+            <LayoutContextProvider>
+              <Component {...pageProps} />
+            </LayoutContextProvider>
+          </CourierNotification>
         </ApolloProvider>
       </SessionProvider>
     </WagmiConfig>

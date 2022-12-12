@@ -1,7 +1,7 @@
 const header = {
-  title: 'We’ve successfully raised $1,515,250 for human creativity',
+  title: 'Daily Grants for Human Creativity',
   subtitle:
-    'Each month, we award unrestricted grants to creators at intersection of art, tech, science, and design. Apply for funding or donate to help select the winning projects and earn an ownership stake in the Artizen Fund.',
+    'Every 24 hours, donations to the Artizen Fund are pooled and awarded to new projects at the frontier of art, tech, science, and design.',
 }
 
 export { header }

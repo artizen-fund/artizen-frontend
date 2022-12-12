@@ -23,7 +23,7 @@ export const Grants = () => {
         <Button onClick={() => endGrant(grantId)}>End Grant</Button>
         <Button onClick={() => cancelGrant(grantId)}>Cancel Grant</Button>
       </Container>
-      <Button onClick={() => publish('')}>Publish</Button>
+      {/* <Button onClick={() => publish('')}>Publish</Button> */}
     </>
   )
 }
