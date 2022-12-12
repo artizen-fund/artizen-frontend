@@ -9,15 +9,10 @@ const withAuth = () => (PageComponent: NextJsInitializedPage) => {
     if (!password) {
       return <AuthForm />
     }
-
     const NEXT_PUBLIC_DEV_PASSWORD = assert(process.env.NEXT_PUBLIC_DEV_PASSWORD, 'NEXT_PUBLIC_DEV_PASSWORD')
-
-    console.log('NEXT_PUBLIC_DEV_PASSWORD  heyyeyeyeyey  ', NEXT_PUBLIC_DEV_PASSWORD)
-
     if (password !== NEXT_PUBLIC_DEV_PASSWORD) {
       return <AuthForm />
     }
-
     return <PageComponent {...props} />
   }
   return WithAuth
