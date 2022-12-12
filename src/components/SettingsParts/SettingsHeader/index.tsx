@@ -1,13 +1,14 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useReactiveVar } from '@apollo/client'
 import { Button, AvatarUploadWidget, BannerUploadWidget } from '@components'
-import { rgba, UserContext } from '@lib'
+import { rgba, loggedInUserVar } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { monthNames } from '@copy/common'
 import { Maybe } from '@types'
 
 const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const [dateJoined, setDateJoined] = useState<string>()
   useEffect(() => {

@@ -26,8 +26,8 @@ const Header = () => {
           </Link>
           <MobileNavButton
             onClick={() => toggleShelf?.('howItWorks')}
-            icon={glyphKey.arrow}
-            iconOnRight
+            glyph={glyphKey.arrow}
+            glyphOnRight
             outline
             level={1}
           >
@@ -43,12 +43,13 @@ const Header = () => {
               <li onClick={() => toggleShelf?.('howItWorks')}>How it Works</li>
             </ul>
           </Nav>
-          <DonateButton onClick={() => toggleShelf?.('donate')} active={visibleShelf === 'donate'} />
-          <AccountButton
-            id="accountButton"
-            onClick={() => toggleShelf?.('session')}
-            active={visibleShelf === 'session'}
+          <DonateButton
+            onClick={() => {
+              //test
+            }}
+            active={visibleShelf === 'donate'}
           />
+          <AccountButton id="accountButton" active={visibleShelf === 'session'} />
         </Items>
       </Wrapper>
       <Shelf shelfKey="session" {...{ shadowVisible }}>
@@ -74,7 +75,7 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   justify-content: space-between;
   align-items: center;
 
-  padding: 0 24px;
+  padding: 0 16px;
   width: 100%;
   height: 64px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -96,7 +97,7 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   );
   backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
 
-  border-bottom: 0.5px solid transparent;
+  border-bottom: 0.5px solid ${rgba(palette.stone)};
   transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
     backdrop-filter 0.3s ease-in-out;
   &.visibleShelf {

@@ -1,20 +1,21 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
+import { useReactiveVar } from '@apollo/client'
 import { Layout, SettingsHeader, EditProfile, EditSettings } from '@components'
-import { UserContext, rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
+import { rgba, useTabbedInfo, Tabs, TabbedContent, loggedInUserVar } from '@lib'
 import { palette, breakpoint } from '@theme'
 
 const Settings = () => {
   const router = useRouter()
-  const { loading, loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   useEffect(() => {
     /* todo: If a user has an active session and lands on this page from "nowhere," it will punt them home.
      * That isn't a desired action, but all my attempts at "waiting" a moment for a session are causing render glitches.
      * This makes dev a headache (will forward on every site refresh), but since it's an edge case, I'm punting it.
      */
-    if (!loading && !loggedInUser) router.push('/')
+    if (!loggedInUser) router.push('/')
   }, [])
 
   const tabs = [

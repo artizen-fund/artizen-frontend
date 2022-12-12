@@ -1,14 +1,36 @@
 import { useContext, useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import { useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { Maybe } from '@types'
-import { rgba, UserContext } from '@lib'
+import { IGetUserQuery, Maybe } from '@types'
+import { rgba, loggedInUserVar, LayoutContext } from '@lib'
+import { GET_USER } from '@gql'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
-  const { loggedInUser } = useContext(UserContext)
+  const apolloClient = useApolloClient()
+  const { setVisibleModal, toggleShelf } = useContext(LayoutContext)
+  const { data: session } = useSession()
+  const loggedInUser = useReactiveVar(loggedInUserVar)
+
+  useEffect(() => {
+    if (!session?.user?.publicAddress) return
+    getUserFromHasura()
+  }, [session])
+
+  const getUserFromHasura = async () => {
+    const userFromDB = await apolloClient.query<IGetUserQuery>({
+      query: GET_USER,
+      variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
+    })
+    loggedInUserVar(userFromDB.data.Users[0])
+  }
+
+  const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : toggleShelf?.('session'))
 
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
+
   useEffect(() => {
     setAvatarDisplay(
       !loggedInUser
@@ -19,10 +41,16 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         ? 'initials'
         : 'placeholder',
     )
+    if (
+      !!loggedInUser &&
+      (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName || !loggedInUser.artizenHandle)
+    ) {
+      setVisibleModal?.('createProfile')
+    }
   }, [loggedInUser])
 
   return (
-    <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...props}>
+    <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...{ onClick }} {...props}>
       <CloseLabel id="close-bt" visible={active}>
         Close
       </CloseLabel>

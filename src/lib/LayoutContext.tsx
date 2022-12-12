@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState, useContext } from 'react'
-import { UserContext, isServer } from '@lib'
+import { createContext, useEffect, useState } from 'react'
+import { useReactiveVar } from '@apollo/client'
+import { loggedInUserVar, isServer } from '@lib'
 
 /* TODO: rename this
  *  candidates:
@@ -23,13 +24,15 @@ interface ILayoutContext {
   toggleModal?: (modal?: ModalType) => void
   setVisibleModalWithAttrs?: (modalType: ModalType, options: any) => void
   modalAttrs?: any
+  locked?: boolean
+  setLocked?: (b: boolean) => void
   // TODO: modalAttrs?: MediaAttrs | whatever-else
 }
 
 export const LayoutContext = createContext<ILayoutContext>({ donationStage: 'setAmount' })
 
 export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
-  const { loggedInUser } = useContext(UserContext)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
   const [donationStage, setDonationStage] = useState<DonationStage>('setAmount')
@@ -37,6 +40,7 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
+  const [locked, setLocked] = useState(false)
   const [visibleModal, setVisibleModal] = useState<ModalType | undefined>()
   const [modalAttrs, setModalAttrs] = useState<any>()
   const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
@@ -91,6 +95,8 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
         toggleModal,
         setVisibleModalWithAttrs,
         modalAttrs,
+        locked,
+        setLocked,
       }}
     >
       {children}

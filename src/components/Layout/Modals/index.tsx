@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { CloseButton, PostDonationData, Share, AlertModal, MediaModal } from '@components'
+import { CloseButton, CreateProfile, Share, AlertModal, MediaModal, LoginModal } from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
 
 const ANIMATION_TIMING = 0.6 // seconds
 
 const Modals = () => {
-  const { visibleModal, toggleModal } = useContext(LayoutContext)
+  const { visibleModal, toggleModal, setLocked, locked } = useContext(LayoutContext)
   /* In order for the modal to have any kind of fade-out effect, it needs
    *   to persist even when visibleModal is changed in the LayoutContext.
    *
@@ -21,16 +21,22 @@ const Modals = () => {
     if (!visibleModal) {
       setVisible(false)
       setTimeout(() => setDisplayedVisibleModal(undefined), ANIMATION_TIMING * 1000)
+      setLocked?.(false)
     } else {
       setVisible(true)
       setDisplayedVisibleModal(visibleModal)
+      setLocked?.(visibleModal === 'createProfile')
     }
   }, [visibleModal])
 
   const renderSwitch = (visibleModal?: ModalType) => {
-    switch (displayedVisibleModal) {
-      case 'postDonationData':
-        return <PostDonationData />
+    // TODO: the animation timing above isn't working, so instead of switching on
+    // displayedVisibleModal, I'm just gonna go off the real thing for now.
+    switch (visibleModal) {
+      case 'login':
+        return <LoginModal />
+      case 'createProfile':
+        return <CreateProfile />
       case 'share':
         return <Share />
       case 'alert':
@@ -46,7 +52,7 @@ const Modals = () => {
     <Wrapper {...{ visible }}>
       <Content>
         {renderSwitch(visibleModal)}
-        <CloseButton onClick={() => toggleModal?.()} {...{ visible }} />
+        {!locked && <CloseButton onClick={() => toggleModal?.()} {...{ visible }} />}
       </Content>
     </Wrapper>
   )

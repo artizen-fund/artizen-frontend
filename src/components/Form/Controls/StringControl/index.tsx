@@ -5,6 +5,7 @@ import { Wrapper, InputLabel, InputWrapper, Message, InputGlyph } from '../_Comm
 import { ccnFormat } from '@lib'
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
+import UploadFileControl from '../UploadFileControl'
 
 export interface StringControlProps {
   label: string | Array<string>
@@ -84,6 +85,29 @@ export const StringControl = ({
             defaultCountry="US"
             international={false}
             className={!!data ? 'hasData' : ''}
+          />
+        ) : uischema?.options?.format === 'uploadFile' ? (
+          <UploadFileControl
+            {...{ required }}
+            disabled={!enabled}
+            placeholder={uischema?.options?.placeholder || ' '}
+            value={data}
+            onChange={(fileUrl: string) => handleChange(path, fileUrl)}
+            className={!!data ? 'hasData' : ''}
+            path={path}
+          />
+        ) : schema?.format === 'date' ? (
+          <input
+            {...{ required, autoComplete }}
+            disabled={!enabled || processing}
+            minLength={schema?.minLength}
+            maxLength={schema?.maxLength}
+            type="date"
+            placeholder={uischema?.options?.placeholder || ' '}
+            defaultValue={data}
+            onChange={e => handleChange(path, ccnFormat(e.target.value))}
+            onBlur={() => setVirgin(false)}
+            value={data}
           />
         ) : uischema?.options?.format === 'creditCard' ? (
           <input

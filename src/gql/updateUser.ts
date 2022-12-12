@@ -25,6 +25,7 @@ export const UPDATE_USER = gql`
     $twitterHandle: String
     $discordHandle: String
     $artizenHandle: String
+    $email: String
     $hideFromLeaderboard: Boolean
     $website: String
     $instagramHandle: String
@@ -40,6 +41,7 @@ export const UPDATE_USER = gql`
         twitterHandle: $twitterHandle
         discordHandle: $discordHandle
         artizenHandle: $artizenHandle
+        email: $email
         hideFromLeaderboard: $hideFromLeaderboard
         website: $website
         instagramHandle: $instagramHandle
