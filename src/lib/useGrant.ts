@@ -163,6 +163,22 @@ export const useGrant = () => {
 
     console.log('grant.startTime   ', grant.startingDate)
 
+    /*
+    const _grants = {
+    nftContract: nftContract,
+    nftOwner: nftOwner, // Artizen DAO wallet
+    nftAuthor: nftAuthor, // Project creator wallet
+    tokenID1: tokenID1,
+    tokenID2: tokenID2,
+    tokenID3: tokenID3,
+    startTime: startTime,
+    endTime: endTime,
+    topDonatedAmount: 0,
+    topDonor: topDonor,
+    minimumDonationAmount: minimumDonationAmount,
+  };
+    */
+
     const grantTuple = {
       nftContract: nftContractAddress,
       nftOwner: address,
@@ -211,6 +227,7 @@ export const useGrant = () => {
 
     return returnTx
   }
+  //sendRewards
 
   const cancelGrant = async (grantId: number) => {
     const grantTransaction = await grantsContract.cancelGrant(grantId)

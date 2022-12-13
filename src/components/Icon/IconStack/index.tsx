@@ -30,8 +30,11 @@ const Wrapper = styled.ol`
     @media (prefers-color-scheme: dark) {
       background: ${rgba(palette.moon)};
     }
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      left: 31.5px;
+    }
     @media only screen and (min-width: ${breakpoint.desktop}px) {
-      left: 35px;
+      left: 35.5px;
     }
   }
   > * {
