@@ -10,6 +10,8 @@ const moduleExports = {
     return config
   },
   async redirects() {
+    // IMPORTANT NOTE: if this URL schema changes, update affected forwards
+    // ex. /components/Layout/Header/index.tsx router.push()
     return [
       {
         source: '/',

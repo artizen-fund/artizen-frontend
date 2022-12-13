@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { IconStack, Icon } from '@components'
 import { assetPath } from '@lib'
-import { breakpoint, typography } from '@theme'
+import { breakpoint, typography, palette } from '@theme'
 
 const AlternatingPanel = ({ list, image, imageDark, title, copy, imageOnRight, children }: IAlternatingPanel) => {
   return (
@@ -13,7 +13,7 @@ const AlternatingPanel = ({ list, image, imageDark, title, copy, imageOnRight, c
         <Copy>{copy}</Copy>
         <IconStack>
           {list.map((item, index) => (
-            <Icon outline glyphOutline key={`rand-${index}`} glyph={item.glyph} label={item.label} />
+            <Icon color="moon" outline glyphOutline key={`rand-${index}`} glyph={item.glyph} label={item.label} />
           ))}
         </IconStack>
         {children}

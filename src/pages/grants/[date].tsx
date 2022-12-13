@@ -4,18 +4,17 @@ import { useQuery } from '@apollo/client'
 import { LOAD_GRANTS } from '@gql'
 import {
   FeaturedArt,
+  FeaturedArtPanel,
   Layout,
-  Metrics,
+  Team,
   Newsletter,
   PagePadding,
   AlternatingPanels,
   AlternatingPanel,
   GrantsExplorer,
   Button,
-  Icon,
   ApplyForFundingBlurb,
   Faq,
-  TableAvatar,
 } from '@components'
 import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
@@ -48,10 +47,6 @@ const GrantPage = () => {
 
   const activeGrant = loadedGrantData?.Grants[0]
 
-  const artist = activeGrant?.submission?.project?.members?.filter(m => m.type === 'lead')[0]
-
-  const artifactNumber = 1
-
   return (
     <Layout>
       <Header>
@@ -60,77 +55,9 @@ const GrantPage = () => {
       </Header>
       <StyledPagePadding>
         <Wrapper>
-          <FeaturedArt grant={activeGrant} />
-          <DescriptionBlock>
-            <Copy>
-              <Metadata>
-                <Metadatum>
-                  <Icon glyph="crown" level={2} outline glyphOutline label="Top Donor Prize" />
-                </Metadatum>
-                <Metadatum>
-                  <Icon glyph="palette" level={2} outline glyphOutline label="Artifact 27" />
-                </Metadatum>
-                <Metadatum>
-                  <Icon
-                    glyph="face"
-                    level={2}
-                    outline
-                    glyphOutline
-                    label={`${artist?.user?.firstName} ${artist?.user?.lastName}`}
-                  />
-                </Metadatum>
-              </Metadata>
-            </Copy>
-            <P>{activeGrant?.submission?.project?.description}</P>
-            <Impact>Impact</Impact>
-            <P>{activeGrant?.submission?.project?.impact}</P>
-
-            <ListHeader>Project</ListHeader>
-            <List>
-              <div>
-                <dt>Season One</dt>
-                <dd>Extended Reality</dd>
-              </div>
-              <div>
-                <dt>Started</dt>
-                <dd>creationDate</dd>
-              </div>
-              <div>
-                <dt>Completed</dt>
-                <dd>completionDate</dd>
-              </div>
-            </List>
-
-            <ListHeader>Artifact</ListHeader>
-            <List>
-              <div>
-                <dt>Minted</dt>
-                <dd>createdAt</dd>
-              </div>
-              <div>
-                <dt>Token</dt>
-                <dd></dd>
-              </div>
-              <div>
-                <dt>Address</dt>
-                <dd></dd>
-              </div>
-            </List>
-
-            <ListHeader>Contributors</ListHeader>
-            <List>
-              {activeGrant?.submission?.project?.members.map((member, index) => (
-                <div key={`member-${index}`}>
-                  <dt>
-                    <TableAvatar profileImage={member.user?.profileImage} />
-                    {member?.user?.firstName} {member?.user?.lastName}
-                  </dt>
-                  <dd>{member.type}</dd>
-                </div>
-              ))}
-            </List>
-          </DescriptionBlock>
-          <GrantsExplorer grant={activeGrant} />
+          <FeaturedArt grant={activeGrant} {...{ loading }} />
+          <FeaturedArtPanel grant={activeGrant} {...{ loading }} />
+          <GrantsExplorer grant={activeGrant} {...{ loading }} />
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>
@@ -145,7 +72,7 @@ const GrantPage = () => {
       <Newsletter />
       <ApplyForFundingBlurb />
       <Faq />
-      <Metrics {...{ metrics }} />
+      <Team />
     </Layout>
   )
 }
@@ -188,76 +115,6 @@ const Wrapper = styled.section`
   padding-bottom: 100px;
 `
 // todo: above is just a filled-in value, check design
-
-const DescriptionBlock = styled.div`
-  grid-area: tabbedInfo;
-  margin-top: 30px;
-`
-
-const Copy = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-`
-
-const Title = styled.div`
-  ${typography.title.l4}
-  margin: 1em 0;
-`
-
-const Metadata = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px 15px;
-  ${typography.label.l1}
-  margin-bottom: 24px;
-`
-
-const Metadatum = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 10px;
-`
-
-const P = styled.p`
-  ${typography.body.l2}
-`
-
-const Impact = styled.h4`
-  margin-top: 1em;
-  ${typography.title.l4}
-`
-
-const ListHeader = styled.h4`
-  ${typography.label.l1}
-  margin: 1em 0;
-`
-
-const List = styled.dl`
-  ${typography.label.l1}
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  > div {
-    background: ${rgba(palette.stone, 0.24)};
-    border-radius: 4px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 40px;
-    padding: 0 15px;
-    dt {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 15px;
-    }
-  }
-`
 
 export default GrantPage
 
