@@ -21,7 +21,7 @@ const alternatingPanels: Array<IAlternatingPanel> = [
       },
     ],
     buttonLabel: 'Learn More',
-    destination: '/about',
+    destination: 'https://help.artizen.fund/en/articles/6782291-welcome-to-the-artizen-fund',
   },
   {
     image: '/assets/illustrations/home/trust.png',
@@ -43,7 +43,7 @@ const alternatingPanels: Array<IAlternatingPanel> = [
       },
     ],
     buttonLabel: 'Learn More',
-    destination: '/about',
+    destination: 'https://help.artizen.fund/en/articles/6604061-curate-our-grants',
   },
   {
     image: '/assets/illustrations/home/about.png',
@@ -65,7 +65,7 @@ const alternatingPanels: Array<IAlternatingPanel> = [
       },
     ],
     buttonLabel: 'Learn More',
-    destination: '/about',
+    destination: 'https://help.artizen.fund/en/articles/6761187-join-a-vibrant-community',
   },
 ]
 
