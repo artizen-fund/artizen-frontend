@@ -65,10 +65,14 @@ const Footer = () => {
           <Credits>Open source platform made with ❤️ by a globally distributed team.</Credits>
           <Legal>
             <Item>
-              <Link href="/leaderboard">Privacy Policy</Link>
+              <Link target="_blank" href="https://help.artizen.fund/en/articles/4761373-privacy-policy">
+                Privacy Policy
+              </Link>
             </Item>
             <Item>
-              <Link href="/leaderboard">Terms &amp; Conditions</Link>
+              <Link target="_blank" href="https://help.artizen.fund/en/articles/4761356-terms-of-use">
+                Terms &amp; Conditions
+              </Link>
             </Item>
           </Legal>
         </BottomWrapper>
