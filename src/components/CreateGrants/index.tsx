@@ -47,7 +47,6 @@ const CreateGrants = () => {
       {!loading && loadedGrantData && (
         <>
           <GrantLayout grant={loadedGrantData.Grants[0]} />
-
           <FooterWrapper>
             <StyledButton
               stretch
@@ -87,7 +86,6 @@ const Email = styled.div`
 */
 
 const FormWrapper = styled.div`
-  padding: 100px;
   .group-layout legend {
     font-size: 30px;
   }

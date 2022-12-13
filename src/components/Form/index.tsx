@@ -2,7 +2,7 @@ import { useState, cloneElement, useEffect } from 'react'
 import { JsonForms } from '@jsonforms/react'
 import { ErrorObject } from 'ajv'
 import { JsonSchema, Layout, ControlElement, JsonFormsCore } from '@jsonforms/core'
-import { vanillaRenderers } from '@jsonforms/vanilla-renderers'
+import { vanillaRenderers, vanillaCells, TextAreaCell, textAreaCellTester } from '@jsonforms/vanilla-renderers'
 import flattenChildren from 'react-keyed-flatten-children'
 import { pickBy } from 'lodash'
 
@@ -52,6 +52,8 @@ const Form = <TStateInterface extends Record<string, unknown>>({
 
     setData(formData)
 
+    console.log('formData  in here::::::   ', formData)
+
     if (localStorageKey && typeof localStorage !== 'undefined' && !!data) {
       const safeVars = (uischema.elements as Array<ControlElement>)
         .filter(schemaVar => !schemaVar.options?.unsafeToRetain)
@@ -75,10 +77,12 @@ const Form = <TStateInterface extends Record<string, unknown>>({
     { tester: enumControlTester, renderer: EnumControl },
   ]
 
+  const cells = [...vanillaCells]
+
   return (
     <>
       <JsonForms
-        {...{ schema, uischema, renderers, data, readonly, additionalErrors }}
+        {...{ schema, uischema, renderers, data, cells, readonly, additionalErrors }}
         {...props}
         config={{ trim: true }}
         onChange={formState => setFormState(formState)}

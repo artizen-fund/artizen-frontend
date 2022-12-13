@@ -69,9 +69,20 @@ export const LOAD_GRANTS = gql`
     }
   }
 
-  query loadGrants($where: Grants_bool_exp!) {
-    Grants(where: $where) {
+  query loadGrants($where: Grants_bool_exp) {
+    Grants(where: $where, order_by: [{ date: desc }]) {
       ...GrantsWithProjectAndDonations
+    }
+  }
+`
+
+export const UPDATE_GRANTS = gql`
+  mutation updateGrants($_set: Grants_set_input, $where: Grants_bool_exp!) {
+    update_Grants(_set: $_set, where: $where) {
+      returning {
+        id
+        status
+      }
     }
   }
 `

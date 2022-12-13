@@ -4,10 +4,13 @@ import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
 import { mockGrants } from './mock-grants'
 import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { UPDATE_GRANTS } from '@gql'
+import { useMutation } from '@apollo/client'
 
 export const useGrant = () => {
   const { address } = useAccount()
   const { data: signer, isError, isLoading } = useSigner()
+  const [updateGrant] = useMutation(UPDATE_GRANTS)
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
   const grantContractAddress = assert(
@@ -130,7 +133,6 @@ export const useGrant = () => {
         }),
       )
 
-      console.log('Metadata IPFS    ', metadata)
       return metadata
     })
 
@@ -141,7 +143,7 @@ export const useGrant = () => {
     // const grant = mockGrants[0]
     const metadataUris = await generateMetadata(grant)
 
-    console.log('metadataUris    ', metadataUris)
+    console.log('IPFS metadataUris     ', metadataUris)
 
     if (!metadataUris) {
       throw new Error('Non metadataUris from NFTs publish')
@@ -153,6 +155,8 @@ export const useGrant = () => {
       await mintTransaction.wait()
 
       console.log('mintTransaction   ', mintTransaction)
+
+      // update the grant data in databse
     }
 
     const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
@@ -163,6 +167,26 @@ export const useGrant = () => {
 
     console.log('grant.startTime   ', grant.startingDate)
 
+    /*
+    const _grants = {
+    nftContract: nftContract,
+    nftOwner: nftOwner, // Artizen DAO wallet
+    nftAuthor: nftAuthor, // Project creator wallet
+    tokenID1: tokenID1,
+    tokenID2: tokenID2,
+    tokenID3: tokenID3,
+    startTime: startTime,
+    endTime: endTime,
+    topDonatedAmount: 0,
+    topDonor: topDonor,
+    minimumDonationAmount: minimumDonationAmount,
+  };
+    */
+
+    const grantStartinTime = Date.now()
+
+    console.log('grant starting time', grantStartinTime)
+
     const grantTuple = {
       nftContract: nftContractAddress,
       nftOwner: address,
@@ -170,8 +194,8 @@ export const useGrant = () => {
       tokenID1: latestTokenId.sub(3),
       tokenID2: latestTokenId.sub(2),
       tokenID3: latestTokenId.sub(1),
-      startTime: '1670775237', // must be timestamp in seconds
-      endTime: (Number(1670775237) + 60 * 60 * 48).toString(), // must be timestamp in seconds
+      startTime: grantStartinTime, // must be timestamp in seconds
+      endTime: (Number(grantStartinTime) + 60 * 60 * 48).toString(), // must be timestamp in seconds
       minimumDonationAmount: ethers.utils.parseEther('0.008'),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
@@ -184,6 +208,28 @@ export const useGrant = () => {
     await grantTransaction.wait()
 
     console.log('Grant publish tx data      ', grantTransaction)
+
+    const latestGrantCreateNumber = await grantsContract.grantsCount()
+
+    console.log('Grant published number    ', latestGrantCreateNumber.toString())
+
+    // update Grant blockchain and status
+
+    const updatingGrant = await updateGrant({
+      variables: {
+        _set: {
+          status: 'open',
+          blockchainId: latestGrantCreateNumber.toString(),
+        },
+        where: {
+          id: {
+            _eq: grant.id,
+          },
+        },
+      },
+    })
+
+    console.log('grant publised', updatingGrant)
 
     alert('Grant publish')
   }
@@ -211,6 +257,7 @@ export const useGrant = () => {
 
     return returnTx
   }
+  //sendRewards
 
   const cancelGrant = async (grantId: number) => {
     const grantTransaction = await grantsContract.cancelGrant(grantId)
