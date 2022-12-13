@@ -23,7 +23,7 @@ export const CREATE_USERS = gql`
 `
 
 export const UPDATE_USERS = gql`
-  mutation updateUsers($_set: Users_set_input, $where: Users_bool_exp!) {
+  mutation updateUsersHere($_set: Users_set_input, $where: Users_bool_exp!) {
     update_Users(_set: $_set, where: $where) {
       returning {
         id
