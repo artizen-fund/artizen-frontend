@@ -6,7 +6,7 @@ import {
   FeaturedArt,
   FeaturedArtPanel,
   Layout,
-  Metrics,
+  Team,
   Newsletter,
   PagePadding,
   AlternatingPanels,
@@ -72,7 +72,7 @@ const GrantPage = () => {
       <Newsletter />
       <ApplyForFundingBlurb />
       <Faq />
-      <Metrics {...{ metrics }} />
+      <Team />
     </Layout>
   )
 }
