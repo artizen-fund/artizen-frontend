@@ -5,7 +5,6 @@ import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, S
 import { breakpoint, palette, typography } from '@theme'
 import { IGrantsWithProjectAndDonationsFragment } from '@types'
 import { rgba, formatStringDate } from '@lib'
-import { Sponsors } from '../HomeParts'
 
 interface IGrantsExplorer {
   grant?: IGrantsWithProjectAndDonationsFragment
@@ -56,8 +55,6 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
           )}
 
           <Leaderboard grantId={grant.id} forceUpdate={updateLeaderBoard} />
-
-          <Sponsors />
         </Body>
       </Wrapper>
     </StyledStickyCanvas>

@@ -4,18 +4,18 @@ import { assetPath } from '@lib'
 import { breakpoint, typeface, typography } from '@theme'
 import { team } from '@copy/home'
 
-const Curators = () => (
+const Team = () => (
   <PagePadding>
     <Wrapper>
       <Headline>{team.title}</Headline>
       <Copy>{team.copy}</Copy>
       <ul>
-        {team.curators.map((curator, i) => (
-          <Curator key={`curator-${i}`}>
-            <img src={assetPath(`${curator.portrait}?fm=webp`)} alt={curator.name} />
+        {team.curators.map((person, i) => (
+          <Curator key={`person-${i}`}>
+            <img src={assetPath(`${person.portrait}?fm=webp`)} alt={person.name} />
             <Description>
-              <Name>{curator.name}</Name>
-              <Title>{curator.title}</Title>
+              <Name>{person.name}</Name>
+              <Title>{person.title}</Title>
             </Description>
           </Curator>
         ))}
@@ -82,4 +82,4 @@ const Title = styled.div`
   font-weight: 500;
 `
 
-export default Curators
+export default Team
