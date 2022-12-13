@@ -211,7 +211,9 @@ export const useGrant = () => {
 
     const latestGrantCreateNumber = await grantsContract.grantsCount()
 
-    console.log('Grant published number    ', latestGrantCreateNumber.toString())
+    const blockchainId = latestGrantCreateNumber.toString()
+
+    console.log('Grant published number    ', blockchainId)
 
     // update Grant blockchain and status
 
@@ -219,7 +221,7 @@ export const useGrant = () => {
       variables: {
         _set: {
           status: 'open',
-          blockchainId: latestGrantCreateNumber.toString(),
+          blockchainId,
         },
         where: {
           id: {

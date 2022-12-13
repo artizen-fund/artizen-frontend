@@ -19,7 +19,7 @@ const CreateGrants = () => {
   const {
     query: { date },
   } = useRouter()
-  const { publish } = useGrant()
+  const { publish, endGrant } = useGrant()
 
   const {
     loading,
@@ -41,6 +41,8 @@ const CreateGrants = () => {
     return <div>Error loading grant</div>
   }
 
+  const isGrantOpen = loadedGrantData?.Grants[0].status === 'open'
+
   return (
     <FormWrapper>
       {!loading && !loadedGrantData && <NewGrantForm />}
@@ -48,18 +50,23 @@ const CreateGrants = () => {
         <>
           <GrantLayout grant={loadedGrantData.Grants[0]} />
           <FooterWrapper>
-            <StyledButton
-              stretch
-              onClick={() => {
-                publish(loadedGrantData.Grants[0])
-              }}
-              level={0}
-            >
-              Publish Grant
-            </StyledButton>
-            <StyledButton disabled={true} stretch onClick={() => alert('TODO')} level={0}>
-              End Grant
-            </StyledButton>
+            {!isGrantOpen && (
+              <StyledButton
+                stretch
+                disable={true}
+                onClick={() => {
+                  publish(loadedGrantData.Grants[0])
+                }}
+                level={0}
+              >
+                Publish Grant
+              </StyledButton>
+            )}
+            {isGrantOpen && (
+              <StyledButton stretch onClick={() => endGrant(2)} level={0}>
+                End Grant
+              </StyledButton>
+            )}
           </FooterWrapper>
         </>
       )}
@@ -68,13 +75,11 @@ const CreateGrants = () => {
 }
 
 const GrantContentWrapper = styled.div`
-  width: 80%;
   display: block;
 `
 
 const FooterWrapper = styled.div`
-  width: 80%;
-  display: flex;
+  margin: 50px auto 0 0;
 `
 
 /*
@@ -86,6 +91,8 @@ const Email = styled.div`
 */
 
 const FormWrapper = styled.div`
+  width: 80%;
+  margin: 0 auto;
   .group-layout legend {
     font-size: 30px;
   }
@@ -134,7 +141,6 @@ const StyledButton = styled(props => <Button {...props} />)`
   margin-top: 20px;
   width: 170px;
   margin: 10px 30px 0 10px;
-  float: right;
 `
 
 export default CreateGrants
