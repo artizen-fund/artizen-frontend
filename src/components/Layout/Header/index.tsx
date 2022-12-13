@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import { Button, Logo, Modals } from '@components'
@@ -17,11 +18,15 @@ const Header = () => {
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 
+  const {
+    query: { date },
+  } = useRouter()
+
   return (
     <>
       <Wrapper {...{ shadowVisible }} className={visibleShelf ? 'visibleShelf' : ''}>
         <Items>
-          <Link href="/">
+          <Link href={`/grants/${date}`}>
             <Logo />
           </Link>
           <MobileNavButton
