@@ -183,9 +183,10 @@ export const useGrant = () => {
   };
     */
 
-    const grantStartinTime = Date.now()
+    const startingDate = Date.now()
+    const endTime = (Number(startingDate) + 60 * 60).toString()
 
-    console.log('grant starting time', grantStartinTime)
+    console.log('grant starting time', startingDate)
 
     const grantTuple = {
       nftContract: nftContractAddress,
@@ -194,8 +195,8 @@ export const useGrant = () => {
       tokenID1: latestTokenId.sub(3),
       tokenID2: latestTokenId.sub(2),
       tokenID3: latestTokenId.sub(1),
-      startTime: grantStartinTime, // must be timestamp in seconds
-      endTime: (Number(grantStartinTime) + 60 * 60 * 48).toString(), // must be timestamp in seconds
+      startTime: startingDate, // must be timestamp in seconds
+      endTime,
       minimumDonationAmount: ethers.utils.parseEther('0.008'),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
@@ -222,6 +223,7 @@ export const useGrant = () => {
         _set: {
           status: 'open',
           blockchainId,
+          startingDate,
         },
         where: {
           id: {
