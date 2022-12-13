@@ -19,6 +19,12 @@ const GrantLayout = ({ grant }: IGrantLayout) => {
         <TextCntainer>
           Status: <span> {grant.status}</span>{' '}
         </TextCntainer>
+        <TextCntainer>
+          Project: <span> {grant.submission?.project?.title}</span>
+        </TextCntainer>
+        <TextCntainer>
+          Project Description: <span> {grant.submission?.project?.description}</span>
+        </TextCntainer>
         {/* <ArtifactsContainer>
           {artifacts?.map(({ edition, artwork, description, name }) => (
             <ArtifactItem key={edition}>
@@ -48,9 +54,10 @@ const GrantContentWrapper = styled.div`
 `
 
 const TextCntainer = styled.div`
+  margin: 10px 0;
   span {
     font-weight: 100;
-    display: block;
+
     ${typography.title.l4}
   }
 `
