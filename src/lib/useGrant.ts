@@ -184,9 +184,10 @@ export const useGrant = () => {
     */
 
     const startingDate = Date.now()
-    const endTime = (Number(startingDate) + 60 * 60).toString()
+    const endTime = (Number(startingDate) + 60 * 10).toString()
 
     console.log('grant starting time', startingDate)
+    console.log('grant  endTime', endTime)
 
     const grantTuple = {
       nftContract: nftContractAddress,
