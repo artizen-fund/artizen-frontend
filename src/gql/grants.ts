@@ -69,8 +69,8 @@ export const LOAD_GRANTS = gql`
     }
   }
 
-  query loadGrants($where: Grants_bool_exp!) {
-    Grants(where: $where) {
+  query loadGrants($where: Grants_bool_exp) {
+    Grants(where: $where, order_by: [{ date: desc }]) {
       ...GrantsWithProjectAndDonations
     }
   }

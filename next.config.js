@@ -12,7 +12,7 @@ const moduleExports = {
   async redirects() {
     return [
       {
-        source: '/',
+        source: '^[^/]*/$',
         destination: '/grants/2022-12-11',
         permanent: false,
       },
