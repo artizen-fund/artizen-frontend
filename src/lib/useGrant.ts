@@ -192,6 +192,7 @@ export const useGrant = () => {
     const grantTuple = {
       nftContract: nftContractAddress,
       nftOwner: address,
+      nftAuthor: grant.submission?.project?.walletAddress,
       grantsID: 0,
       tokenID1: latestTokenId.sub(3),
       tokenID2: latestTokenId.sub(2),
@@ -201,9 +202,9 @@ export const useGrant = () => {
       minimumDonationAmount: ethers.utils.parseEther('0.008'),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
-      cancelled: false,
-      ended: false,
     }
+
+    console.log(grantTuple)
 
     //Create a new Grant
     const grantTransaction = await grantsContract.createGrant(grantTuple)
