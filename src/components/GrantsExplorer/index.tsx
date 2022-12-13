@@ -23,8 +23,8 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
             previous
           </Button>
           <Copy>
-            <Date>{formatStringDate(grant.date)}</Date>
-            <Description>Today’s Grant</Description>
+            <Date>Daily Grant #1</Date>
+            <Description>{formatStringDate(grant.date)}</Description>
           </Copy>
           <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2} disabled>
             next
