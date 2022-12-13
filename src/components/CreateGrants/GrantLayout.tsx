@@ -42,7 +42,6 @@ const GrantLayout = ({ grant }: IGrantLayout) => {
 }
 
 const GrantContentWrapper = styled.div`
-  width: 80%;
   padding: 20px;
   margin: 0 auto;
   display: block;
