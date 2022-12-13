@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useReactiveVar, useQuery } from '@apollo/client'
-import { Grants, Layout } from '@components'
+import { Layout, Button } from '@components'
+
 import { loggedInUserVar } from '@lib'
 import { useRouter } from 'next/router'
 import { LOAD_GRANTS } from '@gql'
@@ -33,23 +34,43 @@ const ManageGrants = () => {
 
   return (
     <Layout>
-      <TextSections>Grant List:</TextSections>
-      <GrantsLayout>
-        {loadedGrantData?.Grants.map((grant: IGrantsWithProjectAndDonationsFragment) => (
-          <GrantItem onClick={openGrant(grant.date)} key={grant.id} highlighed={grant.status === 'open'}>
-            <GrantDate>
-              DATE: <span>{grant.date}</span>
-            </GrantDate>
-            <GrantStatus>{grant.status}</GrantStatus>
-          </GrantItem>
-        ))}
-      </GrantsLayout>
+      <PageLayout>
+        <TextSections>Grant List:</TextSections>
+        <GrantsLayout>
+          {loadedGrantData?.Grants.map((grant: IGrantsWithProjectAndDonationsFragment) => (
+            <GrantItem onClick={openGrant(grant.date)} key={grant.id} highlighed={grant.status === 'open'}>
+              <GrantDate>
+                DATE: <span>{grant.date}</span>
+              </GrantDate>
+              <GrantStatus>{grant.status}</GrantStatus>
+            </GrantItem>
+          ))}
+        </GrantsLayout>
+        <ButtonWrapper>
+          <Button onClick={openGrant('new')}>CREATE NEW GRANT</Button>
+        </ButtonWrapper>
+      </PageLayout>
     </Layout>
   )
 }
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  width: 80%;
+  margin: 4rem auto;
+`
+
+const PageLayout = styled.div`
+  width: 100%;
+`
+
 const TextSections = styled.div`
   ${typography.title.l2}
+  width: 80%;
+  margin: 3rem auto 0;
 `
 
 const GrantDate = styled.div`
@@ -66,7 +87,7 @@ const GrantStatus = styled.span`
 const GrantsLayout = styled.div`
   width: 80%;
   height: 500px;
-  margin: 3rem auto 0;
+  margin: 3rem auto 4rem;
   overflow-y: scroll;
 `
 

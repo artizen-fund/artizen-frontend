@@ -87,7 +87,6 @@ const Email = styled.div`
 */
 
 const FormWrapper = styled.div`
-  padding: 100px;
   .group-layout legend {
     font-size: 30px;
   }

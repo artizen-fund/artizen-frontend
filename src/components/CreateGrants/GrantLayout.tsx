@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { typography } from '@theme'
 
 interface IGrantLayout {
   grant: IGrantsWithProjectAndDonationsFragment
@@ -8,7 +9,7 @@ interface IGrantLayout {
 const GrantLayout = ({ grant }: IGrantLayout) => {
   const artifacts = grant.submission?.artifacts
 
-  console.log('artifacts   ', artifacts)
+  console.log('grant   ', grant)
   return (
     <>
       <GrantContentWrapper>
@@ -42,6 +43,8 @@ const GrantLayout = ({ grant }: IGrantLayout) => {
 
 const GrantContentWrapper = styled.div`
   width: 80%;
+  padding: 20px;
+  margin: 0 auto;
   display: block;
 `
 
@@ -49,6 +52,7 @@ const TextCntainer = styled.div`
   span {
     font-weight: 100;
     display: block;
+    ${typography.title.l4}
   }
 `
 
