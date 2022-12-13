@@ -10,8 +10,7 @@ import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
-
-import { rgba, LayoutContext, isProd } from '@lib'
+import { rgba, LayoutContext, isProd, scrollToGrantExplorer } from '@lib'
 
 const Header = () => {
   const { visibleShelf, toggleShelf } = useContext(LayoutContext)
@@ -48,12 +47,7 @@ const Header = () => {
               <li onClick={() => toggleShelf?.('howItWorks')}>How it Works</li>
             </ul>
           </Nav>
-          <DonateButton
-            onClick={() => {
-              //test
-            }}
-            active={visibleShelf === 'donate'}
-          />
+          <DonateButton onClick={() => scrollToGrantExplorer()} active={visibleShelf === 'donate'} />
           <AccountButton id="accountButton" active={visibleShelf === 'session'} />
         </Items>
       </Wrapper>

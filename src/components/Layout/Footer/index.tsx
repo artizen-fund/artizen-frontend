@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba, LayoutContext, textCrop } from '@lib'
+import { rgba, LayoutContext, textCrop, scrollToGrantExplorer } from '@lib'
 import { Button, PagePadding } from '@components'
 import SocialLinks from './SocialLinks'
 
@@ -46,7 +46,7 @@ const Footer = () => {
           <Column>
             <Headline>Join the mission to fund human creativity.</Headline>
             <Buttons>
-              <Button onClick={() => setVisibleShelf?.('donate')} stretch inverted level={1} glyph="donate">
+              <Button onClick={() => scrollToGrantExplorer()} stretch inverted level={1} glyph="donate">
                 Donate
               </Button>
               <Button onClick={() => setVisibleModal?.('share')} stretch inverted outline level={1}>
