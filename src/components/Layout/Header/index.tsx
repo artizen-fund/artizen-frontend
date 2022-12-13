@@ -42,9 +42,15 @@ const Header = () => {
           <Nav>
             <ul>
               <li>
-                <Link href="/apply">Apply</Link>
+                <Link target="_blank" href="https://artizen.link/apply">
+                  Apply
+                </Link>
               </li>
-              <li onClick={() => toggleShelf?.('howItWorks')}>How it Works</li>
+              <li>
+                <Link target="_blank" href="https://help.artizen.fund/en/articles/6782291-how-the-artizen-fund-works">
+                  How It Works
+                </Link>
+              </li>
             </ul>
           </Nav>
           <DonateButton onClick={() => scrollToGrantExplorer()} active={visibleShelf === 'donate'} />

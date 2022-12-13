@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { IconStack, Icon } from '@components'
 import { assetPath } from '@lib'
-import { breakpoint, typography, palette } from '@theme'
+import { breakpoint, typography } from '@theme'
 
 const AlternatingPanel = ({ list, image, imageDark, title, copy, imageOnRight, children }: IAlternatingPanel) => {
   return (
