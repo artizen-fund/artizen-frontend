@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { PagePadding } from '@components'
-import { assetPath, rgba } from '@lib'
+import { assetPath, rgba, textCrop } from '@lib'
 import { breakpoint, typeface, typography, palette } from '@theme'
 import { team } from '@copy/home'
 
@@ -78,7 +78,7 @@ const Description = styled.div`
 `
 
 const Name = styled.div`
-  ${typography.label.l1}
+  ${textCrop(typography.label.l1)}
 `
 
 const Title = styled.div`
