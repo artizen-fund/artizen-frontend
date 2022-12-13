@@ -75,3 +75,14 @@ export const LOAD_GRANTS = gql`
     }
   }
 `
+
+export const UPDATE_GRANTS = gql`
+  mutation updateGrants($_set: Grants_set_input, $where: Grants_bool_exp!) {
+    update_Grants(_set: $_set, where: $where) {
+      returning {
+        id
+        status
+      }
+    }
+  }
+`

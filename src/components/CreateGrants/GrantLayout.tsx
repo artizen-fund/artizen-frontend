@@ -19,7 +19,7 @@ const GrantLayout = ({ grant }: IGrantLayout) => {
         <TextCntainer>
           Status: <span> {grant.status}</span>{' '}
         </TextCntainer>
-        <ArtifactsContainer>
+        {/* <ArtifactsContainer>
           {artifacts?.map(({ edition, artwork, description, name }) => (
             <ArtifactItem key={edition}>
               <span>Artwork {edition} </span>
@@ -35,7 +35,7 @@ const GrantLayout = ({ grant }: IGrantLayout) => {
               ></div>
             </ArtifactItem>
           ))}
-        </ArtifactsContainer>
+        </ArtifactsContainer> */}
       </GrantContentWrapper>
     </>
   )

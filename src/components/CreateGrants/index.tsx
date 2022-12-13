@@ -47,7 +47,6 @@ const CreateGrants = () => {
       {!loading && loadedGrantData && (
         <>
           <GrantLayout grant={loadedGrantData.Grants[0]} />
-
           <FooterWrapper>
             <StyledButton
               stretch
