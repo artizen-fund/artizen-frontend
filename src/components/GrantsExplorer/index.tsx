@@ -16,7 +16,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const amountRaised = grant.donations.reduce((accum, obj) => accum + obj.amount * 1000000000, 0) / 1000000000
   return (
     <StyledStickyCanvas>
-      <Wrapper>
+      <Wrapper id="grant-explorer">
         <Nav>
           <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2} disabled>
             previous

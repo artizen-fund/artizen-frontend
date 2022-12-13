@@ -24,16 +24,10 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
   const { setVisibleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)
 
-  const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : donateFn())
-
   const donateFn = async () => {
     if (!blockchainId || !data.donationAmount) return
     setSending(true)
-    console.log('get to donateFn', error)
-    console.log('blockchainId    ', blockchainId)
-    console.log('data.donationAmount    ', data.donationAmount)
     const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
-    console.log('after returnTx', returnTx)
     // TODO: it'll only work when EK removes the transaction from the server
     // if there is transaction hash add a record
     const tx = returnTx?.transactionHash
@@ -41,7 +35,6 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
       // todo: should we throw an error here?
       return
     }
-
     try {
       await insertDonation({
         variables: {
@@ -79,10 +72,24 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
 
   return (
     <Wrapper>
-      <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
-      <Button level={0} {...{ onClick }} disabled={!data.donationAmount || data.donationAmount <= 0} stretch>
-        {sending ? 'Sending' : 'Donate'}
-      </Button>
+      {!loggedInUser && (
+        <Button level={0} onClick={() => setVisibleModal?.('login')} stretch>
+          Sign In
+        </Button>
+      )}
+      {!!loggedInUser && (
+        <>
+          <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
+          <Button
+            level={0}
+            onClick={() => donateFn()}
+            disabled={!data.donationAmount || data.donationAmount <= 0}
+            stretch
+          >
+            {sending ? 'Sending' : 'Donate'}
+          </Button>
+        </>
+      )}
     </Wrapper>
   )
 }
