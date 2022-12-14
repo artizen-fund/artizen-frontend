@@ -58,7 +58,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
 
           {grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
 
-          {/* <Leaderboard grantId={grant.id} {...{ setAmountRaised }} /> */}
+          <Leaderboard grantId={grant.id} {...{ setAmountRaised }} />
         </Body>
       </Wrapper>
     </StyledStickyCanvas>

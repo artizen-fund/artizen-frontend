@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { useMutation, useLazyQuery } from '@apollo/client'
+import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
+import { typography } from '@theme'
+import moment from 'moment-timezone'
 
 import {
   INSERT_GRANTS,
@@ -10,16 +12,17 @@ import {
   GET_USERS,
   CREATE_USERS,
   UPDATE_USERS,
+  LOAD_GRANTS,
 } from '@gql'
 import {
   IInsert_GrantsMutation,
   IInsert_ArtifactsMutation,
   IInsert_ProjectsMutation,
   IInsert_ProjectMembersMutation,
+  ILoadGrantsQuery,
 } from '@types'
 
 import { Form, Button } from '@components'
-// import { typography } from '@theme'
 import { useRouter } from 'next/router'
 
 import {
@@ -57,6 +60,31 @@ const NewGrantForm = () => {
 
   const [processing, setProcessing] = useState(false)
 
+  const {
+    loading,
+    data: loadedGrantData,
+    error: errorLoadingGrant,
+  } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
+    variables: {
+      order_by: [{ closingDate: 'desc_nulls_last' }],
+      limit: 1,
+    },
+  })
+
+  if (loading) {
+    return <div>Loading Grant</div>
+  }
+
+  if (errorLoadingGrant) {
+    console.error('errorLoadingGrant ', errorLoadingGrant)
+    return <div>Error loading grant</div>
+  }
+
+  const grant = loadedGrantData?.Grants[0]
+  const startingDate = moment(grant?.closingDate).add(1, 's')
+
+  console.log('loadedGrantData    ', loadedGrantData)
+
   const saveChanges = async (formData: FormState) => {
     console.log('formData   ', formData)
 
@@ -84,20 +112,14 @@ const NewGrantForm = () => {
       {
         edition: 'community',
         artwork: artifactsData.artworkCommunity,
-        description: artifactsData.descriptionCommunity,
-        name: artifactsData.nameCommunity,
       },
       {
         edition: 'patron',
         artwork: artifactsData.artworkPatron,
-        description: artifactsData.descriptionPatron,
-        name: artifactsData.namePatron,
       },
       {
         edition: 'creator',
         artwork: artifactsData.artworkCreator,
-        description: artifactsData.descriptionCreator,
-        name: artifactsData.nameCreator,
       },
     ]
   }
@@ -257,11 +279,17 @@ const NewGrantForm = () => {
   }
 
   const insertGrants = async (grantData: Grant, artifactsData: any, projectId: string) => {
+    const { length, ...restData } = grantData
+
+    console.log('grant lenghth', length)
+
     const insertGrantsMReturn = await insertGrantsM({
       variables: {
         objects: [
           {
             status: 'draft',
+            closingDate: moment(grant?.closingDate).add(length, 'm'),
+            startingDate,
             submission: {
               data: {
                 artifacts: {
@@ -270,7 +298,7 @@ const NewGrantForm = () => {
                 projectId,
               },
             },
-            ...grantData,
+            ...restData,
           },
         ],
       },
@@ -285,6 +313,7 @@ const NewGrantForm = () => {
 
   return (
     <FormWrapper>
+      <TileTitle>Starting time: {startingDate.format('DD-MM-YYYY hh:mm:ss')} (PST)</TileTitle>
       <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
         <StyledButton disabled={processing} onClick={() => saveChanges(data)} stretch level={0}>
           {processing ? 'Saving...' : 'Save Draft'}
@@ -293,6 +322,10 @@ const NewGrantForm = () => {
     </FormWrapper>
   )
 }
+
+const TileTitle = styled.h3`
+  ${typography.title.l3}
+`
 
 const GrantContentWrapper = styled.div`
   width: 80%;
