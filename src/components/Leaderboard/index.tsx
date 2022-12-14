@@ -48,6 +48,8 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     },
   })
 
+  console.log('data   ', data)
+
   if (error) {
     console.error('error donation subscription', error)
   }

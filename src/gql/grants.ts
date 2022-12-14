@@ -38,6 +38,7 @@ export const LOAD_GRANTS = gql`
       project {
         id
         impact
+        impactTags
         longline
         description
         creationDate
@@ -62,8 +63,8 @@ export const LOAD_GRANTS = gql`
     }
   }
 
-  query loadGrants($where: Grants_bool_exp) {
-    Grants(where: $where, order_by: [{ date: desc }]) {
+  query loadGrants($where: Grants_bool_exp, $order_by: [Grants_order_by!], $limit: Int) {
+    Grants(where: $where, order_by: $order_by, limit: $limit) {
       ...GrantsWithProject
     }
   }

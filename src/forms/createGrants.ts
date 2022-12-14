@@ -9,9 +9,9 @@ export const schema: JsonSchema = {
       title: 'Grant',
       type: 'object',
       properties: {
-        date: {
-          type: 'string',
-          format: 'date',
+        length: {
+          type: 'integer',
+          title: 'Grant length in minutes (It will be hours after testing)',
         },
         goal: {
           type: 'integer',
@@ -20,7 +20,7 @@ export const schema: JsonSchema = {
           type: 'integer',
         },
       },
-      required: ['date', 'season', 'goal'],
+      required: ['season', 'goal', 'length'],
     },
     project: {
       title: 'Project',
@@ -38,9 +38,9 @@ export const schema: JsonSchema = {
         impact: {
           type: 'string',
         },
-        // impactTags: {
-        //   type: 'string',
-        // },
+        impactTags: {
+          type: 'string',
+        },
         creationDate: {
           type: 'string',
           format: 'date',
@@ -59,7 +59,7 @@ export const schema: JsonSchema = {
         'longline',
         'description',
         'impact',
-        // 'impactTags',
+        'impactTags',
         'creationDate',
         'completionDate',
         'walletAddress',
@@ -98,36 +98,19 @@ export const schema: JsonSchema = {
       title: 'Artifacts Assets',
       type: 'object',
       properties: {
-        namePatron: {
-          type: 'string',
-        },
-        descriptionPatron: {
-          type: 'string',
-        },
         artworkPatron: {
           type: 'string',
         },
         // videoPatron: {
         //   type: 'string',
         // },
-        nameCreator: {
-          type: 'string',
-        },
-        descriptionCreator: {
-          type: 'string',
-        },
+
         artworkCreator: {
           type: 'string',
         },
         // videoCreator: {
         //   type: 'string',
         // },
-        nameCommunity: {
-          type: 'string',
-        },
-        descriptionCommunity: {
-          type: 'string',
-        },
         artworkCommunity: {
           type: 'string',
         },
@@ -146,18 +129,12 @@ export const schema: JsonSchema = {
 */
 
 export interface Grant {
-  date: string
   goal: number
   season: number
+  length: number
 }
 
 export interface Artifacts {
-  namePatron?: string
-  nameCreator?: string
-  nameCommunity?: string
-  descriptionPatron?: string
-  descriptionCreator?: string
-  descriptionCommunity?: string
   artworkPatron?: string
   artworkCreator?: string
   artworkCommunity?: string
@@ -171,6 +148,7 @@ export interface Project {
   longline?: string
   description?: string
   impact?: string
+  impactTags?: string
   creationDate?: string
   completionDate?: string
   walletAddress?: string
@@ -195,17 +173,11 @@ export interface FormState extends Record<string, unknown> {
 /* This is our local initialState. */
 export const initialState: FormState = {
   grant: {
-    date: '',
+    length: 0,
     goal: 0,
     season: 0,
   },
   artifacts: {
-    namePatron: undefined,
-    nameCreator: undefined,
-    nameCommunity: undefined,
-    descriptionPatron: undefined,
-    descriptionCreator: undefined,
-    descriptionCommunity: undefined,
     artworkPatron: undefined,
     artworkCreator: undefined,
     artworkCommunity: undefined,
@@ -218,6 +190,7 @@ export const initialState: FormState = {
     longline: undefined,
     description: undefined,
     impact: undefined,
+    impactTags: undefined,
     creationDate: undefined,
     completionDate: undefined,
     walletAddress: undefined,
@@ -252,8 +225,7 @@ export const uischema = {
           elements: [
             {
               type: 'Control',
-              scope: '#/properties/grant/properties/date',
-              label: 'Date, format: 2022-12-03',
+              scope: '#/properties/grant/properties/length',
             },
             {
               type: 'Control',
@@ -290,10 +262,10 @@ export const uischema = {
               type: 'Control',
               scope: '#/properties/project/properties/impact',
             },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/project/properties/impactTags',
-            // },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/impactTags',
+            },
             {
               type: 'Control',
               scope: '#/properties/project/properties/creationDate',
@@ -331,14 +303,6 @@ export const uischema = {
           elements: [
             {
               type: 'Control',
-              scope: '#/properties/artifacts/properties/namePatron',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/descriptionPatron',
-            },
-            {
-              type: 'Control',
               scope: '#/properties/artifacts/properties/artworkPatron',
               options: { format: 'uploadFile' },
             },
@@ -347,14 +311,7 @@ export const uischema = {
             //   scope: '#/properties/artifacts/properties/videoPatron',
             //   options: { format: 'uploadFile' },
             // },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/nameCreator',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/descriptionCreator',
-            },
+
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCreator',
@@ -365,14 +322,7 @@ export const uischema = {
             //   scope: '#/properties/artifacts/properties/videoCreator',
             //   options: { unsafeToRetain: true, format: 'uploadFile' },
             // },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/nameCommunity',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/descriptionCommunity',
-            },
+
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCommunity',

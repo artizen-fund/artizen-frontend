@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { useMutation, useLazyQuery } from '@apollo/client'
+import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
+import { typography } from '@theme'
+import moment from 'moment-timezone'
 
 import {
   INSERT_GRANTS,
@@ -10,16 +12,17 @@ import {
   GET_USERS,
   CREATE_USERS,
   UPDATE_USERS,
+  LOAD_GRANTS,
 } from '@gql'
 import {
   IInsert_GrantsMutation,
   IInsert_ArtifactsMutation,
   IInsert_ProjectsMutation,
   IInsert_ProjectMembersMutation,
+  ILoadGrantsQuery,
 } from '@types'
 
 import { Form, Button } from '@components'
-// import { typography } from '@theme'
 import { useRouter } from 'next/router'
 
 import {
@@ -57,6 +60,31 @@ const NewGrantForm = () => {
 
   const [processing, setProcessing] = useState(false)
 
+  const {
+    loading,
+    data: loadedGrantData,
+    error: errorLoadingGrant,
+  } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
+    variables: {
+      order_by: [{ closingDate: 'desc_nulls_last' }],
+      limit: 1,
+    },
+  })
+
+  if (loading) {
+    return <div>Loading Grant</div>
+  }
+
+  if (errorLoadingGrant) {
+    console.error('errorLoadingGrant ', errorLoadingGrant)
+    return <div>Error loading grant</div>
+  }
+
+  const grant = loadedGrantData?.Grants[0]
+  const startingDate = moment(grant?.closingDate).add(1, 's')
+
+  console.log('loadedGrantData    ', loadedGrantData)
+
   const saveChanges = async (formData: FormState) => {
     console.log('formData   ', formData)
 
@@ -64,18 +92,22 @@ const NewGrantForm = () => {
 
     const projectId = await insertProjectsF(formData.project)
 
+    console.log('projectId  ', projectId)
+
     await insertProjecttMembers(formData.projectMembers, projectId)
 
     const artifactsData = mapArtifactF(formData.artifacts)
 
-    //finally insert grants
+    // //finally insert grants
     const newgGrantDBDate = await insertGrants(formData.grant, artifactsData, projectId)
 
-    setProcessing(false)
+    console.log('newgGrantDBDate  ', newgGrantDBDate)
 
-    push(`/admin/grants/${newgGrantDBDate}`)
+    // setProcessing(false)
 
-    return
+    // push(`/admin/grants/${newgGrantDBDate}`)
+
+    // return
   }
 
   //TODO: This should be break down into smaller units
@@ -84,20 +116,14 @@ const NewGrantForm = () => {
       {
         edition: 'community',
         artwork: artifactsData.artworkCommunity,
-        description: artifactsData.descriptionCommunity,
-        name: artifactsData.nameCommunity,
       },
       {
         edition: 'patron',
         artwork: artifactsData.artworkPatron,
-        description: artifactsData.descriptionPatron,
-        name: artifactsData.namePatron,
       },
       {
         edition: 'creator',
         artwork: artifactsData.artworkCreator,
-        description: artifactsData.descriptionCreator,
-        name: artifactsData.nameCreator,
       },
     ]
   }
@@ -118,11 +144,6 @@ const NewGrantForm = () => {
 
   const insertProjecttMembers = async (projectMemberData: Array<ProjectMember>, projectId: string) => {
     const membersData = projectMemberData.map(async (member: ProjectMember) => {
-      // check if user excits in database
-      // if it is, update it
-      // if it is not, create
-      // added to the list of members
-
       console.log('insertProjecttMembers  ', member.email)
 
       if (!member.email) {
@@ -132,7 +153,7 @@ const NewGrantForm = () => {
 
       console.log('gets to loaded getUser')
 
-      const { data } = await getUser({
+      const { data, error } = await getUser({
         variables: {
           where: {
             email: {
@@ -141,6 +162,8 @@ const NewGrantForm = () => {
           },
         },
       })
+
+      console.log('error loading user  ', error)
 
       console.log('user in database===  ', data.Users)
 
@@ -188,7 +211,7 @@ const NewGrantForm = () => {
             _set: {
               firstName: member.firstName,
               lastName: member.lastName,
-              publicAddress: member?.wallet,
+              // publicAddress: member?.wallet,
               externalLink: member.externalLink,
             },
           },
@@ -230,51 +253,42 @@ const NewGrantForm = () => {
     })
 
     return Promise.all(membersData)
-
-    // const insertProjectMembersReturn = await insertProjecstMemberInDB({
-    //   variables: {
-    //     objects: [
-    //       {
-    //         projectId,
-    //         type: projectMemberData.type,
-    //         user: {
-    //           data: {
-    //             firstName: projectMemberData.firstName,
-    //             lastName: projectMemberData.lastName,
-    //             publicAddress: projectMemberData.wallet,
-    //             externalLink: projectMemberData.externalLink,
-    //             email: projectMemberData.email,
-    //           },
-    //         },
-    //       },
-    //     ],
-    //   },
-    // })
-
-    // if (insertProjectMembersReturn?.data?.insert_ProjectMembers === undefined) {
-    //   throw new Error('error adding project members to project in DB')
-    // }
   }
 
   const insertGrants = async (grantData: Grant, artifactsData: any, projectId: string) => {
-    const insertGrantsMReturn = await insertGrantsM({
-      variables: {
-        objects: [
-          {
-            status: 'draft',
-            submission: {
-              data: {
-                artifacts: {
-                  data: artifactsData,
-                },
-                projectId,
+    const { length, ...restData } = grantData
+
+    console.log('grant lenghth', length)
+    console.log('artifactsData  ', artifactsData)
+    console.log('projectId  ', projectId)
+
+    const variables = {
+      objects: [
+        {
+          status: 'draft',
+          closingDate: moment(grant?.closingDate).add(length, 'm'),
+          startingDate,
+          date: startingDate,
+          submission: {
+            data: {
+              artifacts: {
+                data: artifactsData,
               },
+              projectId,
             },
-            ...grantData,
           },
-        ],
-      },
+          ...restData,
+        },
+      ],
+    }
+
+    console.log('variables  ', variables)
+
+    const insertGrantsMReturn = await insertGrantsM({
+      variables,
     })
+
+    console.log('insertGrantsMReturn   ', insertGrantsMReturn)
 
     if (insertGrantsMReturn.data?.insert_Grants === undefined) {
       throw new Error('error creating grant in DB')
@@ -285,6 +299,7 @@ const NewGrantForm = () => {
 
   return (
     <FormWrapper>
+      <TileTitle>Starting time: {startingDate.format('DD-MM-YYYY hh:mm:ss')} (PST)</TileTitle>
       <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
         <StyledButton disabled={processing} onClick={() => saveChanges(data)} stretch level={0}>
           {processing ? 'Saving...' : 'Save Draft'}
@@ -293,6 +308,10 @@ const NewGrantForm = () => {
     </FormWrapper>
   )
 }
+
+const TileTitle = styled.h3`
+  ${typography.title.l3}
+`
 
 const GrantContentWrapper = styled.div`
   width: 80%;

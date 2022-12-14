@@ -13,6 +13,13 @@ interface IGrantsExplorer {
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const [amountRaised, setAmountRaised] = useState(0)
   if (!grant) return <Spinner />
+
+  const moveToNextGround = () => {
+    console.log('move to next grant')
+
+    window.location.href = `${window.location.protocol}//${window.location.host}/grants/today`
+  }
+
   return (
     <StyledStickyCanvas>
       <Wrapper id="grant-explorer">
@@ -45,7 +52,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
 
             <div>
               <DataLabel>Ends in</DataLabel>
-              <Countdown date={grant.closingDate} />
+              <Countdown date={grant.closingDate} onComplete={moveToNextGround} />
             </div>
           </GrantData>
 
