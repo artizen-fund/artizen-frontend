@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useReactiveVar, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { Layout, Button, Spinner } from '@components'
-import { loggedInUserVar } from '@lib'
 import { useRouter } from 'next/router'
 import { LOAD_GRANTS } from '@gql'
 import styled from 'styled-components'
@@ -11,7 +10,6 @@ import { ILoadGrantsQuery, IGrantsWithProjectFragment } from '@types'
 
 const ManageGrants = () => {
   const router = useRouter()
-  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const { status } = useSession()
   useEffect(() => {
