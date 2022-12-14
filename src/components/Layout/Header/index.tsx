@@ -10,8 +10,7 @@ import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
-
-import { rgba, LayoutContext, isProd } from '@lib'
+import { rgba, LayoutContext, isProd, scrollToGrantExplorer } from '@lib'
 
 const Header = () => {
   const { visibleShelf, toggleShelf } = useContext(LayoutContext)
@@ -43,17 +42,18 @@ const Header = () => {
           <Nav>
             <ul>
               <li>
-                <Link href="/apply">Apply</Link>
+                <Link target="_blank" href="https://artizen.link/apply">
+                  Apply
+                </Link>
               </li>
-              <li onClick={() => toggleShelf?.('howItWorks')}>How it Works</li>
+              <li>
+                <Link target="_blank" href="https://help.artizen.fund/en/articles/6782291-how-the-artizen-fund-works">
+                  How It Works
+                </Link>
+              </li>
             </ul>
           </Nav>
-          <DonateButton
-            onClick={() => {
-              //test
-            }}
-            active={visibleShelf === 'donate'}
-          />
+          <DonateButton onClick={() => scrollToGrantExplorer()} active={visibleShelf === 'donate'} />
           <AccountButton id="accountButton" active={visibleShelf === 'session'} />
         </Items>
       </Wrapper>

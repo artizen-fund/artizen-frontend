@@ -3,7 +3,7 @@ import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
 import { mockGrants } from './mock-grants'
-import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS } from '@gql'
 import { useMutation } from '@apollo/client'
 
@@ -42,7 +42,7 @@ export const useGrant = () => {
     return response.json()
   }
 
-  const generateMetadata = async (grant: IGrantsWithProjectAndDonationsFragment) => {
+  const generateMetadata = async (grant: IGrantsWithProjectFragment) => {
     // const grant = mockGrants[0]
     console.log('grant.submission', grant)
     //map artifacts data
@@ -139,7 +139,7 @@ export const useGrant = () => {
     return Promise.all(metadataUris)
   }
 
-  const publish = async (grant: IGrantsWithProjectAndDonationsFragment) => {
+  const publish = async (grant: IGrantsWithProjectFragment) => {
     // const grant = mockGrants[0]
     const metadataUris = await generateMetadata(grant)
 

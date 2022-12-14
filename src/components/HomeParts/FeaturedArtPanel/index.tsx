@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import { Icon, TableAvatar } from '@components'
 import { rgba, formatStringDate } from '@lib'
 import { palette, typography } from '@theme'
-import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { IGrantsWithProjectFragment } from '@types'
 
 type IFeaturedArtPanel = {
-  grant?: IGrantsWithProjectAndDonationsFragment
+  grant?: IGrantsWithProjectFragment
   loading: boolean
 }
 
@@ -19,15 +19,16 @@ const FeaturedArtPanel = ({ grant }: IFeaturedArtPanel) => {
       <Copy>
         <Metadata>
           <Metadatum>
-            <Icon glyph="crown" color="moon" level={2} outline glyphOutline label="Top Donor Prize" />
+            <Icon glyph="crown" color="slate" darkColor="moon" level={2} outline glyphOutline label="Top Donor Prize" />
           </Metadatum>
           <Metadatum>
-            <Icon glyph="palette" color="moon" level={2} outline glyphOutline label="Artifact 27" />
+            <Icon glyph="palette" color="slate" darkColor="moon" level={2} outline glyphOutline label="Artifact 27" />
           </Metadatum>
           <Metadatum>
             <Icon
               glyph="face"
-              color="moon"
+              color="slate"
+              darkColor="moon"
               level={2}
               outline
               glyphOutline
