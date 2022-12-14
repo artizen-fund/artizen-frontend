@@ -94,12 +94,15 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   }
 
   background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
-  @media (prefers-color-scheme: dark) {
-    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
-  }
   filter: drop-shadow(
     ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
   );
+  @media (prefers-color-scheme: dark) {
+    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
+    filter: drop-shadow(
+      ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(114, 124, 140, 0.64)')}
+    );
+  }
   backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
 
   border-bottom: 0.5px solid transparent;
