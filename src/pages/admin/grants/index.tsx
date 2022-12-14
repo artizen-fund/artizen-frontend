@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { LOAD_GRANTS } from '@gql'
 import styled from 'styled-components'
 import { typography } from '@theme'
-import { ILoadGrantsQuery, IGrantsWithProjectAndDonationsFragment } from '@types'
+import { ILoadGrantsQuery, IGrantsWithProjectFragment } from '@types'
 
 const ManageGrants = () => {
   const router = useRouter()
@@ -37,7 +37,7 @@ const ManageGrants = () => {
       <PageLayout>
         <TextSections>Grant List:</TextSections>
         <GrantsLayout>
-          {loadedGrantData?.Grants.map((grant: IGrantsWithProjectAndDonationsFragment) => (
+          {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => (
             <GrantItem onClick={openGrant(grant.date)} key={grant.id} highlighed={grant.status === 'open'}>
               <GrantDate>
                 DATE: <span>{grant.date}</span>

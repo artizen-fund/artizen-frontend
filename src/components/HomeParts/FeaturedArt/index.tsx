@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { palette, breakpoint } from '@theme'
 import { rgba } from '@lib'
-import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { IGrantsWithProjectFragment } from '@types'
 
 type IFeaturedArt = {
-  grant?: IGrantsWithProjectAndDonationsFragment
+  grant?: IGrantsWithProjectFragment
   loading: boolean
 }
 
