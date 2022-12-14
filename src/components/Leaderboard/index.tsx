@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
 import { useSubscription } from '@apollo/client'
 import { reduceWithPrecision } from '@lib'
-import { IDonationsSubscription } from '@types'
+import { IDonationsSubscription, IUserWithDonationFragment } from '@types'
 import { SUBSCRIBE_DONATIONS } from '@gql'
 // import truncateEthAddress from 'truncate-eth-address'
 
@@ -13,7 +13,7 @@ interface ILeaderboard {
   setAmountRaised: (n: number) => void
 }
 
-const DEFAULT_LIMIT = 3
+const DEFAULT_LIMIT = 9999
 
 const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
@@ -25,16 +25,22 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
       where: {
         _and: [
           {
-            grantId: {
-              _eq: grantId,
+            hideFromLeaderboard: {
+              _eq: false,
             },
-            status: {
-              _eq: 'confirmed',
-            },
-            user: {
-              hideFromLeaderboard: {
-                _eq: false,
-              },
+          },
+          {
+            donations: {
+              _and: [
+                {
+                  grantId: {
+                    _eq: grantId,
+                  },
+                  status: {
+                    _eq: 'confirmed',
+                  },
+                },
+              ],
             },
           },
         ],
@@ -46,9 +52,18 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     console.error('error donation subscription', error)
   }
 
+  const [donatingUsers, setDonatingUsers] = useState<Array<IUserWithDonationFragment & { aggregateDonation: number }>>()
+
   useEffect(() => {
     if (!data) return
-    setAmountRaised(reduceWithPrecision(data.Donations.map(d => d.amount))((a: number, b: number) => a + b))
+    const usersWithAggregate = data.Users.map(u => {
+      const aggregateDonation = reduceWithPrecision(u.donations.map(d => d.amount))((a: number, b: number) => a + b)
+      return { ...u, aggregateDonation }
+    })
+    setDonatingUsers(usersWithAggregate)
+    setAmountRaised(
+      reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
+    )
   }, [data])
 
   const sideItem = (
@@ -57,22 +72,21 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     </Button>
   )
 
-  return !!loading || !data?.Donations ? (
+  return !!loading || !data?.Users || !donatingUsers ? (
     <Spinner />
   ) : (
     <StyledTable title="Leaderboard" {...{ sideItem }}>
-      {data?.Donations.map(
-        (donation, index) =>
-          !!donation.user && (
-            <TableCell key={`donation-${index}`} highlight>
-              <div>
-                <TableAvatar profileImage={donation.user.profileImage} />
-                <Name>{donation.user?.artizenHandle}</Name>
-              </div>
-              <Amount>{donation.amount} ETH</Amount>
-            </TableCell>
-          ),
-      )}
+      {donatingUsers
+        .sort((a, b) => (a.aggregateDonation > b.aggregateDonation ? -1 : 1))
+        .map((user, index) => (
+          <TableCell key={`donating-user-${index}`} highlight>
+            <div>
+              <TableAvatar profileImage={user.profileImage} />
+              <Name>{user?.artizenHandle}</Name>
+            </div>
+            <Amount>{user.aggregateDonation} ETH</Amount>
+          </TableCell>
+        ))}
     </StyledTable>
   )
 }
