@@ -15,7 +15,7 @@ const moduleExports = {
     return [
       {
         source: '/',
-        destination: '/grants/2022-12-11',
+        destination: '/grants/2022-12-14',
         permanent: false,
       },
     ]
