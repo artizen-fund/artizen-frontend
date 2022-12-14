@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { useReactiveVar, useQuery } from '@apollo/client'
-import { Layout, Button } from '@components'
-
+import { Layout, Button, Spinner } from '@components'
 import { loggedInUserVar } from '@lib'
 import { useRouter } from 'next/router'
 import { LOAD_GRANTS } from '@gql'
@@ -13,10 +13,10 @@ const ManageGrants = () => {
   const router = useRouter()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
+  const { status } = useSession()
   useEffect(() => {
-    console.log('loggedInUser  ', loggedInUser)
-    // if (!loggedInUser) router.push('/')
-  }, [loggedInUser])
+    if (status === 'unauthenticated') router.push('/')
+  }, [status])
 
   const { loading, data: loadedGrantData, error: errorLoadingGrant } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS)
 
@@ -34,22 +34,26 @@ const ManageGrants = () => {
 
   return (
     <Layout>
-      <PageLayout>
-        <TextSections>Grant List:</TextSections>
-        <GrantsLayout>
-          {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => (
-            <GrantItem onClick={openGrant(grant.date)} key={grant.id} highlighed={grant.status === 'open'}>
-              <GrantDate>
-                DATE: <span>{grant.date}</span>
-              </GrantDate>
-              <GrantStatus>{grant.status}</GrantStatus>
-            </GrantItem>
-          ))}
-        </GrantsLayout>
-        <ButtonWrapper>
-          <Button onClick={openGrant('new')}>CREATE NEW GRANT</Button>
-        </ButtonWrapper>
-      </PageLayout>
+      {status !== 'authenticated' ? (
+        <Spinner />
+      ) : (
+        <PageLayout>
+          <TextSections>Grant List:</TextSections>
+          <GrantsLayout>
+            {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => (
+              <GrantItem onClick={openGrant(grant.date)} key={grant.id} highlighed={grant.status === 'open'}>
+                <GrantDate>
+                  DATE: <span>{grant.date}</span>
+                </GrantDate>
+                <GrantStatus>{grant.status}</GrantStatus>
+              </GrantItem>
+            ))}
+          </GrantsLayout>
+          <ButtonWrapper>
+            <Button onClick={openGrant('new')}>CREATE NEW GRANT</Button>
+          </ButtonWrapper>
+        </PageLayout>
+      )}
     </Layout>
   )
 }
