@@ -1,22 +1,17 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { useReactiveVar } from '@apollo/client'
-import { Layout, SettingsHeader, EditProfile, EditSettings } from '@components'
-import { rgba, useTabbedInfo, Tabs, TabbedContent, loggedInUserVar } from '@lib'
+import { Layout, SettingsHeader, EditProfile, EditSettings, Spinner } from '@components'
+import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { palette, breakpoint } from '@theme'
 
 const Settings = () => {
   const router = useRouter()
-  const loggedInUser = useReactiveVar(loggedInUserVar)
-
+  const { status } = useSession()
   useEffect(() => {
-    /* todo: If a user has an active session and lands on this page from "nowhere," it will punt them home.
-     * That isn't a desired action, but all my attempts at "waiting" a moment for a session are causing render glitches.
-     * This makes dev a headache (will forward on every site refresh), but since it's an edge case, I'm punting it.
-     */
-    if (!loggedInUser) router.push('/')
-  }, [])
+    if (status === 'unauthenticated') router.push('/')
+  }, [status])
 
   const tabs = [
     <Tab label="Profile" key="tab-profile">
@@ -29,16 +24,20 @@ const Settings = () => {
 
   const { activeTab, setTab } = useTabbedInfo(tabs, true)
 
-  return !loggedInUser ? (
-    <></>
-  ) : (
+  return (
     <Layout>
-      <SettingsHeader>
-        <StyledTabs {...{ activeTab, setTab, tabs }} />
-      </SettingsHeader>
-      <Main>
-        <TabbedContent {...{ tabs, activeTab }} />
-      </Main>
+      {status !== 'authenticated' ? (
+        <Spinner />
+      ) : (
+        <>
+          <SettingsHeader>
+            <StyledTabs {...{ activeTab, setTab, tabs }} />
+          </SettingsHeader>
+          <Main>
+            <TabbedContent {...{ tabs, activeTab }} />
+          </Main>
+        </>
+      )}
     </Layout>
   )
 }
