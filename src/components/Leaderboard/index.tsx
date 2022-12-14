@@ -42,13 +42,15 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     },
   })
 
+  console.log('data   ', data)
+
   if (error) {
     console.error('error donation subscription', error)
   }
 
   useEffect(() => {
     if (!data) return
-    setAmountRaised(reduceWithPrecision(data.Donations.map(d => d.amount))((a: number, b: number) => a + b))
+    setAmountRaised(reduceWithPrecision(data.Donations.map((d: any) => d.amount))((a: number, b: number) => a + b))
   }, [data])
 
   const sideItem = (
