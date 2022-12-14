@@ -31,7 +31,7 @@ const QaPair = ({ question, answer, ...props }: { question: string; answer: stri
         <Glyph glyph={collapsed ? 'mathPlus' : 'mathMinus'} level={2} color="moon" darkColor="moon" />
       </Question>
       <Answer closed={collapsed}>
-        <ReactMarkdown>{answer}</ReactMarkdown>
+        <ReactMarkdown linkTarget="_blank">{answer}</ReactMarkdown>
       </Answer>
     </Wrapper>
   )
