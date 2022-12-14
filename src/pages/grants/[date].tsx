@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import { LOAD_GRANTS } from '@gql'
+import { useRef } from 'react'
+import moment from 'moment-timezone'
 import {
   FeaturedArt,
   FeaturedArtPanel,
@@ -16,15 +18,22 @@ import {
   ApplyForFundingBlurb,
   Faq,
 } from '@components'
-import { rgba } from '@lib'
+import { rgba, TODAY_GRANT } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels, metrics } from '@copy/home'
+import { header, alternatingPanels } from '@copy/home'
 import { ILoadGrantsQuery } from '@types'
 
 const GrantPage = () => {
   const {
     query: { date },
   } = useRouter()
+  const parsedDataRef = useRef('')
+
+  if (date === TODAY_GRANT && parsedDataRef.current === '') {
+    const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
+    parsedDataRef.current = loadingAngelesTime
+    console.log('set today time now    ', loadingAngelesTime)
+  }
 
   const {
     loading,
@@ -34,12 +43,21 @@ const GrantPage = () => {
     skip: date === undefined,
     variables: {
       where: {
-        date: {
-          _eq: date,
-        },
+        _and: [
+          {
+            startingDate: {
+              _lte: parsedDataRef.current,
+            },
+            closingDate: {
+              _gte: parsedDataRef.current,
+            },
+          },
+        ],
       },
     },
   })
+
+  console.log('loadedGrantData   ', loadedGrantData)
 
   if (errorLoadingGrant) {
     console.error('Error loading grant error   ', errorLoadingGrant)
@@ -76,6 +94,12 @@ const GrantPage = () => {
     </Layout>
   )
 }
+
+// export async function getServerSideProps(context) {
+//   return {
+//     props: {}, // will be passed to the page component as props
+//   }
+// }
 
 const Header = styled(props => <PagePadding {...props} />)`
   h1 {

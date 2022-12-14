@@ -15,6 +15,13 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const [updateLeaderBoard, setUpdateLeaderBoard] = useState<boolean>(false)
   if (!grant) return <Spinner />
   const amountRaised = grant.donations.reduce((accum, obj) => accum + obj.amount * 1000000000, 0) / 1000000000
+
+  const moveToNextGround = () => {
+    console.log('move to next grant')
+
+    window.location.href = `${window.location.protocol}//${window.location.host}/grants/today-grant`
+  }
+
   return (
     <StyledStickyCanvas>
       <Wrapper>
@@ -47,7 +54,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
 
             <div>
               <DataLabel>Ends in</DataLabel>
-              <Countdown date={grant.closingDate} />
+              <Countdown date={grant.closingDate} onComplete={moveToNextGround} />
             </div>
           </GrantData>
 

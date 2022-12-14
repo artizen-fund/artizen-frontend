@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { default as ReactCountdown } from 'react-countdown'
 import { typography } from '@theme'
+import moment from 'moment-timezone'
 
 export interface CountdownProps {
   date: string
+  onComplete: () => void
 }
 
 interface IRendererProps {
@@ -16,6 +18,8 @@ interface IRendererProps {
 }
 
 const renderer = ({ days, hours, minutes, seconds, completed }: IRendererProps) => {
+  console.log('date hours', hours)
+
   return completed ? (
     <span>resetting</span>
   ) : (
@@ -25,7 +29,13 @@ const renderer = ({ days, hours, minutes, seconds, completed }: IRendererProps) 
   )
 }
 
-const Countdown = ({ date }: CountdownProps) => {
+const Countdown = ({ date, onComplete }: CountdownProps) => {
+  // date is save in PST so it needs to be converte to local machine date
+  const newMomnetDate = moment.tz(date, 'America/Los_Angeles').local().format()
+
+  console.log(' date  original   ', date)
+  console.log('newMomnetDate  ', newMomnetDate)
+
   const [hasMounted, setHasMounted] = useState(false)
 
   useEffect(() => {
@@ -34,7 +44,7 @@ const Countdown = ({ date }: CountdownProps) => {
     setHasMounted(typeof jest === 'undefined')
   }, [])
 
-  return <Wrapper>{hasMounted && <ReactCountdown {...{ date, renderer }} />}</Wrapper>
+  return <Wrapper>{hasMounted && <ReactCountdown {...{ date: newMomnetDate, renderer, onComplete }} />}</Wrapper>
 }
 
 const Wrapper = styled.div`
