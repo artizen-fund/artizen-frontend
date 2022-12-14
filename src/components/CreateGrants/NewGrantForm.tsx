@@ -92,16 +92,18 @@ const NewGrantForm = () => {
 
     const projectId = await insertProjectsF(formData.project)
 
-    await insertProjecttMembers(formData.projectMembers, projectId)
+    console.log('projectId  ', projectId)
 
-    const artifactsData = mapArtifactF(formData.artifacts)
+    // await insertProjecttMembers(formData.projectMembers, projectId)
 
-    //finally insert grants
-    const newgGrantDBDate = await insertGrants(formData.grant, artifactsData, projectId)
+    // const artifactsData = mapArtifactF(formData.artifacts)
 
-    setProcessing(false)
+    // //finally insert grants
+    // const newgGrantDBDate = await insertGrants(formData.grant, artifactsData, projectId)
 
-    push(`/admin/grants/${newgGrantDBDate}`)
+    // setProcessing(false)
+
+    // push(`/admin/grants/${newgGrantDBDate}`)
 
     return
   }
