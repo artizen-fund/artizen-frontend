@@ -54,11 +54,12 @@ export const useGrant = () => {
     const { artifacts } = grant.submission
     const { project } = grant.submission
     const members = grant.submission?.project?.members
+    const inpactTags = grant.submission?.project?.impactTags?.split(',') || []
 
     const leadMemberTraitType = project?.members.map(({ user, type }) => {
-      console.log('user type, ', type === 'lead')
+      console.log('user type, ', type === 'leader')
       console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
-      if (type === 'lead') {
+      if (type === 'leader') {
         return `${user?.firstName} ${user?.lastName}`
       }
       return null
@@ -93,10 +94,9 @@ export const useGrant = () => {
           { trait_type: 'Project', value: project.title },
 
           { trait_type: 'Lead Creator', value: leadMemberTraitType },
-          //TODO: ADD impact tags
-          // ...grant.project.tags.map(tag => {
-          //   return { trait_type: 'Impact', value: tag }
-          // }),
+          ...inpactTags.map(tag => {
+            return { trait_type: 'Impact', value: tag }
+          }),
         ],
       }
 
@@ -167,22 +167,6 @@ export const useGrant = () => {
 
     console.log('grant.startTime   ', grant.startingDate)
 
-    /*
-    const _grants = {
-    nftContract: nftContract,
-    nftOwner: nftOwner, // Artizen DAO wallet
-    nftAuthor: nftAuthor, // Project creator wallet
-    tokenID1: tokenID1,
-    tokenID2: tokenID2,
-    tokenID3: tokenID3,
-    startTime: startTime,
-    endTime: endTime,
-    topDonatedAmount: 0,
-    topDonor: topDonor,
-    minimumDonationAmount: minimumDonationAmount,
-  };
-    */
-
     const startingDate = Date.now()
     const endTime = (Number(startingDate) + 60 * 10).toString()
 
@@ -223,9 +207,8 @@ export const useGrant = () => {
     const updatingGrant = await updateGrant({
       variables: {
         _set: {
-          status: 'open',
+          status: 'published',
           blockchainId,
-          startingDate,
         },
         where: {
           id: {

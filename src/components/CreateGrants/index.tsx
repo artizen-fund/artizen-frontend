@@ -17,7 +17,7 @@ import { useRouter } from 'next/router'
 
 const CreateGrants = () => {
   const {
-    query: { date },
+    query: { id },
   } = useRouter()
   const { publish, endGrant } = useGrant()
 
@@ -26,11 +26,11 @@ const CreateGrants = () => {
     data: loadedGrantData,
     error: errorLoadingGrant,
   } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
-    skip: date === undefined || date === 'new',
+    skip: id === undefined || id === 'new',
     variables: {
       where: {
-        date: {
-          _eq: date,
+        id: {
+          _eq: id,
         },
       },
     },
@@ -40,6 +40,8 @@ const CreateGrants = () => {
     console.error('errorLoadingGrant ', errorLoadingGrant)
     return <div>Error loading grant</div>
   }
+
+  console.log('loadedGrantData?.Grants[0]  ', loadedGrantData?.Grants[0])
 
   const isGrantOpen = loadedGrantData?.Grants[0].status === 'open'
 

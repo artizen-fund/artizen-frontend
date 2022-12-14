@@ -8,6 +8,7 @@ import { LOAD_GRANTS } from '@gql'
 import styled from 'styled-components'
 import { typography } from '@theme'
 import { ILoadGrantsQuery, IGrantsWithProjectFragment } from '@types'
+import moment from 'moment-timezone'
 
 const ManageGrants = () => {
   const router = useRouter()
@@ -18,7 +19,19 @@ const ManageGrants = () => {
     // if (!loggedInUser) router.push('/')
   }, [loggedInUser])
 
-  const { loading, data: loadedGrantData, error: errorLoadingGrant } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS)
+  const {
+    loading,
+    data: loadedGrantData,
+    error: errorLoadingGrant,
+  } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
+    variables: {
+      order_by: [
+        {
+          startingDate: 'desc_nulls_last',
+        },
+      ],
+    },
+  })
 
   if (errorLoadingGrant) {
     console.error('errorLoadingGrant ', errorLoadingGrant)
@@ -32,19 +45,28 @@ const ManageGrants = () => {
 
   console.log('loadedGrantData   ', loadedGrantData)
 
+  //moment(grant?.closingDate).add(1, 's')
+
   return (
     <Layout>
       <PageLayout>
         <TextSections>Grant List:</TextSections>
         <GrantsLayout>
-          {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => (
-            <GrantItem onClick={openGrant(grant.date)} key={grant.id} highlighed={grant.status === 'open'}>
-              <GrantDate>
-                DATE: <span>{grant.date}</span>
-              </GrantDate>
-              <GrantStatus>{grant.status}</GrantStatus>
-            </GrantItem>
-          ))}
+          {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => {
+            const startingDate = moment(grant.startingDate).format('DD-MM-YYYY hh:mm:ss')
+            const closingDate = moment(grant.startingDate).format('DD-MM-YYYY hh:mm:ss')
+            return (
+              <GrantItem onClick={openGrant(grant.id)} key={grant.id} highlighed={grant.status === 'open'}>
+                <GrantDate>
+                  Starting date: <span>{startingDate}</span>
+                </GrantDate>
+                <GrantDate>
+                  Ending date: <span>{closingDate}</span>
+                </GrantDate>
+                <GrantStatus>{grant.status}</GrantStatus>
+              </GrantItem>
+            )
+          })}
         </GrantsLayout>
         <ButtonWrapper>
           <Button onClick={openGrant('new')}>CREATE NEW GRANT</Button>
@@ -75,7 +97,7 @@ const TextSections = styled.div`
 
 const GrantDate = styled.div`
   display: block;
-  ${typography.title.l4}
+  ${typography.title.l6}
   span {
   }
 `
@@ -101,7 +123,7 @@ const GrantItem = styled.div<{ highlighed: boolean }>`
   margin: 10px 0;
   text-align: center;
   background-color: ${props => (props.highlighed ? 'rgba(217, 219, 224, 0.64);' : 'rgba(217, 219, 224, 0.24);')};
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas: 'GrantDate GrantStatus';
 
   .highlighed {

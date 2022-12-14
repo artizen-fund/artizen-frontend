@@ -94,18 +94,20 @@ const NewGrantForm = () => {
 
     console.log('projectId  ', projectId)
 
-    // await insertProjecttMembers(formData.projectMembers, projectId)
+    await insertProjecttMembers(formData.projectMembers, projectId)
 
-    // const artifactsData = mapArtifactF(formData.artifacts)
+    const artifactsData = mapArtifactF(formData.artifacts)
 
     // //finally insert grants
-    // const newgGrantDBDate = await insertGrants(formData.grant, artifactsData, projectId)
+    const newgGrantDBDate = await insertGrants(formData.grant, artifactsData, projectId)
+
+    console.log('newgGrantDBDate  ', newgGrantDBDate)
 
     // setProcessing(false)
 
     // push(`/admin/grants/${newgGrantDBDate}`)
 
-    return
+    // return
   }
 
   //TODO: This should be break down into smaller units
@@ -142,11 +144,6 @@ const NewGrantForm = () => {
 
   const insertProjecttMembers = async (projectMemberData: Array<ProjectMember>, projectId: string) => {
     const membersData = projectMemberData.map(async (member: ProjectMember) => {
-      // check if user excits in database
-      // if it is, update it
-      // if it is not, create
-      // added to the list of members
-
       console.log('insertProjecttMembers  ', member.email)
 
       if (!member.email) {
@@ -156,7 +153,7 @@ const NewGrantForm = () => {
 
       console.log('gets to loaded getUser')
 
-      const { data } = await getUser({
+      const { data, error } = await getUser({
         variables: {
           where: {
             email: {
@@ -165,6 +162,8 @@ const NewGrantForm = () => {
           },
         },
       })
+
+      console.log('error loading user  ', error)
 
       console.log('user in database===  ', data.Users)
 
@@ -212,7 +211,7 @@ const NewGrantForm = () => {
             _set: {
               firstName: member.firstName,
               lastName: member.lastName,
-              publicAddress: member?.wallet,
+              // publicAddress: member?.wallet,
               externalLink: member.externalLink,
             },
           },
@@ -254,57 +253,42 @@ const NewGrantForm = () => {
     })
 
     return Promise.all(membersData)
-
-    // const insertProjectMembersReturn = await insertProjecstMemberInDB({
-    //   variables: {
-    //     objects: [
-    //       {
-    //         projectId,
-    //         type: projectMemberData.type,
-    //         user: {
-    //           data: {
-    //             firstName: projectMemberData.firstName,
-    //             lastName: projectMemberData.lastName,
-    //             publicAddress: projectMemberData.wallet,
-    //             externalLink: projectMemberData.externalLink,
-    //             email: projectMemberData.email,
-    //           },
-    //         },
-    //       },
-    //     ],
-    //   },
-    // })
-
-    // if (insertProjectMembersReturn?.data?.insert_ProjectMembers === undefined) {
-    //   throw new Error('error adding project members to project in DB')
-    // }
   }
 
   const insertGrants = async (grantData: Grant, artifactsData: any, projectId: string) => {
     const { length, ...restData } = grantData
 
     console.log('grant lenghth', length)
+    console.log('artifactsData  ', artifactsData)
+    console.log('projectId  ', projectId)
+
+    const variables = {
+      objects: [
+        {
+          status: 'draft',
+          closingDate: moment(grant?.closingDate).add(length, 'm'),
+          startingDate,
+          date: startingDate,
+          submission: {
+            data: {
+              artifacts: {
+                data: artifactsData,
+              },
+              projectId,
+            },
+          },
+          ...restData,
+        },
+      ],
+    }
+
+    console.log('variables  ', variables)
 
     const insertGrantsMReturn = await insertGrantsM({
-      variables: {
-        objects: [
-          {
-            status: 'draft',
-            closingDate: moment(grant?.closingDate).add(length, 'm'),
-            startingDate,
-            submission: {
-              data: {
-                artifacts: {
-                  data: artifactsData,
-                },
-                projectId,
-              },
-            },
-            ...restData,
-          },
-        ],
-      },
+      variables,
     })
+
+    console.log('insertGrantsMReturn   ', insertGrantsMReturn)
 
     if (insertGrantsMReturn.data?.insert_Grants === undefined) {
       throw new Error('error creating grant in DB')

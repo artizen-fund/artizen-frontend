@@ -38,6 +38,7 @@ export const LOAD_GRANTS = gql`
       project {
         id
         impact
+        impactTags
         longline
         description
         creationDate
