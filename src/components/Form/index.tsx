@@ -52,8 +52,6 @@ const Form = <TStateInterface extends Record<string, unknown>>({
 
     setData(formData)
 
-    console.log('formData  in here::::::   ', formData)
-
     if (localStorageKey && typeof localStorage !== 'undefined' && !!data) {
       const safeVars = (uischema.elements as Array<ControlElement>)
         .filter(schemaVar => !schemaVar.options?.unsafeToRetain)

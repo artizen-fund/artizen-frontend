@@ -1,27 +1,29 @@
-import { ApolloClient, createHttpLink, NormalizedCacheObject } from '@apollo/client'
+import { ApolloClient, ApolloLink, createHttpLink, NormalizedCacheObject } from '@apollo/client'
 import { WebSocketLink } from '@apollo/client/link/ws'
+import { getMainDefinition } from '@apollo/client/utilities'
 import { setContext } from '@apollo/client/link/context'
 import merge from 'deepmerge'
 import { getSession } from 'next-auth/react'
 import isEqual from 'lodash/isEqual'
-import { assert, isServer } from '@lib'
+import { assert, isServer, isClient } from '@lib'
 import { cache } from './'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 export const createApolloClient = (didToken?: string) => {
-  const httpLink = isServer()
-    ? createHttpLink({
-        uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
-        headers: {},
-        credentials: 'same-origin',
-      })
-    : new WebSocketLink({
+  const httpLink = createHttpLink({
+    uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
+    headers: {},
+    credentials: 'same-origin',
+  })
+  const wsLink = isClient()
+    ? new WebSocketLink({
         uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_WEBHOOK, 'NEXT_PUBLIC_HASURA_GRAPHQL_WEBHOOK'),
         options: {
           reconnect: true,
         },
       })
+    : undefined
 
   // This sets up a middleware that circumstantially uses the correct query token.
   // https://www.apollographql.com/docs/react/networking/authentication/#header
@@ -56,9 +58,21 @@ export const createApolloClient = (didToken?: string) => {
     }
   })
 
+  const link =
+    wsLink === undefined
+      ? authLink.concat(httpLink)
+      : ApolloLink.split(
+          ({ query }) => {
+            const definition = getMainDefinition(query)
+            return isClient() && definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+          },
+          authLink.concat(wsLink),
+          authLink.concat(httpLink),
+        )
+
   return new ApolloClient({
     ssrMode: isServer(),
-    link: authLink.concat(httpLink),
+    link,
     cache,
   })
 }
