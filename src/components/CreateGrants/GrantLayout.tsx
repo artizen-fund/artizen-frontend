@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { IGrantsWithProjectFragment } from '@types'
 import { typography } from '@theme'
 
 interface IGrantLayout {
-  grant: IGrantsWithProjectAndDonationsFragment
+  grant: IGrantsWithProjectFragment
 }
 
 const GrantLayout = ({ grant }: IGrantLayout) => {
