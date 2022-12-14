@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react'
+import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
-import { loggedInUserVar, LayoutContext, useGrant } from '@lib'
+import { LayoutContext, useGrant } from '@lib'
 import { breakpoint } from '@theme'
 
 interface IDonationBox {
@@ -12,7 +13,7 @@ interface IDonationBox {
 
 // TODO: Ruben, is grantId still needed here?
 const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
-  const loggedInUser = loggedInUserVar()
+  const { status } = useSession()
 
   const { donate } = useGrant()
   const [readonly, setReadonly] = useState(false)
@@ -38,29 +39,24 @@ const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
 
   return (
     <Wrapper>
-      {!loggedInUser && (
-        <Button level={0} onClick={() => setVisibleModal?.('login')} stretch>
-          Sign In
+      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal?.('login')} />}
+      <>
+        <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
+        <Button
+          level={0}
+          onClick={() => donateFn()}
+          disabled={!data.donationAmount || data.donationAmount <= 0}
+          stretch
+        >
+          {sending ? 'Sending' : 'Donate'}
         </Button>
-      )}
-      {!!loggedInUser && (
-        <>
-          <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
-          <Button
-            level={0}
-            onClick={() => donateFn()}
-            disabled={!data.donationAmount || data.donationAmount <= 0}
-            stretch
-          >
-            {sending ? 'Sending' : 'Donate'}
-          </Button>
-        </>
-      )}
+      </>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -69,6 +65,16 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
+`
+
+const SessionMask = styled.div`
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 `
 
 export default DonationBox
