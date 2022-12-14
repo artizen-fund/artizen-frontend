@@ -42,6 +42,8 @@ export const LOAD_GRANTS = gql`
         description
         creationDate
         completionDate
+        walletAddress
+        title
         members {
           id
           type
@@ -56,7 +58,6 @@ export const LOAD_GRANTS = gql`
             publicAddress
           }
         }
-        title
       }
     }
     donations {
