@@ -17,7 +17,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const moveToNextGround = () => {
     console.log('move to next grant')
 
-    window.location.href = `${window.location.protocol}//${window.location.host}/grants/today-grant`
+    window.location.href = `${window.location.protocol}//${window.location.host}/grants/today`
   }
 
   return (

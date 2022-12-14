@@ -15,7 +15,7 @@ const moduleExports = {
     return [
       {
         source: '/',
-        destination: '/grants/today-grant',
+        destination: '/grants/today',
         permanent: false,
       },
     ]

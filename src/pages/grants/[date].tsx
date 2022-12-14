@@ -18,7 +18,7 @@ import {
   ApplyForFundingBlurb,
   Faq,
 } from '@components'
-import { rgba, TODAY_GRANT } from '@lib'
+import { rgba, TODAY } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels } from '@copy/home'
 import { ILoadGrantsQuery } from '@types'
@@ -29,7 +29,7 @@ const GrantPage = () => {
   } = useRouter()
   const parsedDataRef = useRef('')
 
-  if (date === TODAY_GRANT && parsedDataRef.current === '') {
+  if (date === TODAY && parsedDataRef.current === '') {
     const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
     parsedDataRef.current = loadingAngelesTime
     console.log('set today time now    ', loadingAngelesTime)

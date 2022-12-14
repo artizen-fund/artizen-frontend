@@ -1,1 +1,1 @@
-export const TODAY_GRANT = 'today-grant'
+export const TODAY = 'today'
