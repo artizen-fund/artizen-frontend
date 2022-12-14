@@ -31,10 +31,10 @@ const renderer = ({ days, hours, minutes, seconds, completed }: IRendererProps) 
 
 const Countdown = ({ date, onComplete }: CountdownProps) => {
   // date is save in PST so it needs to be converte to local machine date
-  const newMomnetDate = moment.tz(date, 'America/Los_Angeles').local().format()
+  const newMomentDate = moment.tz(date, 'America/Los_Angeles').local().format()
 
   console.log(' date  original   ', date)
-  console.log('newMomnetDate  ', newMomnetDate)
+  console.log('newMomnetDate  ', newMomentDate)
 
   const [hasMounted, setHasMounted] = useState(false)
 
@@ -44,7 +44,7 @@ const Countdown = ({ date, onComplete }: CountdownProps) => {
     setHasMounted(typeof jest === 'undefined')
   }, [])
 
-  return <Wrapper>{hasMounted && <ReactCountdown {...{ date: newMomnetDate, renderer, onComplete }} />}</Wrapper>
+  return <Wrapper>{hasMounted && <ReactCountdown {...{ date: newMomentDate, renderer, onComplete }} />}</Wrapper>
 }
 
 const Wrapper = styled.div`
