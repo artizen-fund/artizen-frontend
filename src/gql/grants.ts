@@ -12,7 +12,7 @@ export const INSERT_GRANTS = gql`
 `
 
 export const LOAD_GRANTS = gql`
-  fragment GrantsWithProjectAndDonations on Grants {
+  fragment GrantsWithProject on Grants {
     id
     date
     status
@@ -60,19 +60,11 @@ export const LOAD_GRANTS = gql`
         }
       }
     }
-    donations {
-      amount
-      user {
-        id
-        profileImage
-        artizenHandle
-      }
-    }
   }
 
   query loadGrants($where: Grants_bool_exp) {
     Grants(where: $where, order_by: [{ date: desc }]) {
-      ...GrantsWithProjectAndDonations
+      ...GrantsWithProject
     }
   }
 `

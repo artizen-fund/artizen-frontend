@@ -4,15 +4,14 @@ import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
 import { loggedInUserVar, LayoutContext, useGrant } from '@lib'
 import { breakpoint } from '@theme'
-import { useMutation } from '@apollo/client'
 
 interface IDonationBox {
   blockchainId: string | undefined
   grantId: string | undefined
-  updatefn: any
 }
 
-const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
+// TODO: Ruben, is grantId still needed here?
+const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
   const loggedInUser = loggedInUserVar()
 
   const { donate } = useGrant()
@@ -34,8 +33,6 @@ const DonationBox = ({ blockchainId, grantId, updatefn }: IDonationBox) => {
     }
 
     setSending(false)
-    updatefn(true)
-
     alert('donation complete')
   }
 

@@ -37,7 +37,7 @@ export const SUBSCRIBE_DONATIONS = gql`
     }
   }
 
-  query donations($where: Donations_bool_exp, $limit: Int!) {
+  subscription donations($where: Donations_bool_exp, $limit: Int!) {
     Donations(where: $where, order_by: [{ amount: desc_nulls_first }], limit: $limit) {
       ...DonationWithUser
     }

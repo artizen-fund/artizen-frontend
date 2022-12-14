@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import { Icon, TableAvatar } from '@components'
 import { rgba, formatStringDate } from '@lib'
 import { palette, typography } from '@theme'
-import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { IGrantsWithProjectFragment } from '@types'
 
 type IFeaturedArtPanel = {
-  grant?: IGrantsWithProjectAndDonationsFragment
+  grant?: IGrantsWithProjectFragment
   loading: boolean
 }
 
