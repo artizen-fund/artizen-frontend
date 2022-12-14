@@ -18,7 +18,5 @@ export const team = {
     },
     { name: 'Zsofie Tubel', title: 'Blockchain Dev', portrait: '/assets/illustrations/team/zsofia.jpg' },
     { name: 'Eric Jacobsen', title: 'Frontend Dev', portrait: '/assets/illustrations/team/eric-j.jpg' },
-    { name: 'Karolina Kurcwald', title: 'Writer', portrait: '/assets/illustrations/team/karolina.jpg' },
-    { name: 'Ryan Juliano', title: 'Legal', portrait: '/assets/illustrations/team/ryan.jpg' },
   ],
 }

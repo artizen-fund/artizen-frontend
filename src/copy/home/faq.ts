@@ -6,7 +6,7 @@ const faq = [
     answer: `
 Artifacts are a new type of NFT designed to fund human creativity. Minted by our grant winners, they capture the spark of inspiration behind a project.
 
-[Learn More](https://help.artizen.fund/en/articles/6604052-what-are-artifacts)
+[How it works](https://help.artizen.fund/en/articles/6604052-what-are-artifacts)
 `,
   },
   {
@@ -14,7 +14,7 @@ Artifacts are a new type of NFT designed to fund human creativity. Minted by our
     answer: `
 Artifacts are a new type of NFT designed to fund human creativity. Minted by our grant winners, they capture the spark of inspiration behind a project. 
 
-[Learn More](https://help.artizen.fund/en/articles/6604052-what-are-artifacts)
+[Learn what makes Artizen special](https://help.artizen.fund/en/articles/6604052-what-are-artifacts)
 `,
   },
   {
@@ -22,7 +22,7 @@ Artifacts are a new type of NFT designed to fund human creativity. Minted by our
     answer: `
 There are two ways to earn Artifacts. Either you become the top donor for a given 24 hour grant cycle, or you are a creator and selected as a grant winner.
 
-[Learn More](https://help.artizen.fund/en/articles/6742664-how-do-i-earn-artifacts)
+[Earn Artifacts from winning projects](https://help.artizen.fund/en/articles/6742664-how-do-i-earn-artifacts)
 `,
   },
   {
@@ -30,7 +30,7 @@ There are two ways to earn Artifacts. Either you become the top donor for a give
     answer: `
 Artifacts are designed to reward positive impact. Think carbon credits, but for any project that does good in the world.
 
-[Learn More](https://help.artizen.fund/en/articles/6746680-invest-in-positive-impact)
+[Artifacts represent impact claims](https://help.artizen.fund/en/articles/6746680-invest-in-positive-impact)
 `,
   },
   {
@@ -38,7 +38,7 @@ Artifacts are designed to reward positive impact. Think carbon credits, but for 
     answer: `
 All donations are made in ETH, the native currency of Ethereum. Don't have a crypto wallet? We suggest using MetaMask.
 
-[Learn More](https://help.artizen.fund/en/articles/4759762-donate-to-the-artizen-fund)
+[Support creators by donating](https://help.artizen.fund/en/articles/4759762-donate-to-the-artizen-fund)
 `,
   },
   {
@@ -46,7 +46,7 @@ All donations are made in ETH, the native currency of Ethereum. Don't have a cry
     answer: `
 We award unrestricted grants to creators who produce positive impact in the world through art, science, tech, and design. Sound like you? We’d love you to apply. 
 
-[Learn More](https://help.artizen.fund/en/articles/6604399-apply-for-grant-funding)
+[How to submit projects for grant funding](https://help.artizen.fund/en/articles/6604399-apply-for-grant-funding)
 `,
   },
   {
@@ -54,7 +54,7 @@ We award unrestricted grants to creators who produce positive impact in the worl
     answer: `
 Every day, a new grant winner is selected by our community of Artifact holders. Join us to vote for your favorite projects and champion the creators you love. 
 
-[Learn More](https://help.artizen.fund/en/articles/6604061-curate-our-grants)
+[Artifacts empower you to curate our grants](https://help.artizen.fund/en/articles/6604061-curate-our-grants)
 `,
   },
   {
@@ -62,7 +62,7 @@ Every day, a new grant winner is selected by our community of Artifact holders. 
     answer: `
 When you own an Artifact, you join a vibrant community of artists, scientists, coders, and creators of every kind. Attend workshops, talks, retreats, and private gatherings with your fellow Artifact holders, online and in the real world. 
 
-[Learn More](https://help.artizen.fund/en/articles/6761187-join-a-vibrant-community)
+[Benefits of joining our community](https://help.artizen.fund/en/articles/6761187-join-a-vibrant-community)
 `,
   },
 ]

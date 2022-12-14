@@ -25,7 +25,7 @@ const applyForFundingBlurb = {
   ],
   buttonLabel: 'Apply',
   applyLink: 'https://artizen.link',
-  disclaimer: 'Disclaimer about redirecting to  an external website.',
+  disclaimer: 'Clicking apply redirects you to an external website.',
 }
 
 export { applyForFundingBlurb }

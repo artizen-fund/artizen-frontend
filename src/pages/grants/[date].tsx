@@ -18,7 +18,7 @@ import {
 } from '@components'
 import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels, metrics } from '@copy/home'
+import { header, alternatingPanels } from '@copy/home'
 import { ILoadGrantsQuery } from '@types'
 
 const GrantPage = () => {
