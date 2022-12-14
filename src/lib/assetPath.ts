@@ -5,6 +5,9 @@
 
 export const assetPath = (assetPath: string): string => {
   // note: we are not asserting this envVar, as it can be null/undefined in dev and testing environments
-  const cdnPath = process.env.NEXT_PUBLIC_ASSET_PATH
-  return cdnPath ? cdnPath + assetPath.replace(/assets\//, '') : assetPath
+  // const cdnPath = process.env.NEXT_PUBLIC_ASSET_PATH
+  // return cdnPath ? cdnPath + assetPath.replace(/assets\//, '') : assetPath
+
+  // temp: turning this off until we can test on production
+  return assetPath
 }

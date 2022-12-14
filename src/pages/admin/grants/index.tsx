@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { useReactiveVar, useQuery } from '@apollo/client'
-import { Layout, Button } from '@components'
-
+import { Layout, Button, Spinner } from '@components'
 import { loggedInUserVar } from '@lib'
 import { useRouter } from 'next/router'
 import { LOAD_GRANTS } from '@gql'
@@ -14,10 +14,10 @@ const ManageGrants = () => {
   const router = useRouter()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
+  const { status } = useSession()
   useEffect(() => {
-    console.log('loggedInUser  ', loggedInUser)
-    // if (!loggedInUser) router.push('/')
-  }, [loggedInUser])
+    if (status === 'unauthenticated') router.push('/')
+  }, [status])
 
   const {
     loading,
@@ -49,29 +49,33 @@ const ManageGrants = () => {
 
   return (
     <Layout>
-      <PageLayout>
-        <TextSections>Grant List:</TextSections>
-        <GrantsLayout>
-          {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => {
-            const startingDate = moment(grant.startingDate).format('DD-MM-YYYY hh:mm:ss')
-            const closingDate = moment(grant.startingDate).format('DD-MM-YYYY hh:mm:ss')
-            return (
-              <GrantItem onClick={openGrant(grant.id)} key={grant.id} highlighed={grant.status === 'open'}>
-                <GrantDate>
-                  Starting date: <span>{startingDate}</span>
-                </GrantDate>
-                <GrantDate>
-                  Ending date: <span>{closingDate}</span>
-                </GrantDate>
-                <GrantStatus>{grant.status}</GrantStatus>
-              </GrantItem>
-            )
-          })}
-        </GrantsLayout>
-        <ButtonWrapper>
-          <Button onClick={openGrant('new')}>CREATE NEW GRANT</Button>
-        </ButtonWrapper>
-      </PageLayout>
+      {status !== 'authenticated' ? (
+        <Spinner />
+      ) : (
+        <PageLayout>
+          <TextSections>Grant List:</TextSections>
+          <GrantsLayout>
+            {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => {
+              const startingDate = moment(grant.startingDate).format('DD-MM-YYYY hh:mm:ss')
+              const closingDate = moment(grant.startingDate).format('DD-MM-YYYY hh:mm:ss')
+              return (
+                <GrantItem onClick={openGrant(grant.id)} key={grant.id} highlighed={grant.status === 'open'}>
+                  <GrantDate>
+                    Starting date: <span>{startingDate}</span>
+                  </GrantDate>
+                  <GrantDate>
+                    Ending date: <span>{closingDate}</span>
+                  </GrantDate>
+                  <GrantStatus>{grant.status}</GrantStatus>
+                </GrantItem>
+              )
+            })}
+          </GrantsLayout>
+          <ButtonWrapper>
+            <Button onClick={openGrant('new')}>CREATE NEW GRANT</Button>
+          </ButtonWrapper>
+        </PageLayout>
+      )}
     </Layout>
   )
 }
@@ -97,7 +101,7 @@ const TextSections = styled.div`
 
 const GrantDate = styled.div`
   display: block;
-  ${typography.title.l6}
+  ${typography.title.l4}
   span {
   }
 `
