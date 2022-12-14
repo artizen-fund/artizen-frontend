@@ -31,7 +31,7 @@ const QaPair = ({ question, answer, ...props }: { question: string; answer: stri
         <Glyph glyph={collapsed ? 'mathPlus' : 'mathMinus'} level={2} color="moon" darkColor="moon" />
       </Question>
       <Answer closed={collapsed}>
-        <ReactMarkdown>{answer}</ReactMarkdown>
+        <ReactMarkdown linkTarget="_blank">{answer}</ReactMarkdown>
       </Answer>
     </Wrapper>
   )
@@ -61,7 +61,16 @@ const Answer = styled(props => <SlideDown {...props} />)<{ collapsed: boolean }>
     color: ${rgba(palette.stone)};
   }
   > p {
-    padding-bottom: 1em;
+    padding-top: 1em;
+  }
+  a {
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.25);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.15s;
+    &:hover {
+      text-decoration-color: rgba(255, 255, 255, 0.75);
+    }
   }
 `
 

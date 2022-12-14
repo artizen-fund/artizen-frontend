@@ -65,53 +65,75 @@ export const schema: JsonSchema = {
         'walletAddress',
       ],
     },
+
     projectMembers: {
       title: 'Project Member',
-      type: 'object',
-      properties: {
-        firstName: {
-          type: 'string',
-        },
-        lastName: {
-          type: 'string',
-        },
-        externalLink: {
-          type: 'string',
-        },
-        email: {
-          type: 'string',
-        },
-        wallet: {
-          type: 'string',
-        },
-        type: {
-          type: 'string',
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          firstName: {
+            type: 'string',
+          },
+          lastName: {
+            type: 'string',
+          },
+          externalLink: {
+            type: 'string',
+          },
+          email: {
+            type: 'string',
+          },
+          wallet: {
+            type: 'string',
+          },
+          type: {
+            type: 'string',
+          },
         },
       },
-      required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
+      // required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
     },
     artifacts: {
       title: 'Artifacts Assets',
       type: 'object',
       properties: {
+        namePatron: {
+          type: 'string',
+        },
+        descriptionPatron: {
+          type: 'string',
+        },
         artworkPatron: {
           type: 'string',
         },
-        videoPatron: {
+        // videoPatron: {
+        //   type: 'string',
+        // },
+        nameCreator: {
+          type: 'string',
+        },
+        descriptionCreator: {
           type: 'string',
         },
         artworkCreator: {
           type: 'string',
         },
-        videoCreator: {
+        // videoCreator: {
+        //   type: 'string',
+        // },
+        nameCommunity: {
+          type: 'string',
+        },
+        descriptionCommunity: {
           type: 'string',
         },
         artworkCommunity: {
           type: 'string',
         },
-        videoCommunity: {
-          type: 'string',
-        },
+        // videoCommunity: {
+        //   type: 'string',
+        // },
       },
       required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
     },
@@ -130,6 +152,12 @@ export interface Grant {
 }
 
 export interface Artifacts {
+  namePatron?: string
+  nameCreator?: string
+  nameCommunity?: string
+  descriptionPatron?: string
+  descriptionCreator?: string
+  descriptionCommunity?: string
   artworkPatron?: string
   artworkCreator?: string
   artworkCommunity?: string
@@ -148,7 +176,7 @@ export interface Project {
   walletAddress?: string
 }
 
-export interface ProjectMembers {
+export interface ProjectMember {
   firstName?: string
   lastName?: string
   externalLink?: string
@@ -161,7 +189,7 @@ export interface FormState extends Record<string, unknown> {
   grant: Grant
   artifacts: Artifacts
   project: Project
-  projectMembers: ProjectMembers
+  projectMembers: Array<ProjectMember>
 }
 
 /* This is our local initialState. */
@@ -172,6 +200,12 @@ export const initialState: FormState = {
     season: 0,
   },
   artifacts: {
+    namePatron: undefined,
+    nameCreator: undefined,
+    nameCommunity: undefined,
+    descriptionPatron: undefined,
+    descriptionCreator: undefined,
+    descriptionCommunity: undefined,
     artworkPatron: undefined,
     artworkCreator: undefined,
     artworkCommunity: undefined,
@@ -188,14 +222,16 @@ export const initialState: FormState = {
     completionDate: undefined,
     walletAddress: undefined,
   },
-  projectMembers: {
-    firstName: undefined,
-    lastName: undefined,
-    externalLink: undefined,
-    email: undefined,
-    wallet: undefined,
-    type: undefined,
-  },
+  projectMembers: [
+    {
+      firstName: undefined,
+      lastName: undefined,
+      externalLink: undefined,
+      email: undefined,
+      wallet: undefined,
+      type: undefined,
+    },
+  ],
 }
 
 /*
@@ -231,7 +267,6 @@ export const uischema = {
         },
       ],
     },
-
     {
       type: 'Group',
       label: 'Project',
@@ -275,41 +310,18 @@ export const uischema = {
         },
       ],
     },
+
     {
       type: 'Group',
       label: 'Project Members',
       elements: [
         {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/firstName',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/lastName',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/externalLink',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/email',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/wallet',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/type',
-            },
-          ],
+          type: 'Control',
+          scope: '#/properties/projectMembers',
         },
       ],
     },
+
     {
       type: 'Group',
       label: 'Artifacts Assets',
@@ -317,6 +329,14 @@ export const uischema = {
         {
           type: 'HorizontalLayout',
           elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/namePatron',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/descriptionPatron',
+            },
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkPatron',
@@ -329,6 +349,14 @@ export const uischema = {
             // },
             {
               type: 'Control',
+              scope: '#/properties/artifacts/properties/nameCreator',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/descriptionCreator',
+            },
+            {
+              type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCreator',
               options: { unsafeToRetain: true, format: 'uploadFile' },
             },
@@ -337,6 +365,14 @@ export const uischema = {
             //   scope: '#/properties/artifacts/properties/videoCreator',
             //   options: { unsafeToRetain: true, format: 'uploadFile' },
             // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/nameCommunity',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/descriptionCommunity',
+            },
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCommunity',

@@ -1,4 +1,5 @@
 import { ApolloClient, createHttpLink, NormalizedCacheObject } from '@apollo/client'
+import { WebSocketLink } from '@apollo/client/link/ws'
 import { setContext } from '@apollo/client/link/context'
 import merge from 'deepmerge'
 import { getSession } from 'next-auth/react'
@@ -9,10 +10,11 @@ import { cache } from './'
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 export const createApolloClient = (didToken?: string) => {
-  const httpLink = createHttpLink({
-    uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
-    headers: {},
-    credentials: 'same-origin',
+  const httpLink = new WebSocketLink({
+    uri: 'wss://artizen-dev.hasura.app/v1/graphql',
+    options: {
+      reconnect: true,
+    },
   })
 
   // This sets up a middleware that circumstantially uses the correct query token.

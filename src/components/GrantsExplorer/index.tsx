@@ -3,26 +3,25 @@ import styled from 'styled-components'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { IGrantsWithProjectFragment } from '@types'
 import { rgba, formatStringDate } from '@lib'
 
 interface IGrantsExplorer {
-  grant?: IGrantsWithProjectAndDonationsFragment
+  grant?: IGrantsWithProjectFragment
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
-  const [updateLeaderBoard, setUpdateLeaderBoard] = useState<boolean>(false)
+  const [amountRaised, setAmountRaised] = useState(0)
   if (!grant) return <Spinner />
-  const amountRaised = grant.donations.reduce((accum, obj) => accum + obj.amount * 1000000000, 0) / 1000000000
   return (
     <StyledStickyCanvas>
-      <Wrapper>
+      <Wrapper id="grant-explorer">
         <Nav>
           <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2} disabled>
             previous
           </Button>
           <Copy>
-            <Date>Daily Grant #1</Date>
+            <Date>Today’s Grant</Date>
             <Description>{formatStringDate(grant.date)}</Description>
           </Copy>
           <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2} disabled>
@@ -50,11 +49,9 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
             </div>
           </GrantData>
 
-          {grant.blockchainId && (
-            <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} updatefn={setUpdateLeaderBoard} />
-          )}
+          {grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
 
-          <Leaderboard grantId={grant.id} forceUpdate={updateLeaderBoard} />
+          <Leaderboard grantId={grant.id} {...{ setAmountRaised }} />
         </Body>
       </Wrapper>
     </StyledStickyCanvas>

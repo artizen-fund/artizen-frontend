@@ -1,51 +1,153 @@
 const grantsAbi = [
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
     name: 'AmountsNotEqual',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
+    name: 'ContractShutdown',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
     name: 'DonationTooLow',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: 'grantID',
+        type: 'uint256',
+      },
+    ],
+    name: 'DonationsPaid',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: 'grantID',
+        type: 'uint256',
+      },
+    ],
     name: 'GrantCancelled',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: 'grantID',
+        type: 'uint256',
+      },
+    ],
     name: 'GrantHasEnded',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: 'grantID',
+        type: 'uint256',
+      },
+    ],
     name: 'GrantHasNotEnded',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
     name: 'IncorrectTimesGiven',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
     name: 'InitialAmountHasToBeZero',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
     name: 'InsufficientAmount',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
     name: 'MinimumDonationCantBeZero',
     type: 'error',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'message',
+        type: 'string',
+      },
+    ],
     name: 'ZeroAddressNotAllowed',
     type: 'error',
   },
@@ -74,7 +176,7 @@ const grantsAbi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'grantsId',
+        name: 'grantID',
         type: 'uint256',
       },
       {
@@ -93,23 +195,42 @@ const grantsAbi = [
       {
         indexed: false,
         internalType: 'address',
-        name: 'DAOWallet',
+        name: 'account',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'grantsID',
+        name: 'grantID',
         type: 'uint256',
       },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'winnerAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'DonationSentToWinner',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
       {
         indexed: false,
         internalType: 'uint256',
         name: 'amount',
         type: 'uint256',
       },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
     ],
-    name: 'DonationsTransferred',
+    name: 'FundsWithdrawnFromContract',
     type: 'event',
   },
   {
@@ -180,7 +301,7 @@ const grantsAbi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'grantsID',
+        name: 'grantID',
         type: 'uint256',
       },
       {
@@ -273,31 +394,12 @@ const grantsAbi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
+        internalType: 'bool',
+        name: '_isShutdown',
+        type: 'bool',
       },
     ],
-    name: 'donationsWithdrawnFromContract',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'nftAuthorWallet',
-        type: 'address',
-      },
-    ],
-    name: 'nftAuthorWalletAddressSet',
+    name: 'Shutdown',
     type: 'event',
   },
   {
@@ -343,13 +445,32 @@ const grantsAbi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'grantsID',
+        name: 'grantID',
         type: 'uint256',
       },
     ],
     name: 'cancelGrant',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'cancelled',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -367,9 +488,9 @@ const grantsAbi = [
             type: 'address',
           },
           {
-            internalType: 'uint256',
-            name: 'grantsID',
-            type: 'uint256',
+            internalType: 'address',
+            name: 'nftAuthor',
+            type: 'address',
           },
           {
             internalType: 'uint256',
@@ -398,7 +519,7 @@ const grantsAbi = [
           },
           {
             internalType: 'uint256',
-            name: 'minimumDonationAmount',
+            name: 'topDonatedAmount',
             type: 'uint256',
           },
           {
@@ -407,19 +528,9 @@ const grantsAbi = [
             type: 'address',
           },
           {
-            internalType: 'uint256',
-            name: 'topDonatedAmount',
-            type: 'uint256',
-          },
-          {
-            internalType: 'bool',
-            name: 'cancelled',
-            type: 'bool',
-          },
-          {
-            internalType: 'bool',
-            name: 'ended',
-            type: 'bool',
+            internalType: 'uint64',
+            name: 'minimumDonationAmount',
+            type: 'uint64',
           },
         ],
         internalType: 'struct Grants.Grant',
@@ -442,7 +553,7 @@ const grantsAbi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_grantsId',
+        name: '_grantID',
         type: 'uint256',
       },
       {
@@ -457,13 +568,19 @@ const grantsAbi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'donationCount',
-    outputs: [
+    inputs: [
       {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
+      },
+    ],
+    name: 'donationsPaid',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -473,7 +590,25 @@ const grantsAbi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'grantsID',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address payable',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'emergencyWithdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'grantID',
         type: 'uint256',
       },
     ],
@@ -492,9 +627,9 @@ const grantsAbi = [
             type: 'address',
           },
           {
-            internalType: 'uint256',
-            name: 'grantsID',
-            type: 'uint256',
+            internalType: 'address',
+            name: 'nftAuthor',
+            type: 'address',
           },
           {
             internalType: 'uint256',
@@ -523,7 +658,7 @@ const grantsAbi = [
           },
           {
             internalType: 'uint256',
-            name: 'minimumDonationAmount',
+            name: 'topDonatedAmount',
             type: 'uint256',
           },
           {
@@ -532,19 +667,9 @@ const grantsAbi = [
             type: 'address',
           },
           {
-            internalType: 'uint256',
-            name: 'topDonatedAmount',
-            type: 'uint256',
-          },
-          {
-            internalType: 'bool',
-            name: 'cancelled',
-            type: 'bool',
-          },
-          {
-            internalType: 'bool',
-            name: 'ended',
-            type: 'bool',
+            internalType: 'uint64',
+            name: 'minimumDonationAmount',
+            type: 'uint64',
           },
         ],
         internalType: 'struct Grants.Grant',
@@ -613,9 +738,9 @@ const grantsAbi = [
         type: 'address',
       },
       {
-        internalType: 'uint256',
-        name: 'grantsID',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'nftAuthor',
+        type: 'address',
       },
       {
         internalType: 'uint256',
@@ -644,7 +769,7 @@ const grantsAbi = [
       },
       {
         internalType: 'uint256',
-        name: 'minimumDonationAmount',
+        name: 'topDonatedAmount',
         type: 'uint256',
       },
       {
@@ -653,19 +778,9 @@ const grantsAbi = [
         type: 'address',
       },
       {
-        internalType: 'uint256',
-        name: 'topDonatedAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bool',
-        name: 'cancelled',
-        type: 'bool',
-      },
-      {
-        internalType: 'bool',
-        name: 'ended',
-        type: 'bool',
+        internalType: 'uint64',
+        name: 'minimumDonationAmount',
+        type: 'uint64',
       },
     ],
     stateMutability: 'view',
@@ -713,19 +828,6 @@ const grantsAbi = [
     name: 'initialize',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'nftAuthorWallet',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -815,8 +917,13 @@ const grantsAbi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'grantsID',
+        name: 'grantID',
         type: 'uint256',
+      },
+      {
+        internalType: 'address payable',
+        name: 'winnerAccount',
+        type: 'address',
       },
     ],
     name: 'sendRewards',
@@ -853,12 +960,12 @@ const grantsAbi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_nftAuthorWallet',
-        type: 'address',
+        internalType: 'bool',
+        name: '_isShutdown',
+        type: 'bool',
       },
     ],
-    name: 'setNftAuthorWalletAddress',
+    name: 'shutdown',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -909,19 +1016,20 @@ const grantsAbi = [
   {
     inputs: [
       {
-        internalType: 'address payable',
-        name: 'account',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
-        name: 'amount',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'withdrawDonations',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'totalDonationsPerGrant',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
 ]

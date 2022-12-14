@@ -1,68 +1,55 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Table, TableCell, TableAvatar } from '@components'
-import { breakpoint, palette } from '@theme'
-import { useLazyQuery } from '@apollo/client'
-import { formatUSDC, rgba } from '@lib'
-import { IDonationsQuery } from '@types'
+import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
+import { useSubscription } from '@apollo/client'
+import { reduceWithPrecision } from '@lib'
+import { IDonationsSubscription } from '@types'
 import { SUBSCRIBE_DONATIONS } from '@gql'
 // import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
   limit?: number
   grantId: string
-  forceUpdate: boolean
+  setAmountRaised: (n: number) => void
 }
-
-//TODO Leaderboard needs to subscribe to the donation table, so it receives live updates
 
 const DEFAULT_LIMIT = 3
 
-const Leaderboard = ({ grantId, forceUpdate }: ILeaderboard) => {
+const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
-  const [loadSubcription, { data, error: errorSubcribingDonations }] = useLazyQuery<IDonationsQuery>(
-    SUBSCRIBE_DONATIONS,
-    {
-      fetchPolicy: 'no-cache',
-      variables: {
-        limit,
-        where: {
-          _and: [
-            {
-              grantId: {
-                _eq: grantId,
-              },
-              status: {
-                _eq: 'confirmed',
-              },
-              user: {
-                hideFromLeaderboard: {
-                  _eq: false,
-                },
+  const { loading, error, data } = useSubscription<IDonationsSubscription>(SUBSCRIBE_DONATIONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      limit,
+      where: {
+        _and: [
+          {
+            grantId: {
+              _eq: grantId,
+            },
+            status: {
+              _eq: 'confirmed',
+            },
+            user: {
+              hideFromLeaderboard: {
+                _eq: false,
               },
             },
-          ],
-        },
+          },
+        ],
       },
     },
-  )
+  })
 
-  console.log(data)
-
-  useEffect(() => {
-    loadSubcription()
-  }, [])
-
-  useEffect(() => {
-    forceUpdate && loadSubcription()
-  }, [forceUpdate])
-
-  const loadedDonations = data && data.Donations ? data.Donations : []
-
-  if (errorSubcribingDonations) {
-    console.error('error donation subscription', errorSubcribingDonations)
+  if (error) {
+    console.error('error donation subscription', error)
   }
+
+  useEffect(() => {
+    if (!data) return
+    setAmountRaised(reduceWithPrecision(data.Donations.map(d => d.amount))((a: number, b: number) => a + b))
+  }, [data])
 
   const sideItem = (
     <Button outline level={2} onClick={() => setLimit(limit === DEFAULT_LIMIT ? 9999 : DEFAULT_LIMIT)}>
@@ -70,17 +57,22 @@ const Leaderboard = ({ grantId, forceUpdate }: ILeaderboard) => {
     </Button>
   )
 
-  return (
+  return !!loading || !data?.Donations ? (
+    <Spinner />
+  ) : (
     <StyledTable title="Leaderboard" {...{ sideItem }}>
-      {loadedDonations.map((donation, index) => (
-        <TableCell key={`donation-${index}`} highlight>
-          <div>
-            <TableAvatar profileImage={donation.user!.profileImage} />
-            <Name>{donation.user?.artizenHandle}</Name>
-          </div>
-          <Amount>{donation.amount} ETH</Amount>
-        </TableCell>
-      ))}
+      {data?.Donations.map(
+        (donation, index) =>
+          !!donation.user && (
+            <TableCell key={`donation-${index}`} highlight>
+              <div>
+                <TableAvatar profileImage={donation.user.profileImage} />
+                <Name>{donation.user?.artizenHandle}</Name>
+              </div>
+              <Amount>{donation.amount} ETH</Amount>
+            </TableCell>
+          ),
+      )}
     </StyledTable>
   )
 }
