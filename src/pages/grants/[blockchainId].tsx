@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import { LOAD_GRANTS } from '@gql'
 import moment from 'moment-timezone'
+import { LOAD_GRANTS } from '@gql'
 import {
   FeaturedArt,
   FeaturedArtPanel,

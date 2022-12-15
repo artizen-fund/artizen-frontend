@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
+import moment from 'moment-timezone'
 import { Button } from '@components'
 import { palette, typography } from '@theme'
 import { GET_ADJACENT_GRANT } from '@gql'
@@ -15,6 +16,8 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
   const {
     query: { blockchainId },
   } = useRouter()
+
+  const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
 
   const { data: prevGrantData } = useQuery<IGetAdjacentGrantQuery>(GET_ADJACENT_GRANT, {
     fetchPolicy: 'no-cache',
@@ -51,6 +54,11 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
           {
             blockchainId: {
               _gt: grant.blockchainId,
+            },
+          },
+          {
+            startingDate: {
+              _lt: loadingAngelesTime,
             },
           },
         ],
