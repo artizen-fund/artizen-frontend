@@ -177,9 +177,9 @@ export const useGrant = () => {
       nftOwner: address,
       nftAuthor: grant.submission?.project?.walletAddress,
       grantsID: 0,
-      tokenID1: latestTokenId.sub(2),
+      tokenID1: latestTokenId,
       tokenID2: latestTokenId.sub(1),
-      tokenID3: latestTokenId,
+      tokenID3: latestTokenId.sub(2),
       startTime, // must be timestamp in seconds
       endTime,
       minimumDonationAmount: ethers.utils.parseEther('0.008'),

@@ -43,11 +43,6 @@ const CreateGrants = () => {
     return <div>Error loading grant</div>
   }
 
-  console.log(
-    'loadedGrantData?.Grants[0]  ',
-    moment.tz('America/Los_Angeles').isBefore(moment.tz(loadedGrantData?.Grants[0].closingDate, 'America/Los_Angeles')),
-  )
-
   const grant = loadedGrantData?.Grants[0]
   const isGrantDraft = grant?.status === 'draft'
   const isGrantPublished = grant?.status === 'publised'
