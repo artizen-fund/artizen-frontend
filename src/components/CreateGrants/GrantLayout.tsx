@@ -12,13 +12,6 @@ const GrantLayout = ({ grant }: IGrantLayout) => {
   const startingDate = moment(grant.startingDate).format('MM-DD-YYYY HH:mm:ss')
   const closingDate = moment(grant.closingDate).format('MM-DD-YYYY HH:mm:ss')
 
-  const startTime = moment.tz(grant.startingDate, 'America/Los_Angeles').unix()
-  const startTimeF = moment(grant.startingDate).unix()
-  const endTime = moment.tz(grant.startingDate, 'America/Los_Angeles').unix()
-
-  console.log('startTime  ', startTime)
-  console.log('startTime final ', startTimeF)
-
   console.log('grant   ', grant)
   return (
     <>

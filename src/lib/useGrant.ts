@@ -162,8 +162,8 @@ export const useGrant = () => {
     console.log('grant.startTime   ', grant.startingDate)
     console.log('grant.closingDate   ', grant.closingDate)
 
-    const startTime = moment.tz(grant.startingDate, 'America/Los_Angeles').unix()
-    const endTime = moment.tz(grant.startingDate, 'America/Los_Angeles').unix()
+    const startTime = moment(grant.startingDate).unix()
+    const endTime = moment(grant.startingDate).unix()
 
     // const startingDate = Math.floor(Date.now() / 1000)
     // const endTime = (Number(startingDate) + 60 * 10).toString()
