@@ -168,7 +168,7 @@ export const useGrant = () => {
     console.log('grant.startTime   ', grant.startingDate)
     console.log('grant.closingDate   ', grant.closingDate)
 
-    // EK TESTING: 
+    // EK TESTING:
     // Date.now() returns current time in *milliseconds* since epoch
     // I believe that startTime and endTime timestamps on contract should be in seconds
     // please confirm with Z
