@@ -275,7 +275,7 @@ const NewGrantForm = () => {
         {
           status: 'draft',
           startingDate: staringTimeRaw,
-          closingDate: moment(staringTimeRaw).add(10, 'm').format('YYYY-MM-DDTHH:mm:ss'),
+          closingDate: moment(staringTimeRaw).add(length, 'm').format('YYYY-MM-DDTHH:mm:ss'),
           date: startingDate,
           submission: {
             data: {
