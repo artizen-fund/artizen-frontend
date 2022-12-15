@@ -13,7 +13,15 @@ const AlternatingPanel = ({ list, image, imageDark, title, copy, imageOnRight, c
         <Copy>{copy}</Copy>
         <IconStack>
           {list.map((item, index) => (
-            <Icon outline glyphOutline key={`rand-${index}`} glyph={item.glyph} label={item.label} />
+            <Icon
+              color="slate"
+              darkColor="moon"
+              outline
+              glyphOutline
+              key={`rand-${index}`}
+              glyph={item.glyph}
+              label={item.label}
+            />
           ))}
         </IconStack>
         {children}

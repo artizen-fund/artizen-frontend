@@ -12,7 +12,7 @@ export const INSERT_GRANTS = gql`
 `
 
 export const LOAD_GRANTS = gql`
-  fragment GrantsWithProjectAndDonations on Grants {
+  fragment GrantsWithProject on Grants {
     id
     date
     status
@@ -38,10 +38,13 @@ export const LOAD_GRANTS = gql`
       project {
         id
         impact
+        impactTags
         longline
         description
         creationDate
         completionDate
+        walletAddress
+        title
         members {
           id
           type
@@ -56,22 +59,24 @@ export const LOAD_GRANTS = gql`
             publicAddress
           }
         }
-        title
-      }
-    }
-    donations {
-      amount
-      user {
-        id
-        profileImage
-        artizenHandle
       }
     }
   }
 
-  query loadGrants($where: Grants_bool_exp!) {
-    Grants(where: $where) {
-      ...GrantsWithProjectAndDonations
+  query loadGrants($where: Grants_bool_exp, $order_by: [Grants_order_by!], $limit: Int) {
+    Grants(where: $where, order_by: $order_by, limit: $limit) {
+      ...GrantsWithProject
+    }
+  }
+`
+
+export const UPDATE_GRANTS = gql`
+  mutation updateGrants($_set: Grants_set_input, $where: Grants_bool_exp!) {
+    update_Grants(_set: $_set, where: $where) {
+      returning {
+        id
+        status
+      }
     }
   }
 `

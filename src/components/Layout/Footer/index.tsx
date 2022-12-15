@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba, LayoutContext, textCrop } from '@lib'
+import { rgba, LayoutContext, textCrop, scrollToGrantExplorer } from '@lib'
 import { Button, PagePadding } from '@components'
 import SocialLinks from './SocialLinks'
 
@@ -17,27 +17,44 @@ const Footer = () => {
               <Lists>
                 <MainList>
                   <Item>
-                    <Link href="/leaderboard">Mission</Link>
+                    <Link target="_blank" href="https://help.artizen.fund/en/articles/6767446-our-mission">
+                      Mission
+                    </Link>
                   </Item>
                   <Item>
-                    <Link href="/leaderboard">Leaderboard</Link>
+                    <Link target="_blank" href="https://help.artizen.fund/en/articles/6604052-what-are-artifacts">
+                      Artifacts
+                    </Link>
                   </Item>
                   <Item>
-                    <Link href="/leaderboard">How It Works</Link>
+                    <Link
+                      target="_blank"
+                      href="https://help.artizen.fund/en/articles/6782291-welcome-to-the-artizen-fund"
+                    >
+                      How It Works
+                    </Link>
                   </Item>
                   <Item>
-                    <Link href="/leaderboard">Community</Link>
+                    <Link target="_blank" href="https://help.artizen.fund/en/articles/6761187-join-a-vibrant-community">
+                      Community
+                    </Link>
                   </Item>
                 </MainList>
                 <SubList>
                   <Item>
-                    <Link href="/leaderboard">Contact</Link>
+                    <Link target="_blank" href="https://help.artizen.fund/en/articles/4758440-connect-with-us">
+                      Contact
+                    </Link>
                   </Item>
                   <Item>
-                    <Link href="/leaderboard">Careers</Link>
+                    <Link target="_blank" href="https://help.artizen.fund">
+                      Help Center
+                    </Link>
                   </Item>
                   <Item>
-                    <Link href="/leaderboard">Press</Link>
+                    <Link target="_blank" href="https://help.artizen.fund/en/articles/6746680-reward-positive-impact">
+                      Impact
+                    </Link>
                   </Item>
                 </SubList>
               </Lists>
@@ -46,7 +63,7 @@ const Footer = () => {
           <Column>
             <Headline>Join the mission to fund human creativity.</Headline>
             <Buttons>
-              <Button onClick={() => setVisibleShelf?.('donate')} stretch inverted level={1} glyph="donate">
+              <Button onClick={() => scrollToGrantExplorer()} stretch inverted level={1} glyph="donate">
                 Donate
               </Button>
               <Button onClick={() => setVisibleModal?.('share')} stretch inverted outline level={1}>
@@ -65,10 +82,14 @@ const Footer = () => {
           <Credits>Open source platform made with ❤️ by a globally distributed team.</Credits>
           <Legal>
             <Item>
-              <Link href="/leaderboard">Privacy Policy</Link>
+              <Link target="_blank" href="https://help.artizen.fund/en/articles/4761373-privacy-policy">
+                Privacy Policy
+              </Link>
             </Item>
             <Item>
-              <Link href="/leaderboard">Terms &amp; Conditions</Link>
+              <Link target="_blank" href="https://help.artizen.fund/en/articles/4761356-terms-of-use">
+                Terms &amp; Conditions
+              </Link>
             </Item>
           </Legal>
         </BottomWrapper>

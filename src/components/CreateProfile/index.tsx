@@ -36,11 +36,19 @@ const CreateProfile = () => {
       }
       // todo: replace the force-lowercase with a mutation event in hasura
       // todo: insert hideFromLeaderboard preference if we have it already
+
+      // firstName: {
+      // lastName: {
+      // email: {
+      // artizenHandle: {
       await updateUser({
         variables: {
-          ...loggedInUser,
+          id: loggedInUser.id,
+          firstName: loggedInUser.firstName,
+          lastName: loggedInUser.lastName,
+          email: loggedInUser.email,
           ...data,
-          artizenHandle: data.artizenHandle?.toLowerCase(),
+          artizenHandle: data.artizenHandle?.toLowerCase() || loggedInUser.artizenHandle,
           profileImage,
         },
       })

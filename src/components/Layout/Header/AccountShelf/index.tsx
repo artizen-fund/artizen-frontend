@@ -55,15 +55,15 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
             <Button onClick={() => goToSettings('profile')} stretch outline level={1} glyph="face">
               Profile
             </Button>
-            <Button onClick={() => goToSettings('wallet')} stretch outline level={1} glyph="wallet">
+            {/*<Button onClick={() => goToSettings('wallet')} stretch outline level={1} glyph="wallet">
               Wallet
-            </Button>
+            </Button>*/}
             <Button onClick={() => goToSettings('settings')} stretch outline level={1} glyph="gear">
               Settings
             </Button>
-            <Button onClick={() => goToSettings('notifications')} stretch outline level={1} glyph="bell">
+            {/*<Button onClick={() => goToSettings('notifications')} stretch outline level={1} glyph="bell">
               Notifications
-            </Button>
+            </Button>*/}
           </Buttons>
         </Top>
         <div>
@@ -83,7 +83,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
           </Button>
         </div>
       </Commands>
-      <AccountStats {...{ stats }} />
+      {/*<AccountStats {...{ stats }} />*/}
       <Illustration />
     </Wrapper>
   )
@@ -93,18 +93,18 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto;
-  grid-template-areas: 'commands' 'illustration' 'stats';
+  grid-template-areas: 'commands' 'illustration';
   gap: 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     grid-template-rows: auto;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas: 'illustration stats commands';
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 'illustration commands';
     gap: 48px;
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     grid-template-rows: auto;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas: 'illustration stats commands';
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 'illustration commands';
     gap: 64px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
