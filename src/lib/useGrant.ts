@@ -224,6 +224,8 @@ export const useGrant = () => {
   }
 
   const endGrant = async (grantId: number, winnerAddress: string) => {
+    console.log('grantId   ', grantId)
+    console.log('winnerAddress   ', winnerAddress)
     const grantTransaction = await grantsContract.sendRewards(grantId, winnerAddress)
     await grantTransaction.wait()
 

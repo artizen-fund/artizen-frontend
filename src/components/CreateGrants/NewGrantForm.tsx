@@ -6,7 +6,6 @@ import moment from 'moment-timezone'
 
 import {
   INSERT_GRANTS,
-  INSERT_ARTIFACTS,
   INSERT_PROJECTS,
   INSERT_PROJECTS_MEMBERS,
   GET_USERS,
@@ -16,7 +15,6 @@ import {
 } from '@gql'
 import {
   IInsert_GrantsMutation,
-  IInsert_ArtifactsMutation,
   IInsert_ProjectsMutation,
   IInsert_ProjectMembersMutation,
   ILoadGrantsQuery,
@@ -43,16 +41,13 @@ const NewGrantForm = () => {
   const { push } = useRouter()
 
   const [insertGrantsM] = useMutation<IInsert_GrantsMutation>(INSERT_GRANTS)
-  const [insertArtifactsM] = useMutation<IInsert_ArtifactsMutation>(INSERT_ARTIFACTS)
   const [insertProjectsM] = useMutation<IInsert_ProjectsMutation>(INSERT_PROJECTS)
   const [insertProjecstMemberInDB] = useMutation<IInsert_ProjectMembersMutation>(INSERT_PROJECTS_MEMBERS)
 
   //users
-  const [getUser, { error }] = useLazyQuery(GET_USERS)
+  const [getUser] = useLazyQuery(GET_USERS)
   const [insertUser] = useMutation(CREATE_USERS)
   const [updateUser] = useMutation(UPDATE_USERS)
-
-  console.log('error loading user', error)
 
   const [data, setData] = useState<FormState>(initialState)
 
@@ -84,13 +79,18 @@ const NewGrantForm = () => {
   const startingDateBase = grant?.closingDate || moment.tz('America/Los_Angeles')
   const startingDate = moment(startingDateBase).add(1, 's')
 
-  console.log('loadedGrantData    ', loadedGrantData)
-
-  console.log('startingDate  ', startingDate.format())
+  const thereIsOneLead = (projectMembersR: Array<ProjectMember>) =>
+    projectMembersR.filter(({ type, wallet }) => type === 'lead' && wallet !== undefined).length === 1
 
   const saveChanges = async (formData: FormState) => {
     console.log('formData   ', formData)
-    //2022-12-14T16:46:21
+
+    console.log('thereIsOneLead(formData.projectMembers)  ', thereIsOneLead(formData.projectMembers))
+
+    //check user
+    if (!thereIsOneLead(formData.projectMembers)) {
+      alert(' You need to add one project member with role lead and a blockchain wallet')
+    }
 
     setProcessing(true)
 
@@ -160,12 +160,23 @@ const NewGrantForm = () => {
       const { data, error } = await getUser({
         variables: {
           where: {
-            email: {
-              _eq: member.email,
-            },
+            ...(member.email && {
+              email: {
+                _eq: member.email,
+              },
+            }),
+            ...(member.wallet && {
+              email: {
+                _eq: member.email,
+              },
+            }),
           },
         },
       })
+
+      if (error) {
+        throw new Error('Error loading user')
+      }
 
       console.log('error loading user  ', error)
 
@@ -215,7 +226,7 @@ const NewGrantForm = () => {
             _set: {
               firstName: member.firstName,
               lastName: member.lastName,
-              // publicAddress: member?.wallet,
+              ...(member?.wallet && { publicAddress: member?.wallet }),
               externalLink: member.externalLink,
             },
           },
