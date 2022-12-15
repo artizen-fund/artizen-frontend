@@ -42,7 +42,10 @@ export const useGrant = () => {
     return response.json()
   }
 
-  const generateMetadata = async (grant: IGrantsWithProjectFragment) => {
+  const mintNFTs = async (grant: IGrantsWithProjectFragment, nftOwner: string | undefined) => {
+    if (!nftOwner) {
+      throw new Error('Non address')
+    }
     // const grant = mockGrants[0]
     console.log('grant.submission', grant)
     //map artifacts data
@@ -133,7 +136,12 @@ export const useGrant = () => {
         }),
       )
 
-      return metadata
+      const mintTransaction = await nftContract.safeMint(nftOwner, `ipfs://${metadata.IpfsHash}`)
+      await mintTransaction.wait()
+
+      console.log('mintTransaction   ', mintTransaction)
+
+      return 'completed'
     })
 
     return Promise.all(metadataUris)
@@ -141,24 +149,11 @@ export const useGrant = () => {
 
   const publish = async (grant: IGrantsWithProjectFragment) => {
     // const grant = mockGrants[0]
-    const metadataUris = await generateMetadata(grant)
+    const status = await mintNFTs(grant, address)
 
-    console.log('IPFS metadataUris     ', metadataUris)
+    console.log('status  ', status)
 
-    if (!metadataUris) {
-      throw new Error('Non metadataUris from NFTs publish')
-    }
-
-    // Mint a new NFTs
-    for (let i = 0; i < metadataUris.length; i++) {
-      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadataUris[i].IpfsHash}`)
-      await mintTransaction.wait()
-
-      console.log('mintTransaction   ', mintTransaction)
-
-      // update the grant data in databse
-    }
-
+    //TODO: Need to know what's the order of this tokens so they can be map to the grant tuple correctnly
     const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
 
     // Approve Grant contract to use the new NFT
