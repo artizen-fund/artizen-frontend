@@ -168,12 +168,18 @@ export const useGrant = () => {
     console.log('grant.startTime   ', grant.startingDate)
     console.log('grant.closingDate   ', grant.closingDate)
 
-    const startingDate = Date.now()
+    // EK TESTING: 
+    // Date.now() returns current time in *milliseconds* since epoch
+    // I believe that startTime and endTime timestamps on contract should be in seconds
+    // please confirm with Z
+    // => THIS DOES ALLOW sendRewards to be called
+    const startingDate = Math.floor(Date.now() / 1000)
     const endTime = (Number(startingDate) + 60 * 10).toString()
 
     console.log('grant starting time', startingDate)
     console.log('grant  endTime', endTime)
 
+    // COMPARE ABOVE WITH EXISTING COMMENT BELOW ON startTime
     const grantTuple = {
       nftContract: nftContractAddress,
       nftOwner: address,
