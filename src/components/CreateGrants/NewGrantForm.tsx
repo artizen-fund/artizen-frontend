@@ -48,11 +48,13 @@ const NewGrantForm = () => {
   const [insertProjecstMemberInDB] = useMutation<IInsert_ProjectMembersMutation>(INSERT_PROJECTS_MEMBERS)
 
   //users
-  const [getUser] = useLazyQuery<IGetUsersQuery>(GET_USERS)
+  const [getUser, error] = useLazyQuery<IGetUsersQuery>(GET_USERS)
   const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
   const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS)
 
   const [data, setData] = useState<FormState>(initialState)
+
+  console.log('error  ', error)
 
   console.log('initialState   ', initialState)
 
@@ -160,7 +162,7 @@ const NewGrantForm = () => {
 
       console.log('gets to loaded getUser', member.email)
 
-      const { data, error } = await getUser({
+      const data = await getUser({
         variables: {
           where: {
             ...(member.email && {
@@ -169,19 +171,13 @@ const NewGrantForm = () => {
               },
             }),
             ...(member.wallet && {
-              email: {
-                _eq: member.email,
+              publicAddress: {
+                _eq: member.wallet,
               },
             }),
           },
         },
       })
-
-      console.log('error loading user  ', error)
-
-      if (error) {
-        throw new Error('Error loading user')
-      }
 
       console.log('error loading user  ', error)
 

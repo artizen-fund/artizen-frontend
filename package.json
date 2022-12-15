@@ -12,7 +12,7 @@
   "scripts": {
     "clean": "rm -rf .next",
     "generate": "node ./tools/generate.js",
-    "dev": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- next dev",
+    "dev": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- next dev",
     "develop": "yarn codegen-local && yarn dev",
     "build": "yarn codegen && next build",
     "build-local": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- yarn build",
