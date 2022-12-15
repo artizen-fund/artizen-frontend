@@ -158,7 +158,7 @@ const NewGrantForm = () => {
         throw new Error("You're trying to add a user without email")
       }
 
-      console.log('gets to loaded getUser')
+      console.log('gets to loaded getUser', member.email)
 
       const { data, error } = await getUser({
         variables: {
@@ -176,6 +176,8 @@ const NewGrantForm = () => {
           },
         },
       })
+
+      console.log('error loading user  ', error)
 
       if (error) {
         throw new Error('Error loading user')
@@ -229,7 +231,6 @@ const NewGrantForm = () => {
             _set: {
               firstName: member.firstName,
               lastName: member.lastName,
-              ...(member?.wallet && { publicAddress: member?.wallet }),
               externalLink: member.externalLink,
             },
           },
