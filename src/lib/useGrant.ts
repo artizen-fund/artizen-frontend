@@ -57,9 +57,9 @@ export const useGrant = () => {
     const inpactTags = grant.submission?.project?.impactTags?.split(',') || []
 
     const leadMemberTraitType = project?.members.map(({ user, type }) => {
-      console.log('user type, ', type === 'leader')
+      console.log('user type, ', type === 'lead')
       console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
-      if (type === 'leader') {
+      if (type === 'lead') {
         return `${user?.firstName} ${user?.lastName}`
       }
       return null
