@@ -5,66 +5,66 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    // grant: {
-    //   title: 'Grant',
-    //   type: 'object',
-    //   properties: {
-    //     length: {
-    //       type: 'integer',
-    //       title: 'Grant length in minutes (It will be hours after testing)',
-    //     },
-    //     goal: {
-    //       type: 'integer',
-    //     },
-    //     season: {
-    //       type: 'integer',
-    //     },
-    //   },
-    //   required: ['season', 'goal', 'length'],
-    // },
-    // project: {
-    //   title: 'Project',
-    //   type: 'object',
-    //   properties: {
-    //     title: {
-    //       type: 'string',
-    //     },
-    //     longline: {
-    //       type: 'string',
-    //     },
-    //     description: {
-    //       type: 'string',
-    //     },
-    //     impact: {
-    //       type: 'string',
-    //     },
-    //     impactTags: {
-    //       type: 'string',
-    //     },
-    //     creationDate: {
-    //       type: 'string',
-    //       format: 'date',
-    //       description: 'schema-based time picker',
-    //     },
-    //     completionDate: {
-    //       type: 'string',
-    //       format: 'date',
-    //     },
-    //     walletAddress: {
-    //       type: 'string',
-    //     },
-    //   },
-    //   required: [
-    //     'title',
-    //     'longline',
-    //     'description',
-    //     'impact',
-    //     'impactTags',
-    //     'creationDate',
-    //     'completionDate',
-    //     'walletAddress',
-    //   ],
-    // },
+    grant: {
+      title: 'Grant',
+      type: 'object',
+      properties: {
+        length: {
+          type: 'integer',
+          title: 'Grant length in minutes (It will be hours after testing)',
+        },
+        goal: {
+          type: 'integer',
+        },
+        season: {
+          type: 'integer',
+        },
+      },
+      required: ['season', 'goal', 'length'],
+    },
+    project: {
+      title: 'Project',
+      type: 'object',
+      properties: {
+        title: {
+          type: 'string',
+        },
+        longline: {
+          type: 'string',
+        },
+        description: {
+          type: 'string',
+        },
+        impact: {
+          type: 'string',
+        },
+        impactTags: {
+          type: 'string',
+        },
+        creationDate: {
+          type: 'string',
+          format: 'date',
+          description: 'schema-based time picker',
+        },
+        completionDate: {
+          type: 'string',
+          format: 'date',
+        },
+        walletAddress: {
+          type: 'string',
+        },
+      },
+      required: [
+        'title',
+        'longline',
+        'description',
+        'impact',
+        'impactTags',
+        'creationDate',
+        'completionDate',
+        'walletAddress',
+      ],
+    },
 
     projectMembers: {
       title: 'Project Member',
@@ -94,32 +94,32 @@ export const schema: JsonSchema = {
       },
       // required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
     },
-    // artifacts: {
-    //   title: 'Artifacts Assets',
-    //   type: 'object',
-    //   properties: {
-    //     artworkPatron: {
-    //       type: 'string',
-    //     },
-    //     // videoPatron: {
-    //     //   type: 'string',
-    //     // },
+    artifacts: {
+      title: 'Artifacts Assets',
+      type: 'object',
+      properties: {
+        artworkPatron: {
+          type: 'string',
+        },
+        // videoPatron: {
+        //   type: 'string',
+        // },
 
-    //     artworkCreator: {
-    //       type: 'string',
-    //     },
-    //     // videoCreator: {
-    //     //   type: 'string',
-    //     // },
-    //     artworkCommunity: {
-    //       type: 'string',
-    //     },
-    //     // videoCommunity: {
-    //     //   type: 'string',
-    //     // },
-    //   },
-    //   required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
-    // },
+        artworkCreator: {
+          type: 'string',
+        },
+        // videoCreator: {
+        //   type: 'string',
+        // },
+        artworkCommunity: {
+          type: 'string',
+        },
+        // videoCommunity: {
+        //   type: 'string',
+        // },
+      },
+      required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
+    },
   },
 }
 
@@ -216,72 +216,72 @@ export const initialState: FormState = {
 export const uischema = {
   type: 'VerticalLayout',
   elements: [
-    // {
-    //   type: 'Group',
-    //   label: 'Grant',
-    //   elements: [
-    //     {
-    //       type: 'HorizontalLayout',
-    //       elements: [
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/grant/properties/length',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/grant/properties/goal',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/grant/properties/season',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
-    // {
-    //   type: 'Group',
-    //   label: 'Project',
-    //   elements: [
-    //     {
-    //       type: 'HorizontalLayout',
-    //       elements: [
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/title',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/longline',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/description',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/impact',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/impactTags',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/creationDate',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/completionDate',
-    //         },
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/project/properties/walletAddress',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
+    {
+      type: 'Group',
+      label: 'Grant',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/length',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/goal',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/season',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'Group',
+      label: 'Project',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/title',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/longline',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/description',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/impact',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/impactTags',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/creationDate',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/completionDate',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/walletAddress',
+            },
+          ],
+        },
+      ],
+    },
 
     {
       type: 'Group',
@@ -294,48 +294,48 @@ export const uischema = {
       ],
     },
 
-    // {
-    //   type: 'Group',
-    //   label: 'Artifacts Assets',
-    //   elements: [
-    //     {
-    //       type: 'HorizontalLayout',
-    //       elements: [
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkPatron',
-    //           options: { format: 'uploadFile' },
-    //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoPatron',
-    //         //   options: { format: 'uploadFile' },
-    //         // },
+    {
+      type: 'Group',
+      label: 'Artifacts Assets',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkPatron',
+              options: { format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoPatron',
+            //   options: { format: 'uploadFile' },
+            // },
 
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkCreator',
-    //           options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoCreator',
-    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkCreator',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoCreator',
+            //   options: { unsafeToRetain: true, format: 'uploadFile' },
+            // },
 
-    //         {
-    //           type: 'Control',
-    //           scope: '#/properties/artifacts/properties/artworkCommunity',
-    //           options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         },
-    //         // {
-    //         //   type: 'Control',
-    //         //   scope: '#/properties/artifacts/properties/videoCommunity',
-    //         //   options: { unsafeToRetain: true, format: 'uploadFile' },
-    //         // },
-    //       ],
-    //     },
-    //   ],
-    // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/artworkCommunity',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+            // {
+            //   type: 'Control',
+            //   scope: '#/properties/artifacts/properties/videoCommunity',
+            //   options: { unsafeToRetain: true, format: 'uploadFile' },
+            // },
+          ],
+        },
+      ],
+    },
   ],
 }
