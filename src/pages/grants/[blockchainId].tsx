@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import { LOAD_GRANTS } from '@gql'
-import { useRef } from 'react'
 import moment from 'moment-timezone'
 import {
   FeaturedArt,
@@ -18,51 +18,69 @@ import {
   ApplyForFundingBlurb,
   Faq,
 } from '@components'
-import { rgba, TODAY } from '@lib'
+import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels } from '@copy/home'
 import { ILoadGrantsQuery } from '@types'
 
+type QueryCondition = Record<string, Record<string, string>>
+
 const GrantPage = () => {
   const {
-    query: { date },
+    query: { blockchainId },
   } = useRouter()
-  const parsedDataRef = useRef('')
 
-  if (date === TODAY && parsedDataRef.current === '') {
-    //2022-12-14T17:11:12-08:00
-    const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
-    parsedDataRef.current = loadingAngelesTime
-    console.log('set today time now    ', loadingAngelesTime)
-  }
+  const [conditions, setConditions] = useState<Array<QueryCondition>>([])
+
+  useEffect(() => {
+    if (!!blockchainId && typeof blockchainId !== 'object' && parseInt(blockchainId)) {
+      setConditions([
+        {
+          blockchainId: {
+            _eq: blockchainId,
+          },
+        },
+      ])
+    } else {
+      // get open grant
+      const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
+      setConditions([
+        {
+          startingDate: {
+            _lt: loadingAngelesTime,
+          },
+        },
+        {
+          closingDate: {
+            _gte: loadingAngelesTime,
+          },
+        },
+      ])
+    }
+  }, [blockchainId])
 
   const {
     loading,
     data: loadedGrantData,
     error: errorLoadingGrant,
   } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
-    skip: date === undefined,
     variables: {
+      limit: 1,
       where: {
         _and: [
           {
-            startingDate: {
-              _lte: parsedDataRef.current,
-            },
-            closingDate: {
-              _gte: parsedDataRef.current,
+            status: {
+              _eq: 'published',
             },
           },
+          ...conditions,
         ],
       },
     },
   })
 
-  console.log('loadedGrantData   ', loadedGrantData)
-
   if (errorLoadingGrant) {
-    console.error('Error loading grant error   ', errorLoadingGrant)
-    throw new Error('Non Grant Loaded')
+    console.error('Error loading grant error', errorLoadingGrant)
   }
 
   const activeGrant = loadedGrantData?.Grants[0]
@@ -100,12 +118,6 @@ const GrantPage = () => {
     </Layout>
   )
 }
-
-// export async function getServerSideProps(context) {
-//   return {
-//     props: {}, // will be passed to the page component as props
-//   }
-// }
 
 const Header = styled(props => <PagePadding {...props} />)`
   h1 {

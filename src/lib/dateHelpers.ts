@@ -3,7 +3,7 @@ import { IGrantsWithProjectFragment } from '@types'
 
 // we're storing some dates as yyyy-mm-dd, convert to pretty string
 export const formatStringDate = (dumbDate: string) => {
-  const realDate = new Date(dumbDate)
+  const realDate = new Date(`${dumbDate}T00:00:00`)
   const stringDate = `${monthNames[realDate.getMonth()]} ${realDate.getDate()}, ${realDate.getFullYear()}`
   return stringDate
 }

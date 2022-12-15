@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import { Button } from '@components'
 import { palette, typography } from '@theme'
@@ -11,6 +12,10 @@ interface IGrantsNavigator {
 }
 
 const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
+  const {
+    query: { blockchainId },
+  } = useRouter()
+
   const { data: prevGrantData } = useQuery<IGetAdjacentGrantQuery>(GET_ADJACENT_GRANT, {
     fetchPolicy: 'no-cache',
     variables: {
@@ -20,11 +25,6 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
           {
             status: {
               _eq: 'published',
-            },
-          },
-          {
-            closingDate: {
-              _lt: grant.startingDate,
             },
           },
           {
@@ -49,11 +49,6 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
             },
           },
           {
-            startingDate: {
-              _gt: grant.closingDate,
-            },
-          },
-          {
             blockchainId: {
               _gt: grant.blockchainId,
             },
@@ -69,21 +64,21 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
         glyphOnly
         glyph="arrow"
         glyphRotation={90}
-        href={`/grants/prevGrantData?.Grants?.[0].date`}
+        href={`/grants/${prevGrantData?.Grants?.[0]?.blockchainId || 'today'}`}
         level={2}
         disabled={!prevGrantData?.Grants || prevGrantData.Grants.length < 1}
       >
         previous
       </Button>
       <Copy>
-        <GrantDate>Today’s Grant</GrantDate>
+        <GrantDate>{blockchainId === 'today' ? 'Today’s Grant' : `Grant #${grant.blockchainId}`}</GrantDate>
         <Description>{formatStringDate(grant.date)}</Description>
       </Copy>
       <Button
         glyphOnly
         glyph="arrow"
         glyphRotation={-90}
-        href={`/grants/nextGrantData?.Grants?.[0].date`}
+        href={`/grants/${nextGrantData?.Grants?.[0]?.blockchainId || 'today'}`}
         level={2}
         disabled={!nextGrantData?.Grants || nextGrantData.Grants.length < 1}
       >
