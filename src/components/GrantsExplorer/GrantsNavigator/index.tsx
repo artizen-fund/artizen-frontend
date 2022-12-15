@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import { Button } from '@components'
@@ -12,13 +11,6 @@ interface IGrantsNavigator {
 }
 
 const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
-  const router = useRouter()
-
-  const moveToGrant = (date?: string) => {
-    if (!date) return
-    router.push(`/grants/${date}`)
-  }
-
   const { data: prevGrantData } = useQuery<IGetAdjacentGrantQuery>(GET_ADJACENT_GRANT, {
     fetchPolicy: 'no-cache',
     variables: {
@@ -77,7 +69,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
         glyphOnly
         glyph="arrow"
         glyphRotation={90}
-        onClick={() => moveToGrant(prevGrantData?.Grants?.[0].date)}
+        href={`/grants/prevGrantData?.Grants?.[0].date`}
         level={2}
         disabled={!prevGrantData?.Grants || prevGrantData.Grants.length < 1}
       >
@@ -91,7 +83,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
         glyphOnly
         glyph="arrow"
         glyphRotation={-90}
-        onClick={() => moveToGrant(nextGrantData?.Grants?.[0].date)}
+        href={`/grants/nextGrantData?.Grants?.[0].date`}
         level={2}
         disabled={!nextGrantData?.Grants || nextGrantData.Grants.length < 1}
       >
