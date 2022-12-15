@@ -30,6 +30,7 @@ const GrantPage = () => {
   const parsedDataRef = useRef('')
 
   if (date === TODAY && parsedDataRef.current === '') {
+    //2022-12-14T17:11:12-08:00
     const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
     parsedDataRef.current = loadingAngelesTime
     console.log('set today time now    ', loadingAngelesTime)

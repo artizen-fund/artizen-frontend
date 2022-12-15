@@ -81,12 +81,16 @@ const NewGrantForm = () => {
   }
 
   const grant = loadedGrantData?.Grants[0]
-  const startingDate = moment(grant?.closingDate).add(1, 's')
+  const startingDateBase = grant?.closingDate || moment.tz('America/Los_Angeles')
+  const startingDate = moment(startingDateBase).add(1, 's')
 
   console.log('loadedGrantData    ', loadedGrantData)
 
+  console.log('startingDate  ', startingDate.format())
+
   const saveChanges = async (formData: FormState) => {
     console.log('formData   ', formData)
+    //2022-12-14T16:46:21
 
     setProcessing(true)
 
@@ -103,11 +107,11 @@ const NewGrantForm = () => {
 
     console.log('newgGrantDBDate  ', newgGrantDBDate)
 
-    // setProcessing(false)
+    setProcessing(false)
 
-    // push(`/admin/grants/${newgGrantDBDate}`)
+    push(`/admin/grants/${newgGrantDBDate}`)
 
-    // return
+    return
   }
 
   //TODO: This should be break down into smaller units
@@ -262,12 +266,16 @@ const NewGrantForm = () => {
     console.log('artifactsData  ', artifactsData)
     console.log('projectId  ', projectId)
 
+    const staringTimeRaw = startingDate.format('YYYY-MM-DDTHH:mm:ss')
+    console.log('startingDate  ', startingDate.format('YYYY-MM-DDThh:mm:ss'))
+    console.log('ending time after 10min', moment(staringTimeRaw).add(10, 'm').format('YYYY-MM-DDThh:mm:ss'))
+
     const variables = {
       objects: [
         {
           status: 'draft',
-          closingDate: moment(grant?.closingDate).add(length, 'm'),
-          startingDate,
+          startingDate: staringTimeRaw,
+          closingDate: moment(staringTimeRaw).add(10, 'm').format('YYYY-MM-DDTHH:mm:ss'),
           date: startingDate,
           submission: {
             data: {
@@ -294,12 +302,12 @@ const NewGrantForm = () => {
       throw new Error('error creating grant in DB')
     }
 
-    return insertGrantsMReturn.data?.insert_Grants?.returning[0].date
+    return insertGrantsMReturn.data?.insert_Grants?.returning[0].id
   }
 
   return (
     <FormWrapper>
-      <TileTitle>Starting time: {startingDate.format('DD-MM-YYYY hh:mm:ss')} (PST)</TileTitle>
+      <TileTitle>Starting time: {startingDate.format('DD-MM-YYYY HH:mm:ss')} (PST)</TileTitle>
       <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
         <StyledButton disabled={processing} onClick={() => saveChanges(data)} stretch level={0}>
           {processing ? 'Saving...' : 'Save Draft'}
