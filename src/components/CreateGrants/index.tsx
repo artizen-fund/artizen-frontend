@@ -63,7 +63,7 @@ const CreateGrants = () => {
         <>
           <GrantLayout grant={loadedGrantData.Grants[0]} />
           <FooterWrapper>
-            {isGrantDraft && (
+            {
               <StyledButton
                 stretch
                 disable={true}
@@ -76,7 +76,7 @@ const CreateGrants = () => {
               >
                 {processing ? 'Processing' : 'Publish'}
               </StyledButton>
-            )}
+            }
             {/* {!canGrantBeEnded && <div>Grant Status: Running is open and cannot be ended yet</div>} */}
             <StyledButton
               stretch
