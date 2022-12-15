@@ -166,6 +166,7 @@ export const useGrant = () => {
     await approvalTransaction.wait()
 
     console.log('grant.startTime   ', grant.startingDate)
+    console.log('grant.closingDate   ', grant.closingDate)
 
     const startingDate = Date.now()
     const endTime = (Number(startingDate) + 60 * 10).toString()
