@@ -24,6 +24,7 @@ const ManageGrants = () => {
     data: loadedGrantData,
     error: errorLoadingGrant,
   } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
+    fetchPolicy: 'no-cache',
     variables: {
       order_by: [
         {

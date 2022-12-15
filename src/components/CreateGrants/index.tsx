@@ -43,7 +43,7 @@ const CreateGrants = () => {
 
   console.log('loadedGrantData?.Grants[0]  ', loadedGrantData?.Grants[0])
 
-  const isGrantOpen = loadedGrantData?.Grants[0].status === 'open'
+  const isGrantDraft = loadedGrantData?.Grants[0].status === 'draft'
 
   return (
     <FormWrapper>
@@ -52,7 +52,7 @@ const CreateGrants = () => {
         <>
           <GrantLayout grant={loadedGrantData.Grants[0]} />
           <FooterWrapper>
-            {!isGrantOpen && (
+            {isGrantDraft && (
               <StyledButton
                 stretch
                 disable={true}
@@ -64,11 +64,10 @@ const CreateGrants = () => {
                 Publish Grant
               </StyledButton>
             )}
-            {isGrantOpen && (
-              <StyledButton stretch onClick={() => endGrant(2)} level={0}>
-                End Grant
-              </StyledButton>
-            )}
+            <StyledButton stretch onClick={() => endGrant(Number(loadedGrantData?.Grants[0].blockchainId))} level={0}>
+              End
+            </StyledButton>
+            End grants after its time ends
           </FooterWrapper>
         </>
       )}
