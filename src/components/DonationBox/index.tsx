@@ -33,7 +33,6 @@ const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
     }
 
     setSending(false)
-    alert('donation complete')
   }
 
   return (

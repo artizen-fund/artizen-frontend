@@ -44,6 +44,7 @@ const CreateGrants = () => {
   console.log('loadedGrantData?.Grants[0]  ', loadedGrantData?.Grants[0])
 
   const isGrantDraft = loadedGrantData?.Grants[0].status === 'draft'
+  const grant = loadedGrantData?.Grants[0]
 
   return (
     <FormWrapper>
@@ -64,7 +65,11 @@ const CreateGrants = () => {
                 Publish Grant
               </StyledButton>
             )}
-            <StyledButton stretch onClick={() => endGrant(Number(loadedGrantData?.Grants[0].blockchainId))} level={0}>
+            <StyledButton
+              stretch
+              onClick={() => endGrant(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress || '')}
+              level={0}
+            >
               End
             </StyledButton>
             End grants after its time ends

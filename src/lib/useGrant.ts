@@ -223,8 +223,8 @@ export const useGrant = () => {
     alert('Grant publish')
   }
 
-  const endGrant = async (grantId: number) => {
-    const grantTransaction = await grantsContract.sendRewards(grantId)
+  const endGrant = async (grantId: number, winnerAddress: string) => {
+    const grantTransaction = await grantsContract.sendRewards(grantId, winnerAddress)
     await grantTransaction.wait()
 
     alert('Grant ended')
