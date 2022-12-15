@@ -57,8 +57,8 @@ const ManageGrants = () => {
           <TextSections>Grant List:</TextSections>
           <GrantsLayout>
             {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => {
-              const startingDate = moment(grant.startingDate).format('DD-MM-YYYY hh:mm:ss')
-              const closingDate = moment(grant.startingDate).format('DD-MM-YYYY hh:mm:ss')
+              const startingDate = moment(grant.startingDate).format('MM-DD-YYYY HH:mm:ss')
+              const closingDate = moment(grant.closingDate).format('MM-DD-YYYY HH:mm:ss')
               return (
                 <GrantItem onClick={openGrant(grant.id)} key={grant.id} highlighed={grant.status === 'open'}>
                   <GrantDate>

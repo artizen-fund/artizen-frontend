@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { IGrantsWithProjectFragment } from '@types'
 import { typography } from '@theme'
+import moment from 'moment-timezone'
 
 interface IGrantLayout {
   grant: IGrantsWithProjectFragment
@@ -8,23 +9,29 @@ interface IGrantLayout {
 
 const GrantLayout = ({ grant }: IGrantLayout) => {
   const artifacts = grant.submission?.artifacts
+  const startingDate = moment(grant.startingDate).format('MM-DD-YYYY HH:mm:ss')
+  const closingDate = moment(grant.closingDate).format('MM-DD-YYYY HH:mm:ss')
 
   console.log('grant   ', grant)
   return (
     <>
       <GrantContentWrapper>
         <TextCntainer>
-          Grant Date: <span> {grant.date}</span>
+          Project Starting Date: <span> {startingDate} PST</span>
+        </TextCntainer>
+        <TextCntainer>
+          Project Closing Date: <span> {closingDate} PST</span>
         </TextCntainer>
         <TextCntainer>
           Status: <span> {grant.status}</span>{' '}
         </TextCntainer>
         <TextCntainer>
-          Project: <span> {grant.submission?.project?.title}</span>
+          Project title: <span> {grant.submission?.project?.title}</span>
         </TextCntainer>
         <TextCntainer>
           Project Description: <span> {grant.submission?.project?.description}</span>
         </TextCntainer>
+
         {/* <ArtifactsContainer>
           {artifacts?.map(({ edition, artwork, description, name }) => (
             <ArtifactItem key={edition}>
@@ -48,8 +55,7 @@ const GrantLayout = ({ grant }: IGrantLayout) => {
 }
 
 const GrantContentWrapper = styled.div`
-  padding: 20px;
-  margin: 0 auto;
+  margin: 20px auto;
   display: block;
 `
 
