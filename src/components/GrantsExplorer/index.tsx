@@ -1,40 +1,29 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Countdown from './Countdown'
-import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
+import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGrantsWithProjectFragment } from '@types'
-import { rgba, formatStringDate } from '@lib'
+import { rgba, checkIsCurrentGrant } from '@lib'
+import GrantsNavigator from './GrantsNavigator'
 
 interface IGrantsExplorer {
-  grant?: IGrantsWithProjectFragment
+  grant: IGrantsWithProjectFragment
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
+  const router = useRouter()
   const [amountRaised, setAmountRaised] = useState(0)
-  if (!grant) return <Spinner />
 
-  const moveToNextGround = () => {
-    console.log('move to next grant')
+  const isCurrentGrant = checkIsCurrentGrant(grant)
 
-    window.location.href = `${window.location.protocol}//${window.location.host}/grants/today`
-  }
+  const moveToNextGrant = () => router.push('/grants/today')
 
   return (
     <StyledStickyCanvas>
       <Wrapper id="grant-explorer">
-        <Nav>
-          <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2} disabled>
-            previous
-          </Button>
-          <Copy>
-            <Date>Today’s Grant</Date>
-            <Description>{formatStringDate(grant.date)}</Description>
-          </Copy>
-          <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2} disabled>
-            next
-          </Button>
-        </Nav>
+        <GrantsNavigator {...{ grant }} />
         <Body>
           <Header>{grant.submission?.project?.title}</Header>
 
@@ -50,13 +39,15 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
               </AmountRaisedRow>
             </div>
 
-            <div>
-              <DataLabel>Ends in</DataLabel>
-              <Countdown date={grant.closingDate} onComplete={moveToNextGround} />
-            </div>
+            {isCurrentGrant && (
+              <div>
+                <DataLabel>Ends in</DataLabel>
+                <Countdown date={grant.closingDate} onComplete={moveToNextGrant} />
+              </div>
+            )}
           </GrantData>
 
-          {grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
+          {isCurrentGrant && grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
 
           <Leaderboard grantId={grant.id} {...{ setAmountRaised }} />
         </Body>
@@ -87,28 +78,6 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     top: 108px;
   }
-`
-
-const Nav = styled.nav`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 24px;
-`
-
-const Copy = styled.header`
-  text-align: center;
-`
-
-const Date = styled.div`
-  ${typography.title.l4}
-`
-
-const Description = styled.div`
-  ${typography.label.l1}
-  color: ${rgba(palette.barracuda)};
 `
 
 const Body = styled.div`

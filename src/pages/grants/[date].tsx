@@ -75,9 +75,13 @@ const GrantPage = () => {
       </Header>
       <StyledPagePadding>
         <Wrapper>
-          <FeaturedArt grant={activeGrant} {...{ loading }} />
-          <FeaturedArtPanel grant={activeGrant} {...{ loading }} />
-          <GrantsExplorer grant={activeGrant} {...{ loading }} />
+          {!!activeGrant && (
+            <>
+              <FeaturedArt grant={activeGrant} {...{ loading }} />
+              <FeaturedArtPanel grant={activeGrant} {...{ loading }} />
+              <GrantsExplorer grant={activeGrant} {...{ loading }} />
+            </>
+          )}
         </Wrapper>
       </StyledPagePadding>
       <AlternatingPanels>

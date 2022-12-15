@@ -18,6 +18,9 @@ import {
   IInsert_ProjectsMutation,
   IInsert_ProjectMembersMutation,
   ILoadGrantsQuery,
+  IGetUsersQuery,
+  ICreateUsersMutation,
+  IUpdateUsersMutation,
 } from '@types'
 
 import { Form, Button } from '@components'
@@ -45,9 +48,9 @@ const NewGrantForm = () => {
   const [insertProjecstMemberInDB] = useMutation<IInsert_ProjectMembersMutation>(INSERT_PROJECTS_MEMBERS)
 
   //users
-  const [getUser] = useLazyQuery(GET_USERS)
-  const [insertUser] = useMutation(CREATE_USERS)
-  const [updateUser] = useMutation(UPDATE_USERS)
+  const [getUser] = useLazyQuery<IGetUsersQuery>(GET_USERS)
+  const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
+  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS)
 
   const [data, setData] = useState<FormState>(initialState)
 
