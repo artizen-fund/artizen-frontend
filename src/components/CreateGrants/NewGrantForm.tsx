@@ -183,12 +183,12 @@ const NewGrantForm = () => {
 
       console.log('error loading user  ', error)
 
-      console.log('user in database===  ', data.Users)
+      console.log('user in database===  ', data?.Users)
 
       let userId = ''
 
       // creating user
-      if (data.Users.length === 0) {
+      if (data?.Users.length === 0) {
         console.log('creating new user in DB')
 
         const insertUserRn = await insertUser({
@@ -207,7 +207,7 @@ const NewGrantForm = () => {
 
         console.log('new added user insertUserRn   ', insertUserRn)
 
-        if (!insertUserRn.data.insert_Users) {
+        if (!insertUserRn.data?.insert_Users) {
           throw new Error('Error inserting new user to DB')
         }
 
@@ -215,7 +215,7 @@ const NewGrantForm = () => {
       }
 
       // updating user
-      if (data.Users.length === 1) {
+      if (data?.Users.length === 1) {
         //update user
         console.log('updating user ')
 
@@ -237,7 +237,7 @@ const NewGrantForm = () => {
 
         console.log('updateUserRn   ', updateUserRn)
 
-        if (!updateUserRn.data.update_Users) {
+        if (!updateUserRn.data?.update_Users) {
           throw new Error('Error updating user in DB')
         }
 
