@@ -1,7 +1,7 @@
 export const reduceWithPrecision =
   (collection: Array<number>) => (reducingFn: (accumulator: number, val: number) => number) => {
     const longestDecimal = Math.max(...collection.map(num => countDecimals(num)))
-    const precision = 10 ^ longestDecimal
+    const precision = 10 ** longestDecimal
     return collection.map(n => n * precision).reduce(reducingFn, 0) / precision
   }
 /* reduceWithPrecision usage

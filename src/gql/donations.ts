@@ -24,16 +24,17 @@ export const UPDATE_DONATIONS = gql`
 // https://www.apollographql.com/docs/react/api/link/apollo-link-subscriptions
 export const SUBSCRIBE_DONATIONS = gql`
   fragment UserWithDonation on Users {
-    donations {
+    donations(where: $whereDonations) {
       id
       amount
+      grantId
     }
     artizenHandle
     profileImage
     publicAddress
   }
 
-  subscription donations($where: Users_bool_exp, $limit: Int!) {
+  subscription donations($where: Users_bool_exp, $whereDonations: Donations_bool_exp, $limit: Int!) {
     Users(where: $where, limit: $limit) {
       ...UserWithDonation
     }
