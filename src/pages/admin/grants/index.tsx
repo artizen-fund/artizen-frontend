@@ -1,26 +1,16 @@
-import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useQuery } from '@apollo/client'
-import { Layout, Button, Spinner } from '@components'
+import { Layout, Button, Spinner, CuratorCheck } from '@components'
 import { useRouter } from 'next/router'
 import { LOAD_GRANTS } from '@gql'
 import styled from 'styled-components'
 import { typography } from '@theme'
 import { ILoadGrantsQuery, IGrantsWithProjectFragment } from '@types'
-import { assert } from '@lib'
 import moment from 'moment-timezone'
 
 const ManageGrants = () => {
   const router = useRouter()
-
-  const { status, data } = useSession()
-
-  useEffect(() => {
-    const GRANT_CURATOR_ROLE = assert(process.env.NEXT_PUBLIC_GRANT_CURATOR_ROLE, 'NEXT_PUBLIC_GRANT_CURATOR_ROLE')
-    if (status === 'unauthenticated' && data !== null && (data as any).user?.id === GRANT_CURATOR_ROLE) {
-      router.push('/')
-    }
-  }, [status, data])
+  const { status } = useSession()
 
   const {
     loading,
@@ -53,6 +43,7 @@ const ManageGrants = () => {
 
   return (
     <Layout>
+      <CuratorCheck />
       {status !== 'authenticated' ? (
         <Spinner />
       ) : (

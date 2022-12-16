@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { Layout, CreateGrants, Spinner } from '@components'
+import { CuratorCheck, Layout, CreateGrants, Spinner } from '@components'
 
-const grantDetails = () => {
+const GrantDetails = () => {
   const router = useRouter()
   const { status } = useSession()
 
@@ -11,7 +11,12 @@ const grantDetails = () => {
     if (status === 'unauthenticated') router.push('/')
   }, [status])
 
-  return <Layout>{status !== 'authenticated' ? <Spinner /> : <CreateGrants />}</Layout>
+  return (
+    <Layout>
+      <CuratorCheck />
+      {status !== 'authenticated' ? <Spinner /> : <CreateGrants />}
+    </Layout>
+  )
 }
 
-export default grantDetails
+export default GrantDetails
