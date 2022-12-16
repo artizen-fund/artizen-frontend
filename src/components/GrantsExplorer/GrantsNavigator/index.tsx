@@ -6,7 +6,7 @@ import { Button } from '@components'
 import { palette, typography } from '@theme'
 import { GET_ADJACENT_GRANT } from '@gql'
 import { IGrantsWithProjectFragment, IGetAdjacentGrantQuery } from '@types'
-import { rgba, formatStringDate } from '@lib'
+import { rgba, formatStringDate, checkIsCurrentGrant } from '@lib'
 
 interface IGrantsNavigator {
   grant: IGrantsWithProjectFragment
@@ -39,6 +39,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
       },
     },
   })
+  const previousGrantLink = `/grants/${prevGrantData?.Grants?.[0]?.blockchainId || 'today'}`
 
   const { data: nextGrantData } = useQuery<IGetAdjacentGrantQuery>(GET_ADJACENT_GRANT, {
     fetchPolicy: 'no-cache',
@@ -65,6 +66,9 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
       },
     },
   })
+  const nextGrantLink = checkIsCurrentGrant(nextGrantData?.Grants?.[0])
+    ? `/grants/${nextGrantData?.Grants?.[0]?.blockchainId}`
+    : 'today'
 
   return (
     <Wrapper>
@@ -72,7 +76,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
         glyphOnly
         glyph="arrow"
         glyphRotation={90}
-        href={`/grants/${prevGrantData?.Grants?.[0]?.blockchainId || 'today'}`}
+        href={previousGrantLink}
         level={2}
         disabled={!prevGrantData?.Grants || prevGrantData.Grants.length < 1}
       >
@@ -86,7 +90,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
         glyphOnly
         glyph="arrow"
         glyphRotation={-90}
-        href={`/grants/${nextGrantData?.Grants?.[0]?.blockchainId || 'today'}`}
+        href={nextGrantLink}
         level={2}
         disabled={!nextGrantData?.Grants || nextGrantData.Grants.length < 1}
       >
