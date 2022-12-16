@@ -12,7 +12,7 @@ export interface UploadFileProps {
   className: string
 }
 
-const UploadVideoControl = ({ required, placeholder, onChange, path, value, className, disabled }: UploadFileProps) => {
+const UploadFileControl = ({ required, placeholder, onChange, path, value, className, disabled }: UploadFileProps) => {
   const [tempImg, setTempImg] = useState<string>('')
   const [selectedFile, setSelectedFile] = useState<File>()
 
@@ -51,7 +51,7 @@ const UploadVideoControl = ({ required, placeholder, onChange, path, value, clas
             defaultValue={value}
             type="file"
             placeholder={placeholder}
-            accept=".jpg, .png, .jpeg, .gif"
+            accept=".mov,.mp4"
             onChange={event => {
               event.preventDefault()
               const file: File | null =
@@ -73,18 +73,12 @@ const UploadVideoControl = ({ required, placeholder, onChange, path, value, clas
 
       {isThereImg && (
         <ImageWrapper>
-          {/* eslint-disable-next-line no-use-before-define */}
-          <div
-            style={{
-              width: 300,
-              height: 300,
-              borderStyle: 'dotted',
-              borderWidth: '2px',
-              borderColor: '#000',
+          {/* <video controls width="250">
 
-              background: `url("${tempImg}") no-repeat center center / contain`,
-            }}
-          ></div>
+<source src="/media/cc0-videos/flower.webm" type="video/webm">
+<video width="640" height="480" src="https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4" controls> Sorry, your browser doesn't support HTML5 <code>video</code>, but you can download this video from the <a href="https://archive.org/details/Popeye_forPresident" target="_blank">Internet Archive</a>. </video>
+
+Read more: https://html.com/tags/video/#ixzz7naj9o2rA */}
         </ImageWrapper>
       )}
     </UploadWrapper>
@@ -118,4 +112,4 @@ const UploadWrapper = styled.div`
   }
 `
 
-export default UploadVideoControl
+export default UploadFileControl

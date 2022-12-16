@@ -18,6 +18,9 @@ import {
   IInsert_ProjectsMutation,
   IInsert_ProjectMembersMutation,
   ILoadGrantsQuery,
+  IGetUsersQuery,
+  ICreateUsersMutation,
+  IUpdateUsersMutation,
 } from '@types'
 
 import { Form, Button } from '@components'
@@ -34,9 +37,6 @@ import {
   ProjectMember,
 } from '@forms/createGrants'
 
-//TODO: startingDate is set by publishing function
-//TODO: closingDate is set by ending function
-
 const NewGrantForm = () => {
   const { push } = useRouter()
 
@@ -45,11 +45,13 @@ const NewGrantForm = () => {
   const [insertProjecstMemberInDB] = useMutation<IInsert_ProjectMembersMutation>(INSERT_PROJECTS_MEMBERS)
 
   //users
-  const [getUser] = useLazyQuery(GET_USERS)
-  const [insertUser] = useMutation(CREATE_USERS)
-  const [updateUser] = useMutation(UPDATE_USERS)
+  const [getUser, { error }] = useLazyQuery<IGetUsersQuery>(GET_USERS)
+  const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
+  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS)
 
   const [data, setData] = useState<FormState>(initialState)
+
+  console.log('error  ', error)
 
   console.log('initialState   ', initialState)
 
@@ -120,14 +122,17 @@ const NewGrantForm = () => {
       {
         edition: 'community',
         artwork: artifactsData.artworkCommunity,
+        video: artifactsData.videoCommunity,
       },
       {
         edition: 'patron',
         artwork: artifactsData.artworkPatron,
+        video: artifactsData.videoCommunity,
       },
       {
         edition: 'creator',
         artwork: artifactsData.artworkCreator,
+        video: artifactsData.videoCreator,
       },
     ]
   }
@@ -155,37 +160,34 @@ const NewGrantForm = () => {
         throw new Error("You're trying to add a user without email")
       }
 
-      console.log('gets to loaded getUser')
+      console.log('gets to loaded getUser', member.email)
 
       const { data, error } = await getUser({
         variables: {
           where: {
-            ...(member.email && {
-              email: {
-                _eq: member.email,
+            _or: [
+              {
+                email: {
+                  _eq: member.email,
+                },
               },
-            }),
-            ...(member.wallet && {
-              email: {
-                _eq: member.email,
+              {
+                publicAddress: {
+                  _eq: member.wallet,
+                },
               },
-            }),
+            ],
           },
         },
       })
 
-      if (error) {
-        throw new Error('Error loading user')
-      }
-
-      console.log('error loading user  ', error)
-
-      console.log('user in database===  ', data.Users)
+      console.log('user in database===  ', data)
+      console.log('console.log user  ', error)
 
       let userId = ''
 
       // creating user
-      if (data.Users.length === 0) {
+      if (data?.Users.length === 0) {
         console.log('creating new user in DB')
 
         const insertUserRn = await insertUser({
@@ -204,7 +206,7 @@ const NewGrantForm = () => {
 
         console.log('new added user insertUserRn   ', insertUserRn)
 
-        if (!insertUserRn.data.insert_Users) {
+        if (!insertUserRn.data?.insert_Users) {
           throw new Error('Error inserting new user to DB')
         }
 
@@ -212,7 +214,7 @@ const NewGrantForm = () => {
       }
 
       // updating user
-      if (data.Users.length === 1) {
+      if (data?.Users.length === 1) {
         //update user
         console.log('updating user ')
 
@@ -226,7 +228,6 @@ const NewGrantForm = () => {
             _set: {
               firstName: member.firstName,
               lastName: member.lastName,
-              ...(member?.wallet && { publicAddress: member?.wallet }),
               externalLink: member.externalLink,
             },
           },
@@ -234,14 +235,12 @@ const NewGrantForm = () => {
 
         console.log('updateUserRn   ', updateUserRn)
 
-        if (!updateUserRn.data.update_Users) {
+        if (!updateUserRn.data?.update_Users) {
           throw new Error('Error updating user in DB')
         }
 
         userId = updateUserRn.data.update_Users.returning[0].id
       }
-
-      console.log('userId   ', userId)
 
       const insertProjectMembersReturn = await insertProjecstMemberInDB({
         variables: {
@@ -254,11 +253,6 @@ const NewGrantForm = () => {
           ],
         },
       })
-
-      console.log(
-        'insertProjectMembersReturn?.data?.insert_ProjectMember   ',
-        insertProjectMembersReturn?.data?.insert_ProjectMembers,
-      )
 
       if (insertProjectMembersReturn?.data?.insert_ProjectMembers === undefined) {
         throw new Error('error adding project members to project in DB')

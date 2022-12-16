@@ -11,6 +11,22 @@ export const INSERT_GRANTS = gql`
   }
 `
 
+export const GET_ADJACENT_GRANT = gql`
+  fragment AdjacentGrantData on Grants {
+    id
+    date
+    status
+    blockchainId
+    startingDate
+  }
+
+  query getAdjacentGrant($where: Grants_bool_exp, $order_by: [Grants_order_by!]) {
+    Grants(where: $where, order_by: $order_by, limit: 1) {
+      ...AdjacentGrantData
+    }
+  }
+`
+
 export const LOAD_GRANTS = gql`
   fragment GrantsWithProject on Grants {
     id
@@ -63,8 +79,8 @@ export const LOAD_GRANTS = gql`
     }
   }
 
-  query loadGrants($where: Grants_bool_exp, $order_by: [Grants_order_by!], $limit: Int) {
-    Grants(where: $where, order_by: $order_by, limit: $limit) {
+  query loadGrants($where: Grants_bool_exp, $order_by: [Grants_order_by!], $limit: Int, $offset: Int) {
+    Grants(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
       ...GrantsWithProject
     }
   }

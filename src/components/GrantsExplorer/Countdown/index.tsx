@@ -18,8 +18,6 @@ interface IRendererProps {
 }
 
 const renderer = ({ days, hours, minutes, seconds, completed }: IRendererProps) => {
-  console.log('date hours', hours)
-
   return completed ? (
     <span>resetting</span>
   ) : (
@@ -32,9 +30,6 @@ const renderer = ({ days, hours, minutes, seconds, completed }: IRendererProps) 
 const Countdown = ({ date, onComplete }: CountdownProps) => {
   // date is save in PST so it needs to be converte to local machine date
   const newMomentDate = moment.tz(date, 'America/Los_Angeles').local().format()
-
-  console.log(' date  original   ', date)
-  console.log('newMomnetDate  ', newMomentDate)
 
   const [hasMounted, setHasMounted] = useState(false)
 

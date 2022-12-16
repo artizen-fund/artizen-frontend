@@ -6,6 +6,7 @@ import { mockGrants } from './mock-grants'
 import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS } from '@gql'
 import { useMutation } from '@apollo/client'
+import moment from 'moment-timezone'
 
 export const useGrant = () => {
   const { address } = useAccount()
@@ -42,7 +43,7 @@ export const useGrant = () => {
     return response.json()
   }
 
-  const generateMetadata = async (grant: IGrantsWithProjectFragment) => {
+  const minNFTs = async (grant: IGrantsWithProjectFragment) => {
     // const grant = mockGrants[0]
     console.log('grant.submission', grant)
     //map artifacts data
@@ -71,7 +72,8 @@ export const useGrant = () => {
       return
     }
 
-    const metadataUris = artifacts.map(async artifact => {
+    const metadataUris = artifacts.map(async (artifact, index) => {
+      const artifactName = `Artifact#${index}`
       const metadataObject: Record<string, any> = {
         name: project?.title,
         description: project?.description,
@@ -105,7 +107,7 @@ export const useGrant = () => {
       const image = await publishNFTRequest(
         JSON.stringify({
           imagePath: artifact.artwork,
-          name: `${artifact.name}-image`,
+          name: `${artifactName}-image`,
           description: artifact.description,
         }),
       )
@@ -117,7 +119,7 @@ export const useGrant = () => {
         const video = await publishNFTRequest(
           JSON.stringify({
             imagePath: artifact.video,
-            name: `${artifact.name}-video`,
+            name: `${artifactName}-video`,
             // description: artifact.description,
           }),
         )
@@ -133,7 +135,10 @@ export const useGrant = () => {
         }),
       )
 
-      return metadata
+      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadata.IpfsHash}`)
+      await mintTransaction.wait()
+
+      return true
     })
 
     return Promise.all(metadataUris)
@@ -141,22 +146,12 @@ export const useGrant = () => {
 
   const publish = async (grant: IGrantsWithProjectFragment) => {
     // const grant = mockGrants[0]
-    const metadataUris = await generateMetadata(grant)
+    const metadataUris = await minNFTs(grant)
 
     console.log('IPFS metadataUris     ', metadataUris)
 
     if (!metadataUris) {
       throw new Error('Non metadataUris from NFTs publish')
-    }
-
-    // Mint a new NFTs
-    for (let i = 0; i < metadataUris.length; i++) {
-      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadataUris[i].IpfsHash}`)
-      await mintTransaction.wait()
-
-      console.log('mintTransaction   ', mintTransaction)
-
-      // update the grant data in databse
     }
 
     const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
@@ -168,15 +163,13 @@ export const useGrant = () => {
     console.log('grant.startTime   ', grant.startingDate)
     console.log('grant.closingDate   ', grant.closingDate)
 
-    // EK TESTING:
-    // Date.now() returns current time in *milliseconds* since epoch
-    // I believe that startTime and endTime timestamps on contract should be in seconds
-    // please confirm with Z
-    // => THIS DOES ALLOW sendRewards to be called
-    const startingDate = Math.floor(Date.now() / 1000)
-    const endTime = (Number(startingDate) + 60 * 10).toString()
+    const startTime = moment(grant.startingDate).unix()
+    const endTime = moment(grant.closingDate).unix()
 
-    console.log('grant starting time', startingDate)
+    // const startingDate = Math.floor(Date.now() / 1000)
+    // const endTime = (Number(startingDate) + 60 * 10).toString()
+
+    console.log('grant starting time', startTime)
     console.log('grant  endTime', endTime)
 
     // COMPARE ABOVE WITH EXISTING COMMENT BELOW ON startTime
@@ -185,10 +178,10 @@ export const useGrant = () => {
       nftOwner: address,
       nftAuthor: grant.submission?.project?.walletAddress,
       grantsID: 0,
-      tokenID1: latestTokenId.sub(3),
-      tokenID2: latestTokenId.sub(2),
-      tokenID3: latestTokenId.sub(1),
-      startTime: startingDate, // must be timestamp in seconds
+      tokenID1: latestTokenId,
+      tokenID2: latestTokenId.sub(1),
+      tokenID3: latestTokenId.sub(2),
+      startTime, // must be timestamp in seconds
       endTime,
       minimumDonationAmount: ethers.utils.parseEther('0.008'),
       topDonor: '0x0000000000000000000000000000000000000000',

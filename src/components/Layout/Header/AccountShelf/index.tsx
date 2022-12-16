@@ -44,6 +44,15 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
     hideShelf()
   }
 
+  const disconnectAndSignout = async () => {
+    disconnect()
+    await signOut()
+    document.cookie.split(';').forEach(function (c) {
+      document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`)
+    })
+    localStorage.clear()
+  }
+
   return (
     <Wrapper>
       <Commands>
@@ -68,17 +77,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
         </Top>
         <div>
           <Rule />
-          <Button
-            onClick={() => {
-              disconnect()
-              signOut()
-              //
-            }}
-            stretch
-            level={1}
-            glyph="power"
-            transparent
-          >
+          <Button onClick={() => disconnectAndSignout()} stretch level={1} glyph="power" transparent>
             Sign Out
           </Button>
         </div>
