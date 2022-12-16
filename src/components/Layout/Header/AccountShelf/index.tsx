@@ -47,7 +47,10 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
   const disconnectAndSignout = async () => {
     disconnect()
     await signOut()
-    alert('You will need to manually disconnect Metamask.')
+    document.cookie.split(';').forEach(function (c) {
+      document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`)
+    })
+    localStorage.clear()
   }
 
   return (
