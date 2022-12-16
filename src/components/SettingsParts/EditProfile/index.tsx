@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
@@ -14,14 +14,17 @@ const EditProfile = () => {
   const [updateUser] = useMutation(UPDATE_USER)
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const [data, setData] = useState<FormState>({
-    artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,
-    bio: loggedInUser?.bio || initialState.bio,
-    twitterHandle: loggedInUser?.twitterHandle || initialState.twitterHandle,
-    instagramHandle: loggedInUser?.instagramHandle || initialState.instagramHandle,
-    discordHandle: loggedInUser?.discordHandle || initialState.discordHandle,
-    website: loggedInUser?.website || initialState.website,
-  })
+  const [data, setData] = useState<FormState>(initialState)
+  useEffect(() => {
+    setData({
+      artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,
+      bio: loggedInUser?.bio || initialState.bio,
+      twitterHandle: loggedInUser?.twitterHandle || initialState.twitterHandle,
+      instagramHandle: loggedInUser?.instagramHandle || initialState.instagramHandle,
+      discordHandle: loggedInUser?.discordHandle || initialState.discordHandle,
+      website: loggedInUser?.website || initialState.website,
+    })
+  }, [loggedInUser])
 
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   const [readonly, setReadonly] = useState(false)

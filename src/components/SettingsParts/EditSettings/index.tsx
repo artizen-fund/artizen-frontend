@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { UPDATE_USER } from '@gql'
@@ -11,11 +11,14 @@ const EditSettings = () => {
   const [updateUser] = useMutation(UPDATE_USER)
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const [data, setData] = useState<FormState>({
-    firstName: loggedInUser?.firstName || initialState.firstName,
-    lastName: loggedInUser?.lastName || initialState.lastName,
-    email: loggedInUser?.email || initialState.email,
-  })
+  const [data, setData] = useState<FormState>(initialState)
+  useEffect(() => {
+    setData({
+      firstName: loggedInUser?.firstName || initialState.firstName,
+      lastName: loggedInUser?.lastName || initialState.lastName,
+      email: loggedInUser?.email || initialState.email,
+    })
+  }, [loggedInUser])
 
   const [processing, setProcessing] = useState(false)
   // todo: replace processing with [loading] from useMutation
