@@ -13,7 +13,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt: ({ token, user }) => {
-      console.log('user ', user)
       if (user) {
         token.id = user.id
         token.iat = Date.now() / 1000
