@@ -11,7 +11,7 @@ import { GET_USER } from '@gql'
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
   const apolloClient = useApolloClient()
   const { setVisibleModal, toggleShelf } = useContext(LayoutContext)
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
   useEffect(() => {
@@ -42,6 +42,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         : 'placeholder',
     )
     if (
+      status === 'authenticated' &&
       !!loggedInUser &&
       (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName || !loggedInUser.artizenHandle)
     ) {
