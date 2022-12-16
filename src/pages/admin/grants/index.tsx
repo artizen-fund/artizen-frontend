@@ -1,7 +1,6 @@
-import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useQuery } from '@apollo/client'
-import { Layout, Button, Spinner } from '@components'
+import { Layout, Button, Spinner, CuratorCheck } from '@components'
 import { useRouter } from 'next/router'
 import { LOAD_GRANTS } from '@gql'
 import styled from 'styled-components'
@@ -11,11 +10,7 @@ import moment from 'moment-timezone'
 
 const ManageGrants = () => {
   const router = useRouter()
-
   const { status } = useSession()
-  useEffect(() => {
-    if (status === 'unauthenticated') router.push('/')
-  }, [status])
 
   const {
     loading,
@@ -48,6 +43,7 @@ const ManageGrants = () => {
 
   return (
     <Layout>
+      <CuratorCheck />
       {status !== 'authenticated' ? (
         <Spinner />
       ) : (

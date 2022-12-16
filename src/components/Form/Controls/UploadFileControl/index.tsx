@@ -12,7 +12,7 @@ export interface UploadFileProps {
   className: string
 }
 
-const UploadVideoControl = ({ required, placeholder, onChange, path, value, className, disabled }: UploadFileProps) => {
+const UploadFileControl = ({ required, placeholder, onChange, path, value, className, disabled }: UploadFileProps) => {
   const [tempImg, setTempImg] = useState<string>('')
   const [selectedFile, setSelectedFile] = useState<File>()
 
@@ -118,4 +118,4 @@ const UploadWrapper = styled.div`
   }
 `
 
-export default UploadVideoControl
+export default UploadFileControl
