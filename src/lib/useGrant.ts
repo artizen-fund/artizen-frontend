@@ -163,7 +163,7 @@ export const useGrant = () => {
     console.log('grant.closingDate   ', grant.closingDate)
 
     const startTime = moment(grant.startingDate).unix()
-    const endTime = moment(grant.startingDate).unix()
+    const endTime = moment(grant.closingDate).unix()
 
     // const startingDate = Math.floor(Date.now() / 1000)
     // const endTime = (Number(startingDate) + 60 * 10).toString()
