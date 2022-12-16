@@ -12,9 +12,17 @@ import moment from 'moment-timezone'
 const ManageGrants = () => {
   const router = useRouter()
 
-  const { status } = useSession()
+  const { status, data } = useSession()
+
+  console.log('status  ', status)
+
   useEffect(() => {
-    if (status === 'unauthenticated') router.push('/')
+    console.log('NEXT_PUBLIC_GRANT_CURATOR_ROLE  ', process.env.NEXT_PUBLIC_GRANT_CURATOR_ROLE)
+    console.log('data user  ', data)
+
+    if (status === 'unauthenticated' && data?.user?.id === process.env.NEXT_PUBLIC_GRANT_CURATOR_ROLE) {
+      router.push('/')
+    }
   }, [status])
 
   const {
