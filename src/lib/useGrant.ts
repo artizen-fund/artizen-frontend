@@ -72,7 +72,8 @@ export const useGrant = () => {
       return
     }
 
-    const metadataUris = artifacts.map(async artifact => {
+    const metadataUris = artifacts.map(async (artifact, index) => {
+      const artifactName = `Artifact#${index}`
       const metadataObject: Record<string, any> = {
         name: project?.title,
         description: project?.description,
@@ -106,7 +107,7 @@ export const useGrant = () => {
       const image = await publishNFTRequest(
         JSON.stringify({
           imagePath: artifact.artwork,
-          name: `${artifact.name}-image`,
+          name: `${artifactName}-image`,
           description: artifact.description,
         }),
       )
@@ -118,7 +119,7 @@ export const useGrant = () => {
         const video = await publishNFTRequest(
           JSON.stringify({
             imagePath: artifact.video,
-            name: `${artifact.name}-video`,
+            name: `${artifactName}-video`,
             // description: artifact.description,
           }),
         )
