@@ -28,6 +28,7 @@ type QueryCondition = Record<string, Record<string, string>>
 const GrantPage = () => {
   const {
     query: { blockchainId },
+    push,
   } = useRouter()
 
   const [conditions, setConditions] = useState<Array<QueryCondition>>([])
@@ -82,6 +83,16 @@ const GrantPage = () => {
   if (errorLoadingGrant) {
     console.error('Error loading grant error', errorLoadingGrant)
   }
+
+  useEffect(() => {
+    if (errorLoadingGrant) {
+      console.error('Error loading grant error', errorLoadingGrant)
+      return
+    }
+    if (!loading && typeof loadedGrantData?.Grants === 'object' && loadedGrantData?.Grants.length < 1) {
+      push('/404')
+    }
+  }, [loading, errorLoadingGrant, loadedGrantData])
 
   const activeGrant = loadedGrantData?.Grants[0]
 
