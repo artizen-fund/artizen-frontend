@@ -72,14 +72,15 @@ export const useGrant = () => {
       return
     }
 
+    // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
-      const artifactName = `Artifact#${index}`
+      const artifactName = `Artifact #${index}`
       const metadataObject: Record<string, any> = {
-        name: project?.title,
+        name: artifactName,
         description: project?.description,
         image: '',
         background_color: '000000',
-        external_url: 'https://artizen.fund/artifacts',
+        external_url: `https://artizen.fund/artifacts/artifact${index}/`,
         attributes: [
           {
             trait_type: 'Project Created',
@@ -92,7 +93,7 @@ export const useGrant = () => {
             display_type: 'date',
           },
           { trait_type: 'Limited Series', value: artifact.edition },
-          { trait_type: 'Minted', value: grant.season },
+          { trait_type: 'Minted', value: `Season ${grant.season}` },
           { trait_type: 'Project', value: project.title },
 
           { trait_type: 'Lead Creator', value: leadMemberTraitType },
@@ -103,6 +104,7 @@ export const useGrant = () => {
       }
 
       console.log('metadataObject    ', metadataObject)
+      console.log('metadataObject json', JSON.stringify(metadataObject))
 
       const image = await publishNFTRequest(
         JSON.stringify({
