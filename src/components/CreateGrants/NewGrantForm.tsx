@@ -122,14 +122,17 @@ const NewGrantForm = () => {
       {
         edition: 'community',
         artwork: artifactsData.artworkCommunity,
+        video: artifactsData.videoCommunity,
       },
       {
         edition: 'patron',
         artwork: artifactsData.artworkPatron,
+        video: artifactsData.videoCommunity,
       },
       {
         edition: 'creator',
         artwork: artifactsData.artworkCreator,
+        video: artifactsData.videoCreator,
       },
     ]
   }
