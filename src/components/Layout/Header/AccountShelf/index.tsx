@@ -72,6 +72,11 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
             onClick={() => {
               disconnect()
               signOut()
+              document.cookie.split(';').forEach(function (c) {
+                document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`)
+              })
+              localStorage.clear()
+
               //
             }}
             stretch
