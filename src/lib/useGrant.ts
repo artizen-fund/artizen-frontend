@@ -68,18 +68,43 @@ export const useGrant = () => {
 
     console.log('leadMemberTraitType  ', leadMemberTraitType)
 
+    const allProjectMembersString = project?.members
+      .map(({ user, type }) => {
+        console.log('user type, ', type)
+        console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
+        return `${user?.firstName} ${user?.lastName}`
+      })
+      .join(', ')
+
+    console.log('allProjectMembersString  ', allProjectMembersString)
+
     if (!artifacts || !project) {
       return
     }
 
+    // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
-      const artifactName = `Artifact#${index}`
+      const artifactName = `Artifact #${index}`
+      const artifactDescription = `**Artifact #${index} minted by "${project.title}"**
+*${artifact.edition} Edition 1/1*
+      
+**About**: ${project.longline}
+      
+**Impact**: ${project.impact}
+      
+**Team**: ${allProjectMembersString}
+      
+This Artifact is in the [public domain](https://creativecommons.org/publicdomain/zero/1.0/).
+
+**Supported by the [Artizen Fund](https://www.artizen.fund/) for human creativity**
+`
+
       const metadataObject: Record<string, any> = {
-        name: project?.title,
-        description: project?.description,
+        name: artifactName,
+        description: artifactDescription,
         image: '',
         background_color: '000000',
-        external_url: 'https://artizen.fund/artifacts',
+        external_url: `https://artizen.fund/projects/artifacts/artifact${index}/`,
         attributes: [
           {
             trait_type: 'Project Created',
@@ -92,7 +117,7 @@ export const useGrant = () => {
             display_type: 'date',
           },
           { trait_type: 'Limited Series', value: artifact.edition },
-          { trait_type: 'Minted', value: grant.season },
+          { trait_type: 'Minted', value: `Season ${grant.season}` },
           { trait_type: 'Project', value: project.title },
 
           { trait_type: 'Lead Creator', value: leadMemberTraitType },
@@ -103,6 +128,7 @@ export const useGrant = () => {
       }
 
       console.log('metadataObject    ', metadataObject)
+      console.log('metadataObject json', JSON.stringify(metadataObject))
 
       const image = await publishNFTRequest(
         JSON.stringify({
