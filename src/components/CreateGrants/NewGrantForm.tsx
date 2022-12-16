@@ -92,6 +92,7 @@ const NewGrantForm = () => {
     //check user
     if (!thereIsOneLead(formData.projectMembers)) {
       alert(' You need to add one project member with role lead and a blockchain wallet')
+      return
     }
 
     setProcessing(true)
