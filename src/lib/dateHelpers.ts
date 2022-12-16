@@ -16,7 +16,8 @@ export const getDaysAgoFromDate = (start: number) => {
   return diffInDays
 }
 
-export const checkIsCurrentGrant = (grant: IGrantsWithProjectFragment) => {
+export const checkIsCurrentGrant = (grant?: IGrantsWithProjectFragment) => {
+  if (!grant) return false
   const now = new Date()
   const grantStarts = new Date(grant.startingDate)
   const grantEnds = new Date(grant.closingDate)
