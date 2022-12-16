@@ -74,7 +74,7 @@ export const useGrant = () => {
       return `${user?.firstName} ${user?.lastName}`
     }).join(', ')
 
-    console.log('leadMemberTraitType  ', leadMemberTraitType)
+    console.log('allProjectMembersString  ', allProjectMembersString)
 
     if (!artifacts || !project) {
       return
