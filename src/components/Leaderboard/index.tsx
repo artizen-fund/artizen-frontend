@@ -1,68 +1,70 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Table, TableCell, TableAvatar } from '@components'
-import { breakpoint, palette } from '@theme'
-import { useLazyQuery } from '@apollo/client'
-import { formatUSDC, rgba } from '@lib'
-import { IDonationsQuery } from '@types'
+import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
+import { useSubscription } from '@apollo/client'
+import { reduceWithPrecision } from '@lib'
+import { IDonationsSubscription, IUserWithDonationFragment } from '@types'
 import { SUBSCRIBE_DONATIONS } from '@gql'
 // import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
   limit?: number
   grantId: string
-  forceUpdate: boolean
+  setAmountRaised: (n: number) => void
 }
 
-//TODO Leaderboard needs to subscribe to the donation table, so it receives live updates
+const DEFAULT_LIMIT = 9999
 
-const DEFAULT_LIMIT = 3
-
-const Leaderboard = ({ grantId, forceUpdate }: ILeaderboard) => {
+const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
-  const [loadSubcription, { data, error: errorSubcribingDonations }] = useLazyQuery<IDonationsQuery>(
-    SUBSCRIBE_DONATIONS,
-    {
-      fetchPolicy: 'no-cache',
-      variables: {
-        limit,
-        where: {
-          _and: [
-            {
-              grantId: {
-                _eq: grantId,
-              },
-              status: {
-                _eq: 'confirmed',
-              },
-              user: {
-                hideFromLeaderboard: {
-                  _eq: false,
-                },
-              },
+  const { loading, error, data } = useSubscription<IDonationsSubscription>(SUBSCRIBE_DONATIONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      limit,
+      where: {
+        _and: [
+          {
+            hideFromLeaderboard: {
+              _eq: false,
             },
-          ],
-        },
+          },
+          {
+            donations: {
+              _and: [
+                {
+                  grantId: {
+                    _eq: grantId,
+                  },
+                  status: {
+                    _eq: 'confirmed',
+                  },
+                },
+              ],
+            },
+          },
+        ],
       },
     },
-  )
+  })
 
-  console.log(data)
-
-  useEffect(() => {
-    loadSubcription()
-  }, [])
-
-  useEffect(() => {
-    forceUpdate && loadSubcription()
-  }, [forceUpdate])
-
-  const loadedDonations = data && data.Donations ? data.Donations : []
-
-  if (errorSubcribingDonations) {
-    console.error('error donation subscription', errorSubcribingDonations)
+  if (error) {
+    console.error('error donation subscription', error)
   }
+
+  const [donatingUsers, setDonatingUsers] = useState<Array<IUserWithDonationFragment & { aggregateDonation: number }>>()
+
+  useEffect(() => {
+    if (!data) return
+    const usersWithAggregate = data.Users.map(u => {
+      const aggregateDonation = reduceWithPrecision(u.donations.map(d => d.amount))((a: number, b: number) => a + b)
+      return { ...u, aggregateDonation }
+    })
+    setDonatingUsers(usersWithAggregate)
+    setAmountRaised(
+      reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
+    )
+  }, [data])
 
   const sideItem = (
     <Button outline level={2} onClick={() => setLimit(limit === DEFAULT_LIMIT ? 9999 : DEFAULT_LIMIT)}>
@@ -70,17 +72,21 @@ const Leaderboard = ({ grantId, forceUpdate }: ILeaderboard) => {
     </Button>
   )
 
-  return (
+  return !!loading || !data?.Users || !donatingUsers ? (
+    <Spinner />
+  ) : (
     <StyledTable title="Leaderboard" {...{ sideItem }}>
-      {loadedDonations.map((donation, index) => (
-        <TableCell key={`donation-${index}`} highlight>
-          <div>
-            <TableAvatar profileImage={donation.user!.profileImage} />
-            <Name>{donation.user?.artizenHandle}</Name>
-          </div>
-          <Amount>{donation.amount} ETH</Amount>
-        </TableCell>
-      ))}
+      {donatingUsers
+        .sort((a, b) => (a.aggregateDonation > b.aggregateDonation ? -1 : 1))
+        .map((user, index) => (
+          <TableCell key={`donating-user-${index}`} highlight>
+            <div>
+              <TableAvatar profileImage={user.profileImage} />
+              <Name>{user?.artizenHandle}</Name>
+            </div>
+            <Amount>{user.aggregateDonation} ETH</Amount>
+          </TableCell>
+        ))}
     </StyledTable>
   )
 }

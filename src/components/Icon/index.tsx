@@ -83,7 +83,7 @@ const Circle = styled.div<CircleProps>`
   background: ${props => (!props.inverted && !props.outline ? rgba(palette.night) : rgba(palette.white))};
 
   @media (prefers-color-scheme: dark) {
-    border-color: ${props => rgba(props.outline ? palette[props.color] : 'transparent')};
+    border-color: ${props => rgba(props.outline ? palette[props.darkColor] : 'transparent')};
     background: ${props => (!props.outline ? rgba(palette.moon) : rgba(palette.night))};
   }
 `

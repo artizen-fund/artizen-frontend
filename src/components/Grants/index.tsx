@@ -19,9 +19,6 @@ export const Grants = () => {
             style={{ backgroundColor: '#FFFFFF' }}
           />
         </label>
-
-        <Button onClick={() => endGrant(grantId)}>End Grant</Button>
-        <Button onClick={() => cancelGrant(grantId)}>Cancel Grant</Button>
       </Container>
       {/* <Button onClick={() => publish('')}>Publish</Button> */}
     </>

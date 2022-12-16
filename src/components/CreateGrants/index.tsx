@@ -11,26 +11,28 @@ import { ILoadGrantsQuery } from '@types'
 import { Button } from '@components'
 // import { typography } from '@theme'
 import { useRouter } from 'next/router'
+import moment from 'moment-timezone'
 
 //TODO: startingDate is set by publishing function
 //TODO: closingDate is set by ending function
 
 const CreateGrants = () => {
   const {
-    query: { date },
+    query: { id },
   } = useRouter()
-  const { publish } = useGrant()
+  const { publish, endGrant } = useGrant()
+  const [processing, setProcessing] = useState<boolean>()
 
   const {
     loading,
     data: loadedGrantData,
     error: errorLoadingGrant,
   } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
-    skip: date === undefined || date === 'new',
+    skip: id === undefined || id === 'new',
     variables: {
       where: {
-        date: {
-          _eq: date,
+        id: {
+          _eq: id,
         },
       },
     },
@@ -41,26 +43,48 @@ const CreateGrants = () => {
     return <div>Error loading grant</div>
   }
 
+  const grant = loadedGrantData?.Grants[0]
+  const isGrantDraft = grant?.status === 'draft'
+  const isGrantPublished = grant?.status === 'publised'
+  const isGrantTimeRunning = moment().isBefore(moment.tz(loadedGrantData?.Grants[0].closingDate, 'America/Los_Angeles'))
+  const canGrantBeEnded = isGrantPublished && !isGrantTimeRunning
+
+  console.log('isGrantTimeRunning  ', isGrantTimeRunning)
+
   return (
     <FormWrapper>
       {!loading && !loadedGrantData && <NewGrantForm />}
       {!loading && loadedGrantData && (
         <>
           <GrantLayout grant={loadedGrantData.Grants[0]} />
-
           <FooterWrapper>
+            {
+              <StyledButton
+                stretch
+                disable={true}
+                onClick={async () => {
+                  setProcessing(true)
+                  await publish(loadedGrantData.Grants[0])
+                  setProcessing(false)
+                }}
+                level={0}
+              >
+                {processing ? 'Processing' : 'Publish'}
+              </StyledButton>
+            }
+            {/* {!canGrantBeEnded && <div>Grant Status: Running is open and cannot be ended yet</div>} */}
             <StyledButton
               stretch
-              onClick={() => {
-                publish(loadedGrantData.Grants[0])
+              onClick={async () => {
+                setProcessing(true)
+                endGrant(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress || '')
+                setProcessing(true)
               }}
               level={0}
             >
-              Publish Grant
+              {processing ? 'Processing' : 'End'}
             </StyledButton>
-            <StyledButton disabled={true} stretch onClick={() => alert('TODO')} level={0}>
-              End Grant
-            </StyledButton>
+            Only end grants that their time is finished
           </FooterWrapper>
         </>
       )}
@@ -69,13 +93,11 @@ const CreateGrants = () => {
 }
 
 const GrantContentWrapper = styled.div`
-  width: 80%;
   display: block;
 `
 
 const FooterWrapper = styled.div`
-  width: 80%;
-  display: flex;
+  margin: 50px auto 0 0;
 `
 
 /*
@@ -87,7 +109,8 @@ const Email = styled.div`
 */
 
 const FormWrapper = styled.div`
-  padding: 100px;
+  width: 80%;
+  margin: 0 auto;
   .group-layout legend {
     font-size: 30px;
   }
@@ -136,7 +159,6 @@ const StyledButton = styled(props => <Button {...props} />)`
   margin-top: 20px;
   width: 170px;
   margin: 10px 30px 0 10px;
-  float: right;
 `
 
 export default CreateGrants

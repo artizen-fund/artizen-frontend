@@ -83,9 +83,9 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
               </Button>
             )}
           </SocialLinks>
-          <ProfileLink outline onClick={() => alert('not yet')} level={1} glyph="face">
+          {/*<ProfileLink outline onClick={() => alert('not yet')} level={1} glyph="face">
             See Public Profile
-          </ProfileLink>
+          </ProfileLink>*/}
         </Content>
         {children}
       </Main>

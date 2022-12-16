@@ -3,11 +3,15 @@ import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
 import { mockGrants } from './mock-grants'
-import { IGrantsWithProjectAndDonationsFragment } from '@types'
+import { IGrantsWithProjectFragment } from '@types'
+import { UPDATE_GRANTS } from '@gql'
+import { useMutation } from '@apollo/client'
+import moment from 'moment-timezone'
 
 export const useGrant = () => {
   const { address } = useAccount()
   const { data: signer, isError, isLoading } = useSigner()
+  const [updateGrant] = useMutation(UPDATE_GRANTS)
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
   const grantContractAddress = assert(
@@ -39,7 +43,7 @@ export const useGrant = () => {
     return response.json()
   }
 
-  const generateMetadata = async (grant: IGrantsWithProjectAndDonationsFragment) => {
+  const minNFTs = async (grant: IGrantsWithProjectFragment) => {
     // const grant = mockGrants[0]
     console.log('grant.submission', grant)
     //map artifacts data
@@ -51,6 +55,7 @@ export const useGrant = () => {
     const { artifacts } = grant.submission
     const { project } = grant.submission
     const members = grant.submission?.project?.members
+    const inpactTags = grant.submission?.project?.impactTags?.split(',') || []
 
     const leadMemberTraitType = project?.members.map(({ user, type }) => {
       console.log('user type, ', type === 'lead')
@@ -67,7 +72,8 @@ export const useGrant = () => {
       return
     }
 
-    const metadataUris = artifacts.map(async artifact => {
+    const metadataUris = artifacts.map(async (artifact, index) => {
+      const artifactName = `Artifact#${index}`
       const metadataObject: Record<string, any> = {
         name: project?.title,
         description: project?.description,
@@ -90,10 +96,9 @@ export const useGrant = () => {
           { trait_type: 'Project', value: project.title },
 
           { trait_type: 'Lead Creator', value: leadMemberTraitType },
-          //TODO: ADD impact tags
-          // ...grant.project.tags.map(tag => {
-          //   return { trait_type: 'Impact', value: tag }
-          // }),
+          ...inpactTags.map(tag => {
+            return { trait_type: 'Impact', value: tag }
+          }),
         ],
       }
 
@@ -102,7 +107,7 @@ export const useGrant = () => {
       const image = await publishNFTRequest(
         JSON.stringify({
           imagePath: artifact.artwork,
-          name: `${artifact.name}-image`,
+          name: `${artifactName}-image`,
           description: artifact.description,
         }),
       )
@@ -114,7 +119,7 @@ export const useGrant = () => {
         const video = await publishNFTRequest(
           JSON.stringify({
             imagePath: artifact.video,
-            name: `${artifact.name}-video`,
+            name: `${artifactName}-video`,
             // description: artifact.description,
           }),
         )
@@ -130,29 +135,23 @@ export const useGrant = () => {
         }),
       )
 
-      console.log('Metadata IPFS    ', metadata)
-      return metadata
+      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadata.IpfsHash}`)
+      await mintTransaction.wait()
+
+      return true
     })
 
     return Promise.all(metadataUris)
   }
 
-  const publish = async (grant: IGrantsWithProjectAndDonationsFragment) => {
+  const publish = async (grant: IGrantsWithProjectFragment) => {
     // const grant = mockGrants[0]
-    const metadataUris = await generateMetadata(grant)
+    const metadataUris = await minNFTs(grant)
 
-    console.log('metadataUris    ', metadataUris)
+    console.log('IPFS metadataUris     ', metadataUris)
 
     if (!metadataUris) {
       throw new Error('Non metadataUris from NFTs publish')
-    }
-
-    // Mint a new NFTs
-    for (let i = 0; i < metadataUris.length; i++) {
-      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadataUris[i].IpfsHash}`)
-      await mintTransaction.wait()
-
-      console.log('mintTransaction   ', mintTransaction)
     }
 
     const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
@@ -162,22 +161,34 @@ export const useGrant = () => {
     await approvalTransaction.wait()
 
     console.log('grant.startTime   ', grant.startingDate)
+    console.log('grant.closingDate   ', grant.closingDate)
 
+    const startTime = moment(grant.startingDate).unix()
+    const endTime = moment(grant.closingDate).unix()
+
+    // const startingDate = Math.floor(Date.now() / 1000)
+    // const endTime = (Number(startingDate) + 60 * 10).toString()
+
+    console.log('grant starting time', startTime)
+    console.log('grant  endTime', endTime)
+
+    // COMPARE ABOVE WITH EXISTING COMMENT BELOW ON startTime
     const grantTuple = {
       nftContract: nftContractAddress,
       nftOwner: address,
+      nftAuthor: grant.submission?.project?.walletAddress,
       grantsID: 0,
-      tokenID1: latestTokenId.sub(3),
-      tokenID2: latestTokenId.sub(2),
-      tokenID3: latestTokenId.sub(1),
-      startTime: '1670775237', // must be timestamp in seconds
-      endTime: (Number(1670775237) + 60 * 60 * 48).toString(), // must be timestamp in seconds
+      tokenID1: latestTokenId,
+      tokenID2: latestTokenId.sub(1),
+      tokenID3: latestTokenId.sub(2),
+      startTime, // must be timestamp in seconds
+      endTime,
       minimumDonationAmount: ethers.utils.parseEther('0.008'),
       topDonor: '0x0000000000000000000000000000000000000000',
       topDonatedAmount: BigNumber.from(0),
-      cancelled: false,
-      ended: false,
     }
+
+    console.log(grantTuple)
 
     //Create a new Grant
     const grantTransaction = await grantsContract.createGrant(grantTuple)
@@ -185,11 +196,37 @@ export const useGrant = () => {
 
     console.log('Grant publish tx data      ', grantTransaction)
 
+    const latestGrantCreateNumber = await grantsContract.grantsCount()
+
+    const blockchainId = latestGrantCreateNumber.toString()
+
+    console.log('Grant published number    ', blockchainId)
+
+    // update Grant blockchain and status
+
+    const updatingGrant = await updateGrant({
+      variables: {
+        _set: {
+          status: 'published',
+          blockchainId,
+        },
+        where: {
+          id: {
+            _eq: grant.id,
+          },
+        },
+      },
+    })
+
+    console.log('grant publised', updatingGrant)
+
     alert('Grant publish')
   }
 
-  const endGrant = async (grantId: number) => {
-    const grantTransaction = await grantsContract.sendRewards(grantId)
+  const endGrant = async (grantId: number, winnerAddress: string) => {
+    console.log('grantId   ', grantId)
+    console.log('winnerAddress   ', winnerAddress)
+    const grantTransaction = await grantsContract.sendRewards(grantId, winnerAddress)
     await grantTransaction.wait()
 
     alert('Grant ended')
@@ -211,6 +248,7 @@ export const useGrant = () => {
 
     return returnTx
   }
+  //sendRewards
 
   const cancelGrant = async (grantId: number) => {
     const grantTransaction = await grantsContract.cancelGrant(grantId)

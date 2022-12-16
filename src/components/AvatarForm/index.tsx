@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Button, Glyph } from '@components'
-import { InvisiFileInput } from '@lib'
-import { breakpoint } from '@theme'
+import { InvisiFileInput, rgba } from '@lib'
+import { breakpoint, palette } from '@theme'
 
 interface IAvatarForm {
   setFile: (input: File) => void
@@ -71,6 +71,9 @@ const DropZone = styled.div<{ preview?: string }>`
     }
   `}
   border: 2px dashed black;
+  @media (prefers-color-scheme: dark) {
+    border: 2px dashed ${rgba(palette.moon)};
+  }
   border-radius: 9999px;
   transition: border-color 0.2s ease-in-out;
 `

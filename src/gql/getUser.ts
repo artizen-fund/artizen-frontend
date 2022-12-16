@@ -12,6 +12,15 @@ export const GET_USER = gql`
   }
 `
 
+export const GET_USERS = gql`
+  query getUsers($where: Users_bool_exp) {
+    Users(where: $where) {
+      id
+      email
+    }
+  }
+`
+
 export const mockGetUserData = [
   {
     request: {

@@ -1,37 +1,29 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Countdown from './Countdown'
-import { Glyph, ProgressBar, Button, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
+import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGrantsWithProjectAndDonationsFragment } from '@types'
-import { rgba, assetPath } from '@lib'
+import { IGrantsWithProjectFragment } from '@types'
+import { rgba, checkIsCurrentGrant } from '@lib'
+import GrantsNavigator from './GrantsNavigator'
 
 interface IGrantsExplorer {
-  grant?: IGrantsWithProjectAndDonationsFragment
+  grant: IGrantsWithProjectFragment
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
-  const [updateLeaderBoard, setUpdateLeaderBoard] = useState<boolean>(false)
-  if (!grant) return <Spinner />
-  const amountRaised = grant.donations.reduce((accum, obj) => accum + obj.amount * 1000000000, 0) / 1000000000
+  const router = useRouter()
+  const [amountRaised, setAmountRaised] = useState(0)
 
-  console.log('closingDate', grant.closingDate)
+  const isCurrentGrant = checkIsCurrentGrant(grant)
+
+  const moveToNextGrant = () => router.push('/grants/today')
 
   return (
     <StyledStickyCanvas>
-      <Wrapper>
-        <Nav>
-          <Button glyphOnly glyph="arrow" glyphRotation={90} onClick={() => alert('previous')} level={2} disabled>
-            previous
-          </Button>
-          <Copy>
-            <Date>{grant.date}</Date>
-            <Description>Today’s Grant</Description>
-          </Copy>
-          <Button glyphOnly glyph="arrow" glyphRotation={-90} onClick={() => alert('next')} level={2} disabled>
-            next
-          </Button>
-        </Nav>
+      <Wrapper id="grant-explorer">
+        <GrantsNavigator {...{ grant }} />
         <Body>
           <Header>{grant.submission?.project?.title}</Header>
 
@@ -42,27 +34,22 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
               <DataLabel>Raised</DataLabel>
               <AmountRaisedRow>
                 <Glyph glyph="ethereum" level={2} />
-                <AmountRaised>{amountRaised}</AmountRaised>
+                <AmountRaised>{amountRaised.toFixed(3)}</AmountRaised>
                 <Goal>&nbsp;/ {grant.goal} goal</Goal>
               </AmountRaisedRow>
             </div>
 
-            <div>
-              <DataLabel>Ends in</DataLabel>
-              <Countdown date={grant.closingDate} />
-            </div>
+            {isCurrentGrant && (
+              <div>
+                <DataLabel>Ends in</DataLabel>
+                <Countdown date={grant.closingDate} onComplete={moveToNextGrant} />
+              </div>
+            )}
           </GrantData>
 
-          {grant.blockchainId && (
-            <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} updatefn={setUpdateLeaderBoard} />
-          )}
+          {isCurrentGrant && grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
 
-          <Leaderboard grantId={grant.id} forceUpdate={updateLeaderBoard} />
-
-          <Sponsors>
-            <Microsoft />
-            <ExtendedReality />
-          </Sponsors>
+          <Leaderboard grantId={grant.id} {...{ setAmountRaised }} />
         </Body>
       </Wrapper>
     </StyledStickyCanvas>
@@ -91,28 +78,6 @@ const Wrapper = styled(props => <StickyContent {...props} />)`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     top: 108px;
   }
-`
-
-const Nav = styled.nav`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 24px;
-`
-
-const Copy = styled.header`
-  text-align: center;
-`
-
-const Date = styled.div`
-  ${typography.title.l4}
-`
-
-const Description = styled.div`
-  ${typography.label.l1}
-  color: ${rgba(palette.barracuda)};
 `
 
 const Body = styled.div`
@@ -161,58 +126,6 @@ const AmountRaisedRow = styled.div`
 
 const AmountRaised = styled.div`
   ${typography.title.l4}
-`
-
-const Sponsors = styled.div`
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: space-around;
-  align-items: center;
-  gap: 15px;
-  margin-top: 24px;
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    flex-direction: row;
-  }
-`
-
-const Microsoft = styled.div`
-  width: 94px;
-  height: 20px;
-  background-image: url(${assetPath('/assets/microsoft.svg')});
-  background-size: contain;
-  background-repeat: no-repeat;
-  @media (prefers-color-scheme: dark) {
-    background-image: url(${assetPath('/assets/microsoft-dark.svg')});
-  }
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    width: 150px;
-    height: 24px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 150px;
-    height: 65px;
-    background-image: url(${assetPath('/assets/microsoft-presents.svg')});
-    @media (prefers-color-scheme: dark) {
-      background-image: url(${assetPath('/assets/microsoft-presents-dark.svg')});
-    }
-  }
-`
-
-const ExtendedReality = styled.div`
-  width: 200px;
-  height: 50px;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    width: 275px;
-    height: 71px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 275px;
-    height: 88px;
-  }
-  background-image: url(${assetPath('/assets/season-1.svg')});
-  @media (prefers-color-scheme: dark) {
-    background-image: url(${assetPath('/assets/season-1-dark.svg')});
-  }
 `
 
 export default GrantsExplorer

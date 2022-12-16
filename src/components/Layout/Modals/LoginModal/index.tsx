@@ -94,7 +94,10 @@ const LoginModal = ({ ...props }) => {
         <Check>
           <CheckboxControl data={enabled} path="not-used" handleChange={() => setEnabled(!enabled)} label="" />
           <CheckMessage>
-            I agree to Artizen’s <Link href="/privacy-policy">Privacy Policy</Link>
+            I agree to Artizen’s{' '}
+            <Link href="https://help.artizen.fund/en/articles/4761373-privacy-policy" target="_blank">
+              Privacy Policy
+            </Link>
           </CheckMessage>
         </Check>
       </CheckWrapper>

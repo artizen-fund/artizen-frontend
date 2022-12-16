@@ -9,9 +9,9 @@ export const schema: JsonSchema = {
       title: 'Grant',
       type: 'object',
       properties: {
-        date: {
-          type: 'string',
-          format: 'date',
+        length: {
+          type: 'integer',
+          title: 'Grant length in minutes (It will be hours after testing)',
         },
         goal: {
           type: 'integer',
@@ -20,7 +20,7 @@ export const schema: JsonSchema = {
           type: 'integer',
         },
       },
-      required: ['date', 'season', 'goal'],
+      required: ['season', 'goal', 'length'],
     },
     project: {
       title: 'Project',
@@ -38,9 +38,9 @@ export const schema: JsonSchema = {
         impact: {
           type: 'string',
         },
-        // impactTags: {
-        //   type: 'string',
-        // },
+        impactTags: {
+          type: 'string',
+        },
         creationDate: {
           type: 'string',
           format: 'date',
@@ -59,36 +59,40 @@ export const schema: JsonSchema = {
         'longline',
         'description',
         'impact',
-        // 'impactTags',
+        'impactTags',
         'creationDate',
         'completionDate',
         'walletAddress',
       ],
     },
+
     projectMembers: {
       title: 'Project Member',
-      type: 'object',
-      properties: {
-        firstName: {
-          type: 'string',
-        },
-        lastName: {
-          type: 'string',
-        },
-        externalLink: {
-          type: 'string',
-        },
-        email: {
-          type: 'string',
-        },
-        wallet: {
-          type: 'string',
-        },
-        type: {
-          type: 'string',
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          firstName: {
+            type: 'string',
+          },
+          lastName: {
+            type: 'string',
+          },
+          externalLink: {
+            type: 'string',
+          },
+          email: {
+            type: 'string',
+          },
+          wallet: {
+            type: 'string',
+          },
+          type: {
+            type: 'string',
+          },
         },
       },
-      required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
+      // required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
     },
     artifacts: {
       title: 'Artifacts Assets',
@@ -100,6 +104,7 @@ export const schema: JsonSchema = {
         videoPatron: {
           type: 'string',
         },
+
         artworkCreator: {
           type: 'string',
         },
@@ -124,9 +129,9 @@ export const schema: JsonSchema = {
 */
 
 export interface Grant {
-  date: string
   goal: number
   season: number
+  length: number
 }
 
 export interface Artifacts {
@@ -134,7 +139,7 @@ export interface Artifacts {
   artworkCreator?: string
   artworkCommunity?: string
   videoPatron?: string
-  videCreator?: string
+  videoCreator?: string
   videoCommunity?: string
 }
 
@@ -143,12 +148,13 @@ export interface Project {
   longline?: string
   description?: string
   impact?: string
+  impactTags?: string
   creationDate?: string
   completionDate?: string
   walletAddress?: string
 }
 
-export interface ProjectMembers {
+export interface ProjectMember {
   firstName?: string
   lastName?: string
   externalLink?: string
@@ -161,13 +167,13 @@ export interface FormState extends Record<string, unknown> {
   grant: Grant
   artifacts: Artifacts
   project: Project
-  projectMembers: ProjectMembers
+  projectMembers: Array<ProjectMember>
 }
 
 /* This is our local initialState. */
 export const initialState: FormState = {
   grant: {
-    date: '',
+    length: 0,
     goal: 0,
     season: 0,
   },
@@ -176,7 +182,7 @@ export const initialState: FormState = {
     artworkCreator: undefined,
     artworkCommunity: undefined,
     videoPatron: undefined,
-    videCreator: undefined,
+    videoCreator: undefined,
     videoCommunity: undefined,
   },
   project: {
@@ -184,18 +190,21 @@ export const initialState: FormState = {
     longline: undefined,
     description: undefined,
     impact: undefined,
+    impactTags: undefined,
     creationDate: undefined,
     completionDate: undefined,
     walletAddress: undefined,
   },
-  projectMembers: {
-    firstName: undefined,
-    lastName: undefined,
-    externalLink: undefined,
-    email: undefined,
-    wallet: undefined,
-    type: undefined,
-  },
+  projectMembers: [
+    {
+      firstName: undefined,
+      lastName: undefined,
+      externalLink: undefined,
+      email: undefined,
+      wallet: undefined,
+      type: undefined,
+    },
+  ],
 }
 
 /*
@@ -216,8 +225,7 @@ export const uischema = {
           elements: [
             {
               type: 'Control',
-              scope: '#/properties/grant/properties/date',
-              label: 'Date, format: 2022-12-03',
+              scope: '#/properties/grant/properties/length',
             },
             {
               type: 'Control',
@@ -231,7 +239,6 @@ export const uischema = {
         },
       ],
     },
-
     {
       type: 'Group',
       label: 'Project',
@@ -255,10 +262,10 @@ export const uischema = {
               type: 'Control',
               scope: '#/properties/project/properties/impact',
             },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/project/properties/impactTags',
-            // },
+            {
+              type: 'Control',
+              scope: '#/properties/project/properties/impactTags',
+            },
             {
               type: 'Control',
               scope: '#/properties/project/properties/creationDate',
@@ -275,41 +282,18 @@ export const uischema = {
         },
       ],
     },
+
     {
       type: 'Group',
       label: 'Project Members',
       elements: [
         {
-          type: 'HorizontalLayout',
-          elements: [
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/firstName',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/lastName',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/externalLink',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/email',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/wallet',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/projectMembers/properties/type',
-            },
-          ],
+          type: 'Control',
+          scope: '#/properties/projectMembers',
         },
       ],
     },
+
     {
       type: 'Group',
       label: 'Artifacts Assets',
@@ -322,31 +306,33 @@ export const uischema = {
               scope: '#/properties/artifacts/properties/artworkPatron',
               options: { format: 'uploadFile' },
             },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoPatron',
-            //   options: { format: 'uploadFile' },
-            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/videoPatron',
+              options: { format: 'uploadFile' },
+            },
+
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCreator',
               options: { unsafeToRetain: true, format: 'uploadFile' },
             },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoCreator',
-            //   options: { unsafeToRetain: true, format: 'uploadFile' },
-            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/videoCreator',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCommunity',
               options: { unsafeToRetain: true, format: 'uploadFile' },
             },
-            // {
-            //   type: 'Control',
-            //   scope: '#/properties/artifacts/properties/videoCommunity',
-            //   options: { unsafeToRetain: true, format: 'uploadFile' },
-            // },
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/videoCommunity',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
           ],
         },
       ],
