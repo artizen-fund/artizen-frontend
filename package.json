@@ -43,6 +43,7 @@
     "api": "^5.0.1",
     "cookie": "^0.5.0",
     "creditcard.js": "^3.0.21",
+    "crypto-address-validator-ts": "^0.5.12",
     "ethers": "^5.7.2",
     "husky": "^8.0.2",
     "install": "^0.13.0",

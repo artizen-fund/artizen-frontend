@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
 import { typography } from '@theme'
 import moment from 'moment-timezone'
-import { validate } from 'wallet-address-validator'
+import * as validateLib from 'wallet-address-validator'
 
 import {
   INSERT_GRANTS,
@@ -93,7 +93,7 @@ const NewGrantForm = () => {
 
   const getUsesrWalletIsNotCorrect = (projectMembersR: Array<ProjectMember>) =>
     projectMembersR
-      .filter(({ wallet }) => !validate(wallet, 'ETH'))
+      .filter(({ wallet }) => !validateLib.validate(wallet, 'ETH'))
       .map(
         ({ firstName, lastName, wallet }) =>
           `${firstName} ${lastName} wallet is not a valid ETH wallet, wallet number: ${wallet}`,
