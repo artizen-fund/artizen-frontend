@@ -8,8 +8,8 @@ const CuratorCheck = () => {
   const { status, data } = useSession()
   useEffect(() => {
     const GRANT_CURATOR_ROLE = assert(process.env.NEXT_PUBLIC_GRANT_CURATOR_ROLE, 'NEXT_PUBLIC_GRANT_CURATOR_ROLE')
-    if (status === 'unauthenticated' && data !== null && (data as any).user?.id === GRANT_CURATOR_ROLE) {
-      router.push('/')
+    if (status === 'unauthenticated' || (!!data && (data as any).user?.id !== GRANT_CURATOR_ROLE)) {
+      router.push('/grants/today')
     }
   }, [status, data])
   return <></>
