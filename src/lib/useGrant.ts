@@ -68,11 +68,13 @@ export const useGrant = () => {
 
     console.log('leadMemberTraitType  ', leadMemberTraitType)
 
-    const allProjectMembersString = project?.members.map(({ user, type }) => {
-      console.log('user type, ', type)
-      console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
-      return `${user?.firstName} ${user?.lastName}`
-    }).join(', ')
+    const allProjectMembersString = project?.members
+      .map(({ user, type }) => {
+        console.log('user type, ', type)
+        console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
+        return `${user?.firstName} ${user?.lastName}`
+      })
+      .join(', ')
 
     console.log('allProjectMembersString  ', allProjectMembersString)
 
@@ -83,7 +85,7 @@ export const useGrant = () => {
     // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
       const artifactName = `Artifact #${index}`
-      const description = `**Artifact #${index} minted by "${project.title}"**
+      const artifactDescription = `**Artifact #${index} minted by "${project.title}"**
 *${artifact.edition} Edition 1/1*
       
 **About**: ${project.longline}
@@ -99,7 +101,7 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
 
       const metadataObject: Record<string, any> = {
         name: artifactName,
-        description: description,
+        description: artifactDescription,
         image: '',
         background_color: '000000',
         external_url: `https://artizen.fund/projects/artifacts/artifact${index}/`,
