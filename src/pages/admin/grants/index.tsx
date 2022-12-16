@@ -7,6 +7,7 @@ import { LOAD_GRANTS } from '@gql'
 import styled from 'styled-components'
 import { typography } from '@theme'
 import { ILoadGrantsQuery, IGrantsWithProjectFragment } from '@types'
+import { assert } from '@lib'
 import moment from 'moment-timezone'
 
 const ManageGrants = () => {
@@ -14,16 +15,12 @@ const ManageGrants = () => {
 
   const { status, data } = useSession()
 
-  console.log('status  ', status)
-
   useEffect(() => {
-    console.log('NEXT_PUBLIC_GRANT_CURATOR_ROLE  ', process.env.NEXT_PUBLIC_GRANT_CURATOR_ROLE)
-    console.log('data user  ', data)
-
-    if (status === 'unauthenticated' && data?.user?.id === process.env.NEXT_PUBLIC_GRANT_CURATOR_ROLE) {
+    const GRANT_CURATOR_ROLE = assert(process.env.NEXT_PUBLIC_GRANT_CURATOR_ROLE, 'NEXT_PUBLIC_GRANT_CURATOR_ROLE')
+    if (status === 'unauthenticated' && data !== null && (data as any).user?.id === GRANT_CURATOR_ROLE) {
       router.push('/')
     }
-  }, [status])
+  }, [status, data])
 
   const {
     loading,
