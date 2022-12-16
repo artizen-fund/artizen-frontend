@@ -66,9 +66,10 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
       },
     },
   })
+
   const nextGrantLink = checkIsCurrentGrant(nextGrantData?.Grants?.[0])
-    ? `/grants/${nextGrantData?.Grants?.[0]?.blockchainId}`
-    : 'today'
+    ? 'today'
+    : `/grants/${nextGrantData?.Grants?.[0]?.blockchainId}`
 
   return (
     <Wrapper>

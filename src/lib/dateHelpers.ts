@@ -16,10 +16,12 @@ export const getDaysAgoFromDate = (start: number) => {
   return diffInDays
 }
 
+const GMT_OFFSET = `0800`
+
 export const checkIsCurrentGrant = (grant?: IGrantsWithProjectFragment) => {
   if (!grant) return false
   const now = new Date()
-  const grantStarts = new Date(grant.startingDate)
-  const grantEnds = new Date(grant.closingDate)
+  const grantStarts = new Date(`${grant.startingDate}-${GMT_OFFSET}`)
+  const grantEnds = new Date(`${grant.closingDate}-${GMT_OFFSET}`)
   return grantStarts <= now && grantEnds > now
 }
