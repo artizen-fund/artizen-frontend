@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
 import { typography } from '@theme'
 import moment from 'moment-timezone'
+import * as validateLib from 'wallet-address-validator'
 
 import {
   INSERT_GRANTS,
@@ -84,14 +85,43 @@ const NewGrantForm = () => {
   const thereIsOneLead = (projectMembersR: Array<ProjectMember>) =>
     projectMembersR.filter(({ type, wallet }) => type === 'lead' && wallet !== undefined).length === 1
 
+  const thereIsIncompleteInformationFilled = (projectMembersR: Array<ProjectMember>) =>
+    projectMembersR.filter(
+      ({ firstName, lastName, externalLink, email, wallet, type }) =>
+        !firstName || !lastName || !externalLink || !email || !wallet || !type,
+    ).length > 0
+
+  const getUsesrWalletIsNotCorrect = (projectMembersR: Array<ProjectMember>) =>
+    projectMembersR
+      .filter(({ wallet }) => !validateLib.validate(wallet, 'ETH'))
+      .map(
+        ({ firstName, lastName, wallet }) =>
+          `${firstName} ${lastName} wallet is not a valid ETH wallet, wallet number: ${wallet}`,
+      )
+
   const saveChanges = async (formData: FormState) => {
     console.log('formData   ', formData)
 
     console.log('thereIsOneLead(formData.projectMembers)  ', thereIsOneLead(formData.projectMembers))
+    console.log(
+      'thereIsIncompleteInformationFilled(formData.projectMembers)  ',
+      thereIsIncompleteInformationFilled(formData.projectMembers),
+    )
 
     //check user
-    if (!thereIsOneLead(formData.projectMembers)) {
-      alert(' You need to add one project member with role lead and a blockchain wallet')
+    if (!thereIsOneLead(formData.projectMembers) || thereIsIncompleteInformationFilled(formData.projectMembers)) {
+      alert(
+        ' You need to add all the project member data and at least one member with role lead and a blockchain wallet',
+      )
+      return
+    }
+
+    const usersWithINcorrectWallet = getUsesrWalletIsNotCorrect(formData.projectMembers)
+
+    console.log('usersWithINcorrectWallet  ', usersWithINcorrectWallet)
+
+    if (usersWithINcorrectWallet.length > 0) {
+      alert(usersWithINcorrectWallet.join())
       return
     }
 
@@ -107,8 +137,6 @@ const NewGrantForm = () => {
 
     // //finally insert grants
     const newgGrantDBDate = await insertGrants(formData.grant, artifactsData, projectId)
-
-    console.log('newgGrantDBDate  ', newgGrantDBDate)
 
     setProcessing(false)
 
@@ -197,7 +225,7 @@ const NewGrantForm = () => {
               {
                 firstName: member.firstName,
                 lastName: member.lastName,
-                publicAddress: member?.wallet,
+                publicAddress: member?.wallet?.toLowerCase(),
                 externalLink: member.externalLink,
                 email: member.email,
               },
