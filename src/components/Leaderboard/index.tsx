@@ -72,9 +72,11 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
       return { ...u, aggregateDonation }
     })
     setDonatingUsers(usersWithAggregate)
-    setAmountRaised(
-      reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
-    )
+    if (usersWithAggregate.length > 0) {
+      setAmountRaised(
+        reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
+      )
+    }
   }, [data])
 
   const sideItem = (
