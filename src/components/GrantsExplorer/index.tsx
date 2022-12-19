@@ -5,7 +5,7 @@ import Countdown from './Countdown'
 import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGrantsWithProjectFragment } from '@types'
-import { rgba, checkIsCurrentGrant } from '@lib'
+import { rgba, isCurrentGrant } from '@lib'
 import GrantsNavigator from './GrantsNavigator'
 
 interface IGrantsExplorer {
@@ -16,7 +16,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const router = useRouter()
   const [amountRaised, setAmountRaised] = useState(0)
 
-  const isCurrentGrant = checkIsCurrentGrant(grant)
+  const isCurrentGrant = isCurrentGrant(grant)
 
   const moveToNextGrant = () => router.push('/grants/today')
 

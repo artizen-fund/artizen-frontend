@@ -6,7 +6,7 @@ import { Button } from '@components'
 import { palette, typography } from '@theme'
 import { GET_ADJACENT_GRANT } from '@gql'
 import { IGrantsWithProjectFragment, IGetAdjacentGrantQuery } from '@types'
-import { rgba, formatStringDate, checkIsCurrentGrant } from '@lib'
+import { rgba, formatStringDate, isCurrentGrant } from '@lib'
 
 interface IGrantsNavigator {
   grant: IGrantsWithProjectFragment
@@ -67,7 +67,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
     },
   })
 
-  const nextGrantLink = checkIsCurrentGrant(nextGrantData?.Grants?.[0])
+  const nextGrantLink = isCurrentGrant(nextGrantData?.Grants?.[0])
     ? 'today'
     : `/grants/${nextGrantData?.Grants?.[0]?.blockchainId}`
 
