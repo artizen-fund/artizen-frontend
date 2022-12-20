@@ -25,7 +25,13 @@ import {
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState, Grant, Project, ProjectMember } from '@forms/createGrants'
 import { ARTIZEN_TIMEZONE } from '@lib'
-import { thereIsOneLead, thereIsIncompleteInformationFilled, getUsersWalletIsNotCorrect, mapArtifactF } from './helpers'
+import {
+  thereIsOneLead,
+  thereIsIncompleteInformationFilled,
+  getUsersWalletIsNotCorrect,
+  mapArtifactF,
+  getGrantDates,
+} from './helpers'
 
 const NewGrantForm = () => {
   const { push } = useRouter()
@@ -66,13 +72,12 @@ const NewGrantForm = () => {
 
   const grant = loadedGrantData?.Grants[0]
   const startingDateBase = grant?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
-  const startingDate = moment(startingDateBase).add(1, 's')
+  const startingDate = moment(startingDateBase)
 
-  const saveChanges = async (formData: FormState) => {
+  const saveNewGrant = async (formData: FormState) => {
     // validate users array
     if (!thereIsOneLead(formData.projectMembers) || thereIsIncompleteInformationFilled(formData.projectMembers)) {
-      /* For now, continue to do validation this way.
-          A more correct way would be…
+      /* TODO: integrate validation into <Form /> tag
           const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>()
           setAdditionalErrors([...additionalErrors, someNewError])
           ...
@@ -123,6 +128,7 @@ const NewGrantForm = () => {
   const insertProjectMembers = async (projectMemberData: Array<ProjectMember>, projectId: string) => {
     const membersData = projectMemberData.map(async (member: ProjectMember) => {
       if (!member.email) {
+        // TODO: should this check happen before insertProjectsF? bundle with other validation
         alert('You’re trying to add a user without email')
         return
       }
@@ -204,13 +210,13 @@ const NewGrantForm = () => {
 
   const insertGrants = async (grantData: Grant, artifactsData: any, projectId: string) => {
     const { length, ...restData } = grantData
-    const staringTimeRaw = startingDate.format('YYYY-MM-DDTHH:mm:ss')
+    const [startingDateRaw, closingDateRaw] = getGrantDates(startingDate, length)
     const variables = {
       objects: [
         {
           status: 'draft',
-          startingDate: staringTimeRaw,
-          closingDate: moment(staringTimeRaw).add(length, 'm').format('YYYY-MM-DDTHH:mm:ss'),
+          startingDate: startingDateRaw,
+          closingDate: closingDateRaw,
           date: startingDate,
           submission: {
             data: {
@@ -238,7 +244,7 @@ const NewGrantForm = () => {
       <TileTitle>Starting time: {startingDate.format('DD-MM-YYYY HH:mm:ss')} (PST)</TileTitle>
       <FormWrapper>
         <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
-          <StyledButton onClick={() => saveChanges(data)} stretch level={0}>
+          <StyledButton onClick={() => saveNewGrant(data)} stretch level={0}>
             {processing ? 'Saving...' : 'Save Draft'}
           </StyledButton>
         </Form>
