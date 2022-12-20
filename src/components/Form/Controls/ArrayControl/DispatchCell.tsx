@@ -15,7 +15,6 @@ import {
 } from '../'
 
 const Dispatch = ({ uischema, schema, path, id, enabled, ...props }: DispatchCellProps) => {
-  console.log('dispatchProps', props)
   const cells = [...vanillaCells]
   // @ts-ignore
   const cell = maxBy(cells, r => r.tester(uischema, schema))
@@ -27,12 +26,10 @@ const Dispatch = ({ uischema, schema, path, id, enabled, ...props }: DispatchCel
     { tester: numberControlTester, renderer: NumberControl },
     { tester: enumControlTester, renderer: EnumControl },
   ]
-  console.log('cell', cell)
   // @ts-ignore
   if (cell === undefined || cell.tester(uischema, schema) === -1) {
     return <UnknownRenderer type={'cell'} />
   } else {
-    console.log('cell', cell.cell)
     const Cell = cell.cell
     return (
       <>

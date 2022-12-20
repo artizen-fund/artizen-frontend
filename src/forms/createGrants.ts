@@ -95,6 +95,7 @@ export const schema: JsonSchema = {
       },
       // required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
     },
+
     artifacts: {
       title: 'Artifacts Assets',
       type: 'object',

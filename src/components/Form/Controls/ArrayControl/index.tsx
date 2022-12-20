@@ -41,8 +41,6 @@ export const ArrayControl = ({
   addItem,
   ...props
 }: ArrayControlProps & VanillaRendererProps) => {
-  console.log('props', props)
-
   const confirmDelete = (path: string, index: number) => {
     const p = path.substring(0, path.lastIndexOf('.'))
     removeItems?.(p, [index])()
@@ -64,80 +62,85 @@ export const ArrayControl = ({
     </Button>
   )
 
-  console.log(props)
   return (
-    <Table title="derp" {...{ sideItem }}>
-      {data.map((_child: any, index: number) => {
-        const childPath = Paths.compose(path, `${index}`)
-        const errorsPerEntry: any[] = filter(childErrors, error => {
-          const errorPath = getControlPath(error)
-          return errorPath.startsWith(childPath)
-        })
+    <Wrapper>
+      <Table title="derp" {...{ sideItem }}>
+        {data.map((_child: any, index: number) => {
+          const childPath = Paths.compose(path, `${index}`)
+          const errorsPerEntry: any[] = filter(childErrors, error => {
+            const errorPath = getControlPath(error)
+            return errorPath.startsWith(childPath)
+          })
 
-        const validationClassName = 'array.validation'
-        const errorValidationClassName = 'array.validation.error'
-        const errorClassNames = errorsPerEntry
-          ? [validationClassName].concat(errorValidationClassName).join(' ')
-          : validationClassName
+          const validationClassName = 'array.validation'
+          const errorValidationClassName = 'array.validation.error'
+          const errorClassNames = errorsPerEntry
+            ? [validationClassName].concat(errorValidationClassName).join(' ')
+            : validationClassName
 
-        return (
-          <TableCell key={`table-cell-${index}`}>
-            {schema.properties ? (
-              fpflow(
-                fpkeys,
-                fpfilter(prop => schema.properties?.[prop].type !== 'array'),
-                fpmap(prop => {
-                  const childPropPath = Paths.compose(childPath, prop.toString())
-                  // this is an input
-                  return (
-                    <One key={childPropPath}>
-                      <DispatchCell
-                        schema={Resolve.schema(schema, `#/properties/${encode(prop)}`, rootSchema)}
-                        uischema={createControlElement(encode(prop))}
-                        path={`${childPath}.${prop}`}
-                      />
-                    </One>
-                  )
-                }),
-              )(schema.properties)
-            ) : (
-              <Two key={Paths.compose(childPath, index.toString())}>
-                {/* dunno what this is… no schema? */}
-                <DispatchCell schema={schema} uischema={createControlElement()} path={childPath} />
-              </Two>
-            )}
-            <Three>
-              {/* errors… why here… */}
-              {errorsPerEntry ? (
-                <span className={errorClassNames}>
-                  {join(
-                    errorsPerEntry.map(e => e.message),
-                    ' and ',
-                  )}
-                </span>
+          return (
+            <TableCell key={`table-cell-${index}`}>
+              {schema.properties ? (
+                fpflow(
+                  fpkeys,
+                  fpfilter(prop => schema.properties?.[prop].type !== 'array'),
+                  fpmap(prop => {
+                    const childPropPath = Paths.compose(childPath, prop.toString())
+                    // this is an input
+                    return (
+                      <One key={childPropPath}>
+                        <DispatchCell
+                          schema={Resolve.schema(schema, `#/properties/${encode(prop)}`, rootSchema)}
+                          uischema={createControlElement(encode(prop))}
+                          path={`${childPath}.${prop}`}
+                        />
+                      </One>
+                    )
+                  }),
+                )(schema.properties)
               ) : (
-                <span className={errorClassNames}>OK</span>
+                <Two key={Paths.compose(childPath, index.toString())}>
+                  {/* dunno what this is… no schema? */}
+                  <DispatchCell schema={schema} uischema={createControlElement()} path={childPath} />
+                </Two>
               )}
-            </Three>
-            <Four>
-              {/* delete button */}
-              <button
-                aria-label={`Delete`}
-                onClick={() => {
-                  if (window.confirm('Are you sure you wish to delete this item?')) {
-                    confirmDelete(childPath, index)
-                  }
-                }}
-              >
-                Delete
-              </button>
-            </Four>
-          </TableCell>
-        )
-      })}
-    </Table>
+              <Three>
+                {/* errors… why here… */}
+                {errorsPerEntry ? (
+                  <span className={errorClassNames}>
+                    {join(
+                      errorsPerEntry.map(e => e.message),
+                      ' and ',
+                    )}
+                  </span>
+                ) : (
+                  <span className={errorClassNames}>OK</span>
+                )}
+              </Three>
+              <Four>
+                {/* delete button */}
+                <button
+                  aria-label={`Delete`}
+                  onClick={() => {
+                    if (window.confirm('Are you sure you wish to delete this item?')) {
+                      confirmDelete(childPath, index)
+                    }
+                  }}
+                >
+                  Delete
+                </button>
+              </Four>
+            </TableCell>
+          )
+        })}
+      </Table>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div`
+  grid-column: 1 / span 12;
+`
 
 const One = styled.div`
   outline: 2px dashed red;

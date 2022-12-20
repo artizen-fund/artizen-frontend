@@ -294,7 +294,6 @@ const FormWrapper = styled.div`
   }
 
   legend {
-    outline: 2px solid green;
     grid-column: 1 / span 12;
   }
 
@@ -304,28 +303,24 @@ const FormWrapper = styled.div`
       display: contents;
       > * {
         grid-column-end: span 12;
-        outline: 2px solid purple;
       }
     }
     .horizontal-layout-2 {
       display: contents;
       > * {
         grid-column-end: span 6;
-        outline: 2px solid purple;
       }
     }
     .horizontal-layout-3 {
       display: contents;
       > * {
         grid-column-end: span 4;
-        outline: 2px solid blue;
       }
     }
     .horizontal-layout-6 {
       display: contents;
       > * {
         grid-column-end: span 2;
-        outline: 2px solid red;
       }
     }
   }

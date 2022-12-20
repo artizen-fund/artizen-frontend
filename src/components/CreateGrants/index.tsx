@@ -89,11 +89,9 @@ const CreateGrants = () => {
 
 const FooterWrapper = styled.div`
   margin: 50px auto 0 0;
-  outline: 2px solid blue;
 `
 
 const FormWrapper = styled.div`
-  outline: 2px solid red;
   width: 80%;
   margin: 0 auto;
   .group-layout legend {
