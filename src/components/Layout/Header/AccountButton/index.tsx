@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
-import { Glyph } from '@components'
+import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGetUserQuery, Maybe } from '@types'
-import { rgba, loggedInUserVar, LayoutContext } from '@lib'
+import { rgba, loggedInUserVar, LayoutContext, textCrop } from '@lib'
 import { GET_USER } from '@gql'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
@@ -27,7 +27,15 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     loggedInUserVar(userFromDB.data.Users[0])
   }
 
-  const onClick = () => (!loggedInUser ? setVisibleModal?.('login') : toggleShelf?.('session'))
+  const onClick = () => {
+    if (status === 'loading') {
+      return
+    } else if (!loggedInUser) {
+      setVisibleModal?.('login')
+    } else {
+      toggleShelf?.('session')
+    }
+  }
 
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
@@ -52,23 +60,33 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
 
   return (
     <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...{ onClick }} {...props}>
-      <CloseLabel id="close-bt" visible={active}>
-        Close
-      </CloseLabel>
-      <SignInLabel id="signin-bt" visible={!loggedInUser && !active}>
-        Sign In
-      </SignInLabel>
-      <HamburgerGlyph visible={!!loggedInUser && !active} color="night" darkColor="moon" glyph="hamburger" />
-      <AvatarWrapper active={!!loggedInUser && !active}>
+      <TextLabel visible={status === 'loading'}>
+        <Spinner />
+      </TextLabel>
+      <TextLabel visible={status !== 'loading' && active}>
+        <SizedType>Close</SizedType>
+      </TextLabel>
+      <TextLabel visible={status !== 'loading' && !loggedInUser && !active}>
+        <SizedType>Sign In</SizedType>
+      </TextLabel>
+      <HamburgerGlyph
+        visible={status !== 'loading' && !!loggedInUser && !active}
+        color="night"
+        darkColor="moon"
+        glyph="hamburger"
+      />
+      <IconWrapper active={!!loggedInUser && !active}>
         <AvatarImage active={avatarDisplay === 'avatar'} profileImage={loggedInUser?.profileImage} />
         <AvatarImage active={avatarDisplay === 'placeholder'}>
           <Glyph glyph="face" level={1} color="night" darkColor="moon" />
         </AvatarImage>
         <Initials active={avatarDisplay === 'initials'}>
-          {loggedInUser?.firstName?.substring(0, 1)}
-          {loggedInUser?.lastName?.substring(0, 1)}
+          <SizedType>
+            {loggedInUser?.firstName?.substring(0, 1)}
+            {loggedInUser?.lastName?.substring(0, 1)}
+          </SizedType>
         </Initials>
-      </AvatarWrapper>
+      </IconWrapper>
     </Wrapper>
   )
 }
@@ -106,7 +124,7 @@ const Wrapper = styled.div<{ loggedIn: boolean; visibleShelf: boolean }>`
   transition: width 0.3s ease-in-out;
 `
 
-const SignInLabel = styled.div<{ visible: boolean }>`
+const TextLabel = styled.div<{ visible: boolean }>`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -118,39 +136,15 @@ const SignInLabel = styled.div<{ visible: boolean }>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
-  ${typography.label.l1}
 
   opacity: ${props => (props.visible ? 1 : 0)};
   transition: opacity 0.15s ease-in-out;
   pointer-events: none;
 `
 
-const CloseLabel = styled.div<{ visible: boolean }>`
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  ${typography.label.l1}
-  padding-top: 2px;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    padding-top: 2.5px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    padding-top: 3.5px;
-  }
-
-  opacity: ${props => (props.visible ? 1 : 0)};
-  transition: opacity 0.15s ease-in-out;
-  pointer-events: none;
+const SizedType = styled.span`
+  display: block;
+  ${textCrop(typography.label.l1)}
 `
 
 const HamburgerGlyph = styled(props => <Glyph {...props} />)<{ visible: boolean }>`
@@ -166,7 +160,7 @@ const HamburgerGlyph = styled(props => <Glyph {...props} />)<{ visible: boolean 
   transition: opacity 0.3s ease-in-out;
 `
 
-const AvatarWrapper = styled.div<{ active: boolean }>`
+const IconWrapper = styled.div<{ active: boolean }>`
   position: relative;
   width: 32px;
   height: 32px;
@@ -237,6 +231,7 @@ const Initials = styled.div<{ active: boolean }>`
 
   color: ${rgba(palette.night)};
   background-color: ${rgba(palette.stone)};
+  ${textCrop(typography.label.l1)}
 
   font-size: 13px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
