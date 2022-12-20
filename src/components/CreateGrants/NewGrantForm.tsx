@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
-import { typography } from '@theme'
+import { breakpoint, typography } from '@theme'
 import {
   INSERT_GRANTS,
   INSERT_PROJECTS,
@@ -25,7 +25,6 @@ import {
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState, Grant, Project, ProjectMember } from '@forms/createGrants'
 import { ARTIZEN_TIMEZONE } from '@lib'
-import { breakpoint } from '@theme'
 import { thereIsOneLead, thereIsIncompleteInformationFilled, getUsersWalletIsNotCorrect, mapArtifactF } from './helpers'
 
 const NewGrantForm = () => {
@@ -33,7 +32,7 @@ const NewGrantForm = () => {
 
   const [insertGrantsM] = useMutation<IInsert_GrantsMutation>(INSERT_GRANTS)
   const [insertProjectsM] = useMutation<IInsert_ProjectsMutation>(INSERT_PROJECTS)
-  const [insertProjecstMemberInDB] = useMutation<IInsert_ProjectMembersMutation>(INSERT_PROJECTS_MEMBERS)
+  const [insertProjectsMemberInDB] = useMutation<IInsert_ProjectMembersMutation>(INSERT_PROJECTS_MEMBERS)
 
   //users
   const [getUser, { error }] = useLazyQuery<IGetUsersQuery>(GET_USERS)
@@ -70,30 +69,38 @@ const NewGrantForm = () => {
   const startingDate = moment(startingDateBase).add(1, 's')
 
   const saveChanges = async (formData: FormState) => {
-    console.log('formData   ', formData)
-    console.log('thereIsOneLead(formData.projectMembers)  ', thereIsOneLead(formData.projectMembers))
-    console.log(
-      'thereIsIncompleteInformationFilled(formData.projectMembers)  ',
-      thereIsIncompleteInformationFilled(formData.projectMembers),
-    )
-    //check user
+    // validate users array
     if (!thereIsOneLead(formData.projectMembers) || thereIsIncompleteInformationFilled(formData.projectMembers)) {
+      /* For now, continue to do validation this way.
+          A more correct way would be…
+          const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>()
+          setAdditionalErrors([...additionalErrors, someNewError])
+          ...
+          <Form {...{ additionalErrors }} /> 
+          
+          This will automatically disable the Submit button.
+      */
       alert(
-        ' You need to add all the project member data and at least one member with role lead and a blockchain wallet',
+        'You need to add all the project member data and at least one member with role lead and a blockchain wallet',
       )
       return
     }
+
     const usersWithIncorrectWallet = getUsersWalletIsNotCorrect(formData.projectMembers)
-    console.log('usersWithIncorrectWallet  ', usersWithIncorrectWallet)
     if (usersWithIncorrectWallet.length > 0) {
       alert(usersWithIncorrectWallet.join())
       return
     }
+
     setProcessing(true)
+
+    // insert project
     const projectId = await insertProjectsF(formData.project)
-    console.log('projectId  ', projectId)
     await insertProjectMembers(formData.projectMembers, projectId)
+
+    // prepare artifacts
     const artifactsData = mapArtifactF(formData.artifacts)
+
     // finally insert grants
     const newgGrantDBDate = await insertGrants(formData.grant, artifactsData, projectId)
     setProcessing(false)
@@ -107,25 +114,18 @@ const NewGrantForm = () => {
         objects: projectsData,
       },
     })
-
     if (projectDBCreationReturn.data?.insert_Projects === undefined) {
       throw new Error('error creating project in DB')
     }
-
     return projectDBCreationReturn.data?.insert_Projects?.returning[0].id
   }
 
   const insertProjectMembers = async (projectMemberData: Array<ProjectMember>, projectId: string) => {
     const membersData = projectMemberData.map(async (member: ProjectMember) => {
-      console.log('insertProjectMembers  ', member.email)
-
       if (!member.email) {
-        // eslint-disable-next-line
-        throw new Error("You're trying to add a user without email")
+        alert('You’re trying to add a user without email')
+        return
       }
-
-      console.log('gets to loaded getUser', member.email)
-
       const { data, error } = await getUser({
         variables: {
           where: {
@@ -144,16 +144,8 @@ const NewGrantForm = () => {
           },
         },
       })
-
-      console.log('user in database===  ', data)
-      console.log('console.log user  ', error)
-
       let userId = ''
-
-      // creating user
       if (data?.Users.length === 0) {
-        console.log('creating new user in DB')
-
         const insertUserRn = await insertUser({
           variables: {
             objects: [
@@ -167,21 +159,12 @@ const NewGrantForm = () => {
             ],
           },
         })
-
-        console.log('new added user insertUserRn   ', insertUserRn)
-
         if (!insertUserRn.data?.insert_Users) {
           throw new Error('Error inserting new user to DB')
         }
-
         userId = insertUserRn.data.insert_Users.returning[0].id
       }
-
-      // updating user
       if (data?.Users.length === 1) {
-        //update user
-        console.log('updating user ')
-
         const updateUserRn = await updateUser({
           variables: {
             where: {
@@ -196,15 +179,12 @@ const NewGrantForm = () => {
             },
           },
         })
-
-        console.log('updateUserRn   ', updateUserRn)
-
         if (!updateUserRn.data?.update_Users) {
           throw new Error('Error updating user in DB')
         }
         userId = updateUserRn.data.update_Users.returning[0].id
       }
-      const insertProjectMembersReturn = await insertProjecstMemberInDB({
+      const insertProjectMembersReturn = await insertProjectsMemberInDB({
         variables: {
           objects: [
             {
@@ -224,12 +204,7 @@ const NewGrantForm = () => {
 
   const insertGrants = async (grantData: Grant, artifactsData: any, projectId: string) => {
     const { length, ...restData } = grantData
-    console.log('grant lenghth', length)
-    console.log('artifactsData  ', artifactsData)
-    console.log('projectId  ', projectId)
     const staringTimeRaw = startingDate.format('YYYY-MM-DDTHH:mm:ss')
-    console.log('startingDate  ', startingDate.format('YYYY-MM-DDThh:mm:ss'))
-    console.log('ending time after 10min', moment(staringTimeRaw).add(10, 'm').format('YYYY-MM-DDThh:mm:ss'))
     const variables = {
       objects: [
         {
@@ -250,7 +225,6 @@ const NewGrantForm = () => {
       ],
     }
     const insertGrantsReturn = await insertGrantsM({ variables })
-    console.log('insertGrantsReturn', insertGrantsReturn)
     if (insertGrantsReturn.data?.insert_Grants === undefined) {
       throw new Error('error creating grant in DB')
     }
@@ -260,20 +234,25 @@ const NewGrantForm = () => {
   return loading ? (
     <div>Loading Grant</div>
   ) : (
-    <>
+    <Wrapper>
       <TileTitle>Starting time: {startingDate.format('DD-MM-YYYY HH:mm:ss')} (PST)</TileTitle>
       <FormWrapper>
-        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}></Form>
-        <StyledButton disabled={processing} onClick={() => saveChanges(data)} stretch level={0}>
-          {processing ? 'Saving...' : 'Save Draft'}
-        </StyledButton>
+        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
+          <StyledButton onClick={() => saveChanges(data)} stretch level={0}>
+            {processing ? 'Saving...' : 'Save Draft'}
+          </StyledButton>
+        </Form>
       </FormWrapper>
-    </>
+    </Wrapper>
   )
 }
 
+const Wrapper = styled.div`
+  padding: 150px 0;
+`
+
 const TileTitle = styled.h3`
-  ${typography.title.l3}
+  ${typography.title.l2}
 `
 
 const FormWrapper = styled.div`
@@ -288,6 +267,11 @@ const FormWrapper = styled.div`
   .group-layout,
   .group-layout-item {
     display: contents;
+  }
+
+  legend {
+    margin-top: 30px;
+    ${typography.label.l3}
   }
 
   .array-table-layout {
@@ -326,23 +310,22 @@ const FormWrapper = styled.div`
     }
   }
 
-  .group-layout legend {
-    font-size: 30px;
-  }
-  .group-layout {
-    margin: 40px 0;
-  }
-
   .array-table-layout {
-    outline: 1px dashed red;
     header {
       display: flex;
       justify-content: space-between;
       cursor: pointer;
     }
+    td {
+      padding: 0px 10px 10px 0px;
+    }
     button {
       color: black;
       border: 1px solid black;
+      @media (prefers-color-scheme: dark) {
+        border: 1px solid white;
+        color: white;
+      }
       padding: 4px 20px;
       border-radius: 9999px;
       cursor: pointer;
@@ -365,6 +348,10 @@ const FormWrapper = styled.div`
       }
       @media only screen and (min-width: ${breakpoint.desktop}px) {
         padding: 22px 32px 22px 32px;
+      }
+      @media (prefers-color-scheme: dark) {
+        border: 1px solid white;
+        color: white;
       }
     }
   }
