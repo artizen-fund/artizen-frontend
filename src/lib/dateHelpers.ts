@@ -24,7 +24,7 @@ export const getDaysAgoFromDate = (start: number) => {
 
 const GMT_OFFSET = `0800`
 
-export const checkIsCurrentGrant = (grant?: IGrantsWithProjectFragment) => {
+export const isCurrentGrant = (grant?: IGrantsWithProjectFragment) => {
   if (!grant) return false
   const now = new Date()
   const grantStarts = new Date(`${grant.startingDate}-${GMT_OFFSET}`)

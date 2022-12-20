@@ -2,7 +2,7 @@ import { useState, cloneElement, useEffect } from 'react'
 import { JsonForms } from '@jsonforms/react'
 import { ErrorObject } from 'ajv'
 import { JsonSchema, Layout, ControlElement, JsonFormsCore } from '@jsonforms/core'
-import { vanillaRenderers, vanillaCells, TextAreaCell, textAreaCellTester } from '@jsonforms/vanilla-renderers'
+import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers'
 import flattenChildren from 'react-keyed-flatten-children'
 import { pickBy } from 'lodash'
 

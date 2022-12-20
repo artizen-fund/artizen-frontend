@@ -1,12 +1,14 @@
+import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useQuery } from '@apollo/client'
-import { Layout, Button, Spinner, CuratorCheck } from '@components'
 import { useRouter } from 'next/router'
-import { LOAD_GRANTS } from '@gql'
 import styled from 'styled-components'
-import { typography } from '@theme'
-import { ILoadGrantsQuery, IGrantsWithProjectFragment } from '@types'
+import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
+import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } from '@components'
+import { LOAD_GRANTS } from '@gql'
+import { typography, palette } from '@theme'
+import { ILoadGrantsQuery, IGrantsWithProjectFragment } from '@types'
+import { isCurrentGrant, rgba } from '@lib'
 
 const ManageGrants = () => {
   const router = useRouter()
@@ -27,19 +29,20 @@ const ManageGrants = () => {
     },
   })
 
-  if (errorLoadingGrant) {
-    console.error('errorLoadingGrant ', errorLoadingGrant)
-    return <div>Error loading grant</div>
-  }
+  useEffect(() => {
+    if (!errorLoadingGrant) return
+    console.error('errorLoadingGrant', errorLoadingGrant)
+  }, [errorLoadingGrant])
 
   const openGrant = (target: string) => () => {
-    console.log('tarrget   ', target)
     router.push(`/admin/grants/${target}`)
   }
 
-  console.log('loadedGrantData   ', loadedGrantData)
-
-  //moment(grant?.closingDate).add(1, 's')
+  const sideItem = (
+    <Button onClick={openGrant('new')} level={2} outline>
+      Create new Grant
+    </Button>
+  )
 
   return (
     <Layout>
@@ -47,87 +50,62 @@ const ManageGrants = () => {
       {status !== 'authenticated' ? (
         <Spinner />
       ) : (
-        <PageLayout>
-          <TextSections>Grant List:</TextSections>
-          <GrantsLayout>
+        <PagePadding>
+          <StyledTable title="Grant List" {...{ sideItem }}>
             {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => {
               const startingDate = moment(grant.startingDate).format('MM-DD-YYYY HH:mm:ss')
               const closingDate = moment(grant.closingDate).format('MM-DD-YYYY HH:mm:ss')
               return (
-                <GrantItem onClick={openGrant(grant.id)} key={grant.id} highlighed={grant.status === 'open'}>
-                  <GrantDate>
-                    Starting date: <span>{startingDate}</span>
-                  </GrantDate>
-                  <GrantDate>
-                    Ending date: <span>{closingDate}</span>
-                  </GrantDate>
-                  <GrantStatus>{grant.status}</GrantStatus>
-                </GrantItem>
+                <StyledTableCell onClick={openGrant(grant.id)} key={grant.id} highlight>
+                  <Title>“{grant.submission?.project?.title}”</Title>
+                  <Status>
+                    {isCurrentGrant(grant) && '👉 '}
+                    {grant.status}
+                  </Status>
+                  <DateLine>
+                    <div>
+                      Starts: <span>{startingDate}</span>
+                    </div>
+                    <div>
+                      Ends: <span>{closingDate}</span>
+                    </div>
+                  </DateLine>
+                </StyledTableCell>
               )
             })}
-          </GrantsLayout>
-          <ButtonWrapper>
-            <Button onClick={openGrant('new')}>CREATE NEW GRANT</Button>
-          </ButtonWrapper>
-        </PageLayout>
+          </StyledTable>
+        </PagePadding>
       )}
     </Layout>
   )
 }
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  width: 80%;
-  margin: 4rem auto;
+const StyledTable = styled(props => <Table {...props} />)`
+  max-width: 680px;
 `
 
-const PageLayout = styled.div`
-  width: 100%;
-`
-
-const TextSections = styled.div`
-  ${typography.title.l2}
-  width: 80%;
-  margin: 3rem auto 0;
-`
-
-const GrantDate = styled.div`
-  display: block;
-  ${typography.title.l4}
-  span {
-  }
-`
-
-const GrantStatus = styled.span`
-  display: block;
-`
-
-const GrantsLayout = styled.div`
-  width: 80%;
-  height: 500px;
-  margin: 3rem auto 4rem;
-  overflow-y: scroll;
-`
-
-const GrantItem = styled.div<{ highlighed: boolean }>`
-  width: 100%;
-  height: 100px;
-  display: grid;
+const StyledTableCell = styled(props => <TableCell {...props} />)`
   cursor: pointer;
-  align-items: center;
-  border-radius: 8px;
-  margin: 10px 0;
-  text-align: center;
-  background-color: ${props => (props.highlighed ? 'rgba(217, 219, 224, 0.64);' : 'rgba(217, 219, 224, 0.24);')};
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: 'GrantDate GrantStatus';
-
-  .highlighed {
-    background-color: rgba(217, 219, 224, 1);
+  &:hover {
+    background-color: ${rgba(palette.stone)};
   }
+`
+
+const Title = styled.div`
+  ${typography.label.l1}
+  flex: 1;
+`
+
+const Status = styled.div`
+  ${typography.label.l2}
+`
+
+const DateLine = styled.div`
+  display: flex;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 0 !important;
+  ${typography.label.l3}
 `
 
 export default ManageGrants
