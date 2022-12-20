@@ -8,6 +8,12 @@ export const formatStringDate = (dumbDate: string) => {
   return stringDate
 }
 
+export const formatDate = (date: Date) => {
+  const realDate = new Date(date)
+  const stringDate = `${monthNames[realDate.getMonth()]} ${realDate.getDate()}, ${realDate.getFullYear()}`
+  return stringDate
+}
+
 export const getDaysAgoFromDate = (start: number) => {
   const now = new Date()
   const oneDay = 1000 * 60 * 60 * 24
