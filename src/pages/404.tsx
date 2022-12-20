@@ -12,7 +12,7 @@ const Page = () => (
           might have moved. Let’s get you to an actual existing page instead.
         </p>
         <Button href="/grants/today" level={1} outline>
-          Go back to the hompage
+          Go back to the homepage
         </Button>
       </Box>
     </Content>
