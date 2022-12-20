@@ -2,7 +2,7 @@ import { useState, cloneElement, useEffect } from 'react'
 import { JsonForms } from '@jsonforms/react'
 import { ErrorObject } from 'ajv'
 import { JsonSchema, Layout, ControlElement, JsonFormsCore } from '@jsonforms/core'
-import { vanillaRenderers, vanillaCells, TextAreaCell, textAreaCellTester } from '@jsonforms/vanilla-renderers'
+import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers'
 import flattenChildren from 'react-keyed-flatten-children'
 import { pickBy } from 'lodash'
 
@@ -15,6 +15,8 @@ import {
   booleanControlTester,
   EnumControl,
   enumControlTester,
+  ArrayControl,
+  arrayControlTester,
 } from './Controls'
 
 interface FormProps<TStateInterface> {
@@ -69,6 +71,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
 
   const renderers = [
     ...vanillaRenderers,
+    { tester: arrayControlTester, renderer: ArrayControl },
     { tester: stringControlTester, renderer: StringControl },
     { tester: booleanControlTester, renderer: BooleanControl },
     { tester: numberControlTester, renderer: NumberControl },

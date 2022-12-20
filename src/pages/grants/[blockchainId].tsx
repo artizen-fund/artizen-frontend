@@ -18,7 +18,7 @@ import {
   ApplyForFundingBlurb,
   Faq,
 } from '@components'
-import { rgba } from '@lib'
+import { rgba, ARTIZEN_TIMEZONE } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels } from '@copy/home'
 import { ILoadGrantsQuery } from '@types'
@@ -44,7 +44,7 @@ const GrantPage = () => {
       ])
     } else {
       // get open grant
-      const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
+      const loadingAngelesTime = moment.tz(ARTIZEN_TIMEZONE).format()
       setConditions([
         {
           startingDate: {

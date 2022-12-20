@@ -6,7 +6,7 @@ import { Button } from '@components'
 import { palette, typography } from '@theme'
 import { GET_ADJACENT_GRANT } from '@gql'
 import { IGrantsWithProjectFragment, IGetAdjacentGrantQuery } from '@types'
-import { rgba, formatStringDate, isCurrentGrant } from '@lib'
+import { rgba, formatStringDate, isCurrentGrant, ARTIZEN_TIMEZONE } from '@lib'
 
 interface IGrantsNavigator {
   grant: IGrantsWithProjectFragment
@@ -17,7 +17,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
     query: { blockchainId },
   } = useRouter()
 
-  const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
+  const loadingAngelesTime = moment.tz(ARTIZEN_TIMEZONE).format()
 
   const { data: prevGrantData } = useQuery<IGetAdjacentGrantQuery>(GET_ADJACENT_GRANT, {
     fetchPolicy: 'no-cache',

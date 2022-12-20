@@ -1,4 +1,5 @@
 import { JsonSchema } from '@jsonforms/core'
+import { ARTIZEN_CURRENT_SEASON } from '@lib'
 
 /* This is the data schema. See JSONForms documentation for more options. */
 //  properties
@@ -11,7 +12,7 @@ export const schema: JsonSchema = {
       properties: {
         length: {
           type: 'integer',
-          title: 'Grant length in minutes (It will be hours after testing)',
+          title: 'Grant length in minutes', // TODO: switch to Hours after testing
         },
         goal: {
           type: 'integer',
@@ -175,7 +176,7 @@ export const initialState: FormState = {
   grant: {
     length: 0,
     goal: 0,
-    season: 0,
+    season: ARTIZEN_CURRENT_SEASON,
   },
   artifacts: {
     artworkPatron: undefined,
@@ -239,44 +240,70 @@ export const uischema = {
         },
       ],
     },
+
     {
       type: 'Group',
       label: 'Project',
       elements: [
         {
-          type: 'HorizontalLayout',
+          type: 'VerticalLayout',
           elements: [
             {
-              type: 'Control',
-              scope: '#/properties/project/properties/title',
+              type: 'HorizontalLayout',
+              elements: [
+                {
+                  type: 'Control',
+                  scope: '#/properties/project/properties/title',
+                },
+                {
+                  type: 'Control',
+                  scope: '#/properties/project/properties/longline',
+                },
+              ],
             },
             {
-              type: 'Control',
-              scope: '#/properties/project/properties/longline',
+              type: 'HorizontalLayout',
+              elements: [
+                {
+                  type: 'Control',
+                  scope: '#/properties/project/properties/description',
+                },
+              ],
             },
             {
-              type: 'Control',
-              scope: '#/properties/project/properties/description',
+              type: 'HorizontalLayout',
+              elements: [
+                {
+                  type: 'Control',
+                  scope: '#/properties/project/properties/impact',
+                },
+                {
+                  type: 'Control',
+                  scope: '#/properties/project/properties/impactTags',
+                },
+              ],
             },
             {
-              type: 'Control',
-              scope: '#/properties/project/properties/impact',
+              type: 'HorizontalLayout',
+              elements: [
+                {
+                  type: 'Control',
+                  scope: '#/properties/project/properties/creationDate',
+                },
+                {
+                  type: 'Control',
+                  scope: '#/properties/project/properties/completionDate',
+                },
+              ],
             },
             {
-              type: 'Control',
-              scope: '#/properties/project/properties/impactTags',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/creationDate',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/completionDate',
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/project/properties/walletAddress',
+              type: 'HorizontalLayout',
+              elements: [
+                {
+                  type: 'Control',
+                  scope: '#/properties/project/properties/walletAddress',
+                },
+              ],
             },
           ],
         },
@@ -304,28 +331,33 @@ export const uischema = {
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkPatron',
-              options: { format: 'uploadFile' },
-            },
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/videoPatron',
-              options: { format: 'uploadFile' },
-            },
-
-            {
-              type: 'Control',
-              scope: '#/properties/artifacts/properties/artworkCreator',
               options: { unsafeToRetain: true, format: 'uploadFile' },
             },
             {
               type: 'Control',
-              scope: '#/properties/artifacts/properties/videoCreator',
+              scope: '#/properties/artifacts/properties/artworkCreator',
               options: { unsafeToRetain: true, format: 'uploadFile' },
             },
 
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCommunity',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+          ],
+        },
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/videoPatron',
+              options: { unsafeToRetain: true, format: 'uploadFile' },
+            },
+
+            {
+              type: 'Control',
+              scope: '#/properties/artifacts/properties/videoCreator',
               options: { unsafeToRetain: true, format: 'uploadFile' },
             },
             {
