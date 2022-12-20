@@ -25,6 +25,7 @@ import {
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState, Grant, Project, ProjectMember } from '@forms/createGrants'
 import { ARTIZEN_TIMEZONE } from '@lib'
+import { breakpoint } from '@theme'
 import { thereIsOneLead, thereIsIncompleteInformationFilled, getUsersWalletIsNotCorrect, mapArtifactF } from './helpers'
 
 const NewGrantForm = () => {
@@ -333,53 +334,37 @@ const FormWrapper = styled.div`
   }
 
   .array-table-layout {
-    text-align: center;
-
-    color: white;
-    input {
-      color: white;
-    }
-
-    table {
-      width: 100%;
-    }
-
-    tbody {
-      background-color: white;
-      margin: 10px;
-
-      input {
-        color: black;
-        font-size: 14px;
-        margin: 0 4px;
-        font-weight: bold;
-        height: 64px;
-      }
-    }
-
-    th {
-      text-align: left;
-    }
-
-    td {
-      text-align: left;
-    }
-
-    button {
+    outline: 1px dashed red;
+    header {
+      display: flex;
+      justify-content: space-between;
       cursor: pointer;
     }
-
-    header {
-      text-align: right;
-      margin: 10px 0;
-
-      label {
-        display: none;
+    button {
+      color: black;
+      border: 1px solid black;
+      padding: 4px 20px;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-style: normal;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.5px;
+      ${typography.label.l2}
+      transition: transform 0.15s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
       }
-
-      button {
-        color: white;
-        font-weight: bold;
+    }
+    input {
+      border: 1px solid black;
+      width: 100%;
+      padding: 18px 16px 18px 16px;
+      @media only screen and (min-width: ${breakpoint.laptop}px) {
+        padding: 20px 24px 20px 24px;
+      }
+      @media only screen and (min-width: ${breakpoint.desktop}px) {
+        padding: 22px 32px 22px 32px;
       }
     }
   }

@@ -1,4 +1,3 @@
-export { default as ArrayControl, arrayControlTester } from './ArrayControl'
 export { default as StringControl, stringControlTester } from './StringControl'
 export { default as NumberControl, numberControlTester } from './NumberControl'
 export { default as BooleanControl, booleanControlTester } from './BooleanControl'

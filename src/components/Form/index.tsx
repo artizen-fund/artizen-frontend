@@ -15,8 +15,6 @@ import {
   booleanControlTester,
   EnumControl,
   enumControlTester,
-  ArrayControl,
-  arrayControlTester,
 } from './Controls'
 
 interface FormProps<TStateInterface> {
@@ -71,7 +69,6 @@ const Form = <TStateInterface extends Record<string, unknown>>({
 
   const renderers = [
     ...vanillaRenderers,
-    { tester: arrayControlTester, renderer: ArrayControl },
     { tester: stringControlTester, renderer: StringControl },
     { tester: booleanControlTester, renderer: BooleanControl },
     { tester: numberControlTester, renderer: NumberControl },
