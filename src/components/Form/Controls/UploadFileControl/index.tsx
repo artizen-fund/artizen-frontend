@@ -1,121 +1,95 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { uploadToCloudinary } from '@lib'
+import { InvisiFileInput, uploadToCloudinary, fileType } from '@lib'
+import { StringControlProps } from '../StringControl'
+import { breakpoint } from '@theme'
 
-export interface UploadFileProps {
-  onChange?: (fileUrl: string) => void
+interface UploadFileControlProps {
+  onBlur: () => void
   disabled: boolean
-  required?: boolean
-  path: string
-  placeholder: string | undefined
-  value: string
+  placeholder: string
   className: string
+  path: string
 }
 
-const UploadFileControl = ({ required, placeholder, onChange, path, value, className, disabled }: UploadFileProps) => {
-  const [tempImg, setTempImg] = useState<string>('')
+const UploadFileControl = ({
+  enabled,
+  processing,
+  required,
+  uischema,
+  data,
+  handleChange,
+  path,
+  onBlur,
+  ...props
+}: Partial<StringControlProps> & UploadFileControlProps) => {
   const [selectedFile, setSelectedFile] = useState<File>()
-
-  // create a preview as a side effect, whenever selected file is changed
-  // preventing memory leaks with createObjectURL
   useEffect(() => {
-    if (!selectedFile) {
-      setTempImg('')
-      return
-    }
-
-    const uploadImg = async (img: File) => {
-      const cloudinaryResponse = await uploadToCloudinary(img)
-      const link = cloudinaryResponse.secure_url
-
-      setTempImg(link)
-
-      onChange?.(link)
-    }
-
-    uploadImg(selectedFile)
-
-    // free memory when ever this component is unmounted
-    // return () => URL.revokeObjectURL(objectUrl)
+    if (!selectedFile) return
+    uploadFile(selectedFile)
   }, [selectedFile])
 
-  const isThereImg = value !== undefined || tempImg !== ''
+  const uploadFile = async (newFile: File) => {
+    if (!uischema?.options?.fileFormats.find((supportedFormat: string) => supportedFormat === newFile.type)) {
+      console.error('illegal file type')
+      return
+    }
+    try {
+      const cloudinaryResponse = await uploadToCloudinary(newFile)
+      const cloudinaryUrl = cloudinaryResponse.secure_url
+      handleChange!(path, cloudinaryUrl)
+    } catch (error) {
+      console.error('error uploading to cloudinary', error)
+    }
+  }
 
   return (
-    <UploadWrapper>
-      {!isThereImg && (
-        <>
-          <input
-            disabled={disabled}
-            {...{ required }}
-            defaultValue={value}
-            type="file"
-            placeholder={placeholder}
-            accept=".jpg, .png, .jpeg, .gif"
-            onChange={event => {
-              event.preventDefault()
-              const file: File | null =
-                event.target.files && event.target.files.length > 0 ? event.target.files[0] : null
-
-              if (!file) {
-                return
-              }
-
-              setSelectedFile(file)
-            }}
-            style={{ display: 'none' }}
-            id={path}
-            className={className}
-          />
-          <label htmlFor={path}>Upload</label>
-        </>
-      )}
-
-      {isThereImg && (
-        <ImageWrapper>
-          {/* eslint-disable-next-line no-use-before-define */}
-          <div
-            style={{
-              width: 300,
-              height: 300,
-              borderStyle: 'dotted',
-              borderWidth: '2px',
-              borderColor: '#000',
-
-              background: `url("${tempImg}") no-repeat center center / contain`,
-            }}
-          ></div>
-        </ImageWrapper>
-      )}
-    </UploadWrapper>
+    <InvisiFileInput setFile={setSelectedFile}>
+      <input
+        {...{ required, onBlur }}
+        disabled={!enabled || processing}
+        type="string"
+        placeholder={uischema?.options?.placeholder || ' '}
+        defaultValue={data}
+        value={data}
+      />
+      <PreviewWrapper visible={!!selectedFile && !!data}>
+        {fileType(selectedFile) === 'image' && !!data && <PreviewImage src={data} />}
+        {fileType(selectedFile) === 'video' && !!data && (
+          <video loop={true} autoPlay={true} controls={false} muted={true}>
+            <source src={data} type="video/mp4" />
+          </video>
+        )}
+      </PreviewWrapper>
+    </InvisiFileInput>
   )
 }
 
-const ImageWrapper = styled.div`
-  width: 100%
+const PreviewWrapper = styled.div<{ visible: boolean }>`
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: ${props => (props.visible ? 'block' : 'none')};
+  height: 56px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    height: 64px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    height: 72px;
+  }
   text-align: center;
   background-color: #fff;
-  padding: 20px;
 
   appearance: none;
   outline: none;
 
-  position: relative;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  border: 1px solid black;
 `
 
-const UploadWrapper = styled.div`
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
-  border-radius: 0px;
-
-  label {
-    height: 200px;
-    display: block;
-    background-color: #fff;
-  }
+const PreviewImage = styled.img`
+  width: 100%;
+  height: 100%;
 `
 
 export default UploadFileControl

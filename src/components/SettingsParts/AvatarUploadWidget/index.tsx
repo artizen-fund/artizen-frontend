@@ -31,9 +31,9 @@ const AvatarUploadWidget = () => {
   }
 
   return (
-    <InvisiFileInput setFile={setNewAvatar}>
-      <ProfileAvatar profileImage={loggedInUser?.profileImage} />
-    </InvisiFileInput>
+    <ProfileAvatar profileImage={loggedInUser?.profileImage}>
+      <InvisiFileInput setFile={setNewAvatar} />
+    </ProfileAvatar>
   )
 }
 

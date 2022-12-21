@@ -1,5 +1,6 @@
 import { useState, useRef, cloneElement } from 'react'
 import flattenChildren from 'react-keyed-flatten-children'
+import styled from 'styled-components'
 
 /* USAGE
 This component provides a simple `<input type='file' />` component,
@@ -61,12 +62,7 @@ const InvisiFileInput = ({ setFile, children, ...props }: IInvisiFileInput) => {
 
   return (
     <>
-      <input
-        type="file"
-        {...{ onChange, ref }}
-        {...props}
-        style={{ appearance: 'none', width: '1px', height: '1px', opacity: 0 }}
-      />
+      <Input type="file" {...{ onChange, ref }} {...props} />
       {flattenChildren(children).map(child =>
         cloneElement(child as React.ReactElement, {
           preview,
@@ -76,5 +72,17 @@ const InvisiFileInput = ({ setFile, children, ...props }: IInvisiFileInput) => {
     </>
   )
 }
+
+const Input = styled.input`
+  position: absolute !important;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+`
 
 export { InvisiFileInput }
