@@ -28,6 +28,7 @@ const AvatarUploadWidget = () => {
       variables: { ...loggedInUser, profileImage },
       onError: error => console.error('Error saving new user profile', error),
     })
+    // todo: prompt loggedInUser to reload reactive var
   }
 
   return (
