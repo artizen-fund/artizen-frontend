@@ -31,6 +31,7 @@ const AvatarForm = ({ setFile }: IAvatarForm) => {
 }
 
 const Wrapper = styled.div`
+  position: relative;
   grid-area: avatarForm;
   display: flex;
   flex-direction: row;
