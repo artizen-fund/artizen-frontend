@@ -364,18 +364,18 @@ export const uischema = {
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoPatron',
-              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4'] },
+              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
             },
 
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoCreator',
-              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4'] },
+              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
             },
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoCommunity',
-              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4'] },
+              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
             },
           ],
         },
