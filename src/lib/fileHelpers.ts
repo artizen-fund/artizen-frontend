@@ -8,7 +8,6 @@ export const fileType = (file?: File) => {
     case 'image/gif':
       return 'image'
     default:
-      // unsupported MIME, reject it
       return undefined
   }
 }
