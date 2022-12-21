@@ -50,7 +50,6 @@ const UploadFileControl = ({
         disabled={!enabled || processing}
         type="string"
         placeholder={uischema?.options?.placeholder || ' '}
-        defaultValue={data}
         value={data}
       />
       <PreviewWrapper visible={!!selectedFile && !!data}>

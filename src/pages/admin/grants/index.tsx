@@ -89,6 +89,11 @@ const StyledTableCell = styled(props => <TableCell {...props} />)`
   &:hover {
     background-color: ${rgba(palette.stone)};
   }
+  @media (prefers-color-scheme: dark) {
+    &:hover {
+      background-color: ${rgba(palette.barracuda)};
+    }
+  }
 `
 
 const Title = styled.div`
