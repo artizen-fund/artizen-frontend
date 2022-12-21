@@ -192,12 +192,6 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     const startTime = moment(grant.startingDate).unix()
     const endTime = moment(grant.closingDate).unix()
 
-    // const startingDate = Math.floor(Date.now() / 1000)
-    // const endTime = (Number(startingDate) + 60 * 10).toString()
-
-    console.log('grant starting time', startTime)
-    console.log('grant  endTime', endTime)
-
     // COMPARE ABOVE WITH EXISTING COMMENT BELOW ON startTime
     const grantTuple = {
       nftContract: nftContractAddress,
@@ -220,13 +214,9 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     const grantTransaction = await grantsContract.createGrant(grantTuple)
     await grantTransaction.wait()
 
-    console.log('Grant publish tx data      ', grantTransaction)
-
     const latestGrantCreateNumber = await grantsContract.grantsCount()
 
     const blockchainId = latestGrantCreateNumber.toString()
-
-    console.log('Grant published number    ', blockchainId)
 
     // update Grant blockchain and status
 

@@ -29,15 +29,19 @@ export const schema: JsonSchema = {
       properties: {
         title: {
           type: 'string',
+          minLength: 20,
         },
         longline: {
           type: 'string',
+          maxLength: 140,
+          minLength: 10,
         },
         description: {
           type: 'string',
         },
         impact: {
           type: 'string',
+          maxLength: 500,
         },
         impactTags: {
           type: 'string',
