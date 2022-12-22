@@ -18,7 +18,7 @@ import {
   ApplyForFundingBlurb,
   Faq,
 } from '@components'
-import { rgba } from '@lib'
+import { rgba, ARTIZEN_TIMEZONE } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels } from '@copy/home'
 import { ILoadGrantsQuery } from '@types'
@@ -28,6 +28,7 @@ type QueryCondition = Record<string, Record<string, string>>
 const GrantPage = () => {
   const {
     query: { blockchainId },
+    push,
   } = useRouter()
 
   const [conditions, setConditions] = useState<Array<QueryCondition>>([])
@@ -43,7 +44,7 @@ const GrantPage = () => {
       ])
     } else {
       // get open grant
-      const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
+      const loadingAngelesTime = moment.tz(ARTIZEN_TIMEZONE).format()
       setConditions([
         {
           startingDate: {
@@ -82,6 +83,16 @@ const GrantPage = () => {
   if (errorLoadingGrant) {
     console.error('Error loading grant error', errorLoadingGrant)
   }
+
+  useEffect(() => {
+    if (errorLoadingGrant) {
+      console.error('Error loading grant error', errorLoadingGrant)
+      return
+    }
+    if (!loading && typeof loadedGrantData?.Grants === 'object' && loadedGrantData?.Grants.length < 1) {
+      push('/404')
+    }
+  }, [loading, errorLoadingGrant, loadedGrantData])
 
   const activeGrant = loadedGrantData?.Grants[0]
 

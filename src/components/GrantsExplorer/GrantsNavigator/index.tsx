@@ -6,7 +6,7 @@ import { Button } from '@components'
 import { palette, typography } from '@theme'
 import { GET_ADJACENT_GRANT } from '@gql'
 import { IGrantsWithProjectFragment, IGetAdjacentGrantQuery } from '@types'
-import { rgba, formatStringDate } from '@lib'
+import { rgba, formatStringDate, isCurrentGrant, ARTIZEN_TIMEZONE } from '@lib'
 
 interface IGrantsNavigator {
   grant: IGrantsWithProjectFragment
@@ -17,7 +17,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
     query: { blockchainId },
   } = useRouter()
 
-  const loadingAngelesTime = moment.tz('America/Los_Angeles').format()
+  const loadingAngelesTime = moment.tz(ARTIZEN_TIMEZONE).format()
 
   const { data: prevGrantData } = useQuery<IGetAdjacentGrantQuery>(GET_ADJACENT_GRANT, {
     fetchPolicy: 'no-cache',
@@ -39,6 +39,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
       },
     },
   })
+  const previousGrantLink = `/grants/${prevGrantData?.Grants?.[0]?.blockchainId || 'today'}`
 
   const { data: nextGrantData } = useQuery<IGetAdjacentGrantQuery>(GET_ADJACENT_GRANT, {
     fetchPolicy: 'no-cache',
@@ -66,13 +67,17 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
     },
   })
 
+  const nextGrantLink = isCurrentGrant(nextGrantData?.Grants?.[0])
+    ? 'today'
+    : `/grants/${nextGrantData?.Grants?.[0]?.blockchainId}`
+
   return (
     <Wrapper>
       <Button
         glyphOnly
         glyph="arrow"
         glyphRotation={90}
-        href={`/grants/${prevGrantData?.Grants?.[0]?.blockchainId || 'today'}`}
+        href={previousGrantLink}
         level={2}
         disabled={!prevGrantData?.Grants || prevGrantData.Grants.length < 1}
       >
@@ -86,7 +91,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
         glyphOnly
         glyph="arrow"
         glyphRotation={-90}
-        href={`/grants/${nextGrantData?.Grants?.[0]?.blockchainId || 'today'}`}
+        href={nextGrantLink}
         level={2}
         disabled={!nextGrantData?.Grants || nextGrantData.Grants.length < 1}
       >

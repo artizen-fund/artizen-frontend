@@ -22,11 +22,23 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     fetchPolicy: 'no-cache',
     variables: {
       limit,
+      whereDonations: {
+        _and: [
+          {
+            grantId: {
+              _eq: grantId,
+            },
+            status: {
+              _eq: 'confirmed',
+            },
+          },
+        ],
+      },
       where: {
         _and: [
           {
             hideFromLeaderboard: {
-              _eq: false,
+              _neq: true,
             },
           },
           {
@@ -53,7 +65,6 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
   }
 
   const [donatingUsers, setDonatingUsers] = useState<Array<IUserWithDonationFragment & { aggregateDonation: number }>>()
-
   useEffect(() => {
     if (!data) return
     const usersWithAggregate = data.Users.map(u => {
@@ -61,9 +72,11 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
       return { ...u, aggregateDonation }
     })
     setDonatingUsers(usersWithAggregate)
-    setAmountRaised(
-      reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
-    )
+    if (usersWithAggregate.length > 0) {
+      setAmountRaised(
+        reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
+      )
+    }
   }, [data])
 
   const sideItem = (

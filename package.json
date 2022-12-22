@@ -1,6 +1,6 @@
 {
   "name": "artizen-frontend",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
@@ -13,8 +13,10 @@
     "clean": "rm -rf .next",
     "generate": "node ./tools/generate.js",
     "dev": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- next dev",
+    "prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- next dev", 
     "develop": "yarn codegen-local && yarn dev",
     "build": "yarn codegen && next build",
+    "build-prod":"SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- yarn build", 
     "build-local": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- yarn build",
     "start": "next build && next start -p $PORT",
     "lint": "next lint",
@@ -23,6 +25,7 @@
     "test:e2e": "PORT=3000 start-server-and-test 'yarn start' http-get://localhost:3000 'env-cmd -f .env.development synpress run -cf synpress.config.js'",
     "codegen": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "codegen-local": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
+    "codegen-prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -43,8 +46,10 @@
     "api": "^5.0.1",
     "cookie": "^0.5.0",
     "creditcard.js": "^3.0.21",
+    "crypto-address-validator-ts": "^0.5.12",
     "ethers": "^5.7.2",
     "husky": "^8.0.2",
+    "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mailchimp-marketing": "^0.0.1-security",
@@ -56,6 +61,7 @@
     "next-auth": "^4.17.0",
     "next-intercom": "^0.1.4",
     "next-plugin-graphql": "^0.0.2",
+    "npm": "^9.2.0",
     "qs": "^6.11.0",
     "react": "18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
@@ -74,7 +80,8 @@
     "underscore": "^1.13.6",
     "use-debounce": "^8.0.4",
     "uuid": "^9.0.0",
-    "wagmi": "^0.6.2"
+    "wagmi": "^0.6.2",
+    "wallet-address-validator": "^0.2.4"
   },
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",

@@ -8,11 +8,9 @@ interface IGrantLayout {
 }
 
 const GrantLayout = ({ grant }: IGrantLayout) => {
-  const artifacts = grant.submission?.artifacts
+  // const artifacts = grant.submission?.artifacts
   const startingDate = moment(grant.startingDate).format('MM-DD-YYYY HH:mm:ss')
   const closingDate = moment(grant.closingDate).format('MM-DD-YYYY HH:mm:ss')
-
-  console.log('grant   ', grant)
   return (
     <>
       <GrantContentWrapper>
