@@ -5,11 +5,12 @@ import { rgba, assetPath } from '@lib'
 export interface SpinnerProps {
   hidden?: boolean
   absolute?: boolean
+  alwaysLight?: boolean
 }
 
-const Spinner = ({ hidden = false, ...props }: SpinnerProps) => (
+const Spinner = ({ hidden = false, alwaysLight, ...props }: SpinnerProps) => (
   <Wrapper className={hidden ? 'hidden' : ''} {...props}>
-    <AnimatedSpinner />
+    <AnimatedSpinner {...{ alwaysLight }} />
   </Wrapper>
 )
 
@@ -45,10 +46,10 @@ const Wrapper = styled.div<SpinnerProps>`
   }
 `
 
-const AnimatedSpinner = styled.div`
+const AnimatedSpinner = styled.div<SpinnerProps>`
   background-color: ${rgba(palette.night)};
   @media (prefers-color-scheme: dark) {
-    background-color: ${rgba(palette.moon)};
+    background-color: ${props => rgba(props.alwaysLight ? palette.night : palette.moon)};
   }
   mask-repeat: no-repeat;
   mask-position: center;

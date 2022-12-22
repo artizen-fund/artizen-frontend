@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Icon, TableAvatar } from '@components'
-import { rgba, formatStringDate } from '@lib'
+import { rgba, formatDate } from '@lib'
 import { palette, typography } from '@theme'
 import { IGrantsWithProjectFragment } from '@types'
 
@@ -49,11 +49,11 @@ const FeaturedArtPanel = ({ grant }: IFeaturedArtPanel) => {
         </div>
         <div>
           <dt>Started</dt>
-          <dd>{formatStringDate(grant.submission?.project?.creationDate)}</dd>
+          <dd>{formatDate(grant.submission?.project?.creationDate)}</dd>
         </div>
         <div>
           <dt>Completed</dt>
-          <dd>{formatStringDate(grant.submission?.project?.completionDate)}</dd>
+          <dd>{formatDate(grant.submission?.project?.completionDate)}</dd>
         </div>
       </List>
 

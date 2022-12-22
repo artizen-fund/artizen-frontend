@@ -5,7 +5,7 @@ import Countdown from './Countdown'
 import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGrantsWithProjectFragment } from '@types'
-import { rgba, checkIsCurrentGrant } from '@lib'
+import { rgba, isCurrentGrant } from '@lib'
 import GrantsNavigator from './GrantsNavigator'
 
 interface IGrantsExplorer {
@@ -16,7 +16,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const router = useRouter()
   const [amountRaised, setAmountRaised] = useState(0)
 
-  const isCurrentGrant = checkIsCurrentGrant(grant)
+  const isCurrent = isCurrentGrant(grant)
 
   const moveToNextGrant = () => router.push('/grants/today')
 
@@ -39,7 +39,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
               </AmountRaisedRow>
             </div>
 
-            {isCurrentGrant && (
+            {isCurrent && (
               <div>
                 <DataLabel>Ends in</DataLabel>
                 <Countdown date={grant.closingDate} onComplete={moveToNextGrant} />
@@ -47,7 +47,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
             )}
           </GrantData>
 
-          {isCurrentGrant && grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
+          {isCurrent && grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
 
           <Leaderboard grantId={grant.id} {...{ setAmountRaised }} />
         </Body>

@@ -1,18 +1,15 @@
 import { useState, useEffect, useContext } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { LayoutContext } from '@lib'
 
 const MediaModal = () => {
   const [loaded, setLoaded] = useState<boolean>()
   const { visibleModal, modalAttrs } = useContext(LayoutContext)
-  // TODO: future enhancement: modalAttrs should include image/video options
-
   useEffect(() => setLoaded(visibleModal === 'media'), [visibleModal])
-
   return (
     <Wrapper className={visibleModal === 'media' ? 'visible' : ''}>
-      {visibleModal === 'media' && (
-        <Content>
+      <Content>
+        {!!modalAttrs.videoFile && (
           <Video
             loop={true}
             autoPlay={true}
@@ -23,8 +20,9 @@ const MediaModal = () => {
           >
             <source src={modalAttrs.videoFile} type="video/mp4" />
           </Video>
-        </Content>
-      )}
+        )}
+        {!!modalAttrs.imageFile && <Image className={loaded ? 'visible' : ''} src={modalAttrs.imageFile} />}
+      </Content>
     </Wrapper>
   )
 }
@@ -43,7 +41,7 @@ const Content = styled.div`
   align-items: center;
 `
 
-const Video = styled.video`
+const PopupStyle = css`
   opacity: 0;
   transform: scale(1.1);
   /* transition out timing */
@@ -59,6 +57,13 @@ const Video = styled.video`
   }
   will-change: opacity;
   border-radius: 16px;
+`
+
+const Video = styled.video`
+  ${PopupStyle}
+`
+const Image = styled.img`
+  ${PopupStyle}
 `
 
 // TODO: combine this with system-wide Onionskin

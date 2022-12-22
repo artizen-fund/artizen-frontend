@@ -8,6 +8,12 @@ export const formatStringDate = (dumbDate: string) => {
   return stringDate
 }
 
+export const formatDate = (date: Date) => {
+  const realDate = new Date(date)
+  const stringDate = `${monthNames[realDate.getMonth()]} ${realDate.getDate()}, ${realDate.getFullYear()}`
+  return stringDate
+}
+
 export const getDaysAgoFromDate = (start: number) => {
   const now = new Date()
   const oneDay = 1000 * 60 * 60 * 24
@@ -16,9 +22,12 @@ export const getDaysAgoFromDate = (start: number) => {
   return diffInDays
 }
 
-export const checkIsCurrentGrant = (grant: IGrantsWithProjectFragment) => {
+const GMT_OFFSET = `0800`
+
+export const isCurrentGrant = (grant?: IGrantsWithProjectFragment) => {
+  if (!grant) return false
   const now = new Date()
-  const grantStarts = new Date(grant.startingDate)
-  const grantEnds = new Date(grant.closingDate)
+  const grantStarts = new Date(`${grant.startingDate}-${GMT_OFFSET}`)
+  const grantEnds = new Date(`${grant.closingDate}-${GMT_OFFSET}`)
   return grantStarts <= now && grantEnds > now
 }

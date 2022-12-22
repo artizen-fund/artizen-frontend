@@ -1,6 +1,6 @@
 {
   "name": "artizen-frontend",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "private": true,
   "engines": {
     "node": ">=16.14.0 <17",
@@ -13,7 +13,7 @@
     "clean": "rm -rf .next",
     "generate": "node ./tools/generate.js",
     "dev": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- next dev",
-    "prod": "yarn codegen-prod && yarn build-prod && yarn dev", 
+    "prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- next dev", 
     "develop": "yarn codegen-local && yarn dev",
     "build": "yarn codegen && next build",
     "build-prod":"SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- yarn build", 

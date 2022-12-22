@@ -88,13 +88,11 @@ export const StringControl = ({
           />
         ) : uischema?.options?.format === 'uploadFile' ? (
           <UploadFileControl
-            {...{ required }}
+            {...{ required, setVirgin, enabled, data, path, handleChange, uischema }}
             disabled={!enabled}
             placeholder={uischema?.options?.placeholder || ' '}
-            value={data}
-            onChange={(fileUrl: string) => handleChange(path, fileUrl)}
+            onBlur={() => setVirgin(false)}
             className={!!data ? 'hasData' : ''}
-            path={path}
           />
         ) : schema?.format === 'date' ? (
           <input

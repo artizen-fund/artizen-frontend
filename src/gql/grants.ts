@@ -18,6 +18,7 @@ export const GET_ADJACENT_GRANT = gql`
     status
     blockchainId
     startingDate
+    closingDate
   }
 
   query getAdjacentGrant($where: Grants_bool_exp, $order_by: [Grants_order_by!]) {

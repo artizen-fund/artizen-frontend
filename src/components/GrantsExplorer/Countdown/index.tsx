@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { default as ReactCountdown } from 'react-countdown'
-import { typography } from '@theme'
 import moment from 'moment-timezone'
+import { typography } from '@theme'
+import { ARTIZEN_TIMEZONE } from '@lib'
 
 export interface CountdownProps {
   date: string
@@ -29,7 +30,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }: IRendererProps) 
 
 const Countdown = ({ date, onComplete }: CountdownProps) => {
   // date is save in PST so it needs to be converte to local machine date
-  const newMomentDate = moment.tz(date, 'America/Los_Angeles').local().format()
+  const newMomentDate = moment.tz(date, ARTIZEN_TIMEZONE).local().format()
 
   const [hasMounted, setHasMounted] = useState(false)
 
