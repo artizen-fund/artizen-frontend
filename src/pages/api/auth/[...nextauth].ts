@@ -110,9 +110,6 @@ export const authOptions: NextAuthOptions = {
             })
           ).raw
 
-          console.log('authorize  address  ', address)
-          console.log('authorize  profileId  ', profileId)
-
           //check if user is in database
 
           let userId = undefined
