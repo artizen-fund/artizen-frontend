@@ -97,7 +97,7 @@ export const schema: JsonSchema = {
     },
 
     artifacts: {
-      title: 'Artifacts Assets',
+      title: 'Artifact Assets',
       type: 'object',
       properties: {
         artworkPatron: {
@@ -106,7 +106,6 @@ export const schema: JsonSchema = {
         videoPatron: {
           type: 'string',
         },
-
         artworkCreator: {
           type: 'string',
         },
@@ -324,7 +323,7 @@ export const uischema = {
 
     {
       type: 'Group',
-      label: 'Artifacts Assets',
+      label: 'Artifact Assets',
       elements: [
         {
           type: 'HorizontalLayout',
@@ -332,18 +331,30 @@ export const uischema = {
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkPatron',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
+              options: {
+                unsafeToRetain: true,
+                format: 'uploadFile',
+                fileFormats: ['image/png', 'image/jpeg', 'image/gif'],
+              },
             },
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCreator',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
+              options: {
+                unsafeToRetain: true,
+                format: 'uploadFile',
+                fileFormats: ['image/png', 'image/jpeg', 'image/gif'],
+              },
             },
 
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/artworkCommunity',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
+              options: {
+                unsafeToRetain: true,
+                format: 'uploadFile',
+                fileFormats: ['image/png', 'image/jpeg', 'image/gif'],
+              },
             },
           ],
         },
@@ -353,18 +364,18 @@ export const uischema = {
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoPatron',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
+              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
             },
 
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoCreator',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
+              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
             },
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoCommunity',
-              options: { unsafeToRetain: true, format: 'uploadFile' },
+              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
             },
           ],
         },

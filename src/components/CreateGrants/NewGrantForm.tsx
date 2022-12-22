@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
-import { breakpoint, typography } from '@theme'
+import { breakpoint, typography, palette } from '@theme'
 import {
   INSERT_GRANTS,
   INSERT_PROJECTS,
@@ -24,7 +24,7 @@ import {
 } from '@types'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState, Grant, Project, ProjectMember } from '@forms/createGrants'
-import { ARTIZEN_TIMEZONE } from '@lib'
+import { ARTIZEN_TIMEZONE, rgba } from '@lib'
 import {
   thereIsOneLead,
   thereIsIncompleteInformationFilled,
@@ -255,6 +255,7 @@ const NewGrantForm = () => {
 
 const Wrapper = styled.div`
   padding: 150px 0;
+  min-height: 100vh;
 `
 
 const TileTitle = styled.h3`
@@ -323,7 +324,7 @@ const FormWrapper = styled.div`
       cursor: pointer;
     }
     td {
-      padding: 0px 10px 10px 0px;
+      padding: 0px 0px 10px 0px;
     }
     button {
       color: black;
@@ -346,7 +347,7 @@ const FormWrapper = styled.div`
       }
     }
     input {
-      border: 1px solid black;
+      border: 1px solid ${rgba(palette.stone)};
       width: 100%;
       padding: 18px 16px 18px 16px;
       @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -356,8 +357,9 @@ const FormWrapper = styled.div`
         padding: 22px 32px 22px 32px;
       }
       @media (prefers-color-scheme: dark) {
-        border: 1px solid white;
-        color: white;
+        border: 1px solid ${rgba(palette.stone)};
+        color: ${rgba(palette.slate)};
+        background: ${rgba(palette.moon)};
       }
     }
   }

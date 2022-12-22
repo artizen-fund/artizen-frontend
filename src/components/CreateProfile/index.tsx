@@ -6,7 +6,7 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation } from '@types'
-import { rgba, loggedInUserVar, LayoutContext, uploadToCloudinary } from '@lib'
+import { rgba, loggedInUserVar, LayoutContext, useCloudinary } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/createProfile'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
@@ -24,6 +24,7 @@ const CreateProfile = () => {
   const [imageFile, setImageFile] = useState<File>()
 
   const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USER)
+  const { upload } = useCloudinary()
   // todo: replace readOnly with [loading] from useMutation
   const submit = async () => {
     setReadonly(true)
@@ -31,8 +32,8 @@ const CreateProfile = () => {
     try {
       let profileImage = undefined
       if (imageFile) {
-        const cloudinaryResponse = await uploadToCloudinary(imageFile)
-        profileImage = cloudinaryResponse.secure_url
+        const cloudinaryResponse = await upload(imageFile)
+        profileImage = cloudinaryResponse?.secure_url
       }
       await updateUser({
         variables: {
