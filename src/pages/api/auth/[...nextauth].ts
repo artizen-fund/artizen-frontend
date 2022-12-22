@@ -1,4 +1,4 @@
-import NextAuth, { User, Session, NextAuthOptions } from 'next-auth'
+import NextAuth, { User, Session, NextAuthOptions, AdapterUser } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
@@ -7,6 +7,8 @@ import { CREATE_USER, GET_USERS_AND_CURATORS } from '@gql'
 import { ICreateUserMutation, IGetUsersAndCuratorsQuery } from '@types'
 import { assert, createApolloClient } from '@lib'
 
+type UserWithRole = User & { isCurator: boolean }
+
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
@@ -14,30 +16,31 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt: ({ token, user }) => {
       console.log('user     ', user)
-      if (user) {
-        token.id = user.id
+      const userWRole: UserWithRole | AdapterUser | undefined = user
+      if (userWRole) {
+        token.id = userWRole.id
         token.iat = Date.now() / 1000
         token.exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
 
-        if (user.isCurator) {
+        if (userWRole.isCurator) {
           token['https://hasura.io/jwt/claims'] = {
             'x-hasura-allowed-roles': ['user', 'curator'],
             'x-hasura-default-role': 'curator',
             'x-hasura-role': 'curator',
-            'x-hasura-user-id': user.id,
+            'x-hasura-user-id': userWRole.id,
           }
         }
 
-        if (!user.isCurator) {
+        if (!userWRole.isCurator) {
           token['https://hasura.io/jwt/claims'] = {
             'x-hasura-allowed-roles': ['user', 'curator'],
             'x-hasura-default-role': 'user',
             'x-hasura-role': 'user',
-            'x-hasura-user-id': user.id,
+            'x-hasura-user-id': userWRole.id,
           }
         }
 
-        token.user = user
+        token.user = userWRole
       }
       return token
     },
