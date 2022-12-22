@@ -7,8 +7,6 @@ import { CREATE_USER, GET_USERS_AND_CURATORS } from '@gql'
 import { ICreateUserMutation, IGetUsersAndCuratorsQuery } from '@types'
 import { assert, createApolloClient } from '@lib'
 
-type UserWithRole = User & { isCurator: boolean }
-
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
@@ -16,7 +14,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt: ({ token, user }) => {
       console.log('user     ', user)
-      const userWRole: UserWithRole | AdapterUser | undefined = user
+      const userWRole = user as any
       if (userWRole) {
         token.id = userWRole.id
         token.iat = Date.now() / 1000
