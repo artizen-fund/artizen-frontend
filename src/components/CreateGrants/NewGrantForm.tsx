@@ -20,7 +20,7 @@ import {
   ILoadGrantsQuery,
   IGetUsersQuery,
   ICreateUsersMutation,
-  IUpdateUsersMutation,
+  IUpdateUsersHereMutation,
 } from '@types'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState, Grant, Project, ProjectMember } from '@forms/createGrants'
@@ -43,7 +43,7 @@ const NewGrantForm = () => {
   //users
   const [getUser, { error }] = useLazyQuery<IGetUsersQuery>(GET_USERS)
   const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
-  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS)
+  const [updateUser] = useMutation<IUpdateUsersHereMutation>(UPDATE_USERS)
 
   const [data, setData] = useState<FormState>(initialState)
 

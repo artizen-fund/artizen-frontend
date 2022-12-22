@@ -1,5 +1,5 @@
 import { MockedProvider } from '@apollo/client/testing'
-import { UPDATE_USER } from '@gql'
+import { UPDATE_SELF } from '@gql'
 import EditProfile from './'
 
 export default {
@@ -20,7 +20,7 @@ EditProfileComponent.parameters = {
     mocks: [
       {
         request: {
-          query: UPDATE_USER,
+          query: UPDATE_SELF,
         },
         result: {
           data: {

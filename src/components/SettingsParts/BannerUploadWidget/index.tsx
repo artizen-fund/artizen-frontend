@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import { useMutation, useQuery } from '@apollo/client'
 import { Button } from '@components'
 import { useCloudinary, InvisiFileInput } from '@lib'
-import { UPDATE_USER, GET_SELF } from '@gql'
-import { IGetSelfQuery } from '@types'
+import { UPDATE_SELF, GET_SELF } from '@gql'
+import { IGetSelfQuery, IUpdateSelfMutation } from '@types'
 
 // TODO: look at combining this into a lib with AvatarUploadWidget
 
@@ -16,7 +16,7 @@ const BannerUploadWidget = () => {
       publicAddress: session?.user?.publicAddress.toLowerCase(),
     },
   })
-  const [updateUser] = useMutation(UPDATE_USER)
+  const [updateSelf] = useMutation<IUpdateSelfMutation>(UPDATE_SELF)
 
   const [newBanner, setNewBanner] = useState<File>()
   useEffect(() => {
@@ -31,7 +31,7 @@ const BannerUploadWidget = () => {
       const cloudinaryResponse = await upload(newAvatar)
       bannerImage = cloudinaryResponse.secure_url
     }
-    await updateUser({
+    await updateSelf({
       variables: { ...loggedInUser?.Users[0], bannerImage },
       onError: error => console.error('Error saving new user profile', error),
     })

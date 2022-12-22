@@ -6,9 +6,9 @@ import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
-import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation, IGetSelfQuery } from '@types'
+import { ICheckForExistingArtizenHandleQuery, IUpdateSelfMutation, IGetSelfQuery } from '@types'
 import { rgba, LayoutContext, useCloudinary } from '@lib'
-import { GET_SELF, UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
+import { GET_SELF, UPDATE_SELF, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/createProfile'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
 import { typography, palette } from '@theme'
@@ -23,17 +23,15 @@ const CreateProfile = () => {
 
   const { visibleModal, toggleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)
-  const [readonly, setReadonly] = useState(false)
   const [acceptedToc, setAcceptedToc] = useState(true)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   const [imageFile, setImageFile] = useState<File>()
 
-  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USER)
+  const [updateSelf, { loading }] = useMutation<IUpdateSelfMutation>(UPDATE_SELF)
   const { upload } = useCloudinary()
   // todo: replace readOnly with [loading] from useMutation
   const submit = async () => {
-    setReadonly(true)
     if (!loggedInUser) return
     try {
       let profileImage = undefined
@@ -41,7 +39,7 @@ const CreateProfile = () => {
         const cloudinaryResponse = await upload(imageFile)
         profileImage = cloudinaryResponse?.secure_url
       }
-      await updateUser({
+      await updateSelf({
         variables: {
           ...loggedInUser,
           ...data,
@@ -66,7 +64,6 @@ const CreateProfile = () => {
     } catch (error) {
       console.error('Error saving new user profile', error)
     }
-    setReadonly(false)
   }
 
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
@@ -117,10 +114,11 @@ const CreateProfile = () => {
 
         <AvatarForm setFile={setImageFile} />
         <Form
-          {...{ schema, uischema, initialState, data, setData, readonly, additionalErrors }}
+          {...{ schema, uischema, initialState, data, setData, additionalErrors }}
+          readonly={loading}
           submitDisabledFromOutside={!acceptedToc}
         >
-          <SubmitButton onClick={() => submit()} stretch disabled={readonly}>
+          <SubmitButton onClick={() => submit()} stretch disabled={loading}>
             Save Changes
           </SubmitButton>
         </Form>

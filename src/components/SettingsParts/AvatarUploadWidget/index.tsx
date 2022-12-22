@@ -4,13 +4,13 @@ import styled from 'styled-components'
 import { useMutation, useQuery } from '@apollo/client'
 import { rgba, useCloudinary, InvisiFileInput } from '@lib'
 import { palette, breakpoint } from '@theme'
-import { UPDATE_USER, GET_SELF } from '@gql'
-import { Maybe, IGetSelfQuery } from '@types'
+import { UPDATE_SELF, GET_SELF } from '@gql'
+import { Maybe, IGetSelfQuery, IUpdateSelfMutation } from '@types'
 
 // TODO: look at combining this into a lib with BannerUploadWidget
 
 const AvatarUploadWidget = () => {
-  const [updateUser] = useMutation(UPDATE_USER)
+  const [updateSelf] = useMutation<IUpdateSelfMutation>(UPDATE_SELF)
   const { data: session } = useSession()
   const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
     variables: {
@@ -31,7 +31,7 @@ const AvatarUploadWidget = () => {
       const cloudinaryResponse = await upload(newAvatar)
       profileImage = cloudinaryResponse?.secure_url
     }
-    await updateUser({
+    await updateSelf({
       variables: { ...loggedInUser?.Users[0], profileImage },
       onError: error => console.error('Error saving new user profile', error),
     })

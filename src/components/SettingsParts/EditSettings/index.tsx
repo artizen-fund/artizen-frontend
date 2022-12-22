@@ -9,7 +9,7 @@ import { IGetSelfQuery, IUpdateSelfMutation } from '@types'
 import { schema, uischema, initialState, FormState } from '@forms/editSettings'
 
 const EditSettings = () => {
-  const [updateUser, { loading }] = useMutation<IUpdateSelfMutation>(UPDATE_SELF)
+  const [updateSelf, { loading }] = useMutation<IUpdateSelfMutation>(UPDATE_SELF)
   const { data: session } = useSession()
   const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
     variables: {
@@ -28,7 +28,7 @@ const EditSettings = () => {
 
   const saveChanges = async () => {
     if (!loggedInUser) return
-    await updateUser({ variables: { ...loggedInUser.Users[0], ...data } })
+    await updateSelf({ variables: { ...loggedInUser.Users[0], ...data } })
   }
 
   return (

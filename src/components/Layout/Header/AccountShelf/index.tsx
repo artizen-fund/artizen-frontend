@@ -5,17 +5,16 @@ import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
 import { rgba, assetPath } from '@lib'
-import { IUsers, IGetSelfQuery } from '@types'
+import { IGetSelfQuery } from '@types'
 import { useDisconnect } from 'wagmi'
 import { GET_SELF } from '@gql'
 
 interface IAccountShelf {
-  user: Partial<IUsers>
   hideShelf: () => void
 }
 
 const AccountShelf = ({ hideShelf }: IAccountShelf) => {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
     variables: {
       publicAddress: session?.user?.publicAddress.toLowerCase(),
@@ -51,15 +50,9 @@ const AccountShelf = ({ hideShelf }: IAccountShelf) => {
             <Button onClick={() => goToSettings('profile')} stretch outline level={1} glyph="face">
               Profile
             </Button>
-            {/*<Button onClick={() => goToSettings('wallet')} stretch outline level={1} glyph="wallet">
-              Wallet
-            </Button>*/}
             <Button onClick={() => goToSettings('settings')} stretch outline level={1} glyph="gear">
               Settings
             </Button>
-            {/*<Button onClick={() => goToSettings('notifications')} stretch outline level={1} glyph="bell">
-              Notifications
-            </Button>*/}
           </Buttons>
         </Top>
         <div>
@@ -69,7 +62,6 @@ const AccountShelf = ({ hideShelf }: IAccountShelf) => {
           </Button>
         </div>
       </Commands>
-      {/*<AccountStats {...{ stats }} />*/}
       <Illustration />
     </Wrapper>
   )

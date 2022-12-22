@@ -4,14 +4,14 @@ import { useSession } from 'next-auth/react'
 import { useMutation, useQuery } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER, GET_SELF } from '@gql'
-import { ICheckForExistingArtizenHandleQuery, IGetSelfQuery } from '@types'
+import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_SELF, GET_SELF } from '@gql'
+import { ICheckForExistingArtizenHandleQuery, IGetSelfQuery, IUpdateSelfMutation } from '@types'
 import { Form, Button, SettingsFormHeader } from '@components'
 import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
-  const [updateUser] = useMutation(UPDATE_USER)
+  const [updateSelf, { loading }] = useMutation<IUpdateSelfMutation>(UPDATE_SELF)
   const { data: session } = useSession()
   const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
     variables: {
@@ -32,15 +32,11 @@ const EditProfile = () => {
   }, [loggedInUser])
 
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
-  const [readonly, setReadonly] = useState(false)
-  // todo: replace readonly with [loading] from useMutation
 
   const saveChanges = async () => {
     if (!loggedInUser) return
-    setReadonly(true)
     // todo: replace this force-lowercase with a mutation event in hasura
-    await updateUser({ variables: { ...loggedInUser, ...data, artizenHandle: data.artizenHandle?.toLowerCase() } })
-    setReadonly(false)
+    await updateSelf({ variables: { ...loggedInUser, ...data, artizenHandle: data.artizenHandle?.toLowerCase() } })
   }
 
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
@@ -79,7 +75,7 @@ const EditProfile = () => {
         subtitle="Your public profile is visible to everyone"
       />
       <FormWrapper>
-        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors, readonly }}>
+        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={loading}>
           <StyledButton onClick={() => saveChanges()} stretch level={0}>
             Save Changes
           </StyledButton>
