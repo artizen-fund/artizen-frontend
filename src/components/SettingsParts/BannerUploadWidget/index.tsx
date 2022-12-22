@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { Button } from '@components'
-import { uploadToCloudinary, InvisiFileInput, loggedInUserVar } from '@lib'
+import { useCloudinary, InvisiFileInput, loggedInUserVar } from '@lib'
 import { UPDATE_USER } from '@gql'
 
 // TODO: look at combining this into a lib with AvatarUploadWidget
@@ -17,10 +17,11 @@ const BannerUploadWidget = () => {
     uploadBanner(newBanner)
   }, [newBanner, loggedInUser])
 
+  const { upload } = useCloudinary()
   const uploadBanner = async (newAvatar: File) => {
     let bannerImage = undefined
     if (newAvatar) {
-      const cloudinaryResponse = await uploadToCloudinary(newAvatar)
+      const cloudinaryResponse = await upload(newAvatar)
       bannerImage = cloudinaryResponse.secure_url
     }
     await updateUser({

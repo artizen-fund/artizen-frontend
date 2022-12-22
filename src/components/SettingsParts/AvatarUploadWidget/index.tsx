@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useMutation, useReactiveVar } from '@apollo/client'
-import { rgba, uploadToCloudinary, InvisiFileInput, loggedInUserVar } from '@lib'
+import { rgba, useCloudinary, InvisiFileInput, loggedInUserVar } from '@lib'
 import { palette, breakpoint } from '@theme'
 import { UPDATE_USER } from '@gql'
 import { Maybe } from '@types'
@@ -18,11 +18,12 @@ const AvatarUploadWidget = () => {
     uploadAvatar(newAvatar)
   }, [newAvatar, loggedInUser])
 
+  const { upload } = useCloudinary()
   const uploadAvatar = async (newAvatar: File) => {
     let profileImage = undefined
     if (newAvatar) {
-      const cloudinaryResponse = await uploadToCloudinary(newAvatar)
-      profileImage = cloudinaryResponse.secure_url
+      const cloudinaryResponse = await upload(newAvatar)
+      profileImage = cloudinaryResponse?.secure_url
     }
     await updateUser({
       variables: { ...loggedInUser, profileImage },
