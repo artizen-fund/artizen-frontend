@@ -1,21 +1,11 @@
 import { createContext, useEffect, useState } from 'react'
-import { useReactiveVar } from '@apollo/client'
-import { loggedInUserVar, isServer } from '@lib'
-
-/* TODO: rename this
- *  candidates:
- *    - uiContext
- *    - layoutContext
- *    - siteLayoutContext
- */
+import { isServer } from '@lib'
 
 export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
 
 interface ILayoutContext {
   donationStatus?: DonationStatus
   setDonationStatus?: (status: DonationStatus) => void
-  donationStage: DonationStage
-  setDonationStage?: (stage: DonationStage) => void
   visibleShelf?: HeaderShelfType
   setVisibleShelf?: (shelf: HeaderShelfType) => void
   toggleShelf?: (shelf?: HeaderShelfType) => void
@@ -26,17 +16,11 @@ interface ILayoutContext {
   modalAttrs?: any
   locked?: boolean
   setLocked?: (b: boolean) => void
-  // TODO: modalAttrs?: MediaAttrs | whatever-else
 }
 
-export const LayoutContext = createContext<ILayoutContext>({ donationStage: 'setAmount' })
+export const LayoutContext = createContext<ILayoutContext>({})
 
 export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
-  const loggedInUser = useReactiveVar(loggedInUserVar)
-
-  const [donationStatus, setDonationStatus] = useState<DonationStatus>('')
-  const [donationStage, setDonationStage] = useState<DonationStage>('setAmount')
-
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
 
@@ -48,23 +32,6 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
     setVisibleModal(modalType)
     setModalAttrs(options)
   }
-
-  useEffect(() => {
-    /* A donation can be initiated before a user is logged in.
-     * This effect initiates the login UI, and then returns the UI to the donation flow.
-     */
-    if (donationStage === 'login') {
-      /* ^ If a donation amount is set but no user is logged in, the donationStage will be set to 'login'. */
-      if (visibleShelf === 'donate' && !loggedInUser) {
-        /* ^ No user? Switch visible header shelf to session for Login/Signup UI. */
-        setVisibleShelf('session')
-      } else if (visibleShelf === 'session' && !!loggedInUser) {
-        /* ^ Once the user is not undefined, flip back to Donation flow. */
-        setDonationStage?.('paymentFiatAddress')
-        setVisibleShelf('donate')
-      }
-    }
-  }, [donationStage, loggedInUser, visibleShelf])
 
   useEffect(() => {
     /* Lock the page scroll if a shelf is open
@@ -83,10 +50,6 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   return (
     <LayoutContext.Provider
       value={{
-        donationStatus,
-        setDonationStatus,
-        donationStage,
-        setDonationStage,
         visibleShelf,
         setVisibleShelf,
         toggleShelf,

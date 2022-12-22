@@ -1,33 +1,34 @@
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
-import { useMutation, useReactiveVar } from '@apollo/client'
-import { UPDATE_USER } from '@gql'
+import { useMutation, useQuery } from '@apollo/client'
+import { UPDATE_SELF, GET_SELF } from '@gql'
 import { Form, Button, SettingsFormHeader } from '@components'
-import { loggedInUserVar } from '@lib'
 import { breakpoint, typography } from '@theme'
+import { IGetSelfQuery, IUpdateSelfMutation } from '@types'
 import { schema, uischema, initialState, FormState } from '@forms/editSettings'
 
 const EditSettings = () => {
-  const [updateUser] = useMutation(UPDATE_USER)
-  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const [updateUser, { loading }] = useMutation<IUpdateSelfMutation>(UPDATE_SELF)
+  const { data: session } = useSession()
+  const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
+    variables: {
+      publicAddress: session?.user?.publicAddress.toLowerCase(),
+    },
+  })
 
   const [data, setData] = useState<FormState>(initialState)
   useEffect(() => {
     setData({
-      firstName: loggedInUser?.firstName || initialState.firstName,
-      lastName: loggedInUser?.lastName || initialState.lastName,
-      email: loggedInUser?.email || initialState.email,
+      firstName: loggedInUser?.Users[0].firstName || initialState.firstName,
+      lastName: loggedInUser?.Users[0].lastName || initialState.lastName,
+      email: loggedInUser?.Users[0].email || initialState.email,
     })
   }, [loggedInUser])
 
-  const [processing, setProcessing] = useState(false)
-  // todo: replace processing with [loading] from useMutation
-
   const saveChanges = async () => {
     if (!loggedInUser) return
-    setProcessing(true)
-    await updateUser({ variables: { ...loggedInUser, ...data } })
-    setProcessing(false)
+    await updateUser({ variables: { ...loggedInUser.Users[0], ...data } })
   }
 
   return (
@@ -39,8 +40,8 @@ const EditSettings = () => {
         subtitle="Check your settings below."
       />
       <FormWrapper>
-        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
-          <StyledButton disabled={processing} onClick={() => saveChanges()} stretch level={0}>
+        <Form {...{ schema, uischema, initialState, data, setData }} readonly={loading}>
+          <StyledButton disabled={loading} onClick={() => saveChanges()} stretch level={0}>
             Save Changes
           </StyledButton>
         </Form>

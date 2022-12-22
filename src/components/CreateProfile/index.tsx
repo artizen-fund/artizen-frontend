@@ -1,19 +1,25 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
+import { useSession } from 'next-auth/react'
+import { useMutation, useQuery } from '@apollo/client'
 import Link from 'next/link'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
-import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation } from '@types'
-import { rgba, loggedInUserVar, LayoutContext, useCloudinary } from '@lib'
-import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
+import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation, IGetSelfQuery } from '@types'
+import { rgba, LayoutContext, useCloudinary } from '@lib'
+import { GET_SELF, UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
 import { schema, uischema, initialState, FormState } from '@forms/createProfile'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
 import { typography, palette } from '@theme'
 
 const CreateProfile = () => {
-  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const { data: session } = useSession()
+  const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
+    variables: {
+      publicAddress: session?.user?.publicAddress.toLowerCase(),
+    },
+  })
 
   const { visibleModal, toggleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)
@@ -39,7 +45,7 @@ const CreateProfile = () => {
         variables: {
           ...loggedInUser,
           ...data,
-          artizenHandle: data.artizenHandle?.toLowerCase() || loggedInUser.artizenHandle,
+          artizenHandle: data.artizenHandle?.toLowerCase() || loggedInUser.Users[0].artizenHandle,
           profileImage,
         },
       })
@@ -51,7 +57,7 @@ const CreateProfile = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id: loggedInUser.id,
+          id: loggedInUser.Users[0].id,
           email: data.email,
         }),
       })
@@ -67,7 +73,10 @@ const CreateProfile = () => {
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
     variables: {
       where: {
-        _and: [{ artizenHandle: { _eq: newArtizenHandle?.toLowerCase() } }, { id: { _neq: loggedInUser?.id } }],
+        _and: [
+          { artizenHandle: { _eq: newArtizenHandle?.toLowerCase() } },
+          { id: { _neq: loggedInUser?.Users[0].id } },
+        ],
       },
     },
     onError: error => console.error('error ', error),
@@ -91,7 +100,11 @@ const CreateProfile = () => {
     <></>
   ) : (
     <Wrapper visible={visibleModal === 'createProfile'}>
-      <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
+      <FormWrapper
+        hasFirstName={!!loggedInUser?.Users[0].firstName}
+        hasLastName={!!loggedInUser?.Users[0].lastName}
+        hasUsername={false}
+      >
         <CloseButton onClick={() => toggleModal?.()} />
 
         <Copy>

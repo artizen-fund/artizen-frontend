@@ -1,6 +1,9 @@
 import { useCallback, useEffect } from 'react'
-import { useReactiveVar } from '@apollo/client'
-import { assert, loggedInUserVar } from '@lib'
+import { useSession } from 'next-auth/react'
+import { useQuery } from '@apollo/client'
+import { assert } from '@lib'
+import { IGetSelfQuery } from '@types'
+import { GET_SELF } from '@gql'
 import { loadIntercom, trackEvent, shutdownIntercom } from 'next-intercom'
 
 export const notifications = []
@@ -19,15 +22,20 @@ export enum intercomEventEnum {
 export const trackEventF = (type: intercomEventEnum, target: object = {}) => trackEvent(type, target)
 
 export function initIntercom() {
-  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const { data: session } = useSession()
+  const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
+    variables: {
+      publicAddress: session?.user?.publicAddress.toLowerCase(),
+    },
+  })
 
   const appId = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
   const startIntercom = useCallback(() => {
     loadIntercom({
       appId,
-      email: loggedInUser?.email, // default: ''
-      name: loggedInUser && `${loggedInUser?.firstName} ${loggedInUser?.lastName}`,
+      email: loggedInUser?.Users[0].email, // default: ''
+      name: loggedInUser?.Users && `${loggedInUser?.Users[0].firstName} ${loggedInUser?.Users[0].lastName}`,
       ssr: false, // default: false
       initWindow: true, // default: true
       delay: 0, // default: 0  - useful for mobile devices to prevent blocking the main thread

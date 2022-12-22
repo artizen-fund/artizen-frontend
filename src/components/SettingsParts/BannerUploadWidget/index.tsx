@@ -1,21 +1,28 @@
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
-import { useMutation, useReactiveVar } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { Button } from '@components'
-import { useCloudinary, InvisiFileInput, loggedInUserVar } from '@lib'
-import { UPDATE_USER } from '@gql'
+import { useCloudinary, InvisiFileInput } from '@lib'
+import { UPDATE_USER, GET_SELF } from '@gql'
+import { IGetSelfQuery } from '@types'
 
 // TODO: look at combining this into a lib with AvatarUploadWidget
 
 const BannerUploadWidget = () => {
-  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const { data: session } = useSession()
+  const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
+    variables: {
+      publicAddress: session?.user?.publicAddress.toLowerCase(),
+    },
+  })
   const [updateUser] = useMutation(UPDATE_USER)
 
   const [newBanner, setNewBanner] = useState<File>()
   useEffect(() => {
-    if (!newBanner || !loggedInUser) return
+    if (!newBanner) return
     uploadBanner(newBanner)
-  }, [newBanner, loggedInUser])
+  }, [newBanner])
 
   const { upload } = useCloudinary()
   const uploadBanner = async (newAvatar: File) => {
@@ -25,7 +32,7 @@ const BannerUploadWidget = () => {
       bannerImage = cloudinaryResponse.secure_url
     }
     await updateUser({
-      variables: { ...loggedInUser, bannerImage },
+      variables: { ...loggedInUser?.Users[0], bannerImage },
       onError: error => console.error('Error saving new user profile', error),
     })
   }

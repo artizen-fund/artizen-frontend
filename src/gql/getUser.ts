@@ -7,7 +7,6 @@ export const GET_USER = gql`
   query getUser($publicAddress: String) {
     Users(where: { publicAddress: { _eq: $publicAddress } }) {
       ...UserPublic
-      ...UserPrivate
     }
   }
 `

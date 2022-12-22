@@ -1,28 +1,33 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useSession } from 'next-auth/react'
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER } from '@gql'
-import { ICheckForExistingArtizenHandleQuery } from '@types'
+import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER, GET_SELF } from '@gql'
+import { ICheckForExistingArtizenHandleQuery, IGetSelfQuery } from '@types'
 import { Form, Button, SettingsFormHeader } from '@components'
-import { loggedInUserVar } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
 
 const EditProfile = () => {
   const [updateUser] = useMutation(UPDATE_USER)
-  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const { data: session } = useSession()
+  const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
+    variables: {
+      publicAddress: session?.user?.publicAddress.toLowerCase(),
+    },
+  })
 
   const [data, setData] = useState<FormState>(initialState)
   useEffect(() => {
     setData({
-      artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,
-      bio: loggedInUser?.bio || initialState.bio,
-      twitterHandle: loggedInUser?.twitterHandle || initialState.twitterHandle,
-      instagramHandle: loggedInUser?.instagramHandle || initialState.instagramHandle,
-      discordHandle: loggedInUser?.discordHandle || initialState.discordHandle,
-      website: loggedInUser?.website || initialState.website,
+      artizenHandle: loggedInUser?.Users[0].artizenHandle || initialState.artizenHandle,
+      bio: loggedInUser?.Users[0].bio || initialState.bio,
+      twitterHandle: loggedInUser?.Users[0].twitterHandle || initialState.twitterHandle,
+      instagramHandle: loggedInUser?.Users[0].instagramHandle || initialState.instagramHandle,
+      discordHandle: loggedInUser?.Users[0].discordHandle || initialState.discordHandle,
+      website: loggedInUser?.Users[0].website || initialState.website,
     })
   }, [loggedInUser])
 
@@ -42,7 +47,10 @@ const EditProfile = () => {
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
     variables: {
       where: {
-        _and: [{ artizenHandle: { _eq: newArtizenHandle?.toLowerCase() } }, { id: { _neq: loggedInUser?.id } }],
+        _and: [
+          { artizenHandle: { _eq: newArtizenHandle?.toLowerCase() } },
+          { id: { _neq: loggedInUser?.Users[0].id } },
+        ],
       },
     },
     onError: error => console.error('error ', error),

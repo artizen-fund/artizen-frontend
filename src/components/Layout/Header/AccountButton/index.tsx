@@ -1,31 +1,21 @@
 import { useContext, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { useApolloClient, useReactiveVar } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGetUserQuery, Maybe } from '@types'
-import { rgba, loggedInUserVar, LayoutContext, textCrop } from '@lib'
-import { GET_USER } from '@gql'
+import { IGetSelfQuery, Maybe } from '@types'
+import { rgba, LayoutContext, textCrop } from '@lib'
+import { GET_SELF } from '@gql'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
-  const apolloClient = useApolloClient()
   const { setVisibleModal, toggleShelf } = useContext(LayoutContext)
   const { data: session, status } = useSession()
-  const loggedInUser = useReactiveVar(loggedInUserVar)
-
-  useEffect(() => {
-    if (!session?.user?.publicAddress) return
-    getUserFromHasura()
-  }, [session])
-
-  const getUserFromHasura = async () => {
-    const userFromDB = await apolloClient.query<IGetUserQuery>({
-      query: GET_USER,
-      variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
-    })
-    loggedInUserVar(userFromDB.data.Users[0])
-  }
+  const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
+    variables: {
+      publicAddress: session?.user?.publicAddress.toLowerCase(),
+    },
+  })
 
   const onClick = () => {
     if (status === 'loading') {
@@ -43,16 +33,19 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     setAvatarDisplay(
       !loggedInUser
         ? undefined
-        : !!loggedInUser.profileImage
+        : !!loggedInUser.Users[0].profileImage
         ? 'avatar'
-        : !!loggedInUser.firstName && !!loggedInUser.lastName
+        : !!loggedInUser.Users[0].firstName && !!loggedInUser.Users[0].lastName
         ? 'initials'
         : 'placeholder',
     )
     if (
       status === 'authenticated' &&
       !!loggedInUser &&
-      (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName || !loggedInUser.artizenHandle)
+      (!loggedInUser.Users[0].email ||
+        !loggedInUser.Users[0].firstName ||
+        !loggedInUser.Users[0].lastName ||
+        !loggedInUser.Users[0].artizenHandle)
     ) {
       setVisibleModal?.('createProfile')
     }
@@ -76,14 +69,14 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         glyph="hamburger"
       />
       <IconWrapper active={!!loggedInUser && !active}>
-        <AvatarImage active={avatarDisplay === 'avatar'} profileImage={loggedInUser?.profileImage} />
+        <AvatarImage active={avatarDisplay === 'avatar'} profileImage={loggedInUser?.Users[0].profileImage} />
         <AvatarImage active={avatarDisplay === 'placeholder'}>
           <Glyph glyph="face" level={1} color="night" darkColor="moon" />
         </AvatarImage>
         <Initials active={avatarDisplay === 'initials'}>
           <SizedType>
-            {loggedInUser?.firstName?.substring(0, 1)}
-            {loggedInUser?.lastName?.substring(0, 1)}
+            {loggedInUser?.Users[0].firstName?.substring(0, 1)}
+            {loggedInUser?.Users[0].lastName?.substring(0, 1)}
           </SizedType>
         </Initials>
       </IconWrapper>

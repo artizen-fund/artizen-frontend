@@ -1,12 +1,13 @@
 import styled from 'styled-components'
-import { useReactiveVar } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { rgba, assetPath, loggedInUserVar } from '@lib'
-import { IUsers } from '@types'
-import { signOut } from 'next-auth/react'
+import { rgba, assetPath } from '@lib'
+import { IUsers, IGetSelfQuery } from '@types'
 import { useDisconnect } from 'wagmi'
+import { GET_SELF } from '@gql'
 
 interface IAccountShelf {
   user: Partial<IUsers>
@@ -14,30 +15,13 @@ interface IAccountShelf {
 }
 
 const AccountShelf = ({ hideShelf }: IAccountShelf) => {
-  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const { data: session, status } = useSession()
+  const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
+    variables: {
+      publicAddress: session?.user?.publicAddress.toLowerCase(),
+    },
+  })
   const { disconnect } = useDisconnect()
-  const stats = [
-    {
-      glyph: 'donate',
-      unit: '$800',
-      label: 'donated',
-    },
-    {
-      glyph: 'palette',
-      unit: '42',
-      label: 'collected',
-    },
-    {
-      glyph: 'wallet',
-      unit: '$0',
-      label: 'collected',
-    },
-    {
-      glyph: 'token',
-      unit: '100',
-      label: '$ART',
-    },
-  ]
 
   const router = useRouter()
   const goToSettings = (section: string) => {
@@ -54,14 +38,14 @@ const AccountShelf = ({ hideShelf }: IAccountShelf) => {
     localStorage.clear()
   }
 
-  return !loggedInUser ? (
+  return !loggedInUser?.Users ? (
     <></>
   ) : (
     <Wrapper>
       <Commands>
         <Top>
-          {loggedInUser.firstName && <Welcome>Hi {loggedInUser.firstName}</Welcome>}
-          {!loggedInUser.firstName && <Welcome>Welcome</Welcome>}
+          {loggedInUser.Users[0].firstName && <Welcome>Hi {loggedInUser.Users[0].firstName}</Welcome>}
+          {!loggedInUser.Users[0].firstName && <Welcome>Welcome</Welcome>}
           <Message>Thanks for supporting the future of public goods.</Message>
           <Buttons>
             <Button onClick={() => goToSettings('profile')} stretch outline level={1} glyph="face">

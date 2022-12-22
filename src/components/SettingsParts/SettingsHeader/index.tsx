@@ -1,20 +1,27 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useReactiveVar } from '@apollo/client'
+import { useSession } from 'next-auth/react'
+import { useQuery } from '@apollo/client'
 import { Button, AvatarUploadWidget, BannerUploadWidget } from '@components'
-import { rgba, loggedInUserVar } from '@lib'
+import { rgba } from '@lib'
+import { GET_SELF } from '@gql'
 import { breakpoint, palette, typography } from '@theme'
 import { monthNames } from '@copy/common'
-import { Maybe } from '@types'
+import { Maybe, IGetSelfQuery } from '@types'
 
 const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
-  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const { data: session } = useSession()
+  const { data: loggedInUser } = useQuery<IGetSelfQuery>(GET_SELF, {
+    variables: {
+      publicAddress: session?.user?.publicAddress.toLowerCase(),
+    },
+  })
 
   const [dateJoined, setDateJoined] = useState<string>()
   useEffect(() => {
     if (!loggedInUser) return
     // todo: this is some jank ass typescript :\
-    const dateJoinedAsDate = new Date(loggedInUser.createdAt as unknown as string)
+    const dateJoinedAsDate = new Date(loggedInUser.Users[0].createdAt as unknown as string)
     setDateJoined(`${monthNames[dateJoinedAsDate.getMonth()]} ${dateJoinedAsDate.getFullYear()}`)
   }, [loggedInUser])
 
@@ -22,7 +29,7 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
     <></>
   ) : (
     <header>
-      <PersonalBannerGraphic bannerImage={loggedInUser.bannerImage}>
+      <PersonalBannerGraphic bannerImage={loggedInUser.Users[0].bannerImage}>
         <Content>
           <BannerUploadWidget />
         </Content>
@@ -31,54 +38,54 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
       <Main>
         <Content>
           <Name>
-            {loggedInUser.firstName} {loggedInUser.lastName}
+            {loggedInUser.Users[0].firstName} {loggedInUser.Users[0].lastName}
           </Name>
           <HandleLine>
-            {loggedInUser.artizenHandle && <span>@{loggedInUser.artizenHandle}</span>}
+            {loggedInUser.Users[0].artizenHandle && <span>@{loggedInUser.Users[0].artizenHandle}</span>}
             <span>Joined {dateJoined}</span>
           </HandleLine>
-          {loggedInUser.bio && <Biography>{loggedInUser.bio}</Biography>}
+          {loggedInUser.Users[0].bio && <Biography>{loggedInUser.Users[0].bio}</Biography>}
           <SocialLinks>
-            {!!loggedInUser.twitterHandle && (
+            {!!loggedInUser.Users[0].twitterHandle && (
               <Button
                 glyphOnly
                 glyph="twitter"
                 level={1}
                 outline
-                href={`https://twitter.com/${loggedInUser.twitterHandle}`}
+                href={`https://twitter.com/${loggedInUser.Users[0].twitterHandle}`}
                 target="_blank"
               >
-                @{loggedInUser.twitterHandle}
+                @{loggedInUser.Users[0].twitterHandle}
               </Button>
             )}
-            {!!loggedInUser.discordHandle && (
+            {!!loggedInUser.Users[0].discordHandle && (
               <Button
                 glyphOnly
                 glyph="discord"
                 level={1}
                 outline
-                href={`https://discordapp.com/users/${loggedInUser.discordHandle}`}
+                href={`https://discordapp.com/users/${loggedInUser.Users[0].discordHandle}`}
                 target="_blank"
               >
-                @{loggedInUser.discordHandle}
+                @{loggedInUser.Users[0].discordHandle}
               </Button>
             )}
-            {!!loggedInUser.instagramHandle && (
+            {!!loggedInUser.Users[0].instagramHandle && (
               <a target="_blank" rel="noreferrer">
                 <Button
                   glyphOnly
                   glyph="instagram"
                   level={1}
                   outline
-                  href={`https://instagram.com/${loggedInUser.instagramHandle}`}
+                  href={`https://instagram.com/${loggedInUser.Users[0].instagramHandle}`}
                   target="_blank"
                 >
-                  @{loggedInUser.instagramHandle}
+                  @{loggedInUser.Users[0].instagramHandle}
                 </Button>
               </a>
             )}
-            {!!loggedInUser.website && (
-              <Button glyphOnly glyph="globe" level={1} outline href={loggedInUser.website} target="_blank">
+            {!!loggedInUser.Users[0].website && (
+              <Button glyphOnly glyph="globe" level={1} outline href={loggedInUser.Users[0].website} target="_blank">
                 website
               </Button>
             )}
