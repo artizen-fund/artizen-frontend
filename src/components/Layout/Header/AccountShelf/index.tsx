@@ -1,10 +1,10 @@
 import styled from 'styled-components'
+import { useReactiveVar } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { rgba, assetPath } from '@lib'
+import { rgba, assetPath, loggedInUserVar } from '@lib'
 import { IUsers } from '@types'
-import AccountStats from './AccountStats'
 import { signOut } from 'next-auth/react'
 import { useDisconnect } from 'wagmi'
 
@@ -13,7 +13,8 @@ interface IAccountShelf {
   hideShelf: () => void
 }
 
-const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
+const AccountShelf = ({ hideShelf }: IAccountShelf) => {
+  const loggedInUser = useReactiveVar(loggedInUserVar)
   const { disconnect } = useDisconnect()
   const stats = [
     {
@@ -53,12 +54,14 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
     localStorage.clear()
   }
 
-  return (
+  return !loggedInUser ? (
+    <></>
+  ) : (
     <Wrapper>
       <Commands>
         <Top>
-          {user.firstName && <Welcome>Hi {user.firstName}</Welcome>}
-          {!user.firstName && <Welcome>Welcome</Welcome>}
+          {loggedInUser.firstName && <Welcome>Hi {loggedInUser.firstName}</Welcome>}
+          {!loggedInUser.firstName && <Welcome>Welcome</Welcome>}
           <Message>Thanks for supporting the future of public goods.</Message>
           <Buttons>
             <Button onClick={() => goToSettings('profile')} stretch outline level={1} glyph="face">

@@ -6,7 +6,7 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import { Button, Logo, Modals } from '@components'
 import AccountButton from './AccountButton'
 import DonateButton from './DonateButton'
-import SessionShelf from './SessionShelf'
+import AccountShelf from './AccountShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette, glyphKey } from '@theme'
@@ -63,7 +63,7 @@ const Header = () => {
         </Items>
       </Wrapper>
       <Shelf shelfKey="session" {...{ shadowVisible }}>
-        <SessionShelf hideShelf={() => toggleShelf?.()} />
+        <AccountShelf hideShelf={() => toggleShelf?.()} />
       </Shelf>
       <Shelf shelfKey="howItWorks" {...{ shadowVisible }}>
         <HowItWorks />
