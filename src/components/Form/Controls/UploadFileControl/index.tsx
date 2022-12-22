@@ -47,7 +47,6 @@ const UploadFileControl = ({
   }
 
   const showModal = () => {
-    if (!selectedFile || !data) return
     setVisibleModalWithAttrs?.(
       'media',
       fileType(selectedFile) === 'image'
@@ -59,6 +58,11 @@ const UploadFileControl = ({
           },
     )
   }
+
+  useEffect(() => {
+    if (!selectedFile || !data) return
+    showModal()
+  }, [selectedFile, data])
 
   return (
     <>
