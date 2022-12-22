@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useSession } from 'next-auth/react'
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER, GET_SELF } from '@gql'
