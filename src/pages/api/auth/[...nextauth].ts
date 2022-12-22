@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
-import { CREATE_USER } from '@gql'
+import { CREATE_USER, GET_USERS_AND_CURATORS } from '@gql'
 import { ICreateUserMutation } from '@types'
 import { assert, createApolloClient } from '@lib'
 
@@ -13,16 +13,30 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt: ({ token, user }) => {
+      console.log('user     ', user)
       if (user) {
         token.id = user.id
         token.iat = Date.now() / 1000
         token.exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
-        token['https://hasura.io/jwt/claims'] = {
-          'x-hasura-allowed-roles': ['user'],
-          'x-hasura-default-role': 'user',
-          'x-hasura-role': 'user',
-          'x-hasura-user-id': user.id,
+
+        if (user.isCurator) {
+          token['https://hasura.io/jwt/claims'] = {
+            'x-hasura-allowed-roles': ['user', 'curator'],
+            'x-hasura-default-role': 'curator',
+            'x-hasura-role': 'curator',
+            'x-hasura-user-id': user.id,
+          }
         }
+
+        if (!user.isCurator) {
+          token['https://hasura.io/jwt/claims'] = {
+            'x-hasura-allowed-roles': ['user', 'curator'],
+            'x-hasura-default-role': 'user',
+            'x-hasura-role': 'user',
+            'x-hasura-user-id': user.id,
+          }
+        }
+
         token.user = user
       }
       return token
@@ -77,6 +91,9 @@ export const authOptions: NextAuthOptions = {
         },
       },
       authorize: async credentials => {
+        // NOTE: on_conflict in mutations, mutates records ID.
+        // This invalidates external services that use the users ID as their references
+        // We check for users in the DB firstly and only add them if they do not excit in the DB already
         const apolloClient = createApolloClient()
 
         try {
@@ -96,23 +113,54 @@ export const authOptions: NextAuthOptions = {
           console.log('authorize  address  ', address)
           console.log('authorize  profileId  ', profileId)
 
-          const userFromDB = await apolloClient.mutate<ICreateUserMutation>({
-            mutation: CREATE_USER,
-            variables: { publicAddress: address.toLowerCase() },
+          //check if user is in database
+
+          let userId = undefined
+          let isCurator = undefined
+
+          const userInDataBase = await apolloClient.query({
+            query: GET_USERS_AND_CURATORS,
+            variables: {
+              where: {
+                publicAddress: {
+                  _eq: address.toLowerCase(),
+                },
+              },
+              whereCurator: {
+                user: {
+                  publicAddress: {
+                    _eq: address.toLowerCase(),
+                  },
+                },
+              },
+            },
           })
 
-          console.log('authorize  userFromDB  ', userFromDB)
+          if (userInDataBase.data?.Users.length === 0) {
+            //Add user
+            console.log('adding user  ::::')
+            const userFromDB = await apolloClient.mutate<ICreateUserMutation>({
+              mutation: CREATE_USER,
+              variables: { publicAddress: address.toLowerCase() },
+            })
 
-          if (!userFromDB.data?.insert_Users_one?.id) {
-            throw new Error('Could not retrieve ID from database upsert.')
+            console.log('authorize  userFromDB  ', userFromDB)
+
+            if (!userFromDB.data?.insert_Users_one?.id) {
+              throw new Error('Could not retrieve ID from database upsert.')
+            }
+
+            userId = userFromDB.data?.insert_Users_one?.id
+          } else {
+            userId = userInDataBase.data?.Users[0].id
+            isCurator = userInDataBase.data?.Users[0].curators.length > 0
           }
-
-          const userId = userFromDB.data?.insert_Users_one?.id
 
           const user = {
             id: userId,
             publicAddress: address.toLowerCase(),
             profileId,
+            isCurator,
             expirationTime,
             signature: credentials?.signature,
           }
