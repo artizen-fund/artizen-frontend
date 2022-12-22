@@ -41,7 +41,7 @@ export const Glyph = styled.div<GlyphProps>`
     props.size
       ? `
         mask-image: url(${assetPath(
-          `/glyphs/${props.glyph}/${props.size}/${props.outline ? 'outline' : 'solid'}.svg`,
+          `/assets/glyphs/${props.glyph}/${props.size}/${props.outline ? 'outline' : 'solid'}.svg`,
         )});
         mask-size: ${props.size}px ${props.size}px;
         width: ${props.size}px;

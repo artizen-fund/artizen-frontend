@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { Spinner } from '@components'
+import { Spinner, Glyph } from '@components'
 import { InvisiFileInput, useCloudinary, fileType, rgba, LayoutContext, sleep } from '@lib'
 import { StringControlProps } from '../StringControl'
 import { breakpoint, palette } from '@theme'
@@ -83,10 +83,21 @@ const UploadFileControl = ({
             <source src={data} type={selectedFile.type} />
           </video>
         )}
+        <GlyphWrapper>
+          <Glyph glyph="expand" size={12} />
+        </GlyphWrapper>
       </PreviewWrapper>
     </>
   )
 }
+
+const GlyphWrapper = styled.div`
+  position: absolute;
+  z-index: 102;
+  bottom: 5px;
+  right: 5px;
+  filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 0.4));
+`
 
 const StyledSpinner = styled(props => <Spinner {...props} />)`
   position: absolute;
