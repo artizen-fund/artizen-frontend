@@ -21,6 +21,19 @@ export const GET_USERS = gql`
   }
 `
 
+export const GET_USERS_AND_CURATORS = gql`
+  query getUsersAndCurators($where: Users_bool_exp, $whereCurator: Curators_bool_exp) {
+    Users(where: $where) {
+      id
+      email
+      publicAddress
+      curators(where: $whereCurator) {
+        id
+      }
+    }
+  }
+`
+
 export const mockGetUserData = [
   {
     request: {
