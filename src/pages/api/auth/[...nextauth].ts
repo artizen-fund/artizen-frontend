@@ -4,7 +4,7 @@ import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
 import { CREATE_USER, GET_USERS_AND_CURATORS } from '@gql'
-import { ICreateUserMutation } from '@types'
+import { ICreateUserMutation, IGetUsersAndCuratorsQuery } from '@types'
 import { assert, createApolloClient } from '@lib'
 
 export const authOptions: NextAuthOptions = {
@@ -118,7 +118,7 @@ export const authOptions: NextAuthOptions = {
           let userId = undefined
           let isCurator = undefined
 
-          const userInDataBase = await apolloClient.query({
+          const userInDataBase = await apolloClient.query<IGetUsersAndCuratorsQuery>({
             query: GET_USERS_AND_CURATORS,
             variables: {
               where: {
@@ -168,8 +168,6 @@ export const authOptions: NextAuthOptions = {
           console.log('authorize  user  ', user)
 
           return user
-
-          // window.location.assign(`${window.location.protocol}//${window.location.host}/`)
         } catch (error) {
           console.error('error adding user in nextAuth authorize     ', error)
           return null
