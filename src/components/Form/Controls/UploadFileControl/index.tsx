@@ -78,9 +78,9 @@ const UploadFileControl = ({
       <PreviewWrapper visible={!!selectedFile && !!data} {...{ uploading }} filled={!!data} onClick={() => showModal()}>
         {uploading && <StyledSpinner alwaysLight />}
         {fileType(selectedFile) === 'image' && !!data && <PreviewImage src={data} />}
-        {fileType(selectedFile) === 'video' && !!data && (
+        {fileType(selectedFile) === 'video' && !!data && !!selectedFile && (
           <video loop={true} autoPlay={true} controls={false} muted={true}>
-            <source src={data} type="video/mp4" />
+            <source src={data} type={selectedFile.type} />
           </video>
         )}
       </PreviewWrapper>
