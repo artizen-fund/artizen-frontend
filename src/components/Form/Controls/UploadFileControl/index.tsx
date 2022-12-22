@@ -83,7 +83,7 @@ const UploadFileControl = ({
             <source src={data} type={selectedFile.type} />
           </video>
         )}
-        <GlyphWrapper>
+        <GlyphWrapper visible={!!selectedFile && !!data}>
           <Glyph glyph="expand" size={12} />
         </GlyphWrapper>
       </PreviewWrapper>
@@ -91,7 +91,8 @@ const UploadFileControl = ({
   )
 }
 
-const GlyphWrapper = styled.div`
+const GlyphWrapper = styled.div<{ visible: boolean }>`
+  display: ${props => (props.visible ? 'block' : 'none')};
   position: absolute;
   z-index: 102;
   bottom: 5px;
