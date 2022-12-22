@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import { Button, Logo, Modals } from '@components'
 import AccountButton from './AccountButton'
@@ -15,6 +16,15 @@ const Header = () => {
   const { visibleShelf, toggleShelf } = useContext(LayoutContext)
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
+
+  const { pathname, push } = useRouter()
+  const donateButtonAction = () => {
+    if (pathname === '/grants/today') {
+      scrollToGrantExplorer()
+    } else {
+      push('/grants/today')
+    }
+  }
 
   return (
     <>
@@ -48,7 +58,7 @@ const Header = () => {
               </li>
             </ul>
           </Nav>
-          <DonateButton onClick={() => scrollToGrantExplorer()} active={visibleShelf === 'donate'} />
+          <DonateButton onClick={() => donateButtonAction()} active={visibleShelf === 'donate'} />
           <AccountButton id="accountButton" active={visibleShelf === 'session'} />
         </Items>
       </Wrapper>

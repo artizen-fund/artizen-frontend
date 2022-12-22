@@ -1,108 +1,85 @@
 import styled from 'styled-components'
-import {
-  FeaturedArt,
-  Layout,
-  Metrics,
-  Newsletter,
-  PagePadding,
-  AlternatingPanels,
-  AlternatingPanel,
-  Button,
-} from '@components'
-import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
+import { Layout, Button } from '@components'
+import { assetPath, rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels, metrics } from '@copy/home'
 
-const Home = () => {
-  return (
-    <Layout>
-      <Header>
-        <h1>{header.title}</h1>
-        <h2>{header.subtitle}</h2>
-      </Header>
-      <StyledPagePadding>
-        <Wrapper>
-          {/*<FeaturedArt tokenId={raffle?.tokenID} startTime={raffle?.startTime} /> */}
-          <TabbedInfoWrapper></TabbedInfoWrapper>
-        </Wrapper>
-      </StyledPagePadding>
-      <AlternatingPanels>
-        {alternatingPanels.map((panel, i) => (
-          <AlternatingPanel key={`panel-${i}`} {...panel}>
-            <Button href={panel.destination} level={1}>
-              {panel.buttonLabel}
-            </Button>
-          </AlternatingPanel>
-        ))}
-      </AlternatingPanels>
-      <Newsletter />
-      <Metrics {...{ metrics }} />
-    </Layout>
-  )
-}
+const Index = () => (
+  <Layout>
+    <Content>
+      <Box>
+        <Image />
+        <h1>Hang tight!</h1>
+        <p>You’re being redirected to another page. This might take a few seconds! Or click the button, that works.</p>
+        <Button href="/grants/today" level={1} outline>
+          Go to today’s grant
+        </Button>
+      </Box>
+    </Content>
+  </Layout>
+)
 
-const Header = styled(props => <PagePadding {...props} />)`
-  h1 {
-    ${typography.title.l1};
-  }
-  h2 {
-    ${typography.body.l1};
-  }
+const Content = styled.div`
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
-const StyledPagePadding = styled(props => <PagePadding {...props} />)`
-  position: relative;
-  padding: 0;
-`
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 
-const Wrapper = styled.section`
-  position: relative;
-  display: grid;
-  grid-template-areas: 'featuredArt' 'sidebar' 'tabbedInfo';
+  margin: 35px 10px;
+  padding: 20px;
+  @media only screen and (min-width: ${breakpoint.phablet}px) {
+    margin: 60px auto;
+    padding: 30px;
+    max-width: 507px;
+  }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-template-columns: auto 390px;
-    grid-template-areas: 'featuredArt sidebar' 'tabbedInfo sidebar';
-    grid-gap: 0px 30px;
+    max-width: 685px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    grid-template-columns: auto 480px;
-    grid-gap: 0px 80px;
+    padding: 40px;
+    max-width: 760px;
   }
-  padding-bottom: 100px;
-`
-// todo: above is just a filled-in value, check design
 
-const Tab = styled.div<{ label: string }>``
-
-const TabbedInfoWrapper = styled.div`
-  grid-area: tabbedInfo;
-`
-
-const StyledTabbedContent = styled(props => <TabbedContent {...props} />)`
   h1 {
     ${typography.title.l2}
-    margin-bottom: 0.125em;
   }
-  h2 {
-    ${typography.label.l1}
-    color: ${rgba(palette.barracuda)};
-    margin-bottom: 1em;
-  }
-  p,
-  li {
+  p {
     ${typography.body.l2}
-    margin-bottom: 1em;
+    max-width: 420px;
   }
+
+  background: #ffffff;
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.slate)};
+  }
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
 `
 
-const StyledTabs = styled(props => <Tabs {...props} />)`
-  margin: 40px 0px 35px 0px;
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
-    margin: 50px 0px 45px 0px;
+const Image = styled.div`
+  width: 100%;
+  height: 148px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    height: 204px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    margin: 60px 0px 55px 0px;
+    height: 320px;
+  }
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(${assetPath('/assets/illustrations/404-and-redirect/redirect.png')});
+  @media (prefers-color-scheme: dark) {
+    background-image: url(${assetPath('/assets/illustrations/404-and-redirect/redirect-dark.png')});
   }
 `
 
-export default Home
+export default Index
