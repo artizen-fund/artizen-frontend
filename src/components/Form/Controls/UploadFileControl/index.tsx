@@ -72,7 +72,10 @@ const UploadFileControl = ({
           disabled={!enabled || processing}
           type="string"
           placeholder={uischema?.options?.placeholder || ' '}
-          value={data}
+          value={!!data ? 'uploaded' : ''}
+          onChange={() => {
+            /* do nothing (required to keep this a controlled input) */
+          }}
         />
       </InvisiFileInput>
       <PreviewWrapper visible={!!selectedFile && !!data} {...{ uploading }} filled={!!data} onClick={() => showModal()}>
