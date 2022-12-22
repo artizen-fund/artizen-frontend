@@ -6,9 +6,8 @@ import { assert } from '@lib'
 const CuratorCheck = () => {
   const router = useRouter()
   const { status, data } = useSession()
-  console.log('data   ', data)
   useEffect(() => {
-    if (status === 'unauthenticated' || (!!data && (data as any).user?.isCurator)) {
+    if (status === 'unauthenticated' || (!!data && (!data as any).user?.isCurator)) {
       router.push('/grants/today')
     }
   }, [status, data])
