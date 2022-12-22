@@ -1,4 +1,4 @@
-import NextAuth, { User, Session, NextAuthOptions, AdapterUser } from 'next-auth'
+import NextAuth, { User, Session, NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
