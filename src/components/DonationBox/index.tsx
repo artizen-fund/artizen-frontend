@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
-import { LayoutContext, useGrant } from '@lib'
+import { LayoutContext, useGrant, trackEventF, intercomEventEnum } from '@lib'
 import { breakpoint } from '@theme'
 
 interface IDonationBox {
@@ -25,13 +25,27 @@ const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
   const donateFn = async () => {
     if (!blockchainId || !data.donationAmount) return
     setSending(true)
+    trackEventF(intercomEventEnum.DONATION_START, {
+      amount: data.donationAmount.toString(),
+      grantblockchainId: blockchainId,
+    })
     const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
+
     // TODO: it'll only work when EK removes the transaction from the server
     // if there is transaction hash add a record
     const tx = returnTx?.transactionHash
     if (!tx) {
+      trackEventF(intercomEventEnum.DONATION_FAILED, {
+        amount: data.donationAmount.toString(),
+        grantblockchainId: blockchainId,
+      })
       throw new Error('Tx is empty')
     }
+
+    trackEventF(intercomEventEnum.DONATION_FINISHED, {
+      amount: data.donationAmount.toString(),
+      grantblockchainId: blockchainId,
+    })
 
     setSending(false)
   }

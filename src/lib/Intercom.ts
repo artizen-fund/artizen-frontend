@@ -6,14 +6,9 @@ import { loadIntercom, trackEvent, shutdownIntercom } from 'next-intercom'
 export const notifications = []
 
 export enum intercomEventEnum {
-  USER_LOGIN = 'user:login',
-  DONATION_FIAT_START = 'donation:fiat:start',
-  DONATION_FIAT_TOPUP = 'donation:fiat:pay:topup',
-  DONATION_FIAT_CONFIRMED = 'donation:fiat:confirmed',
-  DONATION_CRYTO_START = 'donation:crypto:start',
-  DONATION_CRYTO_SWAP = 'donation:crypto:swap',
-  DONATION_CRYTO_BRIDGE = 'donation:crypto:bridge',
-  DONATION_CRYTO_CONFIRMED = 'donation:crypto:confirmed',
+  DONATION_START = 'donation:start',
+  DONATION_FINISHED = 'donation:finished',
+  DONATION_FAILED = 'donation:failed',
 }
 
 export const trackEventF = (type: intercomEventEnum, target: object = {}) => trackEvent(type, target)
