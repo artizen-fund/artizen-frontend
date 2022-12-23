@@ -5,14 +5,23 @@ import { rgba, assetPath } from '@lib'
 interface SpinnerProps {
   hidden?: boolean
   absolute?: boolean
-  alwaysLight?: boolean
+  darkBackground?: boolean
+  /*
+    Normally the spinner responds to light/dark modes, but we have some canvases that are dark
+    background on both light and dark mode. (ex. footer, newsletter form)
+    darkBackground parameter will make spinner look correct on dark canvas regardless of scheme.
+  */
   minHeight?: string
+  /*
+    Normal mode (minHeight: undefined) is a square that is intended to put in another component.
+    If you need a big block of space with the spinner in the middle, use the minHeight parameter.
+  */
 }
 
-const Spinner = ({ hidden = false, alwaysLight, ...props }: SpinnerProps) => {
+const Spinner = ({ hidden = false, darkBackground, ...props }: SpinnerProps) => {
   return (
     <Canvas className={hidden ? 'hidden' : ''} {...props}>
-      <AnimatedSpinner {...{ alwaysLight }} />
+      <AnimatedSpinner {...{ darkBackground }} />
     </Canvas>
   )
 }
@@ -60,7 +69,7 @@ const Canvas = styled.div<SpinnerProps>`
 const AnimatedSpinner = styled.div<SpinnerProps>`
   background-color: ${rgba(palette.night)};
   @media (prefers-color-scheme: dark) {
-    background-color: ${props => rgba(props.alwaysLight ? palette.night : palette.moon)};
+    background-color: ${props => rgba(props.darkBackground ? palette.night : palette.moon)};
   }
   mask-repeat: no-repeat;
   mask-position: center;
