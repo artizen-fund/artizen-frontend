@@ -69,7 +69,7 @@ const UploadFileControl = ({
       <InvisiFileInput setFile={setSelectedFile}>
         <input
           {...{ required, onBlur }}
-          disabled={!enabled || processing}
+          disabled={true}
           type="string"
           placeholder={uischema?.options?.placeholder || ' '}
           value={!!data ? 'uploaded' : ''}
