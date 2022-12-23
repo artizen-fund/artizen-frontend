@@ -2,19 +2,22 @@ import styled from 'styled-components'
 import { breakpoint, palette } from '@theme'
 import { rgba, assetPath } from '@lib'
 
-export interface SpinnerProps {
+interface SpinnerProps {
   hidden?: boolean
   absolute?: boolean
   alwaysLight?: boolean
+  minHeight?: string
 }
 
-const Spinner = ({ hidden = false, alwaysLight, ...props }: SpinnerProps) => (
-  <Wrapper className={hidden ? 'hidden' : ''} {...props}>
-    <AnimatedSpinner {...{ alwaysLight }} />
-  </Wrapper>
-)
+const Spinner = ({ hidden = false, alwaysLight, ...props }: SpinnerProps) => {
+  return (
+    <Canvas className={hidden ? 'hidden' : ''} {...props}>
+      <AnimatedSpinner {...{ alwaysLight }} />
+    </Canvas>
+  )
+}
 
-const Wrapper = styled.div<SpinnerProps>`
+const Canvas = styled.div<SpinnerProps>`
   z-index: 2;
   position: ${props => (props.absolute ? 'absolute' : 'relative')};
   display: flex;
@@ -27,12 +30,20 @@ const Wrapper = styled.div<SpinnerProps>`
   left: 0;
   right: 0;
 
+  ${props =>
+    props.minHeight
+      ? `
+    width: 100%;
+    min-height: ${props.minHeight};
+    `
+      : `
   width: 24px;
   height: 24px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 32px;
     height: 32px;
   }
+    `}
 
   opacity: 1;
   transform: scale3d(1, 1, 1);
@@ -76,6 +87,13 @@ const AnimatedSpinner = styled.div<SpinnerProps>`
       transform: rotateZ(360deg);
     }
   }
+`
+
+const SpinnerBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
 `
 
 export default Spinner

@@ -2,7 +2,7 @@ import { JsonSchema } from '@jsonforms/core'
 import { ARTIZEN_CURRENT_SEASON, DEFAULT_GRANT_LENGTH_HOURS, DEFAULT_GRANT_GOAL_ETH } from '@lib'
 
 /* This is the data schema. See JSONForms documentation for more options. */
-//  properties
+
 export const schema: JsonSchema = {
   type: 'object',
   properties: {

@@ -20,9 +20,9 @@ import {
   ILoadGrantsQuery,
   IGetUsersQuery,
   ICreateUsersMutation,
-  IUpdateUsersMutation,
+  IUpdateUsersHereMutation,
 } from '@types'
-import { Form, Button } from '@components'
+import { Form, Button, Spinner } from '@components'
 import { schema, uischema, initialState, FormState, Grant, Project, ProjectMember } from '@forms/createGrants'
 import { ARTIZEN_TIMEZONE, rgba } from '@lib'
 import {
@@ -43,7 +43,7 @@ const NewGrantForm = () => {
   //users
   const [getUser, { error }] = useLazyQuery<IGetUsersQuery>(GET_USERS)
   const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
-  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS)
+  const [updateUser] = useMutation<IUpdateUsersHereMutation>(UPDATE_USERS)
 
   const [data, setData] = useState<FormState>(initialState)
 
@@ -237,8 +237,8 @@ const NewGrantForm = () => {
     return insertGrantsReturn.data?.insert_Grants?.returning[0].id
   }
 
-  return loading ? (
-    <div>Loading Grant</div>
+  return !loading ? (
+    <Spinner minHeight="85vh" />
   ) : (
     <Wrapper>
       <TileTitle>Starting time: {startingDate.format('DD-MM-YYYY HH:mm:ss')} (PST)</TileTitle>
