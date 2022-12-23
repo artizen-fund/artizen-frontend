@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
+import * as validateLib from 'wallet-address-validator'
+import { ErrorObject } from 'ajv'
 import { typography, palette } from '@theme'
 import { LOAD_GRANTS } from '@gql'
 import { ILoadGrantsQuery } from '@types'
@@ -17,6 +19,7 @@ const NewGrantForm = () => {
 
   const [data, setData] = useState<FormState>(initialState)
   const [processing, setProcessing] = useState(false)
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   const { loading, data: loadedGrantData } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
     variables: {
@@ -38,6 +41,21 @@ const NewGrantForm = () => {
     })
   }, [loadedGrantData])
 
+  useEffect(() => {
+    // set additional form validators here
+    const errors: Array<ErrorObject> = []
+    if (!validateLib.validate(data.project.walletAddress, 'ETH')) {
+      errors.push({
+        instancePath: '/project/walletAddress',
+        message: 'Invalid blockchain address',
+        schemaPath: '#/properties/project/properties/walletAddress',
+        keyword: '',
+        params: {},
+      })
+    }
+    setAdditionalErrors(errors)
+  }, [data])
+
   const saveNewGrant = async () => {
     if (!validateProjectMembers(data.projectMembers)) return
     setProcessing(true)
@@ -57,7 +75,7 @@ const NewGrantForm = () => {
   ) : (
     <Wrapper>
       <FormWrapper>
-        <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
+        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
           <StyledButton onClick={() => saveNewGrant()} stretch level={0}>
             {processing ? 'Saving...' : 'Save Draft'}
           </StyledButton>

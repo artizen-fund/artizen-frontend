@@ -22,7 +22,7 @@ const useSaveGrant = () => {
   const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
   const [updateUser] = useMutation<IUpdateUsersHereMutation>(UPDATE_USERS)
 
-  const insertProjects = async (objects: Project) => {
+  const insertProject = async (objects: Project) => {
     const projectDBCreationReturn = await insertProjectsM({
       variables: {
         objects,
@@ -153,7 +153,7 @@ const useSaveGrant = () => {
     return insertGrantsReturn.data?.insert_Grants?.returning[0].id
   }
 
-  return { insertProjects, insertMembers, insertGrant }
+  return { insertProject, insertMembers, insertGrant }
 }
 
 export default useSaveGrant

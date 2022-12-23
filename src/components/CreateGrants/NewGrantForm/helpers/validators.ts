@@ -19,6 +19,13 @@ export const getUsersWalletIsNotCorrect = (projectMembersR: Array<ProjectMember>
     )
 
 export const validateProjectMembers = (projectMembers: Array<ProjectMember>) => {
+  /* "shouldn't this be in the additionalValidators of the form component?"
+     Yes. However, the JSONforms array[] type is weird.
+     At this time, we're not able to make a custom component with good messaging,
+       so we're doing this alert() thing instead.
+     TODO: address this someday.
+  */
+
   if (!thereIsOneLead(projectMembers) || thereIsIncompleteInformationFilled(projectMembers)) {
     alert('You need to add all the project member data and at least one member with role lead and a blockchain wallet')
     return false
