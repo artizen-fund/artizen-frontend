@@ -22,10 +22,10 @@ const useSaveGrant = () => {
   const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
   const [updateUser] = useMutation<IUpdateUsersHereMutation>(UPDATE_USERS)
 
-  const insertProjectsF = async (projectsData: Project) => {
+  const insertProjectsF = async (objects: Project) => {
     const projectDBCreationReturn = await insertProjectsM({
       variables: {
-        objects: projectsData,
+        objects,
       },
     })
     if (projectDBCreationReturn.data?.insert_Projects === undefined) {
@@ -36,64 +36,7 @@ const useSaveGrant = () => {
 
   const insertProjectMembers = async (projectMemberData: Array<ProjectMember>, projectId: string) => {
     const membersData = projectMemberData.map(async (member: ProjectMember) => {
-      const { data } = await getUser({
-        variables: {
-          where: {
-            _or: [
-              {
-                email: {
-                  _eq: member.email,
-                },
-              },
-              {
-                publicAddress: {
-                  _eq: member.wallet?.toLowerCase(),
-                },
-              },
-            ],
-          },
-        },
-      })
-      let userId = ''
-      if (data?.Users.length === 0) {
-        const insertUserRn = await insertUser({
-          variables: {
-            objects: [
-              {
-                firstName: member.firstName,
-                lastName: member.lastName,
-                publicAddress: member?.wallet?.toLowerCase(),
-                externalLink: member.externalLink,
-                email: member.email,
-              },
-            ],
-          },
-        })
-        if (!insertUserRn.data?.insert_Users) {
-          throw new Error('Error inserting new user to DB')
-        }
-        userId = insertUserRn.data.insert_Users.returning[0].id
-      }
-      if (data?.Users.length === 1) {
-        const updateUserRn = await updateUser({
-          variables: {
-            where: {
-              email: {
-                _eq: member.email,
-              },
-            },
-            _set: {
-              firstName: member.firstName,
-              lastName: member.lastName,
-              externalLink: member.externalLink,
-            },
-          },
-        })
-        if (!updateUserRn.data?.update_Users) {
-          throw new Error('Error updating user in DB')
-        }
-        userId = updateUserRn.data.update_Users.returning[0].id
-      }
+      const userId = getUserRecord(member)
       const insertProjectMembersReturn = await insertProjectsMemberInDB({
         variables: {
           objects: [
@@ -110,6 +53,74 @@ const useSaveGrant = () => {
       }
     })
     return Promise.all(membersData)
+  }
+
+  const getUserRecord = async (member: ProjectMember) => {
+    const { data } = await getUser({
+      variables: {
+        where: {
+          _or: [
+            {
+              // todo: this lookup doesn't work, check permissions
+              email: {
+                _eq: member.email,
+              },
+            },
+            {
+              publicAddress: {
+                _eq: member.wallet?.toLowerCase(),
+              },
+            },
+          ],
+        },
+      },
+    })
+    if (data?.Users.length === 0) {
+      return await insertNewUserRecord(member)
+    } else {
+      return await updateUserRecord(member)
+    }
+  }
+
+  const insertNewUserRecord = async (member: ProjectMember) => {
+    const insertUserRn = await insertUser({
+      variables: {
+        objects: [
+          {
+            firstName: member.firstName,
+            lastName: member.lastName,
+            publicAddress: member?.wallet?.toLowerCase(),
+            externalLink: member.externalLink,
+            email: member.email,
+          },
+        ],
+      },
+    })
+    if (!insertUserRn.data?.insert_Users) {
+      throw new Error('Error inserting new user to DB')
+    }
+    return insertUserRn.data.insert_Users.returning[0].id
+  }
+
+  const updateUserRecord = async (member: ProjectMember) => {
+    const updateUserRn = await updateUser({
+      variables: {
+        where: {
+          email: {
+            _eq: member.email,
+          },
+        },
+        _set: {
+          firstName: member.firstName,
+          lastName: member.lastName,
+          externalLink: member.externalLink,
+        },
+      },
+    })
+    if (!updateUserRn.data?.update_Users) {
+      throw new Error('Error updating user in DB')
+    }
+    return updateUserRn.data.update_Users.returning[0].id
   }
 
   const insertGrant = async (data: FormState, projectId: string) => {
