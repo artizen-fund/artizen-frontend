@@ -10,12 +10,17 @@ export const schema: JsonSchema = {
       title: 'Grant',
       type: 'object',
       properties: {
+        date: {
+          type: 'string',
+          title: 'Date of Grant',
+        },
         length: {
           type: 'integer',
-          title: 'Grant length in minutes', // TODO: switch to Hours after testing
+          title: 'Grant length (minutes)', // TODO: switch to Hours after testing
         },
         goal: {
           type: 'integer',
+          title: 'Goal (eth)',
         },
         season: {
           type: 'integer',
@@ -61,8 +66,9 @@ export const schema: JsonSchema = {
         },
         walletAddress: {
           type: 'string',
-          minLength: 43,
-          maxLength: 43,
+          format: 'lowercase',
+          minLength: 42,
+          maxLength: 42,
         },
       },
       required: [
@@ -107,8 +113,8 @@ export const schema: JsonSchema = {
           },
           wallet: {
             type: 'string',
-            minLength: 43,
-            maxLength: 43,
+            minLength: 42,
+            maxLength: 42,
           },
           type: {
             type: 'string',
@@ -158,6 +164,7 @@ export const schema: JsonSchema = {
 */
 
 export interface Grant {
+  date?: string
   goal: number
   season: number
   length: number
@@ -173,6 +180,7 @@ export interface Artifacts {
 }
 
 export interface Project {
+  date?: string
   title?: string
   longline?: string
   description?: string
@@ -202,6 +210,7 @@ export interface FormState extends Record<string, unknown> {
 /* This is our local initialState. */
 export const initialState: FormState = {
   grant: {
+    date: undefined,
     length: DEFAULT_GRANT_LENGTH_HOURS,
     goal: DEFAULT_GRANT_GOAL_ETH,
     season: ARTIZEN_CURRENT_SEASON,
@@ -231,7 +240,7 @@ export const initialState: FormState = {
       externalLink: undefined,
       email: undefined,
       wallet: undefined,
-      type: undefined,
+      type: 'lead',
     },
   ],
 }
@@ -249,6 +258,18 @@ export const uischema = {
       type: 'Group',
       label: 'Grant',
       elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/date',
+              options: {
+                readonly: true,
+              },
+            },
+          ],
+        },
         {
           type: 'HorizontalLayout',
           elements: [

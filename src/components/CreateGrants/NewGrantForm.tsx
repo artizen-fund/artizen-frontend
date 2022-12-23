@@ -23,7 +23,16 @@ import {
   IUpdateUsersHereMutation,
 } from '@types'
 import { Form, Button, Spinner } from '@components'
-import { schema, uischema, initialState, FormState, Grant, Project, ProjectMember } from '@forms/createGrants'
+import {
+  schema,
+  uischema,
+  initialState,
+  FormState,
+  Grant,
+  Project,
+  ProjectMember,
+  Artifacts,
+} from '@forms/createGrants'
 import { ARTIZEN_TIMEZONE, rgba } from '@lib'
 import {
   thereIsOneLead,
@@ -31,6 +40,7 @@ import {
   getUsersWalletIsNotCorrect,
   mapArtifactF,
   getGrantDates,
+  MappedArtifact,
 } from './helpers'
 
 const NewGrantForm = () => {
@@ -41,24 +51,15 @@ const NewGrantForm = () => {
   const [insertProjectsMemberInDB] = useMutation<IInsert_ProjectMembersMutation>(INSERT_PROJECTS_MEMBERS)
 
   //users
-  const [getUser, { error }] = useLazyQuery<IGetUsersQuery>(GET_USERS)
+  const [getUser] = useLazyQuery<IGetUsersQuery>(GET_USERS)
   const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
   const [updateUser] = useMutation<IUpdateUsersHereMutation>(UPDATE_USERS)
 
   const [data, setData] = useState<FormState>(initialState)
 
-  useEffect(() => {
-    if (!error) return
-    console.error('error', error)
-  }, [error])
-
   const [processing, setProcessing] = useState(false)
 
-  const {
-    loading,
-    data: loadedGrantData,
-    error: errorLoadingGrant,
-  } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
+  const { loading, data: loadedGrantData } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
     variables: {
       order_by: [{ closingDate: 'desc_nulls_last' }],
       limit: 1,
@@ -66,32 +67,28 @@ const NewGrantForm = () => {
   })
 
   useEffect(() => {
-    if (!errorLoadingGrant) return
-    console.error('errorLoadingGrant', errorLoadingGrant)
-  }, [errorLoadingGrant])
+    // set grant start date (readonly, not user editable)
+    const startingDateBase = loadedGrantData?.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
+    const date = moment(startingDateBase)
+    setData({
+      ...data,
+      grant: {
+        ...data.grant,
+        date: date.format('YYYY-MM-DD HH:mm:ss'),
+      },
+    })
+  }, [loadedGrantData])
 
-  const grant = loadedGrantData?.Grants[0]
-  const startingDateBase = grant?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
-  const startingDate = moment(startingDateBase)
-
-  const saveNewGrant = async (formData: FormState) => {
+  const saveNewGrant = async () => {
     // validate users array
-    if (!thereIsOneLead(formData.projectMembers) || thereIsIncompleteInformationFilled(formData.projectMembers)) {
-      /* TODO: integrate validation into <Form /> tag
-          const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>()
-          setAdditionalErrors([...additionalErrors, someNewError])
-          ...
-          <Form {...{ additionalErrors }} /> 
-          
-          This will automatically disable the Submit button.
-      */
+    if (!thereIsOneLead(data.projectMembers) || thereIsIncompleteInformationFilled(data.projectMembers)) {
       alert(
         'You need to add all the project member data and at least one member with role lead and a blockchain wallet',
       )
       return
     }
 
-    const usersWithIncorrectWallet = getUsersWalletIsNotCorrect(formData.projectMembers)
+    const usersWithIncorrectWallet = getUsersWalletIsNotCorrect(data.projectMembers)
     if (usersWithIncorrectWallet.length > 0) {
       alert(usersWithIncorrectWallet.join())
       return
@@ -99,18 +96,19 @@ const NewGrantForm = () => {
 
     setProcessing(true)
 
-    // insert project
-    const projectId = await insertProjectsF(formData.project)
-    await insertProjectMembers(formData.projectMembers, projectId)
+    try {
+      // insert project and members
+      const projectId = await insertProjectsF(data.project)
+      await insertProjectMembers(data.projectMembers, projectId)
 
-    // prepare artifacts
-    const artifactsData = mapArtifactF(formData.artifacts)
+      // insert grant
+      const newGrantDate = await insertGrant(projectId)
 
-    // finally insert grants
-    const newgGrantDBDate = await insertGrants(formData.grant, artifactsData, projectId)
-    setProcessing(false)
-    push(`/admin/grants/${newgGrantDBDate}`)
-    return
+      push(`/admin/grants/${newGrantDate}`)
+    } catch (error) {
+      setProcessing(false)
+      alert(error)
+    }
   }
 
   const insertProjectsF = async (projectsData: Project) => {
@@ -127,12 +125,7 @@ const NewGrantForm = () => {
 
   const insertProjectMembers = async (projectMemberData: Array<ProjectMember>, projectId: string) => {
     const membersData = projectMemberData.map(async (member: ProjectMember) => {
-      if (!member.email) {
-        // TODO: should this check happen before insertProjectsF? bundle with other validation
-        alert('You’re trying to add a user without email')
-        return
-      }
-      const { data, error } = await getUser({
+      const { data } = await getUser({
         variables: {
           where: {
             _or: [
@@ -143,7 +136,7 @@ const NewGrantForm = () => {
               },
               {
                 publicAddress: {
-                  _eq: member.wallet,
+                  _eq: member.wallet?.toLowerCase(),
                 },
               },
             ],
@@ -208,16 +201,17 @@ const NewGrantForm = () => {
     return Promise.all(membersData)
   }
 
-  const insertGrants = async (grantData: Grant, artifactsData: any, projectId: string) => {
-    const { length, ...restData } = grantData
+  const insertGrant = async (projectId: string) => {
+    const { length, ...etc } = data.grant
+    const startingDate = moment(data.grant.date)
     const [startingDateRaw, closingDateRaw] = getGrantDates(startingDate, length)
+    const artifactsData = mapArtifactF(data.artifacts)
     const variables = {
       objects: [
         {
           status: 'draft',
           startingDate: startingDateRaw,
           closingDate: closingDateRaw,
-          date: startingDate,
           submission: {
             data: {
               artifacts: {
@@ -226,7 +220,7 @@ const NewGrantForm = () => {
               projectId,
             },
           },
-          ...restData,
+          ...etc,
         },
       ],
     }
@@ -237,14 +231,13 @@ const NewGrantForm = () => {
     return insertGrantsReturn.data?.insert_Grants?.returning[0].id
   }
 
-  return !loading ? (
+  return loading ? (
     <Spinner minHeight="85vh" />
   ) : (
     <Wrapper>
-      <TileTitle>Starting time: {startingDate.format('DD-MM-YYYY HH:mm:ss')} (PST)</TileTitle>
       <FormWrapper>
         <Form {...{ schema, uischema, initialState, data, setData }} readonly={processing}>
-          <StyledButton onClick={() => saveNewGrant(data)} stretch level={0}>
+          <StyledButton onClick={() => saveNewGrant()} stretch level={0}>
             {processing ? 'Saving...' : 'Save Draft'}
           </StyledButton>
         </Form>
@@ -256,10 +249,6 @@ const NewGrantForm = () => {
 const Wrapper = styled.div`
   padding: 150px 0;
   min-height: 100vh;
-`
-
-const TileTitle = styled.h3`
-  ${typography.title.l2}
 `
 
 const FormWrapper = styled.div`
@@ -309,6 +298,12 @@ const FormWrapper = styled.div`
         grid-column-end: span 4;
       }
     }
+    .horizontal-layout-4 {
+      display: contents;
+      > * {
+        grid-column-end: span 3;
+      }
+    }
     .horizontal-layout-6 {
       display: contents;
       > * {
@@ -323,8 +318,25 @@ const FormWrapper = styled.div`
       justify-content: space-between;
       cursor: pointer;
     }
-    td {
+    tr {
+      display: flex;
+    }
+    td,
+    th {
+      flex: 2;
       padding: 0px 0px 10px 0px;
+      text-align: left;
+    }
+    td:nth-child(8),
+    th:nth-child(8) {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    td:nth-child(7),
+    th:nth-child(7) {
+      display: none;
     }
     button {
       color: black;
@@ -349,13 +361,7 @@ const FormWrapper = styled.div`
     input {
       border: 1px solid ${rgba(palette.stone)};
       width: 100%;
-      padding: 18px 16px 18px 16px;
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
-        padding: 20px 24px 20px 24px;
-      }
-      @media only screen and (min-width: ${breakpoint.desktop}px) {
-        padding: 22px 32px 22px 32px;
-      }
+      padding: 18px 0px 18px 8px;
       @media (prefers-color-scheme: dark) {
         border: 1px solid ${rgba(palette.stone)};
         color: ${rgba(palette.slate)};

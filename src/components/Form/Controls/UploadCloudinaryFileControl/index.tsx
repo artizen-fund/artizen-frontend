@@ -92,6 +92,7 @@ const CloudinaryButtonWrapper = styled.div<{ visible: boolean }>`
     width: 100% !important;
     height: 100% !important;
     opacity: 0;
+    cursor: pointer;
   }
 `
 
@@ -132,11 +133,6 @@ const PreviewWrapper = styled.div<{ visible: boolean; filled: boolean }>`
     max-height: 100%;
   }
   pointer-events: ${props => (props.filled ? 'all' : 'none')};
-`
-
-const PreviewImage = styled.img`
-  width: 100%;
-  height: 100%;
 `
 
 export default UploadCloudinaryFileControl
