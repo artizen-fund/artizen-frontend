@@ -6,6 +6,7 @@ import { ccnFormat } from '@lib'
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
 import UploadFileControl from '../UploadFileControl'
+import UploadCloudinaryFileControl from '../UploadCloudinaryFileControl'
 
 export interface StringControlProps {
   label: string | Array<string>
@@ -88,6 +89,14 @@ export const StringControl = ({
           />
         ) : uischema?.options?.format === 'uploadFile' ? (
           <UploadFileControl
+            {...{ required, setVirgin, enabled, data, path, handleChange, uischema }}
+            disabled={!enabled}
+            placeholder={uischema?.options?.placeholder || ' '}
+            onBlur={() => setVirgin(false)}
+            className={!!data ? 'hasData' : ''}
+          />
+        ) : uischema?.options?.format === 'uploadCloudinaryFile' ? (
+          <UploadCloudinaryFileControl
             {...{ required, setVirgin, enabled, data, path, handleChange, uischema }}
             disabled={!enabled}
             placeholder={uischema?.options?.placeholder || ' '}
