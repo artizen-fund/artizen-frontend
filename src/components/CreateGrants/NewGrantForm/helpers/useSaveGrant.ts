@@ -22,7 +22,7 @@ const useSaveGrant = () => {
   const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
   const [updateUser] = useMutation<IUpdateUsersHereMutation>(UPDATE_USERS)
 
-  const insertProjectsF = async (objects: Project) => {
+  const insertProjects = async (objects: Project) => {
     const projectDBCreationReturn = await insertProjectsM({
       variables: {
         objects,
@@ -34,7 +34,7 @@ const useSaveGrant = () => {
     return projectDBCreationReturn.data?.insert_Projects?.returning[0].id
   }
 
-  const insertProjectMembers = async (projectMemberData: Array<ProjectMember>, projectId: string) => {
+  const insertMembers = async (projectMemberData: Array<ProjectMember>, projectId: string) => {
     const membersData = projectMemberData.map(async (member: ProjectMember) => {
       const userId = getUserRecord(member)
       const insertProjectMembersReturn = await insertProjectsMemberInDB({
@@ -153,7 +153,7 @@ const useSaveGrant = () => {
     return insertGrantsReturn.data?.insert_Grants?.returning[0].id
   }
 
-  return { insertProjectsF, insertProjectMembers, insertGrant }
+  return { insertProjects, insertMembers, insertGrant }
 }
 
 export default useSaveGrant

@@ -12,7 +12,7 @@ import { ARTIZEN_TIMEZONE, rgba } from '@lib'
 import { validateProjectMembers, useSaveGrant } from './helpers'
 
 const NewGrantForm = () => {
-  const { insertProjectsF, insertProjectMembers, insertGrant } = useSaveGrant()
+  const { insertProject, insertMembers, insertGrant } = useSaveGrant()
   const { push } = useRouter()
 
   const [data, setData] = useState<FormState>(initialState)
@@ -43,13 +43,9 @@ const NewGrantForm = () => {
     setProcessing(true)
 
     try {
-      // insert project and members
-      const projectId = await insertProjectsF(data.project)
-      await insertProjectMembers(data.projectMembers, projectId)
-
-      // insert grant
-      const newGrantDate = await insertGrant(projectId)
-
+      const projectId = await insertProject(data.project)
+      await insertMembers(data.projectMembers, projectId)
+      const newGrantDate = await insertGrant(data, projectId)
       push(`/admin/grants/${newGrantDate}`)
     } catch (error) {
       setProcessing(false)
