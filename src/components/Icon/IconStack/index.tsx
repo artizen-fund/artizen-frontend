@@ -6,6 +6,8 @@ interface IIconStack {
   children: React.ReactNode
 }
 
+/* note: this assumes that icons are L2 size needs refinements for other sizes */
+
 const IconStack = ({ children }: IIconStack) => {
   return <Wrapper>{children}</Wrapper>
 }
@@ -16,25 +18,40 @@ const Wrapper = styled.ol`
   flex-direction: column;
   justify-content: space-around;
   gap: 10px;
-  padding: 10px 0;
   list-style-type: none;
+  padding: 5px 0;
+  margin: 3px 0 3px 22px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    padding: 7px 0;
+    margin: 3px 0 3px 22px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding: 7px 0;
+    margin: 16px 0 16px 22px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding: 7px 0;
+    margin: 23px 0 23px 22px;
+  }
+
   &:before {
+    content: ' ';
     position: absolute;
     z-index: 0;
-    left: 28px;
     top: 0;
     width: 2px;
     height: 100%;
-    content: ' ';
+    left: 19px;
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      left: 23px;
+    }
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      left: 27px;
+    }
+
     background: ${rgba(palette.night)};
     @media (prefers-color-scheme: dark) {
       background: ${rgba(palette.moon)};
-    }
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      left: 31.5px;
-    }
-    @media only screen and (min-width: ${breakpoint.desktop}px) {
-      left: 35.5px;
     }
   }
   > * {
