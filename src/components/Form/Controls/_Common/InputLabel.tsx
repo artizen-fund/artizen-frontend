@@ -33,9 +33,13 @@ export default styled.label`
   pointer-events: none;
 
   textarea ~ & {
-    align-items: flex-start;
-    margin-top: 20px;
-    height: 40px;
+    height: 56px;
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      height: 64px;
+    }
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      height: 72px;
+    }
   }
 
   .PhoneInput:focus-within ~ &,
