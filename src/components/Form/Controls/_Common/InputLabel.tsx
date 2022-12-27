@@ -10,14 +10,15 @@ export default styled.label`
   display: flex;
   align-items: center;
   height: 100%;
-  left: 16px;
-  width: calc(100% - 88px);
 
+  left: 17px;
+  width: calc(100% - 88px);
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    left: 25px;
     width: calc(100% - 92px);
   }
-
   @media only screen and (min-width: ${breakpoint.desktop}px) {
+    left: 33px;
     width: calc(100% - 96px);
   }
 
