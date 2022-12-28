@@ -55,7 +55,7 @@ export const Check = styled.div`
 
 export const CheckMessage = styled.p`
   ${typography.label.l1}
-  color: ${rgba(palette.barracuda)};
+  color: ${rgba(palette.night)};
 `
 
 export const Confirmation = styled.div`

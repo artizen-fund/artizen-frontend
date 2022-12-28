@@ -1,62 +1,17 @@
 import { useContext, useState } from 'react'
-import { signIn } from 'next-auth/react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useConnect, useSignMessage, Connector } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 import { CloseButton, CheckboxControl } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
-import { rgba, LayoutContext, assertInt, getWagmiClient, assetPath } from '@lib'
+import { rgba, assetPath, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
+import useWalletConnect from './lib'
 
 const LoginModal = ({ ...props }) => {
-  const router = useRouter()
+  const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const { toggleModal } = useContext(LayoutContext)
 
-  const { connectAsync } = useConnect()
-  const { signMessageAsync } = useSignMessage()
-  const { chains } = getWagmiClient()
-
   const [enabled, setEnabled] = useState(true)
-
-  const connectWallet = async (connector: Connector) => {
-    const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
-
-    try {
-      const { account: publicAddress, chain } = await connectAsync({
-        connector,
-        chainId,
-      })
-
-      const userData = { address: publicAddress, chain: chain.id, network: 'evm' }
-
-      const response = await fetch('/api/auth/request-message', {
-        method: 'POST',
-        body: JSON.stringify(userData),
-        headers: {
-          'content-type': 'application/json',
-        },
-      })
-
-      const { message } = await response.json()
-      const signature = await signMessageAsync({ message })
-
-      await signIn('credentials', { message, signature, redirect: false })
-
-      // NOTE: this is necessary because of some Metamask logout bug that I don't understand.
-      // Ruben: please document. -EJ
-      router.reload()
-    } catch (e) {
-      console.error('error deleting user ', e)
-    }
-
-    // note: AccountButton component is the real session watcher;
-    //       it'll pick up useSession and get the user from Hasura.
-
-    toggleModal?.()
-  }
 
   return (
     <Wrapper {...props}>
@@ -64,28 +19,11 @@ const LoginModal = ({ ...props }) => {
       <Subhead>WalletConnect provides options for mobile and desktop.</Subhead>
 
       <Tiles>
-        <Tile
-          image="/assets/metamask.svg"
-          onClick={() => connectWallet(new InjectedConnector({ chains }))}
-          {...{ enabled }}
-        >
+        <Tile image="/assets/metamask.svg" onClick={() => connectMetamask()} {...{ enabled }}>
           Metamask
         </Tile>
 
-        <Tile
-          image="/assets/walletConnect.svg"
-          onClick={() =>
-            connectWallet(
-              new WalletConnectConnector({
-                chains,
-                options: {
-                  qrcode: true,
-                },
-              }),
-            )
-          }
-          {...{ enabled }}
-        >
+        <Tile image="/assets/walletConnect.svg" onClick={() => connectOtherWallet} {...{ enabled }}>
           WalletConnect
         </Tile>
       </Tiles>
