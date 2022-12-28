@@ -3,8 +3,9 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { CloseButton, CheckboxControl } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
-import { rgba, assetPath, LayoutContext } from '@lib'
-import { palette, typography } from '@theme'
+import { rgba, assetPath, LayoutContext, textCrop } from '@lib'
+import { palette, typography, breakpoint } from '@theme'
+import { connectWallet as copy } from '@copy/common'
 import useWalletConnect from './lib'
 
 const LoginModal = ({ ...props }) => {
@@ -15,15 +16,17 @@ const LoginModal = ({ ...props }) => {
 
   return (
     <Wrapper {...props}>
-      <Headline>Connect your wallet</Headline>
-      <Subhead>WalletConnect provides options for mobile and desktop.</Subhead>
+      <Headline>{copy.headline}</Headline>
+      <Subhead>{copy.subhead}</Subhead>
 
       <Tiles>
-        <Tile image="/assets/metamask.svg" onClick={() => connectMetamask()} {...{ enabled }}>
+        <Tile onClick={() => connectMetamask()} {...{ enabled }}>
+          <img src={assetPath('/assets/metamask.svg')} alt="Metamask" />
           Metamask
         </Tile>
 
-        <Tile image="/assets/walletConnect.svg" onClick={() => connectOtherWallet} {...{ enabled }}>
+        <Tile onClick={() => connectOtherWallet} {...{ enabled }}>
+          <img src={assetPath('/assets/walletConnect.svg')} alt="WalletConnect" />
           WalletConnect
         </Tile>
       </Tiles>
@@ -32,9 +35,8 @@ const LoginModal = ({ ...props }) => {
         <Check>
           <CheckboxControl data={enabled} path="not-used" handleChange={() => setEnabled(!enabled)} label="" />
           <CheckMessage>
-            I agree to Artizen’s{' '}
             <Link href="https://help.artizen.fund/en/articles/4761373-privacy-policy" target="_blank">
-              Privacy Policy
+              {copy.privacyMessage}
             </Link>
           </CheckMessage>
         </Check>
@@ -45,24 +47,52 @@ const LoginModal = ({ ...props }) => {
   )
 }
 
+const Wrapper = styled.div`
+  padding: 40px 25px;
+  max-width: calc(100vw - 20px);
+  @media only screen and (min-width: ${breakpoint.phablet}px) {
+    padding: 40px;
+    max-width: 507px;
+  }
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    max-width: none;
+    width: 416px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding: 65px;
+    width: 568px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding: 80px;
+    width: 840px;
+  }
+  background: ${rgba(palette.white)};
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.slate)};
+  }
+`
+
 const Tiles = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  padding: 40px 0;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding: 50px 0;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding: 60px 0;
+  }
 `
 
-const Tile = styled.div<{ image: string; enabled: boolean }>`
+const Tile = styled.div<{ enabled: boolean }>`
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-
-  width: 340px;
-  height: 175px;
-
-  background-image: url(${props => assetPath(props.image)});
-  background-repeat: no-repeat;
-  background-position: center;
+  gap: 20px;
 
   cursor: ${props => (props.enabled ? 'pointer' : 'not-allowed')};
   pointer-events: ${props => (props.enabled ? 'all' : 'none')};
@@ -70,20 +100,13 @@ const Tile = styled.div<{ image: string; enabled: boolean }>`
   ${typography.title.l4}
 `
 
-const Wrapper = styled.div`
-  padding: 50px;
-  background: ${rgba(palette.white)};
-  @media (prefers-color-scheme: dark) {
-    background: ${rgba(palette.slate)};
-  }
-`
-
 const Headline = styled.h1`
-  ${typography.title.l2}
+  ${textCrop(typography.title.l2)}
 `
 
 const Subhead = styled.p`
   ${typography.body.l2}
+  margin-top: 1em;
 `
 
 export default LoginModal

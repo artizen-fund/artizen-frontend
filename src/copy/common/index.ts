@@ -1,3 +1,4 @@
+export * from './connectWallet'
 export * from './dates'
 export * from './loginForm'
 export * from './nationCodes'

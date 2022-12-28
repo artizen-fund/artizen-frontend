@@ -56,6 +56,12 @@ export const Check = styled.div`
 export const CheckMessage = styled.p`
   ${typography.label.l1}
   color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.white)};
+  }
+  span {
+    text-decoration: undefline;
+  }
 `
 
 export const Confirmation = styled.div`

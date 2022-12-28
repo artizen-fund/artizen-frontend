@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useConnect, useSignMessage, Connector } from 'wagmi'
 import { useRouter } from 'next/router'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -6,12 +7,14 @@ import { assertInt, getWagmiClient } from '@lib'
 import { signIn } from 'next-auth/react'
 
 const useWalletConnect = () => {
+  const [connecting, setConnecting] = useState(false)
   const { connectAsync } = useConnect()
   const { signMessageAsync } = useSignMessage()
   const { chains } = getWagmiClient()
   const router = useRouter()
 
   const connectWallet = async (connector: Connector) => {
+    setConnecting(true)
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
     try {
@@ -38,8 +41,10 @@ const useWalletConnect = () => {
 
       // NOTE: this is necessary because of some Metamask logout bug that I don't understand.
       // Ruben: please document. -EJ
+      setConnecting(false)
       router.reload()
     } catch (e) {
+      setConnecting(false)
       console.error('error connecting user', e)
     }
   }
@@ -56,7 +61,7 @@ const useWalletConnect = () => {
       }),
     )
 
-  return { connectMetamask, connectOtherWallet }
+  return { connectMetamask, connectOtherWallet, connecting }
 }
 
 export default useWalletConnect
