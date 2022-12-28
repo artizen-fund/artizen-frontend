@@ -30,12 +30,11 @@ export const SignInDirections = styled.p`
 `
 
 export const CheckWrapper = styled.div`
-  display: contents;
+  display: flex;
+  grid-area: tocCheck;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    grid-area: tocCheck;
   }
 `
 
