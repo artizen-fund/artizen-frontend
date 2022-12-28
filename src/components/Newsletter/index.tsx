@@ -4,7 +4,7 @@ import MailchimpSubscribe, { FormHooks, NameFormFields } from 'react-mailchimp-s
 import { rgba, assert, useFormLocalStorage } from '@lib'
 import { Form, Button, PagePadding, Icon } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { schema, uischema, initialState, FormState } from './form'
+import { schema, uischema, initialState, FormState } from '@forms/newsletter'
 import { newsletter } from '@copy/common'
 
 const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) => {
