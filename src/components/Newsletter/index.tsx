@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import MailchimpSubscribe, { FormHooks, NameFormFields } from 'react-mailchimp-subscribe'
 import { rgba, assert, useFormLocalStorage } from '@lib'
-import { Form, Button, PagePadding } from '@components'
+import { Form, Button, PagePadding, Icon } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from './form'
+import { newsletter } from '@copy/common'
 
 const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) => {
   const LOCALSTORAGE_KEY = 'newsletter'
@@ -14,28 +15,34 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) =
   const [error, setError] = useState<string>()
   const [readonly, setReadonly] = useState(false)
 
+  const [buttonLabel, setButtonLabel] = useState<string | undefined>(newsletter.buttonLabel)
+
   useEffect(() => {
     switch (status) {
       case 'sending':
+        setButtonLabel(newsletter.buttonSending)
         setReadonly(true)
         setError(undefined)
         break
       case 'success':
+        setButtonLabel(undefined)
         setSubmitted(true)
         break
       case 'error':
+        setButtonLabel('try again')
         setError(error)
       default:
+        setButtonLabel(newsletter.buttonLabel)
         setReadonly(false)
     }
   }, [status, error])
 
   return (
-    <PagePadding black>
+    <StyledPagePadding black>
       <Wrapper className={submitted ? 'submitted' : ''}>
         <Copy>
-          <Header>Want to see where this goes? Let’s keep in touch.</Header>
-          <Subhead>Sign up for our free newsletter</Subhead>
+          <Header>{newsletter.headline}</Header>
+          <Subhead>{newsletter.subhead}</Subhead>
         </Copy>
         <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
           <StyledButton
@@ -44,20 +51,30 @@ const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) =
             level={0}
             disabled={!data.EMAIL || !data.OPTIN}
           >
-            Submit
+            {buttonLabel}
           </StyledButton>
           <Confirmation>
-            <div>Congrats, confirmation sent!</div>
-            <p>Check your email and follow the steps to confirm your subscription.</p>
+            <Icon glyph="tick" level={1} outline color="uiSuccess" />
+            <div>{newsletter.responseHeadline}</div>
+            <p>{newsletter.responseSubhead}</p>
           </Confirmation>
         </Form>
       </Wrapper>
-    </PagePadding>
+    </StyledPagePadding>
   )
 }
 
+const StyledPagePadding = styled(props => <PagePadding {...props} />)``
+
 const StyledButton = styled(props => <Button {...props} />)`
   grid-area: submit;
+  margin-top: 15px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    margin-top: 25px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    margin-top: 45px;
+  }
 `
 
 const Confirmation = styled.div`
@@ -65,12 +82,15 @@ const Confirmation = styled.div`
   grid-area: confirmation;
   flex-direction: column;
   justify-content: center;
-  div {
+  align-items: center;
+  gap: 15px;
+  > div {
     ${typography.title.l4}
     color: ${rgba(palette.moon)};
     margin-bottom: 0.25em;
   }
   p {
+    max-width: 300px;
     ${typography.label.l1}
     color: ${rgba(palette.barracuda)};
   }
@@ -153,6 +173,7 @@ const Header = styled.div`
 `
 
 const Subhead = styled.div`
+  margin-top: 0.65em;
   ${typography.label.l1}
   color: ${rgba(palette.barracuda)};
 `

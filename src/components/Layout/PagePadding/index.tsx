@@ -14,6 +14,8 @@ const PagePadding = styled.div<PagePaddingProps>`
     background: ${rgba(palette.night)};
     @media (prefers-color-scheme: dark) {
       background: ${rgba(palette.slate)};
+      border-top: 0.5px solid ${rgba(palette.barracuda, 0.4)};
+      border-bottom: 0.5px solid ${rgba(palette.barracuda, 0.4)};
     }
   `}
 

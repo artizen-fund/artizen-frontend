@@ -90,7 +90,7 @@ const GrantPage = () => {
       return
     }
     if (!loading && typeof loadedGrantData?.Grants === 'object' && loadedGrantData?.Grants.length < 1) {
-      push('/404')
+      //      push('/404')
     }
   }, [loading, errorLoadingGrant, loadedGrantData])
 

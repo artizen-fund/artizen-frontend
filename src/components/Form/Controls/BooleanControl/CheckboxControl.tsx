@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
 import { rgba } from '@lib'
+import { Glyph } from '@components'
 import { BooleanControlProps } from './'
 
 const Checkbox = ({
@@ -13,21 +14,26 @@ const Checkbox = ({
   enabled = true,
   uischema,
   ...props
-}: BooleanControlProps) => (
-  <Wrapper gridArea={path} {...{ inverted, enabled }} {...props} id={uischema?.scope}>
-    <Box>
-      <Input
-        type="checkbox"
-        required={!!required}
-        onChange={_ => handleChange(path, !data)}
-        checked={data}
-        disabled={!enabled}
-      />
-      <Checkmark {...{ inverted }} />
-    </Box>
-    <Label {...{ inverted, enabled }}>{typeof label === 'object' ? label[0] : label}</Label>
-  </Wrapper>
-)
+}: BooleanControlProps) => {
+  const checked = !!data
+  return (
+    <Wrapper gridArea={path} {...{ inverted, enabled }} {...props} id={uischema?.scope}>
+      <Box>
+        <Input
+          type="checkbox"
+          required={!!required}
+          onChange={_ => handleChange(path, !data)}
+          checked={checked}
+          disabled={!enabled}
+        />
+        <Checkmark {...{ inverted, enabled, checked }}>
+          <Glyph glyph="tick" level={2} />
+        </Checkmark>
+      </Box>
+      <Label {...{ inverted, enabled }}>{typeof label === 'object' ? label[0] : label}</Label>
+    </Wrapper>
+  )
+}
 
 const Box = styled.div`
   flex: 0 0 auto;
@@ -53,12 +59,15 @@ const Input = styled.input`
   width: 0;
 `
 
-const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
+const Checkmark = styled.span<Partial<BooleanControlProps> & { checked: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   border-radius: 9999px;
   appearance: none;
@@ -66,29 +75,14 @@ const Checkmark = styled.span<Pick<BooleanControlProps, 'inverted'>>`
 
   background-color: ${props => rgba(props.inverted ? palette.night : palette.white)};
   border: 2px solid ${props => rgba(props.inverted ? palette.white : palette.slate)};
-  @media (prefers-color-scheme: dark) {
-    background-color: ${rgba(palette.slate)};
-    border-color ${rgba(palette.moon)};
-  }
+
   /* see [Wrapper -> & input ~ span] for state style changes */
-  
-  &:after {
+
+  ${Glyph} {
     position: absolute;
-    border-style: solid;
-    border-color: ${props => rgba(props.inverted ? palette.night : palette.white)};
-    @media (prefers-color-scheme: dark) {
-      border-color ${rgba(palette.night)};
-    }
-    left: calc(50% - 1px);
-    top: calc(50% - 4px);
-    width: 3px;
-    height: 7px;
-    border-width: 0 1.5px 1px 0;
-    display: block;
-    transform: rotate(45deg) scale3d(0, 0, 1);
-    opacity: 0;
-    content: '';
-    transition: opacity 0.25s ease-in-out, transform 0.6s cubic-bezier(0.44, 1.86, 0.74, 1);
+    background-color: ${props => rgba(props.enabled ? palette.slate : palette.barracuda)};
+    transition: background-color 0.25s ease-in-out, transform 0.5s cubic-bezier(0.42, 0.97, 0.52, 1.49);
+    transform: scale(${props => (props.checked ? 1 : 0)});
   }
 `
 
@@ -138,7 +132,7 @@ const Wrapper = styled.label<Pick<BooleanControlProps, 'enabled' | 'inverted'> &
   & input:checked:disabled ~ span,
   & input:disabled ~ span {
     background-color: ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
-    border: 1px solid ${props => (props.inverted ? rgba(palette.barracuda, 0.4) : rgba(palette.stone))};
+    border: 1px solid ${props => (props.inverted ? rgba(palette.barracuda, 0) : rgba(palette.stone))};
     &::after {
       border-color: ${rgba(palette.barracuda)};
       transform: rotate(45deg) scale3d(1, 1, 1);
@@ -146,12 +140,7 @@ const Wrapper = styled.label<Pick<BooleanControlProps, 'enabled' | 'inverted'> &
     }
     @media (prefers-color-scheme: dark) {
       background-color: ${rgba(palette.barracuda, 0.4)};
-      border: 1px solid ${rgba(palette.barracuda, 0.4)};
-      &::after {
-        border-color: ${rgba(palette.barracuda)};
-        transform: rotate(45deg) scale3d(1, 1, 1);
-        opacity: 1;
-      }
+      border: 1px solid ${rgba(palette.barracuda, 0)};
     }
   }
 

@@ -1,5 +1,6 @@
 export * from './dates'
 export * from './loginForm'
 export * from './nationCodes'
+export * from './newsletter'
 export * from './sharingModal'
 export * from './socialLinks'
