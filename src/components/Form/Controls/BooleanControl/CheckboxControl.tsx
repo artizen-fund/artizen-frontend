@@ -78,7 +78,7 @@ const Checkmark = styled.span<Partial<BooleanControlProps> & { checked: boolean 
 
   /* see [Wrapper -> & input ~ span] for state style changes */
 
-  ${Glyph} {
+  ${() => Glyph} {
     position: absolute;
     background-color: ${props => rgba(props.enabled ? palette.slate : palette.barracuda)};
     transition: background-color 0.25s ease-in-out, transform 0.5s cubic-bezier(0.42, 0.97, 0.52, 1.49);
