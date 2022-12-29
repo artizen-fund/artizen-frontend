@@ -1,6 +1,12 @@
 import { Artifacts } from '@forms/createGrants'
 
-export const mapArtifactF = (artifactsData: Artifacts) => {
+export type MappedArtifact = {
+  edition: 'community' | 'patron' | 'creator'
+  artwork?: string
+  video?: string
+}
+
+export const mapArtifactF = (artifactsData: Artifacts): Array<MappedArtifact> => {
   // TODO: This should be break down into smaller units
   return [
     {

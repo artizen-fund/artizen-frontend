@@ -21,11 +21,10 @@ const Wrapper = styled.div``
 
 const Main = styled.main`
   padding-top: 64px;
+  min-height: 75vh;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     padding-top: 72px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    padding-top: 88px;
+    min-height: calc(100vh - 595px);
   }
 `
 
