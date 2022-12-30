@@ -42,7 +42,8 @@ const Layout = ({ children }: LayoutProps) => {
         <meta name="twitter:card" content="summary_large_image" />
 
         <link id="icon" rel="icon" href={assetPath('/assets/metatags/favicon-32x32.png')} />
-        <link rel="mask-icon" href={assetPath('/assets/metatags/safari-pinned-tab.svg')} color="red" />
+        <link rel="mask-icon" href={assetPath('/assets/metatags/safari-pinned-tab.svg')} color="#1ACC6C" />
+        <meta name="theme-color" content="#1ACC6C" />
       </Head>
       <Header />
       <Main>{children}</Main>
