@@ -1,4 +1,5 @@
 export * from './dates'
+export * from './metatags'
 export * from './loginForm'
 export * from './nationCodes'
 export * from './sharingModal'
