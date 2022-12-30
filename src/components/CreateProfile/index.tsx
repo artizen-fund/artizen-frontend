@@ -67,7 +67,6 @@ const CreateProfile = () => {
             </CheckMessage>
           </Check>
         </CheckWrapper>
-        <Why>{copy.why}</Why>
       </FormWrapper>
     </Wrapper>
   )
