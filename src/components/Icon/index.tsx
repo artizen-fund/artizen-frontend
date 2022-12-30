@@ -14,7 +14,7 @@ export interface IconProps {
   darkColor?: string
   animating?: boolean
   error?: boolean
-  loading: boolean
+  loading?: boolean
 }
 
 const Icon = ({
