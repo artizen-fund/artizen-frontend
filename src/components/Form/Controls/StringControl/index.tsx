@@ -39,22 +39,23 @@ export const StringControl = ({
 }: StringControlProps) => {
   const [virgin, setVirgin] = useState(data === undefined)
 
+  // TODO: these two useEffects are causing infinite updates, troubleshoot later
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
-  useEffect(() => {
-    const splitErrors = errors?.split('\n').filter(e => e !== '') || []
-    if (required && (!data || data === '')) splitErrors.push('is a required property')
-    setParsedErrors(splitErrors)
-  }, [errors, required, data])
+  // useEffect(() => {
+  //   const splitErrors = errors?.split('\n').filter(e => e !== '') || []
+  //   if (required && (!data || data === '')) splitErrors.push('is a required property')
+  //   setParsedErrors(splitErrors)
+  // }, [errors, required, data])
 
   const [visibleError, setVisibleError] = useState<string>()
-  useEffect(() => {
-    if (visibleError && parsedErrors.length < 1) {
-      // wait a moment before disappearing the error so that it's visible during transition-out
-      setTimeout(() => setVisibleError(undefined), 1000)
-    } else {
-      setVisibleError(parsedErrors[0])
-    }
-  }, [visibleError, parsedErrors])
+  // useEffect(() => {
+  //   if (visibleError && parsedErrors.length < 1) {
+  //     // wait a moment before disappearing the error so that it's visible during transition-out
+  //     setTimeout(() => setVisibleError(undefined), 1000)
+  //   } else {
+  //     setVisibleError(parsedErrors[0])
+  //   }
+  // }, [visibleError, parsedErrors])
 
   // This effect is for all right-hand-side icons.
   // This is currently just disabled ("locked"), but down the line could include a spinner, red/yellow/green status markers, …?

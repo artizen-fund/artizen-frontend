@@ -42,17 +42,17 @@ const NewGrantForm = () => {
 
   useEffect(() => {
     // set additional form validators here
-    const errors: Array<ErrorObject> = []
-    if (!validateLib.validate(data.project.walletAddress, 'ETH')) {
-      errors.push({
-        instancePath: '/project/walletAddress',
-        message: 'Invalid blockchain address',
-        schemaPath: '#/properties/project/properties/walletAddress',
-        keyword: '',
-        params: {},
-      })
-    }
-    setAdditionalErrors(errors)
+    // const errors: Array<ErrorObject> = []
+    // if (!validateLib.validate(data.project.walletAddress, 'ETH')) {
+    //   errors.push({
+    //     instancePath: '/project/walletAddress',
+    //     message: 'Invalid blockchain address',
+    //     schemaPath: '#/properties/project/properties/walletAddress',
+    //     keyword: '',
+    //     params: {},
+    //   })
+    // }
+    // setAdditionalErrors(errors)
   }, [data])
 
   const saveNewGrant = async () => {
