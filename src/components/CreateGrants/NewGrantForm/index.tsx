@@ -21,25 +21,24 @@ const NewGrantForm = () => {
   const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const { loading, data: loadedGrantData } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
+  const { loading } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
     variables: {
       order_by: [{ closingDate: 'desc_nulls_last' }],
       limit: 1,
     },
+    onCompleted: response => {
+      const grant = response?.Grants[0]
+      const startingDateBase = grant.closingDate || moment.tz(ARTIZEN_TIMEZONE)
+      const date = moment(startingDateBase).format('YYYY-MM-DD HH:mm:ss')
+      setData({
+        ...data,
+        grant: {
+          ...data.grant,
+          date,
+        },
+      })
+    },
   })
-
-  useEffect(() => {
-    // set grant start date (readonly, not user editable)
-    const startingDateBase = loadedGrantData?.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
-    const date = moment(startingDateBase)
-    setData({
-      ...data,
-      grant: {
-        ...data.grant,
-        date: date.format('YYYY-MM-DD HH:mm:ss'),
-      },
-    })
-  }, [loadedGrantData])
 
   useEffect(() => {
     // set additional form validators here

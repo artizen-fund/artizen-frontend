@@ -9,7 +9,7 @@ import { rgba, isCurrentGrant } from '@lib'
 import GrantsNavigator from './GrantsNavigator'
 
 interface IGrantsExplorer {
-  grant: IGrantsWithProjectFragment
+  grant?: IGrantsWithProjectFragment
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
@@ -19,6 +19,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const isCurrent = isCurrentGrant(grant)
 
   const moveToNextGrant = () => router.push('/grants/today')
+  if (!grant) return <></>
 
   return (
     <StyledStickyCanvas>
