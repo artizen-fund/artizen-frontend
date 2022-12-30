@@ -1,8 +1,8 @@
 import { JsonSchema } from '@jsonforms/core'
-import { ARTIZEN_CURRENT_SEASON } from '@lib'
+import { ARTIZEN_CURRENT_SEASON, DEFAULT_GRANT_LENGTH_HOURS, DEFAULT_GRANT_GOAL_ETH } from '@lib'
 
 /* This is the data schema. See JSONForms documentation for more options. */
-//  properties
+
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
@@ -10,12 +10,17 @@ export const schema: JsonSchema = {
       title: 'Grant',
       type: 'object',
       properties: {
+        date: {
+          type: 'string',
+          title: 'Date of Grant',
+        },
         length: {
           type: 'integer',
-          title: 'Grant length in minutes', // TODO: switch to Hours after testing
+          title: 'Grant length (minutes)', // TODO: switch to Hours after testing
         },
         goal: {
           type: 'integer',
+          title: 'Goal (eth)',
         },
         season: {
           type: 'integer',
@@ -29,23 +34,31 @@ export const schema: JsonSchema = {
       properties: {
         title: {
           type: 'string',
+          minLength: 3,
+          maxLength: 255,
         },
         longline: {
           type: 'string',
+          minLength: 3,
+          maxLength: 255,
         },
         description: {
           type: 'string',
+          minLength: 3,
+          maxLength: 255,
         },
         impact: {
           type: 'string',
+          minLength: 3,
+          maxLength: 255,
         },
         impactTags: {
           type: 'string',
+          maxLength: 255,
         },
         creationDate: {
           type: 'string',
           format: 'date',
-          description: 'schema-based time picker',
         },
         completionDate: {
           type: 'string',
@@ -53,6 +66,9 @@ export const schema: JsonSchema = {
         },
         walletAddress: {
           type: 'string',
+          format: 'lowercase',
+          minLength: 42,
+          maxLength: 42,
         },
       },
       required: [
@@ -75,25 +91,37 @@ export const schema: JsonSchema = {
         properties: {
           firstName: {
             type: 'string',
+            minLength: 2,
+            maxLength: 255,
           },
           lastName: {
             type: 'string',
+            minLength: 2,
+            maxLength: 255,
           },
           externalLink: {
             type: 'string',
+            minLength: 13,
+            maxLength: 255,
+            format: 'url',
           },
           email: {
             type: 'string',
+            minLength: 8,
+            maxLength: 255,
+            format: 'email',
           },
           wallet: {
             type: 'string',
+            minLength: 42,
+            maxLength: 42,
           },
           type: {
             type: 'string',
           },
         },
+        required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
       },
-      // required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
     },
 
     artifacts: {
@@ -102,21 +130,27 @@ export const schema: JsonSchema = {
       properties: {
         artworkPatron: {
           type: 'string',
+          format: 'url',
         },
         videoPatron: {
           type: 'string',
+          format: 'url',
         },
         artworkCreator: {
           type: 'string',
+          format: 'url',
         },
         videoCreator: {
           type: 'string',
+          format: 'url',
         },
         artworkCommunity: {
           type: 'string',
+          format: 'url',
         },
         videoCommunity: {
           type: 'string',
+          format: 'url',
         },
       },
       required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
@@ -130,6 +164,7 @@ export const schema: JsonSchema = {
 */
 
 export interface Grant {
+  date?: string
   goal: number
   season: number
   length: number
@@ -145,6 +180,7 @@ export interface Artifacts {
 }
 
 export interface Project {
+  date?: string
   title?: string
   longline?: string
   description?: string
@@ -174,8 +210,9 @@ export interface FormState extends Record<string, unknown> {
 /* This is our local initialState. */
 export const initialState: FormState = {
   grant: {
-    length: 0,
-    goal: 0,
+    date: undefined,
+    length: DEFAULT_GRANT_LENGTH_HOURS,
+    goal: DEFAULT_GRANT_GOAL_ETH,
     season: ARTIZEN_CURRENT_SEASON,
   },
   artifacts: {
@@ -203,7 +240,7 @@ export const initialState: FormState = {
       externalLink: undefined,
       email: undefined,
       wallet: undefined,
-      type: undefined,
+      type: 'lead',
     },
   ],
 }
@@ -221,6 +258,18 @@ export const uischema = {
       type: 'Group',
       label: 'Grant',
       elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/date',
+              options: {
+                readonly: true,
+              },
+            },
+          ],
+        },
         {
           type: 'HorizontalLayout',
           elements: [
