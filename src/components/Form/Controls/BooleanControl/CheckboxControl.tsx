@@ -101,7 +101,6 @@ const Wrapper = styled.label<Pick<BooleanControlProps, 'enabled' | 'inverted'> &
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 16px 0;
   gap: 8px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 10px;

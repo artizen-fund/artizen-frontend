@@ -9,12 +9,14 @@ import { rgba, isCurrentGrant } from '@lib'
 import GrantsNavigator from './GrantsNavigator'
 
 interface IGrantsExplorer {
-  grant: IGrantsWithProjectFragment
+  grant?: IGrantsWithProjectFragment
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const router = useRouter()
   const [amountRaised, setAmountRaised] = useState(0)
+
+  if (!grant) return <></>
 
   const isCurrent = isCurrentGrant(grant)
 
