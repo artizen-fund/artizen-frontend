@@ -1,4 +1,5 @@
 import { JsonSchema } from '@jsonforms/core'
+import { newsletter } from '@copy/common'
 
 export const schema: JsonSchema = {
   type: 'object',
@@ -50,7 +51,7 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/OPTIN',
-      label: 'Opt-in to receive the Artizen newsletter.',
+      label: newsletter.checkbox,
       options: { inverted: true },
     },
   ],
