@@ -44,6 +44,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
               glyphOutline
               label="Artifact 27"
             />
+            {/* todo: "artifact 27" harcoded, dunno what that is -EJ */}
           </Metadatum>
           <Metadatum>
             <Icon
