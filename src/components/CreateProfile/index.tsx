@@ -52,7 +52,7 @@ const CreateProfile = () => {
         },
         body: JSON.stringify({
           id: loggedInUser.id,
-          email: data.email,
+          userData: data,
         }),
       })
 
