@@ -9,7 +9,7 @@ export const palette: Palette = {
   moon: [241, 243, 238],
   stone: [217, 219, 224],
   reef: [207, 245, 162],
-  algae: [26, 204, 108],
+  algae: [26, 204, 108] /* artizen green, aka #1ACC6C */,
   moss: [6, 170, 89],
   gravel: [77, 93, 83],
   coral: [255, 192, 161],

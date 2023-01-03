@@ -1,6 +1,7 @@
 export * from './connectWallet'
 export * from './createProfile'
 export * from './dates'
+export * from './metatags'
 export * from './loginForm'
 export * from './nationCodes'
 export * from './newsletter'

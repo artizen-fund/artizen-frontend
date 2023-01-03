@@ -17,7 +17,6 @@ export default class DocumentWithStyledComponents extends Document {
           <Fragment key="styled-components-insert">
             {initialProps.styles}
             {sheet.getStyleElement()}
-            <link rel="stylesheet" href="https://use.typekit.net/wwx1oja.css" />
           </Fragment>,
         ],
       }
