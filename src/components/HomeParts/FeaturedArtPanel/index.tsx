@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import styled from 'styled-components'
-import { Icon, TableAvatar } from '@components'
+import { SlideDown } from 'react-slidedown'
+import 'react-slidedown/lib/slidedown.css'
+import { Icon, TableAvatar, Shimmer, Button } from '@components'
 import { rgba, formatDate } from '@lib'
 import { palette, typography } from '@theme'
 import { IGrantsWithProjectFragment } from '@types'
@@ -9,83 +12,119 @@ type IFeaturedArtPanel = {
   loading: boolean
 }
 
-const FeaturedArtPanel = ({ grant }: IFeaturedArtPanel) => {
+const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
+  const [closed, setClosed] = useState(true)
   const artist = grant?.submission?.project?.members?.filter(m => m.type === 'lead')[0]
+  const artistName = !!grant ? `${artist?.user?.firstName} ${artist?.user?.lastName}` : ' '
 
-  return !grant ? (
-    <></>
-  ) : (
+  return (
     <Wrapper>
       <Copy>
         <Metadata>
           <Metadatum>
-            <Icon glyph="crown" color="slate" darkColor="moon" level={2} outline glyphOutline label="Top Donor Prize" />
-          </Metadatum>
-          <Metadatum>
-            <Icon glyph="palette" color="slate" darkColor="moon" level={2} outline glyphOutline label="Artifact 27" />
+            <Icon
+              loading={loading || !grant}
+              glyph="crown"
+              color="slate"
+              darkColor="moon"
+              level={2}
+              outline
+              glyphOutline
+              label="Top Donor Prize"
+            />
           </Metadatum>
           <Metadatum>
             <Icon
+              loading={loading || !grant}
+              glyph="palette"
+              color="slate"
+              darkColor="moon"
+              level={2}
+              outline
+              glyphOutline
+              label="Artifact 27"
+            />
+            {/* todo: "artifact 27" harcoded, dunno what that is -EJ */}
+          </Metadatum>
+          <Metadatum>
+            <Icon
+              loading={loading || !grant}
               glyph="face"
               color="slate"
               darkColor="moon"
               level={2}
               outline
               glyphOutline
-              label={`${artist?.user?.firstName} ${artist?.user?.lastName}`}
+              label={artistName}
             />
           </Metadatum>
         </Metadata>
       </Copy>
-      <P>{grant.submission?.project?.description}</P>
-      <Impact>Impact</Impact>
-      <P>{grant.submission?.project?.impact}</P>
 
-      <ListHeader>Project</ListHeader>
-      <List>
-        <div>
-          <dt>Season {grant.season}</dt>
-          <dd>Extended Reality</dd>
-        </div>
-        <div>
-          <dt>Started</dt>
-          <dd>{formatDate(grant.submission?.project?.creationDate)}</dd>
-        </div>
-        <div>
-          <dt>Completed</dt>
-          <dd>{formatDate(grant.submission?.project?.completionDate)}</dd>
-        </div>
-      </List>
+      {!grant ? (
+        <Shimmer />
+      ) : (
+        <>
+          <P>{grant?.submission?.project?.description}</P>
+          <Impact>Impact</Impact>
+          <P>{grant?.submission?.project?.impact}</P>
+          <SlideDown closed={!closed}>
+            <Button level={2} onClick={() => setClosed(false)} stretch outline>
+              click
+            </Button>
+          </SlideDown>
+        </>
+      )}
 
-      {/* todo: waiting on @EK for data
-      <ListHeader>Artifact</ListHeader>
-      <List>
-        <div>
-          <dt>Minted</dt>
-          <dd>createdAt</dd>
-        </div>
-        <div>
-          <dt>Token</dt>
-          <dd>{grant.submission?.artifacts[0]?.blockchainAddress}</dd>
-        </div>
-      </List>
-      */}
+      <CopyWrapper>
+        <ViewMore {...{ closed }}>
+          <ListHeader>Project</ListHeader>
+          <List>
+            <div>
+              <dt>Season {grant?.season}</dt>
+              <dd>Extended Reality</dd>
+            </div>
+            <div>
+              <dt>Started</dt>
+              <dd>{formatDate(grant?.submission?.project?.creationDate)}</dd>
+            </div>
+            <div>
+              <dt>Completed</dt>
+              <dd>{formatDate(grant?.submission?.project?.completionDate)}</dd>
+            </div>
+          </List>
 
-      <ListHeader>Contributors</ListHeader>
-      <List>
-        {grant?.submission?.project?.members.map((member, index) => (
-          <div key={`member-${index}`}>
-            <dt>
-              <TableAvatar profileImage={member.user?.profileImage} />
-              {member?.user?.firstName} {member?.user?.lastName}
-            </dt>
-            <dd>{member.type}</dd>
-          </div>
-        ))}
-      </List>
+          <ListHeader>Artifact</ListHeader>
+          <List>
+            <div>
+              <dt>Minted</dt>
+              <dd>createdAt</dd>
+            </div>
+            <div>
+              <dt>Token</dt>
+              <dd>{grant?.submission?.artifacts[0]?.blockchainAddress}</dd>
+            </div>
+          </List>
+
+          <ListHeader>Contributors</ListHeader>
+          <List>
+            {grant?.submission?.project?.members.map((member, index) => (
+              <div key={`member-${index}`}>
+                <dt>
+                  <TableAvatar profileImage={member.user?.profileImage} />
+                  {member?.user?.firstName} {member?.user?.lastName}
+                </dt>
+                <dd>{member.type}</dd>
+              </div>
+            ))}
+          </List>
+        </ViewMore>
+      </CopyWrapper>
     </Wrapper>
   )
 }
+
+const ViewMore = styled(props => <SlideDown {...props} />)<{ collapsed: boolean }>``
 
 const Wrapper = styled.div`
   grid-area: tabbedInfo;
@@ -100,7 +139,6 @@ const Copy = styled.div`
 
 const Title = styled.div`
   ${typography.title.l4}
-  margin: 1em 0;
 `
 
 const Metadata = styled.div`
@@ -113,6 +151,7 @@ const Metadata = styled.div`
 `
 
 const Metadatum = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -122,6 +161,7 @@ const Metadatum = styled.div`
 
 const P = styled.p`
   ${typography.body.l2}
+  min-height: 50px;
 `
 
 const Impact = styled.h4`
@@ -131,11 +171,14 @@ const Impact = styled.h4`
 
 const ListHeader = styled.h4`
   ${typography.label.l1}
+  padding: 1em 0;
+`
+
+const CopyWrapper = styled.div`
   margin: 1em 0;
 `
 
 const List = styled.dl`
-  ${typography.label.l1}
   display: flex;
   flex-direction: column;
   gap: 4px;

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Countdown from './Countdown'
-import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
+import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Shimmer, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGrantsWithProjectFragment } from '@types'
 import { rgba, isCurrentGrant } from '@lib'
@@ -25,38 +25,64 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   return (
     <StyledStickyCanvas>
       <Wrapper id="grant-explorer">
-        <GrantsNavigator {...{ grant }} />
+        {!grant ? <GrantsNavigatorShimmer /> : <GrantsNavigator {...{ grant }} />}
         <Body>
-          <Header>{grant.submission?.project?.title}</Header>
+          <Header>{!grant ? <Shimmer height="30px" /> : grant?.submission?.project?.title}</Header>
 
-          <ProgressBar>{amountRaised / (grant.goal || 1)}</ProgressBar>
+          <ProgressBar>{amountRaised / (grant?.goal || 1)}</ProgressBar>
 
           <GrantData>
-            <div>
-              <DataLabel>Raised</DataLabel>
-              <AmountRaisedRow>
-                <Glyph glyph="ethereum" level={2} />
-                <AmountRaised>{amountRaised.toFixed(3)}</AmountRaised>
-                <Goal>&nbsp;/ {grant.goal} goal</Goal>
-              </AmountRaisedRow>
-            </div>
-
-            {isCurrent && (
-              <div>
-                <DataLabel>Ends in</DataLabel>
-                <Countdown date={grant.closingDate} onComplete={moveToNextGrant} />
-              </div>
+            {!grant ? (
+              <>
+                <Shimmer height="60px" />
+                <Shimmer height="60px" />
+              </>
+            ) : (
+              <>
+                <div>
+                  <DataLabel>Raised</DataLabel>
+                  <AmountRaisedRow>
+                    <Glyph glyph="ethereum" level={2} />
+                    <AmountRaised>{amountRaised.toFixed(3)}</AmountRaised>
+                    <Goal>&nbsp;/ {grant?.goal} goal</Goal>
+                  </AmountRaisedRow>
+                </div>
+                <div>
+                  <DataLabel>Ends in</DataLabel>
+                  <Countdown date={grant?.closingDate} onComplete={moveToNextGrant} />
+                </div>
+              </>
             )}
           </GrantData>
 
-          {isCurrent && grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
+          {isCurrent && grant?.blockchainId && <DonationBox grantId={grant?.id} blockchainId={grant?.blockchainId} />}
 
-          <Leaderboard grantId={grant.id} {...{ setAmountRaised }} />
+          {!grant ? (
+            <Gap>
+              <Shimmer height="30px" />
+              <Shimmer height="70px" />
+            </Gap>
+          ) : (
+            <Leaderboard grantId={grant?.id} {...{ setAmountRaised }} />
+          )}
         </Body>
       </Wrapper>
     </StyledStickyCanvas>
   )
 }
+
+const Gap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`
+
+const GrantsNavigatorShimmer = styled(props => <Shimmer {...props} />)`
+  margin: auto;
+  max-width: 250px;
+  height: 40px;
+  justify-content: center;
+`
 
 const StyledStickyCanvas = styled(props => <StickyCanvas {...props} />)`
   grid-area: sidebar;
