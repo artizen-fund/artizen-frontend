@@ -1,7 +1,6 @@
 import { CourierClient } from '@trycourier/courier'
 import { assert } from '@lib'
 import { FormState } from '@forms/createProfile'
-import { welcomeEmail } from '@copy/common'
 
 export const createUserCourierProfile = async (recipientId: string, userData: FormState) => {
   const authorizationToken = assert(process.env.COURIER_API_KEY, 'COURIER_API_KEY')
@@ -16,18 +15,16 @@ export const createUserCourierProfile = async (recipientId: string, userData: Fo
       },
     })
 
-    const courierResponse = await courier.send({
+    const TEMPLATE_ID = assert(process.env.COURIER_WELCOME_TEMPLATE_ID, 'COURIER_WELCOME_TEMPLATE_ID')
+    await courier.send({
       message: {
         to: {
           data: {
-            name: `${userData.firstName} ${userData.lastName}`,
+            firstName: userData.firstName,
           },
           email: userData.email,
         },
-        content: {
-          title: welcomeEmail.title,
-          body: welcomeEmail.body,
-        },
+        template: TEMPLATE_ID,
         routing: {
           method: 'single',
           channels: ['email'],
