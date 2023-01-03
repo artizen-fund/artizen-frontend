@@ -16,6 +16,8 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
   const router = useRouter()
   const [amountRaised, setAmountRaised] = useState(0)
 
+  if (!grant) return <></>
+
   const isCurrent = isCurrentGrant(grant)
 
   const moveToNextGrant = () => router.push('/grants/today')

@@ -68,12 +68,12 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)``
 
 const StyledButton = styled(props => <Button {...props} />)`
   grid-area: submit;
-  margin-top: 15px;
+  margin-top: 14px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     margin-top: 25px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    margin-top: 45px;
+    margin-top: 29px;
   }
 `
 
@@ -148,6 +148,12 @@ const Wrapper = styled.div`
 
   *[id='#/properties/OPTIN'] {
     grid-area: optIn;
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      padding-top: 28px;
+    }
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      padding-top: 32px;
+    }
   }
 
   &.submitted {

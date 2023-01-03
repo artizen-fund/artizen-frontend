@@ -1,6 +1,7 @@
 export const createProfile = {
   headline: 'Complete your profile',
-  subtitle: 'This allows us to get you a final without delay and ensures that your donation is attributed.',
+  subtitle:
+    'This will help make sure we get you a final receipt without delay and that your donation is properly attributed.',
   saveLabel: 'Save Changes',
   tocMessage: (
     <>

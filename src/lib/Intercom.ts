@@ -19,10 +19,14 @@ export function initIntercom() {
   const appId = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
   const startIntercom = useCallback(() => {
+    const name =
+      loggedInUser?.firstName && loggedInUser?.firstName
+        ? `${loggedInUser?.firstName} ${loggedInUser?.lastName}`
+        : undefined
     loadIntercom({
       appId,
       email: loggedInUser?.email, // default: ''
-      name: loggedInUser && `${loggedInUser?.firstName} ${loggedInUser?.lastName}`,
+      name,
       ssr: false, // default: false
       initWindow: true, // default: true
       delay: 0, // default: 0  - useful for mobile devices to prevent blocking the main thread
