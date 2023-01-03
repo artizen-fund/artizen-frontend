@@ -21,9 +21,8 @@ const Checkbox = ({
       <Box>
         <Input
           type="checkbox"
-          required={!!required}
+          {...{ checked, required }}
           onChange={_ => handleChange(path, !data)}
-          checked={checked}
           disabled={!enabled}
         />
         <Checkmark {...{ inverted, enabled, checked }}>
@@ -80,7 +79,19 @@ const Checkmark = styled.span<Partial<BooleanControlProps> & { checked: boolean 
 
   ${() => Glyph} {
     position: absolute;
-    background-color: ${props => rgba(props.enabled ? palette.slate : palette.barracuda)};
+    background-color: ${props =>
+      rgba(
+        props.enabled && props.inverted
+          ? palette.slate
+          : !props.enabled && props.inverted
+          ? palette.barracuda
+          : props.enabled && !props.inverted
+          ? palette.white
+          : palette.night,
+      )};
+    @media (prefers-color-scheme: dark) {
+      background-color: ${props => rgba(props.enabled ? palette.slate : palette.barracuda)};
+    }
     transition: background-color 0.25s ease-in-out, transform 0.5s cubic-bezier(0.42, 0.97, 0.52, 1.49);
     transform: scale(${props => (props.checked ? 1 : 0)});
   }
