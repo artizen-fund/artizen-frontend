@@ -13,7 +13,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt: ({ token, user }) => {
-      console.log('user     ', user)
       const userWRole = user as any
       if (userWRole) {
         token.id = userWRole.id
