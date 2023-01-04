@@ -33,7 +33,7 @@ const NewGrantForm = () => {
     // set grant start date (readonly, not user editable)
     const startingDateBase = loadedGrantData?.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
     const date = moment(startingDateBase)
-    setNewGrantDate(date)
+    setNewGrantDate(date.format('YYYY-MM-DD HH:mm:ss'))
     // TODO: this is causing an infinite loop
     // setData({
     //   ...data,
