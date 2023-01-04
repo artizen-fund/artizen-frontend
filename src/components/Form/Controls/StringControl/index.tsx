@@ -73,7 +73,7 @@ export const StringControl = ({
 
   return (
     <Wrapper gridArea={path} {...props} {...{ hasMessage }} id={uischema?.scope}>
-      <InputWrapper disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
+      <InputWrapper disabled={!enabled || processing}>
         {uischema?.options?.format === 'phone' ? (
           <PhoneInput
             {...{ required, autoComplete }}
@@ -158,7 +158,7 @@ export const StringControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {!!statusGlyph && <InputGlyph outline color="night" darkColor="night" glyph={statusGlyph} />}
+        <InputGlyph outline color="night" darkColor="night" glyph={statusGlyph} />
       </InputWrapper>
       <Message className={hasMessage ? 'hasMessage' : ''}>{visibleError}</Message>
     </Wrapper>

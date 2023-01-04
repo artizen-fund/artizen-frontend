@@ -63,7 +63,7 @@ export const NumberControl = ({
 
   return (
     <Wrapper gridArea={path} hasMessage={!!errors} {...props} id={uischema?.scope}>
-      <InputWrapper disabled={!enabled || processing} hasStatusGlyph={!!statusGlyph}>
+      <InputWrapper disabled={!enabled || processing}>
         <input
           {...{ required }}
           disabled={!enabled || processing}
@@ -81,7 +81,7 @@ export const NumberControl = ({
           {typeof label === 'object' ? label[0] : label}
           {required ? ' *' : ''}
         </InputLabel>
-        {!!statusGlyph && <InputGlyph color="night" glyph={statusGlyph} />}
+        <InputGlyph color="night" glyph={statusGlyph} />
       </InputWrapper>
       <Message {...{ virgin }} className={!!errors ? 'hasMessage' : ''}>
         {visibleError}

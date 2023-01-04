@@ -72,7 +72,6 @@ const InputTypography = css`
 
 export default styled.div<{
   hasWidget?: boolean
-  hasStatusGlyph?: boolean
   disabled?: boolean
 }>`
   position: relative;
@@ -89,13 +88,6 @@ export default styled.div<{
     align-items: center;
 
     width: 100%;
-    padding: 18px ${props => (props.hasStatusGlyph ? 48 : 16)}px 0 16px;
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      padding: 20px ${props => (props.hasStatusGlyph ? 72 : 24)}px 0 24px;
-    }
-    @media only screen and (min-width: ${breakpoint.desktop}px) {
-      padding: 22px ${props => (props.hasStatusGlyph ? 88 : 32)}px 0 32px;
-    }
 
     border-width: 1px 1px 1px 1px;
     border-style: solid;
@@ -113,21 +105,27 @@ export default styled.div<{
   input,
   select {
     height: 56px;
+    padding: 18px 16px 0 16px;
     @media only screen and (min-width: ${breakpoint.laptop}px) {
       height: 64px;
+      padding: 20px 24px 0 24px;
     }
     @media only screen and (min-width: ${breakpoint.desktop}px) {
       height: 72px;
+      padding: 22px 32px 0 32px;
     }
   }
 
   textarea {
     height: 168px;
+    padding: 24px 16px 0 16px;
     @media only screen and (min-width: ${breakpoint.laptop}px) {
       height: 192px;
+      padding: 29px 24px 0 24px;
     }
     @media only screen and (min-width: ${breakpoint.desktop}px) {
       height: 216px;
+      padding: 34px 32px 0 32px;
     }
   }
 

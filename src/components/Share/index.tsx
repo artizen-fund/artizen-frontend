@@ -11,13 +11,15 @@ const Share = () => {
 
   const link = 'https://artizen.fund'
   const title = 'Artizen'
-  const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(
-    link,
-  )}`
+  const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    sharingModal.twitterMessage,
+  )}&url=${encodeURIComponent(link)}`
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-    title,
-  )}%20${encodeURIComponent(link)}`
-  const redditLink = `http://www.reddit.com/submit?url=${encodeURIComponent(link)}&title=${encodeURIComponent(title)}`
+    sharingModal.facebookMessage,
+  )}`
+  const redditLink = `http://www.reddit.com/submit?url=${encodeURIComponent(
+    sharingModal.redditMessage,
+  )}&title=${encodeURIComponent('Artizen Fund')}`
   const mailLink = encodeURIComponent(link)
 
   const [copied, setCopied] = useState(false)

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { palette, breakpoint } from '@theme'
+import { Shimmer } from '@components'
 import { rgba } from '@lib'
 import { IGrantsWithProjectFragment } from '@types'
 
@@ -8,19 +9,14 @@ type IFeaturedArt = {
   loading: boolean
 }
 
-const FeaturedArt = ({ grant }: IFeaturedArt) => {
+const FeaturedArt = ({ grant, loading }: IFeaturedArt) => {
   // const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
-  if (!grant?.submission?.artifacts) return <></>
   //TODO: message for EricJ, you got now 3 artifacts, one per edition
   const artworkCommunity = grant?.submission?.artifacts ? grant?.submission?.artifacts[0].artwork : ''
 
   // note: current video NFT ratio is 1:.56
-  return (
-    <Wrapper>
-      <Poster src={artworkCommunity as string} />
-    </Wrapper>
-  )
+  return <Wrapper>{loading || !grant ? <Shimmer /> : <Poster src={artworkCommunity as string} />}</Wrapper>
 }
 
 const Wrapper = styled.section`
@@ -30,15 +26,20 @@ const Wrapper = styled.section`
   @media only screen and (max-width: ${breakpoint.laptop - 1}px) {
     border-radius: 16px 16px 0px 0px;
     color: ${rgba(palette.white)};
-    &:after {
-      content: ' ';
-      position: absolute;
-      z-index: 1;
-      bottom: -4px;
-      height: 4px;
-      width: 100%;
-      background: linear-gradient(90deg, #c2b6dc 0%, #c2b6dc 27.07%, #1acc6c 100%);
-    }
+  }
+
+  min-height: 340px;
+  @media only screen and (min-width: ${breakpoint.phablet}px) {
+    min-height: 512px;
+  }
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    min-height: 320px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    min-height: 440px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    min-height: 760px;
   }
 `
 
@@ -52,6 +53,15 @@ const Poster = styled.img`
     border-radius: 16px;
   }
   cursor: pointer;
+  &:after {
+    content: ' ';
+    position: absolute;
+    z-index: 1;
+    bottom: -4px;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #c2b6dc 0%, #c2b6dc 27.07%, #1acc6c 100%);
+  }
 `
 
 export default FeaturedArt
