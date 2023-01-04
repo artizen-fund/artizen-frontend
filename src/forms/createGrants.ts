@@ -265,7 +265,7 @@ export const uischema = {
               type: 'Control',
               scope: '#/properties/grant/properties/date',
               options: {
-                readonly: true,
+                // readonly: true,
               },
             },
           ],
