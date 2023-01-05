@@ -75,11 +75,7 @@ const useSaveGrant = () => {
         },
       },
     })
-    if (data?.Users.length === 0) {
-      return await insertNewUserRecord(member)
-    } else {
-      return await updateUserRecord(member)
-    }
+    return data?.Users.length === 0 ? await insertNewUserRecord(member) : await updateUserRecord(member)
   }
 
   const insertNewUserRecord = async (member: ProjectMember) => {
@@ -106,8 +102,8 @@ const useSaveGrant = () => {
     const updateUserRn = await updateUser({
       variables: {
         where: {
-          email: {
-            _eq: member.email,
+          publicAddress: {
+            _eq: member.wallet?.toLowerCase(),
           },
         },
         _set: {
@@ -120,18 +116,7 @@ const useSaveGrant = () => {
     if (!updateUserRn.data?.update_Users) {
       throw new Error('Error updating user in DB')
     }
-    // return updateUserRn.data.update_Users.returning[0].id
-    /*
-      Note: there is an edge case where we might enter a bundle like…
-        { email: 'herp@derp.com', publicAddress: '0x123' }
-      … and there is an existing record like…
-        { email: 'dorp@donk.com', publicAddress: '0x123' }
-      Under those circumstances, even though a record will be found, no records will be updated.
-      This could be resolved with an OR update, but that sounds dangerous.
-      We need to revisit the policy of how we handle these unique fields in the database.
-      In the meantime, we're not actually using the returned ID for anything, so just returning true.
-    */
-    return true
+    return updateUserRn.data.update_Users.returning[0].id
   }
 
   const insertGrant = async (data: FormState, projectId: string) => {
