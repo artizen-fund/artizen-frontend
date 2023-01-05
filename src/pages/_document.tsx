@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import Document, { DocumentContext } from 'next/document'
+import Document, { DocumentContext, Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 export default class DocumentWithStyledComponents extends Document {
@@ -23,5 +23,20 @@ export default class DocumentWithStyledComponents extends Document {
     } finally {
       sheet.seal()
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link rel="preconnect" href="https://use.typekit.net" />
+          <link rel="stylesheet" href="https://use.typekit.net/wwx1oja.css" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
   }
 }

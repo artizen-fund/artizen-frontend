@@ -21,9 +21,6 @@ const Layout = ({ children }: LayoutProps) => {
 
         <meta property="og:type" content="website" />
 
-        <link rel="preconnect" href="https://use.typekit.net" />
-        <link rel="stylesheet" href="https://use.typekit.net/wwx1oja.css" />
-
         <meta property="og:title" content={copy.title} key="title" />
         <meta name="twitter:title" content={copy.title} />
 
