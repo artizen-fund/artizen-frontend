@@ -84,8 +84,11 @@ export const useGrant = () => {
 
     // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
-      const artifactName = `Artifact #${index}`
-      const artifactDescription = `**Artifact #${index} minted by "${project.title}"**
+      // EK testing: it seems as though the Artifact number here should always the current token id + 1
+      const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
+      const artifactNumber = latestTokenId.add(1) // can't + a BigNumber and a Number, so need to .add()...
+      const artifactName = `Artifact #${artifactNumber}`
+      const artifactDescription = `**${artifactName} minted by "${project.title}"**
 *${artifact.edition} Edition 1/1*
       
 **About**: ${project.longline}
@@ -104,7 +107,7 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
         description: artifactDescription,
         image: '',
         background_color: '000000',
-        external_url: `https://artizen.fund/projects/artifacts/artifact${index}/`,
+        external_url: `https://artizen.fund/projects/artifacts/artifact${artifactNumber}/`,
         attributes: [
           {
             trait_type: 'Project Created',
