@@ -28,33 +28,36 @@ const NewGrantForm = () => {
     },
   })
 
+  const [newGrantDate, setNewGrantDate] = useState('')
   useEffect(() => {
     // set grant start date (readonly, not user editable)
     const startingDateBase = loadedGrantData?.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
     const date = moment(startingDateBase)
-    setData({
-      ...data,
-      grant: {
-        ...data.grant,
-        date: date.format('YYYY-MM-DD HH:mm:ss'),
-      },
-    })
+    setNewGrantDate(date.format('YYYY-MM-DD HH:mm:ss'))
+    // TODO: this is causing an infinite loop
+    // setData({
+    //   ...data,
+    //   grant: {
+    //     ...data.grant,
+    //     date: date.format('YYYY-MM-DD HH:mm:ss'),
+    //   },
+    // })
   }, [loadedGrantData])
 
-  useEffect(() => {
-    // set additional form validators here
-    const errors: Array<ErrorObject> = []
-    if (!validateLib.validate(data.project.walletAddress, 'ETH')) {
-      errors.push({
-        instancePath: '/project/walletAddress',
-        message: 'Invalid blockchain address',
-        schemaPath: '#/properties/project/properties/walletAddress',
-        keyword: '',
-        params: {},
-      })
-    }
-    setAdditionalErrors(errors)
-  }, [data])
+  //   useEffect(() => {
+  //     // set additional form validators here
+  //     const errors: Array<ErrorObject> = []
+  //     if (!validateLib.validate(data.project.walletAddress, 'ETH')) {
+  //       errors.push({
+  //         instancePath: '/project/walletAddress',
+  //         message: 'Invalid blockchain address',
+  //         schemaPath: '#/properties/project/properties/walletAddress',
+  //         keyword: '',
+  //         params: {},
+  //       })
+  //     }
+  //     setAdditionalErrors(errors)
+  //   }, [data])
 
   const saveNewGrant = async () => {
     if (!validateProjectMembers(data.projectMembers)) return
@@ -74,6 +77,7 @@ const NewGrantForm = () => {
     <Spinner minHeight="85vh" />
   ) : (
     <Wrapper>
+      <p>new grant date: {newGrantDate}</p>
       <FormWrapper>
         <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
           <StyledButton onClick={() => saveNewGrant()} stretch level={0}>
