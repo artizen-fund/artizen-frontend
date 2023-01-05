@@ -66,9 +66,6 @@ export const schema: JsonSchema = {
         },
         walletAddress: {
           type: 'string',
-          format: 'lowercase',
-          minLength: 42,
-          maxLength: 42,
         },
       },
       required: [
@@ -265,7 +262,7 @@ export const uischema = {
               type: 'Control',
               scope: '#/properties/grant/properties/date',
               options: {
-                // readonly: true,
+                readonly: true,
               },
             },
           ],
@@ -351,6 +348,9 @@ export const uischema = {
                 {
                   type: 'Control',
                   scope: '#/properties/project/properties/walletAddress',
+                  options: {
+                    format: 'lowercase',
+                  },
                 },
               ],
             },

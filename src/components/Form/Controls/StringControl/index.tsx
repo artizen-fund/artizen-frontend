@@ -39,12 +39,35 @@ export const StringControl = ({
 }: StringControlProps) => {
   const [virgin, setVirgin] = useState(data === undefined)
 
+  /* Why are we managing state locally and not just using data and handleChange from JSONForms?
+   * For unknown reasons, React thinks that's changing from an unmanaged to a managed input.
+   * That error goes away when we go unmanaged, but then we're not able to do special formatting
+   *   like toLowerCase()
+   * So, this is the compromise. Not crazy about it. :\ -EJ
+   */
+  const [localData, setLocalData] = useState<string>(data || '')
+  useEffect(() => {
+    if (!localData) return
+    handleChange(path, localData)
+  }, [localData])
+
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
   useEffect(() => {
     const splitErrors = errors?.split('\n').filter(e => e !== '') || []
     if (required && (!data || data === '')) splitErrors.push('is a required property')
     setParsedErrors(splitErrors)
   }, [errors, required, data])
+
+  const handleStringChange = (value: string) => {
+    // put any special formatting rules here
+    if (uischema?.options?.format === 'creditCard') {
+      setLocalData(ccnFormat(value))
+    } else if (uischema?.options?.format === 'lowercase') {
+      setLocalData(value.toLowerCase())
+    } else {
+      setLocalData(value)
+    }
+  }
 
   const [visibleError, setVisibleError] = useState<string>()
   useEffect(() => {
@@ -74,20 +97,7 @@ export const StringControl = ({
   return (
     <Wrapper gridArea={path} {...props} {...{ hasMessage }} id={uischema?.scope}>
       <InputWrapper disabled={!enabled || processing}>
-        {uischema?.options?.format === 'phone' ? (
-          <PhoneInput
-            {...{ required, autoComplete }}
-            disabled={!enabled}
-            placeholder={uischema?.options?.placeholder || ' '}
-            value={data}
-            onChange={(e: string) => handleChange(path, e)}
-            onBlur={() => setVirgin(false)}
-            countrySelectProps={{ unicodeFlags: true }}
-            defaultCountry="US"
-            international={false}
-            className={!!data ? 'hasData' : ''}
-          />
-        ) : uischema?.options?.format === 'uploadFile' ? (
+        {uischema?.options?.format === 'uploadFile' ? (
           <UploadFileControl
             {...{ required, setVirgin, enabled, data, path, handleChange, uischema }}
             disabled={!enabled}
@@ -103,6 +113,19 @@ export const StringControl = ({
             onBlur={() => setVirgin(false)}
             className={!!data ? 'hasData' : ''}
           />
+        ) : uischema?.options?.format === 'phone' ? (
+          <PhoneInput
+            {...{ required, autoComplete }}
+            disabled={!enabled}
+            placeholder={uischema?.options?.placeholder || ' '}
+            value={localData}
+            onChange={(e: string) => setLocalData(e)}
+            onBlur={() => setVirgin(false)}
+            countrySelectProps={{ unicodeFlags: true }}
+            defaultCountry="US"
+            international={false}
+            className={!!data ? 'hasData' : ''}
+          />
         ) : schema?.format === 'date' ? (
           <input
             {...{ required, autoComplete }}
@@ -111,23 +134,9 @@ export const StringControl = ({
             maxLength={schema?.maxLength}
             type="date"
             placeholder={uischema?.options?.placeholder || ' '}
-            defaultValue={data}
-            onChange={e => handleChange(path, ccnFormat(e.target.value))}
+            value={localData}
+            onChange={e => handleStringChange(e.target.value)}
             onBlur={() => setVirgin(false)}
-            value={data}
-          />
-        ) : uischema?.options?.format === 'creditCard' ? (
-          <input
-            {...{ required, autoComplete }}
-            disabled={!enabled || processing}
-            minLength={schema?.minLength}
-            maxLength={schema?.maxLength}
-            type={uischema?.options?.format || 'text'}
-            placeholder={uischema?.options?.placeholder || ' '}
-            defaultValue={data}
-            onChange={e => handleChange(path, ccnFormat(e.target.value))}
-            onBlur={() => setVirgin(false)}
-            value={data}
           />
         ) : uischema?.options?.format === 'text' ? (
           <textarea
@@ -136,8 +145,8 @@ export const StringControl = ({
             minLength={schema?.minLength}
             maxLength={schema?.maxLength}
             placeholder={uischema?.options?.placeholder || ' '}
-            defaultValue={data}
-            onChange={e => handleChange(path, e.target.value)}
+            value={localData}
+            onChange={e => handleStringChange(e.target.value)}
             onBlur={() => setVirgin(false)}
             rows={3}
           />
@@ -149,8 +158,8 @@ export const StringControl = ({
             maxLength={schema?.maxLength}
             type={uischema?.options?.format || 'text'}
             placeholder={uischema?.options?.placeholder || ' '}
-            defaultValue={data}
-            onChange={e => handleChange(path, e.target.value)}
+            value={localData}
+            onChange={e => handleStringChange(e.target.value)}
             onBlur={() => setVirgin(false)}
           />
         )}
