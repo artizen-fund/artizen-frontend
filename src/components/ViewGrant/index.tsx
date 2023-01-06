@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import moment from 'moment-timezone'
-import { Button, PagePadding, Spinner } from '@components'
+import { Button, Spinner } from '@components'
 import GrantLayout from './GrantLayout'
 import { useGrant, ARTIZEN_TIMEZONE } from '@lib'
 import { IGrantsWithProjectFragment } from '@types'
@@ -23,49 +23,39 @@ const ViewGrant = ({ grant }: IViewGrantProps) => {
   const endGrantDisabled = grantIsPublished && grantIsActive
 
   return (
-    <Wrapper>
-      <StyledPagePadding>
-        <GrantLayout {...{ grant }} />
-        <Buttons>
-          {
-            <Button
-              stretch
-              disabled={grantIsPublished || processing}
-              onClick={async () => {
-                setProcessing(true)
-                await publish(grant)
-                setProcessing(false)
-              }}
-              level={2}
-            >
-              {processing ? 'Processing' : 'Publish'}
-            </Button>
-          }
+    <>
+      <GrantLayout {...{ grant }} />
+      <Buttons>
+        {
           <Button
-            disabled={endGrantDisabled || processing}
             stretch
+            disabled={grantIsPublished || processing}
             onClick={async () => {
               setProcessing(true)
-              endGrant(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress || '')
-              setProcessing(true)
+              await publish(grant)
+              setProcessing(false)
             }}
             level={2}
           >
-            {processing ? 'Processing' : 'End'}
+            {processing ? 'Processing' : 'Publish'}
           </Button>
-        </Buttons>
-      </StyledPagePadding>
-    </Wrapper>
+        }
+        <Button
+          disabled={endGrantDisabled || processing}
+          stretch
+          onClick={async () => {
+            setProcessing(true)
+            endGrant(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress || '')
+            setProcessing(true)
+          }}
+          level={2}
+        >
+          {processing ? 'Processing' : 'End'}
+        </Button>
+      </Buttons>
+    </>
   )
 }
-
-const Wrapper = styled.div``
-
-const StyledPagePadding = styled(props => <PagePadding {...props} />)`
-  max-width: 600px;
-  min-height: 75vh;
-  margin: auto;
-`
 
 const Buttons = styled.div`
   display: flex;

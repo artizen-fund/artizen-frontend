@@ -1,8 +1,10 @@
+import styled from 'styled-components'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import { CuratorCheck, Layout, ViewGrant, Spinner } from '@components'
+import { PagePadding, CuratorCheck, Layout, ViewGrant, Spinner } from '@components'
 import { LOAD_GRANTS } from '@gql'
 import { ILoadGrantsQuery } from '@types'
 
@@ -36,15 +38,24 @@ const GrantDetails = () => {
   return (
     <Layout>
       <CuratorCheck />
-      {status !== 'authenticated' || loading ? (
-        <Spinner minHeight="75vh" />
-      ) : (
-        <>
-          <ViewGrant grant={loadedGrantData?.Grants[0]} />
-        </>
-      )}
+      <StyledPagePadding>
+        {status !== 'authenticated' || loading ? (
+          <Spinner minHeight="75vh" />
+        ) : (
+          <>
+            <ViewGrant grant={loadedGrantData?.Grants[0]} />
+            <Link href="/admin/grants">↩ back to list</Link>
+          </>
+        )}
+      </StyledPagePadding>
     </Layout>
   )
 }
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  max-width: 600px;
+  min-height: 75vh;
+  margin: auto;
+`
 
 export default GrantDetails
