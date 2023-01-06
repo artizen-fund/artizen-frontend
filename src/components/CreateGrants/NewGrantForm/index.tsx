@@ -30,9 +30,9 @@ const NewGrantForm = () => {
   })
 
   useEffect(() => {
+    if (!loadedGrantData) return
     // set initialState
-    if (!!data) return
-    const startingDateBase = loadedGrantData?.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
+    const startingDateBase = loadedGrantData.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
     const date = moment(startingDateBase)
     setData({
       ...initialState,
