@@ -84,9 +84,8 @@ export const useGrant = () => {
 
     // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
-      // EK testing: it seems as though the Artifact number here should always the current token id + 1
       const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
-      const artifactNumber = latestTokenId.add(1) // can't + a BigNumber and a Number, so need to .add()...
+      const artifactNumber = latestTokenId.add(index + 1) // can't + a BigNumber and a Number, so need to .add()...
       const artifactName = `Artifact #${artifactNumber}`
       const artifactDescription = `**${artifactName} minted by "${project.title}"**
 *${artifact.edition} Edition 1/1*
