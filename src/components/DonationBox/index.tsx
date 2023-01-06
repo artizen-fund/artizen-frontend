@@ -58,7 +58,7 @@ const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
         <Button
           level={0}
           onClick={() => donateFn()}
-          disabled={!data.donationAmount || data.donationAmount <= 0}
+          disabled={!data.donationAmount || data.donationAmount <= 0 || sending}
           stretch
         >
           {sending ? 'Sending' : 'Donate'}
