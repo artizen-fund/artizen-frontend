@@ -85,7 +85,7 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     </Button>
   )
 
-  return !!loading || !data?.Users || !donatingUsers ? (
+  return !data?.Users || !donatingUsers ? (
     <Spinner />
   ) : (
     <StyledTable title="Leaderboard" {...{ sideItem }}>
