@@ -91,7 +91,7 @@ export const useGrant = () => {
       //     1. Creator
       //     2. Community
       //     3. Patron
-      // for index = 0, 1, 2, 
+      // for index = 0, 1, 2,
       // (index + 1) becomes 1, 2, 3 (previous attempt at fixing this numbering)
       // (3 - index) becomes 3, 2, 1 (which is the reverse of the previous attempt, which is what we want)
       const artifactNumber = latestTokenId.add(3 - index) // can't + a BigNumber and a Number, so need to .add()...
