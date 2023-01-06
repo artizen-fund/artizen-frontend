@@ -13,7 +13,7 @@ interface ILeaderboard {
   setAmountRaised: (n: number) => void
 }
 
-const DEFAULT_LIMIT = 9999
+const DEFAULT_LIMIT = 5
 
 const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
@@ -79,20 +79,23 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     }
   }, [data])
 
-  const sideItem = (
-    <Button outline level={2} onClick={() => setLimit(limit === DEFAULT_LIMIT ? 9999 : DEFAULT_LIMIT)}>
-      {limit === DEFAULT_LIMIT ? 'See All' : 'See Less'}
-    </Button>
-  )
+  const sideItem =
+    donatingUsers && donatingUsers.length > limit ? (
+      <Button outline level={2} onClick={() => setLimit(limit === DEFAULT_LIMIT ? 9999 : DEFAULT_LIMIT)}>
+        {limit === DEFAULT_LIMIT ? 'See All' : 'See Less'}
+      </Button>
+    ) : (
+      <></>
+    )
 
-  return !data?.Users || !donatingUsers ? (
-    <Spinner />
+  return !donatingUsers ? (
+    <Spinner minHeight="65px" />
   ) : (
     <StyledTable title="Leaderboard" {...{ sideItem }}>
       {donatingUsers
         .sort((a, b) => (a.aggregateDonation > b.aggregateDonation ? -1 : 1))
         .map((user, index) => (
-          <TableCell key={`donating-user-${index}`} highlight>
+          <TableCell key={`donating-user-${index}`} highlight hidden={index > limit}>
             <div>
               <TableAvatar profileImage={user.profileImage} />
               <Name>{user?.artizenHandle}</Name>
