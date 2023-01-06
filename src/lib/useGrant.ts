@@ -85,7 +85,16 @@ export const useGrant = () => {
     // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
       const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
-      const artifactNumber = latestTokenId.add(index + 1) // can't + a BigNumber and a Number, so need to .add()...
+      // TODO: once Artifact ordering has stabilized for good, consider fixing this upstream
+      //       => an upstream change would also affect at least the construction of grantTuple below
+      // using (3 - index) here because the minted Artifact order is:
+      //     1. Creator
+      //     2. Community
+      //     3. Patron
+      // for index = 0, 1, 2, 
+      // (index + 1) becomes 1, 2, 3 (previous attempt at fixing this numbering)
+      // (3 - index) becomes 3, 2, 1 (which is the reverse of the previous attempt, which is what we want)
+      const artifactNumber = latestTokenId.add(3 - index) // can't + a BigNumber and a Number, so need to .add()...
       const artifactName = `Artifact #${artifactNumber}`
       const artifactDescription = `**${artifactName} minted by "${project.title}"**
 *${artifact.edition} Edition 1/1*
