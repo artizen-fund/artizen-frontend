@@ -102,10 +102,10 @@ const Wrapper = styled.div`
   gap: 10px;
   grid-template-areas:
     'copy copy'
-    'optIn optIn'
     'firstName lastName'
     'email email'
-    'submit submit';
+    'submit submit'
+    'optIn optIn';
   &.submitted {
     grid-template-areas:
       'copy'
@@ -148,7 +148,10 @@ const Wrapper = styled.div`
 
   *[id='#/properties/OPTIN'] {
     grid-area: optIn;
+    text-align: center;
+    margin: 1em auto 0 auto;
     @media only screen and (min-width: ${breakpoint.laptop}px) {
+      margin: 0;
       padding-top: 28px;
     }
     @media only screen and (min-width: ${breakpoint.laptop}px) {
