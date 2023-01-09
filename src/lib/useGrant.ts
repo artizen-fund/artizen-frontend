@@ -2,7 +2,6 @@ import { ArtizenArtifactsAbi, GrantsAbi } from '@contracts'
 import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
-import { mockGrants } from './mock-grants'
 import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS } from '@gql'
 import { useMutation } from '@apollo/client'
@@ -10,7 +9,7 @@ import moment from 'moment-timezone'
 
 export const useGrant = () => {
   const { address } = useAccount()
-  const { data: signer, isError, isLoading } = useSigner()
+  const { data: signer } = useSigner()
   const [updateGrant] = useMutation(UPDATE_GRANTS)
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
@@ -44,8 +43,6 @@ export const useGrant = () => {
   }
 
   const minNFTs = async (grant: IGrantsWithProjectFragment) => {
-    // const grant = mockGrants[0]
-    console.log('grant.submission', grant)
     //map artifacts data
 
     if (!grant.submission) {
@@ -57,7 +54,7 @@ export const useGrant = () => {
     const members = grant.submission?.project?.members
     const inpactTags = grant.submission?.project?.impactTags?.split(',') || []
 
-    const leadMemberTraitType = project?.members.map(({ user, type }) => {
+    const leadMemberTraitType = members?.map(({ user, type }) => {
       console.log('user type, ', type === 'lead')
       console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
       if (type === 'lead') {
@@ -99,7 +96,7 @@ export const useGrant = () => {
       const artifactDescription = `**${artifactName} minted by "${project.title}"**
 *${artifact.edition} Edition 1/1*
       
-**About**: ${project.longline}
+**About**: ${project.logline}
       
 **Impact**: ${project.impact}
       

@@ -4,7 +4,7 @@ export const mockGrants = [
     season: '1',
     project: {
       title: '',
-      longline: '',
+      logline: '',
       description: '',
       impact: '',
       tags: ['Art', 'Science', 'Technology', 'Design', 'Human Creativity'],

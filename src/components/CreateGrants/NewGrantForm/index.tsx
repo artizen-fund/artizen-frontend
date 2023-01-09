@@ -12,7 +12,7 @@ import { ILoadGrantsQuery } from '@types'
 import { Form, Button, Spinner } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createGrants'
 import { ARTIZEN_TIMEZONE, rgba } from '@lib'
-import { validateProjectMembers, useSaveGrant } from './lib'
+import { validateProjectMembers, useSaveGrant, getGrantDates } from './lib'
 
 const NewGrantForm = () => {
   const { insertProject, insertMembers, insertGrant } = useSaveGrant()
@@ -33,12 +33,13 @@ const NewGrantForm = () => {
     if (!loadedGrantData) return
     // set initialState
     const startingDateBase = loadedGrantData.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
-    const date = moment(startingDateBase)
+    const [startingDate] = getGrantDates(moment(startingDateBase), 1)
+
     setData({
       ...initialState,
       grant: {
         ...initialState.grant,
-        date: date.format('YYYY-MM-DD HH:mm:ss'),
+        startingDate,
       },
     })
   }, [loadedGrantData])
