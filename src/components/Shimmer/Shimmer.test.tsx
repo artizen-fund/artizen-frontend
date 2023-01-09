@@ -1,9 +1,9 @@
 import renderer from 'react-test-renderer'
-import EditWallet from './'
+import Shimmer from './'
 
-describe('EditWallet', () => {
+describe('Shimmer', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<EditWallet />).toJSON()
+    const tree = renderer.create(<Shimmer />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

@@ -2,7 +2,6 @@ import { ArtizenArtifactsAbi, GrantsAbi } from '@contracts'
 import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
-import { mockGrants } from './mock-grants'
 import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS } from '@gql'
 import { useMutation } from '@apollo/client'
@@ -10,7 +9,7 @@ import moment from 'moment-timezone'
 
 export const useGrant = () => {
   const { address } = useAccount()
-  const { data: signer, isError, isLoading } = useSigner()
+  const { data: signer } = useSigner()
   const [updateGrant] = useMutation(UPDATE_GRANTS)
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
@@ -44,8 +43,6 @@ export const useGrant = () => {
   }
 
   const minNFTs = async (grant: IGrantsWithProjectFragment) => {
-    // const grant = mockGrants[0]
-    console.log('grant.submission', grant)
     //map artifacts data
 
     if (!grant.submission) {
@@ -57,7 +54,7 @@ export const useGrant = () => {
     const members = grant.submission?.project?.members
     const inpactTags = grant.submission?.project?.impactTags?.split(',') || []
 
-    const leadMemberTraitType = project?.members.map(({ user, type }) => {
+    const leadMemberTraitType = members?.map(({ user, type }) => {
       console.log('user type, ', type === 'lead')
       console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
       if (type === 'lead') {
@@ -84,11 +81,22 @@ export const useGrant = () => {
 
     // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
-      const artifactName = `Artifact #${index}`
-      const artifactDescription = `**Artifact #${index} minted by "${project.title}"**
+      const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
+      // TODO: once Artifact ordering has stabilized for good, consider fixing this upstream
+      //       => an upstream change would also affect at least the construction of grantTuple below
+      // using (3 - index) here because the minted Artifact order is:
+      //     1. Creator
+      //     2. Community
+      //     3. Patron
+      // for index = 0, 1, 2,
+      // (index + 1) becomes 1, 2, 3 (previous attempt at fixing this numbering)
+      // (3 - index) becomes 3, 2, 1 (which is the reverse of the previous attempt, which is what we want)
+      const artifactNumber = latestTokenId.add(3 - index) // can't + a BigNumber and a Number, so need to .add()...
+      const artifactName = `Artifact #${artifactNumber}`
+      const artifactDescription = `**${artifactName} minted by "${project.title}"**
 *${artifact.edition} Edition 1/1*
       
-**About**: ${project.longline}
+**About**: ${project.logline}
       
 **Impact**: ${project.impact}
       
@@ -104,7 +112,7 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
         description: artifactDescription,
         image: '',
         background_color: '000000',
-        external_url: `https://artizen.fund/projects/artifacts/artifact${index}/`,
+        external_url: `https://artizen.fund/projects/artifacts/artifact${artifactNumber}/`,
         attributes: [
           {
             trait_type: 'Project Created',

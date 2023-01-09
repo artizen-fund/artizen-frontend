@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useMutation, useReactiveVar } from '@apollo/client'
 import { UPDATE_USER } from '@gql'
-import { Form, Button, SettingsFormHeader } from '@components'
+import { Form, Button, SettingsFormHeader, Spinner } from '@components'
 import { loggedInUserVar } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editSettings'
@@ -11,9 +11,12 @@ const EditSettings = () => {
   const [updateUser] = useMutation(UPDATE_USER)
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const [data, setData] = useState<FormState>(initialState)
+  const [data, setData] = useState<FormState>()
   useEffect(() => {
+    // set initialState
+    if (!!data || !loggedInUser) return
     setData({
+      ...initialState,
       firstName: loggedInUser?.firstName || initialState.firstName,
       lastName: loggedInUser?.lastName || initialState.lastName,
       email: loggedInUser?.email || initialState.email,
@@ -30,7 +33,9 @@ const EditSettings = () => {
     setProcessing(false)
   }
 
-  return (
+  return !loggedInUser || !data ? (
+    <Spinner minHeight="85vh" />
+  ) : (
     <Wrapper>
       <SettingsFormHeader
         imgPath="/assets/illustrations/settings/profile.png"

@@ -1,7 +1,7 @@
 import { useState, cloneElement, useEffect } from 'react'
 import { JsonForms } from '@jsonforms/react'
 import { ErrorObject } from 'ajv'
-import { JsonSchema, Layout, ControlElement, JsonFormsCore } from '@jsonforms/core'
+import { JsonSchema, Layout, ControlElement } from '@jsonforms/core'
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers'
 import flattenChildren from 'react-keyed-flatten-children'
 import { pickBy } from 'lodash'
@@ -29,6 +29,8 @@ interface FormProps<TStateInterface> {
   children?: React.ReactElement | Array<React.ReactElement>
 }
 
+type JsonFormsError = ErrorObject<string, Record<string, any>>
+
 const Form = <TStateInterface extends Record<string, unknown>>({
   localStorageKey,
   schema,
@@ -42,15 +44,15 @@ const Form = <TStateInterface extends Record<string, unknown>>({
   ...props
 }: FormProps<TStateInterface>) => {
   const [disabled, setDisabled] = useState(true)
-  const [formState, setFormState] = useState<Pick<JsonFormsCore, 'data' | 'errors'>>()
+  const [formErrors, setFormErrors] = useState<Array<JsonFormsError>>()
 
-  const formData = formState?.data
-  const formErrors = formState?.errors
+  const setForm = (data: TStateInterface, errors?: Array<ErrorObject<string, Record<string, any>>>) => {
+    setData(data)
+    setFormErrors(errors)
+  }
 
   useEffect(() => {
-    if (!formData) return
-
-    setData(formData)
+    if (!data) return
 
     if (localStorageKey && typeof localStorage !== 'undefined' && !!data) {
       const safeVars = (uischema.elements as Array<ControlElement>)
@@ -65,7 +67,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
         [formErrors].flatMap(e => e).length > 0 ||
         (!!additionalErrors && [additionalErrors].flatMap(e => e).length > 0),
     )
-  }, [formData, formErrors, additionalErrors])
+  }, [data, formErrors, additionalErrors])
 
   const renderers = [
     ...vanillaRenderers,
@@ -75,15 +77,14 @@ const Form = <TStateInterface extends Record<string, unknown>>({
     { tester: enumControlTester, renderer: EnumControl },
   ]
 
-  const cells = [...vanillaCells]
-
   return (
     <>
       <JsonForms
-        {...{ schema, uischema, renderers, data, cells, readonly, additionalErrors }}
+        {...{ schema, uischema, renderers, data, readonly, additionalErrors }}
         {...props}
+        cells={vanillaCells}
         config={{ trim: true }}
-        onChange={formState => setFormState(formState)}
+        onChange={({ data, errors }) => setForm(data, errors)}
       />
       {flattenChildren(children).map(child =>
         cloneElement(child as React.ReactElement, { disabled: disabled || submitDisabledFromOutside }),

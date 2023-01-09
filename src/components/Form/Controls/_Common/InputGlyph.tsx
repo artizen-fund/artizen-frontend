@@ -2,20 +2,26 @@
 
 import styled from 'styled-components'
 import { Glyph } from '@components'
+import { GlyphProps } from '../../../Glyph'
 import { breakpoint } from '@theme'
 
-const InputGlyph = (props: any) => (
-  <Wrapper>
-    <Glyph {...props} />
-  </Wrapper>
-)
+const InputGlyph = ({ glyph, ...props }: Partial<GlyphProps>) => {
+  const visible = !!glyph
+  return (
+    <Wrapper {...{ visible }}>
+      <Glyph {...props} glyph={glyph || 'lock'} />
+    </Wrapper>
+  )
+}
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ visible: boolean }>`
   z-index: 2;
   position: absolute;
   right: 16px;
-  top: 0;
-  height: 100%;
+  top: 1px;
+  height: calc(100% - 2px);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  padding-left: 10px;
 
   display: flex;
   flex-direction: column;
@@ -28,6 +34,12 @@ const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     right: 32px;
   }
+
+  pointer-events: none;
+
+  transform: scale(${props => (props.visible ? 1 : 0)});
+  opacity: ${props => (props.visible ? 1 : 0)};
+  transition: opacity 0.25s ease-in-out, transform 0.5s cubic-bezier(0.42, 0.97, 0.52, 1.49);
 `
 
 export default InputGlyph

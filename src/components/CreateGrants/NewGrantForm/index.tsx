@@ -5,19 +5,20 @@ import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
 import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
+import { useDebounce } from 'use-debounce'
 import { typography, palette } from '@theme'
 import { LOAD_GRANTS } from '@gql'
 import { ILoadGrantsQuery } from '@types'
 import { Form, Button, Spinner } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createGrants'
 import { ARTIZEN_TIMEZONE, rgba } from '@lib'
-import { validateProjectMembers, useSaveGrant } from './helpers'
+import { validateProjectMembers, useSaveGrant, getGrantDates } from './lib'
 
 const NewGrantForm = () => {
   const { insertProject, insertMembers, insertGrant } = useSaveGrant()
   const { push } = useRouter()
 
-  const [data, setData] = useState<FormState>(initialState)
+  const [data, setData] = useState<FormState>()
   const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
@@ -29,22 +30,27 @@ const NewGrantForm = () => {
   })
 
   useEffect(() => {
-    // set grant start date (readonly, not user editable)
-    const startingDateBase = loadedGrantData?.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
-    const date = moment(startingDateBase)
+    if (!loadedGrantData) return
+    // set initialState
+    const startingDateBase = loadedGrantData.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
+    const [startingDate] = getGrantDates(moment(startingDateBase), 1)
+
     setData({
-      ...data,
+      ...initialState,
       grant: {
-        ...data.grant,
-        date: date.format('YYYY-MM-DD HH:mm:ss'),
+        ...initialState.grant,
+        startingDate,
       },
     })
   }, [loadedGrantData])
 
+  const [debouncedData] = useDebounce(data, 500)
   useEffect(() => {
+    if (!debouncedData) return
+
     // set additional form validators here
     const errors: Array<ErrorObject> = []
-    if (!validateLib.validate(data.project.walletAddress, 'ETH')) {
+    if (!validateLib.validate(debouncedData.project.walletAddress, 'ETH')) {
       errors.push({
         instancePath: '/project/walletAddress',
         message: 'Invalid blockchain address',
@@ -54,10 +60,10 @@ const NewGrantForm = () => {
       })
     }
     setAdditionalErrors(errors)
-  }, [data])
+  }, [debouncedData])
 
   const saveNewGrant = async () => {
-    if (!validateProjectMembers(data.projectMembers)) return
+    if (!data || !validateProjectMembers(data.projectMembers)) return
     setProcessing(true)
     try {
       const projectId = await insertProject(data.project)
@@ -70,12 +76,12 @@ const NewGrantForm = () => {
     }
   }
 
-  return loading ? (
+  return loading || !data ? (
     <Spinner minHeight="85vh" />
   ) : (
     <Wrapper>
       <FormWrapper>
-        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={processing}>
+        <Form {...{ schema, uischema, data, setData, additionalErrors }} readonly={processing}>
           <StyledButton onClick={() => saveNewGrant()} stretch level={0}>
             {processing ? 'Saving...' : 'Save Draft'}
           </StyledButton>
@@ -159,6 +165,7 @@ const FormWrapper = styled.div`
     }
     tr {
       display: flex;
+      position: relative;
     }
     td,
     th {
@@ -173,9 +180,13 @@ const FormWrapper = styled.div`
       justify-content: center;
       align-items: center;
     }
-    td:nth-child(7),
-    th:nth-child(7) {
-      display: none;
+    td:nth-child(7) {
+      padding: 5px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-weight: 300;
+      font-size: 9px;
+      pointer-events: none;
     }
     button {
       color: black;

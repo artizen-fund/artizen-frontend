@@ -10,13 +10,13 @@ export const schema: JsonSchema = {
       title: 'Grant',
       type: 'object',
       properties: {
-        date: {
+        startingDate: {
           type: 'string',
           title: 'Date of Grant',
         },
         length: {
           type: 'integer',
-          title: 'Grant length (minutes)', // TODO: switch to Hours after testing
+          title: 'Grant length (hours)', // TODO: switch to Hours after testing
         },
         goal: {
           type: 'integer',
@@ -37,7 +37,7 @@ export const schema: JsonSchema = {
           minLength: 3,
           maxLength: 255,
         },
-        longline: {
+        logline: {
           type: 'string',
           minLength: 3,
           maxLength: 255,
@@ -66,14 +66,11 @@ export const schema: JsonSchema = {
         },
         walletAddress: {
           type: 'string',
-          format: 'lowercase',
-          minLength: 42,
-          maxLength: 42,
         },
       },
       required: [
         'title',
-        'longline',
+        'logline',
         'description',
         'impact',
         'impactTags',
@@ -164,7 +161,7 @@ export const schema: JsonSchema = {
 */
 
 export interface Grant {
-  date?: string
+  startingDate?: string
   goal: number
   season: number
   length: number
@@ -180,9 +177,9 @@ export interface Artifacts {
 }
 
 export interface Project {
-  date?: string
+  startingDate?: string
   title?: string
-  longline?: string
+  logline?: string
   description?: string
   impact?: string
   impactTags?: string
@@ -210,7 +207,7 @@ export interface FormState extends Record<string, unknown> {
 /* This is our local initialState. */
 export const initialState: FormState = {
   grant: {
-    date: undefined,
+    startingDate: undefined,
     length: DEFAULT_GRANT_LENGTH_HOURS,
     goal: DEFAULT_GRANT_GOAL_ETH,
     season: ARTIZEN_CURRENT_SEASON,
@@ -225,7 +222,7 @@ export const initialState: FormState = {
   },
   project: {
     title: undefined,
-    longline: undefined,
+    logline: undefined,
     description: undefined,
     impact: undefined,
     impactTags: undefined,
@@ -263,7 +260,7 @@ export const uischema = {
           elements: [
             {
               type: 'Control',
-              scope: '#/properties/grant/properties/date',
+              scope: '#/properties/grant/properties/startingDate',
               options: {
                 readonly: true,
               },
@@ -306,7 +303,7 @@ export const uischema = {
                 },
                 {
                   type: 'Control',
-                  scope: '#/properties/project/properties/longline',
+                  scope: '#/properties/project/properties/logline',
                 },
               ],
             },
@@ -351,6 +348,9 @@ export const uischema = {
                 {
                   type: 'Control',
                   scope: '#/properties/project/properties/walletAddress',
+                  options: {
+                    format: 'lowercase',
+                  },
                 },
               ],
             },

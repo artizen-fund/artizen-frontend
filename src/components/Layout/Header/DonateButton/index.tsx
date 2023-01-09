@@ -13,7 +13,7 @@ const DonateButton = ({ active, ...props }: SimpleComponentProps & { active: boo
 
 const StyledButton = styled(props => <Button {...props} />)`
   @media only screen and (max-width: 413px) {
-    ${Glyph} {
+    ${() => Glyph} {
       display: none;
     }
   }

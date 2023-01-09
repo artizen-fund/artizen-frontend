@@ -36,4 +36,6 @@ export const validateProjectMembers = (projectMembers: Array<ProjectMember>) => 
     alert(usersWithIncorrectWallet.join())
     return false
   }
+
+  return true
 }
