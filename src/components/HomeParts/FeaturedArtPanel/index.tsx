@@ -70,7 +70,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <P>{grant?.submission?.project?.impact}</P>
           <SlideDown closed={!closed}>
             <Button level={2} onClick={() => setClosed(false)} stretch outline>
-              click
+              view more
             </Button>
           </SlideDown>
         </>
