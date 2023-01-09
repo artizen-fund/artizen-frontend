@@ -40,17 +40,12 @@ export const schema: JsonSchema = {
         logline: {
           type: 'string',
           minLength: 3,
-          maxLength: 255,
-        },
-        description: {
-          type: 'string',
-          minLength: 3,
-          maxLength: 255,
+          maxLength: 140,
         },
         impact: {
           type: 'string',
           minLength: 3,
-          maxLength: 255,
+          maxLength: 240,
         },
         impactTags: {
           type: 'string',
@@ -68,16 +63,7 @@ export const schema: JsonSchema = {
           type: 'string',
         },
       },
-      required: [
-        'title',
-        'logline',
-        'description',
-        'impact',
-        'impactTags',
-        'creationDate',
-        'completionDate',
-        'walletAddress',
-      ],
+      required: ['title', 'logline', 'impact', 'impactTags', 'creationDate', 'completionDate', 'walletAddress'],
     },
 
     projectMembers: {
@@ -180,7 +166,6 @@ export interface Project {
   startingDate?: string
   title?: string
   logline?: string
-  description?: string
   impact?: string
   impactTags?: string
   creationDate?: string
@@ -223,7 +208,6 @@ export const initialState: FormState = {
   project: {
     title: undefined,
     logline: undefined,
-    description: undefined,
     impact: undefined,
     impactTags: undefined,
     creationDate: undefined,
@@ -303,7 +287,7 @@ export const uischema = {
                 },
                 {
                   type: 'Control',
-                  scope: '#/properties/project/properties/logline',
+                  scope: '#/properties/project/properties/impactTags',
                 },
               ],
             },
@@ -312,20 +296,17 @@ export const uischema = {
               elements: [
                 {
                   type: 'Control',
-                  scope: '#/properties/project/properties/description',
+                  scope: '#/properties/project/properties/logline',
+                  options: {
+                    format: 'text',
+                  },
                 },
-              ],
-            },
-            {
-              type: 'HorizontalLayout',
-              elements: [
                 {
                   type: 'Control',
                   scope: '#/properties/project/properties/impact',
-                },
-                {
-                  type: 'Control',
-                  scope: '#/properties/project/properties/impactTags',
+                  options: {
+                    format: 'text',
+                  },
                 },
               ],
             },
