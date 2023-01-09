@@ -8,7 +8,15 @@ export type MappedArtifact = {
 
 export const mapArtifactF = (artifactsData: Artifacts): Array<MappedArtifact> => {
   // TODO: This should be break down into smaller units
+  // The ordering is specified here
+  // https://docs.google.com/document/d/1Jwsmc3WxCK_Z-uRCjLNhTp8EbJGSF0CT7MNDbg0jmQk/edit
+  // Creator, Community, Patron
   return [
+    {
+      edition: 'creator',
+      artwork: artifactsData.artworkCreator,
+      video: artifactsData.videoCreator,
+    },
     {
       edition: 'community',
       artwork: artifactsData.artworkCommunity,
@@ -18,11 +26,6 @@ export const mapArtifactF = (artifactsData: Artifacts): Array<MappedArtifact> =>
       edition: 'patron',
       artwork: artifactsData.artworkPatron,
       video: artifactsData.videoCommunity,
-    },
-    {
-      edition: 'creator',
-      artwork: artifactsData.artworkCreator,
-      video: artifactsData.videoCreator,
     },
   ]
 }
