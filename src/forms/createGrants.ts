@@ -15,11 +15,11 @@ export const schema: JsonSchema = {
           title: 'Date of Grant',
         },
         length: {
-          type: 'integer',
-          title: 'Grant length (hours)', // TODO: switch to Hours after testing
+          type: 'number',
+          title: 'Grant length (hours)',
         },
         goal: {
-          type: 'integer',
+          type: 'number',
           title: 'Goal (eth)',
         },
         season: {
