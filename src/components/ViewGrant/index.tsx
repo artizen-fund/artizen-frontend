@@ -61,7 +61,7 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 1em 0;
+  padding: 1em 0;
   gap: 15px;
 `
 
