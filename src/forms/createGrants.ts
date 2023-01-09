@@ -37,7 +37,7 @@ export const schema: JsonSchema = {
           minLength: 3,
           maxLength: 255,
         },
-        longline: {
+        logline: {
           type: 'string',
           minLength: 3,
           maxLength: 255,
@@ -70,7 +70,7 @@ export const schema: JsonSchema = {
       },
       required: [
         'title',
-        'longline',
+        'logline',
         'description',
         'impact',
         'impactTags',
@@ -179,7 +179,7 @@ export interface Artifacts {
 export interface Project {
   date?: string
   title?: string
-  longline?: string
+  logline?: string
   description?: string
   impact?: string
   impactTags?: string
@@ -222,7 +222,7 @@ export const initialState: FormState = {
   },
   project: {
     title: undefined,
-    longline: undefined,
+    logline: undefined,
     description: undefined,
     impact: undefined,
     impactTags: undefined,
@@ -303,7 +303,7 @@ export const uischema = {
                 },
                 {
                   type: 'Control',
-                  scope: '#/properties/project/properties/longline',
+                  scope: '#/properties/project/properties/logline',
                 },
               ],
             },
