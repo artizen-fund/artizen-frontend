@@ -135,13 +135,11 @@ export const authOptions: NextAuthOptions = {
 
           if (userInDataBase.data?.Users.length === 0) {
             //Add user
-            console.log('adding user  ::::')
+
             const userFromDB = await apolloClient.mutate<ICreateUserMutation>({
               mutation: CREATE_USER,
               variables: { publicAddress: address.toLowerCase() },
             })
-
-            console.log('authorize  userFromDB  ', userFromDB)
 
             if (!userFromDB.data?.insert_Users_one?.id) {
               throw new Error('Could not retrieve ID from database upsert.')

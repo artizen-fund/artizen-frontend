@@ -2,7 +2,6 @@ import { ArtizenArtifactsAbi, GrantsAbi } from '@contracts'
 import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
-import { mockGrants } from './mock-grants'
 import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS } from '@gql'
 import { useMutation } from '@apollo/client'
@@ -10,7 +9,7 @@ import moment from 'moment-timezone'
 
 export const useGrant = () => {
   const { address } = useAccount()
-  const { data: signer, isError, isLoading } = useSigner()
+  const { data: signer } = useSigner()
   const [updateGrant] = useMutation(UPDATE_GRANTS)
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
@@ -43,21 +42,19 @@ export const useGrant = () => {
     return response.json()
   }
 
-  const minNFTs = async (grant: IGrantsWithProjectFragment) => {
-    // const grant = mockGrants[0]
-    console.log('grant.submission', grant)
+  const mintNFTs = async (grant: IGrantsWithProjectFragment) => {
     //map artifacts data
 
     if (!grant.submission) {
-      throw new Error('Grant cannot be pubish because it is missing submission')
+      throw new Error('Grant cannot be published because it is missing submission')
     }
 
     const { artifacts } = grant.submission
     const { project } = grant.submission
     const members = grant.submission?.project?.members
-    const inpactTags = grant.submission?.project?.impactTags?.split(',') || []
+    const impactTags = grant.submission?.project?.impactTags?.split(',') || []
 
-    const leadMemberTraitType = project?.members.map(({ user, type }) => {
+    const leadMemberTraitType = members?.map(({ user, type }) => {
       console.log('user type, ', type === 'lead')
       console.log('user user, ', `${user?.firstName} ${user?.lastName}`)
       if (type === 'lead') {
@@ -85,21 +82,16 @@ export const useGrant = () => {
     // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
       const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
-      // TODO: once Artifact ordering has stabilized for good, consider fixing this upstream
-      //       => an upstream change would also affect at least the construction of grantTuple below
-      // using (3 - index) here because the minted Artifact order is:
+      // The minted Artifact order is:
       //     1. Creator
       //     2. Community
       //     3. Patron
-      // for index = 0, 1, 2,
-      // (index + 1) becomes 1, 2, 3 (previous attempt at fixing this numbering)
-      // (3 - index) becomes 3, 2, 1 (which is the reverse of the previous attempt, which is what we want)
-      const artifactNumber = latestTokenId.add(3 - index) // can't + a BigNumber and a Number, so need to .add()...
+      const artifactNumber = latestTokenId.add(index + 1) // can't + a BigNumber and a Number, so need to .add()...
       const artifactName = `Artifact #${artifactNumber}`
       const artifactDescription = `**${artifactName} minted by "${project.title}"**
 *${artifact.edition} Edition 1/1*
       
-**About**: ${project.longline}
+**About**: ${project.logline}
       
 **Impact**: ${project.impact}
       
@@ -132,7 +124,7 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
           { trait_type: 'Project', value: project.title },
 
           { trait_type: 'Lead Creator', value: leadMemberTraitType },
-          ...inpactTags.map(tag => {
+          ...impactTags.map(tag => {
             return { trait_type: 'Impact', value: tag }
           }),
         ],
@@ -183,9 +175,8 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
 
   const publish = async (grant: IGrantsWithProjectFragment) => {
     // const grant = mockGrants[0]
-    const metadataUris = await minNFTs(grant)
-
-    console.log('IPFS metadataUris     ', metadataUris)
+    const metadataUris = await mintNFTs(grant)
+    console.log(`metadataUris = ${metadataUris}`)
 
     if (!metadataUris) {
       throw new Error('Non metadataUris from NFTs publish')
