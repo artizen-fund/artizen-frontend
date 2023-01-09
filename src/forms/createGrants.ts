@@ -10,13 +10,13 @@ export const schema: JsonSchema = {
       title: 'Grant',
       type: 'object',
       properties: {
-        date: {
+        startingDate: {
           type: 'string',
           title: 'Date of Grant',
         },
         length: {
           type: 'integer',
-          title: 'Grant length (minutes)', // TODO: switch to Hours after testing
+          title: 'Grant length (hours)', // TODO: switch to Hours after testing
         },
         goal: {
           type: 'integer',
@@ -161,7 +161,7 @@ export const schema: JsonSchema = {
 */
 
 export interface Grant {
-  date?: string
+  startingDate?: string
   goal: number
   season: number
   length: number
@@ -177,7 +177,7 @@ export interface Artifacts {
 }
 
 export interface Project {
-  date?: string
+  startingDate?: string
   title?: string
   logline?: string
   description?: string
@@ -207,7 +207,7 @@ export interface FormState extends Record<string, unknown> {
 /* This is our local initialState. */
 export const initialState: FormState = {
   grant: {
-    date: undefined,
+    startingDate: undefined,
     length: DEFAULT_GRANT_LENGTH_HOURS,
     goal: DEFAULT_GRANT_GOAL_ETH,
     season: ARTIZEN_CURRENT_SEASON,
@@ -260,7 +260,7 @@ export const uischema = {
           elements: [
             {
               type: 'Control',
-              scope: '#/properties/grant/properties/date',
+              scope: '#/properties/grant/properties/startingDate',
               options: {
                 readonly: true,
               },

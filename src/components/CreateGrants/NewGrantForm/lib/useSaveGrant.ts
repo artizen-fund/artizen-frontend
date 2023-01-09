@@ -1,4 +1,4 @@
-import { useApolloClient, useMutation, useLazyQuery } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client'
 import moment from 'moment-timezone'
 import { INSERT_GRANTS, INSERT_PROJECTS, INSERT_PROJECTS_MEMBERS, GET_USERS, CREATE_USERS, UPDATE_USERS } from '@gql'
 import {
@@ -121,7 +121,7 @@ const useSaveGrant = () => {
 
   const insertGrant = async (data: FormState, projectId: string) => {
     const { length, ...etc } = data.grant
-    const startingDate = moment(data.grant.date)
+    const startingDate = moment(data.grant.startingDate)
     const [startingDateRaw, closingDateRaw] = getGrantDates(startingDate, length)
     const artifactsData = mapArtifactF(data.artifacts)
     const variables = {

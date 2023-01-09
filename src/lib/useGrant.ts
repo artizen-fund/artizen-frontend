@@ -43,7 +43,6 @@ export const useGrant = () => {
   }
 
   const minNFTs = async (grant: IGrantsWithProjectFragment) => {
-    console.log('grant.submission', grant)
     //map artifacts data
 
     if (!grant.submission) {

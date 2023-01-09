@@ -11,7 +11,8 @@ export const getGrantDates = (startingDate: moment.Moment, length: number) => {
        2022-12-21T00:00:00
      ]
   */
+
   const starting = startingDate.add(1, 's').format('YYYY-MM-DDTHH:mm:ss')
-  const closing = startingDate.add(length, 'm').format('YYYY-MM-DDTHH:mm:ss')
+  const closing = startingDate.add(length, 'h').format('YYYY-MM-DDTHH:mm:ss')
   return [starting, closing]
 }
