@@ -66,15 +66,19 @@ const useCreateProfile = () => {
   }
 
   const addUserToCourier = async () => {
-    const checkCourier = await fetch('/api/syncCourier', {
+    await fetch('/api/syncCourier', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: loggedInUser!.id, email: data.email }),
+      body: JSON.stringify({
+        id: loggedInUser!.id,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      }),
     })
-    console.log('checkCourier', checkCourier)
   }
 
   return { createProfile, additionalErrors, data, setData, setImageFile }

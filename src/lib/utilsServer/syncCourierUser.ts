@@ -14,7 +14,6 @@ export const createUserCourierProfile = async (recipientId: string, userData: Fo
         family_name: userData.lastName,
       },
     })
-
     const TEMPLATE_ID = assert(process.env.COURIER_WELCOME_TEMPLATE_ID, 'COURIER_WELCOME_TEMPLATE_ID')
     await courier.send({
       message: {
