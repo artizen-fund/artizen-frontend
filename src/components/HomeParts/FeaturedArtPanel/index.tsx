@@ -80,10 +80,6 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <ListHeader>Project</ListHeader>
           <List>
             <div>
-              <dt>Season {grant?.season}</dt>
-              <dd>{ARTIZEN_CURRENT_SEASON_NAME}</dd>
-            </div>
-            <div>
               <dt>Started</dt>
               <dd>{formatDate(grant?.submission?.project?.creationDate)}</dd>
             </div>
@@ -95,6 +91,10 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
 
           <ListHeader>Artifact</ListHeader>
           <List>
+            <div>
+              <dt>Season {grant?.season}</dt>
+              <dd>{ARTIZEN_CURRENT_SEASON_NAME}</dd>
+            </div>
             <div>
               <dt>Minted</dt>
               <dd>{formatDate(grant?.submission?.artifacts[0]?.createdAt)}</dd>
