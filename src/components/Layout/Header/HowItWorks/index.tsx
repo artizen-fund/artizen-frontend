@@ -8,14 +8,14 @@ const HowItWorks = () => {
   return (
     <Wrapper>
       {howItWorks.map(cell => (
-        <Cell key={`cell-${cell.title}`} mobileOnly={cell.mobileOnly}>
+        <Cell key={`cell-${cell.title}`}>
           <Illustration light={cell.illustration} dark={cell.illustrationDark} />
           <Under>
             <Title>{cell.title}</Title>
             <Description>{cell.copy}</Description>
             {!!cell.destination && (
               <Button outline level={2} href={cell.destination}>
-                Learn More
+                {cell.buttonLabel}
               </Button>
             )}
           </Under>
@@ -39,14 +39,8 @@ const Cell = styled.div<{ mobileOnly?: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: row;
-  &:nth-child(even) {
-    flex-direction: row-reverse;
-  }
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     flex-direction: column;
-    &:nth-child(even) {
-      flex-direction: column;
-    }
     ${props => props.mobileOnly && 'display: none;'}
   }
 `
@@ -91,6 +85,7 @@ const Description = styled.p`
   @media (prefers-color-scheme: dark) {
     color: ${rgba(palette.stone)};
   }
+  margin-bottom: 0.5em;
 `
 
 export default HowItWorks
