@@ -16,7 +16,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
   const [closed, setClosed] = useState(true)
   const artist = grant?.submission?.project?.members?.filter(m => m.type === 'lead')[0]
   const artistName = !!grant ? `${artist?.user?.firstName} ${artist?.user?.lastName}` : ' '
-
+  console.log('grant', grant)
   return (
     <Wrapper>
       <Copy>
@@ -69,9 +69,9 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <Impact>Impact</Impact>
           <P>{grant?.submission?.project?.impact}</P>
           <SlideDown closed={!closed}>
-            <Button level={2} onClick={() => setClosed(false)} stretch outline>
+            <StyledButton level={2} onClick={() => setClosed(false)} stretch outline>
               view more
-            </Button>
+            </StyledButton>
           </SlideDown>
         </>
       )}
@@ -118,6 +118,9 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
               </div>
             ))}
           </List>
+          <StyledButton level={2} onClick={() => setClosed(true)} stretch outline>
+            view less
+          </StyledButton>
         </ViewMore>
       </CopyWrapper>
     </Wrapper>
@@ -198,6 +201,10 @@ const List = styled.dl`
       gap: 15px;
     }
   }
+`
+
+const StyledButton = styled(props => <Button {...props} />)`
+  margin-top: 2em;
 `
 
 export default FeaturedArtPanel
