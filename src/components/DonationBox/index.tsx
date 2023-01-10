@@ -77,7 +77,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
             disabled={!data.donationAmount || data.donationAmount <= 0 || sending}
             stretch
           >
-            {sending ? 'Sending' : 'Donate'}
+            {sending ? 'Processing Donation' : 'Donate'}
           </Button>
         </Form>
       </>

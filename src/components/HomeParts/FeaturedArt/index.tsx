@@ -12,7 +12,7 @@ type IFeaturedArt = {
 
 const FeaturedArt = ({ grant, loading }: IFeaturedArt) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const videoFile = !!grant?.submission?.artifacts[1].video
+  const videoFile = grant?.submission?.artifacts[1].video
 
   const showModal = () => {
     if (videoFile) {
