@@ -1,31 +1,19 @@
 const howItWorks = [
   {
-    illustration: 'how-it-works/about.svg',
-    illustrationDark: 'how-it-works/about-dark.svg',
-    title: 'About',
-    copy: 'Find out who’s behind the Artizen Fund, what we’re all about, and why we’re doing this.',
-  },
-  {
     illustration: 'how-it-works/grants.svg',
     illustrationDark: 'how-it-works/grants-dark.svg',
-    title: 'Grants',
-    copy: 'Read more about how donations work and how you can submit a project for funding.',
-    destination: '/derp',
+    title: 'Apply for Funding',
+    copy: 'If you have a project that fits our eligibility requirements, we’d love you to submit it.',
+    buttonLabel: 'Apply here',
+    destination: 'https://artizen.link/apply',
   },
   {
-    illustration: 'leaderboard/trust.svg',
-    illustrationDark: 'leaderboard/trust-dark.svg',
-    title: 'Leaderboard',
-    copy: 'See where you are on the leaderboard based on your donation amounts.',
-    destination: '/leaderboard',
-    mobileOnly: true,
-  },
-  {
-    illustration: 'how-it-works/faq.svg',
-    illustrationDark: 'how-it-works/faq-dark.svg',
-    title: 'FAQs',
-    copy: 'Got more questions about Artizen, the fund, and the donation process? Go here.',
-    destination: 'https://help.artizen.fund/',
+    illustration: 'how-it-works/about.svg',
+    illustrationDark: 'how-it-works/about-dark.svg',
+    title: 'How It Works',
+    copy: 'Find out what we’re all about, how donations work and how to submit a project',
+    buttonLabel: 'Learn more',
+    destination: 'https://help.artizen.fund/en/articles/6782291-how-the-artizen-fund-works',
   },
 ]
 
