@@ -16,7 +16,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
   const [closed, setClosed] = useState(true)
   const artist = grant?.submission?.project?.members?.filter(m => m.type === 'lead')[0]
   const artistName = !!grant ? `${artist?.user?.firstName} ${artist?.user?.lastName}` : ' '
-  console.log('grant', grant)
+
   return (
     <Wrapper>
       <Copy>
@@ -33,7 +33,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
               label="Top Donor Prize"
             />
           </Metadatum>
-          <Metadatum>
+          {/*<Metadatum>
             <Icon
               loading={loading || !grant}
               glyph="palette"
@@ -44,8 +44,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
               glyphOutline
               label="Artifact 27"
             />
-            {/* todo: "artifact 27" harcoded, dunno what that is -EJ */}
-          </Metadatum>
+          </Metadatum>*/}
           <Metadatum>
             <Icon
               loading={loading || !grant}
