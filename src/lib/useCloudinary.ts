@@ -36,7 +36,14 @@ const useCloudinary = () => {
     }
   }
 
-  return { upload, uploading, error }
+  const addParamsToLink = (url: string, attrs: string, type: string): string => {
+    const prefixUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/${type}/upload`
+    const secondPart = url.substr(prefixUrl.length + 1, url.length)
+
+    return `${prefixUrl}/${attrs}/${secondPart}`
+  }
+
+  return { upload, uploading, error, addParamsToLink }
 }
 
 export { useCloudinary }
