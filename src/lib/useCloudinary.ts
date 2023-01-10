@@ -35,7 +35,7 @@ const useCloudinary = () => {
       console.error('error uploading to cloudinary', error)
     }
   }
-
+  /*TODO: Add Pixel density*/
   const addParamsToLink = (url: string, attrs: string, type: string): string => {
     const prefixUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/${type}/upload`
     const secondPart = url.substr(prefixUrl.length + 1, url.length)
