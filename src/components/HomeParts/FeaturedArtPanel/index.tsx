@@ -147,13 +147,12 @@ const Metadata = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px 15px;
+  gap: 10px 30px;
   ${typography.label.l1}
   margin-bottom: 24px;
 `
 
 const Metadatum = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
