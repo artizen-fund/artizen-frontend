@@ -65,6 +65,9 @@ const NewGrantForm = () => {
   const saveNewGrant = async () => {
     if (!data || !validateProjectMembers(data.projectMembers)) return
     setProcessing(true)
+
+    console.log('data in saveNewGrant ', data)
+
     try {
       const projectId = await insertProject(data.project)
       await insertMembers(data.projectMembers, projectId)
