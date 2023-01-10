@@ -31,8 +31,6 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     skip: !session || !session?.user?.publicAddress,
     variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
     onCompleted: data => {
-      console.log('data.Users  ', data.Users)
-      console.log('loggedInUser ', loggedInUser)
       if (!loggedInUser || loggedInUser.id !== data.Users[0].id) {
         //TODO: there is really not need to use useReactiveVar. We can move this function to a hook and use it everywhere the user data is needed
         // useReactiveVar forces rerender the whole website, bad stuff
