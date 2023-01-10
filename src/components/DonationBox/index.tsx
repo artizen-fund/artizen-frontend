@@ -4,14 +4,12 @@ import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
-import { LayoutContext, useGrant, trackEventF, intercomEventEnum } from '@lib'
+import { LayoutContext, useGrant, trackEventF, intercomEventEnum, MINIMUM_DONATION_AMOUNT } from '@lib'
 import { breakpoint } from '@theme'
 
 interface IDonationBox {
   blockchainId: string | undefined
 }
-
-const MINIMUM_DONATION_AMOUNT = 0.0001
 
 const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { status } = useSession()

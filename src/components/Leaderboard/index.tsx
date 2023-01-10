@@ -79,14 +79,11 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     }
   }, [data])
 
-  const sideItem =
-    donatingUsers && donatingUsers.length > limit ? (
-      <Button outline level={2} onClick={() => setLimit(limit === DEFAULT_LIMIT ? 9999 : DEFAULT_LIMIT)}>
-        {limit === DEFAULT_LIMIT ? 'See All' : 'See Less'}
-      </Button>
-    ) : (
-      <></>
-    )
+  const sideItem = (
+    <Button outline level={2} onClick={() => setLimit(limit === DEFAULT_LIMIT ? 9999 : DEFAULT_LIMIT)}>
+      {limit === DEFAULT_LIMIT ? 'See All' : 'See Less'}
+    </Button>
+  )
 
   return !donatingUsers ? (
     <Spinner minHeight="65px" />
