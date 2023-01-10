@@ -45,17 +45,29 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       amount: data.donationAmount.toString(),
       grantblockchainId: blockchainId,
     })
-    const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
-
-    // TODO: it'll only work when EK removes the transaction from the server
-    // if there is transaction hash add a record
-    const tx = returnTx?.transactionHash
-    if (!tx) {
-      trackEventF(intercomEventEnum.DONATION_FAILED, {
-        amount: data.donationAmount.toString(),
-        grantblockchainId: blockchainId,
+    try {
+      const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
+      // TODO: it'll only work when EK removes the transaction from the server
+      // if there is transaction hash add a record
+      if (!returnTx.transactionHash) {
+        trackEventF(intercomEventEnum.DONATION_FAILED, {
+          amount: data.donationAmount.toString(),
+          grantblockchainId: blockchainId,
+        })
+        throw new Error('Tx is empty')
+      }
+    } catch (e: any) {
+      const errors: Array<ErrorObject> = []
+      const message = e.code === 'INSUFFICIENT_FUNDS' ? 'Insufficient funds' : 'Unknown error'
+      errors.push({
+        instancePath: '/donationAmount',
+        message,
+        schemaPath: '#/properties/donationAmount',
+        keyword: '',
+        params: {},
       })
-      throw new Error('Tx is empty')
+      setAdditionalErrors(errors)
+      setSending(false)
     }
 
     trackEventF(intercomEventEnum.DONATION_FINISHED, {
