@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { useApolloClient, useReactiveVar } from '@apollo/client'
+import { useQuery, useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGetUserQuery, Maybe } from '@types'
+import { IGetUserQuery, Maybe, IUsers } from '@types'
 import { rgba, loggedInUserVar, LayoutContext, textCrop } from '@lib'
 import { GET_USER } from '@gql'
 
@@ -14,18 +14,32 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   const { data: session, status } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  useEffect(() => {
-    if (!session?.user?.publicAddress) return
-    getUserFromHasura()
-  }, [session])
+  // useEffect(() => {
+  //   if (!session?.user?.publicAddress) return
+  //   // getUserFromHasura()
+  // }, [session])
 
-  const getUserFromHasura = async () => {
-    const userFromDB = await apolloClient.query<IGetUserQuery>({
-      query: GET_USER,
-      variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
-    })
-    loggedInUserVar(userFromDB.data.Users[0])
-  }
+  // const getUserFromHasura = async () => {
+  //   const userFromDB = await apolloClient.query<IGetUserQuery>({
+  //     query: GET_USER,
+  //     variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
+  //   })
+  //   loggedInUserVar(userFromDB.data.Users[0])
+  // }
+
+  useQuery<IGetUserQuery>(GET_USER, {
+    skip: !session || !session?.user?.publicAddress,
+    variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
+    onCompleted: data => {
+      console.log('data.Users  ', data.Users)
+      console.log('loggedInUser ', loggedInUser)
+      if (!loggedInUser || loggedInUser.id !== data.Users[0].id) {
+        //TODO: there is really not need to use useReactiveVar. We can move this function to a hook and use it everywhere the user data is needed
+        // useReactiveVar forces rerender the whole website, bad stuff
+        loggedInUserVar(data.Users[0])
+      }
+    },
+  })
 
   const onClick = () => {
     if (status === 'loading') {
