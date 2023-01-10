@@ -37,7 +37,6 @@ export * from './HomeParts'
 export * from './Layout/StickyContent'
 export * from './SettingsParts'
 export * from './Table'
-export * from './Grants'
 
 export { default as CheckboxControl } from './Form/Controls/BooleanControl/CheckboxControl'
 export { default as SwitchControl } from './Form/Controls/BooleanControl/SwitchControl'
