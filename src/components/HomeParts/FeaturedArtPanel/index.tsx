@@ -64,7 +64,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
         <Shimmer />
       ) : (
         <>
-          <P>{grant?.submission?.project?.description}</P>
+          <P>{grant?.submission?.project?.logline}</P>
           <Impact>Impact</Impact>
           <P>{grant?.submission?.project?.impact}</P>
           <SlideDown closed={!closed}>
