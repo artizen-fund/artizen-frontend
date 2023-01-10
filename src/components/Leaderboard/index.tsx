@@ -85,10 +85,10 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
         reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
       )
     }
-    if (!loggedInUser) return
-    //    const i = usersWithAggregate.filter(user => user.publicAddress === loggedInUser.publicAddress)[0].aggregateDonation
+    if (!loggedInUser || usersWithAggregate.length < 1) return
     setLoggedUserDonation(
-      usersWithAggregate.filter(user => user.publicAddress === loggedInUser.publicAddress)[0].aggregateDonation,
+      usersWithAggregate.filter(user => user.publicAddress === loggedInUser.publicAddress)[0]?.aggregateDonation ||
+        undefined,
     )
   }, [data])
 
