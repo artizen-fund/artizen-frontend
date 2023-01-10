@@ -6,6 +6,7 @@ import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS } from '@gql'
 import { useMutation } from '@apollo/client'
 import moment from 'moment-timezone'
+import { ARTIZEN_TIMEZONE } from '@lib'
 
 export const useGrant = () => {
   const { address } = useAccount()
@@ -193,8 +194,8 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
 
     // OUR CONVENTION IS THAT grant.startingDate AND grant.closingDate ARE US PACIFIC TIME
     // strategy here is to construct the moment object with explicit US Pacific tz info
-    const startTime = moment.tz(grant.startingDate, 'America/Los_Angeles').unix()
-    const endTime = moment.tz(grant.closingDate, 'America/Los_Angeles').unix()
+    const startTime = moment.tz(grant.startingDate, ARTIZEN_TIMEZONE).unix()
+    const endTime = moment.tz(grant.closingDate, ARTIZEN_TIMEZONE).unix()
 
     // const startingDate = Math.floor(Date.now() / 1000)
     // const endTime = (Number(startingDate) + 60 * 10).toString()
