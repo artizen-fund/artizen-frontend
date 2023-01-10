@@ -4,9 +4,9 @@ const faq = [
   {
     question: 'How does the Artizen Fund work?',
     answer: `
-Artifacts are a new type of NFT designed to fund human creativity. Minted by our grant winners, they capture the spark of inspiration behind a project.
+Every 24 hours, donations to the Artizen Fund are pooled and awarded to new projects at the frontier of art, tech, science, and design.
 
-[How it works](https://help.artizen.fund/en/articles/6604052-what-are-artifacts)
+[How it works](https://help.artizen.fund/en/articles/6782291-welcome-to-the-artizen-fund)
 `,
   },
   {
@@ -14,7 +14,7 @@ Artifacts are a new type of NFT designed to fund human creativity. Minted by our
     answer: `
 Artifacts are a new type of NFT designed to fund human creativity. Minted by our grant winners, they capture the spark of inspiration behind a project. 
 
-[Learn what makes Artizen special](https://help.artizen.fund/en/articles/6604052-what-are-artifacts)
+[Learn what makes Artifacts special](https://help.artizen.fund/en/articles/6604052-what-are-artifacts)
 `,
   },
   {

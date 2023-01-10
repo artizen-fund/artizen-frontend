@@ -34,7 +34,7 @@ const Header = () => {
             <Logo />
           </Link>
           <MobileNavButton
-            onClick={() => toggleShelf?.('howItWorks')}
+            href="https://help.artizen.fund/en/articles/6782291-how-the-artizen-fund-works"
             glyph={glyphKey.arrow}
             glyphOnRight
             outline
