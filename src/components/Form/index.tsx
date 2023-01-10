@@ -84,10 +84,7 @@ const Form = <TStateInterface extends Record<string, unknown>>({
         {...props}
         cells={vanillaCells}
         config={{ trim: true }}
-        onChange={({ data, errors }) => {
-          console.log('new data is called', data)
-          setForm(data, errors)
-        }}
+        onChange={({ data, errors }) => setForm(data, errors)}
       />
       {flattenChildren(children).map(child =>
         cloneElement(child as React.ReactElement, { disabled: disabled || submitDisabledFromOutside }),
