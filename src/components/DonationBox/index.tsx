@@ -1,6 +1,7 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
+import { ErrorObject } from 'ajv'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
 import { LayoutContext, useGrant, trackEventF, intercomEventEnum } from '@lib'
@@ -8,22 +9,39 @@ import { breakpoint } from '@theme'
 
 interface IDonationBox {
   blockchainId: string | undefined
-  grantId: string | undefined
 }
 
-// TODO: Ruben, is grantId still needed here?
-const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
+const MINIMUM_DONATION_AMOUNT = 0.0001
+
+const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { status } = useSession()
 
   const { donate } = useGrant()
-  const [readonly, setReadonly] = useState(false)
   const [sending, setSending] = useState<boolean>(false)
-  // const [error, setError] = useState<string>()
   const { setVisibleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
+
+  useEffect(() => {
+    const errors: Array<ErrorObject> = []
+    if (!data.donationAmount || data.donationAmount < MINIMUM_DONATION_AMOUNT) {
+      errors.push({
+        instancePath: '/donationAmount',
+        message: `Minimum donation is ${MINIMUM_DONATION_AMOUNT} ETH`,
+        schemaPath: '#/properties/donationAmount',
+        keyword: '',
+        params: {},
+      })
+    }
+    setAdditionalErrors(errors)
+  }, [data])
 
   const donateFn = async () => {
     if (!blockchainId || !data.donationAmount) return
+    if (data.donationAmount < MINIMUM_DONATION_AMOUNT) {
+      // under minimum
+      return
+    }
     setSending(true)
     trackEventF(intercomEventEnum.DONATION_START, {
       amount: data.donationAmount.toString(),
@@ -54,15 +72,16 @@ const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
     <Wrapper>
       {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal?.('login')} />}
       <>
-        <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
-        <Button
-          level={0}
-          onClick={() => donateFn()}
-          disabled={!data.donationAmount || data.donationAmount <= 0}
-          stretch
-        >
-          {sending ? 'Sending' : 'Donate'}
-        </Button>
+        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={sending}>
+          <Button
+            level={0}
+            onClick={() => donateFn()}
+            disabled={!data.donationAmount || data.donationAmount <= 0 || sending}
+            stretch
+          >
+            {sending ? 'Sending' : 'Donate'}
+          </Button>
+        </Form>
       </>
     </Wrapper>
   )

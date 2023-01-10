@@ -10,9 +10,11 @@ export const getGrantDates = (startingDate: moment.Moment, length: number) => {
        2022-12-20T00:00:01,
        2022-12-21T00:00:00
      ]
+     
+     also note: Moments are mutable. don't use startingDate.add()!
   */
 
-  const starting = startingDate.add(1, 's').format('YYYY-MM-DDTHH:mm:ss')
-  const closing = startingDate.add(length, 'h').format('YYYY-MM-DDTHH:mm:ss')
+  const starting = startingDate.clone().add(1, 's').format('YYYY-MM-DDTHH:mm:ss')
+  const closing = startingDate.clone().add(length, 'h').format('YYYY-MM-DDTHH:mm:ss')
   return [starting, closing]
 }

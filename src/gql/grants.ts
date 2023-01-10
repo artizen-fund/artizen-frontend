@@ -51,6 +51,7 @@ export const LOAD_GRANTS = gql`
         blockchainAddress
         dateMinting
         token
+        createdAt
       }
       project {
         id

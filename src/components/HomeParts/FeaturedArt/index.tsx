@@ -1,7 +1,8 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { palette, breakpoint } from '@theme'
 import { Shimmer } from '@components'
-import { rgba } from '@lib'
+import { rgba, LayoutContext } from '@lib'
 import { IGrantsWithProjectFragment } from '@types'
 
 type IFeaturedArt = {
@@ -10,13 +11,29 @@ type IFeaturedArt = {
 }
 
 const FeaturedArt = ({ grant, loading }: IFeaturedArt) => {
-  // const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+  const videoFile = !!grant?.submission?.artifacts[1].video
 
-  //TODO: message for EricJ, you got now 3 artifacts, one per edition
-  const artworkCommunity = grant?.submission?.artifacts ? grant?.submission?.artifacts[0].artwork : ''
+  const showModal = () => {
+    if (videoFile) {
+      setVisibleModalWithAttrs?.('media', {
+        videoFile,
+      })
+    }
+  }
+
+  const artworkCommunity = grant?.submission?.artifacts ? grant?.submission?.artifacts[1].artwork : ''
 
   // note: current video NFT ratio is 1:.56
-  return <Wrapper>{loading || !grant ? <Shimmer /> : <Poster src={artworkCommunity as string} />}</Wrapper>
+  return (
+    <Wrapper>
+      {loading || !grant ? (
+        <Shimmer />
+      ) : (
+        <Poster src={artworkCommunity as string} onClick={() => showModal()} hasVideo={!!videoFile} />
+      )}
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
@@ -43,7 +60,7 @@ const Wrapper = styled.section`
   }
 `
 
-const Poster = styled.img`
+const Poster = styled.img<{ hasVideo: boolean }>`
   position: relative;
   z-index: 1;
   max-width: 100%;
@@ -52,7 +69,7 @@ const Poster = styled.img`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     border-radius: 16px;
   }
-  cursor: pointer;
+  cursor: ${props => (props.hasVideo ? 'pointer' : 'default')};
   &:after {
     content: ' ';
     position: absolute;
