@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import { Icon, TableAvatar, Shimmer, Button } from '@components'
-import { rgba, formatDate } from '@lib'
+import { rgba, formatDate, ARTIZEN_CURRENT_SEASON_NAME } from '@lib'
 import { palette, typography } from '@theme'
 import { IGrantsWithProjectFragment } from '@types'
 
@@ -82,7 +82,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <List>
             <div>
               <dt>Season {grant?.season}</dt>
-              <dd>Extended Reality</dd>
+              <dd>{ARTIZEN_CURRENT_SEASON_NAME}</dd>
             </div>
             <div>
               <dt>Started</dt>
@@ -98,12 +98,12 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <List>
             <div>
               <dt>Minted</dt>
-              <dd>createdAt</dd>
+              <dd>{formatDate(grant?.submission?.artifacts[0]?.createdAt)}</dd>
             </div>
-            <div>
+            {/*<div>
               <dt>Token</dt>
               <dd>{grant?.submission?.artifacts[0]?.blockchainAddress}</dd>
-            </div>
+            </div>*/}
           </List>
 
           <ListHeader>Contributors</ListHeader>
