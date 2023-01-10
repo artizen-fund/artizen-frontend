@@ -6,7 +6,7 @@ const CuratorCheck = () => {
   const router = useRouter()
   const { status, data } = useSession()
   useEffect(() => {
-    if (status === 'unauthenticated' || (!!data && !(data as any).user?.isCurator)) {
+    if (status === 'unauthenticated' || (!!data && !data.user?.isCurator)) {
       router.push('/grants/today')
     }
   }, [status, data])
