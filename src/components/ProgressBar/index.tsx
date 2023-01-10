@@ -37,6 +37,8 @@ const ProgressBar = styled.div<ProgressBarProps>`
     content: '${props => props.children * 100}%';
     border-radius: 9999px;
     background-color: linear-gradient(90deg, #c2b6dc 0%, #c2b6dc 27.07%, #1acc6c 100%);
+    /* todo: why doesn't this gradient work? */
+    background-color: ${rgba(palette.algae)};
     ${props =>
       !props.noSmoothing &&
       `
