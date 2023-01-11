@@ -10,11 +10,10 @@ export const createUserCourierProfile = async (recipientId: string, userData: Fo
       recipientId,
       profile: {
         email: userData.email,
-        name: userData.firstName,
+        given_name: userData.firstName,
         family_name: userData.lastName,
       },
     })
-
     const TEMPLATE_ID = assert(process.env.COURIER_WELCOME_TEMPLATE_ID, 'COURIER_WELCOME_TEMPLATE_ID')
     await courier.send({
       message: {

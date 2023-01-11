@@ -64,7 +64,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
         <Shimmer />
       ) : (
         <>
-          <P>{grant?.submission?.project?.description}</P>
+          <P>{grant?.submission?.project?.logline}</P>
           <Impact>Impact</Impact>
           <P>{grant?.submission?.project?.impact}</P>
           <SlideDown closed={!closed}>
@@ -80,10 +80,6 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <ListHeader>Project</ListHeader>
           <List>
             <div>
-              <dt>Season {grant?.season}</dt>
-              <dd>{ARTIZEN_CURRENT_SEASON_NAME}</dd>
-            </div>
-            <div>
               <dt>Started</dt>
               <dd>{formatDate(grant?.submission?.project?.creationDate)}</dd>
             </div>
@@ -95,6 +91,10 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
 
           <ListHeader>Artifact</ListHeader>
           <List>
+            <div>
+              <dt>Season {grant?.season}</dt>
+              <dd>{ARTIZEN_CURRENT_SEASON_NAME}</dd>
+            </div>
             <div>
               <dt>Minted</dt>
               <dd>{formatDate(grant?.submission?.artifacts[0]?.createdAt)}</dd>
@@ -147,13 +147,12 @@ const Metadata = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px 15px;
+  gap: 10px 30px;
   ${typography.label.l1}
   margin-bottom: 24px;
 `
 
 const Metadatum = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

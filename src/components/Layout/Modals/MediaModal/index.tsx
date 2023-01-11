@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
 import styled, { css } from 'styled-components'
-import { LayoutContext } from '@lib'
+import { LayoutContext, useCloudinary } from '@lib'
 
 const MediaModal = () => {
   const [loaded, setLoaded] = useState<boolean>()
+  const { addParamsToLink } = useCloudinary()
   const { visibleModal, modalAttrs } = useContext(LayoutContext)
+
   useEffect(() => setLoaded(visibleModal === 'media'), [visibleModal])
   return (
     <Wrapper className={visibleModal === 'media' ? 'visible' : ''}>
@@ -18,7 +20,7 @@ const MediaModal = () => {
             onCanPlay={() => setLoaded(true)}
             className={loaded ? 'visible' : ''}
           >
-            <source src={modalAttrs.videoFile} type="video/mp4" />
+            <source src={addParamsToLink(modalAttrs.videoFile, 'c_fill,h_300,w_300', 'video')} type="video/mp4" />
           </Video>
         )}
         {!!modalAttrs.imageFile && <Image className={loaded ? 'visible' : ''} src={modalAttrs.imageFile} />}
