@@ -112,12 +112,12 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
         attributes: [
           {
             trait_type: 'Project Created',
-            value: project.creationDate,
+            value: moment.tz(project.creationDate, ARTIZEN_TIMEZONE).unix(),
             display_type: 'date',
           },
           {
             trait_type: 'Project Completed',
-            value: project.completionDate,
+            value: moment.tz(project.completionDate, ARTIZEN_TIMEZONE).unix(),
             display_type: 'date',
           },
           { trait_type: 'Limited Series', value: artifact.edition },
