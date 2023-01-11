@@ -1,17 +1,44 @@
 import { ArtizenArtifactsAbi, GrantsAbi } from '@contracts'
 import { BigNumber, ethers } from 'ethers'
-import { useAccount, useContract, useSigner } from 'wagmi'
+import {
+  useAccount,
+  useContract,
+  useSigner,
+  useWaitForTransaction,
+  useContractWrite,
+  usePrepareContractWrite,
+} from 'wagmi'
 import { assert } from './assert'
 import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS } from '@gql'
 import { useMutation } from '@apollo/client'
 import moment from 'moment-timezone'
 import { ARTIZEN_TIMEZONE } from '@lib'
+import {} from 'wagmi'
 
 export const useGrant = () => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
   const [updateGrant] = useMutation(UPDATE_GRANTS)
+
+  // https://0.6.x.wagmi.sh/docs/prepare-hooks/usePrepareContractWrite
+  const {
+    data: usePrepareContractWriteData,
+    config,
+    error,
+  } = usePrepareContractWrite({
+    // @ts-ignore
+    address: address,
+    abi: ArtizenArtifactsAbi,
+    functionName: 'safeMint',
+  })
+
+  console.log(JSON.stringify(usePrepareContractWriteData))
+
+  // https://0.6.x.wagmi.sh/docs/hooks/useContractWrite
+  const { data: useContractWriteData, isLoading, isSuccess, write } = useContractWrite(config)
+
+  console.log(JSON.stringify(useContractWriteData))
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
   const grantContractAddress = assert(
@@ -165,8 +192,18 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
         }),
       )
 
-      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadata.IpfsHash}`)
-      await mintTransaction.wait()
+      console.log('Testing wagmi contract write...')
+      // @ts-ignore
+      await write?.()
+      // write?.("0x2aF01f377A0D94F6F28771809D9B675Fa217B1fe")
+      console.log(`isLoading: ${isLoading}, isSuccess: ${isSuccess}`)
+      console.log(`useContractWriteData: ${JSON.stringify(useContractWriteData)}`)
+
+      // we'd like to use wagmi useWaitForTransaction here
+      // https://0.6.x.wagmi.sh/docs/hooks/useWaitForTransaction
+
+      // const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadata.IpfsHash}`)
+      // await mintTransaction.wait()
 
       return true
     })
