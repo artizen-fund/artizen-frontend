@@ -165,11 +165,28 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
         }),
       )
 
-      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadata.IpfsHash}`)
-      await mintTransaction.wait()
+      const ipfsUri = `ipfs://${metadata.IpfsHash}`
+      console.log(`ipfsUri: ${ipfsUri}`)
 
-      return true
+      return ipfsUri
     })
+
+    console.log('before first safe mint')
+
+    const mintTransaction0 = await nftContract.safeMint(address, metadataUris[0])
+    await mintTransaction0.wait()
+
+    console.log('before second safe mint')
+
+    const mintTransaction1 = await nftContract.safeMint(address, metadataUris[1])
+    await mintTransaction1.wait()
+
+    console.log('before third safe mint')
+
+    const mintTransaction2 = await nftContract.safeMint(address, metadataUris[2])
+    await mintTransaction2.wait()
+
+    console.log('after last safe mint')
 
     return Promise.all(metadataUris)
   }
