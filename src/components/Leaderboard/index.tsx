@@ -108,7 +108,7 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
             <TableAvatar profileImage={loggedInUser?.profileImage} />
             <Name>{loggedInUser?.artizenHandle} (you)</Name>
           </div>
-          <Amount>{loggedUserDonation}</Amount>
+          <Amount>{loggedUserDonation} ETH</Amount>
         </LoggedInUserTableCell>
       )}
       {donatingUsers
@@ -139,7 +139,9 @@ const LoggedInUserTableCell = styled(props => <TableCell {...props} />)`
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   color: ${rgba(palette.slate)};
   @media (prefers-color-scheme: dark) {
-    background-color: ${rgba(palette.stone)};
+    color: ${rgba(palette.moon)};
+    background-color: ${rgba(palette.barracuda, 0.06)};
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
   }
   margin-bottom: 8px;
 `
