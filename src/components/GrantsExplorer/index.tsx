@@ -18,7 +18,12 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
 
   const isCurrent = isCurrentGrant(grant)
 
-  const moveToNextGrant = () => push('/grants/today')
+  const moveToNextGrant = () => {
+    setTimeout(() => {
+      console.log('updating...')
+      window.location.assign(`${window.location.protocol}//${window.location.host}/grants/today`)
+    }, 5000)
+  }
 
   return (
     <StyledStickyCanvas>
