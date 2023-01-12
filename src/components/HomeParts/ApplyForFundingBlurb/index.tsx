@@ -64,9 +64,21 @@ const TrailingHead = styled.p`
 
 const Tiles = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: top;
   justify-content: space-around;
+  gap: 32px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex-direction: row;
+    gap: 24px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    gap: 32px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding: 0 40px;
+    gap: 80px;
+  }
 `
 
 const Tile = styled.li``
@@ -123,6 +135,7 @@ const TileTitle = styled.h3`
 `
 
 const TileDescription = styled.p`
+  margin-top: 0.5em;
   ${typography.body.l2}
 `
 

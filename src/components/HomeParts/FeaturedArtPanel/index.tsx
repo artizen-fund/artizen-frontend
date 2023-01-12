@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import { Icon, TableAvatar, Shimmer, Button } from '@components'
-import { rgba, formatDate } from '@lib'
+import { rgba, formatDate, ARTIZEN_CURRENT_SEASON_NAME } from '@lib'
 import { palette, typography } from '@theme'
 import { IGrantsWithProjectFragment } from '@types'
 
@@ -33,7 +33,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
               label="Top Donor Prize"
             />
           </Metadatum>
-          <Metadatum>
+          {/*<Metadatum>
             <Icon
               loading={loading || !grant}
               glyph="palette"
@@ -44,8 +44,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
               glyphOutline
               label="Artifact 27"
             />
-            {/* todo: "artifact 27" harcoded, dunno what that is -EJ */}
-          </Metadatum>
+          </Metadatum>*/}
           <Metadatum>
             <Icon
               loading={loading || !grant}
@@ -65,13 +64,13 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
         <Shimmer />
       ) : (
         <>
-          <P>{grant?.submission?.project?.description}</P>
+          <P>{grant?.submission?.project?.logline}</P>
           <Impact>Impact</Impact>
           <P>{grant?.submission?.project?.impact}</P>
           <SlideDown closed={!closed}>
-            <Button level={2} onClick={() => setClosed(false)} stretch outline>
-              click
-            </Button>
+            <StyledButton level={2} onClick={() => setClosed(false)} stretch outline>
+              view more
+            </StyledButton>
           </SlideDown>
         </>
       )}
@@ -80,10 +79,6 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
         <ViewMore {...{ closed }}>
           <ListHeader>Project</ListHeader>
           <List>
-            <div>
-              <dt>Season {grant?.season}</dt>
-              <dd>Extended Reality</dd>
-            </div>
             <div>
               <dt>Started</dt>
               <dd>{formatDate(grant?.submission?.project?.creationDate)}</dd>
@@ -97,13 +92,17 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <ListHeader>Artifact</ListHeader>
           <List>
             <div>
-              <dt>Minted</dt>
-              <dd>createdAt</dd>
+              <dt>Season {grant?.season}</dt>
+              <dd>{ARTIZEN_CURRENT_SEASON_NAME}</dd>
             </div>
             <div>
+              <dt>Minted</dt>
+              <dd>{formatDate(grant?.submission?.artifacts[0]?.createdAt)}</dd>
+            </div>
+            {/*<div>
               <dt>Token</dt>
               <dd>{grant?.submission?.artifacts[0]?.blockchainAddress}</dd>
-            </div>
+            </div>*/}
           </List>
 
           <ListHeader>Contributors</ListHeader>
@@ -118,6 +117,9 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
               </div>
             ))}
           </List>
+          <StyledButton level={2} onClick={() => setClosed(true)} stretch outline>
+            view less
+          </StyledButton>
         </ViewMore>
       </CopyWrapper>
     </Wrapper>
@@ -145,13 +147,12 @@ const Metadata = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px 15px;
+  gap: 10px 30px;
   ${typography.label.l1}
   margin-bottom: 24px;
 `
 
 const Metadatum = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -198,6 +199,10 @@ const List = styled.dl`
       gap: 15px;
     }
   }
+`
+
+const StyledButton = styled(props => <Button {...props} />)`
+  margin-top: 2em;
 `
 
 export default FeaturedArtPanel

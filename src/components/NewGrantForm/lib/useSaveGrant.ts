@@ -23,13 +23,23 @@ const useSaveGrant = () => {
   const apolloClient = useApolloClient()
   // note: we cannot use useLazyQuery() for GET_USERS as it does not cooperate with Promise.all()
 
-  const insertProject = async (objects: Project) => {
+  const insertProject = async (projectData: Project) => {
     const projectDBCreationReturn = await insertProjectsM({
       variables: {
-        objects,
+        objects: {
+          ...projectData,
+          description: '',
+          impactTags: projectData.impactTags
+            ?.split(',')
+            .map(tag => tag.trim())
+            .join(','),
+        },
       },
     })
-    if (projectDBCreationReturn.data?.insert_Projects === undefined) {
+    if (
+      !projectDBCreationReturn.data?.insert_Projects ||
+      projectDBCreationReturn.data?.insert_Projects.returning.length < 1
+    ) {
       throw new Error('error creating project in DB')
     }
     return projectDBCreationReturn.data?.insert_Projects?.returning[0].id
@@ -92,7 +102,7 @@ const useSaveGrant = () => {
         ],
       },
     })
-    if (!insertUserRn.data?.insert_Users) {
+    if (!insertUserRn.data?.insert_Users || insertUserRn.data.insert_Users.returning.length < 1) {
       throw new Error('Error inserting new user to DB')
     }
     return insertUserRn.data.insert_Users.returning[0].id
@@ -113,7 +123,7 @@ const useSaveGrant = () => {
         },
       },
     })
-    if (!updateUserRn.data?.update_Users) {
+    if (!updateUserRn.data?.update_Users || updateUserRn.data.update_Users.returning.length < 1) {
       throw new Error('Error updating user in DB')
     }
     return updateUserRn.data.update_Users.returning[0].id
@@ -143,7 +153,7 @@ const useSaveGrant = () => {
       ],
     }
     const insertGrantsReturn = await insertGrantsM({ variables })
-    if (insertGrantsReturn.data?.insert_Grants === undefined) {
+    if (!insertGrantsReturn.data?.insert_Grants || insertGrantsReturn.data?.insert_Grants.returning.length < 1) {
       throw new Error('error creating grant in DB')
     }
     return insertGrantsReturn.data?.insert_Grants?.returning[0].id

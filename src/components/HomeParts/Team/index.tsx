@@ -74,7 +74,10 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 24px 0 24px 0;
+  padding: 24px 12px 24px 12px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding: 24px 24px 24px 24px;
+  }
 `
 
 const Name = styled.div`
@@ -82,6 +85,7 @@ const Name = styled.div`
 `
 
 const Title = styled.div`
+  margin-top: 0.5em;
   ${typography.label.l2}
   font-family: ${typeface.mackinacPro};
   font-weight: 500;

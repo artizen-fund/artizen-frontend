@@ -13,14 +13,17 @@ interface IGrantsExplorer {
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
-  const router = useRouter()
+  const { push } = useRouter()
   const [amountRaised, setAmountRaised] = useState(0)
-
-  if (!grant) return <></>
 
   const isCurrent = isCurrentGrant(grant)
 
-  const moveToNextGrant = () => router.push('/grants/today')
+  const moveToNextGrant = () => {
+    setTimeout(() => {
+      console.log('updating...')
+      window.location.assign(`${window.location.protocol}//${window.location.host}/grants/today`)
+    }, 5000)
+  }
 
   return (
     <StyledStickyCanvas>
@@ -47,15 +50,17 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
                     <Goal>&nbsp;/ {grant?.goal} goal</Goal>
                   </AmountRaisedRow>
                 </div>
-                <div>
-                  <DataLabel>Ends in</DataLabel>
-                  <Countdown date={grant?.closingDate} onComplete={moveToNextGrant} />
-                </div>
+                {isCurrent && (
+                  <div>
+                    <DataLabel>Ends in</DataLabel>
+                    <Countdown date={grant?.closingDate} onComplete={() => moveToNextGrant()} />
+                  </div>
+                )}
               </>
             )}
           </GrantData>
 
-          {isCurrent && grant?.blockchainId && <DonationBox grantId={grant?.id} blockchainId={grant?.blockchainId} />}
+          {isCurrent && grant?.blockchainId && <DonationBox blockchainId={grant?.blockchainId} />}
 
           {!grant ? (
             <Gap>
@@ -117,13 +122,13 @@ const GrantData = styled.div`
   flex-direction: row;
   gap: 30px;
   margin-bottom: 25px;
-  > div:first-child {
+  > div:nth-child(2) {
     position: relative;
     &:after {
       content: ' ';
       position: absolute;
       top: 0;
-      right: -15px;
+      left: -15px;
       width: 1px;
       height: 100%;
       background: ${rgba(palette.stone)};

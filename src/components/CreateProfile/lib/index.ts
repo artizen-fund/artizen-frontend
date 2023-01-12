@@ -72,7 +72,12 @@ const useCreateProfile = () => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: loggedInUser!.id, email: data.email }),
+      body: JSON.stringify({
+        id: loggedInUser!.id,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      }),
     })
   }
 

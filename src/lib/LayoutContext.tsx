@@ -66,20 +66,6 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
     }
   }, [donationStage, loggedInUser, visibleShelf])
 
-  useEffect(() => {
-    /* Lock the page scroll if a shelf is open
-     *  Note that the "correct" way to do this would be <body scrollLock={true} /> or something.
-     *  Alas, body is outside the React context, so the only way to do this is via query selectors.
-     */
-    if (isServer()) return
-    const docBody = document.getElementsByTagName('body')?.[0]
-    if (!!visibleShelf) {
-      docBody.classList.add('scrollLock')
-    } else {
-      docBody.classList.remove('scrollLock')
-    }
-  }, [visibleShelf])
-
   return (
     <LayoutContext.Provider
       value={{

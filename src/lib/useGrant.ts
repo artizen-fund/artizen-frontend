@@ -6,6 +6,7 @@ import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS } from '@gql'
 import { useMutation } from '@apollo/client'
 import moment from 'moment-timezone'
+import { ARTIZEN_TIMEZONE } from '@lib'
 
 export const useGrant = () => {
   const { address } = useAccount()
@@ -111,12 +112,12 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
         attributes: [
           {
             trait_type: 'Project Created',
-            value: project.creationDate,
+            value: moment.tz(project.creationDate, ARTIZEN_TIMEZONE).unix(),
             display_type: 'date',
           },
           {
             trait_type: 'Project Completed',
-            value: project.completionDate,
+            value: moment.tz(project.completionDate, ARTIZEN_TIMEZONE).unix(),
             display_type: 'date',
           },
           { trait_type: 'Limited Series', value: artifact.edition },
@@ -164,11 +165,28 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
         }),
       )
 
-      const mintTransaction = await nftContract.safeMint(address, `ipfs://${metadata.IpfsHash}`)
-      await mintTransaction.wait()
+      const ipfsUri = `ipfs://${metadata.IpfsHash}`
+      console.log(`ipfsUri: ${ipfsUri}`)
 
-      return true
+      return ipfsUri
     })
+
+    console.log('before first safe mint')
+
+    const mintTransaction0 = await nftContract.safeMint(address, metadataUris[0])
+    await mintTransaction0.wait()
+
+    console.log('before second safe mint')
+
+    const mintTransaction1 = await nftContract.safeMint(address, metadataUris[1])
+    await mintTransaction1.wait()
+
+    console.log('before third safe mint')
+
+    const mintTransaction2 = await nftContract.safeMint(address, metadataUris[2])
+    await mintTransaction2.wait()
+
+    console.log('after last safe mint')
 
     return Promise.all(metadataUris)
   }
@@ -191,8 +209,10 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     console.log('grant.startTime   ', grant.startingDate)
     console.log('grant.closingDate   ', grant.closingDate)
 
-    const startTime = moment(grant.startingDate).unix()
-    const endTime = moment(grant.closingDate).unix()
+    // OUR CONVENTION IS THAT grant.startingDate AND grant.closingDate ARE US PACIFIC TIME
+    // strategy here is to construct the moment object with explicit US Pacific tz info
+    const startTime = moment.tz(grant.startingDate, ARTIZEN_TIMEZONE).unix()
+    const endTime = moment.tz(grant.closingDate, ARTIZEN_TIMEZONE).unix()
 
     // const startingDate = Math.floor(Date.now() / 1000)
     // const endTime = (Number(startingDate) + 60 * 10).toString()
@@ -261,19 +281,10 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
   }
 
   const donate = async (grantId: number, amount: string) => {
-    let returnTx
-
-    try {
-      const grantTransaction = await grantsContract.donate(grantId, ethers.utils.parseEther(amount), {
-        value: ethers.utils.parseEther(amount),
-      })
-      returnTx = await grantTransaction.wait()
-    } catch (e: any) {
-      if (e.code === 'INSUFFICIENT_FUNDS') {
-        alert('Insufficient funds')
-      }
-    }
-
+    const grantTransaction = await grantsContract.donate(grantId, ethers.utils.parseEther(amount), {
+      value: ethers.utils.parseEther(amount),
+    })
+    const returnTx = await grantTransaction.wait()
     return returnTx
   }
   //sendRewards

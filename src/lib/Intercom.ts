@@ -23,6 +23,7 @@ export function initIntercom() {
       loggedInUser?.firstName && loggedInUser?.firstName
         ? `${loggedInUser?.firstName} ${loggedInUser?.lastName}`
         : undefined
+
     loadIntercom({
       appId,
       email: loggedInUser?.email, // default: ''
