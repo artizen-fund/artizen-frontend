@@ -27,7 +27,9 @@
     "codegen-local": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "codegen-prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test:online": "env-cmd -f .env_1password_template.txt synpress run -cf synpress.config.js"
+    
   },
   "dependencies": {
     "@apollo/client": "3.7.1",
