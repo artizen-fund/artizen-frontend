@@ -12,13 +12,12 @@ export const mapArtifactsForDB = (artifactsData: Artifacts): Array<MappedArtifac
   // https://docs.google.com/document/d/1Jwsmc3WxCK_Z-uRCjLNhTp8EbJGSF0CT7MNDbg0jmQk/edit
   // Creator, Community, Patron
 
-  console.log('artifactsData', artifactsData)
-
   return [
     {
       edition: 'creator',
       artwork: artifactsData.artworkCreator,
       video: artifactsData.videoCreator,
+      // TODO: add following data to all artifacts in Hasura
       // blockChainAddress: '',
       // submissionId: '',
       // name: '',
