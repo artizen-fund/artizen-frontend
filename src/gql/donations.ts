@@ -20,8 +20,6 @@ export const UPDATE_DONATIONS = gql`
   }
 `
 
-//TODO: replace query for subscription after adding WS transporter to link
-// https://www.apollographql.com/docs/react/api/link/apollo-link-subscriptions
 export const SUBSCRIBE_DONATIONS = gql`
   fragment UserWithDonation on Users {
     donations(where: $whereDonations) {
@@ -34,9 +32,29 @@ export const SUBSCRIBE_DONATIONS = gql`
     publicAddress
   }
 
-  subscription donations($where: Users_bool_exp, $whereDonations: Donations_bool_exp, $limit: Int!) {
+  subscription leaderboard($where: Users_bool_exp, $whereDonations: Donations_bool_exp, $limit: Int!) {
     Users(where: $where, limit: $limit) {
       ...UserWithDonation
+    }
+  }
+`
+
+export const GET_DONATIONS = gql`
+  fragment ConfirmedDonators on Users {
+    donations(where: $whereDonations) {
+      id
+      amount
+      grantId
+    }
+    email
+    firstName
+    lastName
+    publicAddress
+  }
+
+  query donations($where: Users_bool_exp, $whereDonations: Donations_bool_exp) {
+    Users(where: $where) {
+      ...ConfirmedDonators
     }
   }
 `

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
 import { useSubscription, useReactiveVar } from '@apollo/client'
-import { reduceWithPrecision, loggedInUserVar, rgba } from '@lib'
-import { IDonationsSubscription, IUserWithDonationFragment } from '@types'
+import { reduceWithPrecision, aggregateDonators, loggedInUserVar, rgba } from '@lib'
+import { ILeaderboardSubscription, IUserWithDonationFragment } from '@types'
 import { palette } from '@theme'
 import { SUBSCRIBE_DONATIONS } from '@gql'
 // import truncateEthAddress from 'truncate-eth-address'
@@ -25,7 +25,7 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     We should probably be doing a more complex GraphQL query, some sort of "SELECT SUM(amount) FROM donations LEFT OUTER JOIN..."
     ... but Eric doesn't know how to do that in GraphQL.
   */
-  const { loading, error, data } = useSubscription<IDonationsSubscription>(SUBSCRIBE_DONATIONS, {
+  const { loading, error, data } = useSubscription<ILeaderboardSubscription>(SUBSCRIBE_DONATIONS, {
     fetchPolicy: 'no-cache',
     variables: {
       limit: 9999,
@@ -75,19 +75,16 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
   const [loggedUserDonation, setLoggedUserDonation] = useState<number>()
   useEffect(() => {
     if (!data) return
-    const usersWithAggregate = data.Users.map(u => {
-      const aggregateDonation = reduceWithPrecision(u.donations.map(d => d.amount))((a: number, b: number) => a + b)
-      return { ...u, aggregateDonation }
-    })
-    setDonatingUsers(usersWithAggregate)
-    if (usersWithAggregate.length > 0) {
+    const aggregatedDonators = aggregateDonators(data.Users)
+    setDonatingUsers(aggregatedDonators)
+    if (aggregatedDonators.length > 0) {
       setAmountRaised(
-        reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
+        reduceWithPrecision(aggregatedDonators.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
       )
     }
-    if (!loggedInUser || usersWithAggregate.length < 1) return
+    if (!loggedInUser || aggregatedDonators.length < 1) return
     setLoggedUserDonation(
-      usersWithAggregate.filter(user => user.publicAddress === loggedInUser.publicAddress)[0]?.aggregateDonation ||
+      aggregatedDonators.filter(user => user.publicAddress === loggedInUser.publicAddress)[0]?.aggregateDonation ||
         undefined,
     )
   }, [data])
@@ -111,17 +108,15 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
           <Amount>{loggedUserDonation} ETH</Amount>
         </LoggedInUserTableCell>
       )}
-      {donatingUsers
-        .sort((a, b) => (a.aggregateDonation > b.aggregateDonation ? -1 : 1))
-        .map((user, index) => (
-          <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
-            <div>
-              <TableAvatar profileImage={user.profileImage} />
-              <Name>{user?.artizenHandle}</Name>
-            </div>
-            <Amount>{user.aggregateDonation} ETH</Amount>
-          </StyledTableCell>
-        ))}
+      {donatingUsers.map((user, index) => (
+        <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
+          <div>
+            <TableAvatar profileImage={user.profileImage} />
+            <Name>{user?.artizenHandle}</Name>
+          </div>
+          <Amount>{user.aggregateDonation} ETH</Amount>
+        </StyledTableCell>
+      ))}
     </StyledTable>
   )
 }
