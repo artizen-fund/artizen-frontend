@@ -25,7 +25,7 @@ export const mapArtifactF = (artifactsData: Artifacts): Array<MappedArtifact> =>
     {
       edition: 'patron',
       artwork: artifactsData.artworkPatron,
-      video: artifactsData.videoCommunity,
+      video: artifactsData.videoPatron,
     },
   ]
 }
