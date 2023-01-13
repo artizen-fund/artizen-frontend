@@ -21,7 +21,7 @@ const MediaModal = () => {
             className={loaded ? 'visible' : ''}
           >
             <source
-              src={addParamsToLink(modalAttrs.videoFile, 'c_fill,h_300,w_300,q_auto', 'video')}
+              src={addParamsToLink(modalAttrs.videoFile, 'c_fill,h_1000,w_1000,q_auto', 'video')}
               type="video/mp4"
             />
           </Video>
