@@ -10,7 +10,7 @@ import {
   IUpdateUsersHereMutation,
 } from '@types'
 import { FormState, Project, ProjectMember } from '@forms/createGrants'
-import { mapArtifactF, getGrantDates } from './'
+import { mapArtifactsForDB, getGrantDates } from './'
 
 const useSaveGrant = () => {
   const [insertGrantsM] = useMutation<IInsert_GrantsMutation>(INSERT_GRANTS)
@@ -133,7 +133,7 @@ const useSaveGrant = () => {
     const { length, ...etc } = data.grant
     const startingDate = moment(data.grant.startingDate)
     const [startingDateRaw, closingDateRaw] = getGrantDates(startingDate, length)
-    const artifactsData = mapArtifactF(data.artifacts)
+    const artifactsData = mapArtifactsForDB(data.artifacts)
     const variables = {
       objects: [
         {
