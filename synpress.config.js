@@ -1,12 +1,10 @@
 import log from 'debug'
-// const log = require('debug')('synpress:config')
+
 import { defineConfig } from 'cypress'
-// const { defineConfig } = require('cypress')
 const synpressPath = '@synthetixio/synpress/'
 log(`Detected synpress root path is: ${synpressPath}`)
 const pluginsPath = '@synthetixio/synpress/plugins/index'
 log(`Detected synpress plugin path is: ${pluginsPath}`)
-// const setupNodeEvents = require(pluginsPath)
 import setupNodeEvents from '@synthetixio/synpress/plugins/index'
 const fixturesFolder = `${synpressPath}/fixtures`
 log(`Detected synpress fixtures path is: ${fixturesFolder}`)
@@ -34,7 +32,8 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents,
     experimentalSessionAndOrigin: true,
-    baseUrl: 'http://localhost:3000',
+    // baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://lab.artizen.fund/',
     specPattern: 'tests/e2e/specs/**/*.{js,jsx,ts,tsx}',
     supportFile,
   },
