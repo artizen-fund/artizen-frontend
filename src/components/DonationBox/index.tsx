@@ -58,6 +58,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       }
     } catch (e: any) {
       const errors: Array<ErrorObject> = []
+      console.log('TX error code', e.code)
       const message = e.code === 'INSUFFICIENT_FUNDS' ? 'Insufficient funds' : 'Unknown error'
       errors.push({
         instancePath: '/donationAmount',
