@@ -13,8 +13,6 @@ const useWalletConnect = () => {
   const { chains } = getWagmiClient()
   const router = useRouter()
 
-  console.log('gets here')
-
   const connectWallet = async (connector: Connector) => {
     setConnecting(true)
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
