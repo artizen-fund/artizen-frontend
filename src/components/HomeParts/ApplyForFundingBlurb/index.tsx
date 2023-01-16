@@ -24,7 +24,14 @@ const ApplyForFundingBlurb = () => {
             </Tile>
           ))}
         </Tiles>
-        <StyledButton level={0} glyph="external" glyphOnRight onClick={() => router.push(applyLink)} stretch>
+        <StyledButton
+          level={0}
+          glyph="external"
+          glyphOnRight
+          onClick={() => router.push(applyLink)}
+          stretch
+          target="_blank"
+        >
           {buttonLabel}
         </StyledButton>
         <Disclaimer>{disclaimer}</Disclaimer>
