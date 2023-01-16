@@ -12,7 +12,11 @@ const LoginModal = ({ ...props }) => {
   const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const { toggleModal } = useContext(LayoutContext)
 
+  console.log('window.web3', window.web3)
+
   const [enabled, setEnabled] = useState(true)
+
+  console.log('enabled  ')
 
   return (
     <Wrapper {...props}>
@@ -25,7 +29,7 @@ const LoginModal = ({ ...props }) => {
           Metamask
         </Tile>
 
-        <Tile onClick={() => connectOtherWallet} {...{ enabled }}>
+        <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
           <img src={assetPath('/assets/walletConnect.svg')} alt="WalletConnect" />
           WalletConnect
         </Tile>
