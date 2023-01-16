@@ -12,7 +12,7 @@ const LoginModal = ({ ...props }) => {
   const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const { toggleModal } = useContext(LayoutContext)
 
-  console.log('window.web3', window.Web3)
+  console.log('window.web3', window.web3)
 
   const [enabled, setEnabled] = useState(true)
 
