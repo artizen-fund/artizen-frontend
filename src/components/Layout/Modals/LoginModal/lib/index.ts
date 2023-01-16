@@ -13,7 +13,10 @@ const useWalletConnect = () => {
   const { chains } = getWagmiClient()
   const router = useRouter()
 
+  console.log('gets here')
+
   const connectWallet = async (connector: Connector) => {
+    console.log('it gets inside')
     setConnecting(true)
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
@@ -51,7 +54,8 @@ const useWalletConnect = () => {
 
   const connectMetamask = () => connectWallet(new InjectedConnector({ chains }))
 
-  const connectOtherWallet = () =>
+  const connectOtherWallet = () => {
+    console.log('connectOtherWallet   ')
     connectWallet(
       new WalletConnectConnector({
         chains,
@@ -60,6 +64,7 @@ const useWalletConnect = () => {
         },
       }),
     )
+  }
 
   return { connectMetamask, connectOtherWallet, connecting }
 }
