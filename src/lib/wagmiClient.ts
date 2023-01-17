@@ -1,10 +1,11 @@
-import { configureChains, chain, createClient } from 'wagmi'
+import { configureChains, createClient } from 'wagmi'
+import { mainnet, goerli } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { assert } from '@lib'
 
 export const getWagmiChains = () => {
   const alchemyApiKey = assert(process.env.NEXT_PUBLIC_ALCHEMY_API, 'NEXT_PUBLIC_ALCHEMY_API')
-  const supportedChains = [chain.mainnet, chain.goerli]
+  const supportedChains = [mainnet, goerli]
   const { chains, provider, webSocketProvider } = configureChains(supportedChains, [
     alchemyProvider({ apiKey: alchemyApiKey }),
   ])
