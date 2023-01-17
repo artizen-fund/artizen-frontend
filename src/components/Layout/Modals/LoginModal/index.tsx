@@ -25,10 +25,12 @@ const LoginModal = ({ ...props }) => {
           Metamask
         </Tile>
 
-        <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
+        {/*
+          <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
           <img src={assetPath('/assets/walletConnect.svg')} alt="WalletConnect" />
           WalletConnect
         </Tile>
+        */}
       </Tiles>
 
       <CheckWrapper>
