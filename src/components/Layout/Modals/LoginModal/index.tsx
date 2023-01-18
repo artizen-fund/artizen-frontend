@@ -1,6 +1,12 @@
 import { useContext, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { useAccount, useConnect, useSignMessage, useDisconnect } from 'wagmi'
+import { useAuthRequestChallengeEvm } from '@moralisweb3/next'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { signIn } from 'next-auth/react'
+import { goerli } from 'wagmi/chains'
 import { CloseButton, CheckboxControl } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
 import { rgba, assetPath, LayoutContext, textCrop } from '@lib'
@@ -8,15 +14,65 @@ import { palette, typography, breakpoint } from '@theme'
 import { connectWallet as copy } from '@copy/common'
 import useWalletConnect from './lib'
 
+const walletConnectConnector = new WalletConnectConnector({
+  chains: [goerli],
+  options: {
+    qrcode: true,
+  },
+})
+
+const metamaskConnector = new MetaMaskConnector({ chains: [goerli] })
+
 const LoginModal = ({ ...props }) => {
-  const { connectMetamask, connectOtherWallet } = useWalletConnect()
+  // const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const { toggleModal } = useContext(LayoutContext)
-
-  console.log('window.ethereum', window.ethereum)
-
   const [enabled, setEnabled] = useState(true)
 
-  console.log('enabled  ')
+  const { connectAsync } = useConnect()
+  const { disconnectAsync } = useDisconnect()
+  const { isConnected } = useAccount()
+  const { signMessageAsync } = useSignMessage()
+  const { requestChallengeAsync } = useAuthRequestChallengeEvm()
+
+  const loginWithMetamask = async () => {
+    if (isConnected) {
+      await disconnectAsync()
+    }
+
+    const { account, chain } = await connectAsync({ connector: metamaskConnector })
+
+    const challenge = await requestChallengeAsync({ address: account, chainId: chain.id })
+    if (!challenge) {
+      throw new Error('failed metamask challenge')
+    }
+    const { message } = challenge
+
+    const signature = await signMessageAsync({ message })
+
+    // redirect user after success authentication to '/user' page
+    const signinResponse = await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
+    console.log('signinTresponse', signinResponse)
+  }
+
+  const loginWithWalletConnect = async () => {
+    if (isConnected) {
+      await disconnectAsync()
+    }
+
+    const { account, chain } = await connectAsync({
+      connector: walletConnectConnector,
+    })
+
+    const challenge = await requestChallengeAsync({ address: account, chainId: chain.id })
+    if (!challenge) {
+      throw new Error('failed walletconnect challenge')
+    }
+    const { message } = challenge
+
+    const signature = await signMessageAsync({ message })
+    const signinResponse = await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
+    console.log('signinTresponse', signinResponse)
+  }
 
   return (
     <Wrapper {...props}>
@@ -24,12 +80,12 @@ const LoginModal = ({ ...props }) => {
       <Subhead>{copy.subhead}</Subhead>
 
       <Tiles>
-        <Tile onClick={() => connectMetamask()} {...{ enabled }}>
+        <Tile onClick={() => loginWithMetamask()} {...{ enabled }}>
           <img src={assetPath('/assets/metamask.svg')} alt="Metamask" />
           Metamask
         </Tile>
 
-        <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
+        <Tile onClick={() => loginWithWalletConnect()} {...{ enabled }}>
           <img src={assetPath('/assets/walletConnect.svg')} alt="WalletConnect" />
           WalletConnect
         </Tile>
