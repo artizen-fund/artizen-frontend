@@ -1,43 +1,45 @@
 import { useState } from 'react'
-import { useConnect, useSignMessage, Connector } from 'wagmi'
+import { useConnect, useSignMessage, useAccount, useDisconnect } from 'wagmi'
+import { ConnectResult } from '@wagmi/core'
 import { useRouter } from 'next/router'
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
-import { assertInt, getWagmiClient } from '@lib'
 import { signIn } from 'next-auth/react'
+import { useAuthRequestChallengeEvm } from '@moralisweb3/next'
 
 const useWalletConnect = () => {
   const [connecting, setConnecting] = useState(false)
   const { connectAsync } = useConnect()
   const { signMessageAsync } = useSignMessage()
-  const { chains } = getWagmiClient()
+  const { disconnectAsync } = useDisconnect()
+  const { isConnected } = useAccount()
   const router = useRouter()
+  const { requestChallengeAsync } = useAuthRequestChallengeEvm()
 
-  const connectWallet = async (connector: Connector) => {
+  const connectWallet = async ({ account, chain }: ConnectResult) => {
+    if (isConnected) {
+      await disconnectAsync()
+    }
     setConnecting(true)
-    const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
     try {
-      const { account: publicAddress, chain } = await connectAsync({
-        connector,
-        chainId,
+      console.log('derp', {
+        address: account,
+        chainId: chain.id,
       })
-
-      const userData = { address: publicAddress, chain: chain.id, network: 'evm' }
-      // todo: should "evm" be a constant? What does it mean?
-
-      const response = await fetch('/api/auth/request-message', {
-        method: 'POST',
-        body: JSON.stringify(userData),
-        headers: {
-          'content-type': 'application/json',
-        },
+      const challengeResponse = await requestChallengeAsync({
+        address: account,
+        chainId: chain.id,
       })
-
-      const { message } = await response.json()
+      console.log('dorp')
+      if (!challengeResponse) {
+        throw new Error('Error answering challenge')
+      }
+      const { message } = challengeResponse
       const signature = await signMessageAsync({ message })
 
       await signIn('credentials', { message, signature, redirect: false })
+      // await signIn('moralis-auth', ...)
 
       // NOTE: this is necessary because of some Metamask logout bug that I don't understand.
       // Ruben: please document. -EJ
@@ -49,19 +51,25 @@ const useWalletConnect = () => {
     }
   }
 
-  const connectMetamask = () => connectWallet(new InjectedConnector({ chains }))
+  const connectMetamask = async () => {
+    const connectArgs = await connectAsync({
+      connector: new MetaMaskConnector(),
+    })
+    connectWallet(connectArgs)
+  }
 
-  const connectOtherWallet = () =>
-    connectWallet(
-      new WalletConnectConnector({
-        chains,
+  const connectOtherWallet = async () => {
+    const connectArgs = await connectAsync({
+      connector: new WalletConnectConnector({
         options: {
           qrcode: true,
         },
       }),
-    )
+    })
+    connectWallet(connectArgs)
+  }
 
-  return { connectMetamask, connectOtherWallet, connecting }
+  return { connectMetamask, connectOtherWallet, connectWallet, connecting }
 }
 
 export default useWalletConnect

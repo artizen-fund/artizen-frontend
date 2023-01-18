@@ -6,6 +6,7 @@ import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
 import { CREATE_USER, GET_USERS_AND_CURATORS } from '@gql'
 import { ICreateUserMutation, IGetUsersAndCuratorsQuery } from '@types'
 import { assert, createApolloClient } from '@lib'
+import { MoralisNextAuthProvider } from '@moralisweb3/next'
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -71,6 +72,7 @@ export const authOptions: NextAuthOptions = {
   },
   debug: true,
   providers: [
+    MoralisNextAuthProvider(),
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
       name: 'MoralisAuth',

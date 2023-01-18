@@ -1,6 +1,8 @@
 import Moralis from 'moralis'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+// todo: this is deprecated
+
 const config = {
   domain: process.env.APP_DOMAIN || '',
   statement: 'Please sign this message to confirm your identity.',

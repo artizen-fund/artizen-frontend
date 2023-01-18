@@ -3159,6 +3159,21 @@
     "@moralisweb3/common-core" "^2.11.1"
     "@moralisweb3/common-evm-utils" "^2.11.1"
 
+"@moralisweb3/next@^2.9.0":
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/@moralisweb3/next/-/next-2.11.1.tgz#be871eb88ffc606ca5bc457a047bddeb54d9e9bc"
+  integrity sha512-kY/EEiu3axsCwXmFprF5yxCmz1hQjhlku7vE6SRNR7dif29Df4X9M1tZZawaB0LMCFw1MxKdcCx9NHgWcrTKWg==
+  dependencies:
+    "@moralisweb3/api-utils" "^2.11.1"
+    "@moralisweb3/auth" "^2.11.1"
+    "@moralisweb3/common-auth-utils" "^2.11.1"
+    "@moralisweb3/common-core" "^2.11.1"
+    "@moralisweb3/evm-api" "^2.11.1"
+    "@moralisweb3/sol-api" "^2.11.1"
+    axios "^1.2.1"
+    moralis "^2.11.1"
+    swr "^1.3.0"
+
 "@moralisweb3/sol-api@^2.11.1":
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/@moralisweb3/sol-api/-/sol-api-2.11.1.tgz#e73f4bf493f8e7cd8e1514198e16e72a0e728044"
@@ -13188,7 +13203,7 @@ ethers@^5.0.13:
     "@ethersproject/web" "5.7.1"
     "@ethersproject/wordlists" "5.7.0"
 
-ethers@^5.7.1, ethers@^5.7.2:
+ethers@^5.6.9, ethers@^5.7.1:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.7.2.tgz#3a7deeabbb8c030d4126b24f84e525466145872e"
   integrity sha512-wswUsmWo1aOK8rR7DIKiWSw9DbLWe6x98Jrn8wcTflTVvaXhAMaB5zGAXy0GYQEQp9iO1iSHWVyARQm11zUtyg==
@@ -18938,7 +18953,7 @@ moment-timezone@^0.5.40:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
-moralis@^2.11.1:
+moralis@^2.11.1, moralis@^2.9.0:
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/moralis/-/moralis-2.11.1.tgz#ea8a17bbfdc411ad7a77156991119631d0e23c64"
   integrity sha512-VLzj8zLCVbNOQiiatZ7aAPRhqDrxbVnW5uzr/FLFDdDfcSM21hiiM0CEWbqk5vz32nPn/gYRLGGB0ar2yRRnBA==
@@ -23958,6 +23973,11 @@ swc-loader@^0.1.15:
   version "0.1.16"
   resolved "https://registry.yarnpkg.com/swc-loader/-/swc-loader-0.1.16.tgz#4c718d698e518f3e6ceb9f7872c1855cdb187066"
   integrity sha512-NKIm8aJjK/z/yfzk+v7YGwJMjBKaLaUs9ZKI2zoaIGKAjtkwjO92ZLI0fiTZuwzRqVLQl/29fBdSgFCBzquR0w==
+
+swr@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-1.3.0.tgz#c6531866a35b4db37b38b72c45a63171faf9f4e8"
+  integrity sha512-dkghQrOl2ORX9HYrMDtPa7LTVHJjCTeZoB1dqTbnnEDlSvN8JEKpYIYurDfvbQFUUS8Cg8PceFVZNkW0KNNYPw==
 
 symbol-observable@^1.0.4:
   version "1.2.0"
