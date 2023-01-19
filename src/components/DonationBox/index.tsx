@@ -81,6 +81,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
 
   return (
     <Wrapper>
+      <ScrollPoint id="donation-box" />
       {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal?.('login')} />}
       <>
         <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={sending}>
@@ -108,6 +109,14 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
+`
+
+const ScrollPoint = styled.div`
+  position: absolute;
+  left: 0;
+  top: -100px;
+  width: 1px;
+  height: 1px;
 `
 
 const SessionMask = styled.div`

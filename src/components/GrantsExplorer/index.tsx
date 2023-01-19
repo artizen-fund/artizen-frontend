@@ -27,7 +27,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
 
   return (
     <StyledStickyCanvas>
-      <Wrapper id="grant-explorer">
+      <Wrapper>
         {!grant ? <GrantsNavigatorShimmer /> : <GrantsNavigator {...{ grant }} />}
         <Body>
           <Header>{!grant ? <Shimmer height="30px" /> : grant?.submission?.project?.title}</Header>

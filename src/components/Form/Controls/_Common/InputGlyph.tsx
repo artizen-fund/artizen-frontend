@@ -3,13 +3,14 @@
 import styled from 'styled-components'
 import { Glyph } from '@components'
 import { GlyphProps } from '../../../Glyph'
-import { breakpoint } from '@theme'
+import { breakpoint, palette } from '@theme'
+import { rgba } from '@lib'
 
 const InputGlyph = ({ glyph, ...props }: Partial<GlyphProps>) => {
   const visible = !!glyph
   return (
     <Wrapper {...{ visible }}>
-      <Glyph {...props} glyph={glyph || 'lock'} />
+      <Glyph {...props} glyph={glyph || 'lock'} darkColor="slate" />
     </Wrapper>
   )
 }
@@ -20,7 +21,10 @@ const Wrapper = styled.div<{ visible: boolean }>`
   right: 16px;
   top: 1px;
   height: calc(100% - 2px);
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  background: linear-gradient(90deg, ${rgba(palette.stone, 0)} 0%, ${rgba(palette.stone, 1)} 100%);
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(90deg, ${rgba(palette.white, 0)} 0%, ${rgba(palette.white, 1)} 100%);
+  }
   padding-left: 10px;
 
   display: flex;

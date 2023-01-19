@@ -81,23 +81,16 @@ const NewGrantForm = () => {
     <Spinner minHeight="85vh" />
   ) : (
     <Wrapper>
-      <FormWrapper>
-        <Form {...{ schema, uischema, data, setData, additionalErrors }} readonly={processing}>
-          <StyledButton onClick={() => saveNewGrant()} stretch level={0}>
-            {processing ? 'Saving...' : 'Save Draft'}
-          </StyledButton>
-        </Form>
-      </FormWrapper>
+      <Form {...{ schema, uischema, data, setData, additionalErrors }} readonly={processing}>
+        <StyledButton onClick={() => saveNewGrant()} stretch level={0}>
+          {processing ? 'Saving...' : 'Save Draft'}
+        </StyledButton>
+      </Form>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
-  padding: 150px 0;
-  min-height: 100vh;
-`
-
-const FormWrapper = styled.div`
   display: grid;
   gap: 15px;
 

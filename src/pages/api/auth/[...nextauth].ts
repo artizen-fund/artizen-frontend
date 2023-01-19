@@ -1,48 +1,100 @@
+import { MoralisNextAuthProvider } from '@moralisweb3/next'
 import NextAuth, { User, Session, NextAuthOptions } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import Moralis from 'moralis'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
 import { CREATE_USER, GET_USERS_AND_CURATORS } from '@gql'
 import { ICreateUserMutation, IGetUsersAndCuratorsQuery } from '@types'
-import { assert, createApolloClient } from '@lib'
+import { createApolloClient, assert } from '@lib'
 
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
   callbacks: {
-    jwt: ({ token, user }) => {
-      const userWRole = user as any
-      if (userWRole) {
-        token.id = userWRole.id
-        token.iat = Date.now() / 1000
-        token.exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
+    async jwt({ token, user }) {
+      const userWithRole = user as any
+      const tokenRole = token as any
 
-        if (userWRole.isCurator) {
-          token['https://hasura.io/jwt/claims'] = {
-            'x-hasura-allowed-roles': ['user', 'curator'],
-            'x-hasura-default-role': 'curator',
-            'x-hasura-role': 'curator',
-            'x-hasura-user-id': userWRole.id,
-          }
-        }
+      console.log('userWRole  to start w  ', userWithRole)
+      console.log('tokenRole  to start w  ', tokenRole)
 
-        if (!userWRole.isCurator) {
-          token['https://hasura.io/jwt/claims'] = {
-            'x-hasura-allowed-roles': ['user', 'curator'],
-            'x-hasura-default-role': 'user',
-            'x-hasura-role': 'user',
-            'x-hasura-user-id': userWRole.id,
-          }
-        }
+      //User is only defined on server render, but the callback runs with client session calls
 
-        token.user = userWRole
+      const candidateUser = {
+        id: userWithRole?.id || tokenRole?.user?.id,
+        publicAddress: userWithRole?.address?.toLowerCase() || tokenRole?.user?.publicAddress?.toLowerCase(),
+        profileId: userWithRole?.profileId || tokenRole?.user?.profileId,
+        isCurator: userWithRole?.isCurator || tokenRole?.user?.isCurator,
       }
+
+      if (!token.user) {
+        const apolloClient = createApolloClient()
+        const userInDatabase = await apolloClient.query<IGetUsersAndCuratorsQuery>({
+          query: GET_USERS_AND_CURATORS,
+          variables: {
+            where: {
+              publicAddress: {
+                _eq: candidateUser.publicAddress,
+              },
+            },
+            whereCurator: {
+              user: {
+                publicAddress: {
+                  _eq: candidateUser.publicAddress,
+                },
+              },
+            },
+          },
+        })
+
+        console.log('userInDatabase   ', userInDatabase.data?.Users)
+
+        if (userInDatabase.data?.Users.length === 0) {
+          //Add user
+
+          const newUserFromDB = await apolloClient.mutate<ICreateUserMutation>({
+            mutation: CREATE_USER,
+            variables: { publicAddress: userWithRole.address.toLowerCase() },
+          })
+
+          if (!newUserFromDB.data?.insert_Users_one?.id) {
+            throw new Error('Could not retrieve ID from user in DB.')
+          }
+
+          candidateUser.id = newUserFromDB.data?.insert_Users_one?.id
+        } else {
+          candidateUser.id = userInDatabase.data?.Users[0].id
+          candidateUser.isCurator = userInDatabase.data?.Users[0].curators.length > 0
+        }
+      }
+
+      token.id = candidateUser.id
+      token.iat = Date.now() / 1000
+      token.exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
+
+      if (candidateUser.isCurator) {
+        token['https://hasura.io/jwt/claims'] = {
+          'x-hasura-allowed-roles': ['user', 'curator'],
+          'x-hasura-default-role': 'curator',
+          'x-hasura-role': 'curator',
+          'x-hasura-user-id': candidateUser.id,
+        }
+      }
+
+      if (!candidateUser.isCurator) {
+        token['https://hasura.io/jwt/claims'] = {
+          'x-hasura-allowed-roles': ['user', 'curator'],
+          'x-hasura-default-role': 'user',
+          'x-hasura-role': 'user',
+          'x-hasura-user-id': candidateUser.id,
+        }
+      }
+
+      token.user = candidateUser
       return token
     },
     session: async ({ session, token }: { session: Session; token: JWT; user: User }) => {
-      const secret = process.env.JWT_SECRET || ''
+      const secret = assert(process.env.JWT_SECRET, 'JWT_SECRET')
       const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
 
       return {
@@ -70,107 +122,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   debug: true,
-  providers: [
-    CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
-      name: 'MoralisAuth',
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
-      credentials: {
-        message: {
-          label: 'Message',
-          type: 'text',
-          placeholder: '0x0',
-        },
-        signature: {
-          label: 'Signature',
-          type: 'text',
-          placeholder: '0x0',
-        },
-      },
-      authorize: async credentials => {
-        // NOTE: on_conflict in mutations, mutates records ID.
-        // This invalidates external services that use the users ID as their references
-        // We check for users in the DB firstly and only add them if they do not excit in the DB already
-        const apolloClient = createApolloClient()
-
-        try {
-          const moralisApiKey = assert(process.env.MORALIS_API_KEY, 'MORALIS_API_KEY')
-          await Moralis.start({ apiKey: moralisApiKey })
-
-          console.log('authorize  starts  ', moralisApiKey)
-
-          const { address, profileId, expirationTime } = (
-            await Moralis.Auth.verify({
-              message: credentials?.message || '',
-              signature: credentials?.signature || '',
-              network: 'evm',
-            })
-          ).raw
-
-          //check if user is in database
-
-          let userId = undefined
-          let isCurator = undefined
-
-          const userInDataBase = await apolloClient.query<IGetUsersAndCuratorsQuery>({
-            query: GET_USERS_AND_CURATORS,
-            variables: {
-              where: {
-                publicAddress: {
-                  _eq: address.toLowerCase(),
-                },
-              },
-              whereCurator: {
-                user: {
-                  publicAddress: {
-                    _eq: address.toLowerCase(),
-                  },
-                },
-              },
-            },
-          })
-
-          if (userInDataBase.data?.Users.length === 0) {
-            //Add user
-
-            const userFromDB = await apolloClient.mutate<ICreateUserMutation>({
-              mutation: CREATE_USER,
-              variables: { publicAddress: address.toLowerCase() },
-            })
-
-            if (!userFromDB.data?.insert_Users_one?.id) {
-              throw new Error('Could not retrieve ID from database upsert.')
-            }
-
-            userId = userFromDB.data?.insert_Users_one?.id
-          } else {
-            userId = userInDataBase.data?.Users[0].id
-            isCurator = userInDataBase.data?.Users[0].curators.length > 0
-          }
-
-          const user = {
-            id: userId,
-            publicAddress: address.toLowerCase(),
-            profileId,
-            isCurator,
-            expirationTime,
-            signature: credentials?.signature,
-          }
-
-          console.log('authorize  user  ', user)
-
-          return user
-        } catch (error) {
-          console.error('error adding user in nextAuth authorize     ', error)
-          return null
-        }
-      },
-    }),
-    // ...add more providers here
-  ],
+  providers: [MoralisNextAuthProvider()],
 }
 
 export default NextAuth(authOptions)
