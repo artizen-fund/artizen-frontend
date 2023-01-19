@@ -12,7 +12,7 @@ import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_co
 import { rgba, assetPath, LayoutContext, textCrop } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { connectWallet as copy } from '@copy/common'
-import useWalletConnect from './lib'
+// import useWalletConnect from './lib'
 
 const walletConnectConnector = new WalletConnectConnector({
   chains: [goerli],
