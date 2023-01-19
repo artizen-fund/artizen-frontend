@@ -126,7 +126,9 @@ const StyledTable = styled(props => <Table {...props} />)`
 `
 
 const StyledTableCell = styled(props => <TableCell {...props} />)<{ hidden: boolean }>`
-  display: ${props => (props.hidden ? 'none' : 'flex')};
+  &&& {
+    display: ${props => (props.hidden ? 'none' : 'flex')};
+  }
 `
 
 const LoggedInUserTableCell = styled(props => <TableCell {...props} />)`
