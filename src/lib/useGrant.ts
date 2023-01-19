@@ -20,14 +20,14 @@ export const useGrant = () => {
   )
 
   const nftContract = useContract({
-    addressOrName: nftContractAddress,
-    contractInterface: ArtizenArtifactsAbi,
+    address: nftContractAddress,
+    abi: ArtizenArtifactsAbi,
     signerOrProvider: signer,
   })
 
   const grantsContract = useContract({
-    addressOrName: grantContractAddress,
-    contractInterface: GrantsAbi,
+    address: grantContractAddress,
+    abi: GrantsAbi,
     signerOrProvider: signer,
   })
 
@@ -82,7 +82,7 @@ export const useGrant = () => {
 
     // NOTE: index must be aligned with the published NFTs on chain!
     const metadataUris = artifacts.map(async (artifact, index) => {
-      const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
+      const latestTokenId: BigNumber = await nftContract?.getCurrentTokenId()
       // The minted Artifact order is:
       //     1. Creator
       //     2. Community
@@ -173,17 +173,17 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
 
     console.log('before first safe mint')
 
-    const mintTransaction0 = await nftContract.safeMint(address, metadataUris[0])
+    const mintTransaction0 = await nftContract?.safeMint(address, metadataUris[0])
     await mintTransaction0.wait()
 
     console.log('before second safe mint')
 
-    const mintTransaction1 = await nftContract.safeMint(address, metadataUris[1])
+    const mintTransaction1 = await nftContract?.safeMint(address, metadataUris[1])
     await mintTransaction1.wait()
 
     console.log('before third safe mint')
 
-    const mintTransaction2 = await nftContract.safeMint(address, metadataUris[2])
+    const mintTransaction2 = await nftContract?.safeMint(address, metadataUris[2])
     await mintTransaction2.wait()
 
     console.log('after last safe mint')
@@ -200,10 +200,10 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
       throw new Error('Non metadataUris from NFTs publish')
     }
 
-    const latestTokenId: BigNumber = await nftContract.getCurrentTokenId()
+    const latestTokenId: BigNumber = await nftContract?.getCurrentTokenId()
 
     // Approve Grant contract to use the new NFT
-    const approvalTransaction = await nftContract.setApprovalForAll(grantContractAddress, true)
+    const approvalTransaction = await nftContract?.setApprovalForAll(grantContractAddress, true)
     await approvalTransaction.wait()
 
     console.log('grant.startTime   ', grant.startingDate)
@@ -239,12 +239,12 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     console.log(grantTuple)
 
     //Create a new Grant
-    const grantTransaction = await grantsContract.createGrant(grantTuple)
+    const grantTransaction = await grantsContract?.createGrant(grantTuple)
     await grantTransaction.wait()
 
     console.log('Grant publish tx data      ', grantTransaction)
 
-    const latestGrantCreateNumber = await grantsContract.grantsCount()
+    const latestGrantCreateNumber = await grantsContract?.grantsCount()
 
     const blockchainId = latestGrantCreateNumber.toString()
 
@@ -274,14 +274,14 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
   const endGrant = async (grantId: number, winnerAddress: string) => {
     console.log('grantId   ', grantId)
     console.log('winnerAddress   ', winnerAddress)
-    const grantTransaction = await grantsContract.sendRewards(grantId, winnerAddress)
+    const grantTransaction = await grantsContract?.sendRewards(grantId, winnerAddress)
     await grantTransaction.wait()
 
     alert('Grant ended')
   }
 
   const donate = async (grantId: number, amount: string) => {
-    const grantTransaction = await grantsContract.donate(grantId, ethers.utils.parseEther(amount), {
+    const grantTransaction = await grantsContract?.donate(grantId, ethers.utils.parseEther(amount), {
       value: ethers.utils.parseEther(amount),
     })
     const returnTx = await grantTransaction.wait()
@@ -290,7 +290,7 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
   //sendRewards
 
   const cancelGrant = async (grantId: number) => {
-    const grantTransaction = await grantsContract.cancelGrant(grantId)
+    const grantTransaction = await grantsContract?.cancelGrant(grantId)
     await grantTransaction.wait()
 
     alert('Grant canceled')

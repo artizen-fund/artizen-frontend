@@ -9,9 +9,8 @@ import { connectWallet as copy } from '@copy/common'
 import useWalletConnect from './lib'
 
 const LoginModal = ({ ...props }) => {
-  const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const { toggleModal } = useContext(LayoutContext)
-
+  const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const [enabled, setEnabled] = useState(true)
 
   return (
@@ -35,6 +34,7 @@ const LoginModal = ({ ...props }) => {
         <Check>
           <CheckboxControl data={enabled} path="not-used" handleChange={() => setEnabled(!enabled)} label="" />
           <CheckMessage>
+          {/* todo: move this to Copy doc */}
             <Link href="https://help.artizen.fund/en/articles/4761373-privacy-policy" target="_blank">
               {copy.privacyMessage}
             </Link>
