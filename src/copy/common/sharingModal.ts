@@ -4,7 +4,7 @@ export const sharingModal: Record<string, string> = {
 
   twitterMessage: `🤯 @artizenfund awards daily grants for art, science, technology, and design. Apply for funding or donate to earn Artifacts from the winning projects.
 
-→ https://artizen.fund`,
+→ `, // note: twitter appends link by itself
   facebookMessage: `🤯 The Artizen Fund awards daily grants for art, science, technology, and design. Apply for funding or donate to earn Artifacts from the winning projects.
 
 → https://artizen.fund`,
