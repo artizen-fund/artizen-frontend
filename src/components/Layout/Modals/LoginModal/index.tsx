@@ -9,14 +9,9 @@ import { connectWallet as copy } from '@copy/common'
 import useWalletConnect from './lib'
 
 const LoginModal = ({ ...props }) => {
-  const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const { toggleModal } = useContext(LayoutContext)
-
-  console.log('window.ethereum', window.ethereum)
-
+  const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const [enabled, setEnabled] = useState(true)
-
-  console.log('enabled  ')
 
   return (
     <Wrapper {...props}>
