@@ -30,22 +30,6 @@ const useWalletConnect = () => {
         chainId,
       })
 
-      // const userData = { address: publicAddress, chain: chain.id, network: 'evm' }
-      // // todo: should "evm" be a constant? What does it mean?
-
-      // const response = await fetch('/api/auth/request-message', {
-      //   method: 'POST',
-      //   body: JSON.stringify(userData),
-      //   headers: {
-      //     'content-type': 'application/json',
-      //   },
-      // })
-
-      // const { message } = await response.json()
-      // const signature = await signMessageAsync({ message })
-
-      // await signIn('credentials', { message, signature, redirect: false })
-
       const challenge = await requestChallengeAsync({ address: publicAddress, chainId: chain.id })
       if (!challenge) {
         throw new Error('failed walletconnect challenge')
@@ -57,9 +41,8 @@ const useWalletConnect = () => {
 
       console.log('signinResponse  ', signinResponse)
 
-      // NOTE: this is necessary because of some Metamask logout bug that I don't understand.
-      // Ruben: please document. -EJ
       setConnecting(false)
+      // Force reload due to JWT is not awailable or is still linked to old session when first created. Wagmi renders an error when the smart contracts are called.
       router.reload()
     } catch (e) {
       setConnecting(false)
