@@ -4,7 +4,7 @@ import * as jsonwebtoken from 'jsonwebtoken'
 import { JWT, JWTEncodeParams, JWTDecodeParams } from 'next-auth/jwt'
 import { CREATE_USER, GET_USERS_AND_CURATORS } from '@gql'
 import { ICreateUserMutation, IGetUsersAndCuratorsQuery } from '@types'
-import { createApolloClient } from '@lib'
+import { createApolloClient, assert } from '@lib'
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -12,24 +12,24 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      const userWRole = user as any
+      const userWithRole = user as any
       const tokenRole = token as any
 
-      console.log('userWRole  to start w  ', userWRole)
+      console.log('userWRole  to start w  ', userWithRole)
       console.log('tokenRole  to start w  ', tokenRole)
 
       //User is only defined on server render, but the callback runs with client session calls
 
       const candidateUser = {
-        id: userWRole?.id || tokenRole?.user?.id,
-        publicAddress: userWRole?.address?.toLowerCase() || tokenRole?.user?.publicAddress?.toLowerCase(),
-        profileId: userWRole?.profileId || tokenRole?.user?.profileId,
-        isCurator: userWRole?.isCurator || tokenRole?.user?.isCurator,
+        id: userWithRole?.id || tokenRole?.user?.id,
+        publicAddress: userWithRole?.address?.toLowerCase() || tokenRole?.user?.publicAddress?.toLowerCase(),
+        profileId: userWithRole?.profileId || tokenRole?.user?.profileId,
+        isCurator: userWithRole?.isCurator || tokenRole?.user?.isCurator,
       }
 
       if (!token.user) {
         const apolloClient = createApolloClient()
-        const userInDataBase = await apolloClient.query<IGetUsersAndCuratorsQuery>({
+        const userInDatabase = await apolloClient.query<IGetUsersAndCuratorsQuery>({
           query: GET_USERS_AND_CURATORS,
           variables: {
             where: {
@@ -47,26 +47,24 @@ export const authOptions: NextAuthOptions = {
           },
         })
 
-        console.log('userInDataBase   ', userInDataBase.data?.Users)
+        console.log('userInDatabase   ', userInDatabase.data?.Users)
 
-        if (userInDataBase.data?.Users.length === 0) {
+        if (userInDatabase.data?.Users.length === 0) {
           //Add user
 
           const newUserFromDB = await apolloClient.mutate<ICreateUserMutation>({
             mutation: CREATE_USER,
-            variables: { publicAddress: userWRole.address.toLowerCase() },
+            variables: { publicAddress: userWithRole.address.toLowerCase() },
           })
 
           if (!newUserFromDB.data?.insert_Users_one?.id) {
             throw new Error('Could not retrieve ID from user in DB.')
           }
 
-          console.log('newUserFromDB   ', newUserFromDB.data?.insert_Users_one)
-
           candidateUser.id = newUserFromDB.data?.insert_Users_one?.id
         } else {
-          candidateUser.id = userInDataBase.data?.Users[0].id
-          candidateUser.isCurator = userInDataBase.data?.Users[0].curators.length > 0
+          candidateUser.id = userInDatabase.data?.Users[0].id
+          candidateUser.isCurator = userInDatabase.data?.Users[0].curators.length > 0
         }
       }
 
@@ -93,13 +91,10 @@ export const authOptions: NextAuthOptions = {
       }
 
       token.user = candidateUser
-
-      console.log('final JWT return:::    ', token)
-
       return token
     },
     session: async ({ session, token }: { session: Session; token: JWT; user: User }) => {
-      const secret = process.env.JWT_SECRET || ''
+      const secret = assert(process.env.JWT_SECRET, 'JWT_SECRET')
       const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
 
       return {

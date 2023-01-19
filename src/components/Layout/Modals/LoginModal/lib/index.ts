@@ -42,7 +42,7 @@ const useWalletConnect = () => {
       console.log('signinResponse  ', signinResponse)
 
       setConnecting(false)
-      // Force reload due to JWT is not awailable or is still linked to old session when first created. Wagmi renders an error when the smart contracts are called.
+      // Force reload due to JWT is not available or is still linked to old session when first created. Wagmi renders an error when the smart contracts are called.
       router.reload()
     } catch (e) {
       setConnecting(false)
