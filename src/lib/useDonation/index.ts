@@ -17,22 +17,6 @@ export const useDonation = () => {
 
   const { value: raffleId } = useReadContract(raffleContractAddress, GrantsAbi, 'raffleCount', [])
 
-  // const [createDonation] = useMutation(CREATE_DONATION, {
-  //   onError: error => {
-  //     console.error('createDonation result    ', error)
-  //   },
-  // })
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     setBuildingStatus('PROCESSING')
-  //     setBuildingMessage('Building Donation')
-  //   } else if (raffleId) {
-  //     setBuildingStatus('COMPLETE')
-  //     setBuildingMessage('Donation Built')
-  //   }
-  // }, [loading, raffleId])
-
   const initDonation = async (amount: number, donationMethod: DonationMethod, fee: number, topUpId: string) => {
     setConfirmingStatus('PROCESSING')
     setConfirmingMessage('Confirming Donation')
