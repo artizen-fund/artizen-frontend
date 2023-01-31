@@ -4,7 +4,16 @@ import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
-import { LayoutContext, useGrant, trackEventF, intercomEventEnum, MINIMUM_DONATION_AMOUNT } from '@lib'
+import {
+  LayoutContext,
+  useGrant,
+  trackEventF,
+  intercomEventEnum,
+  MINIMUM_DONATION_AMOUNT,
+  useFullSignOut,
+  WALLET_ERROR_UNSUPPORTED_OPERATION,
+  WALLET_ERROR_INSUFFICIENT_FUNDS,
+} from '@lib'
 import { breakpoint } from '@theme'
 
 interface IDonationBox {
@@ -13,6 +22,7 @@ interface IDonationBox {
 
 const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { status } = useSession()
+  const { disconnectAndSignout } = useFullSignOut()
 
   const { donate } = useGrant()
   const [sending, setSending] = useState<boolean>(false)
@@ -59,7 +69,13 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
     } catch (e: any) {
       const errors: Array<ErrorObject> = []
       console.log('TX error code', e.code)
-      const message = e.code === 'INSUFFICIENT_FUNDS' ? 'Insufficient funds' : 'Unknown error'
+
+      const message =
+        e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
+          ? 'Insufficient funds'
+          : WALLET_ERROR_UNSUPPORTED_OPERATION
+          ? 'Connect wallet'
+          : 'Unknown error'
       errors.push({
         instancePath: '/donationAmount',
         message,
@@ -67,8 +83,13 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
         keyword: '',
         params: {},
       })
+
       setAdditionalErrors(errors)
       setSending(false)
+
+      if (e.code === WALLET_ERROR_UNSUPPORTED_OPERATION) {
+        disconnectAndSignout()
+      }
     }
 
     trackEventF(intercomEventEnum.DONATION_FINISHED, {

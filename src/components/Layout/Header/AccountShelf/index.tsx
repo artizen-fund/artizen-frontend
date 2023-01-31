@@ -2,11 +2,8 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
-import { rgba, assetPath } from '@lib'
+import { rgba, assetPath, useFullSignOut } from '@lib'
 import { IUsers } from '@types'
-import AccountStats from './AccountStats'
-import { signOut } from 'next-auth/react'
-import { useDisconnect } from 'wagmi'
 
 interface IAccountShelf {
   user: Partial<IUsers>
@@ -14,43 +11,34 @@ interface IAccountShelf {
 }
 
 const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
-  const { disconnect } = useDisconnect()
-  const stats = [
-    {
-      glyph: 'donate',
-      unit: '$800',
-      label: 'donated',
-    },
-    {
-      glyph: 'palette',
-      unit: '42',
-      label: 'collected',
-    },
-    {
-      glyph: 'wallet',
-      unit: '$0',
-      label: 'collected',
-    },
-    {
-      glyph: 'token',
-      unit: '100',
-      label: '$ART',
-    },
-  ]
+  const { disconnectAndSignout } = useFullSignOut()
+  // const stats = [
+  //   {
+  //     glyph: 'donate',
+  //     unit: '$800',
+  //     label: 'donated',
+  //   },
+  //   {
+  //     glyph: 'palette',
+  //     unit: '42',
+  //     label: 'collected',
+  //   },
+  //   {
+  //     glyph: 'wallet',
+  //     unit: '$0',
+  //     label: 'collected',
+  //   },
+  //   {
+  //     glyph: 'token',
+  //     unit: '100',
+  //     label: '$ART',
+  //   },
+  // ]
 
   const router = useRouter()
   const goToSettings = (section: string) => {
     router.push(`/settings#${section}`)
     hideShelf()
-  }
-
-  const disconnectAndSignout = async () => {
-    disconnect()
-    await signOut()
-    document.cookie.split(';').forEach(function (c) {
-      document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`)
-    })
-    localStorage.clear()
   }
 
   return (
