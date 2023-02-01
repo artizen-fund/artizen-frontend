@@ -174,9 +174,9 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     console.log('before first safe mint')
 
     const mintTransaction0 = await nftContract?.safeMint(address, metadataUris[0])
-    await mintTransaction0.wait()
+    const mintTransaction0Return = await mintTransaction0.wait()
 
-    console.log('before second safe mint')
+    console.log('before second safe mint', mintTransaction0Return)
 
     const mintTransaction1 = await nftContract?.safeMint(address, metadataUris[1])
     await mintTransaction1.wait()
@@ -200,84 +200,82 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
       throw new Error('Non metadataUris from NFTs publish')
     }
 
-    const latestTokenId: BigNumber = await nftContract?.getCurrentTokenId()
+    // const latestTokenId: BigNumber = await nftContract?.getCurrentTokenId()
 
-    // Approve Grant contract to use the new NFT
-    const approvalTransaction = await nftContract?.setApprovalForAll(grantContractAddress, true)
-    await approvalTransaction.wait()
+    // // Approve Grant contract to use the new NFT
+    // const approvalTransaction = await nftContract?.setApprovalForAll(grantContractAddress, true)
+    // await approvalTransaction.wait()
 
-    console.log('grant.startTime   ', grant.startingDate)
-    console.log('grant.closingDate   ', grant.closingDate)
+    // console.log('grant.startTime   ', grant.startingDate)
+    // console.log('grant.closingDate   ', grant.closingDate)
 
-    // OUR CONVENTION IS THAT grant.startingDate AND grant.closingDate ARE US PACIFIC TIME
-    // strategy here is to construct the moment object with explicit US Pacific tz info
-    const startTime = moment.tz(grant.startingDate, ARTIZEN_TIMEZONE).unix()
-    const endTime = moment.tz(grant.closingDate, ARTIZEN_TIMEZONE).unix()
+    // // OUR CONVENTION IS THAT grant.startingDate AND grant.closingDate ARE US PACIFIC TIME
+    // // strategy here is to construct the moment object with explicit US Pacific tz info
+    // const startTime = moment.tz(grant.startingDate, ARTIZEN_TIMEZONE).unix()
+    // const endTime = moment.tz(grant.closingDate, ARTIZEN_TIMEZONE).unix()
 
-    // const startingDate = Math.floor(Date.now() / 1000)
-    // const endTime = (Number(startingDate) + 60 * 10).toString()
+    // // const startingDate = Math.floor(Date.now() / 1000)
+    // // const endTime = (Number(startingDate) + 60 * 10).toString()
 
-    console.log('grant starting time', startTime)
-    console.log('grant  endTime', endTime)
+    // console.log('grant starting time', startTime)
+    // console.log('grant  endTime', endTime)
 
-    // COMPARE ABOVE WITH EXISTING COMMENT BELOW ON startTime
-    const grantTuple = {
-      nftContract: nftContractAddress,
-      nftOwner: address,
-      nftAuthor: grant.submission?.project?.walletAddress,
-      grantsID: 0,
-      tokenID1: latestTokenId,
-      tokenID2: latestTokenId.sub(1),
-      tokenID3: latestTokenId.sub(2),
-      startTime, // must be timestamp in seconds
-      endTime,
-      minimumDonationAmount: ethers.utils.parseEther('0.008'),
-      topDonor: '0x0000000000000000000000000000000000000000',
-      topDonatedAmount: BigNumber.from(0),
-    }
+    // // COMPARE ABOVE WITH EXISTING COMMENT BELOW ON startTime
+    // const grantTuple = {
+    //   nftContract: nftContractAddress,
+    //   nftOwner: address,
+    //   nftAuthor: grant.submission?.project?.walletAddress,
+    //   grantsID: 0,
+    //   tokenID1: latestTokenId,
+    //   tokenID2: latestTokenId.sub(1),
+    //   tokenID3: latestTokenId.sub(2),
+    //   startTime, // must be timestamp in seconds
+    //   endTime,
+    //   minimumDonationAmount: ethers.utils.parseEther('0.008'),
+    //   topDonor: '0x0000000000000000000000000000000000000000',
+    //   topDonatedAmount: BigNumber.from(0),
+    // }
 
-    console.log(grantTuple)
+    // console.log(grantTuple)
 
-    //Create a new Grant
-    const grantTransaction = await grantsContract?.createGrant(grantTuple)
-    await grantTransaction.wait()
+    // //Create a new Grant
+    // const grantTransaction = await grantsContract?.createGrant(grantTuple)
+    // await grantTransaction.wait()
 
-    console.log('Grant publish tx data      ', grantTransaction)
+    // console.log('Grant publish tx data      ', grantTransaction)
 
-    const latestGrantCreateNumber = await grantsContract?.grantsCount()
+    // const latestGrantCreateNumber = await grantsContract?.grantsCount()
 
-    const blockchainId = latestGrantCreateNumber.toString()
+    // const blockchainId = latestGrantCreateNumber.toString()
 
-    console.log('Grant published number    ', blockchainId)
+    // console.log('Grant published number    ', blockchainId)
 
-    // update Grant blockchain and status
+    // // update Grant blockchain and status
 
-    const updatingGrant = await updateGrant({
-      variables: {
-        _set: {
-          status: 'published',
-          blockchainId,
-        },
-        where: {
-          id: {
-            _eq: grant.id,
-          },
-        },
-      },
-    })
+    // const updatingGrant = await updateGrant({
+    //   variables: {
+    //     _set: {
+    //       status: 'published',
+    //       blockchainId,
+    //     },
+    //     where: {
+    //       id: {
+    //         _eq: grant.id,
+    //       },
+    //     },
+    //   },
+    // })
 
-    console.log('grant publised', updatingGrant)
+    // console.log('grant publised', updatingGrant)
 
     alert('Grant publish')
   }
 
-  const endGrant = async (grantId: number, winnerAddress: string) => {
+  const sendRewards = async (grantId: number, projectWallet: string) => {
     console.log('grantId   ', grantId)
-    console.log('winnerAddress   ', winnerAddress)
-    const grantTransaction = await grantsContract?.sendRewards(grantId, winnerAddress)
-    await grantTransaction.wait()
-
-    alert('Grant ended')
+    console.log('projectWallet   ', projectWallet)
+    const grantTransaction = await grantsContract?.sendRewards(grantId, projectWallet)
+    return await grantTransaction.wait()
   }
 
   const donate = async (grantId: number, amount: string) => {
@@ -296,5 +294,5 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     alert('Grant canceled')
   }
 
-  return { publish, endGrant, cancelGrant, donate }
+  return { publish, sendRewards, cancelGrant, donate }
 }
