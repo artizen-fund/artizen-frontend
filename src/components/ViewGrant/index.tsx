@@ -48,7 +48,7 @@ const ViewGrant = ({ grant }: IViewGrantProps) => {
             setProcessing(true)
             sendRewards(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress || '')
             // send notifications
-            sendTopDonor(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress)
+            // sendTopDonor(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress)
             setProcessing(true)
           }}
           level={2}

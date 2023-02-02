@@ -70,6 +70,9 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       const errors: Array<ErrorObject> = []
       console.log('TX error code', e.code)
 
+      console.log('WALLET_ERROR_UNSUPPORTED_OPERATION  ', WALLET_ERROR_UNSUPPORTED_OPERATION)
+      console.log('e.code  ', e.code === WALLET_ERROR_UNSUPPORTED_OPERATION)
+
       const message =
         e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
           ? 'Insufficient funds'
