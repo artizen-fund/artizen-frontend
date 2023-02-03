@@ -4,12 +4,12 @@ import styled from 'styled-components'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Shimmer, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGrantsWithProjectFragment } from '@types'
+import { IGrantFragment } from '@types'
 import { rgba, isCurrentGrant } from '@lib'
 import GrantsNavigator from './GrantsNavigator'
 
 interface IGrantsExplorer {
-  grant?: IGrantsWithProjectFragment
+  grant?: IGrantFragment
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {

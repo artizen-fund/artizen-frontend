@@ -29,7 +29,50 @@ export const GET_ADJACENT_GRANT = gql`
 `
 
 export const LOAD_GRANTS = gql`
-  fragment GrantsWithProject on Grants {
+  fragment Artifact on Artifacts {
+    id
+    name
+    description
+    artwork
+    video
+    edition
+    blockchainAddress
+    dateMinting
+    token
+    createdAt
+  }
+  fragment User on Users {
+    id
+    firstName
+    lastName
+    artizenHandle
+    twitterHandle
+    website
+    profileImage
+    publicAddress
+  }
+  fragment Member on ProjectMembers {
+    id
+    type
+    user {
+      ...User
+    }
+  }
+  fragment Project on Projects {
+    id
+    impact
+    impactTags
+    logline
+    description
+    creationDate
+    completionDate
+    walletAddress
+    title
+    members {
+      ...Member
+    }
+  }
+  fragment Grant on Grants {
     id
     date
     status
@@ -42,48 +85,17 @@ export const LOAD_GRANTS = gql`
     submission {
       id
       artifacts {
-        id
-        name
-        description
-        artwork
-        video
-        edition
-        blockchainAddress
-        dateMinting
-        token
-        createdAt
+        ...Artifact
       }
       project {
-        id
-        impact
-        impactTags
-        logline
-        description
-        creationDate
-        completionDate
-        walletAddress
-        title
-        members {
-          id
-          type
-          user {
-            id
-            firstName
-            lastName
-            artizenHandle
-            twitterHandle
-            website
-            profileImage
-            publicAddress
-          }
-        }
+        ...Project
       }
     }
   }
 
   query loadGrants($where: Grants_bool_exp, $order_by: [Grants_order_by!], $limit: Int, $offset: Int) {
     Grants(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
-      ...GrantsWithProject
+      ...Grant
     }
   }
 `

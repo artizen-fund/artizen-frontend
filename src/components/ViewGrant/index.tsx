@@ -4,10 +4,10 @@ import moment from 'moment-timezone'
 import { Button, Spinner } from '@components'
 import GrantLayout from './GrantLayout'
 import { useGrant, ARTIZEN_TIMEZONE } from '@lib'
-import { IGrantsWithProjectFragment } from '@types'
+import { IGrantFragment } from '@types'
 
 interface IViewGrantProps {
-  grant?: IGrantsWithProjectFragment
+  grant?: IGrantFragment
 }
 
 const ViewGrant = ({ grant }: IViewGrantProps) => {
