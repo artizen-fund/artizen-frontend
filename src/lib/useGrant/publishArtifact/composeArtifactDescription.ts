@@ -1,6 +1,10 @@
 import { IArtifactFragment, IProjectFragment } from '@types'
 
-export default (project: IProjectFragment, artifact: IArtifactFragment, allProjectMembersString: string) =>
+const composeArtifactDescription = (
+  project: IProjectFragment,
+  artifact: IArtifactFragment,
+  allProjectMembersString: string,
+) =>
   `**${artifact.name} minted by "${project.title}"**
 *${artifact.edition} Edition 1/1*
   
@@ -14,3 +18,5 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
 
 **Supported by the [Artizen Fund](https://www.artizen.fund/) for human creativity**
 `
+
+export default composeArtifactDescription
