@@ -1,19 +1,20 @@
 import { ArtizenArtifactsAbi, GrantsAbi } from '@contracts'
 import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
-import { assert } from './assert'
+import { assert } from '../assert'
 import { IGrantsWithProjectFragment } from '@types'
-import { UPDATE_GRANTS, UPDATE_ARTIFACTS, GET_USERS_AND_CURATORS } from '@gql'
-import { useMutation, useLazyQuery } from '@apollo/client'
+import { UPDATE_ARTIFACTS, UPDATE_GRANTS } from '@gql'
+import { useMutation } from '@apollo/client'
 import moment from 'moment-timezone'
 import { ARTIZEN_TIMEZONE } from '@lib'
+import { useSendRewards } from './useSendRewards'
 
 export const useGrant = () => {
   const { isConnected, address } = useAccount()
   const { data: signer } = useSigner()
   const [updateGrant, { error: updatingGrantError }] = useMutation(UPDATE_GRANTS)
   const [updateArtifact, { error: updatingArtifactsError }] = useMutation(UPDATE_ARTIFACTS)
-  const [getUser] = useLazyQuery(GET_USERS_AND_CURATORS)
+  const { sendRewards } = useSendRewards()
 
   if (updatingGrantError) {
     throw new Error('Updating Grant Error, error= ', updatingGrantError)
@@ -310,46 +311,6 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     console.log('grant publised', updatingGrant)
 
     alert('Grant publish')
-  }
-
-  const sendRewards = async (grantId: number, winnerAddress: string) => {
-    console.log('grantId   ', grantId)
-    console.log('winnerAddress   ', winnerAddress)
-    const grantTransaction = await grantsContract?.sendRewards(grantId, winnerAddress)
-    await grantTransaction.wait()
-
-    // get final grant data to update grant record in database
-    const grantData = await grantsContract?.grants(grantId)
-
-    console.log('grantData   ', grantData)
-
-    const { data } = await getUser({
-      variables: {
-        where: {
-          publicAddress: {
-            _eq: grantData.topDonor.toLowerCase(),
-          },
-        },
-      },
-    })
-
-    console.log('data getTopDonnorID ', data.Users[0].id)
-
-    const updatingGrant = await updateGrant({
-      variables: {
-        _set: {
-          status: 'rewarded',
-          topDonorWinnerId: data.Users[0].id,
-        },
-        where: {
-          blockchainId: {
-            _eq: String(grantId),
-          },
-        },
-      },
-    })
-
-    alert('Grant ended')
   }
 
   const donate = async (grantId: number, amount: string) => {

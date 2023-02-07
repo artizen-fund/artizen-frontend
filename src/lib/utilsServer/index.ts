@@ -1,5 +1,4 @@
 export * from './queryHasura'
-// export * from './syncCourierUser'
 export * from './nftPublisher'
 export * from './courier'
 
