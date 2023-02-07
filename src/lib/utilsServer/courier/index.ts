@@ -1,7 +1,6 @@
-export * from './queryHasura'
-// export * from './syncCourierUser'
-export * from './nftPublisher'
-export * from './courier'
+export * from './getClient'
+export * from './sendNotification'
+export * from './syncCourierUser'
 
 // export * from './createNewToken'
 /* ^ Note: This file cannot be exported from index.ts, as it causes Storybook to go bananas.
