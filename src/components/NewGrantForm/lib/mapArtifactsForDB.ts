@@ -18,6 +18,7 @@ export const mapArtifactsForDB = (artifactsData: Artifacts): Array<MappedArtifac
       artwork: artifactsData.artworkCreator,
       video: artifactsData.videoCreator,
       // TODO: add following data to all artifacts in Hasura
+      // This data is added after publishing the grants to blockchain
       // blockChainAddress: '',
       // submissionId: '',
       // name: '',

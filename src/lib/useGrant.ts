@@ -3,15 +3,29 @@ import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
 import { assert } from './assert'
 import { IGrantsWithProjectFragment } from '@types'
-import { UPDATE_GRANTS } from '@gql'
-import { useMutation } from '@apollo/client'
+import { UPDATE_GRANTS, UPDATE_ARTIFACTS, GET_USERS_AND_CURATORS } from '@gql'
+import { useMutation, useLazyQuery } from '@apollo/client'
 import moment from 'moment-timezone'
 import { ARTIZEN_TIMEZONE } from '@lib'
 
 export const useGrant = () => {
-  const { address } = useAccount()
+  const { isConnected, address } = useAccount()
   const { data: signer } = useSigner()
-  const [updateGrant] = useMutation(UPDATE_GRANTS)
+  const [updateGrant, { error: updatingGrantError }] = useMutation(UPDATE_GRANTS)
+  const [updateArtifact, { error: updatingArtifactsError }] = useMutation(UPDATE_ARTIFACTS)
+  const [getUser] = useLazyQuery(GET_USERS_AND_CURATORS)
+
+  if (updatingGrantError) {
+    throw new Error('Updating Grant Error, error= ', updatingGrantError)
+  }
+
+  if (updatingArtifactsError) {
+    throw new Error('Updating Grant Error, error= ', updatingArtifactsError)
+  }
+
+  if (isConnected) {
+    console.log('isConnected   ', isConnected)
+  }
 
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
   const grantContractAddress = assert(
@@ -266,16 +280,74 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
       },
     })
 
+    //updating NFTs
+    const artifactsToUpdate = grant.submission?.artifacts.map(({ id }, index) => {
+      const token = latestTokenId.sub(index).toString()
+      console.log('index   ', index)
+      console.log('latestTokenId.sub(index)   ', token)
+      const data = {
+        where: {
+          id: {
+            _eq: id,
+          },
+        },
+        _set: {
+          token,
+        },
+      }
+
+      return data
+    })
+
+    console.log('artifactsToUpdate  ', artifactsToUpdate)
+
+    await updateArtifact({
+      variables: {
+        updates: artifactsToUpdate,
+      },
+    })
+
     console.log('grant publised', updatingGrant)
 
     alert('Grant publish')
   }
 
-  const endGrant = async (grantId: number, winnerAddress: string) => {
+  const sendRewards = async (grantId: number, winnerAddress: string) => {
     console.log('grantId   ', grantId)
     console.log('winnerAddress   ', winnerAddress)
     const grantTransaction = await grantsContract?.sendRewards(grantId, winnerAddress)
     await grantTransaction.wait()
+
+    // get final grant data to update grant record in database
+    const grantData = await grantsContract?.grants(grantId)
+
+    console.log('grantData   ', grantData)
+
+    const { data } = await getUser({
+      variables: {
+        where: {
+          publicAddress: {
+            _eq: grantData.topDonor.toLowerCase(),
+          },
+        },
+      },
+    })
+
+    console.log('data getTopDonnorID ', data.Users[0].id)
+
+    const updatingGrant = await updateGrant({
+      variables: {
+        _set: {
+          status: 'rewarded',
+          topDonorWinnerId: data.Users[0].id,
+        },
+        where: {
+          blockchainId: {
+            _eq: String(grantId),
+          },
+        },
+      },
+    })
 
     alert('Grant ended')
   }
@@ -296,5 +368,5 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     alert('Grant canceled')
   }
 
-  return { publish, endGrant, cancelGrant, donate }
+  return { publish, sendRewards, cancelGrant, donate }
 }

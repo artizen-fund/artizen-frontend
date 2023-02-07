@@ -34,6 +34,7 @@ export * from './wagmiClient'
 export * from './useGrant'
 export * from './constants'
 export * from './useFullSignOut'
+export * from './useSendGrantNotification'
 
 // export * from './useDonation'
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.

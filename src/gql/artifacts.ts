@@ -9,3 +9,13 @@ export const INSERT_ARTIFACTS = gql`
     }
   }
 `
+
+export const UPDATE_ARTIFACTS = gql`
+  mutation update_Artifacts_many($updates: [Artifacts_updates!]!) {
+    update_Artifacts_many(updates: $updates) {
+      returning {
+        id
+      }
+    }
+  }
+`
