@@ -1,5 +1,6 @@
 import { assert } from '../../assert'
 import { GrantsAbi } from '@contracts'
+import { IMemberFragment } from '@types'
 import { useContract, useSigner } from 'wagmi'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { UPDATE_GRANTS, GET_USERS_AND_CURATORS, LOAD_GRANTS } from '@gql'
@@ -52,32 +53,24 @@ export const useSendRewards = () => {
 
   const getUserFn = async (userWallet: string) => {
     console.log('userWallet   ', userWallet)
-    try {
-      const dataHere = await getUser({
-        variables: {
-          where: {
-            publicAddress: {
-              _eq: userWallet,
-            },
+    const {data} = await getUser({
+      variables: {
+        where: {
+          publicAddress: {
+            _eq: userWallet,
           },
         },
-      })
-      console.log('data here', dataHere)
-    } catch (error) {
-      console.log('error', error)
+      },
+    })
+
+    if (data.Users.length === 0) {
+      throw new Error('User does not exist')
     }
 
-    // if (returnData.data.Users.length === 0) {
-    //   throw new Error('User does not exist')
-    // }
-
-    // return returnData.data.Users[0].id
+    return data.Users[0].id
   }
 
-  const sendNotificationToProjectAuthor = async (grantId: string) => {
-    const TEMPLATE_ID = assert(PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, 'PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID')
-    console.log('projectWallet  ', grantId)
-
+  const getLeadProjectMember =async (grantId: string) => {
     const { data } = await getGrant({
       variables: {
         limit: 1,
@@ -98,6 +91,10 @@ export const useSendRewards = () => {
       },
     })
 
+    if(data.Grants.length === 0){
+      throw new Error("Grant does not exits");
+    }
+
     const memberArray = data.Grants[0].submission.project.members
 
     const projectLeadMember = memberArray.filter(member => member.type === 'lead')[0].user
@@ -108,13 +105,11 @@ export const useSendRewards = () => {
       throw new Error('Notification cannot be sent because there is not lead member')
     }
 
-    console.log('projectLeadMember   ', projectLeadMember)
-    console.log('TEMPLATE_ID  ', TEMPLATE_ID)
+    return projectLeadMember
+  }
 
-    // const topDonorWinnerId = await getProject(grantData.topDonor.toLowerCase())
-    //sendNotificationAPI
-
-    const sendNotificationRaw = await fetch('/api/sendNotification', {
+  const sendNotificationRequest = async (template:string, projectLeadMember) => {
+    const sendNotificationRt = await fetch('/api/sendNotification', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -123,28 +118,28 @@ export const useSendRewards = () => {
       body: JSON.stringify({
         data: { firstName: projectLeadMember.firstName },
         email: 'rubelux@gmail.com',
-        template: TEMPLATE_ID,
+        template,
       }),
     })
 
-    const sendNotification = await sendNotificationRaw.json()
-
-    console.log('sendNotification  ', sendNotification)
-
-    // await sendNotification(
-    //   {
-    //     firstName: projectLeadMember.firstName,
-    //   },
-    //   TEMPLATE_ID,
-    //   'rubelux@gmail.com',
-    // )
+    if(sendNotificationRt.status === 500){
+      console.error("Notification has not been sent")
+    }
   }
 
-  const updateGrantRecordAfterSendingRewards = async (grantId: number, topDonorWallet: string) => {
-    const topDonorWinnerId = await getUserFn(topDonorWallet)
-    console.log('topDonorWinnerId  ', topDonorWinnerId)
-    // await updatingGrantFn(topDonorWinnerId, String(grantId))
+  const sendNotificationToProjectAuthor = async (grantId: string) => {
+    const TEMPLATE_ID = assert(PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, 'PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID')
+    console.log('projectWallet  ', grantId)
+
+    const projectLeadMember = await getLeadProjectMember(grantId)
+
+    console.log('projectLeadMember   ', projectLeadMember)
+
+    await sendNotificationRequest(TEMPLATE_ID, projectLeadMember)
+    
   }
+
+
 
   const sendRewards = async (grantId: number, projectWallet: string) => {
     console.log('it gets sendRewards')
@@ -159,11 +154,14 @@ export const useSendRewards = () => {
     // const grantTransaction = await grantsContract?.sendRewards(grantId, projectWallet)
     // await grantTransaction.wait()
 
-    await updateGrantRecordAfterSendingRewards(grantId, grantData.topDonor.toLowerCase())
+    const topDonorWinnerId = await getUserFn(grantData.topDonor.toLowerCase())
+    console.log('topDonorWinnerId  ', topDonorWinnerId)
 
-    // await sendNotificationToProjectAuthor(String(grantId))
+    await updatingGrantFn(topDonorWinnerId, String(grantId))
 
-    // alert('Grant ended')
+    await sendNotificationToProjectAuthor(String(grantId))
+
+    alert('Grant ended')
   }
 
   return { sendRewards }

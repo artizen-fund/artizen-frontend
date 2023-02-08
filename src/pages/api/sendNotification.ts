@@ -27,9 +27,7 @@ const sendNotificationAPI = async (req: NextApiRequest, res: NextApiResponse) =>
       return
     }
 
-    const returnValue = await sendNotification(data, template, email)
-
-    console.log('returnValue   ', returnValue)
+    await sendNotification(data, template, email)
 
     res.status(200).end()
   } catch (error) {
