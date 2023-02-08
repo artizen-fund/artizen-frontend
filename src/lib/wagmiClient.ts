@@ -13,7 +13,6 @@ export const getWagmiChains = () => {
   const supportedChains = [goerli]
   const { chains, provider, webSocketProvider } = configureChains(supportedChains, [
     alchemyProvider({ apiKey: alchemyApiKey }),
-
   ])
 
   return { chains, provider, webSocketProvider }
@@ -48,6 +47,6 @@ export const getWagmiClient = () => {
     provider,
     webSocketProvider,
   })
-  
+
   return { wagmiClient, chains }
 }
