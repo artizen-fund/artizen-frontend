@@ -7,7 +7,7 @@ import moment from 'moment-timezone'
 import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } from '@components'
 import { LOAD_GRANTS } from '@gql'
 import { typography, palette } from '@theme'
-import { ILoadGrantsQuery, IGrantsWithProjectFragment } from '@types'
+import { ILoadGrantsQuery, IGrantFragment } from '@types'
 import { isCurrentGrant, rgba } from '@lib'
 
 const ManageGrants = () => {
@@ -52,7 +52,7 @@ const ManageGrants = () => {
       ) : (
         <PagePadding>
           <StyledTable title="Grant List" {...{ sideItem }}>
-            {loadedGrantData?.Grants.map((grant: IGrantsWithProjectFragment) => {
+            {loadedGrantData?.Grants.map((grant: IGrantFragment) => {
               const startingDate = moment(grant.startingDate).format('MM-DD-YYYY HH:mm:ss')
               const closingDate = moment(grant.closingDate).format('MM-DD-YYYY HH:mm:ss')
               return (

@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import moment from 'moment-timezone'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useQuery } from '@apollo/client'
-import { IGrantsWithProjectFragment, IDonationsQuery, IConfirmedDonatorsFragment } from '@types'
+import { IGrantFragment, IDonationsQuery, IConfirmedDonatorsFragment } from '@types'
 import { palette } from '@theme'
 import { rgba, aggregateDonators } from '@lib'
 import { GET_DONATIONS } from '@gql'
 
 interface IGrantLayout {
-  grant: IGrantsWithProjectFragment
+  grant: IGrantFragment
 }
 
 const GrantLayout = ({ grant }: IGrantLayout) => {

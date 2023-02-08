@@ -1,4 +1,4 @@
-import { assert } from '../assert'
+import { assert } from '../../assert'
 import { GrantsAbi } from '@contracts'
 import { useContract, useSigner } from 'wagmi'
 import { useMutation, useLazyQuery } from '@apollo/client'
