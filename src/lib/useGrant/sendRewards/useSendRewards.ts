@@ -3,12 +3,15 @@ import { GrantsAbi } from '@contracts'
 import { useContract, useSigner } from 'wagmi'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { UPDATE_GRANTS, GET_USERS_AND_CURATORS, LOAD_GRANTS } from '@gql'
-import { sendNotification, PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID } from '@lib'
+import { sendNotification, PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, useFullSignOut } from '@lib'
 
 export const useSendRewards = () => {
   const { data: signer } = useSigner()
-  const [getUser] = useLazyQuery(GET_USERS_AND_CURATORS)
-  const [getGrant] = useLazyQuery(LOAD_GRANTS)
+  const { disconnectAndSignout } = useFullSignOut()
+  const [getUser, { data }] = useLazyQuery(GET_USERS_AND_CURATORS, {
+    fetchPolicy: 'no-cache',
+  })
+  const [getGrant] = useLazyQuery(LOAD_GRANTS, { fetchPolicy: 'network-only' })
   const [updateGrant, { error: updatingGrantError }] = useMutation(UPDATE_GRANTS)
 
   if (updatingGrantError) {
@@ -27,7 +30,8 @@ export const useSendRewards = () => {
   })
 
   const updatingGrantFn = async (topDonorWinnerId: string, grantId: string) => {
-    await updateGrant({
+    console.log('it gets to here')
+    const updateGrantR = await updateGrant({
       variables: {
         _set: {
           status: 'rewarded',
@@ -40,21 +44,34 @@ export const useSendRewards = () => {
         },
       },
     })
+
+    console.log('updateGrantR   ', updateGrantR)
+
+    return updateGrantR
   }
 
   const getUserFn = async (userWallet: string) => {
     console.log('userWallet   ', userWallet)
-    const { data } = await getUser({
-      variables: {
-        where: {
-          publicAddress: {
-            _eq: userWallet,
+    try {
+      const dataHere = await getUser({
+        variables: {
+          where: {
+            publicAddress: {
+              _eq: userWallet,
+            },
           },
         },
-      },
-    })
+      })
+      console.log('data here', dataHere)
+    } catch (error) {
+      console.log('error', error)
+    }
 
-    return data.Users[0].id
+    // if (returnData.data.Users.length === 0) {
+    //   throw new Error('User does not exist')
+    // }
+
+    // return returnData.data.Users[0].id
   }
 
   const sendNotificationToProjectAuthor = async (grantId: string) => {
@@ -125,22 +142,28 @@ export const useSendRewards = () => {
 
   const updateGrantRecordAfterSendingRewards = async (grantId: number, topDonorWallet: string) => {
     const topDonorWinnerId = await getUserFn(topDonorWallet)
-
-    await updatingGrantFn(topDonorWinnerId, String(grantId))
+    console.log('topDonorWinnerId  ', topDonorWinnerId)
+    // await updatingGrantFn(topDonorWinnerId, String(grantId))
   }
 
   const sendRewards = async (grantId: number, projectWallet: string) => {
-    const grantData = await grantsContract?.grants(grantId)
-    console.log('grantId   ', grantId)
-    console.log('grantData   ', grantData.nftAuthor.toLowerCase())
+    console.log('it gets sendRewards')
+    let grantData
+    try {
+      grantData = await grantsContract?.grants(grantId)
+    } catch (e) {
+      console.error('Error loading grant ', e)
+      disconnectAndSignout()
+    }
+
     // const grantTransaction = await grantsContract?.sendRewards(grantId, projectWallet)
     // await grantTransaction.wait()
 
     await updateGrantRecordAfterSendingRewards(grantId, grantData.topDonor.toLowerCase())
 
-    await sendNotificationToProjectAuthor(String(grantId))
+    // await sendNotificationToProjectAuthor(String(grantId))
 
-    alert('Grant ended')
+    // alert('Grant ended')
   }
 
   return { sendRewards }

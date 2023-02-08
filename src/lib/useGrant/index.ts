@@ -24,10 +24,6 @@ export const useGrant = () => {
     throw new Error('Updating Grant Error, error= ', updatingArtifactsError)
   }
 
-  if (isConnected) {
-    console.log('isConnected   ', isConnected)
-  }
-
   const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
   const grantContractAddress = assert(
     process.env.NEXT_PUBLIC_GRANTS_CONTRACT_ADDRESS,
