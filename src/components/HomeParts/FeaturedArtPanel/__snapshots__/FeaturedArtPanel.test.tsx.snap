@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeaturedArtPanel renders correctly 1`] = `
+<div
+  className="sc-b73dc9bf-1 lmHMNT"
+>
+  <div
+    className="sc-b73dc9bf-2 dMuaEB"
+  >
+    <div
+      className="sc-b73dc9bf-4 dnUafx"
+    >
+      <div
+        className="sc-b73dc9bf-5 hSnUwu"
+      >
+        <div
+          className="sc-b51f94be-2 dSzGHa"
+        >
+          <div
+            className="sc-3630b030-0 btCMnq sc-b51f94be-3 fcATQK"
+          >
+            <div
+              className="sc-3630b030-1 iydzSb"
+            />
+          </div>
+          <div
+            className="sc-3630b030-0 btCMnq"
+          >
+            <div
+              className="sc-3630b030-1 iydzSb"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-b73dc9bf-5 hSnUwu"
+      >
+        <div
+          className="sc-b51f94be-2 dSzGHa"
+        >
+          <div
+            className="sc-3630b030-0 btCMnq sc-b51f94be-3 fcATQK"
+          >
+            <div
+              className="sc-3630b030-1 iydzSb"
+            />
+          </div>
+          <div
+            className="sc-3630b030-0 btCMnq"
+          >
+            <div
+              className="sc-3630b030-1 iydzSb"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="sc-3630b030-0 btCMnq"
+  >
+    <div
+      className="sc-3630b030-1 iydzSb"
+    />
+  </div>
+  <div
+    className="sc-b73dc9bf-9 lcEMcE"
+  >
+    <div
+      className="react-slidedown sc-b73dc9bf-0"
+      onTransitionEnd={[Function]}
+    >
+      <h4
+        className="sc-b73dc9bf-8 gpEyl"
+      >
+        Project
+      </h4>
+      <dl
+        className="sc-b73dc9bf-10 jaMSBY"
+      >
+        <div>
+          <dt>
+            Started
+          </dt>
+          <dd>
+            undefined NaN, NaN
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Completed
+          </dt>
+          <dd>
+            undefined NaN, NaN
+          </dd>
+        </div>
+      </dl>
+      <h4
+        className="sc-b73dc9bf-8 gpEyl"
+      >
+        Artifact
+      </h4>
+      <dl
+        className="sc-b73dc9bf-10 jaMSBY"
+      >
+        <div>
+          <dt>
+            Season 
+          </dt>
+          <dd>
+            Genesis
+          </dd>
+        </div>
+        <div>
+          <dt>
+            Minted
+          </dt>
+          <dd>
+            undefined NaN, NaN
+          </dd>
+        </div>
+      </dl>
+      <h4
+        className="sc-b73dc9bf-8 gpEyl"
+      >
+        Contributors
+      </h4>
+      <dl
+        className="sc-b73dc9bf-10 jaMSBY"
+      />
+      <button
+        className="sc-313ded62-2 bSEyzZ sc-b73dc9bf-11 epmAqQ "
+        onClick={[Function]}
+      >
+        <span>
+          view less
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;

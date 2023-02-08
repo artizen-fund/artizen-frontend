@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlertModal renders correctly 1`] = `
+<div
+  className="sc-667df19a-0 ekdneS"
+>
+  <button
+    className="sc-313ded62-2 beeidy sc-10e43fa9-0 cCOCSZ "
+    onClick={[Function]}
+  >
+    <div
+      className="sc-3ba9b100-0 buNLTi sc-313ded62-0 ggGmkW"
+    />
+    <span>
+      Close
+    </span>
+  </button>
+  <h1
+    className="sc-667df19a-1 Buvoj"
+  >
+    herp derp
+  </h1>
+  <p
+    className="sc-667df19a-2 cDkRQu"
+  />
+</div>
+`;

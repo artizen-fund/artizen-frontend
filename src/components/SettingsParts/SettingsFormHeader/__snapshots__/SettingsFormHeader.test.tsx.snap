@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsFormHeader renders correctly 1`] = `
+<div
+  className="sc-5bd1e25b-0 ePxCsU"
+>
+  <img
+    alt="header image"
+    className="sc-5bd1e25b-3 hAmsGH"
+    src="undefined?fm=webp"
+  />
+  <img
+    alt="header image"
+    className="sc-5bd1e25b-3 erireH"
+    src="undefined?fm=webp"
+  />
+  <h2
+    className="sc-5bd1e25b-1 dcUTNt"
+  />
+  <p
+    className="sc-5bd1e25b-2 gMnDiO"
+  />
+</div>
+`;

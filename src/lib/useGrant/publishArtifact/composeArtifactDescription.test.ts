@@ -7,5 +7,8 @@ describe('composeArtifactDescription', () => {
     expect(result).toContain(`**${mockArtifact.name} minted`)
     expect(result).toContain(`"${mockProject.title}"**`)
     expect(result).toContain(`*${mockArtifact.edition} Edition`)
+    expect(result).toContain(`About *${mockProject.logline}`)
+    expect(result).toContain(`Impact *${mockProject.impact}`)
+    expect(result).toContain(`Team *${mockProject.members.firstName} *${mockProject.members.lastName}`)
   })
 })

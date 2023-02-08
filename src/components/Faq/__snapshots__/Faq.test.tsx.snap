@@ -1,0 +1,268 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Faq renders correctly 1`] = `
+<div
+  className="sc-45d68d47-0 iEHcks"
+>
+  <dl
+    className="sc-591870a2-0"
+  >
+    <div
+      className="sc-591870a2-1 fiCtqa"
+    >
+      <dt
+        className="sc-591870a2-2 hXnBbx"
+        onClick={[Function]}
+      >
+        How does the Artizen Fund work?
+        <div
+          className="sc-3ba9b100-0 beRJvM"
+          color="moon"
+        />
+      </dt>
+      <div
+        className="react-slidedown sc-591870a2-3 ecmTHi"
+        onTransitionEnd={[Function]}
+      >
+        <p>
+          Every 24 hours, donations to the Artizen Fund are pooled and awarded to new projects at the frontier of art, tech, science, and design.
+        </p>
+        
+
+        <p>
+          <a
+            href="https://help.artizen.fund/en/articles/6782291-welcome-to-the-artizen-fund"
+            target="_blank"
+          >
+            How it works
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-591870a2-1 fiCtqa"
+    >
+      <dt
+        className="sc-591870a2-2 hXnBbx"
+        onClick={[Function]}
+      >
+        What are Artifacts?
+        <div
+          className="sc-3ba9b100-0 beRJvM"
+          color="moon"
+        />
+      </dt>
+      <div
+        className="react-slidedown sc-591870a2-3 ecmTHi"
+        onTransitionEnd={[Function]}
+      >
+        <p>
+          Artifacts are a new type of NFT designed to fund human creativity. Minted by our grant winners, they capture the spark of inspiration behind a project.
+        </p>
+        
+
+        <p>
+          <a
+            href="https://help.artizen.fund/en/articles/6604052-what-are-artifacts"
+            target="_blank"
+          >
+            Learn what makes Artifacts special
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-591870a2-1 fiCtqa"
+    >
+      <dt
+        className="sc-591870a2-2 hXnBbx"
+        onClick={[Function]}
+      >
+        How do I earn Artifacts?
+        <div
+          className="sc-3ba9b100-0 beRJvM"
+          color="moon"
+        />
+      </dt>
+      <div
+        className="react-slidedown sc-591870a2-3 ecmTHi"
+        onTransitionEnd={[Function]}
+      >
+        <p>
+          There are two ways to earn Artifacts. Either you become the top donor for a given 24 hour grant cycle, or you are a creator and selected as a grant winner.
+        </p>
+        
+
+        <p>
+          <a
+            href="https://help.artizen.fund/en/articles/6742664-how-do-i-earn-artifacts"
+            target="_blank"
+          >
+            Earn Artifacts from winning projects
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-591870a2-1 fiCtqa"
+    >
+      <dt
+        className="sc-591870a2-2 hXnBbx"
+        onClick={[Function]}
+      >
+        How do Artifacts reward positive impact?
+        <div
+          className="sc-3ba9b100-0 beRJvM"
+          color="moon"
+        />
+      </dt>
+      <div
+        className="react-slidedown sc-591870a2-3 ecmTHi"
+        onTransitionEnd={[Function]}
+      >
+        <p>
+          Artifacts are designed to reward positive impact. Think carbon credits, but for any project that does good in the world.
+        </p>
+        
+
+        <p>
+          <a
+            href="https://help.artizen.fund/en/articles/6746680-invest-in-positive-impact"
+            target="_blank"
+          >
+            Artifacts represent impact claims
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-591870a2-1 fiCtqa"
+    >
+      <dt
+        className="sc-591870a2-2 hXnBbx"
+        onClick={[Function]}
+      >
+        How do I donate to the Artizen Fund?
+        <div
+          className="sc-3ba9b100-0 beRJvM"
+          color="moon"
+        />
+      </dt>
+      <div
+        className="react-slidedown sc-591870a2-3 ecmTHi"
+        onTransitionEnd={[Function]}
+      >
+        <p>
+          All donations are made in ETH, the native currency of Ethereum. Don't have a crypto wallet? We suggest using MetaMask.
+        </p>
+        
+
+        <p>
+          <a
+            href="https://help.artizen.fund/en/articles/4759762-donate-to-the-artizen-fund"
+            target="_blank"
+          >
+            Support creators by donating
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-591870a2-1 fiCtqa"
+    >
+      <dt
+        className="sc-591870a2-2 hXnBbx"
+        onClick={[Function]}
+      >
+        How do I apply for funding?
+        <div
+          className="sc-3ba9b100-0 beRJvM"
+          color="moon"
+        />
+      </dt>
+      <div
+        className="react-slidedown sc-591870a2-3 ecmTHi"
+        onTransitionEnd={[Function]}
+      >
+        <p>
+          We award unrestricted grants to creators who produce positive impact in the world through art, science, tech, and design. Sound like you? We’d love you to apply.
+        </p>
+        
+
+        <p>
+          <a
+            href="https://help.artizen.fund/en/articles/6604399-apply-for-grant-funding"
+            target="_blank"
+          >
+            How to submit projects for grant funding
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-591870a2-1 fiCtqa"
+    >
+      <dt
+        className="sc-591870a2-2 hXnBbx"
+        onClick={[Function]}
+      >
+        How are grant winners selected?
+        <div
+          className="sc-3ba9b100-0 beRJvM"
+          color="moon"
+        />
+      </dt>
+      <div
+        className="react-slidedown sc-591870a2-3 ecmTHi"
+        onTransitionEnd={[Function]}
+      >
+        <p>
+          Every day, a new grant winner is selected by our community of Artifact holders. Join us to vote for your favorite projects and champion the creators you love.
+        </p>
+        
+
+        <p>
+          <a
+            href="https://help.artizen.fund/en/articles/6604061-curate-our-grants"
+            target="_blank"
+          >
+            Artifacts empower you to curate our grants
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-591870a2-1 fiCtqa"
+    >
+      <dt
+        className="sc-591870a2-2 hXnBbx"
+        onClick={[Function]}
+      >
+        What are the benefits of joining our community?
+        <div
+          className="sc-3ba9b100-0 beRJvM"
+          color="moon"
+        />
+      </dt>
+      <div
+        className="react-slidedown sc-591870a2-3 ecmTHi"
+        onTransitionEnd={[Function]}
+      >
+        <p>
+          When you own an Artifact, you join a vibrant community of artists, scientists, coders, and creators of every kind. Attend workshops, talks, retreats, and private gatherings with your fellow Artifact holders, online and in the real world.
+        </p>
+        
+
+        <p>
+          <a
+            href="https://help.artizen.fund/en/articles/6761187-join-a-vibrant-community"
+            target="_blank"
+          >
+            Benefits of joining our community
+          </a>
+        </p>
+      </div>
+    </div>
+  </dl>
+</div>
+`;

@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Share renders correctly 1`] = `
+<div
+  className="sc-d5b3c762-0 gbKcTJ"
+>
+  <div
+    className="sc-d5b3c762-1 cFOooI"
+  >
+    <header
+      className="sc-d5b3c762-2 kWwRtU"
+    >
+      Sharing is caring
+    </header>
+    <p
+      className="sc-d5b3c762-3 dXoovD"
+    >
+      Help give back to the Artizen community by sharing this page with a friend.
+    </p>
+  </div>
+  <div
+    className="sc-d5b3c762-4 idlffj"
+  >
+    <div
+      className="sc-d5b3c762-7 kuGJIt"
+      color="moon"
+    >
+      <button
+        className="sc-313ded62-2 bYllqi sc-d5b3c762-6 gHdsaS "
+        onClick={[Function]}
+        title="Artizen"
+      >
+        <div
+          className="sc-3ba9b100-0 kSqsgh sc-313ded62-0 ggGmkW"
+        />
+        <span>
+          Twitter
+        </span>
+      </button>
+      <div
+        className="sc-d5b3c762-8 fANDRo"
+      >
+        Twitter
+      </div>
+    </div>
+    <div
+      className="sc-d5b3c762-7 kuGJIt"
+      color="moon"
+    >
+      <button
+        className="sc-313ded62-2 bYllqi sc-d5b3c762-6 gHdsaS "
+        onClick={[Function]}
+        title="Artizen"
+      >
+        <div
+          className="sc-3ba9b100-0 qXlHM sc-313ded62-0 ggGmkW"
+        />
+        <span>
+          Facebook
+        </span>
+      </button>
+      <div
+        className="sc-d5b3c762-8 fANDRo"
+      >
+        Facebook
+      </div>
+    </div>
+    <div
+      className="sc-d5b3c762-7 kuGJIt"
+      color="moon"
+    >
+      <button
+        className="sc-313ded62-2 bYllqi sc-d5b3c762-6 gHdsaS "
+        onClick={[Function]}
+        title="Artizen"
+      >
+        <div
+          className="sc-3ba9b100-0 iZJTeV sc-313ded62-0 ggGmkW"
+        />
+        <span>
+          Reddit
+        </span>
+      </button>
+      <div
+        className="sc-d5b3c762-8 fANDRo"
+      >
+        Reddit
+      </div>
+    </div>
+  </div>
+  <div
+    className="sc-d5b3c762-4 idlffj"
+  >
+    <hr
+      className="sc-d5b3c762-9 blXaET"
+    />
+  </div>
+  <div
+    className="sc-d5b3c762-4 idlffj sc-d5b3c762-5 koKcnQ"
+  >
+    <button
+      className="sc-313ded62-2 jCRIin undefined "
+      onClick={[Function]}
+    >
+      <span>
+        Email Link
+      </span>
+    </button>
+    <button
+      className="sc-313ded62-2 jzVwCg undefined "
+      onClick={[Function]}
+    >
+      <span>
+        <span>
+          Copy Site URL
+        </span>
+      </span>
+    </button>
+  </div>
+</div>
+`;

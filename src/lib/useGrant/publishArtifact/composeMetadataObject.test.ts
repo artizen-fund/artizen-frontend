@@ -14,5 +14,7 @@ describe('composeMetadataObject', () => {
       mockImageResponse,
     )
     expect(result.name).toEqual('Test Artifact Name')
+    expect(result.description).toEqual('Test artifact description goes here')
+    expect(result).toEqual(BigNumber.from('1'))
   })
 })

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TileControl renders correctly 1`] = `
+<div
+  className="sc-a3d9a70f-0 jXatOt"
+/>
+`;

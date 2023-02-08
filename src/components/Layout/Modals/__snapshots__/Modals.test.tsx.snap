@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modals renders correctly 1`] = `
+<div
+  className="sc-aef38af1-1 bVRCcX"
+>
+  <div
+    className="sc-aef38af1-0 ldSFXX"
+  >
+    <button
+      className="sc-313ded62-2 beeidy sc-10e43fa9-0 cCOCSZ "
+      onClick={[Function]}
+    >
+      <div
+        className="sc-3ba9b100-0 buNLTi sc-313ded62-0 ggGmkW"
+      />
+      <span>
+        Close
+      </span>
+    </button>
+  </div>
+</div>
+`;

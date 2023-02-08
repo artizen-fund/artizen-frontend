@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Team renders correctly 1`] = `
+<div
+  className="sc-45d68d47-0 kVBvae"
+>
+  <div
+    className="sc-7aeeab03-0 jxPjHK"
+  >
+    <h2
+      className="sc-7aeeab03-1 cBWYFV"
+    >
+      Our Team
+    </h2>
+    <ul>
+      <div
+        className="sc-7aeeab03-2 jkProv"
+      >
+        <img
+          alt="René Pinnell"
+          src="/assets/illustrations/team/rene.jpg?fm=webp"
+        />
+        <div
+          className="sc-7aeeab03-3 kRHDBJ"
+        >
+          <div
+            className="sc-7aeeab03-4 fSMUjm"
+          >
+            René Pinnell
+          </div>
+          <div
+            className="sc-7aeeab03-5 fqjUpH"
+          >
+            Co-Founder & CEO
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-7aeeab03-2 jkProv"
+      >
+        <img
+          alt="Ruben Campos"
+          src="/assets/illustrations/team/ruben.jpg?fm=webp"
+        />
+        <div
+          className="sc-7aeeab03-3 kRHDBJ"
+        >
+          <div
+            className="sc-7aeeab03-4 fSMUjm"
+          >
+            Ruben Campos
+          </div>
+          <div
+            className="sc-7aeeab03-5 fqjUpH"
+          >
+            Co-Founder & CTO
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-7aeeab03-2 jkProv"
+      >
+        <img
+          alt="Simon Corry"
+          src="/assets/illustrations/team/simon.jpg?fm=webp"
+        />
+        <div
+          className="sc-7aeeab03-3 kRHDBJ"
+        >
+          <div
+            className="sc-7aeeab03-4 fSMUjm"
+          >
+            Simon Corry
+          </div>
+          <div
+            className="sc-7aeeab03-5 fqjUpH"
+          >
+            Head of Product
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-7aeeab03-2 jkProv"
+      >
+        <img
+          alt="Dov Heichemer"
+          src="/assets/illustrations/team/dov.jpg?fm=webp"
+        />
+        <div
+          className="sc-7aeeab03-3 kRHDBJ"
+        >
+          <div
+            className="sc-7aeeab03-4 fSMUjm"
+          >
+            Dov Heichemer
+          </div>
+          <div
+            className="sc-7aeeab03-5 fqjUpH"
+          >
+            Head of Community
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-7aeeab03-2 jkProv"
+      >
+        <img
+          alt="Juju Parchimowicz"
+          src="/assets/illustrations/team/juju.jpg?fm=webp"
+        />
+        <div
+          className="sc-7aeeab03-3 kRHDBJ"
+        >
+          <div
+            className="sc-7aeeab03-4 fSMUjm"
+          >
+            Juju Parchimowicz
+          </div>
+          <div
+            className="sc-7aeeab03-5 fqjUpH"
+          >
+            Product Design & Art Direction
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-7aeeab03-2 jkProv"
+      >
+        <img
+          alt="Eric Katerman"
+          src="/assets/illustrations/team/eric-k.jpg?fm=webp"
+        />
+        <div
+          className="sc-7aeeab03-3 kRHDBJ"
+        >
+          <div
+            className="sc-7aeeab03-4 fSMUjm"
+          >
+            Eric Katerman
+          </div>
+          <div
+            className="sc-7aeeab03-5 fqjUpH"
+          >
+            Mathematician + Blockchain Dev
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-7aeeab03-2 jkProv"
+      >
+        <img
+          alt="Zsofie Tubel"
+          src="/assets/illustrations/team/zsofia.jpg?fm=webp"
+        />
+        <div
+          className="sc-7aeeab03-3 kRHDBJ"
+        >
+          <div
+            className="sc-7aeeab03-4 fSMUjm"
+          >
+            Zsofie Tubel
+          </div>
+          <div
+            className="sc-7aeeab03-5 fqjUpH"
+          >
+            Blockchain Dev
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-7aeeab03-2 jkProv"
+      >
+        <img
+          alt="Eric Jacobsen"
+          src="/assets/illustrations/team/eric-j.jpg?fm=webp"
+        />
+        <div
+          className="sc-7aeeab03-3 kRHDBJ"
+        >
+          <div
+            className="sc-7aeeab03-4 fSMUjm"
+          >
+            Eric Jacobsen
+          </div>
+          <div
+            className="sc-7aeeab03-5 fqjUpH"
+          >
+            Frontend Dev
+          </div>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>
+`;

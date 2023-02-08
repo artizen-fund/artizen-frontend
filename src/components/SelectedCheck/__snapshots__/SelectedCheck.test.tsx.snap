@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectedCheck renders correctly 1`] = `
+<div
+  className="sc-d66eb548-0 dAxGdF"
+>
+  <div
+    className="sc-3ba9b100-0 fSONTk"
+    color="white"
+  />
+</div>
+`;

@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AvatarForm renders correctly 1`] = `
+<div
+  className="sc-ad49e03d-0 bPHiXN"
+>
+  <input
+    className="sc-15a98cbf-0 jkrKKd"
+    id="avatarUploadImage"
+    onChange={[Function]}
+    type="file"
+  />
+  <div
+    className="sc-ad49e03d-2 imeOES"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-3ba9b100-0 hUkqvF"
+    />
+  </div>
+  <div
+    className="sc-ad49e03d-1 bzbruR"
+  >
+    <label
+      className="sc-313ded62-3 gWwXif undefined "
+      htmlFor="avatarUploadImage"
+    >
+      <span>
+        Upload photo
+      </span>
+    </label>
+  </div>
+</div>
+`;

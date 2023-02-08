@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shimmer renders correctly 1`] = `
+<div
+  className="sc-3630b030-0 btCMnq"
+>
+  <div
+    className="sc-3630b030-1 iydzSb"
+  />
+</div>
+`;
