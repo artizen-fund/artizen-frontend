@@ -181,7 +181,7 @@ export const useGrant = () => {
     const returnTx = await grantTransaction.wait()
     return returnTx
   }
-  //sendRewards
+  
 
   const cancelGrant = async (grantId: number) => {
     const grantTransaction = await grantsContract?.cancelGrant(grantId)

@@ -1,10 +1,10 @@
 import { assert } from '../../assert'
 import { GrantsAbi } from '@contracts'
-import { IMemberFragment } from '@types'
+import { IMemberFragment, IUsers } from '@types'
 import { useContract, useSigner } from 'wagmi'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { UPDATE_GRANTS, GET_USERS_AND_CURATORS, LOAD_GRANTS } from '@gql'
-import { sendNotification, PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, useFullSignOut } from '@lib'
+import { PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, useFullSignOut } from '@lib'
 
 export const useSendRewards = () => {
   const { data: signer } = useSigner()
@@ -97,18 +97,18 @@ export const useSendRewards = () => {
 
     const memberArray = data.Grants[0].submission.project.members
 
-    const projectLeadMember = memberArray.filter(member => member.type === 'lead')[0].user
+    const projectLeadUser = memberArray.filter((member:IMemberFragment) => member.type === 'lead')[0].user
 
-    console.log('projectLeadMember   ', projectLeadMember)
+    console.log('projectLeadMember   ', projectLeadUser)
 
-    if (!projectLeadMember) {
+    if (!projectLeadUser) {
       throw new Error('Notification cannot be sent because there is not lead member')
     }
 
-    return projectLeadMember
+    return projectLeadUser
   }
 
-  const sendNotificationRequest = async (template:string, projectLeadMember) => {
+  const sendNotificationRequest = async (template:string, projectLeadMember: IUsers) => {
     const sendNotificationRt = await fetch('/api/sendNotification', {
       method: 'POST',
       headers: {
