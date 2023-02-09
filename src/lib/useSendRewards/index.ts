@@ -1,6 +1,7 @@
-import { IMemberFragment, IUsers } from '@types'
+import { IMemberFragment, IGrantFragment } from '@types'
 import { useMutation, useLazyQuery } from '@apollo/client'
-import { UPDATE_GRANTS, GET_USERS_AND_CURATORS, LOAD_GRANTS } from '@gql'
+import moment from 'moment-timezone'
+import { UPDATE_GRANTS, GET_USERS_AND_CURATORS } from '@gql'
 import { PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, useFullSignOut, useSmartContracts, assert } from '@lib'
 
 export const useSendRewards = () => {
@@ -9,7 +10,6 @@ export const useSendRewards = () => {
   const [getUser] = useLazyQuery(GET_USERS_AND_CURATORS, {
     fetchPolicy: 'no-cache',
   })
-  const [getGrant] = useLazyQuery(LOAD_GRANTS, { fetchPolicy: 'network-only' })
   const [updateGrant, { error: updatingGrantError }] = useMutation(UPDATE_GRANTS)
 
   if (updatingGrantError) {
@@ -18,7 +18,7 @@ export const useSendRewards = () => {
 
   const updatingGrantFn = async (topDonorWinnerId: string, grantId: string) => {
     console.log('it gets to here')
-    const updateGrantR = await updateGrant({
+    const { data } = await updateGrant({
       variables: {
         _set: {
           status: 'rewarded',
@@ -32,9 +32,15 @@ export const useSendRewards = () => {
       },
     })
 
-    console.log('updateGrantR   ', updateGrantR)
+    const updatedGrant = data.update_Grants.returning
 
-    return updateGrantR
+    if (updatedGrant.length === 0) {
+      throw new Error('Grant has not been updated')
+    }
+
+    console.log('updateGrantR   ', updatedGrant[0])
+
+    return updatedGrant[0]
   }
 
   const getUserFn = async (userWallet: string) => {
@@ -56,36 +62,10 @@ export const useSendRewards = () => {
     return data.Users[0].id
   }
 
-  const getLeadProjectMember = async (grantId: string) => {
-    const { data } = await getGrant({
-      variables: {
-        limit: 1,
-        where: {
-          blockchainId: {
-            _eq: grantId,
-          },
-          submission: {
-            project: {
-              members: {
-                type: {
-                  _eq: 'lead',
-                },
-              },
-            },
-          },
-        },
-      },
-    })
+  const getLeadProjectMember = async (grant: IGrantFragment) => {
+    const memberArray = grant.submission?.project?.members
 
-    if (data.Grants.length === 0) {
-      throw new Error('Grant does not exits')
-    }
-
-    const memberArray = data.Grants[0].submission.project.members
-
-    const projectLeadUser = memberArray.filter((member: IMemberFragment) => member.type === 'lead')[0].user
-
-    console.log('projectLeadMember   ', projectLeadUser)
+    const projectLeadUser = memberArray?.filter((member: IMemberFragment) => member.type === 'lead')[0].user
 
     if (!projectLeadUser) {
       throw new Error('Notification cannot be sent because there is not lead member')
@@ -94,7 +74,7 @@ export const useSendRewards = () => {
     return projectLeadUser
   }
 
-  const sendNotificationRequest = async (template: string, projectLeadMember: IUsers) => {
+  const sendNotificationRequest = async (data: any, template: string) => {
     const sendNotificationRt = await fetch('/api/sendNotification', {
       method: 'POST',
       headers: {
@@ -102,7 +82,7 @@ export const useSendRewards = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        data: { firstName: projectLeadMember.firstName },
+        data,
         email: 'rubelux@gmail.com',
         template,
       }),
@@ -113,15 +93,36 @@ export const useSendRewards = () => {
     }
   }
 
-  const sendNotificationToProjectAuthor = async (grantId: string) => {
+  const sendNotificationToProjectAuthor = async (grant: IGrantFragment) => {
     const TEMPLATE_ID = assert(PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, 'PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID')
-    console.log('projectWallet  ', grantId)
 
-    const projectLeadMember = await getLeadProjectMember(grantId)
+    const projectLeadMember = await getLeadProjectMember(grant)
 
-    console.log('projectLeadMember   ', projectLeadMember)
+    const grantPatronArtifact = grant.submission?.artifacts.filter(({ edition }) => edition === 'creator')[0]
 
-    await sendNotificationRequest(TEMPLATE_ID, projectLeadMember)
+    const grantDate = moment(grant.startingDate)
+
+    const etherScanDomain =
+      process.env.NEXT_PUBLIC_PROD === 'false' ? 'https://goerli.etherscan.io/' : 'https://etherscan.io/'
+
+    const openSeaDomain =
+      process.env.NEXT_PUBLIC_PROD === 'false'
+        ? 'https://testnets.opensea.io/assets/goerli/'
+        : 'https://opensea.io/assets/ethereum/'
+
+    const notificationVar = {
+      grantCreatorArtifactName: 'creator',
+      grantDay: grantDate.day(),
+      grantMonth: grantDate.month(),
+      grantAwardAmount: 0, // TODO: finish added the total amount
+      grantProjectName: grant.submission?.project?.title,
+      firstName: projectLeadMember.firstName,
+      grantCreatorWalletAddress: grant.submission?.project?.walletAddress,
+      pageGrantArtifactOpenseaURL: `${openSeaDomain}${process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS}/${grantPatronArtifact?.token}`,
+      pageBlockchainArtifactURL: `${etherScanDomain}address/${process.env.NEXT_PUBLIC_GRANTS_CONTRACT_ADDRESS}`,
+    }
+
+    await sendNotificationRequest(notificationVar, TEMPLATE_ID)
   }
 
   const sendRewards = async (grantId: number, projectWallet: string) => {
@@ -140,9 +141,9 @@ export const useSendRewards = () => {
     const topDonorWinnerId = await getUserFn(grantData.topDonor.toLowerCase())
     console.log('topDonorWinnerId  ', topDonorWinnerId)
 
-    await updatingGrantFn(topDonorWinnerId, String(grantId))
+    const updatedGrant = await updatingGrantFn(topDonorWinnerId, String(grantId))
 
-    await sendNotificationToProjectAuthor(String(grantId))
+    await sendNotificationToProjectAuthor(updatedGrant)
 
     alert('Grant ended')
   }

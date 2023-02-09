@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import moment from 'moment-timezone'
 import { Button, Spinner } from '@components'
 import GrantLayout from './GrantLayout'
-import { useSendRewards, usePublishGrant, ARTIZEN_TIMEZONE, useSendGrantNotification } from '@lib'
+import { useSendRewards, usePublishGrant, ARTIZEN_TIMEZONE } from '@lib'
 import { IGrantFragment } from '@types'
 
 interface IViewGrantProps {
@@ -13,7 +13,7 @@ interface IViewGrantProps {
 const ViewGrant = ({ grant }: IViewGrantProps) => {
   const { sendRewards } = useSendRewards()
   const { publish } = usePublishGrant()
-  const { sendTopDonor } = useSendGrantNotification()
+  // const { sendTopDonor } = useSendGrantNotification()
   const [processing, setProcessing] = useState<boolean>()
 
   if (!grant) {

@@ -18,6 +18,7 @@ const mockProject: IProjectFragment = {
       type: 'lead',
       user: {
         __typename: 'Users',
+        createdAt: '',
         id: 'abc345',
         firstName: 'Herp',
         lastName: 'Derp',
