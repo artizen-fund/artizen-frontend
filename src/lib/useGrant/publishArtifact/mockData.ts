@@ -1,4 +1,5 @@
-import { IArtifactFragment, IProjectFragment } from '@types'
+import { IArtifactFragment, IProjectFragment, IMemberFragment } from '@types'
+import { PinataPinResponse } from '@pinata/sdk'
 
 const mockProject: IProjectFragment = {
   __typename: 'Projects',
@@ -95,16 +96,18 @@ const mockImageResponse = {
 // TODO
 const mockAnimationResponse = {
   IpfsHash: 'QmbwaRdfkS2V3ae2DvpUnCuLQw2pTUDLQiN4DrmomTXUzq',
+  PinSize: 12113,
+  Timestamp: '2023-02-06T23:47:56.336Z',
 }
 
 // TODO
-const mockMemberFragment = {
+const mockMemberFragment: IMemberFragment = {
   lead: {
     user: [{ firstName: 'Zsofie', lastName: 'Tubel' }],
   },
 }
 
-const mockMemberFragmentMissingData = {
+const mockMemberFragmentMissingData: IMemberFragment = {
   lead: {
     user: [{ firstName: 'Zsofie' }],
   },
