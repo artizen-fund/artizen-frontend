@@ -126,8 +126,6 @@ export const usePublishGrant = () => {
     //updating NFTs
     const artifactsToUpdate = grant.submission?.artifacts.map(({ id }, index) => {
       const token = latestTokenId.sub(index).toString()
-      console.log('index   ', index)
-      console.log('latestTokenId.sub(index)   ', token)
       const data = {
         where: {
           id: {
@@ -142,15 +140,11 @@ export const usePublishGrant = () => {
       return data
     })
 
-    console.log('artifactsToUpdate  ', artifactsToUpdate)
-
     await updateArtifact({
       variables: {
         updates: artifactsToUpdate,
       },
     })
-
-    console.log('grant publised', updatingGrant)
 
     push(`/admin/grants/${grant.id}`)
   }

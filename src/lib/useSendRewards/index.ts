@@ -17,7 +17,6 @@ export const useSendRewards = () => {
   }
 
   const updatingGrantFn = async (topDonorWinnerId: string, grantId: string) => {
-    console.log('it gets to here')
     const { data } = await updateGrant({
       variables: {
         _set: {
@@ -38,13 +37,10 @@ export const useSendRewards = () => {
       throw new Error('Grant has not been updated')
     }
 
-    console.log('updateGrantR   ', updatedGrant[0])
-
     return updatedGrant[0]
   }
 
   const getUserFn = async (userWallet: string) => {
-    console.log('userWallet   ', userWallet)
     const { data } = await getUser({
       variables: {
         where: {
@@ -126,7 +122,6 @@ export const useSendRewards = () => {
   }
 
   const sendRewards = async (grantId: number, projectWallet: string) => {
-    console.log('it gets sendRewards')
     let grantData
     try {
       grantData = await grantsContract?.grants(grantId)
@@ -139,7 +134,6 @@ export const useSendRewards = () => {
     await grantTransaction.wait()
 
     const topDonorWinnerId = await getUserFn(grantData.topDonor.toLowerCase())
-    console.log('topDonorWinnerId  ', topDonorWinnerId)
 
     const updatedGrant = await updatingGrantFn(topDonorWinnerId, String(grantId))
 

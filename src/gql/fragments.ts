@@ -39,3 +39,32 @@ export const USER_PUBLIC = gql`
     bio
   }
 `
+
+export const MEMBER = gql`
+  ${USER_PUBLIC}
+  fragment Member on ProjectMembers {
+    id
+    type
+    user {
+      ...UserPublic
+    }
+  }
+`
+
+export const PROJECT = gql`
+  ${MEMBER}
+  fragment Project on Projects {
+    id
+    impact
+    impactTags
+    logline
+    description
+    creationDate
+    completionDate
+    walletAddress
+    title
+    members {
+      ...Member
+    }
+  }
+`

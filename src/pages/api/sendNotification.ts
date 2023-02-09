@@ -20,8 +20,6 @@ const sendNotificationAPI = async (req: NextApiRequest, res: NextApiResponse) =>
     }
     const { data, template, email } = req.body
 
-    console.log('req.body  from API   ', req.body)
-
     if (!data || !template || !email) {
       res.status(401).send({ message: 'Missing body parameters' })
       return
