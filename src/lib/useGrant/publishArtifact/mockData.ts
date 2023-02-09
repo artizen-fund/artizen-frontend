@@ -101,15 +101,31 @@ const mockAnimationResponse = {
 }
 
 // TODO
-const mockMemberFragment: IMemberFragment = {
-  lead: {
-    user: [{ firstName: 'Zsofie', lastName: 'Tubel' }],
+const mockMember: IMemberFragment = {
+  user: {
+    __typename: 'Users',
+    id: 1,
+    firstName: 'Zsofie',
+    lastName: 'Tubel',
+    artizenHandle: 'zst',
+    twitterHandle: 'xxx',
+    website: 'http://blabla.com',
+    profileImage: 'Profile image name',
+    publicAddress: '0x00',
   },
 }
 
-const mockMemberFragmentMissingData: IMemberFragment = {
-  lead: {
-    user: [{ firstName: 'Zsofie' }],
+const mockMemberMissingData: IMemberFragment = {
+  user: {
+    __typename: 'Users',
+    id: 1,
+    firstName: 'Zsofie',
+    lastName: undefined,
+    artizenHandle: 'zst',
+    twitterHandle: 'xxx',
+    website: 'http://blabla.com',
+    profileImage: 'Profile image name',
+    publicAddress: '0x00',
   },
 }
 
@@ -120,6 +136,6 @@ export {
   mockAnimationResponse,
   mockArtifactNoEdition,
   mockProjectNoTitle,
-  mockMemberFragment,
-  mockMemberFragmentMissingData,
+  mockMember,
+  mockMemberMissingData,
 }
