@@ -18,7 +18,7 @@ export const createApolloClient = (didToken?: string) => {
   })
   const wsLink = isClient()
     ? new WebSocketLink({
-        uri: 'wss://hasura.io/learn/graphql',
+        uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_WEBHOOK, 'NEXT_PUBLIC_HASURA_GRAPHQL_WEBHOOK'),
         options: {
           reconnect: true,
           lazy: true,

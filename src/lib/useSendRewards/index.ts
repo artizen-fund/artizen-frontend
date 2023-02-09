@@ -1,15 +1,12 @@
-import { assert } from '../../assert'
-import { GrantsAbi } from '@contracts'
 import { IMemberFragment, IUsers } from '@types'
-import { useContract, useSigner } from 'wagmi'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { UPDATE_GRANTS, GET_USERS_AND_CURATORS, LOAD_GRANTS } from '@gql'
-import { PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, useFullSignOut } from '@lib'
+import { PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID, useFullSignOut, useSmartContracts, assert } from '@lib'
 
 export const useSendRewards = () => {
-  const { data: signer } = useSigner()
+  const { grantsContract } = useSmartContracts()
   const { disconnectAndSignout } = useFullSignOut()
-  const [getUser, { data }] = useLazyQuery(GET_USERS_AND_CURATORS, {
+  const [getUser] = useLazyQuery(GET_USERS_AND_CURATORS, {
     fetchPolicy: 'no-cache',
   })
   const [getGrant] = useLazyQuery(LOAD_GRANTS, { fetchPolicy: 'network-only' })
@@ -18,17 +15,6 @@ export const useSendRewards = () => {
   if (updatingGrantError) {
     throw new Error('Updating Grant Error, error= ', updatingGrantError)
   }
-
-  const grantContractAddress = assert(
-    process.env.NEXT_PUBLIC_GRANTS_CONTRACT_ADDRESS,
-    'NEXT_PUBLIC_GRANTS_CONTRACT_ADDRESS',
-  )
-
-  const grantsContract = useContract({
-    address: grantContractAddress,
-    abi: GrantsAbi,
-    signerOrProvider: signer,
-  })
 
   const updatingGrantFn = async (topDonorWinnerId: string, grantId: string) => {
     console.log('it gets to here')
@@ -53,7 +39,7 @@ export const useSendRewards = () => {
 
   const getUserFn = async (userWallet: string) => {
     console.log('userWallet   ', userWallet)
-    const {data} = await getUser({
+    const { data } = await getUser({
       variables: {
         where: {
           publicAddress: {
@@ -70,7 +56,7 @@ export const useSendRewards = () => {
     return data.Users[0].id
   }
 
-  const getLeadProjectMember =async (grantId: string) => {
+  const getLeadProjectMember = async (grantId: string) => {
     const { data } = await getGrant({
       variables: {
         limit: 1,
@@ -91,13 +77,13 @@ export const useSendRewards = () => {
       },
     })
 
-    if(data.Grants.length === 0){
-      throw new Error("Grant does not exits");
+    if (data.Grants.length === 0) {
+      throw new Error('Grant does not exits')
     }
 
     const memberArray = data.Grants[0].submission.project.members
 
-    const projectLeadUser = memberArray.filter((member:IMemberFragment) => member.type === 'lead')[0].user
+    const projectLeadUser = memberArray.filter((member: IMemberFragment) => member.type === 'lead')[0].user
 
     console.log('projectLeadMember   ', projectLeadUser)
 
@@ -108,7 +94,7 @@ export const useSendRewards = () => {
     return projectLeadUser
   }
 
-  const sendNotificationRequest = async (template:string, projectLeadMember: IUsers) => {
+  const sendNotificationRequest = async (template: string, projectLeadMember: IUsers) => {
     const sendNotificationRt = await fetch('/api/sendNotification', {
       method: 'POST',
       headers: {
@@ -122,8 +108,8 @@ export const useSendRewards = () => {
       }),
     })
 
-    if(sendNotificationRt.status === 500){
-      console.error("Notification has not been sent")
+    if (sendNotificationRt.status === 500) {
+      console.error('Notification has not been sent')
     }
   }
 
@@ -136,10 +122,7 @@ export const useSendRewards = () => {
     console.log('projectLeadMember   ', projectLeadMember)
 
     await sendNotificationRequest(TEMPLATE_ID, projectLeadMember)
-    
   }
-
-
 
   const sendRewards = async (grantId: number, projectWallet: string) => {
     console.log('it gets sendRewards')
@@ -151,8 +134,8 @@ export const useSendRewards = () => {
       disconnectAndSignout()
     }
 
-    // const grantTransaction = await grantsContract?.sendRewards(grantId, projectWallet)
-    // await grantTransaction.wait()
+    const grantTransaction = await grantsContract?.sendRewards(grantId, projectWallet)
+    await grantTransaction.wait()
 
     const topDonorWinnerId = await getUserFn(grantData.topDonor.toLowerCase())
     console.log('topDonorWinnerId  ', topDonorWinnerId)
