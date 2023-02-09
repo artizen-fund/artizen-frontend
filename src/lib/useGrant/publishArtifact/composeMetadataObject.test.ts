@@ -23,7 +23,7 @@ describe('composeMetadataObject', () => {
     expect(result.name).toEqual('Test Artifact Name')
     expect(result.description).toEqual('Test artifact description goes here')
     expect(result.image).toEqual(`ipfs://${mockImageResponse.IpfsHash}`)
-    expect(result.animation_url).toEqual(`ipfs://${mockAnimationResponse.IpfsHash}`)
+    expect(result.animation_url).toEqual(`${mockAnimationResponse.IpfsHash}`)
     expect(result.background_color).toEqual('000000')
     expect(result.external_url).toEqual(`https://artizen.fund/projects/artifacts/artifact${BigNumber.from('1')}/`)
     //TODO expect(result.attributes).toContain('Project Created')

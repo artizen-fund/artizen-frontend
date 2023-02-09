@@ -10,6 +10,7 @@ describe('getLeadMemberTraitType', () => {
   it('throws error if user is not found', () => {
     //TODO
     const result = getLeadMemberTraitType(mockMember.user)
+    expect(result).toThrowError('Lead not found')
   })
   it('throws error if users first or last name is missing', () => {
     const result = getLeadMemberTraitType(mockMemberMissingData.user)
