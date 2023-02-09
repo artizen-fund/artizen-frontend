@@ -26,7 +26,9 @@ describe('composeMetadataObject', () => {
     expect(result.animation_url).toEqual(`${mockAnimationResponse.IpfsHash}`)
     expect(result.background_color).toEqual('000000')
     expect(result.external_url).toEqual(`https://artizen.fund/projects/artifacts/artifact${BigNumber.from('1')}/`)
-    //TODO expect(result.attributes).toContain('Project Created')
+
+    const projectCreatedAttribute = result.attributes.find(attribute => attribute.trait_type === 'Project Created')
+    expect(projectCreatedAttribute?.trait_type).toEqual('Project Created')
   })
 
   it('reverts if edition property is missing', () => {
