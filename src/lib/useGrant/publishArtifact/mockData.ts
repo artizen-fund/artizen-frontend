@@ -97,6 +97,19 @@ const mockAnimationResponse = {
   IpfsHash: 'QmbwaRdfkS2V3ae2DvpUnCuLQw2pTUDLQiN4DrmomTXUzq',
 }
 
+// TODO
+const mockMemberFragment = {
+  lead: {
+    user: [{ firstName: 'Zsofie', lastName: 'Tubel' }],
+  },
+}
+
+const mockMemberFragmentMissingData = {
+  lead: {
+    user: [{ firstName: 'Zsofie' }],
+  },
+}
+
 export {
   mockProject,
   mockArtifact,
@@ -104,4 +117,6 @@ export {
   mockAnimationResponse,
   mockArtifactNoEdition,
   mockProjectNoTitle,
+  mockMemberFragment,
+  mockMemberFragmentMissingData,
 }
