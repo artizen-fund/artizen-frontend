@@ -2,119 +2,77 @@
 
 exports[`HowItWorks renders correctly 1`] = `
 <div
-  className="sc-8ef8168e-0 dQCAro"
+  className="sc-ac2d3ec3-0 ffAbOB"
 >
   <div
-    className="sc-8ef8168e-1 chkazZ"
+    className="sc-ac2d3ec3-1 fTmyjR"
   >
     <div
-      className="sc-8ef8168e-3 gAgQuT"
+      className="sc-ac2d3ec3-3 kJBgyu"
     />
     <div
-      className="sc-8ef8168e-2 dhVFwq"
+      className="sc-ac2d3ec3-2 ieTmYO"
     >
       <h2
-        className="sc-8ef8168e-4 dmUZGM"
+        className="sc-ac2d3ec3-4 hzYqNO"
       >
-        About
+        Apply for Funding
       </h2>
       <p
-        className="sc-8ef8168e-5 idChXc"
+        className="sc-ac2d3ec3-5 jkxzKE"
       >
-        Nullam id dolor id nibh ultricies vehicula ut id elit.
-      </p>
-    </div>
-  </div>
-  <div
-    className="sc-8ef8168e-1 chkazZ"
-  >
-    <div
-      className="sc-8ef8168e-3 hwVjNH"
-    />
-    <div
-      className="sc-8ef8168e-2 dhVFwq"
-    >
-      <h2
-        className="sc-8ef8168e-4 dmUZGM"
-      >
-        Grants
-      </h2>
-      <p
-        className="sc-8ef8168e-5 idChXc"
-      >
-        Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+        If you have a project that fits our eligibility requirements, we’d love you to submit it.
       </p>
       <a
-        className="sc-2a588df4-1 kFiSF undefined "
+        href="https://artizen.link/apply"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onTouchStart={[Function]}
+        target="_blank"
       >
-        <span>
-          Learn More
-        </span>
+        <div
+          className="sc-313ded62-1 dPRxLd undefined "
+        >
+          <span>
+            Apply here
+          </span>
+        </div>
       </a>
     </div>
   </div>
   <div
-    className="sc-8ef8168e-1 fZfbig"
+    className="sc-ac2d3ec3-1 fTmyjR"
   >
     <div
-      className="sc-8ef8168e-3 bquQfz"
+      className="sc-ac2d3ec3-3 gTlCiu"
     />
     <div
-      className="sc-8ef8168e-2 dhVFwq"
+      className="sc-ac2d3ec3-2 ieTmYO"
     >
       <h2
-        className="sc-8ef8168e-4 dmUZGM"
+        className="sc-ac2d3ec3-4 hzYqNO"
       >
-        Leaderboard
+        How It Works
       </h2>
       <p
-        className="sc-8ef8168e-5 idChXc"
+        className="sc-ac2d3ec3-5 jkxzKE"
       >
-        Nullam id dolor id nibh ultricies vehicula ut id elit.
+        Find out what we’re all about, how donations work and how to submit a project
       </p>
       <a
-        className="sc-2a588df4-1 kFiSF undefined "
+        href="https://help.artizen.fund/en/articles/6782291-how-the-artizen-fund-works"
         onClick={[Function]}
         onMouseEnter={[Function]}
         onTouchStart={[Function]}
+        target="_blank"
       >
-        <span>
-          Learn More
-        </span>
-      </a>
-    </div>
-  </div>
-  <div
-    className="sc-8ef8168e-1 chkazZ"
-  >
-    <div
-      className="sc-8ef8168e-3 hAztPz"
-    />
-    <div
-      className="sc-8ef8168e-2 dhVFwq"
-    >
-      <h2
-        className="sc-8ef8168e-4 dmUZGM"
-      >
-        FAQs
-      </h2>
-      <p
-        className="sc-8ef8168e-5 idChXc"
-      >
-        Nullam id dolor id nibh ultricies vehicula ut id elit.
-      </p>
-      <a
-        className="sc-2a588df4-1 kFiSF undefined "
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-        onTouchStart={[Function]}
-      >
-        <span>
-          Learn More
-        </span>
+        <div
+          className="sc-313ded62-1 dPRxLd undefined "
+        >
+          <span>
+            Learn more
+          </span>
+        </div>
       </a>
     </div>
   </div>

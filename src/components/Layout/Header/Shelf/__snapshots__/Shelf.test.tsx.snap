@@ -2,10 +2,10 @@
 
 exports[`Shelf renders correctly 1`] = `
 <div
-  className="sc-d2b8f35e-0 shQBu"
+  className="sc-9486512d-0 daJhtU"
 >
   <div
-    className="sc-8d0edb81-0 ddViZJ"
+    className="sc-45d68d47-0 kVBvae sc-9486512d-1 wGOVk"
   />
 </div>
 `;

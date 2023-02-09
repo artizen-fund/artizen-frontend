@@ -3,11 +3,16 @@
 exports[`Button renders Button link unchanged 1`] = `
 <div>
   <a
-    class="sc-2a588df4-1 hXTcRO undefined "
+    href="/"
+    target="_top"
   >
-    <span>
-      button test
-    </span>
+    <div
+      class="sc-313ded62-1 gCaKcI undefined "
+    >
+      <span>
+        button test
+      </span>
+    </div>
   </a>
 </div>
 `;
@@ -15,7 +20,7 @@ exports[`Button renders Button link unchanged 1`] = `
 exports[`Button renders form Button unchanged 1`] = `
 <div>
   <button
-    class="sc-2a588df4-2 itVOtl undefined "
+    class="sc-313ded62-2 jkFKqP undefined "
   >
     <span>
       button test

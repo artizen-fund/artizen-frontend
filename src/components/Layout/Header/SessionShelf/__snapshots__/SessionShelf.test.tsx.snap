@@ -3,34 +3,34 @@
 exports[`SessionShelf renders correctly 1`] = `
 <div>
   <div
-    class="sc-91894e3-3 iWqXNi"
+    class="sc-3c6a8173-1 isRPmL"
   >
     <div
-      class="sc-91894e3-4 ecIZZ"
+      class="sc-866c48de-0 iWcfsO"
     >
       <h1
-        class="sc-91894e3-5 fTSCwM"
+        class="sc-866c48de-1 gwOJpK"
       >
         Let’s get started by setting up your Artizen account
       </h1>
       <div
-        class="sc-91894e3-6 jXbMYf"
+        class="sc-866c48de-2 kGWioV"
       >
         <div
-          class="sc-60e75bb7-2 elEEJs"
+          class="sc-b51f94be-2 ioudJW"
         >
           <div
-            class="sc-60e75bb7-0 dkGscC"
+            class="sc-b51f94be-0 cfTHcJ"
             color="night"
           >
             <div
-              class="sc-149d3190-0 eIDYrK"
+              class="sc-3ba9b100-0 eOAxiH"
               color="night"
             />
           </div>
         </div>
         <p
-          class="sc-91894e3-7 iDqyHi"
+          class="sc-866c48de-3 fNzhIk"
         >
           Already have an account?
           <br />
@@ -45,11 +45,11 @@ exports[`SessionShelf renders correctly 1`] = `
         class="vertical-layout-item"
       >
         <div
-          class="sc-2f9d5146-0 jjUILZ"
+          class="sc-2f9d5146-0 jUEUrV"
           id="#/properties/email"
         >
           <div
-            class="sc-dccedff6-0 jjRMSF"
+            class="sc-3d47d0c3-0 dNJokE"
           >
             <input
               placeholder="e.g. rene@artizen.fund"
@@ -58,14 +58,22 @@ exports[`SessionShelf renders correctly 1`] = `
               value=""
             />
             <label
-              class="sc-ffdb2e6c-0 cqczZc"
+              class="sc-aacc9954-0 dyxLqB"
             >
               Email Address
                *
             </label>
+            <div
+              class="sc-56d3ceba-0 dWOypg"
+            >
+              <div
+                class="sc-3ba9b100-0 fGdMTk"
+                color="night"
+              />
+            </div>
           </div>
           <div
-            class="sc-93ba83c0-0 BZJQU"
+            class="sc-a6becebf-0 iqYcJk"
           >
             is a required property
           </div>
@@ -73,47 +81,46 @@ exports[`SessionShelf renders correctly 1`] = `
       </div>
     </div>
     <button
-      class="sc-2a588df4-2 bANZSb sc-91894e3-0 itOROQ  disabled"
+      class="sc-313ded62-2 gZJTzD sc-3c6a8173-0 ckkhPY  disabled"
       disabled=""
     >
       <span>
-        Sign In / Sign Up
+        Sign In
       </span>
     </button>
     <div
-      class="sc-91894e3-8 jZmRGv"
+      class="sc-866c48de-4 cHXzyn"
     >
       <div
-        class="sc-91894e3-9 jOehvP"
+        class="sc-866c48de-5 edffFY"
       >
         <label
-          class="sc-dd35d48e-4 dCKwdz"
+          class="sc-ba7c8cb0-4 erkCyH"
         >
           <div
-            class="sc-dd35d48e-0 bkkyVw"
+            class="sc-ba7c8cb0-0 drqsMz"
           >
             <input
               checked=""
-              class="sc-dd35d48e-1 clTMzK"
+              class="sc-ba7c8cb0-1 gDeSTk"
               type="checkbox"
             />
             <span
-              class="sc-dd35d48e-2 dtceeR"
-            />
+              class="sc-ba7c8cb0-2 cupNCt"
+            >
+              <div
+                class="sc-3ba9b100-0 kxhsMF"
+              />
+            </span>
           </div>
           <span
-            class="sc-dd35d48e-3 eAaGSv"
+            class="sc-ba7c8cb0-3 ihKGeu"
           />
         </label>
         <p
-          class="sc-91894e3-10 DnIa-d"
+          class="sc-866c48de-6 boiFGf"
         >
-          I agree to Artizen’s
-          <a
-            href="/toc"
-          >
-             Terms & Conditions
-          </a>
+          Remember my email address.
         </p>
       </div>
     </div>

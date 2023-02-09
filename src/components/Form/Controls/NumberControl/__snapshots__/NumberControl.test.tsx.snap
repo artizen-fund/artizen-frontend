@@ -3,10 +3,10 @@
 exports[`NumberControl renders NumberControl unchanged 1`] = `
 <div>
   <div
-    class="sc-2f9d5146-0 fXWYaa"
+    class="sc-2f9d5146-0 dVAjTV"
   >
     <div
-      class="sc-dccedff6-0 fSqMKz"
+      class="sc-3d47d0c3-0 cntFmj"
       disabled=""
     >
       <input
@@ -18,17 +18,21 @@ exports[`NumberControl renders NumberControl unchanged 1`] = `
         value="5"
       />
       <label
-        class="sc-ffdb2e6c-0 cqczZc"
+        class="sc-aacc9954-0 dyxLqB"
       >
         Integer test
       </label>
       <div
-        class="sc-149d3190-0 btmhnS sc-5f903e4e-0 cJxxyr"
-        color="night"
-      />
+        class="sc-56d3ceba-0 hyJFsA"
+      >
+        <div
+          class="sc-3ba9b100-0 hGSOqt"
+          color="night"
+        />
+      </div>
     </div>
     <div
-      class="sc-93ba83c0-0 BZJQU"
+      class="sc-a6becebf-0 iqYcJk"
     />
   </div>
 </div>

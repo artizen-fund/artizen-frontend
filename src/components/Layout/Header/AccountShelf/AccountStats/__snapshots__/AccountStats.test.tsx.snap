@@ -2,112 +2,112 @@
 
 exports[`AccountStats renders correctly 1`] = `
 <ul
-  className="sc-cf63bf03-0 jnGrA-D"
+  className="sc-f189de67-0 jllnYV"
 >
   <li
-    className="sc-cf63bf03-1 doApLo"
+    className="sc-f189de67-1 hTVRUi"
   >
     <div
-      className="sc-60e75bb7-2 cdqnon"
+      className="sc-b51f94be-2 kveGyO"
     >
       <div
-        className="sc-60e75bb7-0 kBbFeK"
+        className="sc-b51f94be-0 kWzPGK"
         color="night"
       >
         <div
-          className="sc-149d3190-0 ewzPBY"
+          className="sc-3ba9b100-0 VPBGN"
           color="night"
         />
       </div>
     </div>
     <div
-      className="sc-cf63bf03-2 kOxwXQ"
+      className="sc-f189de67-2 kwrJwE"
     >
       $800
     </div>
     <div
-      className="sc-cf63bf03-3 kdPNii"
+      className="sc-f189de67-3 iMidwG"
     >
       donated
     </div>
   </li>
   <li
-    className="sc-cf63bf03-1 doApLo"
+    className="sc-f189de67-1 hTVRUi"
   >
     <div
-      className="sc-60e75bb7-2 cdqnon"
+      className="sc-b51f94be-2 kveGyO"
     >
       <div
-        className="sc-60e75bb7-0 kBbFeK"
+        className="sc-b51f94be-0 kWzPGK"
         color="night"
       >
         <div
-          className="sc-149d3190-0 cyhlIT"
+          className="sc-3ba9b100-0 iYqVjO"
           color="night"
         />
       </div>
     </div>
     <div
-      className="sc-cf63bf03-2 kOxwXQ"
+      className="sc-f189de67-2 kwrJwE"
     >
       42
     </div>
     <div
-      className="sc-cf63bf03-3 kdPNii"
+      className="sc-f189de67-3 iMidwG"
     >
       collected
     </div>
   </li>
   <li
-    className="sc-cf63bf03-1 doApLo"
+    className="sc-f189de67-1 hTVRUi"
   >
     <div
-      className="sc-60e75bb7-2 cdqnon"
+      className="sc-b51f94be-2 kveGyO"
     >
       <div
-        className="sc-60e75bb7-0 kBbFeK"
+        className="sc-b51f94be-0 kWzPGK"
         color="night"
       >
         <div
-          className="sc-149d3190-0 cyhlIT"
+          className="sc-3ba9b100-0 iYqVjO"
           color="night"
         />
       </div>
     </div>
     <div
-      className="sc-cf63bf03-2 kOxwXQ"
+      className="sc-f189de67-2 kwrJwE"
     >
       $0
     </div>
     <div
-      className="sc-cf63bf03-3 kdPNii"
+      className="sc-f189de67-3 iMidwG"
     >
       collected
     </div>
   </li>
   <li
-    className="sc-cf63bf03-1 doApLo"
+    className="sc-f189de67-1 hTVRUi"
   >
     <div
-      className="sc-60e75bb7-2 cdqnon"
+      className="sc-b51f94be-2 kveGyO"
     >
       <div
-        className="sc-60e75bb7-0 kBbFeK"
+        className="sc-b51f94be-0 kWzPGK"
         color="night"
       >
         <div
-          className="sc-149d3190-0 cyhlIT"
+          className="sc-3ba9b100-0 iYqVjO"
           color="night"
         />
       </div>
     </div>
     <div
-      className="sc-cf63bf03-2 kOxwXQ"
+      className="sc-f189de67-2 kwrJwE"
     >
       100
     </div>
     <div
-      className="sc-cf63bf03-3 kdPNii"
+      className="sc-f189de67-3 iMidwG"
     >
       $ART
     </div>

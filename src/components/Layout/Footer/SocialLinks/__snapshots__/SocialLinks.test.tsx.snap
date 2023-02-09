@@ -3,35 +3,75 @@
 exports[`SocialLinks renders Footer unchanged 1`] = `
 <div>
   <div
-    class="sc-91c5d1a5-0 hbgVsC"
+    class="sc-94766cdf-0 fnpErs"
   >
     <a
-      class="sc-91c5d1a5-1 kbnAwz"
       href="https://twitter.com/artizenfund"
       target="_blank"
     >
-      twitter
+      <div
+        alt="twitter"
+        class="sc-313ded62-1 kgROOa sc-94766cdf-1 fbFPrC "
+        target="_blank"
+      >
+        <div
+          class="sc-3ba9b100-0 kSqsgh sc-313ded62-0 ggGmkW"
+        />
+        <span>
+          twitter
+        </span>
+      </div>
     </a>
     <a
-      class="sc-91c5d1a5-1 kbnAwz"
       href="https://artizen.link/discord"
       target="_blank"
     >
-      discord
+      <div
+        alt="discord"
+        class="sc-313ded62-1 kgROOa sc-94766cdf-1 fbFPrC "
+        target="_blank"
+      >
+        <div
+          class="sc-3ba9b100-0 fHtAEo sc-313ded62-0 ggGmkW"
+        />
+        <span>
+          discord
+        </span>
+      </div>
     </a>
     <a
-      class="sc-91c5d1a5-1 kbnAwz"
       href="https://github.com/artizen-fund"
       target="_blank"
     >
-      github
+      <div
+        alt="github"
+        class="sc-313ded62-1 kgROOa sc-94766cdf-1 fbFPrC "
+        target="_blank"
+      >
+        <div
+          class="sc-3ba9b100-0 cGOFYV sc-313ded62-0 ggGmkW"
+        />
+        <span>
+          github
+        </span>
+      </div>
     </a>
     <a
-      class="sc-91c5d1a5-1 kbnAwz"
-      href="https://artizen.link/telegram"
+      href="https://t.me/artizenfund"
       target="_blank"
     >
-      telegram
+      <div
+        alt="telegram"
+        class="sc-313ded62-1 kgROOa sc-94766cdf-1 fbFPrC "
+        target="_blank"
+      >
+        <div
+          class="sc-3ba9b100-0 jFRiTF sc-313ded62-0 ggGmkW"
+        />
+        <span>
+          telegram
+        </span>
+      </div>
     </a>
   </div>
 </div>

@@ -3,10 +3,10 @@
 exports[`StickyContent renders StickyContent unchanged 1`] = `
 <div>
   <section
-    class="sc-f67c5638-1 OMake"
+    class="sc-d7c445ba-1 cLMpKe"
   >
     <div
-      class="sc-f67c5638-0 cRlpgy"
+      class="sc-d7c445ba-0 hydLrq"
     >
       some content
     </div>

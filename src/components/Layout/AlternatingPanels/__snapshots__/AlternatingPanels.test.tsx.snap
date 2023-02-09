@@ -2,10 +2,10 @@
 
 exports[`AlternatingPanels renders correctly 1`] = `
 <div
-  className="sc-8d0edb81-0 ddViZJ"
+  className="sc-45d68d47-0 kVBvae"
 >
   <div
-    className="sc-d74fb460-0 jTmEoF"
+    className="sc-df0af9ba-0 gVpANJ"
   />
 </div>
 `;

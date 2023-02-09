@@ -3,21 +3,25 @@
 exports[`Newsletter renders Newsletter unchanged 1`] = `
 <div>
   <div
-    class="sc-8d0edb81-0 gAsIQZ"
+    class="sc-45d68d47-0 iEHcks sc-861ef53e-0"
   >
     <div
-      class="sc-1e3e9220-2 ejNsI"
+      class="sc-861ef53e-3 ivcWrk"
     >
       <div
-        class="sc-1e3e9220-3 jleLgG"
+        class="sc-861ef53e-4 sMwVm"
       >
         <div
-          class="sc-1e3e9220-4 cgXCYQ"
+          class="sc-861ef53e-5 ewecyG"
         >
-          Join us in building the world's largest web3 fund for public goods
+          <span>
+            Want to see where this goes?
+            <br />
+            Let’s keep in touch.
+          </span>
         </div>
         <div
-          class="sc-1e3e9220-5 fSLjZ"
+          class="sc-861ef53e-6 gizKnd"
         >
           Sign up for our free newsletter
         </div>
@@ -29,11 +33,11 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="sc-2f9d5146-0 cmhLgf"
+            class="sc-2f9d5146-0 ewQlrQ"
             id="#/properties/FNAME"
           >
             <div
-              class="sc-dccedff6-0 jjRMSF"
+              class="sc-3d47d0c3-0 dNJokE"
             >
               <input
                 minlength="2"
@@ -42,13 +46,21 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 cqczZc"
+                class="sc-aacc9954-0 dyxLqB"
               >
                 First Name
               </label>
+              <div
+                class="sc-56d3ceba-0 dWOypg"
+              >
+                <div
+                  class="sc-3ba9b100-0 fGdMTk"
+                  color="night"
+                />
+              </div>
             </div>
             <div
-              class="sc-93ba83c0-0 BZJQU"
+              class="sc-a6becebf-0 iqYcJk"
             />
           </div>
         </div>
@@ -56,11 +68,11 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="sc-2f9d5146-0 ldCYfJ"
+            class="sc-2f9d5146-0 dPjBKe"
             id="#/properties/LNAME"
           >
             <div
-              class="sc-dccedff6-0 jjRMSF"
+              class="sc-3d47d0c3-0 dNJokE"
             >
               <input
                 minlength="2"
@@ -69,13 +81,21 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 cqczZc"
+                class="sc-aacc9954-0 dyxLqB"
               >
                 Last Name
               </label>
+              <div
+                class="sc-56d3ceba-0 dWOypg"
+              >
+                <div
+                  class="sc-3ba9b100-0 fGdMTk"
+                  color="night"
+                />
+              </div>
             </div>
             <div
-              class="sc-93ba83c0-0 BZJQU"
+              class="sc-a6becebf-0 iqYcJk"
             />
           </div>
         </div>
@@ -83,11 +103,11 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <div
-            class="sc-2f9d5146-0 eDHzex"
+            class="sc-2f9d5146-0 etJpoB"
             id="#/properties/EMAIL"
           >
             <div
-              class="sc-dccedff6-0 jjRMSF"
+              class="sc-3d47d0c3-0 dNJokE"
             >
               <input
                 placeholder=" "
@@ -96,14 +116,22 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
                 value=""
               />
               <label
-                class="sc-ffdb2e6c-0 cqczZc"
+                class="sc-aacc9954-0 dyxLqB"
               >
                 Email Address
                  *
               </label>
+              <div
+                class="sc-56d3ceba-0 dWOypg"
+              >
+                <div
+                  class="sc-3ba9b100-0 fGdMTk"
+                  color="night"
+                />
+              </div>
             </div>
             <div
-              class="sc-93ba83c0-0 BZJQU"
+              class="sc-a6becebf-0 iqYcJk"
             >
               is a required property
             </div>
@@ -113,41 +141,59 @@ exports[`Newsletter renders Newsletter unchanged 1`] = `
           class="vertical-layout-item"
         >
           <label
-            class="sc-dd35d48e-4 xNpwT"
+            class="sc-ba7c8cb0-4 fQkYxp"
             id="#/properties/OPTIN"
           >
             <div
-              class="sc-dd35d48e-0 bkkyVw"
+              class="sc-ba7c8cb0-0 drqsMz"
             >
               <input
                 checked=""
-                class="sc-dd35d48e-1 clTMzK"
+                class="sc-ba7c8cb0-1 gDeSTk"
                 required=""
                 type="checkbox"
               />
               <span
-                class="sc-dd35d48e-2 Legqi"
-              />
+                class="sc-ba7c8cb0-2 drHdUG"
+              >
+                <div
+                  class="sc-3ba9b100-0 kxhsMF"
+                />
+              </span>
             </div>
             <span
-              class="sc-dd35d48e-3 kiyWfS"
+              class="sc-ba7c8cb0-3 brhBsN"
             >
-              Opt-in to receive the Artizen newsletter.
+              I agree to receive the Artizen newsletter
             </span>
           </label>
         </div>
       </div>
       <button
-        class="sc-2a588df4-2 dIjHHY sc-1e3e9220-0 eNYEEI  disabled"
+        class="sc-313ded62-2 qDeso sc-861ef53e-1 cNVTTE  disabled"
         disabled=""
       >
         <span>
-          Submit
+          Subscribe Now
         </span>
       </button>
       <div
-        class="sc-1e3e9220-1 bFEpXp"
+        class="sc-861ef53e-2 epbrOx"
+        disabled=""
       >
+        <div
+          class="sc-b51f94be-2 ioudJW"
+        >
+          <div
+            class="sc-b51f94be-0 fVDrcr"
+            color="uiSuccess"
+          >
+            <div
+              class="sc-3ba9b100-0 hsgGRj"
+              color="uiSuccess"
+            />
+          </div>
+        </div>
         <div>
           Congrats, confirmation sent!
         </div>

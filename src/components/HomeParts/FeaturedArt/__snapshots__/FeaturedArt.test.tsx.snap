@@ -3,86 +3,14 @@
 exports[`FeaturedArt renders FeaturedArt unchanged 1`] = `
 <div>
   <section
-    class="sc-103a172f-0 gyTnfw"
+    class="sc-b8b2cdec-0 dhmtGq"
   >
     <div
-      class="sc-4cf5d7c6-0 fQMtff"
-    />
-    <div
-      class="sc-103a172f-1 eNDRzA"
+      class="sc-3630b030-0 btCMnq"
     >
       <div
-        class="sc-103a172f-2 fnQEMJ"
-      >
-        Title of Monthly Featured Artwork
-      </div>
-      <div
-        class="sc-103a172f-3 imRysU"
-      >
-        <div
-          class="sc-103a172f-4 dzKtrV"
-        >
-          <div
-            class="sc-60e75bb7-2 elEEJs"
-          >
-            <div
-              class="sc-60e75bb7-0 dkGscC"
-              color="night"
-            >
-              <div
-                class="sc-149d3190-0 jcCvuQ"
-                color="night"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          class="sc-103a172f-4 dzKtrV"
-        >
-          <div
-            class="sc-60e75bb7-2 elEEJs"
-          >
-            <div
-              class="sc-60e75bb7-0 dkGscC"
-              color="night"
-            >
-              <div
-                class="sc-149d3190-0 fFndyP"
-                color="night"
-              />
-            </div>
-            <div
-              class="sc-60e75bb7-1 emyDrY"
-              color="night"
-            >
-              Created NaN days ago
-            </div>
-          </div>
-        </div>
-        <div
-          class="sc-103a172f-4 dzKtrV"
-        >
-          <div
-            class="sc-60e75bb7-2 elEEJs"
-          >
-            <div
-              class="sc-60e75bb7-0 dkGscC"
-              color="night"
-            >
-              <div
-                class="sc-149d3190-0 kZkAwb"
-                color="night"
-              />
-            </div>
-            <div
-              class="sc-60e75bb7-1 emyDrY"
-              color="night"
-            >
-              Tag Name
-            </div>
-          </div>
-        </div>
-      </div>
+        class="sc-3630b030-1 iydzSb"
+      />
     </div>
   </section>
 </div>

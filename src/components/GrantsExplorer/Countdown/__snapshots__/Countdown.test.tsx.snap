@@ -3,11 +3,7 @@
 exports[`Countdown renders Countdown unchanged 1`] = `
 <div>
   <div
-    class="sc-ba3887ec-0 jyWTDZ"
-  >
-    <div
-      class="sc-149d3190-0 dbfZaQ"
-    />
-  </div>
+    class="sc-2b7f6805-0 VMhNh"
+  />
 </div>
 `;

@@ -2,49 +2,45 @@
 
 exports[`ProcessingSocialLoginShelf renders correctly 1`] = `
 <div
-  className="sc-a856124b-0 chOtxT"
+  className="sc-98d6230a-0 dSCXpR"
 >
   <div
-    className="sc-a856124b-1 iGWUnQ"
+    className="sc-98d6230a-1 jnjmjn"
   >
     <h1
-      className="sc-a856124b-2 horsa-D"
+      className="sc-98d6230a-2 kUoAbc"
     >
       Finishing social login
     </h1>
     <div
-      className="sc-a856124b-3 cwDClW"
+      className="sc-98d6230a-3 ketnKc"
     >
       <div
-        className="sc-60e75bb7-2 elEEJs"
+        className="sc-b51f94be-2 ioudJW"
       >
         <div
-          className="sc-60e75bb7-0 dkGscC"
+          className="sc-b51f94be-0 cfTHcJ"
           color="night"
         >
           <div
-            className="sc-149d3190-0 eIDYrK"
+            className="sc-3ba9b100-0 eOAxiH"
             color="night"
           />
         </div>
       </div>
       <p
-        className="sc-a856124b-4 gvwQpV"
+        className="sc-98d6230a-4 exparC"
       >
         This will only take a moment…
       </p>
     </div>
   </div>
   <div
-    className="sc-a856124b-5 ebUjMG"
+    className="sc-a4dcdd4-0 fWeIMA sc-98d6230a-5 kzMenh"
   >
     <div
-      className="sc-905953ce-0 ejRGvt"
-    >
-      <div
-        className="sc-905953ce-1 bSeZcZ"
-      />
-    </div>
+      className="sc-a4dcdd4-1 xZsTa"
+    />
   </div>
 </div>
 `;

@@ -2,14 +2,14 @@
 
 exports[`Icon renders correctly 1`] = `
 <div
-  className="sc-60e75bb7-2 cdqnon"
+  className="sc-b51f94be-2 kveGyO"
 >
   <div
-    className="sc-60e75bb7-0 jSePiH"
+    className="sc-b51f94be-0 gRFOxO"
     color="white"
   >
     <div
-      className="sc-149d3190-0 eNAwEa"
+      className="sc-3ba9b100-0 cPKgYP"
       color="white"
     />
   </div>
