@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { ARTIFACT, PROJECT } from '@gql'
 
 export const INSERT_GRANTS = gql`
   mutation insert_Grants($objects: [Grants_insert_input!]!) {
@@ -28,50 +29,10 @@ export const GET_ADJACENT_GRANT = gql`
   }
 `
 
-export const LOAD_GRANTS = gql`
-  fragment Artifact on Artifacts {
-    id
-    name
-    description
-    artwork
-    video
-    edition
-    blockchainAddress
-    dateMinting
-    token
-    createdAt
-  }
-  fragment User on Users {
-    id
-    firstName
-    lastName
-    artizenHandle
-    twitterHandle
-    website
-    profileImage
-    publicAddress
-  }
-  fragment Member on ProjectMembers {
-    id
-    type
-    user {
-      ...User
-    }
-  }
-  fragment Project on Projects {
-    id
-    impact
-    impactTags
-    logline
-    description
-    creationDate
-    completionDate
-    walletAddress
-    title
-    members {
-      ...Member
-    }
-  }
+export const GRANT = gql`
+  ${ARTIFACT}
+  ${PROJECT}
+
   fragment Grant on Grants {
     id
     date
@@ -92,7 +53,10 @@ export const LOAD_GRANTS = gql`
       }
     }
   }
+`
 
+export const LOAD_GRANTS = gql`
+  ${GRANT}
   query loadGrants($where: Grants_bool_exp, $order_by: [Grants_order_by!], $limit: Int, $offset: Int) {
     Grants(where: $where, order_by: $order_by, limit: $limit, offset: $offset) {
       ...Grant
@@ -101,11 +65,11 @@ export const LOAD_GRANTS = gql`
 `
 
 export const UPDATE_GRANTS = gql`
+  ${GRANT}
   mutation updateGrants($_set: Grants_set_input, $where: Grants_bool_exp!) {
     update_Grants(_set: $_set, where: $where) {
       returning {
-        id
-        status
+        ...Grant
       }
     }
   }

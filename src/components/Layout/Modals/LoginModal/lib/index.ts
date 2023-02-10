@@ -37,9 +37,7 @@ const useWalletConnect = () => {
       const { message } = challenge
 
       const signature = await signMessageAsync({ message })
-      const signinResponse = await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
-
-      console.log('signinResponse  ', signinResponse)
+      await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
 
       setConnecting(false)
       // Force reload due to JWT is not available or is still linked to old session when first created. Wagmi renders an error when the smart contracts are called.

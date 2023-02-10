@@ -1,19 +1,19 @@
-import { ArtizenArtifactsAbi, GrantsAbi } from '@contracts'
+import { ARTIZEN_TIMEZONE, useSmartContracts } from '@lib'
 import { BigNumber, ethers } from 'ethers'
-import { useAccount, useContract, useSigner } from 'wagmi'
-import { IGrantFragment } from '@types'
-import { UPDATE_GRANTS, UPDATE_ARTIFACTS, GET_USERS_AND_CURATORS } from '@gql'
-import { useMutation, useLazyQuery } from '@apollo/client'
+import { useRouter } from 'next/router'
+import { useAccount } from 'wagmi'
+import { UPDATE_GRANTS, UPDATE_ARTIFACTS } from '@gql'
+import { useMutation } from '@apollo/client'
+import publishArtifact from '../publishArtifact'
 import moment from 'moment-timezone'
-import { assert, ARTIZEN_TIMEZONE } from '@lib'
-import publishArtifact from './publishArtifact'
+import { IGrantFragment } from '@types'
 
-export const useGrant = () => {
-  const { isConnected, address } = useAccount()
-  const { data: signer } = useSigner()
+export const usePublishGrant = () => {
+  const { address } = useAccount()
+  const { push } = useRouter()
+  const { nftContract, grantsContract, grantContractAddress, nftContractAddress } = useSmartContracts()
   const [updateGrant, { error: updatingGrantError }] = useMutation(UPDATE_GRANTS)
   const [updateArtifact, { error: updatingArtifactsError }] = useMutation(UPDATE_ARTIFACTS)
-  const [getUser] = useLazyQuery(GET_USERS_AND_CURATORS)
 
   if (updatingGrantError) {
     throw new Error('Updating Grant Error, error= ', updatingGrantError)
@@ -22,28 +22,6 @@ export const useGrant = () => {
   if (updatingArtifactsError) {
     throw new Error('Updating Grant Error, error= ', updatingArtifactsError)
   }
-
-  if (isConnected) {
-    console.log('isConnected   ', isConnected)
-  }
-
-  const nftContractAddress = assert(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 'NEXT_PUBLIC_NFT_CONTRACT_ADDRESS')
-  const grantContractAddress = assert(
-    process.env.NEXT_PUBLIC_GRANTS_CONTRACT_ADDRESS,
-    'NEXT_PUBLIC_GRANTS_CONTRACT_ADDRESS',
-  )
-
-  const nftContract = useContract({
-    address: nftContractAddress,
-    abi: ArtizenArtifactsAbi,
-    signerOrProvider: signer,
-  })
-
-  const grantsContract = useContract({
-    address: grantContractAddress,
-    abi: GrantsAbi,
-    signerOrProvider: signer,
-  })
 
   const mintNFTs = async (grant: IGrantFragment) => {
     // map artifacts data
@@ -148,8 +126,6 @@ export const useGrant = () => {
     //updating NFTs
     const artifactsToUpdate = grant.submission?.artifacts.map(({ id }, index) => {
       const token = latestTokenId.sub(index).toString()
-      console.log('index   ', index)
-      console.log('latestTokenId.sub(index)   ', token)
       const data = {
         where: {
           id: {
@@ -164,72 +140,14 @@ export const useGrant = () => {
       return data
     })
 
-    console.log('artifactsToUpdate  ', artifactsToUpdate)
-
     await updateArtifact({
       variables: {
         updates: artifactsToUpdate,
       },
     })
 
-    console.log('grant publised', updatingGrant)
-
-    alert('Grant publish')
+    push(`/admin/grants/${grant.id}`)
   }
 
-  const sendRewards = async (grantId: number, winnerAddress: string) => {
-    const grantTransaction = await grantsContract?.sendRewards(grantId, winnerAddress)
-    await grantTransaction.wait()
-
-    // get final grant data to update grant record in database
-    const grantData = await grantsContract?.grants(grantId)
-
-    console.log('grantData   ', grantData)
-
-    const { data } = await getUser({
-      variables: {
-        where: {
-          publicAddress: {
-            _eq: grantData.topDonor.toLowerCase(),
-          },
-        },
-      },
-    })
-
-    console.log('data getTopDonnorID ', data.Users[0].id)
-
-    const updatingGrant = await updateGrant({
-      variables: {
-        _set: {
-          status: 'rewarded',
-          topDonorWinnerId: data.Users[0].id,
-        },
-        where: {
-          blockchainId: {
-            _eq: String(grantId),
-          },
-        },
-      },
-    })
-
-    alert('Grant ended')
-  }
-
-  const donate = async (grantId: number, amount: string) => {
-    const grantTransaction = await grantsContract?.donate(grantId, ethers.utils.parseEther(amount), {
-      value: ethers.utils.parseEther(amount),
-    })
-    const returnTx = await grantTransaction.wait()
-    return returnTx
-  }
-  //sendRewards
-
-  const cancelGrant = async (grantId: number) => {
-    const grantTransaction = await grantsContract?.cancelGrant(grantId)
-    await grantTransaction.wait()
-
-    alert('Grant canceled')
-  }
-
-  return { publish, cancelGrant, donate, sendRewards }
+  return { publish }
 }
