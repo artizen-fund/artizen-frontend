@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useConnect, useSignMessage, Connector, useDisconnect, useAccount } from 'wagmi'
 import { useRouter } from 'next/router'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { useAuthRequestChallengeEvm } from '@moralisweb3/next'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
-import { assertInt, getWagmiClient } from '@lib'
+import { assertInt, getWagmiClient, LayoutContext } from '@lib'
 import { signIn } from 'next-auth/react'
 
 const useWalletConnect = () => {
+  const { toggleModal } = useContext(LayoutContext)
   const [connecting, setConnecting] = useState(false)
   const { connectAsync } = useConnect()
   const { isConnected } = useAccount()
@@ -50,9 +51,13 @@ const useWalletConnect = () => {
     }
   }
   // new MetaMaskConnector({ chains: [goerli] })
-  const connectMetamask = () => connectWallet(new MetaMaskConnector({ chains }))
+  const connectMetamask = () => {
+    toggleModal?.('connecting')
+    connectWallet(new MetaMaskConnector({ chains }))
+  }
 
-  const connectOtherWallet = () =>
+  const connectOtherWallet = () => {
+    toggleModal?.('connecting')
     connectWallet(
       new WalletConnectConnector({
         chains,
@@ -61,6 +66,7 @@ const useWalletConnect = () => {
         },
       }),
     )
+  }
 
   return { connectMetamask, connectOtherWallet, connecting }
 }

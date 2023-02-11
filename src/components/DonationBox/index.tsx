@@ -23,6 +23,7 @@ interface IDonationBox {
 const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { status } = useSession()
   const { disconnectAndSignout } = useFullSignOut()
+  const { toggleModal } = useContext(LayoutContext)
 
   const { donate } = useGrant()
   const [sending, setSending] = useState<boolean>(false)
