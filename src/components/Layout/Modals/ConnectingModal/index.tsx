@@ -6,6 +6,8 @@ import { typography, breakpoint, palette } from '@theme'
 
 const ConnectingModal = () => {
   const { toggleModal } = useContext(LayoutContext)
+  // todo: it would be good if we could automatically detect when
+  //   user turns down Metamask or WalletConnect
   return (
     <Wrapper>
       <Image light="/assets/illustrations/guide/05.png" dark="/assets/illustrations/guide/05-dark.png" />
