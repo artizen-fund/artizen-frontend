@@ -1,5 +1,4 @@
-export * from './userFragments'
-
+export * from './fragments'
 export * from './checkForExistingArtizenHandle'
 export * from './createUser'
 export * from './getUser'

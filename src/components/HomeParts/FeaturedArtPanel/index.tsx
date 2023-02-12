@@ -5,10 +5,10 @@ import 'react-slidedown/lib/slidedown.css'
 import { Icon, TableAvatar, Shimmer, Button } from '@components'
 import { rgba, formatDate, ARTIZEN_CURRENT_SEASON_NAME } from '@lib'
 import { palette, typography } from '@theme'
-import { IGrantsWithProjectFragment } from '@types'
+import { IGrantFragment } from '@types'
 
 type IFeaturedArtPanel = {
-  grant?: IGrantsWithProjectFragment
+  grant?: IGrantFragment
   loading: boolean
 }
 

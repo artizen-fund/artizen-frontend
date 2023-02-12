@@ -6,7 +6,7 @@ import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
 import {
   LayoutContext,
-  useGrant,
+  useDonate,
   trackEventF,
   intercomEventEnum,
   MINIMUM_DONATION_AMOUNT,
@@ -25,7 +25,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { disconnectAndSignout } = useFullSignOut()
   const { toggleModal } = useContext(LayoutContext)
 
-  const { donate } = useGrant()
+  const { donate } = useDonate()
   const [sending, setSending] = useState<boolean>(false)
   const { setVisibleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)

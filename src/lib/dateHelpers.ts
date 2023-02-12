@@ -1,5 +1,5 @@
 import { monthNames } from '@copy/common'
-import { IGrantsWithProjectFragment } from '@types'
+import { IGrantFragment } from '@types'
 
 // we're storing some dates as yyyy-mm-dd, convert to pretty string
 export const formatStringDate = (dumbDate: string) => {
@@ -24,7 +24,7 @@ export const getDaysAgoFromDate = (start: number) => {
 
 const GMT_OFFSET = `0800`
 
-export const isCurrentGrant = (grant?: IGrantsWithProjectFragment) => {
+export const isCurrentGrant = (grant?: IGrantFragment) => {
   if (!grant) return false
   const now = new Date()
   const grantStarts = new Date(`${grant.startingDate}-${GMT_OFFSET}`)
