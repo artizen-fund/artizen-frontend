@@ -32,11 +32,11 @@ const Modals = () => {
     if (!visibleModal) {
       setVisible(false)
       setTimeout(() => setDisplayedVisibleModal(undefined), ANIMATION_TIMING * 1000)
-      setLocked?.(false)
+      setLocked(false)
     } else {
       setVisible(true)
       setDisplayedVisibleModal(visibleModal)
-      setLocked?.(visibleModal === 'createProfile')
+      setLocked(visibleModal === 'createProfile')
     }
   }, [visibleModal])
 
@@ -49,8 +49,10 @@ const Modals = () => {
       case 'confirmTransaction':
         return <ConfirmTransactionModal />
       case 'processTransaction':
+        setLocked(true)
         return <ProcessTransactionModal />
       case 'shareTransaction':
+        setLocked(false)
         return <ShareTransactionModal />
       case 'login':
         return <LoginModal />

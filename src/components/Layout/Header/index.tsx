@@ -24,7 +24,7 @@ const Header = () => {
             <Logo />
           </Link>
           <MobileNavButton
-            onClick={() => toggleShelf?.('howItWorks')}
+            onClick={() => toggleShelf('howItWorks')}
             glyph={glyphKey.arrow}
             glyphOnRight
             outline
@@ -53,7 +53,7 @@ const Header = () => {
         </Items>
       </Wrapper>
       <Shelf shelfKey="session" {...{ shadowVisible }}>
-        <SessionShelf hideShelf={() => toggleShelf?.()} />
+        <SessionShelf hideShelf={() => toggleShelf()} />
       </Shelf>
       <Shelf shelfKey="howItWorks" {...{ shadowVisible }}>
         <HowItWorks />

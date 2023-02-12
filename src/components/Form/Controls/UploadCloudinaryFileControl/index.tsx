@@ -27,7 +27,7 @@ const UploadCloudinaryFileControl = ({
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const showModal = () => {
-    setVisibleModalWithAttrs?.('media', {
+    setVisibleModalWithAttrs('media', {
       videoFile: data,
     })
   }

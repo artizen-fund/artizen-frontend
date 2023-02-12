@@ -110,7 +110,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
   return (
     <Wrapper>
       <ScrollPoint id="donation-box" />
-      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal?.('login')} />}
+      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
         <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={sending}>
           <Button

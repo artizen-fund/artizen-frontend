@@ -16,7 +16,7 @@ const FeaturedArt = ({ grant, loading }: IFeaturedArt) => {
 
   const showModal = () => {
     if (videoFile) {
-      setVisibleModalWithAttrs?.('media', {
+      setVisibleModalWithAttrs('media', {
         videoFile,
       })
     }

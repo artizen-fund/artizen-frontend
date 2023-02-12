@@ -47,7 +47,7 @@ const UploadFileControl = ({
   }
 
   const showModal = () => {
-    setVisibleModalWithAttrs?.(
+    setVisibleModalWithAttrs(
       'media',
       fileType(selectedFile) === 'image'
         ? {

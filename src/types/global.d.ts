@@ -34,16 +34,6 @@ declare global {
     | 'processTransaction'
     | 'shareTransaction'
 
-  type DonationStage =
-    | 'setAmount'
-    | 'login'
-    | 'paymentFiat'
-    | 'paymentCryptoPick'
-    | 'paymentCryptoConnect'
-    | 'paymentFiatAddress'
-    | 'processCrypto'
-    | 'confirmation'
-
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
   type Donation = {

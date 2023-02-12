@@ -6,7 +6,7 @@ const Onionskin = () => {
   const { visibleShelf, toggleShelf, visibleModal, toggleModal, locked } = useContext(LayoutContext)
   const onClick = () => {
     if (locked) return
-    toggleShelf?.()
+    toggleShelf()
     toggleModal()
   }
   return (
