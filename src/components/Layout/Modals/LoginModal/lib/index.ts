@@ -50,12 +50,12 @@ const useWalletConnect = () => {
   }
   // new MetaMaskConnector({ chains: [goerli] })
   const connectMetamask = () => {
-    toggleModal?.('connecting')
+    toggleModal('connecting')
     connectWallet(new MetaMaskConnector({ chains }))
   }
 
   const connectOtherWallet = () => {
-    toggleModal?.('connecting')
+    toggleModal('connecting')
     connectWallet(
       new WalletConnectConnector({
         chains,

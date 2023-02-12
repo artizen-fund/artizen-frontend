@@ -71,7 +71,7 @@ const Modals = () => {
     <Wrapper {...{ visible }}>
       <Content>
         {renderSwitch(visibleModal)}
-        {!locked && <CloseButton onClick={() => toggleModal?.()} {...{ visible }} />}
+        {!locked && <CloseButton onClick={() => toggleModal()} {...{ visible }} />}
       </Content>
     </Wrapper>
   )

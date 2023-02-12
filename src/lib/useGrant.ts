@@ -359,7 +359,6 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
     const grantTransaction = await grantsContract?.donate(grantId, ethers.utils.parseEther(amount), {
       value: ethers.utils.parseEther(amount),
     })
-    toggleModal?.('processTransaction')
     console.log('getting return transaction')
     const returnTx = await grantTransaction.wait()
     console.log('returning transaction')

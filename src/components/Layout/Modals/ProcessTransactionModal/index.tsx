@@ -1,10 +1,8 @@
-import { useContext } from 'react'
 import styled from 'styled-components'
-import { LayoutContext, rgba } from '@lib'
+import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 
 const ProcessTransactionModal = () => {
-  const { toggleModal } = useContext(LayoutContext)
   // todo: it would be good if we could automatically detect when
   //   user turns down Metamask or WalletConnect
   return (

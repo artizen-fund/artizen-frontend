@@ -13,7 +13,7 @@ const ConnectingModal = () => {
       <Image light="/assets/illustrations/guide/05.png" dark="/assets/illustrations/guide/05-dark.png" />
       <h1>Confirm the connection in your wallet</h1>
       <p>When you’re ready, confirm the connection in your wallet.</p>
-      <CloseButton onClick={() => toggleModal?.()} />
+      <CloseButton onClick={() => toggleModal()} />
     </Wrapper>
   )
 }

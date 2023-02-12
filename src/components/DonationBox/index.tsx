@@ -51,7 +51,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       // under minimum
       return
     }
-    toggleModal?.('confirmTransaction')
+    toggleModal('confirmTransaction')
     setSending(true)
     trackEventF(intercomEventEnum.DONATION_START, {
       amount: data.donationAmount.toString(),
@@ -101,6 +101,8 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       amount: data.donationAmount.toString(),
       grantblockchainId: blockchainId,
     })
+
+    toggleModal('shareTransaction')
 
     setSending(false)
   }

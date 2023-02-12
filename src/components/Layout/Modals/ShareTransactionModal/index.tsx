@@ -84,7 +84,7 @@ const ShareTransactionModal = () => {
           </Button>
         </CopyToClipboard>
       </Buttons>
-      <CloseButton onClick={() => toggleModal?.()} />
+      <CloseButton onClick={() => toggleModal()} />
     </Wrapper>
   )
 }

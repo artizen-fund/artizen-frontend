@@ -21,7 +21,7 @@ interface ILayoutContext {
   toggleShelf?: (shelf?: HeaderShelfType) => void
   visibleModal?: ModalType
   setVisibleModal?: (modal: ModalType) => void
-  toggleModal?: (modal?: ModalType) => void
+  toggleModal: (modal?: ModalType) => void
   setVisibleModalWithAttrs?: (modalType: ModalType, options: any) => void
   modalAttrs?: any
   locked?: boolean
@@ -29,7 +29,10 @@ interface ILayoutContext {
   // TODO: modalAttrs?: MediaAttrs | whatever-else
 }
 
-export const LayoutContext = createContext<ILayoutContext>({ donationStage: 'setAmount' })
+export const LayoutContext = createContext<ILayoutContext>({
+  donationStage: 'setAmount',
+  toggleModal: () => void 0,
+})
 
 export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const loggedInUser = useReactiveVar(loggedInUserVar)

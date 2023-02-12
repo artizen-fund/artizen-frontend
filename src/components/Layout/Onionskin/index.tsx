@@ -7,7 +7,7 @@ const Onionskin = () => {
   const onClick = () => {
     if (locked) return
     toggleShelf?.()
-    toggleModal?.()
+    toggleModal()
   }
   return (
     <Wrapper className={!!visibleShelf || !!visibleModal ? 'visible' : ''} onClick={onClick} isModal={!!visibleModal} />
