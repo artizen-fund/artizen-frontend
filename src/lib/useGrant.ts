@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { ArtizenArtifactsAbi, GrantsAbi } from '@contracts'
 import { BigNumber, ethers } from 'ethers'
 import { useAccount, useContract, useSigner } from 'wagmi'
@@ -6,9 +7,10 @@ import { IGrantsWithProjectFragment } from '@types'
 import { UPDATE_GRANTS, UPDATE_ARTIFACTS, GET_USERS_AND_CURATORS } from '@gql'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import moment from 'moment-timezone'
-import { ARTIZEN_TIMEZONE } from '@lib'
+import { ARTIZEN_TIMEZONE, LayoutContext } from '@lib'
 
 export const useGrant = () => {
+  const { toggleModal } = useContext(LayoutContext)
   const { isConnected, address } = useAccount()
   const { data: signer } = useSigner()
   const [updateGrant, { error: updatingGrantError }] = useMutation(UPDATE_GRANTS)
@@ -353,10 +355,14 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
   }
 
   const donate = async (grantId: number, amount: string) => {
+    console.log('getting transaction')
     const grantTransaction = await grantsContract?.donate(grantId, ethers.utils.parseEther(amount), {
       value: ethers.utils.parseEther(amount),
     })
+    toggleModal?.('processTransaction')
+    console.log('getting return transaction')
     const returnTx = await grantTransaction.wait()
+    console.log('returning transaction')
     return returnTx
   }
   //sendRewards

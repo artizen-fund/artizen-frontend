@@ -1,6 +1,17 @@
 import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { CloseButton, CreateProfile, Share, AlertModal, MediaModal, LoginModal, ConnectingModal } from '@components'
+import {
+  CloseButton,
+  CreateProfile,
+  Share,
+  AlertModal,
+  MediaModal,
+  LoginModal,
+  ConnectingModal,
+  ConfirmTransactionModal,
+  ProcessTransactionModal,
+  ShareTransactionModal,
+} from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
 
@@ -35,6 +46,12 @@ const Modals = () => {
     switch (visibleModal) {
       case 'connecting':
         return <ConnectingModal />
+      case 'confirmTransaction':
+        return <ConfirmTransactionModal />
+      case 'processTransaction':
+        return <ProcessTransactionModal />
+      case 'shareTransaction':
+        return <ShareTransactionModal />
       case 'login':
         return <LoginModal />
       case 'createProfile':
