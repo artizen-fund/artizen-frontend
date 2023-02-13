@@ -15,7 +15,7 @@ const AlertModal = ({ headline, message, children, ...props }: IAlertModal) => {
 
   return (
     <Wrapper {...props}>
-      <CloseButton onClick={() => toggleModal?.()} />
+      <CloseButton onClick={() => toggleModal()} />
       <Headline>{headline}</Headline>
       <Message>{message}</Message>
       {children}

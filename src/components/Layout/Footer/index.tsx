@@ -67,7 +67,7 @@ const Footer = () => {
               <Button onClick={() => scrollToDonationBox()} stretch inverted level={1} glyph="donate">
                 Donate
               </Button>
-              <Button onClick={() => setVisibleModal?.('share')} stretch inverted outline level={1}>
+              <Button onClick={() => setVisibleModal('share')} stretch inverted outline level={1}>
                 Share Now
               </Button>
             </Buttons>

@@ -24,7 +24,7 @@ const CreateProfile = () => {
     try {
       await createProfile()
       setProcessing(false)
-      toggleModal?.()
+      toggleModal()
     } catch (error) {
       setProcessing(false)
       console.error('Error saving new user profile', error)
@@ -36,7 +36,7 @@ const CreateProfile = () => {
   ) : (
     <Wrapper visible={visibleModal === 'createProfile'}>
       <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
-        <CloseButton onClick={() => toggleModal?.()} />
+        <CloseButton onClick={() => toggleModal()} />
 
         <Copy>
           <Headline>{copy.headline}</Headline>

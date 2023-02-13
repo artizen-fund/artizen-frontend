@@ -23,6 +23,7 @@ interface IDonationBox {
 const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { status } = useSession()
   const { disconnectAndSignout } = useFullSignOut()
+  const { toggleModal } = useContext(LayoutContext)
 
   const { donate } = useDonate()
   const [sending, setSending] = useState<boolean>(false)
@@ -50,6 +51,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       // under minimum
       return
     }
+    toggleModal('confirmTransaction')
     setSending(true)
     trackEventF(intercomEventEnum.DONATION_START, {
       amount: data.donationAmount.toString(),
@@ -100,13 +102,15 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       grantblockchainId: blockchainId,
     })
 
+    toggleModal('shareTransaction')
+
     setSending(false)
   }
 
   return (
     <Wrapper>
       <ScrollPoint id="donation-box" />
-      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal?.('login')} />}
+      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
         <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={sending}>
           <Button
