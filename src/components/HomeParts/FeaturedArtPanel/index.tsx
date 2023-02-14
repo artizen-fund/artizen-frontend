@@ -69,7 +69,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <P>{grant?.submission?.project?.impact}</P>
           <SlideDown closed={!closed}>
             <StyledButton level={2} onClick={() => setClosed(false)} stretch outline>
-              view more
+              View More
             </StyledButton>
           </SlideDown>
         </>
@@ -118,7 +118,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
             ))}
           </List>
           <StyledButton level={2} onClick={() => setClosed(true)} stretch outline>
-            view less
+            View Less
           </StyledButton>
         </ViewMore>
       </CopyWrapper>
