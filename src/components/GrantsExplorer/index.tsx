@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Countdown from './Countdown'
 import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Shimmer, DonationBox } from '@components'
@@ -13,7 +12,6 @@ interface IGrantsExplorer {
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
-  const { push } = useRouter()
   const [amountRaised, setAmountRaised] = useState(0)
 
   const isCurrent = isCurrentGrant(grant)
