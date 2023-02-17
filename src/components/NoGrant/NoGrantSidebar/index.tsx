@@ -48,10 +48,11 @@ const GrantsExplorer = () => {
           </Button>
         </Bar>
         <Body>
-          <Header>A project will be available here any minute now</Header>
+          <Header>Season #02 coming soon</Header>
 
           <Message>
-            You can still apply right now to be considered for upcoming funding and see your project here.
+            Season #01 raised $30,000+ for creators around the world. Apply today for season #02 to get our project
+            funded.
           </Message>
 
           <Button href="https://artizen.typeform.com/apply">Apply for funding</Button>
