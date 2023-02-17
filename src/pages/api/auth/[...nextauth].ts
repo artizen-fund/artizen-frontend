@@ -15,9 +15,6 @@ export const authOptions: NextAuthOptions = {
       const userWithRole = user as any
       const tokenRole = token as any
 
-      console.log('userWRole  to start w  ', userWithRole)
-      console.log('tokenRole  to start w  ', tokenRole)
-
       //User is only defined on server render, but the callback runs with client session calls
 
       const candidateUser = {

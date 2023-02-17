@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useConnect, useSignMessage, Connector, useDisconnect, useAccount } from 'wagmi'
 import { useRouter } from 'next/router'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { useAuthRequestChallengeEvm } from '@moralisweb3/next'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
-import { assertInt, getWagmiClient } from '@lib'
+import { assertInt, getWagmiClient, LayoutContext } from '@lib'
 import { signIn } from 'next-auth/react'
 
 const useWalletConnect = () => {
+  const { toggleModal } = useContext(LayoutContext)
   const [connecting, setConnecting] = useState(false)
   const { connectAsync } = useConnect()
   const { isConnected } = useAccount()
@@ -37,9 +38,7 @@ const useWalletConnect = () => {
       const { message } = challenge
 
       const signature = await signMessageAsync({ message })
-      const signinResponse = await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
-
-      console.log('signinResponse  ', signinResponse)
+      await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
 
       setConnecting(false)
       // Force reload due to JWT is not available or is still linked to old session when first created. Wagmi renders an error when the smart contracts are called.
@@ -50,9 +49,13 @@ const useWalletConnect = () => {
     }
   }
   // new MetaMaskConnector({ chains: [goerli] })
-  const connectMetamask = () => connectWallet(new MetaMaskConnector({ chains }))
+  const connectMetamask = () => {
+    toggleModal('connecting')
+    connectWallet(new MetaMaskConnector({ chains }))
+  }
 
-  const connectOtherWallet = () =>
+  const connectOtherWallet = () => {
+    toggleModal('connecting')
     connectWallet(
       new WalletConnectConnector({
         chains,
@@ -61,6 +64,7 @@ const useWalletConnect = () => {
         },
       }),
     )
+  }
 
   return { connectMetamask, connectOtherWallet, connecting }
 }

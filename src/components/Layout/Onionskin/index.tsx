@@ -6,8 +6,8 @@ const Onionskin = () => {
   const { visibleShelf, toggleShelf, visibleModal, toggleModal, locked } = useContext(LayoutContext)
   const onClick = () => {
     if (locked) return
-    toggleShelf?.()
-    toggleModal?.()
+    toggleShelf()
+    toggleModal()
   }
   return (
     <Wrapper className={!!visibleShelf || !!visibleModal ? 'visible' : ''} onClick={onClick} isModal={!!visibleModal} />

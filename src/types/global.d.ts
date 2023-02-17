@@ -23,17 +23,16 @@ declare global {
 
   type HeaderShelfType = 'session' | 'howItWorks' | 'donate'
 
-  type ModalType = 'createProfile' | 'share' | 'alert' | 'media' | 'login'
-
-  type DonationStage =
-    | 'setAmount'
+  type ModalType =
+    | 'createProfile'
+    | 'share'
+    | 'alert'
+    | 'media'
     | 'login'
-    | 'paymentFiat'
-    | 'paymentCryptoPick'
-    | 'paymentCryptoConnect'
-    | 'paymentFiatAddress'
-    | 'processCrypto'
-    | 'confirmation'
+    | 'connecting'
+    | 'confirmTransaction'
+    | 'processTransaction'
+    | 'shareTransaction'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 

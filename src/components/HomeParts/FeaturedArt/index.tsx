@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { palette, breakpoint } from '@theme'
 import { Shimmer } from '@components'
 import { rgba, LayoutContext } from '@lib'
-import { IGrantsWithProjectFragment } from '@types'
+import { IGrantFragment } from '@types'
 
 type IFeaturedArt = {
-  grant?: IGrantsWithProjectFragment
+  grant?: IGrantFragment
   loading: boolean
 }
 
@@ -16,7 +16,7 @@ const FeaturedArt = ({ grant, loading }: IFeaturedArt) => {
 
   const showModal = () => {
     if (videoFile) {
-      setVisibleModalWithAttrs?.('media', {
+      setVisibleModalWithAttrs('media', {
         videoFile,
       })
     }

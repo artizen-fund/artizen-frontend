@@ -5,11 +5,11 @@ import moment from 'moment-timezone'
 import { Button } from '@components'
 import { palette, typography } from '@theme'
 import { GET_ADJACENT_GRANT } from '@gql'
-import { IGrantsWithProjectFragment, IGetAdjacentGrantQuery } from '@types'
+import { IGrantFragment, IGetAdjacentGrantQuery } from '@types'
 import { rgba, formatDate, isCurrentGrant, ARTIZEN_TIMEZONE } from '@lib'
 
 interface IGrantsNavigator {
-  grant: IGrantsWithProjectFragment
+  grant: IGrantFragment
 }
 
 const GrantsNavigator = ({ grant }: IGrantsNavigator) => {

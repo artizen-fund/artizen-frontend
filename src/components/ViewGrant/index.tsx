@@ -3,15 +3,17 @@ import styled from 'styled-components'
 import moment from 'moment-timezone'
 import { Button, Spinner } from '@components'
 import GrantLayout from './GrantLayout'
-import { useGrant, ARTIZEN_TIMEZONE } from '@lib'
-import { IGrantsWithProjectFragment } from '@types'
+import { useSendRewards, usePublishGrant, ARTIZEN_TIMEZONE } from '@lib'
+import { IGrantFragment } from '@types'
 
 interface IViewGrantProps {
-  grant?: IGrantsWithProjectFragment
+  grant?: IGrantFragment
 }
 
 const ViewGrant = ({ grant }: IViewGrantProps) => {
-  const { publish, endGrant } = useGrant()
+  const { sendRewards } = useSendRewards()
+  const { publish } = usePublishGrant()
+  // const { sendTopDonor } = useSendGrantNotification()
   const [processing, setProcessing] = useState<boolean>()
 
   if (!grant) {
@@ -45,12 +47,14 @@ const ViewGrant = ({ grant }: IViewGrantProps) => {
           stretch
           onClick={async () => {
             setProcessing(true)
-            endGrant(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress || '')
+            sendRewards(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress || '')
+            // send notifications
+            // sendTopDonor(Number(grant?.blockchainId), grant?.submission?.project?.walletAddress)
             setProcessing(true)
           }}
           level={2}
         >
-          {processing ? 'Processing' : 'End'}
+          {processing ? 'Processing' : 'Send Rewards'}
         </Button>
       </Buttons>
     </>

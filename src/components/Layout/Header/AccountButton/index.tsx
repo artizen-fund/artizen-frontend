@@ -31,9 +31,9 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     if (status === 'loading') {
       return
     } else if (!loggedInUser) {
-      setVisibleModal?.('login')
+      setVisibleModal('login')
     } else {
-      toggleShelf?.('session')
+      toggleShelf('session')
     }
   }
 
@@ -54,7 +54,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       !!loggedInUser &&
       (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName || !loggedInUser.artizenHandle)
     ) {
-      setVisibleModal?.('createProfile')
+      setVisibleModal('createProfile')
     }
   }, [loggedInUser])
 

@@ -6,7 +6,7 @@ import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
 import {
   LayoutContext,
-  useGrant,
+  useDonate,
   trackEventF,
   intercomEventEnum,
   MINIMUM_DONATION_AMOUNT,
@@ -23,8 +23,9 @@ interface IDonationBox {
 const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { status } = useSession()
   const { disconnectAndSignout } = useFullSignOut()
+  const { toggleModal } = useContext(LayoutContext)
 
-  const { donate } = useGrant()
+  const { donate } = useDonate()
   const [sending, setSending] = useState<boolean>(false)
   const { setVisibleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)
@@ -50,6 +51,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       // under minimum
       return
     }
+    toggleModal('confirmTransaction')
     setSending(true)
     trackEventF(intercomEventEnum.DONATION_START, {
       amount: data.donationAmount.toString(),
@@ -68,7 +70,10 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       }
     } catch (e: any) {
       const errors: Array<ErrorObject> = []
-      console.log('TX error code', e.code)
+      console.warn('TX error code', e.code)
+
+      console.warn('WALLET_ERROR_UNSUPPORTED_OPERATION  ', WALLET_ERROR_UNSUPPORTED_OPERATION)
+      console.warn('e.code  ', e.code === WALLET_ERROR_UNSUPPORTED_OPERATION)
 
       const message =
         e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
@@ -97,13 +102,15 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       grantblockchainId: blockchainId,
     })
 
+    toggleModal('shareTransaction')
+
     setSending(false)
   }
 
   return (
     <Wrapper>
       <ScrollPoint id="donation-box" />
-      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal?.('login')} />}
+      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
         <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={sending}>
           <Button

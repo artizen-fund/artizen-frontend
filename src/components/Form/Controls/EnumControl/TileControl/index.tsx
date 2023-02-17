@@ -41,24 +41,6 @@ const TileControl = ({
   )
 }
 
-{
-  /*
-        <Methods>
-          <Method onClick={() => setDonationMethod?.('usd')} selected={donationMethod === 'usd'}>
-            <Icon outline={donationMethod !== 'usd'} inverted level={1} glyph="creditCard" />
-            <div>Credit Card</div>
-            <SelectedCheck selected={donationMethod === 'usd'} />
-          </Method>
-
-          <Method onClick={() => setDonationMethod?.(undefined)} selected={donationMethod !== 'usd'}>
-            <Icon outline={donationMethod === 'usd'} inverted level={1} glyph="wallet" glyphOutline />
-            <div>Connect Wallet</div>
-            <SelectedCheck selected={donationMethod === undefined} />
-          </Method>
-        </Methods>
-*/
-}
-
 const Wrapper = styled.div<{ gridArea?: string }>`
   display: flex;
   flex-direction: row;

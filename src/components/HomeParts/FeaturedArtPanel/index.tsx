@@ -5,10 +5,10 @@ import 'react-slidedown/lib/slidedown.css'
 import { Icon, TableAvatar, Shimmer, Button } from '@components'
 import { rgba, formatDate, ARTIZEN_CURRENT_SEASON_NAME } from '@lib'
 import { palette, typography } from '@theme'
-import { IGrantsWithProjectFragment } from '@types'
+import { IGrantFragment } from '@types'
 
 type IFeaturedArtPanel = {
-  grant?: IGrantsWithProjectFragment
+  grant?: IGrantFragment
   loading: boolean
 }
 
@@ -69,7 +69,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
           <P>{grant?.submission?.project?.impact}</P>
           <SlideDown closed={!closed}>
             <StyledButton level={2} onClick={() => setClosed(false)} stretch outline>
-              view more
+              View More
             </StyledButton>
           </SlideDown>
         </>
@@ -118,7 +118,7 @@ const FeaturedArtPanel = ({ grant, loading }: IFeaturedArtPanel) => {
             ))}
           </List>
           <StyledButton level={2} onClick={() => setClosed(true)} stretch outline>
-            view less
+            View Less
           </StyledButton>
         </ViewMore>
       </CopyWrapper>

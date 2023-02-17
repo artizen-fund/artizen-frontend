@@ -27,15 +27,17 @@ export * from './useFormLocalStorage'
 export * from './usePreventTabClose'
 export * from './useReadContract'
 export * from './useTabbedInfo'
-export * from './useWriteContract'
 export * from './utilsCrypto'
 export * from './utilsServer'
 export * from './wagmiClient'
-export * from './useGrant'
 export * from './constants'
 export * from './useFullSignOut'
+export * from './useSmartContracts'
+export * from './useSendGrantNotification'
+export * from './useSendRewards'
+export * from './usePublishGrant'
+export * from './useDonate'
 
-// export * from './useDonation'
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.
  *  Something to do with a circular import.
  *  Possibly a webpack issue? Investigate… in the meantime, import using relative path (yuck).

@@ -17,6 +17,8 @@ import {
   Button,
   ApplyForFundingBlurb,
   Faq,
+  NoGrantArt,
+  NoGrantSidebar,
 } from '@components'
 import { rgba, ARTIZEN_TIMEZONE } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
@@ -28,7 +30,6 @@ type QueryCondition = Record<string, Record<string, string>>
 const GrantPage = () => {
   const {
     query: { blockchainId },
-    push,
   } = useRouter()
 
   const [conditions, setConditions] = useState<Array<QueryCondition>>([])
@@ -89,9 +90,6 @@ const GrantPage = () => {
       console.error('Error loading grant error', errorLoadingGrant)
       return
     }
-    if (!loading && typeof loadedGrantData?.Grants === 'object' && loadedGrantData?.Grants.length < 1) {
-      push('/404')
-    }
   }, [loading, errorLoadingGrant, loadedGrantData])
 
   const activeGrant = loadedGrantData?.Grants[0]
@@ -103,11 +101,18 @@ const GrantPage = () => {
         <h2>{header.subtitle}</h2>
       </Header>
       <StyledPagePadding>
-        <Wrapper>
-          <FeaturedArt grant={activeGrant} {...{ loading }} />
-          <FeaturedArtPanel grant={activeGrant} {...{ loading }} />
-          <GrantsExplorer grant={activeGrant} {...{ loading }} />
-        </Wrapper>
+        {!!activeGrant ? (
+          <Wrapper>
+            <FeaturedArt grant={activeGrant} {...{ loading }} />
+            <FeaturedArtPanel grant={activeGrant} {...{ loading }} />
+            <GrantsExplorer grant={activeGrant} {...{ loading }} />
+          </Wrapper>
+        ) : (
+          <Wrapper>
+            <NoGrantArt />
+            <NoGrantSidebar />
+          </Wrapper>
+        )}
       </StyledPagePadding>
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (
