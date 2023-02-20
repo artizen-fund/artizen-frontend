@@ -3,7 +3,6 @@ import { goerli, mainnet } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { InjectedConnector } from 'wagmi/connectors/injected'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { assert } from '@lib'
 
 export const getWagmiChains = () => {
@@ -21,20 +20,13 @@ export const getWagmiClient = () => {
     autoConnect: true,
     provider,
     connectors: [
-      new MetaMaskConnector({ chains }),
+      new InjectedConnector({ chains }),
       new WalletConnectConnector({
         chains,
         options: {
           qrcode: true,
         },
       }),
-      new InjectedConnector({
-        chains,
-        options: {
-          name: 'Injected',
-          shimDisconnect: true,
-      },
-    }),
     ],
     webSocketProvider,
   })
