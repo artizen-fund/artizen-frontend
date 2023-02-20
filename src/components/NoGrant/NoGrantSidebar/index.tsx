@@ -51,7 +51,7 @@ const GrantsExplorer = () => {
           <Header>Season #02 coming soon</Header>
 
           <Message>
-            Season #01 raised $30,000+ for creators around the world. Apply today for season #02 to get our project
+            Season #01 raised $30,000+ for creators around the world. Apply today for season #02 to get your project
             funded.
           </Message>
 
