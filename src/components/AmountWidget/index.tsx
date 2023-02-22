@@ -14,7 +14,7 @@ const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
   // todo: will we have text/typing input?
 
   const add = (n: number) => setAmount?.((amount as number) + n)
-
+  // Set the correct amount, in case it isn't already set or is an invalid value
   useEffect(() => {
     if (!amount || isNaN(amount) || amount < 0) setAmount?.(0)
   }, [amount])
@@ -30,6 +30,7 @@ const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
         <label>donation total</label>
       </AmountBox>
       <Buttons>
+      {/* Disabled state for the decrease button, depending on whether the amount is less than 10 */}
         <Button level={2} outline glyphOnly glyph="mathPlus" onClick={() => add(10)}>
           increase
         </Button>
