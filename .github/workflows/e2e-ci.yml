@@ -1,0 +1,21 @@
+name: 'Playwright Tests'
+on: [pull_request]
+jobs:
+  tests_e2e:
+    name: Run end-to-end tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: install dependencies
+        run: npm ci
+      - name: install playwright browsers
+        run: npx playwright install --with-deps
+      - name: run playwright tests
+        run: yarn test:e2e
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report
