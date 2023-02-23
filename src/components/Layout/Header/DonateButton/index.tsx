@@ -1,19 +1,20 @@
 import styled from 'styled-components'
 import { Button, Glyph } from '@components'
-import { glyphKey } from '@theme'
+import { useScrollToDonationBox } from '@lib'
 
-const DonateButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
+const DonateButton = ({ ...props }: SimpleComponentProps) => {
+  const scrollToDonationBox = useScrollToDonationBox()
+
   return (
-    <StyledButton glyph={active ? 'cross' : 'donate'} level={1} {...props} outline={active} glyphOnRight={active}>
-      {active && 'Close'}
-      {!active && 'Donate'}
+    <StyledButton onClick={() => scrollToDonationBox()} glyph="donate" level={1} {...props}>
+      Donate
     </StyledButton>
   )
 }
 
 const StyledButton = styled(props => <Button {...props} />)`
   @media only screen and (max-width: 413px) {
-    ${Glyph} {
+    ${() => Glyph} {
       display: none;
     }
   }

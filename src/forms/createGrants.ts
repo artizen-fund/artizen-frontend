@@ -1,8 +1,8 @@
 import { JsonSchema } from '@jsonforms/core'
-import { ARTIZEN_CURRENT_SEASON } from '@lib'
+import { ARTIZEN_CURRENT_SEASON, DEFAULT_GRANT_LENGTH_HOURS, DEFAULT_GRANT_GOAL_ETH } from '@lib'
 
 /* This is the data schema. See JSONForms documentation for more options. */
-//  properties
+
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
@@ -10,12 +10,17 @@ export const schema: JsonSchema = {
       title: 'Grant',
       type: 'object',
       properties: {
+        startingDate: {
+          type: 'string',
+          title: 'Date of Grant',
+        },
         length: {
-          type: 'integer',
-          title: 'Grant length in minutes', // TODO: switch to Hours after testing
+          type: 'number',
+          title: 'Grant length (hours)',
         },
         goal: {
-          type: 'integer',
+          type: 'number',
+          title: 'Goal (eth)',
         },
         season: {
           type: 'integer',
@@ -29,23 +34,26 @@ export const schema: JsonSchema = {
       properties: {
         title: {
           type: 'string',
+          minLength: 3,
+          maxLength: 255,
         },
-        longline: {
+        logline: {
           type: 'string',
-        },
-        description: {
-          type: 'string',
+          minLength: 3,
+          maxLength: 140,
         },
         impact: {
           type: 'string',
+          minLength: 3,
+          maxLength: 240,
         },
         impactTags: {
           type: 'string',
+          maxLength: 255,
         },
         creationDate: {
           type: 'string',
           format: 'date',
-          description: 'schema-based time picker',
         },
         completionDate: {
           type: 'string',
@@ -55,16 +63,7 @@ export const schema: JsonSchema = {
           type: 'string',
         },
       },
-      required: [
-        'title',
-        'longline',
-        'description',
-        'impact',
-        'impactTags',
-        'creationDate',
-        'completionDate',
-        'walletAddress',
-      ],
+      required: ['title', 'logline', 'impact', 'impactTags', 'creationDate', 'completionDate', 'walletAddress'],
     },
 
     projectMembers: {
@@ -75,25 +74,37 @@ export const schema: JsonSchema = {
         properties: {
           firstName: {
             type: 'string',
+            minLength: 2,
+            maxLength: 255,
           },
           lastName: {
             type: 'string',
+            minLength: 2,
+            maxLength: 255,
           },
           externalLink: {
             type: 'string',
+            minLength: 13,
+            maxLength: 255,
+            format: 'url',
           },
           email: {
             type: 'string',
+            minLength: 8,
+            maxLength: 255,
+            format: 'email',
           },
           wallet: {
             type: 'string',
+            minLength: 42,
+            maxLength: 42,
           },
           type: {
             type: 'string',
           },
         },
+        required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
       },
-      // required: ['firstName', 'lastName', 'externalLink', 'email', 'wallet', 'type'],
     },
 
     artifacts: {
@@ -102,21 +113,27 @@ export const schema: JsonSchema = {
       properties: {
         artworkPatron: {
           type: 'string',
+          format: 'url',
         },
         videoPatron: {
           type: 'string',
+          format: 'url',
         },
         artworkCreator: {
           type: 'string',
+          format: 'url',
         },
         videoCreator: {
           type: 'string',
+          format: 'url',
         },
         artworkCommunity: {
           type: 'string',
+          format: 'url',
         },
         videoCommunity: {
           type: 'string',
+          format: 'url',
         },
       },
       required: ['artworkPatron', 'artworkCreator', 'artworkCommunity'],
@@ -130,6 +147,7 @@ export const schema: JsonSchema = {
 */
 
 export interface Grant {
+  startingDate?: string
   goal: number
   season: number
   length: number
@@ -145,9 +163,9 @@ export interface Artifacts {
 }
 
 export interface Project {
+  startingDate?: string
   title?: string
-  longline?: string
-  description?: string
+  logline?: string
   impact?: string
   impactTags?: string
   creationDate?: string
@@ -174,8 +192,9 @@ export interface FormState extends Record<string, unknown> {
 /* This is our local initialState. */
 export const initialState: FormState = {
   grant: {
-    length: 0,
-    goal: 0,
+    startingDate: undefined,
+    length: DEFAULT_GRANT_LENGTH_HOURS,
+    goal: DEFAULT_GRANT_GOAL_ETH,
     season: ARTIZEN_CURRENT_SEASON,
   },
   artifacts: {
@@ -188,8 +207,7 @@ export const initialState: FormState = {
   },
   project: {
     title: undefined,
-    longline: undefined,
-    description: undefined,
+    logline: undefined,
     impact: undefined,
     impactTags: undefined,
     creationDate: undefined,
@@ -203,7 +221,7 @@ export const initialState: FormState = {
       externalLink: undefined,
       email: undefined,
       wallet: undefined,
-      type: undefined,
+      type: 'lead',
     },
   ],
 }
@@ -221,6 +239,18 @@ export const uischema = {
       type: 'Group',
       label: 'Grant',
       elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/grant/properties/startingDate',
+              options: {
+                readonly: true,
+              },
+            },
+          ],
+        },
         {
           type: 'HorizontalLayout',
           elements: [
@@ -257,7 +287,7 @@ export const uischema = {
                 },
                 {
                   type: 'Control',
-                  scope: '#/properties/project/properties/longline',
+                  scope: '#/properties/project/properties/impactTags',
                 },
               ],
             },
@@ -266,20 +296,17 @@ export const uischema = {
               elements: [
                 {
                   type: 'Control',
-                  scope: '#/properties/project/properties/description',
+                  scope: '#/properties/project/properties/logline',
+                  options: {
+                    format: 'text',
+                  },
                 },
-              ],
-            },
-            {
-              type: 'HorizontalLayout',
-              elements: [
                 {
                   type: 'Control',
                   scope: '#/properties/project/properties/impact',
-                },
-                {
-                  type: 'Control',
-                  scope: '#/properties/project/properties/impactTags',
+                  options: {
+                    format: 'text',
+                  },
                 },
               ],
             },
@@ -302,6 +329,9 @@ export const uischema = {
                 {
                   type: 'Control',
                   scope: '#/properties/project/properties/walletAddress',
+                  options: {
+                    format: 'lowercase',
+                  },
                 },
               ],
             },
@@ -364,18 +394,30 @@ export const uischema = {
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoPatron',
-              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
+              options: {
+                unsafeToRetain: true,
+                format: 'uploadCloudinaryFile',
+                extensions: ['mp4', 'webm'],
+              },
             },
 
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoCreator',
-              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
+              options: {
+                unsafeToRetain: true,
+                format: 'uploadCloudinaryFile',
+                extensions: ['mp4', 'webm'],
+              },
             },
             {
               type: 'Control',
               scope: '#/properties/artifacts/properties/videoCommunity',
-              options: { unsafeToRetain: true, format: 'uploadFile', fileFormats: ['video/mp4', 'video/webm'] },
+              options: {
+                unsafeToRetain: true,
+                format: 'uploadCloudinaryFile',
+                extensions: ['mp4', 'webm'],
+              },
             },
           ],
         },

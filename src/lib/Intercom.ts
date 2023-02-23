@@ -6,14 +6,9 @@ import { loadIntercom, trackEvent, shutdownIntercom } from 'next-intercom'
 export const notifications = []
 
 export enum intercomEventEnum {
-  USER_LOGIN = 'user:login',
-  DONATION_FIAT_START = 'donation:fiat:start',
-  DONATION_FIAT_TOPUP = 'donation:fiat:pay:topup',
-  DONATION_FIAT_CONFIRMED = 'donation:fiat:confirmed',
-  DONATION_CRYTO_START = 'donation:crypto:start',
-  DONATION_CRYTO_SWAP = 'donation:crypto:swap',
-  DONATION_CRYTO_BRIDGE = 'donation:crypto:bridge',
-  DONATION_CRYTO_CONFIRMED = 'donation:crypto:confirmed',
+  DONATION_START = 'donation:start',
+  DONATION_FINISHED = 'donation:finished',
+  DONATION_FAILED = 'donation:failed',
 }
 
 export const trackEventF = (type: intercomEventEnum, target: object = {}) => trackEvent(type, target)
@@ -24,10 +19,15 @@ export function initIntercom() {
   const appId = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
   const startIntercom = useCallback(() => {
+    const name =
+      loggedInUser?.firstName && loggedInUser?.firstName
+        ? `${loggedInUser?.firstName} ${loggedInUser?.lastName}`
+        : undefined
+
     loadIntercom({
       appId,
       email: loggedInUser?.email, // default: ''
-      name: loggedInUser && `${loggedInUser?.firstName} ${loggedInUser?.lastName}`,
+      name,
       ssr: false, // default: false
       initWindow: true, // default: true
       delay: 0, // default: 0  - useful for mobile devices to prevent blocking the main thread

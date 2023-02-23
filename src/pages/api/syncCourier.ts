@@ -3,6 +3,10 @@ import { authOptions } from './auth/[...nextauth]'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createUserCourierProfile } from '@lib'
 
+/* A Courier profile for the user already exists upon wallet signup, but we don't have their email deets yet.
+ * This will update the profile, and initiate the welcome message.
+ */
+
 const syncCourier = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (req.method !== 'POST') {
@@ -14,8 +18,7 @@ const syncCourier = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(401).send({ message: 'Unauthorized' })
       return
     }
-    const { email } = req.body
-    await createUserCourierProfile(session.user.id, email)
+    await createUserCourierProfile(session.user.id, req.body)
     res.status(200).end()
   } catch (error) {
     console.error(error)

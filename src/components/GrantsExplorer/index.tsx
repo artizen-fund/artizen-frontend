@@ -1,60 +1,91 @@
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Countdown from './Countdown'
-import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Spinner, DonationBox } from '@components'
+import { Glyph, ProgressBar, StickyContent, StickyCanvas, Leaderboard, Shimmer, DonationBox } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGrantsWithProjectFragment } from '@types'
+import { IGrantFragment } from '@types'
 import { rgba, isCurrentGrant } from '@lib'
 import GrantsNavigator from './GrantsNavigator'
 
 interface IGrantsExplorer {
-  grant: IGrantsWithProjectFragment
+  grant?: IGrantFragment
 }
 
 const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
-  const router = useRouter()
   const [amountRaised, setAmountRaised] = useState(0)
 
   const isCurrent = isCurrentGrant(grant)
 
-  const moveToNextGrant = () => router.push('/grants/today')
+  const moveToNextGrant = () => {
+    setTimeout(() => {
+      console.log('updating...')
+      window.location.assign(`${window.location.protocol}//${window.location.host}/grants/today`)
+    }, 5000)
+  }
 
   return (
     <StyledStickyCanvas>
-      <Wrapper id="grant-explorer">
-        <GrantsNavigator {...{ grant }} />
+      <Wrapper>
+        {!grant ? <GrantsNavigatorShimmer /> : <GrantsNavigator {...{ grant }} />}
         <Body>
-          <Header>{grant.submission?.project?.title}</Header>
+          <Header>{!grant ? <Shimmer height="30px" /> : grant?.submission?.project?.title}</Header>
 
-          <ProgressBar>{amountRaised / (grant.goal || 1)}</ProgressBar>
+          <ProgressBar>{amountRaised / (grant?.goal || 1)}</ProgressBar>
 
           <GrantData>
-            <div>
-              <DataLabel>Raised</DataLabel>
-              <AmountRaisedRow>
-                <Glyph glyph="ethereum" level={2} />
-                <AmountRaised>{amountRaised.toFixed(3)}</AmountRaised>
-                <Goal>&nbsp;/ {grant.goal} goal</Goal>
-              </AmountRaisedRow>
-            </div>
-
-            {isCurrent && (
-              <div>
-                <DataLabel>Ends in</DataLabel>
-                <Countdown date={grant.closingDate} onComplete={moveToNextGrant} />
-              </div>
+            {!grant ? (
+              <>
+                <Shimmer height="60px" />
+                <Shimmer height="60px" />
+              </>
+            ) : (
+              <>
+                <div>
+                  <DataLabel>Raised</DataLabel>
+                  <AmountRaisedRow>
+                    <Glyph glyph="ethereum" level={2} />
+                    <AmountRaised>{amountRaised.toFixed(3)}</AmountRaised>
+                    <Goal>&nbsp;/ {grant?.goal} goal</Goal>
+                  </AmountRaisedRow>
+                </div>
+                {isCurrent && (
+                  <div>
+                    <DataLabel>Ends in</DataLabel>
+                    <Countdown date={grant?.closingDate} onComplete={() => moveToNextGrant()} />
+                  </div>
+                )}
+              </>
             )}
           </GrantData>
 
-          {isCurrent && grant.blockchainId && <DonationBox grantId={grant.id} blockchainId={grant.blockchainId} />}
+          {isCurrent && grant?.blockchainId && <DonationBox blockchainId={grant?.blockchainId} />}
 
-          <Leaderboard grantId={grant.id} {...{ setAmountRaised }} />
+          {!grant ? (
+            <Gap>
+              <Shimmer height="30px" />
+              <Shimmer height="70px" />
+            </Gap>
+          ) : (
+            <Leaderboard grantId={grant?.id} {...{ setAmountRaised }} />
+          )}
         </Body>
       </Wrapper>
     </StyledStickyCanvas>
   )
 }
+
+const Gap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`
+
+const GrantsNavigatorShimmer = styled(props => <Shimmer {...props} />)`
+  margin: auto;
+  max-width: 250px;
+  height: 40px;
+  justify-content: center;
+`
 
 const StyledStickyCanvas = styled(props => <StickyCanvas {...props} />)`
   grid-area: sidebar;
@@ -89,13 +120,13 @@ const GrantData = styled.div`
   flex-direction: row;
   gap: 30px;
   margin-bottom: 25px;
-  > div:first-child {
+  > div:nth-child(2) {
     position: relative;
     &:after {
       content: ' ';
       position: absolute;
       top: 0;
-      right: -15px;
+      left: -15px;
       width: 1px;
       height: 100%;
       background: ${rgba(palette.stone)};

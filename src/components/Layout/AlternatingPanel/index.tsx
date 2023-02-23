@@ -14,6 +14,7 @@ const AlternatingPanel = ({ list, image, imageDark, title, copy, imageOnRight, c
         <IconStack>
           {list.map((item, index) => (
             <Icon
+              level={1}
               color="slate"
               darkColor="moon"
               outline

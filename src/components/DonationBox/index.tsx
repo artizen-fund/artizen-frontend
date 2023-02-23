@@ -1,54 +1,127 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
+import { ErrorObject } from 'ajv'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/donation'
-import { LayoutContext, useGrant } from '@lib'
+import {
+  LayoutContext,
+  useDonate,
+  trackEventF,
+  intercomEventEnum,
+  MINIMUM_DONATION_AMOUNT,
+  useFullSignOut,
+  WALLET_ERROR_UNSUPPORTED_OPERATION,
+  WALLET_ERROR_INSUFFICIENT_FUNDS,
+} from '@lib'
 import { breakpoint } from '@theme'
 
 interface IDonationBox {
   blockchainId: string | undefined
-  grantId: string | undefined
 }
 
-// TODO: Ruben, is grantId still needed here?
-const DonationBox = ({ blockchainId, grantId }: IDonationBox) => {
+const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { status } = useSession()
+  const { disconnectAndSignout } = useFullSignOut()
+  const { toggleModal } = useContext(LayoutContext)
 
-  const { donate } = useGrant()
-  const [readonly, setReadonly] = useState(false)
+  const { donate } = useDonate()
   const [sending, setSending] = useState<boolean>(false)
-  // const [error, setError] = useState<string>()
   const { setVisibleModal } = useContext(LayoutContext)
   const [data, setData] = useState<FormState>(initialState)
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
+
+  useEffect(() => {
+    const errors: Array<ErrorObject> = []
+    if (!data.donationAmount || data.donationAmount < MINIMUM_DONATION_AMOUNT) {
+      errors.push({
+        instancePath: '/donationAmount',
+        message: `Minimum donation is ${MINIMUM_DONATION_AMOUNT} ETH`,
+        schemaPath: '#/properties/donationAmount',
+        keyword: '',
+        params: {},
+      })
+    }
+    setAdditionalErrors(errors)
+  }, [data])
 
   const donateFn = async () => {
     if (!blockchainId || !data.donationAmount) return
-    setSending(true)
-    const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
-    // TODO: it'll only work when EK removes the transaction from the server
-    // if there is transaction hash add a record
-    const tx = returnTx?.transactionHash
-    if (!tx) {
-      throw new Error('Tx is empty')
+    if (data.donationAmount < MINIMUM_DONATION_AMOUNT) {
+      // under minimum
+      return
     }
+    toggleModal('confirmTransaction')
+    setSending(true)
+    trackEventF(intercomEventEnum.DONATION_START, {
+      amount: data.donationAmount.toString(),
+      grantblockchainId: blockchainId,
+    })
+    try {
+      const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
+      // TODO: it'll only work when EK removes the transaction from the server
+      // if there is transaction hash add a record
+      if (!returnTx.transactionHash) {
+        trackEventF(intercomEventEnum.DONATION_FAILED, {
+          amount: data.donationAmount.toString(),
+          grantblockchainId: blockchainId,
+        })
+        throw new Error('Tx is empty')
+      }
+    } catch (e: any) {
+      const errors: Array<ErrorObject> = []
+      console.warn('TX error code', e.code)
+
+      console.warn('WALLET_ERROR_UNSUPPORTED_OPERATION  ', WALLET_ERROR_UNSUPPORTED_OPERATION)
+      console.warn('e.code  ', e.code === WALLET_ERROR_UNSUPPORTED_OPERATION)
+
+      const message =
+        e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
+          ? 'Insufficient funds'
+          : WALLET_ERROR_UNSUPPORTED_OPERATION
+          ? 'Connect wallet'
+          : 'Unknown error'
+      errors.push({
+        instancePath: '/donationAmount',
+        message,
+        schemaPath: '#/properties/donationAmount',
+        keyword: '',
+        params: {},
+      })
+
+      setAdditionalErrors(errors)
+      setSending(false)
+
+      if (e.code === WALLET_ERROR_UNSUPPORTED_OPERATION) {
+        disconnectAndSignout()
+      }
+    }
+
+    trackEventF(intercomEventEnum.DONATION_FINISHED, {
+      amount: data.donationAmount.toString(),
+      grantblockchainId: blockchainId,
+    })
+
+    toggleModal('shareTransaction')
 
     setSending(false)
   }
 
   return (
     <Wrapper>
-      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal?.('login')} />}
+      <ScrollPoint id="donation-box" />
+      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
-        <Form {...{ schema, uischema, initialState, data, setData, readonly }}></Form>
-        <Button
-          level={0}
-          onClick={() => donateFn()}
-          disabled={!data.donationAmount || data.donationAmount <= 0}
-          stretch
-        >
-          {sending ? 'Sending' : 'Donate'}
-        </Button>
+        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={sending}>
+          <Button
+            level={0}
+            onClick={() => donateFn()}
+            disabled={!data.donationAmount || data.donationAmount <= 0 || sending}
+            stretch
+          >
+            {sending ? 'Processing Donation' : 'Donate'}
+          </Button>
+        </Form>
       </>
     </Wrapper>
   )
@@ -64,6 +137,14 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
+`
+
+const ScrollPoint = styled.div`
+  position: absolute;
+  left: 0;
+  top: -100px;
+  width: 1px;
+  height: 1px;
 `
 
 const SessionMask = styled.div`

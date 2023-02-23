@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { ApolloProvider } from '@apollo/client'
 import { Toast } from '@trycourier/react-toast'
 import { StyledToast } from '@components'
-import { withAuth, CourierNotification, LayoutContextProvider, getWagmiClient, initializeApollo } from '@lib'
+import { initIntercom, CourierNotification, LayoutContextProvider, getWagmiClient, initializeApollo } from '@lib'
 import packageJson from '../../package.json'
 
 import '@public/styles/reset.css'
@@ -22,6 +22,7 @@ const App = ({
 }) => {
   // eslint-disable-next-line
   console.log(`--- version: ${packageJson.version} ----`)
+  initIntercom()
 
   const apolloClient = initializeApollo(pageProps?.apolloData || {})
   return (

@@ -5,7 +5,7 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { CHECK_FOR_EXISTING_ARTIZENHANDLE, UPDATE_USER } from '@gql'
 import { ICheckForExistingArtizenHandleQuery } from '@types'
-import { Form, Button, SettingsFormHeader } from '@components'
+import { Spinner, Form, Button, SettingsFormHeader } from '@components'
 import { loggedInUserVar } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { schema, uischema, initialState, FormState } from '@forms/editProfile'
@@ -14,9 +14,12 @@ const EditProfile = () => {
   const [updateUser] = useMutation(UPDATE_USER)
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const [data, setData] = useState<FormState>(initialState)
+  const [data, setData] = useState<FormState>()
   useEffect(() => {
+    // set initialState
+    if (!!data || !loggedInUser) return
     setData({
+      ...initialState,
       artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,
       bio: loggedInUser?.bio || initialState.bio,
       twitterHandle: loggedInUser?.twitterHandle || initialState.twitterHandle,
@@ -31,14 +34,14 @@ const EditProfile = () => {
   // todo: replace readonly with [loading] from useMutation
 
   const saveChanges = async () => {
-    if (!loggedInUser) return
+    if (!loggedInUser || !data) return
     setReadonly(true)
     // todo: replace this force-lowercase with a mutation event in hasura
     await updateUser({ variables: { ...loggedInUser, ...data, artizenHandle: data.artizenHandle?.toLowerCase() } })
     setReadonly(false)
   }
 
-  const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
+  const [newArtizenHandle] = useDebounce(data?.artizenHandle, 500)
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
     variables: {
       where: {
@@ -62,7 +65,9 @@ const EditProfile = () => {
     },
   })
 
-  return (
+  return !loggedInUser || !data ? (
+    <Spinner minHeight="85vh" />
+  ) : (
     <Wrapper>
       <SettingsFormHeader
         imgPath="/assets/illustrations/settings/profile.png"

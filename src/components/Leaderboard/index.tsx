@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
-import { useSubscription } from '@apollo/client'
-import { reduceWithPrecision } from '@lib'
-import { IDonationsSubscription, IUserWithDonationFragment } from '@types'
+import { useSubscription, useReactiveVar } from '@apollo/client'
+import { reduceWithPrecision, aggregateDonators, loggedInUserVar, rgba } from '@lib'
+import { ILeaderboardSubscription, IUserWithDonationFragment } from '@types'
+import { palette } from '@theme'
 import { SUBSCRIBE_DONATIONS } from '@gql'
 // import truncateEthAddress from 'truncate-eth-address'
 
@@ -13,15 +14,21 @@ interface ILeaderboard {
   setAmountRaised: (n: number) => void
 }
 
-const DEFAULT_LIMIT = 9999
+const DEFAULT_LIMIT = 3
 
 const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const { loading, error, data } = useSubscription<IDonationsSubscription>(SUBSCRIBE_DONATIONS, {
+  /* TODO: 
+    We would like to _not_ be loading 10,000 records (although that many donations would be a "good problem"
+    We should probably be doing a more complex GraphQL query, some sort of "SELECT SUM(amount) FROM donations LEFT OUTER JOIN..."
+    ... but Eric doesn't know how to do that in GraphQL.
+  */
+  const { loading, error, data } = useSubscription<ILeaderboardSubscription>(SUBSCRIBE_DONATIONS, {
     fetchPolicy: 'no-cache',
     variables: {
-      limit,
+      limit: 9999,
       whereDonations: {
         _and: [
           {
@@ -65,18 +72,21 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
   }
 
   const [donatingUsers, setDonatingUsers] = useState<Array<IUserWithDonationFragment & { aggregateDonation: number }>>()
+  const [loggedUserDonation, setLoggedUserDonation] = useState<number>()
   useEffect(() => {
     if (!data) return
-    const usersWithAggregate = data.Users.map(u => {
-      const aggregateDonation = reduceWithPrecision(u.donations.map(d => d.amount))((a: number, b: number) => a + b)
-      return { ...u, aggregateDonation }
-    })
-    setDonatingUsers(usersWithAggregate)
-    if (usersWithAggregate.length > 0) {
+    const aggregatedDonators = aggregateDonators(data.Users)
+    setDonatingUsers(aggregatedDonators)
+    if (aggregatedDonators.length > 0) {
       setAmountRaised(
-        reduceWithPrecision(usersWithAggregate.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
+        reduceWithPrecision(aggregatedDonators.map(d => d.aggregateDonation))((a: number, b: number) => a + b),
       )
     }
+    if (!loggedInUser || aggregatedDonators.length < 1) return
+    setLoggedUserDonation(
+      aggregatedDonators.filter(user => user.publicAddress === loggedInUser.publicAddress)[0]?.aggregateDonation ||
+        undefined,
+    )
   }, [data])
 
   const sideItem = (
@@ -85,27 +95,52 @@ const Leaderboard = ({ grantId, setAmountRaised }: ILeaderboard) => {
     </Button>
   )
 
-  return !!loading || !data?.Users || !donatingUsers ? (
-    <Spinner />
+  return !donatingUsers ? (
+    <Spinner minHeight="65px" />
   ) : (
     <StyledTable title="Leaderboard" {...{ sideItem }}>
-      {donatingUsers
-        .sort((a, b) => (a.aggregateDonation > b.aggregateDonation ? -1 : 1))
-        .map((user, index) => (
-          <TableCell key={`donating-user-${index}`} highlight>
-            <div>
-              <TableAvatar profileImage={user.profileImage} />
-              <Name>{user?.artizenHandle}</Name>
-            </div>
-            <Amount>{user.aggregateDonation} ETH</Amount>
-          </TableCell>
-        ))}
+      {loggedUserDonation && (
+        <LoggedInUserTableCell>
+          <div>
+            <TableAvatar profileImage={loggedInUser?.profileImage} />
+            <Name>{loggedInUser?.artizenHandle} (you)</Name>
+          </div>
+          <Amount>{loggedUserDonation} ETH</Amount>
+        </LoggedInUserTableCell>
+      )}
+      {donatingUsers.map((user, index) => (
+        <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
+          <div>
+            <TableAvatar profileImage={user.profileImage} />
+            <Name>{user?.artizenHandle}</Name>
+          </div>
+          <Amount>{user.aggregateDonation} ETH</Amount>
+        </StyledTableCell>
+      ))}
     </StyledTable>
   )
 }
 
 const StyledTable = styled(props => <Table {...props} />)`
   margin-top: 24px;
+`
+
+const StyledTableCell = styled(props => <TableCell {...props} />)<{ hidden: boolean }>`
+  &&& {
+    display: ${props => (props.hidden ? 'none' : 'flex')};
+  }
+`
+
+const LoggedInUserTableCell = styled(props => <TableCell {...props} />)`
+  background-color: ${rgba(palette.white)};
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  color: ${rgba(palette.slate)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+    background-color: ${rgba(palette.barracuda, 0.06)};
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+  }
+  margin-bottom: 8px;
 `
 
 const Name = styled.div`

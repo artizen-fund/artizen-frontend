@@ -30,12 +30,11 @@ export const SignInDirections = styled.p`
 `
 
 export const CheckWrapper = styled.div`
-  display: contents;
+  display: flex;
+  grid-area: tocCheck;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    grid-area: tocCheck;
   }
 `
 
@@ -55,7 +54,13 @@ export const Check = styled.div`
 
 export const CheckMessage = styled.p`
   ${typography.label.l1}
-  color: ${rgba(palette.barracuda)};
+  color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.white)};
+  }
+  span {
+    text-decoration: undefline;
+  }
 `
 
 export const Confirmation = styled.div`

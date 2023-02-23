@@ -1,39 +1,39 @@
 import { useContext, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { useApolloClient, useReactiveVar } from '@apollo/client'
+import { useAccount } from 'wagmi'
+import { useQuery, useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGetUserQuery, Maybe } from '@types'
+import { IGetUserQuery, Maybe, IUsers } from '@types'
 import { rgba, loggedInUserVar, LayoutContext, textCrop } from '@lib'
 import { GET_USER } from '@gql'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
-  const apolloClient = useApolloClient()
+  const { isConnected } = useAccount()
   const { setVisibleModal, toggleShelf } = useContext(LayoutContext)
   const { data: session, status } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  useEffect(() => {
-    if (!session?.user?.publicAddress) return
-    getUserFromHasura()
-  }, [session])
-
-  const getUserFromHasura = async () => {
-    const userFromDB = await apolloClient.query<IGetUserQuery>({
-      query: GET_USER,
-      variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
-    })
-    loggedInUserVar(userFromDB.data.Users[0])
-  }
+  useQuery<IGetUserQuery>(GET_USER, {
+    skip: !session || !session?.user?.publicAddress || !isConnected,
+    variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
+    onCompleted: data => {
+      if (!loggedInUser || loggedInUser.id !== data.Users[0].id) {
+        //TODO: there is really not need to use useReactiveVar. We can move this query function to a hook and use it everywhere the user data is needed
+        // useReactiveVar forces rerender the whole website, bad stuff
+        loggedInUserVar(data.Users[0])
+      }
+    },
+  })
 
   const onClick = () => {
     if (status === 'loading') {
       return
     } else if (!loggedInUser) {
-      setVisibleModal?.('login')
+      setVisibleModal('login')
     } else {
-      toggleShelf?.('session')
+      toggleShelf('session')
     }
   }
 
@@ -54,7 +54,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       !!loggedInUser &&
       (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName || !loggedInUser.artizenHandle)
     ) {
-      setVisibleModal?.('createProfile')
+      setVisibleModal('createProfile')
     }
   }, [loggedInUser])
 

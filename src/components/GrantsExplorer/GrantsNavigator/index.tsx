@@ -5,11 +5,11 @@ import moment from 'moment-timezone'
 import { Button } from '@components'
 import { palette, typography } from '@theme'
 import { GET_ADJACENT_GRANT } from '@gql'
-import { IGrantsWithProjectFragment, IGetAdjacentGrantQuery } from '@types'
-import { rgba, formatStringDate, isCurrentGrant, ARTIZEN_TIMEZONE } from '@lib'
+import { IGrantFragment, IGetAdjacentGrantQuery } from '@types'
+import { rgba, formatDate, isCurrentGrant, ARTIZEN_TIMEZONE } from '@lib'
 
 interface IGrantsNavigator {
-  grant: IGrantsWithProjectFragment
+  grant: IGrantFragment
 }
 
 const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
@@ -67,9 +67,10 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
     },
   })
 
-  const nextGrantLink = isCurrentGrant(nextGrantData?.Grants?.[0])
-    ? 'today'
-    : `/grants/${nextGrantData?.Grants?.[0]?.blockchainId}`
+  const nextGrantLink =
+    isCurrentGrant(nextGrantData?.Grants?.[0]) || isCurrentGrant(grant)
+      ? 'today'
+      : `/grants/${nextGrantData?.Grants?.[0]?.blockchainId}`
 
   return (
     <Wrapper>
@@ -85,7 +86,7 @@ const GrantsNavigator = ({ grant }: IGrantsNavigator) => {
       </Button>
       <Copy>
         <GrantDate>{blockchainId === 'today' ? 'Today’s Grant' : `Grant #${grant.blockchainId}`}</GrantDate>
-        <Description>{formatStringDate(grant.date)}</Description>
+        <Description>{formatDate(grant.startingDate)}</Description>
       </Copy>
       <Button
         glyphOnly

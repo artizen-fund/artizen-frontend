@@ -6,7 +6,6 @@ export const schema: JsonSchema = {
   properties: {
     donationAmount: {
       type: 'number',
-      minimum: 0.0001,
     },
   },
   required: ['donationAmount'],
@@ -22,7 +21,7 @@ export interface FormState extends Record<string, unknown> {
 
 /* This is our local initialState. */
 export const initialState: FormState = {
-  donationAmount: 0.1,
+  donationAmount: 0.01,
 }
 
 /*

@@ -21,6 +21,9 @@ export const createApolloClient = (didToken?: string) => {
         uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_WEBHOOK, 'NEXT_PUBLIC_HASURA_GRAPHQL_WEBHOOK'),
         options: {
           reconnect: true,
+          lazy: true,
+          timeout: 30000,
+          inactivityTimeout: 30000,
         },
       })
     : undefined

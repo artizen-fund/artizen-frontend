@@ -24,7 +24,7 @@ const applyForFundingBlurb = {
     },
   ],
   buttonLabel: 'Apply',
-  applyLink: 'https://artizen.link',
+  applyLink: 'https://artizen.typeform.com/apply',
   disclaimer: 'Clicking apply redirects you to an external website.',
 }
 
