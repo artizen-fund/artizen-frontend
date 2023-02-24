@@ -38,6 +38,7 @@ export * from './Table'
 export * from './NoGrant'
 
 export * from './Layout/Modals/AlertModal'
+export { default as CreateSeasonModal } from './Layout/Modals/CreateSeasonModal'
 export { default as ConfirmTransactionModal } from './Layout/Modals/ConfirmTransactionModal'
 export { default as ConnectingModal } from './Layout/Modals/ConnectingModal'
 export { default as LoginModal } from './Layout/Modals/LoginModal'

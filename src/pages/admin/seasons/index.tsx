@@ -1,24 +1,25 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
 import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } from '@components'
-import { LOAD_GRANTS } from '@gql'
+import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadGrantsQuery, IGrantFragment } from '@types'
-import { isCurrentGrant, rgba } from '@lib'
+import { isCurrentGrant, rgba, LayoutContext } from '@lib'
 
 const Seasons = () => {
   const router = useRouter()
   const { status } = useSession()
+  const { toggleModal } = useContext(LayoutContext)
 
   const {
     loading,
-    data: loadedGrantData,
-    error: errorLoadingGrant,
-  } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
+    data: loadedSeasonsData,
+    error: errorLoadingSeasons,
+  } = useQuery(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       order_by: [
@@ -28,19 +29,16 @@ const Seasons = () => {
       ],
     },
   })
-
-  useEffect(() => {
-    if (!errorLoadingGrant) return
-    console.error('errorLoadingGrant', errorLoadingGrant)
-  }, [errorLoadingGrant])
+  console.log('error ', errorLoadingSeasons)
+  console.log('loadedSeasonData ', loadedSeasonsData)
 
   const openGrant = (target: string) => () => {
-    router.push(`/admin/grants/${target}`)
+    toggleModal('createSeasonModal')
   }
 
   const sideItem = (
     <Button onClick={openGrant('new')} level={2} outline>
-      Create new Grant
+      Create New Season
     </Button>
   )
 
@@ -51,23 +49,19 @@ const Seasons = () => {
         <Spinner />
       ) : (
         <PagePadding>
-          <StyledTable title="Grant List" {...{ sideItem }}>
-            {loadedGrantData?.Grants.map((grant: IGrantFragment) => {
-              const startingDate = moment(grant.startingDate).format('MM-DD-YYYY HH:mm:ss')
-              const closingDate = moment(grant.closingDate).format('MM-DD-YYYY HH:mm:ss')
+          <StyledTable title="Season List" {...{ sideItem }}>
+            {loadedSeasonsData?.Seasons.map(season => {
+              const startingDate = moment(season.startingDate).format('MM-DD-YYYY HH:mm:ss')
+              const endingDate = moment(season.endingDate).format('MM-DD-YYYY HH:mm:ss')
               return (
-                <StyledTableCell onClick={openGrant(grant.id)} key={grant.id} highlight>
-                  <Title>“{grant.submission?.project?.title}”</Title>
-                  <Status>
-                    {isCurrentGrant(grant) && '👉 '}
-                    {grant.status}
-                  </Status>
+                <StyledTableCell onClick={openGrant(season.id)} key={season.id} highlight>
+                  <Title>“{season.title}”</Title>
                   <DateLine>
                     <div>
                       Starts: <span>{startingDate}</span>
                     </div>
                     <div>
-                      Ends: <span>{closingDate}</span>
+                      Ends: <span>{endingDate}</span>
                     </div>
                   </DateLine>
                 </StyledTableCell>
