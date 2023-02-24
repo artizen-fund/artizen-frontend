@@ -22,16 +22,13 @@ const launchBrowser = async (options: OfficialOptions): Promise<[BrowserContext,
   // https://playwright.dev/docs/api/class-page#page-wait-for-load-state
   await testPage.waitForLoadState('networkidle');
 
-  // await testPage.waitForSelector('#accountButton');
-//   await testPage.waitForSelector('.sc-5e1db7e4-2');
+  // click sign in button
   await testPage.getByText('CloseSign In').waitFor();
+  await testPage.locator('#accountButton').click();
 
-  await testPage.getByText('CloseSign In').click();
-//   await testPage.waitForSelector('.sc-8d724eb2-2');
+  // click metamask icon to open wallet
   await testPage.waitForSelector('img[src="/assets/metamask.svg"]');
-
   await testPage.getByRole('img', { name: 'Metamask' }).click();
-
   
   // Approve the connection when MetaMask pops up
   // This closes the metamask popup so we need to go through artizen sign in process again
@@ -39,11 +36,8 @@ const launchBrowser = async (options: OfficialOptions): Promise<[BrowserContext,
   await wallet.approve();
 
   await testPage.getByRole('button').filter({ hasText: 'Close' }).nth(1).click();
-  await testPage.getByText('CloseSign In').click();
-//   await testPage.waitForSelector('.sc-8d724eb2-2');
+  await testPage.locator('#accountButton').click();
   await testPage.waitForSelector('img[src="/assets/metamask.svg"]');
-
-  // await page.waitForLoadState('networkidle');
   await testPage.getByRole('img', { name: 'Metamask' }).click();
 
   await wallet.sign();
@@ -51,10 +45,8 @@ const launchBrowser = async (options: OfficialOptions): Promise<[BrowserContext,
   await testPage.waitForLoadState('networkidle');
 
   await testPage.waitForSelector('#accountButton');
-//   await testPage.click('span:text-is("ES")');
   await testPage.waitForLoadState('networkidle');
   await testPage.waitForLoadState('domcontentloaded');
-
 
   await expect(testPage.getByText('Complete your profile')).toBeVisible({timeout: 20000});
 //   await testPage.waitForTimeout(20000);
