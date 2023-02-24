@@ -52,6 +52,7 @@ jobs:
         run: npx playwright install --with-deps
       - name: run playwright tests
         env:
+          PORT: 3000
           APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
           COURIER_API_KEY: ${{ secrets.COURIER_API_KEY }}
           COURIER_WELCOME_TEMPLATE_ID: ${{ secrets.COURIER_WELCOME_TEMPLATE_ID }}
