@@ -16,6 +16,9 @@ jobs:
       - name: install playwright browsers
         run: npx playwright install --with-deps
       - name: run playwright tests
+        env:
+          NEXT_PUBLIC_HASURA_GRAPHQL_URL: ${{ secrets.NEXT_PUBLIC_HASURA_GRAPHQL_URL }}
+          HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
         run: yarn test:e2e
       - name: Upload test results
         if: always()
