@@ -9,6 +9,23 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
+      - name: Cache node modules
+        id: cache-yarn
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/node-modules` on Linux/macOS
+          path: ./node-modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - if: ${{ steps.cache-yarn.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: yarn list
       - name: install dependencies
         run: yarn install --frozen-lockfile
       - name: install playwright browsers
