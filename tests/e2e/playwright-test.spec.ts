@@ -22,7 +22,7 @@ const launchBrowser = async (options: OfficialOptions): Promise<[BrowserContext,
   // https://playwright.dev/docs/api/class-page#page-wait-for-load-state
   await testPage.waitForLoadState('networkidle');
 
-  await testPage.waitForSelector('#accountButton');
+  // await testPage.waitForSelector('#accountButton');
 //   await testPage.waitForSelector('.sc-5e1db7e4-2');
   await testPage.getByText('CloseSign In').waitFor();
 
