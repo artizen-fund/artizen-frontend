@@ -48,8 +48,6 @@ jobs:
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
           NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS: ${{ secrets.NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS }}
         run: yarn build
-      - name: install playwright browsers
-        run: npx playwright install --with-deps
       - name: run playwright tests
         env:
           PORT: 3000
@@ -85,7 +83,9 @@ jobs:
           NEXT_PUBLIC_PROD: ${{ secrets.NEXT_PUBLIC_PROD }}
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
           NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS: ${{ secrets.NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS }}
-        run: yarn test:e2e
+        run: |
+          npx playwright install --with-deps chromium
+          xvfb-run --auto-servernum yarn run test:e2e
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v3
