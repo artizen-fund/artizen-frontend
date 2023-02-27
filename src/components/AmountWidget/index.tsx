@@ -30,7 +30,7 @@ const AmountWidget = ({ amount, setAmount }: IAmountWidget) => {
         <label>donation total</label>
       </AmountBox>
       <Buttons>
-      {/* Disabled state for the decrease button, depending on whether the amount is less than 10 */}
+        {/* Disabled state for the decrease button, depending on whether the amount is less than 10 */}
         <Button level={2} outline glyphOnly glyph="mathPlus" onClick={() => add(10)}>
           increase
         </Button>
