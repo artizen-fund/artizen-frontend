@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -8,7 +8,7 @@ import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } 
 import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
-import { isCurrentGrant, rgba, LayoutContext } from '@lib'
+import { rgba, LayoutContext } from '@lib'
 
 const Seasons = () => {
   const router = useRouter()
@@ -29,8 +29,6 @@ const Seasons = () => {
       ],
     },
   })
-
-  const openGrant = (target: string) => () => {}
 
   const sideItem = (
     <Button
@@ -95,10 +93,6 @@ const StyledTableCell = styled(props => <TableCell {...props} />)`
 const Title = styled.div`
   ${typography.label.l1}
   flex: 1;
-`
-
-const Status = styled.div`
-  ${typography.label.l2}
 `
 
 const DateLine = styled.div`
