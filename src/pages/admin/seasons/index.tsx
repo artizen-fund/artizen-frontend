@@ -30,6 +30,10 @@ const Seasons = () => {
     },
   })
 
+  const openSeason = (target: string) => () => {
+    router.push(`/admin/seasons/${target}`)
+  }
+
   const sideItem = (
     <Button
       onClick={() => {
@@ -54,7 +58,7 @@ const Seasons = () => {
               const startingDate = moment(season.startingDate).format('MM-DD-YYYY HH:mm:ss')
               const endingDate = moment(season.endingDate).format('MM-DD-YYYY HH:mm:ss')
               return (
-                <StyledTableCell onClick={openGrant(season.id)} key={season.id} highlight>
+                <StyledTableCell onClick={openSeason(season.id)} key={season.id} highlight>
                   <Title>“{season.title}”</Title>
                   <DateLine>
                     <div>
