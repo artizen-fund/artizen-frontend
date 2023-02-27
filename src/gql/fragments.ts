@@ -68,3 +68,13 @@ export const PROJECT = gql`
     }
   }
 `
+export const SEASON = gql`
+  fragment Season on Seasons {
+    id
+    title
+    startingDate
+    endingDate
+    createdAt
+    updateAt
+  }
+`

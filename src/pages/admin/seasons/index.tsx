@@ -7,7 +7,7 @@ import moment from 'moment-timezone'
 import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } from '@components'
 import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
-import { ILoadGrantsQuery, IGrantFragment } from '@types'
+import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { isCurrentGrant, rgba, LayoutContext } from '@lib'
 
 const Seasons = () => {
@@ -19,7 +19,7 @@ const Seasons = () => {
     loading,
     data: loadedSeasonsData,
     error: errorLoadingSeasons,
-  } = useQuery(LOAD_SEASONS, {
+  } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       order_by: [
@@ -29,8 +29,6 @@ const Seasons = () => {
       ],
     },
   })
-  console.log('error ', errorLoadingSeasons)
-  console.log('loadedSeasonData ', loadedSeasonsData)
 
   const openGrant = (target: string) => () => {}
 
@@ -54,7 +52,7 @@ const Seasons = () => {
       ) : (
         <PagePadding>
           <StyledTable title="Season List" {...{ sideItem }}>
-            {loadedSeasonsData?.Seasons.map(season => {
+            {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
               const startingDate = moment(season.startingDate).format('MM-DD-YYYY HH:mm:ss')
               const endingDate = moment(season.endingDate).format('MM-DD-YYYY HH:mm:ss')
               return (
