@@ -1,55 +1,68 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
-import { CREATE_SEASON } from '@gql'
+import styled from 'styled-components'
+import { INSERT_SEASONS } from '@gql'
 import { LOAD_SEASONS } from '@gql'
-import { DirectiveInfo } from '@apollo/client/utilities'
-// import { Season } from '../../types'
-// import { FormState, initialState, uischema } from './forms/createSeason' // <--- This is the new import
-// import { JsonForms } from '@jsonforms/react'
-// import { materialRenderers } from '@jsonforms/material-renderers'
-// import { materialCells } from '@jsonforms/material-cell'
-// import { JsonFormsDispatch } from '@jsonforms/core'
-// import { useAuth } from '../../context/auth'
+import { ErrorObject } from 'ajv'
+import { Form, Spinner, Button } from '@components'
+import { schema, uischema, initialState, FormState } from '@forms/createSeason'
 
-export default function NewSeasonForm() {
-  //   const { user } = useAuth()
-  //   const [createSeason] = useMutation(CREATE_SEASON)
-  //   //   const [formState, setFormState] = useState<FormState>(initialState)
-  //   const [seasons, setSeasons] = useState([])
+// create a functional component that takes in a prop of type NewSeasonFormProps
+// and returns a JSX element
+// save the component in a constant called NewSeasonForm
+// use the useMutation hook to mutate the season record in the database
+// use the useQuery hook to query the database for the seasons
+// set a variable startingDate to the last season's ending date plus one second
+// show a spinner component if the loading variable is true
 
-  //   const { data, loading, error } = useQuery(LOAD_SEASONS, {
-  //     variables: {
-  //       limit: 10,
-  //       offset: 0,
-  //     },
-  //   })
+export default function NewSeasonForm(): JSX.Element {
+  const [insertSeason] = useMutation(INSERT_SEASONS)
+  const { loading, data: loadedSeasonsData } = useQuery(LOAD_SEASONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      order_by: [
+        {
+          startingDate: 'desc_nulls_last',
+        },
+      ],
+    },
+  })
 
-  //   const handleSubmit = async () => {
-  //     const { data } = await createSeason({
-  //       variables: {
-  //         season: {
-  //           startingDate: formState.season.startingDate,
-  //           endingDate: formState.season.endingDate,
-  //           title: formState.season.title,
-  //         },
-  //       },
-  //     })
-  //     // setSeasons([...seasons, data.createSeason])
-  //   }
+  const startingDate = loadedSeasonsData?.Seasons[0]?.endingDate + 1
+  const [data, setData] = useState<FormState>(initialState)
+  const [processing, setProcessing] = useState(false)
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  //   return (
-  //     <div>
-  //       <JsonForms
-  //         schema={schema}
-  //         uischema={uischema}
-  //         data={formState}
-  //         renderers={materialRenderers}
-  //         cells={materialCells}
-  //         onChange={({ data, errors }: JsonFormsDispatch) => setFormState(data as FormState)}
-  //       />
-  //       <button onClick={handleSubmit}>Submit</button>
-  //     </div>
-  //   )
-
-  return <div>hello</div>
+  const saveNewSeason = async () => {
+    setProcessing(true)
+    try {
+      console.log('season data', data)
+      const dateFronMutation = await insertSeason({
+        variables: { objects: [data] },
+      })
+      console.log('dateFronMutation  ', dateFronMutation)
+      //push(`/admin/seasons/${newSeasonDate}`)
+    } catch (error) {
+      console.log('error saving new season', error)
+      setProcessing(false)
+      alert(error)
+    }
+  }
+  return (
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Form {...{ schema, uischema, data, setData, additionalErrors }} readonly={processing}>
+          <StyledButton onClick={() => saveNewSeason()} stretch level={0}>
+            {processing ? 'Saving...' : 'Save Draft'}
+          </StyledButton>
+        </Form>
+      )}
+    </>
+  )
 }
+
+const StyledButton = styled(props => <Button {...props} />)`
+  margin-top: 2em;
+`

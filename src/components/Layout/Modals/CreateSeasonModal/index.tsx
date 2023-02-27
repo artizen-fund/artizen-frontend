@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
-import { Icon } from '@components'
+import { Icon, NewSeasonForm } from '@components'
 import { rgba } from '@lib'
 import { palette, typography } from '@theme'
 
@@ -9,6 +9,7 @@ const CreateSeasonModal = () => {
   return (
     <Wrapper>
       <Headline>Create a New Season</Headline>
+      <NewSeasonForm />
     </Wrapper>
   )
 }

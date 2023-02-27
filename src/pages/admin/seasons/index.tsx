@@ -32,12 +32,16 @@ const Seasons = () => {
   console.log('error ', errorLoadingSeasons)
   console.log('loadedSeasonData ', loadedSeasonsData)
 
-  const openGrant = (target: string) => () => {
-    toggleModal('createSeasonModal')
-  }
+  const openGrant = (target: string) => () => {}
 
   const sideItem = (
-    <Button onClick={openGrant('new')} level={2} outline>
+    <Button
+      onClick={() => {
+        toggleModal('createSeasonModal')
+      }}
+      level={2}
+      outline
+    >
       Create New Season
     </Button>
   )
