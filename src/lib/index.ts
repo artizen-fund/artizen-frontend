@@ -1,5 +1,4 @@
 export * from './apollo'
-export * from './addUserToNewsLetter'
 export * from './assert'
 export * from './assetPath'
 export * from './componentLevelHelpers'
