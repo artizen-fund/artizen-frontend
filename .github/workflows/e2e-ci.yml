@@ -1,9 +1,12 @@
-name: 'Playwright Tests PR test'
-on: [pull_request]
+name: 'Playwright Tests'
+on:
+  deployment_status:
 jobs:
   tests_e2e:
+    timeout-minutes: 20
     name: Run end-to-end tests
     runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
     steps:
       - uses: actions/checkout@v3
       - name: Set up Node.js
@@ -83,7 +86,10 @@ jobs:
           NEXT_PUBLIC_PROD: ${{ secrets.NEXT_PUBLIC_PROD }}
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
           NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS: ${{ secrets.NEXT_PUBLIC_SESSION_LENGTH_IN_DAYS }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
         run: |
+          echo "PLAYWRIGHT_TEST_BASE_URL:"
+          echo "$PLAYWRIGHT_TEST_BASE_URL"
           npx playwright install --with-deps chromium
           xvfb-run --auto-servernum yarn run test:e2e
       - name: Upload test results
