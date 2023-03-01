@@ -34,10 +34,11 @@ export const test = base.extend<{
 test.describe.configure({ mode: "serial" }); // Avoid colliding browser sessions
 
 test.describe("general artizen user", () => {
-  test.beforeEach(async ({ page, metamask }) => {
+  test.beforeEach(async ({ page, metamask, baseURL }) => {
     await metamask.switchNetwork("Goerli");
     // await page.goto("http://localhost:3000/");
     // relies on playwright baseUrl
+    console.log('baseURL: ', baseURL);
     await page.goto("/");
     await page.bringToFront();
   });

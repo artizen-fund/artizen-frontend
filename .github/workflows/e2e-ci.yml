@@ -56,7 +56,7 @@ jobs:
           echo "PLAYWRIGHT_TEST_BASE_URL:"
           echo "$PLAYWRIGHT_TEST_BASE_URL"
           npx playwright install --with-deps chromium
-          xvfb-run --auto-servernum 'export PLAYWRIGHT_TEST_BASE_URL="$PLAYWRIGHT_TEST_BASE_URL" && yarn run test:e2e'
+          xvfb-run --auto-servernum yarn run test:e2e
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v3
