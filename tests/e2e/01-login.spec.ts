@@ -36,7 +36,9 @@ test.describe.configure({ mode: "serial" }); // Avoid colliding browser sessions
 test.describe("general artizen user", () => {
   test.beforeEach(async ({ page, metamask }) => {
     await metamask.switchNetwork("Goerli");
-    await page.goto("http://localhost:3000/");
+    // await page.goto("http://localhost:3000/");
+    // relies on playwright baseUrl
+    await page.goto("/");
     await page.bringToFront();
   });
 
