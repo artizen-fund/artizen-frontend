@@ -1,18 +1,10 @@
-// functional component that takes in a router query of type NextRouter
-// use the useQuery hook to query the database for the seasons
-// user data from the query to display the seasons
-// and returns a JSX element
-// display the title of the season
-// display the starting date of the season
-// display the ending date of the season
-// display the number of submission in the season
-
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { LOAD_SEASONS } from '@gql'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
-import { Spinner, Layout } from '@components'
+import { Spinner, Layout, Submissions } from '@components'
+import { palette } from '@theme'
 
 export default function SeasonPage(): JSX.Element {
   const {
@@ -43,13 +35,15 @@ export default function SeasonPage(): JSX.Element {
       ) : (
         <Layout>
           {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
+            console.log('season', season.submissions)
+            const id = `submission-container-id-${season.id}`
             return (
-              <>
-                <h1>{season.title}</h1>
-                <h2>{season.startingDate}</h2>
-                <h2>{season.endingDate}</h2>
-                <h2>{season.submissions[0].id}</h2>
-              </>
+              <Wrapper key={id} id={id}>
+                <Title id={`submission-title-${season.title}`}>{season.title}</Title>
+                <Title id={`submission-startingDate-${season.startingDate}`}>{season.startingDate}</Title>
+                <Title id={`submission-endingDate-${season.endingDate}`}>{season.endingDate}</Title>
+                <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
+              </Wrapper>
             )
           })}
         </Layout>
@@ -57,3 +51,28 @@ export default function SeasonPage(): JSX.Element {
     </>
   )
 }
+
+const Title = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  color: ${palette.night};
+`
+
+const Wrapper = styled.div`
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: ${palette.night};
+  color: ${palette.moon};
+
+  @media (prefers-color-scheme: dark) {
+    background-color: ${palette.moon};
+    color: ${palette.night};
+  }
+`
