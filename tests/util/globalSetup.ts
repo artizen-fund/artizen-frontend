@@ -8,6 +8,8 @@ async function globalSetup(config: FullConfig) {
     version: MetaMaskWallet.recommendedVersion,
   });
 
+  console.log("process.env.PLAYWRIGHT_TEST_BASE_URL")
+  console.log(process.env.PLAYWRIGHT_TEST_BASE_URL);
   await metamask.switchNetwork('Goerli');
 
   await context.close();
