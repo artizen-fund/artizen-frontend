@@ -68,7 +68,22 @@ export const PROJECT = gql`
     }
   }
 `
+export const SUBMISSION = gql`
+  ${PROJECT}
+  ${ARTIFACT}
+  fragment Submission on Submissions {
+    id
+    project {
+      ...Project
+    }
+    artifacts {
+      ...Artifact
+    }
+  }
+`
+
 export const SEASON = gql`
+  ${SUBMISSION}
   fragment Season on Seasons {
     id
     title
@@ -76,5 +91,8 @@ export const SEASON = gql`
     endingDate
     createdAt
     updateAt
+    submissions {
+      ...Submission
+    }
   }
 `

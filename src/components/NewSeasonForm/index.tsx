@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import styled from 'styled-components'
-<<<<<<< HEAD
 import { INSERT_SEASONS, LOAD_SEASONS } from '@gql'
-=======
-import { INSERT_SEASONS } from '@gql'
-import { LOAD_SEASONS } from '@gql'
->>>>>>> 5d3c6163 (added season form)
 import { ErrorObject } from 'ajv'
 import { Form, Spinner, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createSeason'
@@ -57,7 +52,14 @@ export default function NewSeasonForm(): JSX.Element {
       {loading ? (
         <Spinner />
       ) : (
-        <Form {...{ schema, uischema, data, setData, additionalErrors }} readonly={processing}>
+        <Form
+          schema={schema}
+          uischema={uischema}
+          data={data}
+          setData={setData}
+          additionalErrors={additionalErrors}
+          readonly={processing}
+        >
           <StyledButton onClick={() => saveNewSeason()} stretch level={0}>
             {processing ? 'Saving...' : 'Save Draft'}
           </StyledButton>

@@ -3,32 +3,19 @@ import { SEASON } from './fragments'
 
 export const LOAD_SEASONS = gql`
   ${SEASON}
-  query loadSeasons($limit: Int, $offset: Int) {
-    Seasons(limit: $limit, offset: $offset) {
-<<<<<<< HEAD
+  query loadSeasons($limit: Int, $offset: Int, $where: Seasons_bool_exp, $order_by: [Seasons_order_by!]) {
+    Seasons(limit: $limit, offset: $offset, where: $where) {
       ...Season
-=======
-      id
-      title
-      startingDate
-      endingDate
->>>>>>> 5d3c6163 (added season form)
     }
   }
 `
 
 export const INSERT_SEASONS = gql`
   mutation insertSeasons($objects: [Seasons_insert_input!]!) {
-<<<<<<< HEAD
     ${SEASON}
     insert_Seasons(objects: $objects) {
       returning {
         ...Season
-=======
-    insert_Seasons(objects: $objects) {
-      returning {
-        id
->>>>>>> 5d3c6163 (added season form)
       }
     }
   }

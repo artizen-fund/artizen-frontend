@@ -18,7 +18,7 @@ const Seasons = () => {
   const {
     loading,
     data: loadedSeasonsData,
-    error: errorLoadingSeasons,
+    error,
   } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
@@ -30,13 +30,9 @@ const Seasons = () => {
     },
   })
 
-<<<<<<< HEAD
   const openSeason = (target: string) => () => {
     router.push(`/admin/seasons/${target}`)
   }
-=======
-  const openGrant = (target: string) => () => {}
->>>>>>> 5d3c6163 (added season form)
 
   const sideItem = (
     <Button
@@ -84,6 +80,7 @@ const Seasons = () => {
 
 const StyledTable = styled(props => <Table {...props} />)`
   max-width: 680px;
+  min-height: 400px;
 `
 
 const StyledTableCell = styled(props => <TableCell {...props} />)`
