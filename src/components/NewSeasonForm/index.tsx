@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import styled from 'styled-components'
+<<<<<<< HEAD
 import { INSERT_SEASONS, LOAD_SEASONS } from '@gql'
+=======
+import { INSERT_SEASONS } from '@gql'
+import { LOAD_SEASONS } from '@gql'
+>>>>>>> 5d3c6163 (added season form)
 import { ErrorObject } from 'ajv'
 import { Form, Spinner, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createSeason'

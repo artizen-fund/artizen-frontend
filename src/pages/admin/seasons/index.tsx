@@ -30,9 +30,13 @@ const Seasons = () => {
     },
   })
 
+<<<<<<< HEAD
   const openSeason = (target: string) => () => {
     router.push(`/admin/seasons/${target}`)
   }
+=======
+  const openGrant = (target: string) => () => {}
+>>>>>>> 5d3c6163 (added season form)
 
   const sideItem = (
     <Button

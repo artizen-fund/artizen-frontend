@@ -29,14 +29,14 @@ export const schema: JsonSchema = {
 	All values must be optional, as an unfilled form will conform to this state.
 */
 
-export interface FormState extends Record<string, unknown> {
+export interface Season {
   startingDate: string
   endingDate: string
   title: string
 }
 
 /* This is our local initialState. */
-export const initialState: FormState = {
+export const initialState: Season = {
   startingDate: '',
   endingDate: '',
   title: '',
