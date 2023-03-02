@@ -63,6 +63,7 @@ export const PROJECT = gql`
     completionDate
     walletAddress
     title
+    metadata
     members {
       ...Member
     }

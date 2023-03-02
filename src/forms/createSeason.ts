@@ -58,16 +58,10 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/startingDate',
-      // options: {
-      //   readonly: true,
-      // },
     },
     {
       type: 'Control',
       scope: '#/properties/endingDate',
-      // options: {
-      //   readonly: true,
-      // },
     },
   ],
 }
