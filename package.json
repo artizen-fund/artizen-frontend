@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf .next",
-    "generate": "node ./tools/generate.js",
+    "generate": "node ./tools/generate.mjs",
     "dev": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- next dev",
     "prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- next dev",
     "develop": "yarn codegen-local && yarn dev",
@@ -28,7 +28,6 @@
     "@jsonforms/core": "^3.0.0",
     "@jsonforms/react": "^3.0.0",
     "@jsonforms/vanilla-renderers": "^3.0.0",
-    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@moralisweb3/next": "2.11.0",
     "@n8tb1t/use-scroll-position": "^2.0.3",
     "@pinata/sdk": "^2.1.0",
