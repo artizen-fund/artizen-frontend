@@ -19,13 +19,11 @@ Check [CONTRIBUTING.md](https://github.com/artizen-fund/artizen-frontend/blob/ma
 - styled-components 💅🏻
 - Cypress testing 🧑‍🏫
 - Jest testing 🤪
-- Component Storybooks 🖼
 - react-jsonschema-forms 📝
 
 ## Installation
 
 - requires Node 16.14.2+
-- npx storybook init
 
 ## Getting Started
 
@@ -45,12 +43,6 @@ yarn codegen
 
 ```bash
 yarn generate
-```
-
-### Run storybooks:
-
-```bash
-yarn storybook
 ```
 
 ### Run Cypress tests:

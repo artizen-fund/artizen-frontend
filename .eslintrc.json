@@ -104,11 +104,6 @@
   "overrides": [
     {
       // or whatever matches stories specified in .storybook/main.js
-      "files": ["*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
-      "rules": { "max-len": 0 }
-    },
-    {
-      // or whatever matches stories specified in .storybook/main.js
       "files": ["*.test.@(ts|tsx|js|jsx|mjs|cjs)"],
       "rules": {
         "no-console": 0
