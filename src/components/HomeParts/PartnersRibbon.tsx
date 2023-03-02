@@ -2,18 +2,21 @@ import styled from 'styled-components'
 import { assetPath } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { partners as copy } from '@copy/home'
+import { PagePadding } from '@components'
 
-const Sponsors = () => (
-  <Wrapper>
-    <Label>{copy.label}</Label>
-    <Partners>
-      {copy.partners.map(partner => (
-        <Partner key={`partner-${partner}`}>
-          <img src={assetPath(`/assets/partners/${partner}.svg`)} alt={partner} />
-        </Partner>
-      ))}
-    </Partners>
-  </Wrapper>
+const PartnersRibbon = () => (
+  <PagePadding>
+    <Wrapper>
+      <Label>{copy.label}</Label>
+      <Partners>
+        {copy.partners.map(partner => (
+          <Partner key={`partner-${partner}`}>
+            <img src={assetPath(`/assets/partners/${partner}.svg`)} alt={partner} />
+          </Partner>
+        ))}
+      </Partners>
+    </Wrapper>
+  </PagePadding>
 )
 
 const Wrapper = styled.div`
@@ -38,4 +41,4 @@ const Partner = styled.li`
   }
 `
 
-export default Sponsors
+export default PartnersRibbon

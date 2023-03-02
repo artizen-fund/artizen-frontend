@@ -2,25 +2,32 @@ import styled from 'styled-components'
 import { assetPath, rgba } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { homeRibbon as copy } from '@copy/home'
+import { PagePadding } from '@components'
 
 const HomeRibbon = () => (
   <Wrapper>
-    {copy.map((item, i) => (
-      <Item key={`ribbon-item-${i}`}>
-        <Title>{item.title}</Title>
-        <Copy>{item.copy}</Copy>
-      </Item>
-    ))}
+    <List>
+      {copy.map((item, i) => (
+        <Item key={`ribbon-item-${i}`}>
+          <Title>{item.title}</Title>
+          <Copy>{item.copy}</Copy>
+        </Item>
+      ))}
+    </List>
   </Wrapper>
 )
 
-const Wrapper = styled.ul`
+const Wrapper = styled(props => <PagePadding {...props} />)`
+  background-color: ${rgba(palette.night)};
+`
+
+const List = styled.ul`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   gap: 15px;
-  background-color: ${rgba(palette.night)};
+  padding: 80px 0;
 `
 
 const Item = styled.li`

@@ -14,9 +14,10 @@ import {
   Button,
   ApplyForFundingBlurb,
   Faq,
-  Sponsors,
+  PartnersRibbon,
   HomeRibbon,
   LeaderboardHeader,
+  ProjectCard,
 } from '@components'
 import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
@@ -46,17 +47,20 @@ const GrantPage = () => {
   return (
     <Layout>
       <HomeHeader />
-      <Sponsors />
+      <PartnersRibbon />
       <HomeRibbon />
       <StyledPagePadding>
         <LeaderboardHeader />
-        {/*
-          <Wrapper>
-            <FeaturedArt grant={activeGrant} {...{ loading }} />
-            <FeaturedArtPanel grant={activeGrant} {...{ loading }} />
-            <GrantsExplorer grant={activeGrant} {...{ loading }} />
-          </Wrapper>
-       */}
+        <PagePadding>
+          <Grid>
+            <ProjectCard />
+            <ProjectCard />
+            <ProjectCard />
+            <ProjectCard />
+            <ProjectCard />
+            <ProjectCard />
+          </Grid>
+        </PagePadding>
       </StyledPagePadding>
       <Newsletter />
       <AlternatingPanels>
@@ -76,7 +80,6 @@ const GrantPage = () => {
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   position: relative;
-  padding: 40px 24px;
   background: ${rgba(palette.wash)};
   @media (prefers-color-scheme: dark) {
     background: ${rgba(palette.slate, 0.64)};
@@ -102,5 +105,19 @@ const Wrapper = styled.section`
   padding-bottom: 100px;
 `
 // todo: above is just a filled-in value, check design
+
+const Grid = styled.div`
+  display: grid;
+  gap: 20px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`
 
 export default GrantPage

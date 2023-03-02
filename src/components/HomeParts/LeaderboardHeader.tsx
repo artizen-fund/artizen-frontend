@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { rgba } from '@lib'
+import { rgba, assetPath } from '@lib'
 import { typography, palette } from '@theme'
 
 const LeaderboardHeader = () => (
@@ -9,7 +9,7 @@ const LeaderboardHeader = () => (
       <Stats>
         <Stat>
           <Label>Artizen Award</Label>
-          <Data>23</Data>
+          <Data>Ξ 23</Data>
         </Stat>
         <Stat>
           <Label>Cycle</Label>
@@ -21,7 +21,7 @@ const LeaderboardHeader = () => (
         </Stat>
       </Stats>
     </Copy>
-    <OfficialSelection>Official Selection</OfficialSelection>
+    <OfficialSelection src={assetPath('/assets/officialSelection.svg')} />
   </Wrapper>
 )
 
@@ -36,12 +36,14 @@ const Copy = styled.div``
 
 const Title = styled.h2`
   ${typography.title.l2}
+  margin-bottom: 32px;
 `
 
 const Stats = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  gap: 60px;
 `
 
 const Stat = styled.div`
@@ -50,10 +52,13 @@ const Stat = styled.div`
     content: ' ';
     position: absolute;
     top: 0;
-    left: 0;
+    left: -30px;
     width: 1px;
     height: 100%;
     background-color: ${rgba(palette.stone)};
+  }
+  &:first-child:before {
+    display: none;
   }
 `
 
@@ -66,6 +71,6 @@ const Data = styled.div`
   ${typography.title.l4}
 `
 
-const OfficialSelection = styled.div``
+const OfficialSelection = styled.img``
 
 export default LeaderboardHeader
