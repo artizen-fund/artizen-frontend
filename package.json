@@ -8,6 +8,7 @@
     "dev": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- next dev",
     "prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- next dev",
     "develop": "yarn codegen-local && yarn dev",
+    "develop-staging": "yarn codegen-local-staging && yarn dev",
     "build": "yarn codegen && next build",
     "build-prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- yarn build",
     "build-local": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- yarn build",
@@ -17,6 +18,7 @@
     "test:quick": "start-server-and-test 'yarn dev' http-get://localhost:3000 'env-cmd -f .env.development npx synpress run -cf synpress.config.js'",
     "test:e2e": "PORT=3000 start-server-and-test 'yarn start' http-get://localhost:3000 'env-cmd -f .env.development synpress run -cf synpress.config.js'",
     "codegen": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
+    "codegen-staging": "SECRET_ENV=StagingSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "codegen-local": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "codegen-prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "test:online": "env-cmd -f .env_1password_template.txt synpress run -cf synpress.config.js"
@@ -39,6 +41,7 @@
     "api": "^5.0.1",
     "cookie": "^0.5.0",
     "crypto-address-validator-ts": "^0.5.12",
+    "dayjs": "^1.11.7",
     "ethers": "^5.6.9",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
