@@ -1,14 +1,19 @@
-import { useEffect } from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { Icon, NewSeasonForm } from '@components'
-import { rgba } from '@lib'
+import { rgba, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
 
-const CreateSeasonModal = () => {
+const SubmitProjectModal = () => {
+  const { modalAttrs } = useContext(LayoutContext)
+  console.log('modalAttrs', modalAttrs)
+
+  const { projectId } = modalAttrs
   return (
     <Wrapper>
-      <Headline>Create a New Season</Headline>
-      <NewSeasonForm />
+      <Headline>Submit Project to Season</Headline>
+      <Message>{`project Id to be Submitted: ${projectId}`}</Message>
+      <div>Season to be added</div>
     </Wrapper>
   )
 }
@@ -30,4 +35,4 @@ const Headline = styled.h1`
 const Message = styled.p`
   ${typography.body.l2}
 `
-export default CreateSeasonModal
+export default SubmitProjectModal

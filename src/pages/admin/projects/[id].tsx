@@ -1,24 +1,17 @@
-// create a functional component that will display the project details
-// gets a project id as a query parameter via useRouter query
-// loads the project from the database using the useQuery hook
-// displays a spinner while loading
-// displays an error message if there is an error
-// displays the project details
-// adds a button to go back to the project list
-
-// src/pages/admin/projects/[id].tsx
 import styled from 'styled-components'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import { PagePadding, CuratorCheck, Layout, Spinner } from '@components'
+import { PagePadding, CuratorCheck, Layout, Spinner, Button } from '@components'
 import { GET_PROJECTS } from '@gql'
+import { LayoutContext } from '@lib'
 import { IProjectsQuery } from '@types'
 
 const ProjectDetails = () => {
   const { status } = useSession()
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
     query: { id },
@@ -44,6 +37,8 @@ const ProjectDetails = () => {
     console.error('errorLoadingProject', errorLoadingProject)
   }, [errorLoadingProject])
 
+  const project = loadedProjectData?.Projects[0]
+
   return (
     <Layout>
       <CuratorCheck />
@@ -52,8 +47,20 @@ const ProjectDetails = () => {
           <Spinner minHeight="75vh" />
         ) : (
           <>
+            <Button
+              level={2}
+              onClick={() => {
+                setVisibleModalWithAttrs('submitProjectModal', {
+                  projectId: project?.id,
+                })
+              }}
+            >
+              Submit
+            </Button>
+            <h1>Project Details</h1>
+            <p>Title: {project?.title}</p>
             {/* <ViewProject project={loadedProjectData?.Projects[0]} /> */}
-            <Link href="/admin/projects">↩ back to list</Link>
+            {/* <Link href="/admin/projects">↩ back to list</Link> */}
           </>
         )}
       </StyledPagePadding>

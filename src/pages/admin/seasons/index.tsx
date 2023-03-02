@@ -30,13 +30,17 @@ const Seasons = () => {
     },
   })
 
+  console.log('error', error)
+
+  console.log('loadedSeasonsData', loadedSeasonsData)
+
   const openSeason = (target: string) => () => {
     router.push(`/admin/seasons/${target}`)
   }
 
   const sideItem = (
     <Button
-      onClick={() => {
+      onClick={async () => {
         toggleModal('createSeasonModal')
       }}
       level={2}

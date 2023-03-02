@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { INSERT_SEASONS, LOAD_SEASONS } from '@gql'
 import { ErrorObject } from 'ajv'
+import { useRouter } from 'next/router'
 import { Form, Spinner, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createSeason'
+import { LayoutContext } from '@lib'
 
 // create a functional component that takes in a prop of type NewSeasonFormProps
 // and returns a JSX element
@@ -15,6 +17,8 @@ import { schema, uischema, initialState, FormState } from '@forms/createSeason'
 // show a spinner component if the loading variable is true
 
 export default function NewSeasonForm(): JSX.Element {
+  const { push } = useRouter()
+  const { toggleModal } = useContext(LayoutContext)
   const [insertSeason] = useMutation(INSERT_SEASONS)
   const { loading, data: loadedSeasonsData } = useQuery(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
@@ -39,8 +43,16 @@ export default function NewSeasonForm(): JSX.Element {
       const dateFronMutation = await insertSeason({
         variables: { objects: [data] },
       })
-      console.log('dateFronMutation  ', dateFronMutation)
-      //push(`/admin/seasons/${newSeasonDate}`)
+
+      const newSeasonData = dateFronMutation.data.insert_Seasons.returning[0]
+
+      if (!newSeasonData && newSeasonData.length === 0) {
+        throw new Error('Error saving new season')
+      }
+
+      toggleModal('createSeasonModal')
+
+      push(`/admin/seasons/${newSeasonData.id}`)
     } catch (error) {
       console.log('error saving new season', error)
       setProcessing(false)

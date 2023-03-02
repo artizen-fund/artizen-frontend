@@ -11,8 +11,8 @@ export const LOAD_SEASONS = gql`
 `
 
 export const INSERT_SEASONS = gql`
+  ${SEASON}
   mutation insertSeasons($objects: [Seasons_insert_input!]!) {
-    ${SEASON}
     insert_Seasons(objects: $objects) {
       returning {
         ...Season
