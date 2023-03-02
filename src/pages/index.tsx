@@ -7,7 +7,6 @@ import { LOAD_GRANTS } from '@gql'
 import {
   HomeHeader,
   Layout,
-  Team,
   Newsletter,
   PagePadding,
   AlternatingPanels,
@@ -17,6 +16,7 @@ import {
   Faq,
   Sponsors,
   HomeRibbon,
+  LeaderboardHeader,
 } from '@components'
 import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
@@ -49,6 +49,7 @@ const GrantPage = () => {
       <Sponsors />
       <HomeRibbon />
       <StyledPagePadding>
+        <LeaderboardHeader />
         {/*
           <Wrapper>
             <FeaturedArt grant={activeGrant} {...{ loading }} />
@@ -57,6 +58,7 @@ const GrantPage = () => {
           </Wrapper>
        */}
       </StyledPagePadding>
+      <Newsletter />
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (
           <AlternatingPanel key={`panel-${i}`} {...panel}>
@@ -66,10 +68,8 @@ const GrantPage = () => {
           </AlternatingPanel>
         ))}
       </AlternatingPanels>
-      <Newsletter />
-      <ApplyForFundingBlurb />
       <Faq />
-      <Team />
+      <ApplyForFundingBlurb />
     </Layout>
   )
 }
@@ -77,7 +77,7 @@ const GrantPage = () => {
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   position: relative;
   padding: 40px 24px;
-  background: ${rgba(palette.moon)};
+  background: ${rgba(palette.wash)};
   @media (prefers-color-scheme: dark) {
     background: ${rgba(palette.slate, 0.64)};
     border-width: 0.5px 0px;
