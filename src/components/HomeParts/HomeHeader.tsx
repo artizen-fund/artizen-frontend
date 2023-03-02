@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { PagePadding, Button } from '@components'
+import { PagePadding, Button, HomeAnimation } from '@components'
 import { header } from '@copy/home'
 import { typography, breakpoint } from '@theme'
 
@@ -8,10 +8,12 @@ const HomeHeader = () => {
   return (
     <PagePadding>
       <Header>
-        <Poster src="/assets/noGrant.jpg" />
+        <HomeAnimation />
         <Copy>
-          <h1>{header.title}</h1>
-          <h2>{header.subtitle}</h2>
+          <div>
+            <h1>{header.title}</h1>
+            <h2>{header.subtitle}</h2>
+          </div>
           <Button level={0} onClick={scrollToLeaderboard}>
             {header.buttonLabel}
           </Button>
@@ -21,24 +23,11 @@ const HomeHeader = () => {
   )
 }
 
-const Poster = styled.img`
-  position: relative;
-  z-index: 1;
-  max-width: 50%;
-  flex: 1;
-  display: block;
-  border-radius: 16px 16px 0 0;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    border-radius: 16px;
-  }
-`
-
 const Header = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 50px;
 `
 
 const Copy = styled.header`
@@ -49,6 +38,9 @@ const Copy = styled.header`
   h2 {
     margin-top: 0.5em;
     ${typography.body.l1};
+  }
+  div {
+    margin-bottom: 60px;
   }
 `
 
