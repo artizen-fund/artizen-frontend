@@ -1,65 +1,40 @@
 import styled from 'styled-components'
 import { assetPath } from '@lib'
-import { breakpoint } from '@theme'
+import { breakpoint, typography } from '@theme'
+import { partners as copy } from '@copy/home'
 
 const Sponsors = () => (
   <Wrapper>
-    <Microsoft />
-    <ExtendedReality />
+    <Label>{copy.label}</Label>
+    <Partners>
+      {copy.partners.map(partner => (
+        <Partner key={`partner-${partner}`}>
+          <img src={assetPath(`/assets/partners/${partner}.svg`)} alt={partner} />
+        </Partner>
+      ))}
+    </Partners>
   </Wrapper>
 )
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: row;
   justify-content: space-around;
   align-items: center;
   gap: 15px;
-  margin-top: 24px;
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    flex-direction: row;
-  }
 `
 
-const Microsoft = styled.div`
-  width: 94px;
-  height: 20px;
-  background-image: url(${assetPath('/assets/microsoft.svg')});
-  background-size: contain;
-  background-repeat: no-repeat;
-  @media (prefers-color-scheme: dark) {
-    background-image: url(${assetPath('/assets/microsoft-dark.svg')});
-  }
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    width: 150px;
-    height: 24px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 150px;
-    height: 65px;
-    background-image: url(${assetPath('/assets/microsoft-presents.svg')});
-    @media (prefers-color-scheme: dark) {
-      background-image: url(${assetPath('/assets/microsoft-presents-dark.svg')});
-    }
-  }
+const Label = styled.h2`
+  ${typography.label.l1}
 `
 
-const ExtendedReality = styled.div`
-  width: 201px;
-  height: 64px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    width: 275px;
-    height: 71px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    width: 275px;
-    height: 88px;
-  }
-  background-image: url(${assetPath('/assets/season-1.svg')});
-  @media (prefers-color-scheme: dark) {
-    background-image: url(${assetPath('/assets/season-1-dark.svg')});
+const Partners = styled.ul`
+  display: contents;
+`
+
+const Partner = styled.li`
+  img {
+    max-height: 56px;
   }
 `
 

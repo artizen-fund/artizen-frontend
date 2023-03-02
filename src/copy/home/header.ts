@@ -1,7 +1,8 @@
 const header = {
-  title: 'Daily Grants for Human Creativity',
+  title: 'Mint Artifacts to fund creativity',
   subtitle:
-    'Every 24 hours, donations to the Artizen Fund are pooled and awarded to new projects at the frontier of art, tech, science, and design.',
+    'Mint Artifacts to select our Grand Prize winner and help fund projects at the frontier of art, science, technology, and design.',
+  buttonLabel: 'See Leaderboard',
 }
 
 export { header }
