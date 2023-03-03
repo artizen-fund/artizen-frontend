@@ -49,8 +49,8 @@ const GrantPage = () => {
       <HomeHeader />
       <PartnersRibbon />
       <HomeRibbon />
+      <LeaderboardHeader />
       <StyledPagePadding>
-        <LeaderboardHeader />
         <PagePadding>
           <Grid>
             <ProjectCard />

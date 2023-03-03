@@ -1,31 +1,78 @@
+import { useScrollPosition } from '@n8tb1t/use-scroll-position'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { rgba, assetPath } from '@lib'
-import { typography, palette } from '@theme'
+import { typography, palette, breakpoint } from '@theme'
+import { PagePadding } from '@components'
 
-const LeaderboardHeader = () => (
-  <Wrapper>
-    <Copy>
-      <Title>Leaderboard</Title>
-      <Stats>
-        <Stat>
-          <Label>Artizen Award</Label>
-          <Data>Ξ 23</Data>
-        </Stat>
-        <Stat>
-          <Label>Cycle</Label>
-          <Data>Season 2</Data>
-        </Stat>
-        <Stat>
-          <Label>Ends in</Label>
-          <Data>13d : 8h : 44m</Data>
-        </Stat>
-      </Stats>
-    </Copy>
-    <OfficialSelection src={assetPath('/assets/officialSelection.svg')} />
-  </Wrapper>
-)
+const LeaderboardHeader = () => {
+  const [shadowVisible, setShadowVisible] = useState(false)
+  useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 500), [], undefined, true, 50)
 
-const Wrapper = styled.header`
+  return (
+    <Wrapper {...{ shadowVisible }}>
+      <StyledPagePadding>
+        <Content>
+          <Copy>
+            <Title>Leaderboard</Title>
+            <Stats>
+              <Stat>
+                <Label>Artizen Award</Label>
+                <Data>Ξ 23</Data>
+              </Stat>
+              <Stat>
+                <Label>Cycle</Label>
+                <Data>Season 2</Data>
+              </Stat>
+              <Stat>
+                <Label>Ends in</Label>
+                <Data>13d : 8h : 44m</Data>
+              </Stat>
+            </Stats>
+          </Copy>
+          <OfficialSelection src={assetPath('/assets/officialSelection.svg')} />
+        </Content>
+      </StyledPagePadding>
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.header<{ shadowVisible: boolean }>`
+  position: sticky;
+  z-index: 102;
+  top: 0px;
+  left: 0;
+
+  padding-top: 76px;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding-top: 84px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    padding-top: 100px;
+  }
+
+  background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
+  filter: drop-shadow(
+    ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
+  );
+  @media (prefers-color-scheme: dark) {
+    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
+    filter: drop-shadow(
+      ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(114, 124, 140, 0.64)')}
+    );
+  }
+  backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
+
+  border-bottom: 0.5px solid transparent;
+  transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
+    backdrop-filter 0.3s ease-in-out;
+`
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  padding: 20px 0;
+`
+
+const Content = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
