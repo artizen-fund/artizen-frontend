@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { Button, Glyph } from '@components'
+import { Button, Glyph, DonationBox } from '@components'
 import numeral from 'numeral'
 
-const ProjectCard = props => (
+const ProjectCard = (props: any) => (
   <Wrapper>
     <Header>
       <Left>
@@ -30,6 +30,7 @@ const ProjectCard = props => (
           <span>Ξ 23.61</span>
         </Amount>
       </Cost>
+      <DonationBox blockchainId="abc123" />
       <NumberInput>1</NumberInput>
       <Button level={1} onClick={() => alert('todo')}>
         Mint

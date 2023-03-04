@@ -1,16 +1,18 @@
-import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { useState } from 'react'
+import { useInViewport } from 'react-in-viewport'
+import { useRef } from 'react'
 import styled from 'styled-components'
 import { rgba, assetPath } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding } from '@components'
 
 const LeaderboardHeader = () => {
-  const [shadowVisible, setShadowVisible] = useState(false)
-  useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 500), [], undefined, true, 50)
+  const trigger = useRef<HTMLDivElement>(null)
+
+  const { inViewport } = useInViewport(trigger)
 
   return (
-    <Wrapper {...{ shadowVisible }}>
+    <Wrapper shadowVisible={!inViewport}>
+      <Trigger ref={trigger} />
       <StyledPagePadding>
         <Content>
           <Copy>
@@ -36,6 +38,13 @@ const LeaderboardHeader = () => {
     </Wrapper>
   )
 }
+
+const Trigger = styled.div`
+  position: absolute;
+  top: -10px;
+  width: 1px;
+  height: 1px;
+`
 
 const Wrapper = styled.header<{ shadowVisible: boolean }>`
   position: sticky;

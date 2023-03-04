@@ -16281,6 +16281,13 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-in-viewport@^1.0.0-alpha.29:
+  version "1.0.0-alpha.29"
+  resolved "https://registry.yarnpkg.com/react-in-viewport/-/react-in-viewport-1.0.0-alpha.29.tgz#7550692dddbc2f129774d1cb3db40be7b27b9438"
+  integrity sha512-48woFq8EUWl3WWAPeyPu5T5KR26G3q8Gs64YXMRQq7aIP5YBzHIN2GvoFwdXDhT19pwcOPmlkSAYWMt0+d3ydw==
+  dependencies:
+    hoist-non-react-statics "^3.0.0"
+
 react-intersection-observer@^9.4.0:
   version "9.4.1"
   resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.4.1.tgz#4ccb21e16acd0b9cf5b28d275af7055bef878f6b"
