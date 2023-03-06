@@ -53,6 +53,7 @@ export const MEMBER = gql`
 
 export const PROJECT = gql`
   ${MEMBER}
+  ${ARTIFACT}
   fragment Project on Projects {
     id
     impact
@@ -64,6 +65,9 @@ export const PROJECT = gql`
     walletAddress
     title
     metadata
+    artifacts {
+      ...Artifact
+    }
     members {
       ...Member
     }

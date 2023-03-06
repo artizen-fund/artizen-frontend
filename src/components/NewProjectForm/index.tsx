@@ -8,13 +8,13 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { typography, palette } from '@theme'
 import { LOAD_GRANTS } from '@gql'
-import { ILoadGrantsQuery } from '@types'
+import { ILoadGrantsQuery, IProjectFragment } from '@types'
 import { Form, Button, Spinner } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createProjects'
-import { ARTIZEN_TIMEZONE, rgba } from '@lib'
+import { rgba } from '@lib'
 import { validateProjectMembers, useSaveProject, getGrantDates } from './lib'
 
-const NewProjectForm = () => {
+const NewProjectForm = (addData: any) => {
   const { insertProject, insertMembers, insertGrant } = useSaveProject()
   const { push } = useRouter()
 
@@ -60,22 +60,24 @@ const NewProjectForm = () => {
   //   setAdditionalErrors(errors)
   // }, [debouncedData])
 
-  const saveNewProject = async () => {
-    // if (!data || !validateProjectMembers(data.projectMembers)) return
-    setProcessing(true)
+  // const saveNewProject = async () => {
+  //   // if (!data || !validateProjectMembers(data.projectMembers)) return
+  //   setProcessing(true)
 
-    console.log(' generalData: ', generalData)
+  //   addData(generalData)
 
-    // try {
-    //   const projectId = await insertProject(data.project)
-    //   await insertMembers(data.projectMembers, projectId)
-    //   const newGrantDate = await insertGrant(data, projectId)
-    //   push(`/admin/grants/${newGrantDate}`)
-    // } catch (error) {
-    //   setProcessing(false)
-    //   alert(error)
-    // }
-  }
+  //   console.log(' generalData: ', generalData)
+
+  //   // try {
+  //   //   const projectId = await insertProject(data.project)
+  //   //   await insertMembers(data.projectMembers, projectId)
+  //   //   const newGrantDate = await insertGrant(data, projectId)
+  //   //   push(`/admin/grants/${newGrantDate}`)
+  //   // } catch (error) {
+  //   //   setProcessing(false)
+  //   //   alert(error)
+  //   // }
+  // }
 
   return (
     <Wrapper>
@@ -83,14 +85,14 @@ const NewProjectForm = () => {
       <WrapperForm>
         <Form
           data={generalData}
-          setData={setGeneralData}
+          setData={() => {
+            console.log('setData')
+            setGeneralData(generalData)
+            addData(generalData)
+          }}
           {...{ schema, uischema, additionalErrors }}
           readonly={processing}
-        >
-          <StyledButton onClick={() => saveNewProject()} stretch level={0}>
-            {processing ? 'Saving...' : 'Save Draft'}
-          </StyledButton>
-        </Form>
+        ></Form>
       </WrapperForm>
     </Wrapper>
   )
