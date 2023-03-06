@@ -32,8 +32,6 @@ const ProjectDetails = () => {
     },
   })
 
-  console.log('loadedProjectData   ', loadedProjectData)
-
   useEffect(() => {
     if (!errorLoadingProject) return
     console.error('errorLoadingProject', errorLoadingProject)

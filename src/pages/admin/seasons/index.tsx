@@ -30,10 +30,6 @@ const Seasons = () => {
     },
   })
 
-  console.log('error', error)
-
-  console.log('loadedSeasonsData', loadedSeasonsData)
-
   const openSeason = (target: string) => () => {
     router.push(`/admin/seasons/${target}`)
   }

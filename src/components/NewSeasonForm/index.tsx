@@ -51,10 +51,7 @@ export default function NewSeasonForm(): JSX.Element {
       return
     }
 
-    console.log('seasons', seasonInDB)
-
     try {
-      console.log('season data', data)
       const dateFronMutation = await insertSeason({
         variables: { objects: [data] },
       })
@@ -69,7 +66,7 @@ export default function NewSeasonForm(): JSX.Element {
 
       push(`/admin/seasons/${newSeasonData.id}`)
     } catch (error) {
-      console.log('error saving new season', error)
+      console.error('error saving new season', error)
       setProcessing(false)
       alert(error)
     }

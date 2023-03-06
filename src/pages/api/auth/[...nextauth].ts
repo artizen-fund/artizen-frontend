@@ -44,8 +44,6 @@ export const authOptions: NextAuthOptions = {
           },
         })
 
-        console.log('userInDatabase   ', userInDatabase.data?.Users)
-
         if (userInDatabase.data?.Users.length === 0) {
           //Add user
 

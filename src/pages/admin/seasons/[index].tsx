@@ -27,8 +27,6 @@ export default function SeasonPage(): JSX.Element {
     },
   })
 
-  console.log('loadedSeasonsData', loadedSeasonsData)
-
   return (
     <>
       {loading ? (
@@ -36,7 +34,6 @@ export default function SeasonPage(): JSX.Element {
       ) : (
         <Layout>
           {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
-            console.log('season', season.submissions)
             const id = `submission-container-id-${season.id}`
             const startingDate = dayjs(season.startingDate).format('MM-DD:HH:mm')
             const endingDate = dayjs(season.endingDate).format('MM-DD:HH:mm')

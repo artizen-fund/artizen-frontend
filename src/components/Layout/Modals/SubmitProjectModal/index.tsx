@@ -26,12 +26,7 @@ const SubmitProjectModal = () => {
   const { data: loadedSeasonsData } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS)
   const [submitProjectMutaton] = useMutation(INSERT_SUBMISSION)
 
-  console.log('modalAttrs', modalAttrs)
-  console.log('loadedSeasonsData', loadedSeasonsData)
-
   const { projectId } = modalAttrs
-
-  console.log('seasonIdselected  ', seasonSelected)
 
   const submitProject = () => {
     // create a new project submission
@@ -63,12 +58,6 @@ const SubmitProjectModal = () => {
           const isSameOrBefore = localTimeToPST.isSameOrBefore(endingDate, 'hour')
 
           const status = isBetween ? 'Running' : isSameOrBefore ? 'Comming' : 'Closed'
-
-          console.log('local time', dayjs().format('YYYY-MM-DD HH:mm:ss'))
-          console.log('local localTimeToPST', localTimeToPST.format('YYYY-MM-DD HH:mm:ss'))
-          console.log('startingDate  ', startingDate.format('YYYY-MM-DD HH:mm:ss'))
-          console.log('isBetween  ', isBetween)
-          console.log('status  ', status)
 
           if (seasonSelected?.id === season.id) {
             return (
