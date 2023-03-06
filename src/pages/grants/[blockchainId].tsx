@@ -1,3 +1,11 @@
+/*
+  This was previously the daily-grant template.
+  
+  It will be repurposed as the selected-project template.
+  
+  TODO: start with GraphQL query to pull up a single project.
+*/
+
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'

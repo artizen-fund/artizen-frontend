@@ -66,7 +66,7 @@ const Header = () => {
 
 const Wrapper = styled.header<{ shadowVisible: boolean }>`
   position: fixed;
-  z-index: 102;
+  z-index: 103;
   top: 0;
   left: 0;
 
