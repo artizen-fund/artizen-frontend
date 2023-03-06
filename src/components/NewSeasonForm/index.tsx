@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation, useLazyQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { INSERT_SEASONS, LOAD_SEASONS } from '@gql'
 import { ErrorObject } from 'ajv'
@@ -20,15 +20,8 @@ export default function NewSeasonForm(): JSX.Element {
   const { push } = useRouter()
   const { toggleModal } = useContext(LayoutContext)
   const [insertSeason] = useMutation(INSERT_SEASONS)
-  const { loading, data: loadedSeasonsData } = useQuery(LOAD_SEASONS, {
+  const [loadSeason, { loading, data: loadedSeasonsData }] = useLazyQuery(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
-    variables: {
-      order_by: [
-        {
-          startingDate: 'desc_nulls_last',
-        },
-      ],
-    },
   })
 
   const startingDate = loadedSeasonsData?.Seasons[0]?.endingDate + 1
@@ -38,6 +31,28 @@ export default function NewSeasonForm(): JSX.Element {
 
   const saveNewSeason = async () => {
     setProcessing(true)
+
+    //check if there is a season already in the database
+    const { data: seasonInDB } = await loadSeason({
+      variables: {
+        where: {
+          startingDate: {
+            _gte: data.startingDate,
+          },
+          endingDate: {
+            _neq: data.endingDate,
+          },
+        },
+      },
+    })
+
+    if (seasonInDB) {
+      alert('Season within starting data and ending data already exists in the database')
+      return
+    }
+
+    console.log('seasons', seasonInDB)
+
     try {
       console.log('season data', data)
       const dateFronMutation = await insertSeason({
