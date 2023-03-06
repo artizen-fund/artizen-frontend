@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useMutation, useQuery } from '@apollo/client'
+import { useEffect, useState, useContext } from 'react'
+import { useMutation, useLazyQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { INSERT_SEASONS, LOAD_SEASONS } from '@gql'
 import { ErrorObject } from 'ajv'
+import { useRouter } from 'next/router'
 import { Form, Spinner, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createSeason'
+import { LayoutContext } from '@lib'
 
 // create a functional component that takes in a prop of type NewSeasonFormProps
 // and returns a JSX element
@@ -15,16 +17,11 @@ import { schema, uischema, initialState, FormState } from '@forms/createSeason'
 // show a spinner component if the loading variable is true
 
 export default function NewSeasonForm(): JSX.Element {
+  const { push } = useRouter()
+  const { toggleModal } = useContext(LayoutContext)
   const [insertSeason] = useMutation(INSERT_SEASONS)
-  const { loading, data: loadedSeasonsData } = useQuery(LOAD_SEASONS, {
+  const [loadSeason, { loading, data: loadedSeasonsData }] = useLazyQuery(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
-    variables: {
-      order_by: [
-        {
-          startingDate: 'desc_nulls_last',
-        },
-      ],
-    },
   })
 
   const startingDate = loadedSeasonsData?.Seasons[0]?.endingDate + 1
@@ -34,15 +31,42 @@ export default function NewSeasonForm(): JSX.Element {
 
   const saveNewSeason = async () => {
     setProcessing(true)
+
+    //check if there is a season already in the database
+    const { data: seasonInDB } = await loadSeason({
+      variables: {
+        where: {
+          startingDate: {
+            _gte: data.startingDate,
+          },
+          endingDate: {
+            _neq: data.endingDate,
+          },
+        },
+      },
+    })
+
+    if (seasonInDB) {
+      alert('Season within starting data and ending data already exists in the database')
+      return
+    }
+
     try {
-      console.log('season data', data)
       const dateFronMutation = await insertSeason({
         variables: { objects: [data] },
       })
-      console.log('dateFronMutation  ', dateFronMutation)
-      //push(`/admin/seasons/${newSeasonDate}`)
+
+      const newSeasonData = dateFronMutation.data.insert_Seasons.returning[0]
+
+      if (!newSeasonData && newSeasonData.length === 0) {
+        throw new Error('Error saving new season')
+      }
+
+      toggleModal('createSeasonModal')
+
+      push(`/admin/seasons/${newSeasonData.id}`)
     } catch (error) {
-      console.log('error saving new season', error)
+      console.error('error saving new season', error)
       setProcessing(false)
       alert(error)
     }

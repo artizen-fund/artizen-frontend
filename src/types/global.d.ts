@@ -34,6 +34,7 @@ declare global {
     | 'processTransaction'
     | 'shareTransaction'
     | 'createSeasonModal'
+    | 'submitProjectModal'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 

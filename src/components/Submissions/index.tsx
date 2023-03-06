@@ -21,8 +21,6 @@ interface SubmissionsProps {
 }
 
 export default function Submissions({ submissions }: SubmissionsProps): JSX.Element {
-  console.log('submissions   ', submissions)
-
   return (
     <StyledSubmissions>
       {submissions?.map((submissionData: ISubmissionFragment, index: number) => (

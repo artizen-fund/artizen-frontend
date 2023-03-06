@@ -18,7 +18,6 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
 
   const moveToNextGrant = () => {
     setTimeout(() => {
-      console.log('updating...')
       window.location.assign(`${window.location.protocol}//${window.location.host}/grants/today`)
     }, 5000)
   }

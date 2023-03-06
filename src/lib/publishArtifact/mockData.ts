@@ -11,6 +11,21 @@ const mockProject: IProjectFragment = {
   completionDate: '2022-01-02 00:00:00',
   walletAddress: '0x00000000000',
   title: 'Test Project',
+  artifacts: [
+    {
+      __typename: 'Artifacts',
+      id: 'id',
+      name: 'name',
+      description: 'description',
+      artwork: 'artwork',
+      video: 'video',
+      edition: 'edition',
+      blockchainAddress: 'blockchainAddress',
+      dateMinting: 'dateMinting',
+      token: 'token',
+      createdAt: 'createdAt',
+    },
+  ],
   members: [
     {
       __typename: 'ProjectMembers',

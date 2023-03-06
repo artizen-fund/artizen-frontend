@@ -5,7 +5,6 @@ import { rgba } from '@lib'
 import { palette, typography } from '@theme'
 
 const CreateSeasonModal = () => {
-  useEffect(() => console.log('init'), [])
   return (
     <Wrapper>
       <Headline>Create a New Season</Headline>

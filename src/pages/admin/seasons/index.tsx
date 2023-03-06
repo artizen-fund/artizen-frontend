@@ -36,7 +36,7 @@ const Seasons = () => {
 
   const sideItem = (
     <Button
-      onClick={() => {
+      onClick={async () => {
         toggleModal('createSeasonModal')
       }}
       level={2}
