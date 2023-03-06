@@ -32,10 +32,14 @@ const ProjectDetails = () => {
     },
   })
 
-  useEffect(() => {
-    if (!errorLoadingProject) return
-    console.error('errorLoadingProject', errorLoadingProject)
-  }, [errorLoadingProject])
+  // useEffect(() => {
+  //   if (!errorLoadingProject) return
+  //   console.error('errorLoadingProject', errorLoadingProject)
+  // }, [errorLoadingProject])
+
+  if (!loading || errorLoadingProject) {
+    throw new Error('error loading project details', errorLoadingProject)
+  }
 
   const project = loadedProjectData?.Projects[0]
 
