@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { Button } from '@components'
-import { Icon } from '@components'
+import { Button, Icon } from '@components'
 import { rgba, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
 import { useQuery, useMutation } from '@apollo/client'
@@ -89,6 +88,8 @@ const SubmitProjectModal = () => {
               </ItemWrapper>
             )
           }
+
+          return null
         })}
       </SchoolItems>
 
