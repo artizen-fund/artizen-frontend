@@ -14,11 +14,7 @@ import { schema, uischema, initialState, FormState } from '@forms/createProjects
 import { rgba } from '@lib'
 import { validateProjectMembers, useSaveProject, getGrantDates } from './lib'
 
-interface NewProjectFormProps {
-  addData: (data: FormState) => void
-}
-
-const NewProjectForm = (addData: NewProjectFormProps) => {
+const NewProjectForm = (addData: any) => {
   const { insertProject, insertMembers, insertGrant } = useSaveProject()
   const { push } = useRouter()
 
