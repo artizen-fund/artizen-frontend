@@ -7,7 +7,7 @@ import { schema, uischema, initialState, FormState } from '@forms/createProjects
 
 const ProjectDetails = () => {
   const { status } = useSession()
-  const [temGenericProject, setTempGenericProject] = useState<FormState>(initialState)
+  const [tempGenericProject, setTempGenericProject] = useState<FormState>(initialState)
 
   const saveProject = () => {
     // console.warn('saveProject')
