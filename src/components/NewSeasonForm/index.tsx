@@ -46,7 +46,9 @@ export default function NewSeasonForm(): JSX.Element {
       },
     })
 
-    if (seasonInDB) {
+    console.log('seasonInDB', seasonInDB)
+
+    if (seasonInDB.length > 0) {
       alert('Season within starting data and ending data already exists in the database')
       return
     }
