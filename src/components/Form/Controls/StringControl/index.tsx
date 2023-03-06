@@ -2,7 +2,6 @@ import { useState, useEffect, FormEventHandler } from 'react'
 import { withJsonFormsControlProps } from '@jsonforms/react'
 import { rankWith, schemaMatches, JsonSchema, ControlElement } from '@jsonforms/core'
 import { Wrapper, InputLabel, InputWrapper, Message, InputGlyph } from '../_Common'
-import { ccnFormat } from '@lib'
 import { GlyphKey } from '@theme'
 import PhoneInput from './PhoneInput'
 import UploadFileControl from '../UploadFileControl'
@@ -61,7 +60,7 @@ export const StringControl = ({
   const handleStringChange = (value: string) => {
     // put any special formatting rules here
     if (uischema?.options?.format === 'creditCard') {
-      setLocalData(ccnFormat(value))
+      // setLocalData(ccnFormat(value))
     } else if (uischema?.options?.format === 'lowercase') {
       setLocalData(value.toLowerCase())
     } else {

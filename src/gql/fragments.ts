@@ -63,8 +63,37 @@ export const PROJECT = gql`
     completionDate
     walletAddress
     title
+    metadata
     members {
       ...Member
+    }
+  }
+`
+export const SUBMISSION = gql`
+  ${PROJECT}
+  ${ARTIFACT}
+  fragment Submission on Submissions {
+    id
+    project {
+      ...Project
+    }
+    artifacts {
+      ...Artifact
+    }
+  }
+`
+
+export const SEASON = gql`
+  ${SUBMISSION}
+  fragment Season on Seasons {
+    id
+    title
+    startingDate
+    endingDate
+    createdAt
+    updateAt
+    submissions {
+      ...Submission
     }
   }
 `
