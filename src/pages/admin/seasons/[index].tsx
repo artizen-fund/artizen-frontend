@@ -3,13 +3,14 @@ import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { LOAD_SEASONS } from '@gql'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
-import { Spinner, Layout, Submissions } from '@components'
+import { Spinner, Layout, Submissions, Button } from '@components'
 import { palette } from '@theme'
 import dayjs from 'dayjs'
 
 export default function SeasonPage(): JSX.Element {
   const {
     query: { index },
+    push,
   } = useRouter()
   const { loading, data: loadedSeasonsData } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
@@ -40,12 +41,18 @@ export default function SeasonPage(): JSX.Element {
             return (
               <Wrapper key={id} id={id}>
                 <Title id={`submission-title-${season.title}`}>{season.title}</Title>
-                <Subtitle id={`submission-status-${season.title}`}>{'running'}</Subtitle>
+                <Subtitle id={`submission-status-${season.title}`}>{'Running'}</Subtitle>
                 <Subtitle
+                  className="expand"
                   id={`submission-startingDate-${season.startingDate}`}
                 >{`From: ${startingDate} to: ${endingDate}`}</Subtitle>
-
-                <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
+                <Title>Projects submitted to this Season:</Title>
+                <Button level={2} onClick={() => push('/admin/projects')}>
+                  Submit a project
+                </Button>
+                <SubmissionsWrapper>
+                  <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
+                </SubmissionsWrapper>
               </Wrapper>
             )
           })}
@@ -54,6 +61,25 @@ export default function SeasonPage(): JSX.Element {
     </>
   )
 }
+
+const SubmissionsWrapper = styled.div`
+  grid-column: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+`
+
+const Wrapper = styled.div`
+  margin: 50px 200px;
+  display: grid;
+  grid-template-rows: 50px 50px;
+  grid-template-columns: 2fr 1fr;
+  .expand {
+    grid-column: 1 / 3;
+  }
+`
 
 const Subtitle = styled.h3`
   font-size: 1rem;
@@ -69,11 +95,4 @@ const Title = styled.h1`
   margin: 0;
   padding: 0;
   color: ${palette.night};
-`
-
-const Wrapper = styled.div`
-  margin: 50px 200px;
-  display: grid;
-  grid-template-rows: 50px 150px;
-  grid-template-columns: 2fr 1fr;
 `

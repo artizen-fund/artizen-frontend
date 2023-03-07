@@ -48,41 +48,9 @@ const SubmitProjectModal = () => {
 
   return (
     <Wrapper>
-      <Headline>Submit Project to Season</Headline>
+      <Headline>Project Lead</Headline>
 
-      <div>Search Season to submit the project to:</div>
-      {/* <SchoolItems>
-        {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
-          const localTimeToPST = dayjs().tz('America/Toronto')
-          const startingDate = dayjs('2023-01-03').tz('America/Toronto', true)
-          const endingDate = dayjs('2023-02-03').tz('America/Toronto', true)
-          const isBetween = localTimeToPST.isBetween(startingDate, endingDate, 'hour')
-          const isSameOrBefore = localTimeToPST.isSameOrBefore(endingDate, 'hour')
-
-          const status = isBetween ? 'Running' : isSameOrBefore ? 'Comming' : 'Closed'
-
-          if (seasonSelected?.id === season.id) {
-            return (
-              <ItemWrapper key={season.id}>
-                <Item className="selected">{season.title}</Item>
-                <Item className="doubleHeight selected">Selected</Item>
-                <Item className="selected">{`Starting Date:${season.startingDate} - Ending Date:${season.endingDate}`}</Item>
-              </ItemWrapper>
-            )
-          }
-          if (!seasonSelected) {
-            return (
-              <ItemWrapper key={season.id} onClick={() => setSeasonSelected(season)}>
-                <Item>{season.title}</Item>
-                <Item className="doubleHeight">{status}</Item>
-                <Item>{`Starting Date:${season.startingDate} - Ending Date:${season.endingDate}`}</Item>
-              </ItemWrapper>
-            )
-          }
-
-          return null
-        })}
-      </SchoolItems> */}
+      <div>Search User to add the project to:</div>
 
       <SchoolItems>
         {!loading && (

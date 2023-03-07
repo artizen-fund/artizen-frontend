@@ -6,7 +6,7 @@ import moment from 'moment-timezone'
 import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { typography, palette } from '@theme'
+import { typography, palette, breakpoint } from '@theme'
 import { LOAD_GRANTS } from '@gql'
 import { ILoadGrantsQuery, IProjectFragment } from '@types'
 import { Form, Button, Spinner } from '@components'
@@ -16,14 +16,14 @@ import { validateProjectMembers, useSaveProject, getGrantDates } from './lib'
 
 interface NewProjectFormProps {
   addData: (data: FormState) => void
+  tempValue: FormState
+  processing: boolean
 }
 
-const NewProjectForm = ({ addData }: NewProjectFormProps) => {
+const NewProjectForm = ({ addData, tempValue, processing }: NewProjectFormProps) => {
   const { insertProject, insertMembers, insertGrant } = useSaveProject()
   const { push } = useRouter()
 
-  const [generalData, setGeneralData] = useState<FormState>(initialState)
-  const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   // const { loading, data: loadedGrantData } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
@@ -85,15 +85,10 @@ const NewProjectForm = ({ addData }: NewProjectFormProps) => {
 
   return (
     <Wrapper>
-      <h1>New Project</h1>
       <WrapperForm>
         <Form
-          data={generalData}
-          setData={() => {
-            console.log('setData')
-            setGeneralData(generalData)
-            addData(generalData)
-          }}
+          data={tempValue}
+          setData={addData}
           {...{ schema, uischema, additionalErrors }}
           readonly={processing}
         ></Form>
@@ -104,135 +99,57 @@ const NewProjectForm = ({ addData }: NewProjectFormProps) => {
 
 const Wrapper = styled.div``
 
+//'title', 'logline', 'impactTags', 'walletAddress', 'info1', 'info2', 'info3', 'info4'
 const WrapperForm = styled.div`
   display: grid;
-  margin: 20px auto;
-  // width: 100%;
-  // gap: 15px;
+  gap: 10px;
+  grid-template-areas:
+    'title logline'
+    'impactTags walletAddress'
+    'info1 info1'
+    'info2 info2'
+    'info3 info3'
+    'info4 info4';
 
-  grid-template-columns: 100%;
-  grid-template-rows: auto;
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    gap: 16px;
+  }
 
   .vertical-layout,
-  .vertical-layout-item,
-  .group-layout,
-  .group-layout-item {
-    margin: 20px 0;
+  .vertical-layout-item {
+    display: contents;
   }
 
-  // legend {
-  //   margin-top: 30px;
-  //   ${typography.label.l3}
-  // }
-
-  // .array-table-layout {
-  //   grid-column: 1 / span 12;
-  // }
-
-  // legend {
-  //   grid-column: 1 / span 12;
-  // }
-
-  // .horizontal-layout {
-  //   display: contents;
-  //   .horizontal-layout-1 {
-  //     display: contents;
-  //     > * {
-  //       grid-column-end: span 12;
-  //     }
-  //   }
-  //   .horizontal-layout-2 {
-  //     display: contents;
-  //     > * {
-  //       grid-column-end: span 6;
-  //     }
-  //   }
-  //   .horizontal-layout-3 {
-  //     display: contents;
-  //     > * {
-  //       grid-column-end: span 4;
-  //     }
-  //   }
-  //   .horizontal-layout-4 {
-  //     display: contents;
-  //     > * {
-  //       grid-column-end: span 3;
-  //     }
-  //   }
-  //   .horizontal-layout-6 {
-  //     display: contents;
-  //     > * {
-  //       grid-column-end: span 2;
-  //     }
-  //   }
+  *[id='#/properties/title'] {
+    grid-area: title;
   }
 
-  // .array-table-layout {
-  //   header {
-  //     display: flex;
-  //     justify-content: space-between;
-  //     cursor: pointer;
-  //   }
-  //   tr {
-  //     display: flex;
-  //     position: relative;
-  //   }
-  //   td,
-  //   th {
-  //     flex: 2;
-  //     padding: 0px 0px 10px 0px;
-  //     text-align: left;
-  //   }
-  //   td:nth-child(8),
-  //   th:nth-child(8) {
-  //     flex: 1;
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-  //   }
-  //   td:nth-child(7) {
-  //     padding: 5px;
-  //     background-color: rgba(255, 255, 255, 0.1);
-  //     color: white;
-  //     font-weight: 300;
-  //     font-size: 9px;
-  //     pointer-events: none;
-  //   }
-    // button {
-    //   color: black;
-    //   border: 1px solid black;
-    //   @media (prefers-color-scheme: dark) {
-    //     border: 1px solid white;
-    //     color: white;
-    //   }
-    //   padding: 4px 20px;
-    //   border-radius: 9999px;
-    //   cursor: pointer;
-    //   font-style: normal;
-    //   font-weight: 700;
-    //   text-align: center;
-    //   letter-spacing: 0.5px;
-    //   ${typography.label.l2}
-    //   transition: transform 0.15s ease-in-out;
-    //   &:hover {
-    //     transform: scale(1.1);
-    //   }
-    // }
-    // input {
-    //   border: 1px solid ${rgba(palette.stone)};
-    //   width: 100%;
-    //   padding: 18px 0px 18px 8px;
-    //   @media (prefers-color-scheme: dark) {
-    //     border: 1px solid ${rgba(palette.stone)};
-    //     color: ${rgba(palette.slate)};
-    //     background: ${rgba(palette.moon)};
-    //   }
-    // }
+  *[id='#/properties/logline'] {
+    grid-area: logline;
   }
 
-  *[aria-label='Delete'] {
-    color: red;
-    padding: 0 6px;
+  *[id='#/properties/impactTags'] {
+    grid-area: impactTags;
+  }
+
+  *[id='#/properties/walletAddress'] {
+    grid-area: walletAddress;
+  }
+
+  *[id='#/properties/info1'] {
+    grid-area: info1;
+  }
+
+  *[id='#/properties/info2'] {
+    grid-area: info2;
+  }
+
+  *[id='#/properties/info3'] {
+    grid-area: info3;
+  }
+
+  *[id='#/properties/info4'] {
+    grid-area: info4;
   }
 `
 
