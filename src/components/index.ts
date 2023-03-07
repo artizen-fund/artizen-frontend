@@ -48,6 +48,7 @@ export { default as MediaModal } from './Layout/Modals/MediaModal'
 export { default as ProcessTransactionModal } from './Layout/Modals/ProcessTransactionModal'
 export { default as ShareTransactionModal } from './Layout/Modals/ShareTransactionModal'
 export { default as SubmitProjectModal } from './Layout/Modals/SubmitProjectModal'
+export { default as NewProjectMembersModal } from './Layout/Modals/NewProjectMembersModal'
 
 export { default as CheckboxControl } from './Form/Controls/BooleanControl/CheckboxControl'
 export { default as SwitchControl } from './Form/Controls/BooleanControl/SwitchControl'

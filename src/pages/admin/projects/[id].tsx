@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { useEffect, useState, useContext } from 'react'
-import Link from 'next/link'
+import { useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'

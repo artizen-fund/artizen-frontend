@@ -11,13 +11,15 @@ export const DropDownBlocks = ({ items, structure, setItemSelected, itemSelected
     <>
       {items.map(item => {
         const isSelected = itemSelected?.id === item.id
+        console.log(itemSelected?.id !== item.id)
+
         return (
-          <ItemWrapper key={item.id} onClick={() => !isSelected && setItemSelected(item)}>
+          <ItemWrapper key={item.id} onClick={() => setItemSelected(!isSelected ? item : null)}>
             {structure.map(itemStructure => {
               return itemStructure[isSelected ? 'selected' : 'notSelected'].map((itemData, index) => {
                 return (
-                  <Item className={`${isSelected ? 'selected' : ''}`} key={index}>
-                    {itemData(item)}
+                  <Item className={itemData.classNames} key={index}>
+                    {itemData.renderer(item)}
                   </Item>
                 )
               })
@@ -34,10 +36,11 @@ const ItemWrapper = styled.div`
   height: 100px;
   display: grid;
   padding: 1rem;
-  background: ${rgba(palette.white, 0.2)};
+  background: ${rgba(palette.white, 0.1)};
   margin: 0.1rem 0;
   grid-auto-rows: 1fr;
   grid-template-columns: 2fr 1fr;
+  course: pointer;
 
   .selected {
     color: ${rgba(palette.algae, 1)};
