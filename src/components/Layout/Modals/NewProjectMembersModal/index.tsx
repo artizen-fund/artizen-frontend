@@ -16,6 +16,8 @@ const NewProjectMembersModal = () => {
 
   const { callback } = modalAttrs
 
+  const Users = !loading && loadedUsers !== undefined && loadedUsers?.Users.length > 0 ? loadedUsers?.Users : null
+
   return (
     <Wrapper>
       <Headline>Project Lead</Headline>
@@ -23,43 +25,21 @@ const NewProjectMembersModal = () => {
       <div>Search User to add the project to:</div>
 
       <SchoolItems>
-        {!loading && (
-          <DropDownBlocks
+        {Users && (
+          <DropDownBlocks<IUserPublicFragment>
             itemSelected={userSelected}
             setItemSelected={setuserSelection}
-            items={loadedUsers?.Users}
+            items={Users}
             structure={[
               {
-                selected: [
-                  {
-                    renderer: (item: IUserPublicFragment) => `${item.firstName} ${item.lastName}`,
-                    classNames: 'selected',
-                  },
-                  {
-                    renderer: (item: IUserPublicFragment) => (
-                      <AvatarImage profileImage={item.profileImage}></AvatarImage>
-                    ),
-                    classNames: 'selected doubleHeight',
-                  },
-                  {
-                    renderer: (item: IUserPublicFragment) => `Public Address :${item.publicAddress}`,
-                    classNames: 'selected',
-                  },
-                ],
-                notSelected: [
-                  {
-                    renderer: (item: IUserPublicFragment) => `${item.firstName} ${item.lastName}`,
-                  },
-                  {
-                    renderer: (item: IUserPublicFragment) => (
-                      <AvatarImage profileImage={item.profileImage}></AvatarImage>
-                    ),
-                    classNames: 'doubleHeight',
-                  },
-                  {
-                    renderer: (item: IUserPublicFragment) => `Public Address :${item.publicAddress}`,
-                  },
-                ],
+                renderer: (item: IUserPublicFragment) => `${item.firstName} ${item.lastName}`,
+              },
+              {
+                renderer: (item: IUserPublicFragment) => <AvatarImage profileImage={item.profileImage}></AvatarImage>,
+                classNames: 'doubleHeight',
+              },
+              {
+                renderer: (item: IUserPublicFragment) => `Public Address :${item.publicAddress}`,
               },
             ]}
           ></DropDownBlocks>
@@ -72,9 +52,6 @@ const NewProjectMembersModal = () => {
         </Button>
         {userSelected && (
           <>
-            <Button level={2} outline onClick={() => setuserSelection(null)}>
-              Unselect
-            </Button>
             <Button level={2} outline onClick={() => setuserSelection(null)}>
               Edit Users Data
             </Button>

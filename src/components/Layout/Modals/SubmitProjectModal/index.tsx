@@ -46,62 +46,33 @@ const SubmitProjectModal = () => {
     })
   }
 
+  const Seasons =
+    !loading && loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0
+      ? loadedSeasonsData?.Seasons
+      : []
+
   return (
     <Wrapper>
       <Headline>Submit Project to Season</Headline>
 
       <div>Search Season to submit the project to:</div>
-      {/* <SchoolItems>
-        {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
-          const localTimeToPST = dayjs().tz('America/Toronto')
-          const startingDate = dayjs('2023-01-03').tz('America/Toronto', true)
-          const endingDate = dayjs('2023-02-03').tz('America/Toronto', true)
-          const isBetween = localTimeToPST.isBetween(startingDate, endingDate, 'hour')
-          const isSameOrBefore = localTimeToPST.isSameOrBefore(endingDate, 'hour')
-
-          const status = isBetween ? 'Running' : isSameOrBefore ? 'Comming' : 'Closed'
-
-          if (seasonSelected?.id === season.id) {
-            return (
-              <ItemWrapper key={season.id}>
-                <Item className="selected">{season.title}</Item>
-                <Item className="doubleHeight selected">Selected</Item>
-                <Item className="selected">{`Starting Date:${season.startingDate} - Ending Date:${season.endingDate}`}</Item>
-              </ItemWrapper>
-            )
-          }
-          if (!seasonSelected) {
-            return (
-              <ItemWrapper key={season.id} onClick={() => setSeasonSelected(season)}>
-                <Item>{season.title}</Item>
-                <Item className="doubleHeight">{status}</Item>
-                <Item>{`Starting Date:${season.startingDate} - Ending Date:${season.endingDate}`}</Item>
-              </ItemWrapper>
-            )
-          }
-
-          return null
-        })}
-      </SchoolItems> */}
 
       <SchoolItems>
-        {!loading && (
-          <DropDownBlocks
+        {!loading && Seasons.length > 0 && (
+          <DropDownBlocks<ISeasonFragment>
             itemSelected={seasonSelected}
             setItemSelected={setSeasonSelection}
-            items={loadedSeasonsData?.Seasons}
+            items={Seasons}
             structure={[
               {
-                selected: [
-                  (item: ISeasonFragment) => item.title,
-                  () => 'Selected',
-                  (item: ISeasonFragment) => `Starting Date:${item.startingDate} - Ending Date:${item.endingDate}`,
-                ],
-                notSelected: [
-                  (item: ISeasonFragment) => item.title,
-                  () => 'status',
-                  (item: ISeasonFragment) => `Starting Date:${item.startingDate} - Ending Date:${item.endingDate}`,
-                ],
+                renderer: (item: ISeasonFragment) => `${item.title}`,
+              },
+              {
+                renderer: () => 'Selected',
+              },
+              {
+                renderer: (item: ISeasonFragment) =>
+                  `Starting Date:${item.startingDate} - Ending Date:${item.endingDate}`,
               },
             ]}
           ></DropDownBlocks>
@@ -114,10 +85,6 @@ const SubmitProjectModal = () => {
         </Button>
         {seasonSelected && (
           <>
-            <Button level={2} outline onClick={() => setSeasonSelection(null)}>
-              Unselect
-            </Button>
-
             <Button level={2} onClick={submitProject}>
               Submit Project
             </Button>

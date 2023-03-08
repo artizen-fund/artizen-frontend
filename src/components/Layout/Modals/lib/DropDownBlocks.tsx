@@ -4,25 +4,42 @@ import { rgba } from '@lib'
 import { palette, typography } from '@theme'
 import styled from 'styled-components'
 
-export const DropDownBlocks = ({ items, structure, setItemSelected, itemSelected }) => {
-  console.log('items', items)
+interface IDropDownBlocks<T> {
+  itemSelected: T | null
+  setItemSelected: (item: T | null) => void
+  items: Array<T>
+  structure: {
+    renderer: (item: T) => JSX.Element | string
+    classNames?: string
+  }[]
+}
 
+export const DropDownBlocks = <ObjectType extends { id?: string }>(props: IDropDownBlocks<ObjectType>) => {
+  const { itemSelected, setItemSelected, items, structure } = props
+
+  console.log(' itemsss  ', items)
   return (
     <>
       {items.map(item => {
         const isSelected = itemSelected?.id === item.id
         console.log(itemSelected?.id !== item.id)
 
+        if (itemSelected?.id && itemSelected?.id !== item.id) {
+          return null
+        }
+
+        console.log('goes here')
+
         return (
-          <ItemWrapper key={item.id} onClick={() => setItemSelected(!isSelected ? item : null)}>
-            {structure.map(itemStructure => {
-              return itemStructure[isSelected ? 'selected' : 'notSelected'].map((itemData, index) => {
-                return (
-                  <Item className={itemData.classNames} key={index}>
-                    {itemData.renderer(item)}
-                  </Item>
-                )
-              })
+          <ItemWrapper id={item.id} key={item.id} onClick={() => setItemSelected(!isSelected ? item : null)}>
+            {structure.map((itemStructure, index) => {
+              const classNames = isSelected ? `${itemStructure.classNames} selected` : itemStructure.classNames
+
+              return (
+                <Item className={classNames} key={`${index}-structure`}>
+                  {itemStructure.renderer(item)}
+                </Item>
+              )
             })}
           </ItemWrapper>
         )
@@ -40,7 +57,7 @@ const ItemWrapper = styled.div`
   margin: 0.1rem 0;
   grid-auto-rows: 1fr;
   grid-template-columns: 2fr 1fr;
-  course: pointer;
+  cursor: pointer;
 
   .selected {
     color: ${rgba(palette.algae, 1)};

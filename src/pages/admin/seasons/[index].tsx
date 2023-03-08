@@ -5,6 +5,7 @@ import { LOAD_SEASONS } from '@gql'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { Spinner, Layout, Submissions, Button } from '@components'
 import { palette } from '@theme'
+import { rgba } from '@lib'
 import dayjs from 'dayjs'
 
 export default function SeasonPage(): JSX.Element {
@@ -86,7 +87,7 @@ const Subtitle = styled.h3`
   font-weight: 100;
   margin: 0;
   padding: 0;
-  color: ${palette.night};
+  color: ${rgba(palette.night)};
 `
 
 const Title = styled.h1`
@@ -94,5 +95,5 @@ const Title = styled.h1`
   font-weight: 600;
   margin: 0;
   padding: 0;
-  color: ${palette.night};
+  color: ${rgba(palette.night)};
 `
