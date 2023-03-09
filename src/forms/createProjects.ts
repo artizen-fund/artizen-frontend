@@ -47,8 +47,16 @@ export const schema: JsonSchema = {
     walletAddress: {
       type: 'string',
     },
+    artworkArtifact: {
+      type: 'string',
+      format: 'url',
+    },
+    videoArtifact: {
+      type: 'string',
+      format: 'url',
+    },
   },
-  required: ['title', 'logline', 'impactTags', 'walletAddress', 'info1', 'info2', 'info3', 'info4'],
+  required: ['title', 'logline', 'impactTags', 'walletAddress', 'info1', 'info2', 'info3', 'info4', 'artworkArtifact'],
 }
 
 export interface FormState extends Record<string, unknown> {
@@ -60,6 +68,8 @@ export interface FormState extends Record<string, unknown> {
   info2?: string
   info3?: string
   info4?: string
+  artworkArtifact?: string
+  videoArtifact?: string
 }
 
 /* This is our local initialState. */
@@ -72,6 +82,8 @@ export const initialState: FormState = {
   info2: undefined,
   info3: undefined,
   info4: undefined,
+  artworkArtifact: undefined,
+  videoArtifact: undefined,
 }
 
 /*
@@ -104,18 +116,48 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/info1',
+      options: {
+        format: 'text',
+      },
     },
     {
       type: 'Control',
       scope: '#/properties/info2',
+      options: {
+        format: 'text',
+      },
     },
     {
       type: 'Control',
       scope: '#/properties/info3',
+      options: {
+        format: 'text',
+      },
     },
     {
       type: 'Control',
       scope: '#/properties/info4',
+      options: {
+        format: 'text',
+      },
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/artworkArtifact',
+      options: {
+        unsafeToRetain: true,
+        format: 'uploadFile',
+        fileFormats: ['image/png', 'image/jpeg', 'image/gif'],
+      },
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/videoArtifact',
+      options: {
+        unsafeToRetain: true,
+        format: 'uploadCloudinaryFile',
+        extensions: ['mp4', 'webm'],
+      },
     },
   ],
 }

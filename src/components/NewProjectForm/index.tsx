@@ -86,18 +86,22 @@ const NewProjectForm = ({ addData, tempValue, processing }: NewProjectFormProps)
   return (
     <Wrapper>
       <WrapperForm>
-        <Form
-          data={tempValue}
-          setData={addData}
-          {...{ schema, uischema, additionalErrors }}
-          readonly={processing}
-        ></Form>
+        <Form data={tempValue} setData={addData} {...{ schema, uischema, additionalErrors }} readonly={processing}>
+          <StyledButton onClick={() => console.log('asdsad')} stretch level={0}>
+            {/* {processing ? 'Saving...' : 'Save Draft'} */}
+          </StyledButton>
+        </Form>
       </WrapperForm>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div``
+
+const StyledButton = styled(props => <Button {...props} />)`
+  grid-column: 1 / span 2;
+  margin-top: 20px;
+`
 
 //'title', 'logline', 'impactTags', 'walletAddress', 'info1', 'info2', 'info3', 'info4'
 const WrapperForm = styled.div`
@@ -109,7 +113,8 @@ const WrapperForm = styled.div`
     'info1 info1'
     'info2 info2'
     'info3 info3'
-    'info4 info4';
+    'info4 info4'
+    'artworkArtifact videoArtifact';
 
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
@@ -151,11 +156,14 @@ const WrapperForm = styled.div`
   *[id='#/properties/info4'] {
     grid-area: info4;
   }
-`
 
-const StyledButton = styled(props => <Button {...props} />)`
-  grid-column: 1 / span 12;
-  margin-top: 20px;
+  *[id='#/properties/artworkArtifact'] {
+    grid-area: artworkArtifact;
+  }
+
+  *[id='#/properties/videoArtifact'] {
+    grid-area: videoArtifact;
+  }
 `
 
 export default NewProjectForm

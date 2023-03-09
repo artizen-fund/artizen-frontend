@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { IUsers, Maybe } from '@types'
 import styled from 'styled-components'
@@ -15,6 +15,11 @@ const ProjectDetails = () => {
   const [tempGenericProject, setTempGenericProject] = useState<FormState>(initialState)
   const [tempLeadMember, setTempLeadMember] = useState<IUsers>()
 
+  useEffect(() => {
+    console.log('tempGenericProject', tempGenericProject)
+    console.log('tempLeadMember', tempLeadMember)
+  }, [tempGenericProject, tempLeadMember])
+
   const saveProject = () => {
     // console.warn('saveProject')
   }
@@ -27,13 +32,11 @@ const ProjectDetails = () => {
           <Spinner />
         ) : (
           <Wrapper>
-            <Title className="extent">New Project</Title>
-            <NewProjectForm addData={setTempGenericProject} tempValue={tempGenericProject} processing={processing} />
+            <Title className="extent">New Project Form: </Title>
             <ProjectLeadMemberWrapper>
-              <Title>Project Lead:</Title>
+              <Subtitle>Project Lead *</Subtitle>
               {!tempLeadMember && (
-                <Button
-                  level={3}
+                <AddProjectLeadBt
                   onClick={() => {
                     setVisibleModalWithAttrs('newProjectMemberModal', {
                       callback: (data: any) => {
@@ -43,19 +46,14 @@ const ProjectDetails = () => {
                       },
                     })
                   }}
-                  stretch
                 >
                   Add New Project Lead
-                </Button>
+                </AddProjectLeadBt>
               )}
 
               {tempLeadMember && (
                 <>
-                  <Button
-                    level={4}
-                    glyph="cross"
-                    stretch
-                    outline
+                  <AddProjectLeadBt
                     onClick={() => {
                       setTempLeadMember(undefined)
                       setVisibleModalWithAttrs('newProjectMemberModal', {
@@ -68,22 +66,27 @@ const ProjectDetails = () => {
                     }}
                   >
                     Replace
-                  </Button>
+                  </AddProjectLeadBt>
 
                   <LeadUserWrapper>
                     <AvatarImage profileImage={tempLeadMember.profileImage}></AvatarImage>
-                    <LeadUserItem>{`Name: ${tempLeadMember.firstName} ${tempLeadMember.lastName}`}</LeadUserItem>
-                    <LeadUserItem>{`Wallet: ${tempLeadMember.publicAddress}`}</LeadUserItem>
-                    <LeadUserItem>{`Email: ${tempLeadMember.email}`}</LeadUserItem>
-                    <LeadUserItem>{`Twitter: ${tempLeadMember.twitterHandle}`}</LeadUserItem>
-                    <LeadUserItem>{`External Link: ${tempLeadMember.externalLink}`}</LeadUserItem>
+                    <Subtitle>{`Name: ${tempLeadMember.firstName} ${tempLeadMember.lastName}`}</Subtitle>
+                    <Subtitle>{`Wallet: ${tempLeadMember.publicAddress}`}</Subtitle>
+                    <Subtitle>{`Email: ${tempLeadMember.email}`}</Subtitle>
+                    <Subtitle>{`Twitter: ${tempLeadMember.twitterHandle}`}</Subtitle>
+                    <Subtitle>{`External Link: ${tempLeadMember.externalLink}`}</Subtitle>
                   </LeadUserWrapper>
                 </>
               )}
             </ProjectLeadMemberWrapper>
-            <StyledButton onClick={saveProject} stretch level={0}>
-              {/* {processing ? 'Saving...' : 'Save Draft'} */}
-            </StyledButton>
+            <NewProjectForm
+              addData={data => {
+                //setTempGenericProject
+                console.log('data in here:::::::', data)
+              }}
+              tempValue={tempGenericProject}
+              processing={processing}
+            />
           </Wrapper>
         )}
       </PagePadding>
@@ -91,32 +94,45 @@ const ProjectDetails = () => {
   )
 }
 
-const LeadUserItem = styled.div``
+const AddProjectLeadBt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  height: 100%;
+  background-color: ${rgba(palette.night)};
+  color: ${rgba(palette.white)};
+  cursor: pointer;
+  @media (prefers-color-scheme: dark) {
+    background-color: ${rgba(palette.moon)};
+    color: ${rgba(palette.night, 0.6)};
+  }
+`
 
 const LeadUserWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 100px 220px 1fr;
   grid-gap: 20px;
-  margin-bottom: 20px;
-
+  grid-template-rows: 18px 18px 18px;
   grid-column: 1 / 3;
 `
 
 const ProjectLeadMemberWrapper = styled.div`
-  margin: 50px 0;
+  margin: 42px 0 10px 0;
+  padding: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
-  margin-bottom: 20px;
-  padding-right: 260px;
+  background-color: ${rgba(palette.white, 1)};
+
   .doubleLength {
     grid-column: 1 / span 2;
   }
 `
 
 const AvatarImage = styled.div<{ profileImage?: Maybe<string> }>`
-  width: 164px;
-  height: 164px;
+  width: 96px;
+  height: 96px;
   background-image: url(${props => props.profileImage});
   background-size: cover;
   background-repeat: no-repeat;
@@ -126,11 +142,6 @@ const AvatarImage = styled.div<{ profileImage?: Maybe<string> }>`
   @media (prefers-color-scheme: dark) {
     background-color: ${rgba(palette.moon)};
   }
-`
-
-const StyledButton = styled(props => <Button {...props} />)`
-  grid-column: 1 / span 12;
-  margin-top: 20px;
 `
 
 const Wrapper = styled.div`
@@ -144,7 +155,18 @@ const Title = styled.h1`
   padding: 0;
   color: ${rgba(palette.night)};
   @media (prefers-color-scheme: dark) {
-    color: ${rgba(palette.moon)};
+    color: ${rgba(palette.white)};
+  }
+`
+
+const Subtitle = styled.h3`
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.night, 0.6)};
   }
 `
 
