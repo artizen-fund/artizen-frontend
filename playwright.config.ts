@@ -13,7 +13,7 @@ export default defineConfig({
   globalSetup: './tests/util/globalSetup.ts',
   testDir: './tests/e2e',
   /* Maximum time one test can run for. */
-  timeout: 120 * 1000,
+  timeout: 30 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -39,7 +39,7 @@ export default defineConfig({
     baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL ? process.env.PLAYWRIGHT_TEST_BASE_URL : "http://localhost:3000/",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'off',
   },
 
   /* Configure projects for major browsers */

@@ -66,7 +66,8 @@ test.describe('general artizen user', () => {
     await deleteTestUserFromDb()
   })
 
-  test('new user can login via metamask', async ({ page, metamask }) => {
+  test('new user can login via metamask', async ({ page, metamask, context }) => {
+    await context.tracing.start({ screenshots: true, snapshots: true })
     await page.waitForLoadState()
 
     // click sign in button
@@ -98,6 +99,7 @@ test.describe('general artizen user', () => {
     await expect(page.getByText('Complete your profile')).toBeVisible({
       timeout: 20000,
     })
+    await context.tracing.stop({ path: 'trace.zip' })
   })
 
   test('new user can complete profile', async ({ page, metamask }) => {
