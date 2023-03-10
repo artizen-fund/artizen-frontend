@@ -1,10 +1,7 @@
-import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project } from '@components'
-import { GET_PROJECTS } from '@gql'
-import { IProjectsQuery, IProjectFragment } from '@types'
+import { Layout, PagePadding } from '@components'
 import { typography, palette } from '@theme'
 import { rgba } from '@lib'
 

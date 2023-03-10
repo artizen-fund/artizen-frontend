@@ -4,9 +4,7 @@ import styled from 'styled-components'
 import { LOAD_SEASONS } from '@gql'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { Spinner, Layout, Submissions, Button, PagePadding } from '@components'
-import { palette, typography } from '@theme'
-import { rgba } from '@lib'
-import dayjs from 'dayjs'
+import { typography } from '@theme'
 import { useDateHelpers } from '@lib'
 
 export default function SeasonPage(): JSX.Element {
