@@ -18,9 +18,10 @@ interface NewProjectFormProps {
   addData: (data: FormState) => void
   tempValue: FormState
   processing: boolean
+  saveNewProject: () => void
 }
 
-const NewProjectForm = ({ addData, tempValue, processing }: NewProjectFormProps) => {
+const NewProjectForm = ({ addData, tempValue, processing, saveNewProject }: NewProjectFormProps) => {
   const { insertProject, insertMembers, insertGrant } = useSaveProject()
   const { push } = useRouter()
 
@@ -87,8 +88,8 @@ const NewProjectForm = ({ addData, tempValue, processing }: NewProjectFormProps)
     <Wrapper>
       <WrapperForm>
         <Form data={tempValue} setData={addData} {...{ schema, uischema, additionalErrors }} readonly={processing}>
-          <StyledButton onClick={() => console.log('asdsad')} stretch level={0}>
-            {/* {processing ? 'Saving...' : 'Save Draft'} */}
+          <StyledButton onClick={saveNewProject} stretch level={0}>
+            {processing ? 'Saving...' : 'Save'}
           </StyledButton>
         </Form>
       </WrapperForm>

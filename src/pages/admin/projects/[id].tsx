@@ -3,17 +3,19 @@ import { useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import { palette } from '@theme'
-import { PagePadding, CuratorCheck, Layout, Spinner, Button } from '@components'
-import { GET_PROJECTS } from '@gql'
-import { LayoutContext } from '@lib'
-import { IProjectsQuery } from '@types'
+import { palette, typography } from '@theme'
+import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
+import { GET_PROJECTS, LOAD_SEASONS } from '@gql'
+import { LayoutContext, rgba } from '@lib'
+
+import { IProjectsQuery, ISeasonFragment } from '@types'
 
 export default function ProjectDetails(): JSX.Element {
   const { status } = useSession()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
+    push,
     query: { id },
   } = useRouter()
 
@@ -23,7 +25,7 @@ export default function ProjectDetails(): JSX.Element {
     loading,
     data: loadedProjectData,
     error: errorLoadingProject,
-  } = useQuery(GET_PROJECTS, {
+  } = useQuery<IProjectsQuery>(GET_PROJECTS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -34,7 +36,24 @@ export default function ProjectDetails(): JSX.Element {
     },
   })
 
-  console.log('loadedProjectData  ', loadedProjectData)
+  const {
+    loading: loadingSeasons,
+    data: loadedSeasons,
+    error: errorLoadingSeasons,
+  } = useQuery(LOAD_SEASONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      where: {
+        submissions: {
+          projectId: {
+            _eq: id,
+          },
+        },
+      },
+    },
+  })
+
+  console.log('loadedSeasons  ', loadedSeasons)
 
   if (!loading && errorLoadingProject) {
     throw new Error('error loading project details', errorLoadingProject)
@@ -55,21 +74,46 @@ export default function ProjectDetails(): JSX.Element {
               level={2}
               onClick={() => {
                 setVisibleModalWithAttrs('submitProjectModal', {
-                  projectId: project?.id,
+                  project,
                 })
               }}
             >
               Submit to a Season
             </Button>
+            <SeasonSubmissionsContainer>
+              {!loadingSeasons &&
+                loadedSeasons.Seasons.map((season: ISeasonFragment) => {
+                  return (
+                    <SeasonItem key={season.id} onClick={() => push(`/admin/seasons/${season.id}`)}>
+                      This project was submitted to season: <b>{season.title}</b>
+                    </SeasonItem>
+                  )
+                })}
+            </SeasonSubmissionsContainer>
 
-            {/* <ViewProject project={loadedProjectData?.Projects[0]} /> */}
-            {/* <Link href="/admin/projects">↩ back to list</Link> */}
+            {loadedProjectData && (
+              <ProjectWrapper className="expand">
+                <Project projectData={loadedProjectData?.Projects[0]} displayType="full" />
+              </ProjectWrapper>
+            )}
           </ProjectContainer>
         )}
       </StyledPagePadding>
     </Layout>
   )
 }
+
+const ProjectWrapper = styled.div`
+  background: ${rgba(palette.white)};
+  padding: 20px;
+
+  background-color: ${rgba(palette.night)};
+  ${typography.body.l3}
+
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.moon, 0.1)};
+  }
+`
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   max-width: 800px;
@@ -79,18 +123,36 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 
 const ProjectContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(30px);
   grid-gap: 20px;
   margin: 20px 0;
+
+  .expand {
+    grid-column: 1 / 3;
+  }
 `
 
-const Subtitle = styled.h3`
-  font-size: 1rem;
-  font-weight: 100;
-  margin: 0;
-  padding: 0;
-  color: ${palette.night};
+const SeasonSubmissionsContainer = styled.div`
+  grid-column: 1 / 3;
 `
+
+const SeasonItem = styled.div`
+  display: flex
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px dotted ${rgba(palette.uiWarning, 0.5)};
+  border-radius: 5px;
+  margin: 10px 0;
+  ${typography.body.l3}
+
+  &:hover {
+    background: ${rgba(palette.uiWarning, 0.1)};
+  }
+
+  `
 
 const Title = styled.h1`
   font-size: 1.5rem;

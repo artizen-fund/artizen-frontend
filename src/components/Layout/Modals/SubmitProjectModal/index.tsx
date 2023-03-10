@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, Icon } from '@components'
-import { rgba, LayoutContext } from '@lib'
+import { rgba, LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
+
 import { palette, typography } from '@theme'
-import { useQuery, useMutation } from '@apollo/client'
+import { useLazyQuery, useMutation } from '@apollo/client'
 import { LOAD_SEASONS, INSERT_SUBMISSION } from '@gql'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { DropDownBlocks } from '../lib/DropDownBlocks'
@@ -13,6 +14,7 @@ import timezone from 'dayjs/plugin/timezone'
 import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import { useRouter } from 'next/router'
 
 // load season data from useQuery
 
@@ -23,64 +25,126 @@ const SubmitProjectModal = () => {
   dayjs.extend(isSameOrAfter)
   dayjs.extend(isSameOrBefore)
 
-  const { modalAttrs } = useContext(LayoutContext)
+  const { modalAttrs, toggleModal } = useContext(LayoutContext)
+  const { project } = modalAttrs
+
+  const inputRef = useRef<ISeasonFragment[]>([])
+
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
-  const { loading, data: loadedSeasonsData } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS)
+  const [loadSeasons, { data: loadedSeasonsData }] = useLazyQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
+    variables: {
+      where: {
+        endingDate: {
+          _gte: dayjs().tz(ARTIZEN_TIMEZONE).format(),
+        },
+      },
+    },
+  })
   const [submitProjectMutaton] = useMutation(INSERT_SUBMISSION)
+  const { reload } = useRouter()
 
-  const { projectId } = modalAttrs
+  useEffect(() => {
+    console.log('inputRef.current  ', inputRef.current)
+    if (inputRef.current.length > 0) return
 
-  const submitProject = () => {
+    loadSeasons()
+    const Seasons =
+      loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0 ? loadedSeasonsData?.Seasons : []
+
+    console.log('Seasons   ', Seasons)
+
+    const arrayWithoutSubmitedProjects = Seasons.filter(({ submissions }) => {
+      const projectSubmited = submissions.find(
+        ({ project: projectFromSubmission }) => projectFromSubmission?.id !== project.id,
+      )
+
+      console.log('projectSubmited   ', projectSubmited)
+      return submissions.length > 0 ? projectSubmited : true
+    })
+
+    if (arrayWithoutSubmitedProjects.length === 0) return
+
+    inputRef.current = arrayWithoutSubmitedProjects
+
+    console.log('goes to load this:::::::::::', arrayWithoutSubmitedProjects)
+  }, [inputRef.current, loadedSeasonsData, loadSeasons, project.id])
+
+  const submitProject = async () => {
     // create a new project submission
     // submit the submission to the season with useMutation
 
-    submitProjectMutaton({
+    console.log('projectId   ', project)
+    console.log('seasonSelected   ', seasonSelected)
+
+    const submitProjectR = await submitProjectMutaton({
       variables: {
         objects: [
           {
-            projectId,
+            projectId: project.id,
+            // TODO: this will not work with multiple artifacts and multiple projects submissions
+            artifactId: project.artifacts[0].id,
             seasonId: seasonSelected?.id,
           },
         ],
       },
     })
-  }
 
-  const Seasons =
-    !loading && loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0
-      ? loadedSeasonsData?.Seasons
-      : []
+    const { data, errors } = submitProjectR
+
+    if (errors) {
+      console.log('errors   ', errors)
+      throw new Error(errors[0].message)
+    }
+
+    toggleModal()
+    reload()
+  }
 
   return (
     <Wrapper>
       <Headline>Submit Project to Season</Headline>
 
-      <div>Search Season to submit the project to:</div>
+      {inputRef.current.length === 0 && (
+        <SchoolItems>
+          There are not active seasons, or has this project been submitted to all the available seasons
+        </SchoolItems>
+      )}
 
-      <SchoolItems>
-        {!loading && Seasons.length > 0 && (
-          <DropDownBlocks<ISeasonFragment>
-            itemSelected={seasonSelected}
-            setItemSelected={setSeasonSelection}
-            items={Seasons}
-            structure={[
-              {
-                renderer: (item: ISeasonFragment) => `${item.title}`,
-              },
-              {
-                renderer: () => 'Selected',
-              },
-              {
-                renderer: (item: ISeasonFragment) =>
-                  `Starting Date:${item.startingDate} - Ending Date:${item.endingDate}`,
-              },
-            ]}
-          ></DropDownBlocks>
-        )}
-      </SchoolItems>
+      {inputRef.current.length > 0 && (
+        <>
+          <div>Search Season to submit the project to:</div>
+
+          <SchoolItems>
+            <DropDownBlocks<ISeasonFragment>
+              itemSelected={seasonSelected}
+              setItemSelected={setSeasonSelection}
+              items={inputRef.current}
+              structure={[
+                {
+                  renderer: (item: ISeasonFragment) => `${item.title}`,
+                },
+                {
+                  renderer: () => 'Selected',
+                },
+                {
+                  renderer: (item: ISeasonFragment) =>
+                    `Starting Date:${item.startingDate} - Ending Date:${item.endingDate}`,
+                },
+              ]}
+            ></DropDownBlocks>
+          </SchoolItems>
+        </>
+      )}
 
       <Menu>
-        <Button level={2} outline onClick={() => setSeasonSelection(null)}>
+        <Button
+          level={2}
+          outline
+          onClick={() => {
+            setSeasonSelection(null)
+            toggleModal('createSeasonModal')
+          }}
+        >
           Create New Season
         </Button>
         {seasonSelected && (
@@ -131,12 +195,6 @@ const ItemWrapper = styled.div`
   }
 `
 
-const Item = styled.div`
-  span {
-    font-size: 0.2rem;
-  }
-`
-
 const Wrapper = styled.div`
   background: ${rgba(palette.white)};
   @media (prefers-color-scheme: dark) {
@@ -144,7 +202,7 @@ const Wrapper = styled.div`
   }
   padding: 2rem;
   width: calc(100vw - 320px);
-  height: calc(100vh - 320px);
+  height: 320px;
 `
 
 const Headline = styled.h1`

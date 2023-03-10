@@ -78,6 +78,7 @@ export const SUBMISSION = gql`
   ${ARTIFACT}
   fragment Submission on Submissions {
     id
+    createdAt
     project {
       ...Project
     }

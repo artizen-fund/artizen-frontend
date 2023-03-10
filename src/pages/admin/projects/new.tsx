@@ -4,24 +4,86 @@ import { IUsers, Maybe } from '@types'
 import styled from 'styled-components'
 import { palette } from '@theme'
 import { LayoutContext, rgba } from '@lib'
-
+import { useMutation } from '@apollo/client'
+import { useRouter } from 'next/router'
+import { INSERT_PROJECTS } from '@gql'
 import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding, Button } from '@components'
-import { initialState, FormState } from '@forms/createProjects'
+import { initialState, schema, FormState } from '@forms/createProjects'
 
 const ProjectDetails = () => {
   const { status } = useSession()
+  const { push } = useRouter()
   const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
-  const [processing, setProcessing] = useState<boolean>(false)
+
   const [tempGenericProject, setTempGenericProject] = useState<FormState>(initialState)
   const [tempLeadMember, setTempLeadMember] = useState<IUsers>()
+  const [insertProject, { loading }] = useMutation(INSERT_PROJECTS)
 
-  useEffect(() => {
-    console.log('tempGenericProject', tempGenericProject)
-    console.log('tempLeadMember', tempLeadMember)
-  }, [tempGenericProject, tempLeadMember])
+  const saveProject = async () => {
+    const { info1, info2, info3, info4, artworkArtifact, videoArtifact, ...project } = tempGenericProject
 
-  const saveProject = () => {
-    // console.warn('saveProject')
+    const newProjectVars = {
+      objects: [
+        {
+          artifacts: {
+            data: [
+              {
+                artwork: artworkArtifact,
+                video: videoArtifact,
+              },
+            ],
+          },
+          /* IMPORTANT: Generic description questions are subject
+           to be changed quite a bit, that's why they are not in the schema 
+          and grouped in a single as jsonb field */
+
+          metadata: [
+            {
+              title: schema.properties?.info1.title,
+              value: info1,
+            },
+            {
+              title: schema.properties?.info2.title,
+              value: info2,
+            },
+            {
+              title: schema.properties?.info3.title,
+              value: info3,
+            },
+            {
+              title: schema.properties?.info4.title,
+              value: info4,
+            },
+          ],
+
+          members: {
+            data: [
+              {
+                type: 'lead',
+                userId: tempLeadMember?.id,
+              },
+            ],
+          },
+          ...project,
+        },
+      ],
+    }
+
+    const insertProjectR = await insertProject({
+      variables: newProjectVars,
+    })
+
+    const {
+      data: {
+        insert_Projects: { returning },
+      },
+    } = insertProjectR
+
+    if (returning.length > 0) {
+      push(`/admin/projects/${returning[0].id}`)
+    }
+
+    console.log('insertProjectR   ', insertProjectR)
   }
 
   return (
@@ -80,12 +142,10 @@ const ProjectDetails = () => {
               )}
             </ProjectLeadMemberWrapper>
             <NewProjectForm
-              addData={data => {
-                //setTempGenericProject
-                console.log('data in here:::::::', data)
-              }}
+              saveNewProject={saveProject}
+              addData={setTempGenericProject}
               tempValue={tempGenericProject}
-              processing={processing}
+              processing={loading}
             />
           </Wrapper>
         )}
@@ -105,13 +165,13 @@ const AddProjectLeadBt = styled.div`
   cursor: pointer;
   @media (prefers-color-scheme: dark) {
     background-color: ${rgba(palette.moon)};
-    color: ${rgba(palette.night, 0.6)};
+    color: ${rgba(palette.barracuda)};
   }
 `
 
 const LeadUserWrapper = styled.div`
   display: grid;
-  grid-template-columns: 100px 220px 1fr;
+  grid-template-columns: 100px 1fr 1fr;
   grid-gap: 20px;
   grid-template-rows: 18px 18px 18px;
   grid-column: 1 / 3;
@@ -166,7 +226,7 @@ const Subtitle = styled.h3`
   padding: 0;
   color: ${rgba(palette.night)};
   @media (prefers-color-scheme: dark) {
-    color: ${rgba(palette.night, 0.6)};
+    color: ${rgba(palette.barracuda)};
   }
 `
 

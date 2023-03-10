@@ -83,23 +83,24 @@ const SchoolItems = styled.div`
 
 const Menu = styled.div`
   display: flex;
-
   justify-content: right;
   gap: 10px;
 `
 
 const Wrapper = styled.div`
+  max-width: calc(100vw - 20px);
+  height: 300px;
+  padding: 20px;
   background: ${rgba(palette.white)};
   @media (prefers-color-scheme: dark) {
     background: ${rgba(palette.slate)};
   }
-  padding: 2rem;
   width: calc(100vw - 320px);
-  height: calc(100vh - 320px);
 `
 
 const Headline = styled.h1`
   margin: 1rem 0;
+
   ${typography.title.l3}
 `
 
