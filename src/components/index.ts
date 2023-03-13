@@ -53,3 +53,4 @@ export { default as NewProjectMembersModal } from './Layout/Modals/NewProjectMem
 
 export { default as CheckboxControl } from './Form/Controls/BooleanControl/CheckboxControl'
 export { default as SwitchControl } from './Form/Controls/BooleanControl/SwitchControl'
+export { default as Counter } from './Counter'
