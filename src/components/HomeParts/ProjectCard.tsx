@@ -25,10 +25,6 @@ const ProjectCard = (props: any) => (
         </Amount>
       </Cost>
       <DonationBox blockchainId="abc123" />
-      <NumberInput>1</NumberInput>
-      <Button level={1} onClick={() => alert('todo')}>
-        Mint
-      </Button>
     </Footer>
   </Wrapper>
 )
@@ -75,7 +71,9 @@ const Img = styled.div`
 
 const Footer = styled.footer`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  gap: 15px;
 `
 
 const Cost = styled.div`
@@ -85,8 +83,7 @@ const Cost = styled.div`
 const Amount = styled.div`
   ${typography.label.l0}
   color: ${rgba(palette.night)};
+  white-space: nowrap;
 `
-
-const NumberInput = styled.div``
 
 export default ProjectCard

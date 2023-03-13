@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
 import { LOAD_GRANTS } from '@gql'
+
 import {
   HomeHeader,
   Layout,
@@ -21,7 +22,7 @@ import {
 } from '@components'
 import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels } from '@copy/home'
+import { header, alternatingPanels, faq } from '@copy/home'
 
 const GrantPage = () => {
   // const {
@@ -72,7 +73,7 @@ const GrantPage = () => {
           </AlternatingPanel>
         ))}
       </AlternatingPanels>
-      <Faq />
+      <Faq copy={faq} />
       <ApplyForFundingBlurb />
     </Layout>
   )
