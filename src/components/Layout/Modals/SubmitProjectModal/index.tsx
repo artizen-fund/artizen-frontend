@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, Icon } from '@components'
-import { rgba, LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
+import { rgba, LayoutContext, ARTIZEN_TIMEZONE, useDateHelpers } from '@lib'
 
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
@@ -15,6 +15,7 @@ import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useRouter } from 'next/router'
+import { capitalCase } from 'capital-case'
 
 // load season data from useQuery
 
@@ -24,6 +25,7 @@ const SubmitProjectModal = () => {
   dayjs.extend(timezone)
   dayjs.extend(isSameOrAfter)
   dayjs.extend(isSameOrBefore)
+  const { getSeasonStatus, formatDate } = useDateHelpers()
 
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
   const { project } = modalAttrs
@@ -122,14 +124,15 @@ const SubmitProjectModal = () => {
               align="right"
               structure={[
                 {
-                  renderer: (item: ISeasonFragment) => `${item.title}`,
-                },
-                {
-                  renderer: () => 'Selected',
+                  renderer: (item: ISeasonFragment) => `${item.title && capitalCase(item.title)}`,
                 },
                 {
                   renderer: (item: ISeasonFragment) =>
-                    `Starting Date:${item.startingDate} - Ending Date:${item.endingDate}`,
+                    `Status: ${capitalCase(getSeasonStatus(item.startingDate, item.endingDate))}`,
+                },
+                {
+                  renderer: (item: ISeasonFragment) =>
+                    `Running from: ${formatDate(item.startingDate)} - to: ${formatDate(item.endingDate)}`,
                 },
               ]}
             ></DropDownBlocks>
