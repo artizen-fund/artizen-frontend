@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { IUsers, Maybe } from '@types'
 import styled from 'styled-components'
@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { INSERT_PROJECTS } from '@gql'
 import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
-import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding, Button } from '@components'
+import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding } from '@components'
 import { initialState, schema, FormState } from '@forms/createProjects'
 
 const testWallet = (walletAddress: string) => {
