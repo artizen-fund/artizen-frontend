@@ -99,7 +99,7 @@ test.describe('general artizen user', () => {
     await expect(page.getByText('Complete your profile')).toBeVisible({
       timeout: 20000,
     })
-    await context.tracing.stop({ path: 'trace.zip' })
+    // await context.tracing.stop({ path: 'trace.zip' })
   })
 
   test('new user can complete profile', async ({ page, metamask }) => {
