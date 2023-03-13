@@ -74,17 +74,15 @@ test.describe('general artizen user', () => {
     await page.locator('#accountButton').click()
 
     // click metamask icon to open wallet
-    await page.waitForTimeout(500)
-    await page.waitForSelector('img[src="/assets/metamask.svg"]')
-    await page.waitForTimeout(500)
+    // await page.waitForTimeout(500)
+    // await page.waitForSelector('img[src="/assets/metamask.svg"]')
+    // await page.waitForTimeout(500)
     await page.getByRole('img', { name: 'Metamask' }).waitFor()
     await page.getByRole('img', { name: 'Metamask' }).click()
 
     // Approve the connection when MetaMask pops up
     // This closes the metamask popup so we need to go through artizen sign in process again
     // to sign the transaction
-    await page.waitForTimeout(500)
-    await metamask.page.waitForLoadState()
     await metamask.approve()
 
     await page.getByRole('button').filter({ hasText: 'Close' }).nth(1).click()
