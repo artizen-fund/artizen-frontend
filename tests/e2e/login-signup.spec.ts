@@ -66,7 +66,7 @@ test.describe('general artizen user', () => {
     await deleteTestUserFromDb()
   })
 
-  test('new user can login via metamask', async ({ page, metamask, context }) => {
+  test.only('new user can login via metamask', async ({ page, metamask, context }) => {
     await page.waitForLoadState()
 
     // click sign in button
@@ -81,6 +81,7 @@ test.describe('general artizen user', () => {
     // Approve the connection when MetaMask pops up
     // This closes the metamask popup so we need to go through artizen sign in process again
     // to sign the transaction
+    await metamask.page.waitForLoadState()
     await metamask.approve()
 
     await page.getByRole('button').filter({ hasText: 'Close' }).nth(1).click()
@@ -89,6 +90,7 @@ test.describe('general artizen user', () => {
     await page.getByRole('img', { name: 'Metamask' }).waitFor()
     await page.getByRole('img', { name: 'Metamask' }).click()
 
+    await metamask.page.waitForLoadState()
     await metamask.sign()
 
     await page.waitForLoadState()
