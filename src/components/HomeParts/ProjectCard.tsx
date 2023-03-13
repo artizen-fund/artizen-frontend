@@ -41,6 +41,9 @@ const Wrapper = styled.article`
   background-color: ${rgba(palette.white)};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   border-radius: 16px;
+  @media (prefers-color-scheme: dark) {
+    background-color: ${rgba(palette.slate)};
+  }
 `
 
 const Header = styled.header`
