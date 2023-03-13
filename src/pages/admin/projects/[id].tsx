@@ -1,19 +1,22 @@
 import styled from 'styled-components'
-import { useEffect, useState, useContext } from 'react'
-import Link from 'next/link'
+import { useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import { PagePadding, CuratorCheck, Layout, Spinner, Button } from '@components'
-import { GET_PROJECTS } from '@gql'
-import { LayoutContext } from '@lib'
-import { IProjectsQuery } from '@types'
+import { palette, typography } from '@theme'
+import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
+import { GET_PROJECTS, LOAD_SEASONS } from '@gql'
+import { LayoutContext, rgba } from '@lib'
+import { capitalCase } from 'capital-case'
 
-const ProjectDetails = () => {
+import { IProjectsQuery, ISeasonFragment } from '@types'
+
+export default function ProjectDetails(): JSX.Element {
   const { status } = useSession()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
+    push,
     query: { id },
   } = useRouter()
 
@@ -22,7 +25,7 @@ const ProjectDetails = () => {
     data: loadedProjectData,
     error: errorLoadingProject,
   } = useQuery<IProjectsQuery>(GET_PROJECTS, {
-    skip: id === undefined,
+    fetchPolicy: 'no-cache',
     variables: {
       where: {
         id: {
@@ -32,12 +35,26 @@ const ProjectDetails = () => {
     },
   })
 
-  // useEffect(() => {
-  //   if (!errorLoadingProject) return
-  //   console.error('errorLoadingProject', errorLoadingProject)
-  // }, [errorLoadingProject])
+  const {
+    loading: loadingSeasons,
+    data: loadedSeasons,
+    error: errorLoadingSeasons,
+  } = useQuery(LOAD_SEASONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      where: {
+        submissions: {
+          projectId: {
+            _eq: id,
+          },
+        },
+      },
+    },
+  })
 
-  if (!loading || errorLoadingProject) {
+  console.log('loadedSeasons  ', loadedSeasons)
+
+  if (!loading && errorLoadingProject) {
     throw new Error('error loading project details', errorLoadingProject)
   }
 
@@ -50,32 +67,96 @@ const ProjectDetails = () => {
         {status !== 'authenticated' || loading ? (
           <Spinner minHeight="75vh" />
         ) : (
-          <>
+          <ProjectContainer>
+            <Title>{project?.title && capitalCase(project?.title)}</Title>
             <Button
               level={2}
               onClick={() => {
                 setVisibleModalWithAttrs('submitProjectModal', {
-                  projectId: project?.id,
+                  project,
                 })
               }}
             >
-              Submit
+              Submit to a Season
             </Button>
-            <h1>Project Details</h1>
-            <p>Title: {project?.title}</p>
-            {/* <ViewProject project={loadedProjectData?.Projects[0]} /> */}
-            {/* <Link href="/admin/projects">↩ back to list</Link> */}
-          </>
+            <SeasonSubmissionsContainer>
+              {!loadingSeasons &&
+                loadedSeasons.Seasons.map((season: ISeasonFragment) => {
+                  return (
+                    <SeasonItem key={season.id} onClick={() => push(`/admin/seasons/${season.id}`)}>
+                      This project was submitted to season: <b>{season.title}</b>
+                    </SeasonItem>
+                  )
+                })}
+            </SeasonSubmissionsContainer>
+
+            {loadedProjectData && (
+              <ProjectWrapper className="expand">
+                <Project projectData={loadedProjectData?.Projects[0]} displayType="full" />
+              </ProjectWrapper>
+            )}
+          </ProjectContainer>
         )}
       </StyledPagePadding>
     </Layout>
   )
 }
 
+const ProjectWrapper = styled.div`
+  background: ${rgba(palette.white)};
+  padding: 20px;
+
+  background-color: ${rgba(palette.night)};
+  ${typography.body.l3}
+
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.moon, 0.1)};
+  }
+`
+
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
-  max-width: 600px;
+  max-width: 800px;
   min-height: 75vh;
   margin: auto;
 `
 
-export default ProjectDetails
+const ProjectContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(30px);
+  grid-gap: 20px;
+  margin: 20px 0;
+
+  .expand {
+    grid-column: 1 / 3;
+  }
+`
+
+const SeasonSubmissionsContainer = styled.div`
+  grid-column: 1 / 3;
+`
+
+const SeasonItem = styled.div`
+  display: flex
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px dotted ${rgba(palette.uiWarning, 0.5)};
+  border-radius: 5px;
+  margin: 10px 0;
+  ${typography.body.l3}
+
+  &:hover {
+    background: ${rgba(palette.uiWarning, 0.1)};
+  }
+
+  `
+
+const Title = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  color: ${palette.night};
+`

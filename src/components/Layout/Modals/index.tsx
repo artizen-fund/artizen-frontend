@@ -13,6 +13,7 @@ import {
   ShareTransactionModal,
   CreateSeasonModal,
   SubmitProjectModal,
+  NewProjectMembersModal,
 } from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
@@ -70,6 +71,8 @@ const Modals = () => {
         return <CreateSeasonModal />
       case 'submitProjectModal':
         return <SubmitProjectModal />
+      case 'newProjectMemberModal':
+        return <NewProjectMembersModal />
 
       default:
         return <></>

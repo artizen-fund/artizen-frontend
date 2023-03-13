@@ -11,3 +11,12 @@ export const INSERT_SUBMISSION = gql`
     }
   }
 `
+
+export const LOAD_SUBMISSIONS = gql`
+  ${SUBMISSION}
+  query load_Submissions($limit: Int, $where: Submissions_bool_exp, $order_by: [Submissions_order_by!], $offset: Int) {
+    Submissions(limit: $limit, where: $where, order_by: $order_by, offset: $offset) {
+      ...Submission
+    }
+  }
+`

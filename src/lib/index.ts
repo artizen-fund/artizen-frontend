@@ -32,6 +32,7 @@ export * from './useSendGrantNotification'
 export * from './useSendRewards'
 export * from './usePublishGrant'
 export * from './useDonate'
+export * from './useDateHelpers'
 
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.
  *  Something to do with a circular import.

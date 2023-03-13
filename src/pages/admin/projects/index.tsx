@@ -1,17 +1,8 @@
-// create a new function component called Projects
-// load all the projects from the database using the useQuery hook
-// display a spinner while loading
-// display an error message if there is an error
-// display a message if there are no projects
-// display the projects in a table
-// add a button to create a new project
-
-// src/pages/admin/projects/index.tsx
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell } from '@components'
+import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project } from '@components'
 import { GET_PROJECTS } from '@gql'
 import { IProjectsQuery, IProjectFragment } from '@types'
 import { palette } from '@theme'
@@ -43,21 +34,23 @@ const Projects = () => {
 
   return (
     <Layout>
-      <Wrapper>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Table title="Project List" {...{ sideItem }}>
-            {loadedProjectData?.Projects.map((project: IProjectFragment) => {
-              return (
-                <StyledTableCell onClick={openProject(project.id)} key={project.id} highlight>
-                  <Title>{project.title}</Title>
-                </StyledTableCell>
-              )
-            })}
-          </Table>
-        )}
-      </Wrapper>
+      <StyledPagePadding>
+        <Wrapper>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <Table title="Project List" {...{ sideItem }}>
+              {loadedProjectData?.Projects.map((project: IProjectFragment) => {
+                return (
+                  <StyledTableCell onClick={openProject(project.id)} key={project.id} highlight>
+                    <Title>{project.title}</Title>
+                  </StyledTableCell>
+                )
+              })}
+            </Table>
+          )}
+        </Wrapper>
+      </StyledPagePadding>
     </Layout>
   )
 }
@@ -67,11 +60,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5rem;
   border-radius: 0.5rem;
 
   width: 100%;
-
   cursor: pointer;
 `
 
@@ -84,6 +75,12 @@ const Title = styled.h3`
   font-size: 1.25rem;
   font-weight: 500;
   margin: 0;
+`
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  max-width: 800px;
+  min-height: 75vh;
+  margin: auto;
 `
 
 export default Projects

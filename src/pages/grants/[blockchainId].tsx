@@ -30,7 +30,7 @@ import {
 } from '@components'
 import { rgba, ARTIZEN_TIMEZONE } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels } from '@copy/home'
+import { header, alternatingPanels, faq } from '@copy/home'
 import { ILoadGrantsQuery } from '@types'
 
 type QueryCondition = Record<string, Record<string, string>>
@@ -133,7 +133,7 @@ const GrantPage = () => {
       </AlternatingPanels>
       <Newsletter />
       <ApplyForFundingBlurb />
-      <Faq />
+      <Faq copy={faq} />
       <Team />
     </Layout>
   )

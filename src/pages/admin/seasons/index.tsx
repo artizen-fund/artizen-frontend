@@ -9,6 +9,7 @@ import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { rgba, LayoutContext } from '@lib'
+import { capitalCase } from 'capital-case'
 
 const Seasons = () => {
   const router = useRouter()
@@ -24,11 +25,15 @@ const Seasons = () => {
     variables: {
       order_by: [
         {
-          startingDate: 'desc_nulls_last',
+          startingDate: 'asc_nulls_last',
         },
       ],
     },
   })
+
+  console.log('error', error)
+
+  console.log('loadedSeasonsData', loadedSeasonsData)
 
   const openSeason = (target: string) => () => {
     router.push(`/admin/seasons/${target}`)
@@ -52,14 +57,14 @@ const Seasons = () => {
       {status !== 'authenticated' ? (
         <Spinner />
       ) : (
-        <PagePadding>
-          <StyledTable title="Season List" {...{ sideItem }}>
+        <StyledPagePadding>
+          <Table title="Season List" {...{ sideItem }}>
             {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
               const startingDate = moment(season.startingDate).format('MM-DD-YYYY HH:mm:ss')
               const endingDate = moment(season.endingDate).format('MM-DD-YYYY HH:mm:ss')
               return (
                 <StyledTableCell onClick={openSeason(season.id)} key={season.id} highlight>
-                  <Title>“{season.title}”</Title>
+                  <Title>{season.title && capitalCase(season.title)}</Title>
                   <DateLine>
                     <div>
                       Starts: <span>{startingDate}</span>
@@ -71,17 +76,12 @@ const Seasons = () => {
                 </StyledTableCell>
               )
             })}
-          </StyledTable>
-        </PagePadding>
+          </Table>
+        </StyledPagePadding>
       )}
     </Layout>
   )
 }
-
-const StyledTable = styled(props => <Table {...props} />)`
-  max-width: 680px;
-  min-height: 400px;
-`
 
 const StyledTableCell = styled(props => <TableCell {...props} />)`
   cursor: pointer;
@@ -106,6 +106,12 @@ const DateLine = styled.div`
   align-items: flex-start !important;
   gap: 0 !important;
   ${typography.label.l3}
+`
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  max-width: 800px;
+  min-height: 75vh;
+  margin: auto;
 `
 
 export default Seasons
