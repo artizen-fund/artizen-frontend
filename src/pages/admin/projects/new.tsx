@@ -7,10 +7,29 @@ import { LayoutContext, rgba } from '@lib'
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { INSERT_PROJECTS } from '@gql'
+import * as validateLib from 'wallet-address-validator'
+import { ErrorObject } from 'ajv'
 import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding, Button } from '@components'
 import { initialState, schema, FormState } from '@forms/createProjects'
 
+const testWallet = (walletAddress: string) => {
+  console.log('walletAddress', validateLib.validate(walletAddress, 'ETH'))
+
+  const isValid = validateLib.validate(walletAddress, 'ETH')
+
+  return !isValid
+    ? {
+        instancePath: '/project/walletAddress',
+        message: 'Invalid blockchain address',
+        schemaPath: '#/properties/walletAddress',
+        keyword: '',
+        params: {},
+      }
+    : null
+}
+
 const ProjectDetails = () => {
+  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   const { status } = useSession()
   const { push } = useRouter()
   const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
@@ -109,7 +128,7 @@ const ProjectDetails = () => {
                     })
                   }}
                 >
-                  Add New Project Lead
+                  Add Project Lead
                 </AddProjectLeadBt>
               )}
 
@@ -142,8 +161,21 @@ const ProjectDetails = () => {
               )}
             </ProjectLeadMemberWrapper>
             <NewProjectForm
+              additionalErrors={additionalErrors}
               saveNewProject={saveProject}
-              addData={setTempGenericProject}
+              addData={data => {
+                if (data.walletAddress && data.walletAddress?.length > 4) {
+                  const error = testWallet(data.walletAddress)
+
+                  console.log('error   ', error)
+
+                  setAdditionalErrors(error ? [error] : [])
+
+                  setTempGenericProject(data)
+                } else {
+                  setTempGenericProject(data)
+                }
+              }}
               tempValue={tempGenericProject}
               processing={loading}
             />
@@ -163,6 +195,13 @@ const AddProjectLeadBt = styled.div`
   background-color: ${rgba(palette.night)};
   color: ${rgba(palette.white)};
   cursor: pointer;
+  border-radius: 99px;
+  width: 50%;
+  justify-self: center;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    color: ${rgba(palette.night)};
+  }
   @media (prefers-color-scheme: dark) {
     background-color: ${rgba(palette.moon)};
     color: ${rgba(palette.barracuda)};

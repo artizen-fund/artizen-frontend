@@ -71,6 +71,7 @@ const MainAreaButton = styled.div`
 
 const Title = styled.div`
   ${typography.label.l1}
+  margin: 0 0 2rem 0;
 `
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`

@@ -24,7 +24,7 @@ const Seasons = () => {
     variables: {
       order_by: [
         {
-          startingDate: 'desc_nulls_last',
+          startingDate: 'asc_nulls_last',
         },
       ],
     },

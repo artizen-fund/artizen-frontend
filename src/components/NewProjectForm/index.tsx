@@ -3,14 +3,13 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
-import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { typography, palette, breakpoint } from '@theme'
 import { LOAD_GRANTS } from '@gql'
 import { ILoadGrantsQuery, IProjectFragment } from '@types'
 import { Form, Button, Spinner } from '@components'
-import { schema, uischema, initialState, FormState } from '@forms/createProjects'
+import { schema, uischema, FormState } from '@forms/createProjects'
 import { rgba } from '@lib'
 import { validateProjectMembers, useSaveProject, getGrantDates } from './lib'
 
@@ -19,34 +18,13 @@ interface NewProjectFormProps {
   tempValue: FormState
   processing: boolean
   saveNewProject: () => void
+  additionalErrors: Array<ErrorObject>
 }
 
-const NewProjectForm = ({ addData, tempValue, processing, saveNewProject }: NewProjectFormProps) => {
+const NewProjectForm = ({ addData, tempValue, processing, saveNewProject, additionalErrors }: NewProjectFormProps) => {
   const { insertProject, insertMembers, insertGrant } = useSaveProject()
-  const { push } = useRouter()
 
-  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
-
-  // const { loading, data: loadedGrantData } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
-  //   variables: {
-  //     order_by: [{ closingDate: 'desc_nulls_last' }],
-  //     limit: 1,
-  //   },
-  // })
-
-  // useEffect(() => {
-  //   // if (!loadedGrantData) return
-  //   // set initialState
-  //   // const startingDateBase = loadedGrantData.Grants[0]?.closingDate || moment.tz(ARTIZEN_TIMEZONE)
-  //   // const [startingDate] = getGrantDates(moment(startingDateBase), 1)
-  //   // setData({
-  //   //   ...initialState,
-  //   //   grant: {
-  //   //     ...initialState.grant,
-  //   //     startingDate,
-  //   //   },
-  //   // })
-  // }, [loadedGrantData])
+  // const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   // useEffect(() => {
   //   if (!debouncedData) return

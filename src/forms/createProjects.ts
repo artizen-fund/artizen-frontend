@@ -8,37 +8,37 @@ export const schema: JsonSchema = {
     title: {
       type: 'string',
       minLength: 3,
-      maxLength: 255,
+      maxLength: 100,
     },
     logline: {
       type: 'string',
-      minLength: 3,
+      minLength: 20,
       maxLength: 140,
     },
     info1: {
       type: 'string',
       title: 'What are you making?',
-      minLength: 3,
-      maxLength: 140,
+      minLength: 100,
+      maxLength: 400,
     },
     info2: {
       type: 'string',
       // eslint-disable-next-line
       title: "What's original about your project?",
-      minLength: 3,
-      maxLength: 140,
+      minLength: 100,
+      maxLength: 400,
     },
     info3: {
       type: 'string',
       title: 'How will your project impact the world?',
-      minLength: 3,
-      maxLength: 140,
+      minLength: 100,
+      maxLength: 400,
     },
     info4: {
       type: 'string',
       title: 'Why are you the right person to make this project?',
-      minLength: 3,
-      maxLength: 140,
+      minLength: 100,
+      maxLength: 400,
     },
     impactTags: {
       type: 'string',

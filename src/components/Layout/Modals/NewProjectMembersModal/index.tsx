@@ -32,12 +32,13 @@ const NewProjectMembersModal = () => {
             items={Users}
             structure={[
               {
-                renderer: (item: IUserPublicFragment) => `${item.firstName} ${item.lastName}`,
-              },
-              {
                 renderer: (item: IUserPublicFragment) => <AvatarImage profileImage={item.profileImage}></AvatarImage>,
                 classNames: 'doubleHeight',
               },
+              {
+                renderer: (item: IUserPublicFragment) => `${item.firstName} ${item.lastName}`,
+              },
+
               {
                 renderer: (item: IUserPublicFragment) => `Public Address :${item.publicAddress}`,
               },
@@ -72,6 +73,7 @@ const AvatarImage = styled.div<{ profileImage?: Maybe<string> }>`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: ${rgba(palette.white, 0.2)};
 `
 
 const SchoolItems = styled.div`

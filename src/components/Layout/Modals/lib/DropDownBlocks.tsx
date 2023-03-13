@@ -56,7 +56,7 @@ const ItemWrapper = styled.div`
   background: ${rgba(palette.white, 0.1)};
   margin: 0.1rem 0;
   grid-auto-rows: 1fr;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 74px 1fr;
   cursor: pointer;
 
   .selected {
@@ -65,7 +65,7 @@ const ItemWrapper = styled.div`
 
   .doubleHeight {
     grid-row: 1 / 3;
-    grid-column: 2 / 3;
+    grid-column: 1 / 2;
     font-size: 1.5rem;
     text-align: right;
   }

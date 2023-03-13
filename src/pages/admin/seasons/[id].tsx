@@ -8,7 +8,7 @@ import { typography } from '@theme'
 import { useDateHelpers } from '@lib'
 
 export default function SeasonPage(): JSX.Element {
-  const { formatDate, getSeasonStatus } = useDateHelpers()
+  const { formatDate, getSeasonStatus, isOpenForSubmissions } = useDateHelpers()
   const {
     query: { id },
     push,
@@ -42,20 +42,23 @@ export default function SeasonPage(): JSX.Element {
               const id = `submission-container-id-${season.id}`
               const startingDate = formatDate(season.startingDate)
               const endingDate = formatDate(season.endingDate)
+              const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
               return (
                 <Wrapper key={id} id={id}>
                   <Title id={`submission-title-${season.title}`}>{season.title?.toUpperCase()}</Title>
                   <Title className="right-align" id={`submission-status-${season.title}`}>
-                    {getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()}
+                    {seasonStatus}
                   </Title>
                   <Subtitle
                     className="expand"
                     id={`submission-startingDate-${season.startingDate}`}
                   >{`This Season is open from: ${startingDate} to: ${endingDate}`}</Subtitle>
                   <Subtitle>Projects submitted to this Season:</Subtitle>
-                  <Button level={2} onClick={() => push('/admin/projects')}>
-                    Submit a project
-                  </Button>
+                  {isOpenForSubmissions(season.startingDate, season.endingDate) && (
+                    <Button level={2} onClick={() => push('/admin/projects')}>
+                      Submit a project
+                    </Button>
+                  )}
                   <SubmissionsWrapper>
                     <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
                   </SubmissionsWrapper>
