@@ -65,7 +65,7 @@ const ArtifactImage = styled.div<{ artwork?: Maybe<string>; displayType: string 
 const Wrapper = styled.div<{ displayType: string }>`
   display: grid;
   width: 100%;
-  grid-template-rows: ${props => (props.displayType === 'brief' ? '1fr 1fr 1fr  1fr' : ' repeat(7, auto)')};
+  grid-template-rows: ${props => (props.displayType === 'brief' ? '1fr 1fr 1fr  1fr' : 'repeat(7, auto)')};
   grid-template-columns: ${props => (props.displayType === 'brief' ? '104px 1fr 1fr' : ' 1fr 1fr')};
   height: 100%;
 `
