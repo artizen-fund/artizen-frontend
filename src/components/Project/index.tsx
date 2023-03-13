@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { palette, typography, breakpoint } from '@theme'
 import { rgba } from '@lib'
 import { IProjectFragment, Maybe } from '@types'
+import { capitalCase } from 'capital-case'
 
 interface ProjectProps {
   projectData: IProjectFragment
@@ -18,19 +19,23 @@ export default function Project({ projectData, displayType }: ProjectProps): JSX
   return (
     <Wrapper displayType={displayType}>
       <ArtifactImage artwork={artifacts[0].artwork} displayType={displayType} />
-      {displayType === 'brief' && <Headline>{title?.toLocaleUpperCase()}</Headline>}
+      {displayType === 'brief' && <Headline>{title && capitalCase(title)}</Headline>}
       <Item>
         <b>Logline:</b> {logline}
       </Item>
       <Item>
-        By: {leadMember?.firstName} {leadMember?.lastName}
+        <b>By:</b> {leadMember?.firstName} {leadMember?.lastName}
       </Item>
-      <Item>Impact Tags: {impactTags}</Item>
-      <Item>Project Wallet: {walletAddress}</Item>
+      <Item>
+        <b>Impact Tags:</b> {impactTags}
+      </Item>
+      <Item>
+        <b>Project Wallet:</b> {walletAddress}
+      </Item>
       {displayType === 'full' &&
         metadata?.map(({ title, value }: any, index: number) => (
           <Item key={index}>
-            {title}: {value}
+            <b>{title}:</b> {value}
           </Item>
         ))}
     </Wrapper>
@@ -60,17 +65,20 @@ const ArtifactImage = styled.div<{ artwork?: Maybe<string>; displayType: string 
 const Wrapper = styled.div<{ displayType: string }>`
   display: grid;
   width: 100%;
-  grid-template-rows: ${props => (props.displayType === 'brief' ? '1fr 1fr 1fr  1fr' : ' repeat(7, 40px)')};
+  grid-template-rows: ${props => (props.displayType === 'brief' ? '1fr 1fr 1fr  1fr' : ' repeat(7, auto)')};
   grid-template-columns: ${props => (props.displayType === 'brief' ? '104px 1fr 1fr' : ' 1fr 1fr')};
   height: 100%;
 `
 
 const Headline = styled.div`
   width: 100%;
+
   ${typography.body.l2}
+  font-weight: 600;
 `
 
 const Item = styled.div`
   width: 100%;
-  ${typography.body.l3}
+  margin: 0 0 0.5rem 0;
+  ${typography.body.l3};
 `

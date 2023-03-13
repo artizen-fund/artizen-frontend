@@ -7,6 +7,7 @@ import { palette, typography } from '@theme'
 import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
 import { GET_PROJECTS, LOAD_SEASONS } from '@gql'
 import { LayoutContext, rgba } from '@lib'
+import { capitalCase } from 'capital-case'
 
 import { IProjectsQuery, ISeasonFragment } from '@types'
 
@@ -18,8 +19,6 @@ export default function ProjectDetails(): JSX.Element {
     push,
     query: { id },
   } = useRouter()
-
-  console.log('query   ', id)
 
   const {
     loading,
@@ -69,7 +68,7 @@ export default function ProjectDetails(): JSX.Element {
           <Spinner minHeight="75vh" />
         ) : (
           <ProjectContainer>
-            <Title>{project?.title}</Title>
+            <Title>{project?.title && capitalCase(project?.title)}</Title>
             <Button
               level={2}
               onClick={() => {

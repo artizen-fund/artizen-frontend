@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
 
 import styled from 'styled-components'
-import { Layout, PagePadding } from '@components'
+import { Layout, PagePadding, Faq } from '@components'
 import { typography, palette } from '@theme'
 import { rgba } from '@lib'
+import { faq } from '@copy/admin'
 
 const Projects = () => {
   const { push } = useRouter()
@@ -22,6 +23,9 @@ const Projects = () => {
           </MainAreaButton>
         </Wrapper>
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

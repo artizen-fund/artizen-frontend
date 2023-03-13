@@ -9,6 +9,7 @@ import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { rgba, LayoutContext } from '@lib'
+import { capitalCase } from 'capital-case'
 
 const Seasons = () => {
   const router = useRouter()
@@ -63,7 +64,7 @@ const Seasons = () => {
               const endingDate = moment(season.endingDate).format('MM-DD-YYYY HH:mm:ss')
               return (
                 <StyledTableCell onClick={openSeason(season.id)} key={season.id} highlight>
-                  <Title>“{season.title}”</Title>
+                  <Title>{season.title && capitalCase(season.title)}</Title>
                   <DateLine>
                     <div>
                       Starts: <span>{startingDate}</span>

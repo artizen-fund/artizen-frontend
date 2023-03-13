@@ -6,13 +6,17 @@ import 'react-slidedown/lib/slidedown.css'
 import { Glyph, PagePadding } from '@components'
 import { rgba } from '@lib'
 import { palette, typography } from '@theme'
-import { faq } from '@copy/home'
 
-const Faq = () => {
+interface IFaq {
+  copy: Array<{ question: string; answer: string }>
+}
+
+const Faq = function ({ copy }: IFaq) {
+  console.log('copy  ', copy)
   return (
     <PagePadding black>
       <List>
-        {faq.map((pair, index) => (
+        {copy.map((pair, index) => (
           <QaPair key={`faq-item-${index}`} {...pair} />
         ))}
       </List>

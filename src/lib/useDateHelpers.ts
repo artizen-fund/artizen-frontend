@@ -32,6 +32,8 @@ export const useDateHelpers = () => {
     } else if (now.isAfter(end)) {
       return 'end'
     }
+
+    return 'unknown'
   }
 
   const isOpenForSubmissions = (startDate: string, endDate: string) => {

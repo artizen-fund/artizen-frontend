@@ -6,6 +6,7 @@ import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { Spinner, Layout, Submissions, Button, PagePadding } from '@components'
 import { typography } from '@theme'
 import { useDateHelpers } from '@lib'
+import { capitalCase } from 'capital-case'
 
 export default function SeasonPage(): JSX.Element {
   const { formatDate, getSeasonStatus, isOpenForSubmissions } = useDateHelpers()
@@ -45,14 +46,15 @@ export default function SeasonPage(): JSX.Element {
               const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
               return (
                 <Wrapper key={id} id={id}>
-                  <Title id={`submission-title-${season.title}`}>{season.title?.toUpperCase()}</Title>
-                  <Title className="right-align" id={`submission-status-${season.title}`}>
-                    {seasonStatus}
+                  <Title id={`submission-title-${season.title}`}>{season.title && capitalCase(season.title)}</Title>
+                  <Title className="right-align" id={`submission-status-${seasonStatus}`}>
+                    <span style={{ fontWeight: 10 }}>status: </span>
+                    {capitalCase(seasonStatus)}
                   </Title>
                   <Subtitle
                     className="expand"
                     id={`submission-startingDate-${season.startingDate}`}
-                  >{`This Season is open from: ${startingDate} to: ${endingDate}`}</Subtitle>
+                  >{`This Season run from: ${startingDate} to: ${endingDate}`}</Subtitle>
                   <Subtitle>Projects submitted to this Season:</Subtitle>
                   {isOpenForSubmissions(season.startingDate, season.endingDate) && (
                     <Button level={2} onClick={() => push('/admin/projects')}>
