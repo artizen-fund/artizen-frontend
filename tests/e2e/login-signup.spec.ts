@@ -66,7 +66,7 @@ test.describe('general artizen user', () => {
     await deleteTestUserFromDb()
   })
 
-  test.only('new user can login via metamask', async ({ page, metamask, context }) => {
+  test('new user can login via metamask', async ({ page, metamask, context }) => {
     await page.waitForLoadState()
 
     // click sign in button
