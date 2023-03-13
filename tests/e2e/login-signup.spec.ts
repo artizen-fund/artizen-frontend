@@ -67,7 +67,6 @@ test.describe('general artizen user', () => {
   })
 
   test('new user can login via metamask', async ({ page, metamask, context }) => {
-    await context.tracing.start({ screenshots: true, snapshots: true })
     await page.waitForLoadState()
 
     // click sign in button
@@ -76,6 +75,7 @@ test.describe('general artizen user', () => {
 
     // click metamask icon to open wallet
     await page.waitForSelector('img[src="/assets/metamask.svg"]')
+    await page.getByRole('img', { name: 'Metamask' }).waitFor()
     await page.getByRole('img', { name: 'Metamask' }).click()
 
     // Approve the connection when MetaMask pops up
@@ -86,6 +86,7 @@ test.describe('general artizen user', () => {
     await page.getByRole('button').filter({ hasText: 'Close' }).nth(1).click()
     await page.locator('#accountButton').click()
     await page.waitForSelector('img[src="/assets/metamask.svg"]')
+    await page.getByRole('img', { name: 'Metamask' }).waitFor()
     await page.getByRole('img', { name: 'Metamask' }).click()
 
     await metamask.sign()
