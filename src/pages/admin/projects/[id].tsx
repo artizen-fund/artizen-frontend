@@ -84,7 +84,7 @@ export default function ProjectDetails(): JSX.Element {
                 loadedSeasons.Seasons.map((season: ISeasonFragment) => {
                   return (
                     <SeasonItem key={season.id} onClick={() => push(`/admin/seasons/${season.id}`)}>
-                      This project was submitted to season: <b>{season.title}</b>
+                      This project was submitted to season: <b>{season.title && capitalCase(season.title)}</b>
                     </SeasonItem>
                   )
                 })}

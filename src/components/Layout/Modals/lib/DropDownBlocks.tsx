@@ -1,5 +1,6 @@
 import { template } from 'lodash'
 import { useContext, useState } from 'react'
+import { Maybe } from '@types'
 import { rgba } from '@lib'
 import { palette, typography } from '@theme'
 import styled from 'styled-components'
@@ -12,10 +13,11 @@ interface IDropDownBlocks<T> {
     renderer: (item: T) => JSX.Element | string
     classNames?: string
   }[]
+  align?: 'left' | 'right'
 }
 
 export const DropDownBlocks = <ObjectType extends { id?: string }>(props: IDropDownBlocks<ObjectType>) => {
-  const { itemSelected, setItemSelected, items, structure } = props
+  const { itemSelected, setItemSelected, items, structure, align } = props
 
   console.log(' itemsss  ', items)
   return (
@@ -31,7 +33,12 @@ export const DropDownBlocks = <ObjectType extends { id?: string }>(props: IDropD
         console.log('goes here')
 
         return (
-          <ItemWrapper id={item.id} key={item.id} onClick={() => setItemSelected(!isSelected ? item : null)}>
+          <ItemWrapper
+            align={align}
+            id={item.id}
+            key={item.id}
+            onClick={() => setItemSelected(!isSelected ? item : null)}
+          >
             {structure.map((itemStructure, index) => {
               const classNames = isSelected ? `${itemStructure.classNames} selected` : itemStructure.classNames
 
@@ -48,7 +55,7 @@ export const DropDownBlocks = <ObjectType extends { id?: string }>(props: IDropD
   )
 }
 
-const ItemWrapper = styled.div`
+const ItemWrapper = styled.div<{ align?: Maybe<string> }>`
   align-items: center;
   height: 100px;
   display: grid;
@@ -56,9 +63,8 @@ const ItemWrapper = styled.div`
   background: ${rgba(palette.white, 0.1)};
   margin: 0.1rem 0;
   grid-auto-rows: 1fr;
-  grid-template-columns: 74px 1fr;
+  grid-template-columns: ${props => (props.align === 'left' ? '74px 1fr' : '1fr 74px')};
   cursor: pointer;
-
   .selected {
     color: ${rgba(palette.algae, 1)};
   }

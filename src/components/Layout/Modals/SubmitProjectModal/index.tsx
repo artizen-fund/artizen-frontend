@@ -119,6 +119,7 @@ const SubmitProjectModal = () => {
               itemSelected={seasonSelected}
               setItemSelected={setSeasonSelection}
               items={inputRef.current}
+              align="right"
               structure={[
                 {
                   renderer: (item: ISeasonFragment) => `${item.title}`,

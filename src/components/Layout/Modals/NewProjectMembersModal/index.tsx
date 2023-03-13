@@ -30,6 +30,7 @@ const NewProjectMembersModal = () => {
             itemSelected={userSelected}
             setItemSelected={setuserSelection}
             items={Users}
+            align="left"
             structure={[
               {
                 renderer: (item: IUserPublicFragment) => <AvatarImage profileImage={item.profileImage}></AvatarImage>,
