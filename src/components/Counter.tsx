@@ -21,7 +21,7 @@ const Counter = ({ value, onChange, step = 1, min = 1, max }: ICounter) => {
   return (
     <Wrapper>
       <Button onClick={() => increment(-1)}>
-        <Glyph glyph="mathMinus" color="night" darkColor="night" level={2} />
+        <Glyph glyph="mathMinus" color="night" darkColor="white" level={2} />
       </Button>
       <Input
         type="number"
@@ -30,24 +30,35 @@ const Counter = ({ value, onChange, step = 1, min = 1, max }: ICounter) => {
         onChange={e => onChange(parseInt(e.target.value))}
       />
       <Button onClick={() => increment(1)}>
-        <Glyph glyph="mathPlus" color="night" darkColor="night" level={2} />
+        <Glyph glyph="mathPlus" color="night" darkColor="white" level={2} />
       </Button>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
-  border: 1px solid ${rgba(palette.stone)};
+  flex: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  border: 1px solid ${rgba(palette.stone)};
+  @media (prefers-color-scheme: dark) {
+    border: 1px solid ${rgba(palette.barracuda)};
+  }
 `
 
 const Input = styled.input`
   width: auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   ${typography.label.l0}
+  @media (prefers-color-scheme: dark) {
+    color: white;
+  }
 `
 
 const Button = styled.button`

@@ -100,14 +100,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
 
 const Wrapper = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  width: 100%;
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
+  display: contents;
 `
 
 const ScrollPoint = styled.div`

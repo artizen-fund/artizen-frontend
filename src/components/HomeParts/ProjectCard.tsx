@@ -81,9 +81,12 @@ const Cost = styled.div`
   color: ${rgba(palette.barracuda)};
 `
 const Amount = styled.div`
+  white-space: nowrap;
   ${typography.label.l0}
   color: ${rgba(palette.night)};
-  white-space: nowrap;
+  @media (prefers-color-scheme: dark) {
+    color: white;
+  }
 `
 
 export default ProjectCard
