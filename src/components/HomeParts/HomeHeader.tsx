@@ -25,9 +25,12 @@ const HomeHeader = () => {
 
 const Header = styled.header`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex-direction: row;
+  }
 `
 
 const Copy = styled.header`
@@ -40,7 +43,13 @@ const Copy = styled.header`
     ${typography.body.l1};
   }
   div {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
+    @media only screen and (min-width: ${breakpoint.tablet}px) {
+      margin-bottom: 45px;
+    }
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      margin-bottom: 60px;
+    }
   }
 `
 

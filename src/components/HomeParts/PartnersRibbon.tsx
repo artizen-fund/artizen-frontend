@@ -21,10 +21,13 @@ const PartnersRibbon = () => (
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
   gap: 15px;
+  flex-direction: column;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
 `
 
 const Label = styled.h2`
@@ -32,7 +35,14 @@ const Label = styled.h2`
 `
 
 const Partners = styled.ul`
-  display: contents;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  overflow: scroll;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    display: contents;
+    gap: 0;
+  }
 `
 
 const Partner = styled.li`

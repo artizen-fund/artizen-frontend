@@ -15,24 +15,26 @@ const LeaderboardHeader = () => {
       <Trigger ref={trigger} />
       <StyledPagePadding>
         <Content>
-          <Copy>
-            <Title>Leaderboard</Title>
-            <Stats>
-              <Stat>
-                <Label>Artizen Award</Label>
-                <Data>Ξ 23</Data>
-              </Stat>
-              <Stat>
-                <Label>Cycle</Label>
-                <Data>Season 2</Data>
-              </Stat>
-              <Stat>
-                <Label>Ends in</Label>
-                <Data>13d : 8h : 44m</Data>
-              </Stat>
-            </Stats>
-          </Copy>
-          <OfficialSelection src={assetPath('/assets/officialSelection.svg')} />
+          <Title>Leaderboard</Title>
+
+          <Stats>
+            <Stat>
+              <Label>Artizen Award</Label>
+              <Data>Ξ 23</Data>
+            </Stat>
+            <Stat>
+              <Label>Cycle</Label>
+              <Data>Season 2</Data>
+            </Stat>
+            <Stat>
+              <Label>Ends in</Label>
+              <Data>13d : 8h : 44m</Data>
+            </Stat>
+          </Stats>
+
+          <OfficialSelection>
+            <img src={assetPath('/assets/officialSelection.svg')} />
+          </OfficialSelection>
         </Content>
       </StyledPagePadding>
     </Wrapper>
@@ -51,14 +53,6 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   z-index: 102;
   top: 0px;
   left: 0;
-
-  padding-top: 76px;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    padding-top: 84px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    padding-top: 100px;
-  }
 
   background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
   filter: drop-shadow(
@@ -82,20 +76,35 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 `
 
 const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  grid-template-areas: 'title laurels' 'stats stats';
+  gap: 30px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    grid-template-areas: 'title laurels' 'stats laurels';
+  }
 `
 
-const Copy = styled.div``
-
 const Title = styled.h2`
+  grid-area: title;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   ${typography.title.l2}
-  margin-bottom: 32px;
+`
+
+const OfficialSelection = styled.div`
+  grid-area: laurels;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  @media (prefers-color-scheme: dark) {
+    filter: invert(1);
+  }
 `
 
 const Stats = styled.div`
+  grid-area: stats;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -125,12 +134,6 @@ const Label = styled.h3`
 
 const Data = styled.div`
   ${typography.title.l4}
-`
-
-const OfficialSelection = styled.img`
-  @media (prefers-color-scheme: dark) {
-    filter: invert(1);
-  }
 `
 
 export default LeaderboardHeader
