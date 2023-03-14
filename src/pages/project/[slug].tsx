@@ -1,20 +1,18 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/client'
 import {
   Layout,
   PagePadding,
   Button,
   RankAndArtifactCount,
   Tags,
-  Leaderboard,
   ArtifactCard,
   CreatorBox,
   LongDescription,
 } from '@components'
-import { rgba, LayoutContext } from '@lib'
-import { typography, breakpoint, palette } from '@theme'
+import { LayoutContext } from '@lib'
+import { typography, breakpoint } from '@theme'
 
 const ProjectPage = () => {
   const { setVisibleModal } = useContext(LayoutContext)
@@ -36,7 +34,7 @@ const ProjectPage = () => {
     <Layout>
       <PagePadding>
         <Wrapper>
-          <Left>
+          <Side>
             <Header>
               <Topline>
                 <RankAndArtifactCount rank={1} count={128} />
@@ -57,10 +55,10 @@ const ProjectPage = () => {
             {/*<Leaderboard />*/}
 
             <LongDescription />
-          </Left>
-          <Right>
+          </Side>
+          <Side>
             <ArtifactCard />
-          </Right>
+          </Side>
         </Wrapper>
       </PagePadding>
     </Layout>
@@ -68,17 +66,26 @@ const ProjectPage = () => {
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 32px;
+  display: grid;
+  grid-template-areas: 'header' 'card' 'description';
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
 `
 
-const Left = styled.article`
-  flex: 1;
+const Side = styled.div`
+  display: contents;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    display: block;
+    flex: 1;
+  }
 `
 
 const Header = styled.header`
+  grid-area: header;
   h1 {
     margin-top: 1em;
     ${typography.title.l2}
@@ -96,10 +103,6 @@ const Topline = styled.div`
     display: flex;
     justify-content: space-between;
   }
-`
-
-const Right = styled.aside`
-  flex: 1;
 `
 
 export default ProjectPage

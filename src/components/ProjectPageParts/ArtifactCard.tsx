@@ -24,6 +24,7 @@ const ArtifactCard = (props: any) => (
 )
 
 const Wrapper = styled.article`
+  grid-area: card;
   display: flex;
   flex-direction: column;
   gap: 20px;
