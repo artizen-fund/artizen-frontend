@@ -90,23 +90,6 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   }
 `
 
-const Wrapper = styled.section`
-  position: relative;
-  display: grid;
-  grid-template-areas: 'featuredArt' 'sidebar' 'tabbedInfo';
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: 'featuredArt sidebar' 'tabbedInfo sidebar';
-    grid-gap: 0px 30px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 0px 80px;
-  }
-  padding-bottom: 100px;
-`
-// todo: above is just a filled-in value, check design
-
 const Grid = styled.div`
   display: grid;
   gap: 20px;

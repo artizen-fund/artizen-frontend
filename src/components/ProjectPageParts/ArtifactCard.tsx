@@ -1,22 +1,16 @@
 import styled from 'styled-components'
 import { rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { Button, RankAndArtifactCount, DonationBox } from '@components'
+import { Button, ArtifactCount, DonationBox, Rank } from '@components'
 
-const ProjectCard = (props: any) => (
+const ArtifactCard = (props: any) => (
   <Wrapper>
-    <Header>
-      <RankAndArtifactCount rank={1} count={128} />
-      <ArtifactNumber>Artifact #28</ArtifactNumber>
-    </Header>
+    <Img />
     <Copy>
       <h2>Project Name</h2>
-      <p>
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec id elit
-        non mi porta gravida at eget metus.
-      </p>
+      <OpenEdition>Open Edition</OpenEdition>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo.</p>
     </Copy>
-    <Img />
     <Footer>
       <Cost>
         <div>cost</div>
@@ -42,22 +36,15 @@ const Wrapper = styled.article`
   }
 `
 
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-const ArtifactNumber = styled.div`
-  color: ${rgba(palette.barracuda)};
-  ${typography.label.l1}
-`
+const OpenEdition = styled.div``
 
 const Copy = styled.div`
   h2 {
+    margin: 0.5em 0;
     ${typography.title.l2}
   }
   p {
+    margin: 1em 0;
     ${typography.body.l3}
   }
 `
@@ -71,9 +58,8 @@ const Img = styled.div`
 
 const Footer = styled.footer`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  gap: 15px;
+  gap: 16px;
 `
 
 const Cost = styled.div`
@@ -89,4 +75,6 @@ const Amount = styled.div`
   }
 `
 
-export default ProjectCard
+const NumberInput = styled.div``
+
+export default ArtifactCard

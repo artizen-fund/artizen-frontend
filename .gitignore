@@ -50,6 +50,6 @@ yarn-error.log*
 /storybook-static
 
 # playwright
-/test-results/
-/playwright-report/
+/test-results*/
+/playwright-report*/
 /playwright/.cache/

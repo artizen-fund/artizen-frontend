@@ -2,14 +2,12 @@ import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
-import { Form, Button } from '@components'
-import { schema, uischema, initialState, FormState } from '@forms/donation'
+import { Button, Counter } from '@components'
 import {
   LayoutContext,
   useDonate,
   trackEventF,
   intercomEventEnum,
-  MINIMUM_DONATION_AMOUNT,
   useFullSignOut,
   WALLET_ERROR_UNSUPPORTED_OPERATION,
   WALLET_ERROR_INSUFFICIENT_FUNDS,
@@ -28,53 +26,33 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
   const { donate } = useDonate()
   const [sending, setSending] = useState<boolean>(false)
   const { setVisibleModal } = useContext(LayoutContext)
-  const [data, setData] = useState<FormState>(initialState)
-  const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
+  const [artifactQuantity, setArtifactQuantity] = useState(1)
 
-  useEffect(() => {
-    const errors: Array<ErrorObject> = []
-    if (!data.donationAmount || data.donationAmount < MINIMUM_DONATION_AMOUNT) {
-      errors.push({
-        instancePath: '/donationAmount',
-        message: `Minimum donation is ${MINIMUM_DONATION_AMOUNT} ETH`,
-        schemaPath: '#/properties/donationAmount',
-        keyword: '',
-        params: {},
-      })
-    }
-    setAdditionalErrors(errors)
-  }, [data])
+  useEffect(() => console.log(artifactQuantity), [artifactQuantity])
+
+  const donationAmount = 0.01 // < todo: get this from Hasura
 
   const donateFn = async () => {
-    if (!blockchainId || !data.donationAmount) return
-    if (data.donationAmount < MINIMUM_DONATION_AMOUNT) {
-      // under minimum
-      return
-    }
+    if (!blockchainId || !artifactQuantity) return
     toggleModal('confirmTransaction')
     setSending(true)
     trackEventF(intercomEventEnum.DONATION_START, {
-      amount: data.donationAmount.toString(),
+      amount: (artifactQuantity * donationAmount).toString(),
       grantblockchainId: blockchainId,
     })
     try {
-      const returnTx = await donate(parseInt(blockchainId), data.donationAmount.toString())
+      const returnTx = await donate(parseInt(blockchainId), (artifactQuantity * donationAmount).toString())
       // TODO: it'll only work when EK removes the transaction from the server
       // if there is transaction hash add a record
       if (!returnTx.transactionHash) {
         trackEventF(intercomEventEnum.DONATION_FAILED, {
-          amount: data.donationAmount.toString(),
+          amount: (artifactQuantity * donationAmount).toString(),
           grantblockchainId: blockchainId,
         })
         throw new Error('Tx is empty')
       }
     } catch (e: any) {
       const errors: Array<ErrorObject> = []
-      console.warn('TX error code', e.code)
-
-      console.warn('WALLET_ERROR_UNSUPPORTED_OPERATION  ', WALLET_ERROR_UNSUPPORTED_OPERATION)
-      console.warn('e.code  ', e.code === WALLET_ERROR_UNSUPPORTED_OPERATION)
-
       const message =
         e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
           ? 'Insufficient funds'
@@ -89,7 +67,6 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
         params: {},
       })
 
-      setAdditionalErrors(errors)
       setSending(false)
 
       if (e.code === WALLET_ERROR_UNSUPPORTED_OPERATION) {
@@ -98,7 +75,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
     }
 
     trackEventF(intercomEventEnum.DONATION_FINISHED, {
-      amount: data.donationAmount.toString(),
+      amount: (artifactQuantity * donationAmount).toString(),
       grantblockchainId: blockchainId,
     })
 
@@ -112,16 +89,10 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       <ScrollPoint id="donation-box" />
       {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
-        <Form {...{ schema, uischema, initialState, data, setData, additionalErrors }} readonly={sending}>
-          <Button
-            level={0}
-            onClick={() => donateFn()}
-            disabled={!data.donationAmount || data.donationAmount <= 0 || sending}
-            stretch
-          >
-            {sending ? 'Processing Donation' : 'Donate'}
-          </Button>
-        </Form>
+        <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
+        <Button level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending}>
+          {sending ? 'Processing Donation' : 'Mint'}
+        </Button>
       </>
     </Wrapper>
   )
@@ -129,14 +100,7 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
 
 const Wrapper = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
+  display: contents;
 `
 
 const ScrollPoint = styled.div`
