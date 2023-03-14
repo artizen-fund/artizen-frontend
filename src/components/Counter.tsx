@@ -59,6 +59,15 @@ const Input = styled.input`
   @media (prefers-color-scheme: dark) {
     color: white;
   }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
 `
 
 const Button = styled.button`
