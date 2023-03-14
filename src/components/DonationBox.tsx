@@ -90,17 +90,23 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
         <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
-        <Button level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending}>
+        <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending}>
           {sending ? 'Processing Donation' : 'Mint'}
-        </Button>
+        </StyledButton>
       </>
     </Wrapper>
   )
 }
 
+// IMPORTANT TODO SessionMask
+
 const Wrapper = styled.div`
+  flex: 1;
   position: relative;
-  display: contents;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
 `
 
 const ScrollPoint = styled.div`
@@ -119,6 +125,10 @@ const SessionMask = styled.div`
   width: 100%;
   height: 100%;
   cursor: pointer;
+`
+
+const StyledButton = styled(props => <Button {...props} />)`
+  flex: 1;
 `
 
 export default DonationBox

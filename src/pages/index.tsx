@@ -97,7 +97,7 @@ const Grid = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     grid-template-columns: repeat(3, 1fr);

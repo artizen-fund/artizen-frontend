@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border: 1px solid ${rgba(palette.stone)};
   @media (prefers-color-scheme: dark) {
     border: 1px solid ${rgba(palette.barracuda)};
