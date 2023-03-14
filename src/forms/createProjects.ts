@@ -56,7 +56,7 @@ export const schema: JsonSchema = {
       format: 'url',
     },
   },
-  required: ['title', 'logline', 'impactTags', 'walletAddress', 'info1', 'info2', 'info3', 'info4', 'artworkArtifact'],
+  required: ['title', 'logline', 'impactTags', 'walletAddress', 'artworkArtifact'],
 }
 
 export interface FormState extends Record<string, unknown> {

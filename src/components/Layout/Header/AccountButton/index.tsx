@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import { useAccount } from 'wagmi'
 import { useQuery, useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGetUserQuery, Maybe, IUsers } from '@types'
+import { IGetUserQuery, Maybe } from '@types'
 import { rgba, loggedInUserVar, LayoutContext, textCrop } from '@lib'
 import { GET_USER } from '@gql'
 
@@ -15,8 +15,15 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   const { data: session, status } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
+  console.log('AccountButton session  ', session)
+  console.log('AccountButton isConnected  ', isConnected)
+
+  if (!isConnected && !!session) {
+    signOut()
+  }
+
   useQuery<IGetUserQuery>(GET_USER, {
-    skip: !session || !session?.user?.publicAddress || !isConnected,
+    skip: !isConnected || !session || !session?.user?.publicAddress,
     variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
     onCompleted: data => {
       if (!loggedInUser || loggedInUser.id !== data.Users[0].id) {

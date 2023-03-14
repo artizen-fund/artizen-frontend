@@ -41,21 +41,12 @@ const Projects = () => {
           {loading ? (
             <Spinner />
           ) : (
-            // <Table title="Project List" {...{ sideItem }}>
-            //   {loadedProjectData?.Projects.map((project: IProjectFragment) => {
-            //     return (
-            //       <StyledTableCell onClick={openProject(project.id)} key={project.id} highlight>
-            //         <Title>{project.title}</Title>
-            //       </StyledTableCell>
-            //     )
-            //   })}
-            // </Table>
             <>
               <Header>Project List</Header>
               <Button level={2} onClick={openProject('new')}>
                 Submit a project
               </Button>
-              <ProjectList>
+              <ProjectList className="doubleLeght">
                 {loadedProjectData?.Projects.map((project: IProjectFragment) => {
                   return (
                     <ProjectWrapper key={project.id} onClick={openProject(project.id)}>

@@ -30,8 +30,6 @@ export default function SeasonPage(): JSX.Element {
     },
   })
 
-  console.log('loadedSeasonsData  ', loadedSeasonsData)
-
   return (
     <>
       {loading ? (
