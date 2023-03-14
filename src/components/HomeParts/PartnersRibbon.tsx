@@ -38,6 +38,9 @@ const Partners = styled.ul`
 const Partner = styled.li`
   img {
     max-height: 56px;
+    @media (prefers-color-scheme: dark) {
+      filter: invert(1);
+    }
   }
 `
 

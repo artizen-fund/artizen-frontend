@@ -127,6 +127,10 @@ const Data = styled.div`
   ${typography.title.l4}
 `
 
-const OfficialSelection = styled.img``
+const OfficialSelection = styled.img`
+  @media (prefers-color-scheme: dark) {
+    filter: invert(1);
+  }
+`
 
 export default LeaderboardHeader
