@@ -57,7 +57,7 @@ const GrantsExplorer = ({ grant }: IGrantsExplorer) => {
             )}
           </GrantData>
 
-          {isCurrent && grant?.blockchainId && <DonationBox blockchainId={grant?.blockchainId} />}
+          {isCurrent && grant?.blockchainId && <DonationBox unitPrice={1} blockchainId={grant?.blockchainId} />}
 
           {!grant ? (
             <Gap>
