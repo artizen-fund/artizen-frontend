@@ -38,6 +38,7 @@ export const USER_PUBLIC = gql`
     bannerImage
     bio
     externalLink
+    claimed
   }
 `
 

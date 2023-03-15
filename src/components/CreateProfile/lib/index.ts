@@ -82,6 +82,7 @@ const useCreateProfile = () => {
         ...data,
         artizenHandle: data.artizenHandle?.toLowerCase() || loggedInUser.artizenHandle,
         profileImage,
+        claimed: true,
       },
     })
     await addUserToCourier()

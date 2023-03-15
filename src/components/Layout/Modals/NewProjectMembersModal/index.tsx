@@ -108,9 +108,11 @@ const NewProjectMembersModal = () => {
         )}
         {userSelected && (
           <>
-            <Button level={2} outline onClick={() => setuserSelection(null)}>
-              Edit Users Data
-            </Button>
+            {!userSelected.claimed && (
+              <Button level={2} outline onClick={() => setuserSelection(null)}>
+                Edit Users Data
+              </Button>
+            )}
             <Button level={2} onClick={() => callback(userSelected)}>
               Add User to Project
             </Button>
