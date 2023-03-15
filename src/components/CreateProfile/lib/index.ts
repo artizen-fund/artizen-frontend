@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation } from '@types'
+import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation, ICreateUsersMutation } from '@types'
 import { loggedInUserVar, useCloudinary } from '@lib'
-import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
+import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE, CREATE_USERS } from '@gql'
 import { initialState, FormState } from '@forms/createProfile'
 
 const useCreateProfile = () => {
@@ -17,6 +17,7 @@ const useCreateProfile = () => {
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
   const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USER)
+  const [createUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
 
   /* this checks for existing handles while the user types */
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
@@ -44,6 +45,33 @@ const useCreateProfile = () => {
   })
 
   const createProfile = async () => {
+    const profileImage = await uploadAvatar(imageFile)
+
+    console.log('data  ', data)
+
+    const createUserR = await createUser({
+      variables: {
+        objects: [
+          {
+            ...data,
+            artizenHandle: data.artizenHandle?.toLowerCase(),
+            profileImage,
+          },
+        ],
+      },
+    })
+    await addUserToCourier()
+
+    console.log('createUserR  ', createUserR)
+
+    if (!createUserR.data?.insert_Users) {
+      throw new Error('Error creating users in the admin form')
+    }
+
+    return createUserR.data?.insert_Users?.returning[0]
+  }
+
+  const updateProfile = async () => {
     if (!loggedInUser) {
       throw new Error('User session not found')
     }
@@ -81,7 +109,7 @@ const useCreateProfile = () => {
     })
   }
 
-  return { createProfile, additionalErrors, data, setData, setImageFile }
+  return { updateProfile, createProfile, additionalErrors, data, setData, setImageFile }
 }
 
 export default useCreateProfile

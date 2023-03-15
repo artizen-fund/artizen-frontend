@@ -101,9 +101,9 @@ const ProjectDetails = () => {
     if (returning.length > 0) {
       push(`/admin/projects/${returning[0].id}`)
     }
-
-    console.log('insertProjectR   ', insertProjectR)
   }
+
+  console.log('tempLeadMember   ', tempLeadMember)
 
   return (
     <Layout>

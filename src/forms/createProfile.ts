@@ -19,6 +19,14 @@ export const schema: JsonSchema = {
       type: 'string',
       minLength: 2,
     },
+    twitterHandle: {
+      type: 'string',
+      minLength: 2,
+    },
+    externalLink: {
+      type: 'string',
+      minLength: 2,
+    },
   },
   required: ['artizenHandle', 'firstName', 'lastName', 'email'],
 }
@@ -28,6 +36,9 @@ export interface FormState extends Record<string, unknown> {
   firstName?: string
   lastName?: string
   email?: string
+  twitter?: string
+  externalUrl?: string
+  wallet?: string
 }
 
 export const initialState: FormState = {}
@@ -60,6 +71,16 @@ export const uischema = {
       type: 'Control',
       scope: '#/properties/email',
       label: 'Enter your Email',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/twitterHandle',
+      label: 'Enter your Twitter',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/externalLink',
+      label: 'Enter an external link',
     },
   ],
 }

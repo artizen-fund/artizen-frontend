@@ -10,7 +10,8 @@ import { IGetUsersQuery, IUserPublicFragment, Maybe } from '@types'
 import { DropDownBlocks } from '../lib/DropDownBlocks'
 
 const NewProjectMembersModal = () => {
-  const { modalAttrs } = useContext(LayoutContext)
+  const { modalAttrs, toggleModal, setVisibleModalWithAttrs } = useContext(LayoutContext)
+
   const [userSelected, setuserSelection] = useState<IUserPublicFragment | null>(null)
   const [showNonUsers, setShowNonUsers] = useState<boolean>(false)
   const [loadUsers, { loading, data: loadedUsers }] = useLazyQuery<IGetUsersQuery>(GET_USERS, {
@@ -19,10 +20,6 @@ const NewProjectMembersModal = () => {
 
       if (Users.length === 0) {
         setShowNonUsers(true)
-        // setTimeout(() => {
-        //   setShowNonUsers(false)
-        //   setSearchDataData('')
-        // }, 3000)
       } else {
         console.log('gets here')
         setShowNonUsers(false)
@@ -47,6 +44,7 @@ const NewProjectMembersModal = () => {
         <input
           placeholder={'Search users by email or public address'}
           value={searchData}
+          onBlur={e => e.target.value === '' && !loading && setShowNonUsers(false)}
           onChange={e => {
             console.log('e.target.value', e.target.value)
             setSearchDataData(e.target.value)
@@ -90,7 +88,21 @@ const NewProjectMembersModal = () => {
 
       <Menu>
         {!userSelected && (
-          <Button level={2} outline onClick={() => setuserSelection(null)}>
+          <Button
+            level={2}
+            outline
+            onClick={() => {
+              toggleModal()
+              setVisibleModalWithAttrs('createProfile', {
+                type: 'admin',
+                callback: (data: any) => {
+                  console.log('New user in here :::::::', data)
+                  callback(data)
+                  toggleModal()
+                },
+              })
+            }}
+          >
             Create New User
           </Button>
         )}

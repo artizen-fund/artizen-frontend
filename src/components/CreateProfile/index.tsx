@@ -12,17 +12,70 @@ import { createProfile as copy } from '@copy/common'
 
 const CreateProfile = () => {
   const [processing, setProcessing] = useState(false)
-  const { visibleModal, toggleModal } = useContext(LayoutContext)
+  const { visibleModal, toggleModal, modalAttrs } = useContext(LayoutContext)
 
-  const { createProfile, additionalErrors, data, setData, setImageFile } = useCreateProfile()
+  const { updateProfile, createProfile, additionalErrors, data, setData, setImageFile } = useCreateProfile()
   const [acceptedToc, setAcceptedToc] = useState(true)
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const submit = async () => {
+  const finalUischema =
+    modalAttrs?.type === 'admin'
+      ? {
+          ...uischema,
+          ...{
+            elements: [
+              ...uischema.elements,
+              {
+                type: 'Control',
+                scope: '#/properties/publicAddress',
+                label: 'Enter an public address',
+              },
+            ],
+          },
+        }
+      : uischema
+
+  const finalSchema =
+    modalAttrs?.type === 'admin'
+      ? {
+          ...schema,
+          ...{
+            properties: {
+              ...schema.properties,
+              publicAddress: {
+                type: 'string',
+                minLength: 2,
+              },
+            },
+          },
+        }
+      : schema
+
+  console.log('schema.required?', schema.required)
+  console.log('finalSchema  ', finalSchema)
+
+  const updateProfileC = async () => {
     setProcessing(true)
     try {
-      await createProfile()
+      await updateProfile()
+      setProcessing(false)
+      toggleModal()
+    } catch (error) {
+      setProcessing(false)
+      console.error('Error update user profile', error)
+    }
+  }
+
+  const createProfileC = async () => {
+    setProcessing(true)
+    try {
+      const newProfile = await createProfile()
+
+      console.log('newProfile', newProfile)
+
+      modalAttrs.callback(newProfile)
+
       setProcessing(false)
       toggleModal()
     } catch (error) {
@@ -35,38 +88,52 @@ const CreateProfile = () => {
     <></> /* TODO: we have a new spinner for this in a separate PR */
   ) : (
     <Wrapper visible={visibleModal === 'createProfile'}>
-      <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
+      <FormWrapper
+        hasFirstName={!!loggedInUser?.firstName}
+        hasLastName={!!loggedInUser?.lastName}
+        hasUsername={false}
+        type={modalAttrs?.type}
+      >
         <CloseButton onClick={() => toggleModal()} />
 
-        <Copy>
-          <Headline>{copy.headline}</Headline>
-          <SubTitle>{copy.subtitle}</SubTitle>
-        </Copy>
+        {modalAttrs?.type !== 'admin' && (
+          <Copy>
+            <Headline>{copy.headline}</Headline>
+            <SubTitle>{copy.subtitle}</SubTitle>
+          </Copy>
+        )}
 
         <AvatarForm setFile={setImageFile} />
         <Form
-          {...{ schema, uischema, initialState, data, setData, additionalErrors }}
+          {...{ schema: finalSchema, uischema: finalUischema, initialState, data, setData, additionalErrors }}
           readonly={processing}
           submitDisabledFromOutside={!acceptedToc}
         >
-          <SubmitButton onClick={() => submit()} stretch disabled={processing} level={1}>
+          <SubmitButton
+            onClick={() => (modalAttrs?.type !== 'admin' ? updateProfileC() : createProfileC())}
+            stretch
+            disabled={processing}
+            level={1}
+          >
             {copy.saveLabel}
           </SubmitButton>
         </Form>
 
-        <CheckWrapper>
-          <Check>
-            <CheckboxControl
-              data={acceptedToc}
-              path="not-used"
-              handleChange={() => setAcceptedToc(!acceptedToc)}
-              label=""
-            />
-            <CheckMessage>
-              <Link href="/toc">{copy.tocMessage}</Link>
-            </CheckMessage>
-          </Check>
-        </CheckWrapper>
+        {modalAttrs?.type !== 'admin' && (
+          <CheckWrapper>
+            <Check>
+              <CheckboxControl
+                data={acceptedToc}
+                path="not-used"
+                handleChange={() => setAcceptedToc(!acceptedToc)}
+                label=""
+              />
+              <CheckMessage>
+                <Link href="/toc">{copy.tocMessage}</Link>
+              </CheckMessage>
+            </Check>
+          </CheckWrapper>
+        )}
       </FormWrapper>
     </Wrapper>
   )
@@ -99,7 +166,7 @@ const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
 `
 
-const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean }>`
+const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; type: string }>`
   position: relative;
   z-index: 9999;
 
@@ -113,8 +180,10 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     'copy copy'
     'avatarForm avatarForm'
     'firstName lastName'
-    'artizenHandle artizenHandle'
+    'artizenHandle twitterHandle'
     'email email'
+    'externalLink externalLink'
+    '${props => props.type === 'admin' && `publicAddress publicAddress`}'
     'tocCheck tocCheck'
     'submit submit'
     'why why';
@@ -164,6 +233,18 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   }
   *[id='#/properties/email'] {
     grid-area: email;
+  }
+
+  *[id='#/properties/twitterHandle'] {
+    grid-area: twitterHandle;
+  }
+
+  *[id='#/properties/externalLink'] {
+    grid-area: externalLink;
+  }
+
+  *[id='#/properties/wallet'] {
+    grid-area: wallet;
   }
 
   &.submitted {
