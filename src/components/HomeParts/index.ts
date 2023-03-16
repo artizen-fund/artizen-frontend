@@ -1,6 +1,4 @@
 export { default as ApplyForFundingBlurb } from './ApplyForFundingBlurb'
-export { default as FeaturedArt } from './FeaturedArt'
-export { default as FeaturedArtPanel } from './FeaturedArtPanel'
 export { default as HomeAnimation } from './HomeAnimation'
 export { default as HomeHeader } from './HomeHeader'
 export { default as HomeRibbon } from './HomeRibbon'
