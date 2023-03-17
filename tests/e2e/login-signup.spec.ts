@@ -99,7 +99,7 @@ test.describe('general artizen user', () => {
     await page.waitForTimeout(100)
     await page.getByRole('textbox').nth(3).fill('Testusername')
     await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(4).fill('eric+test@artizen.fund')
+    await page.getByRole('textbox').nth(4).fill('e2etesting@email.ghostinspector.com')
     await page.waitForTimeout(100)
     await page.getByText('Save Changes').click()
   })
