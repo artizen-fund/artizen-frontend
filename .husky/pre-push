@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+
+#!/bin/sh
+
+remote="$1"
+url="$2"
+
+echo $1
+echo $2
+
+current_branch=`git branch --show-current`
+
+echo $current_branch
+
+case $current_branch in
+    *-e2e)
+        echo "running e2e tests against localhost:3000"
+        yarn test:e2e:local
+        ;; 
+esac
+
+exit 1
