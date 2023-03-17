@@ -26,18 +26,23 @@ const useWalletConnect = () => {
     const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
     try {
+      console.log('connectAsync')
       const { account: publicAddress, chain } = await connectAsync({
         connector,
         chainId,
       })
 
+      console.log('challenge')
       const challenge = await requestChallengeAsync({ address: publicAddress, chainId: chain.id })
       if (!challenge) {
         throw new Error('failed walletconnect challenge')
       }
       const { message } = challenge
 
+      console.log('signature')
       const signature = await signMessageAsync({ message })
+
+      console.log('signIn')
       await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
 
       setConnecting(false)
