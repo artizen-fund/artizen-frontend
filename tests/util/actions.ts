@@ -10,12 +10,10 @@ export async function closeWalletConnectModal(page: Page) {
 }
 
 export async function clickMetamaskIcon(page: Page) {
-  // await page.getByRole('img', { name: 'Metamask' }).waitFor()
   await page.getByRole('img', { name: 'Metamask' }).click()
 }
 
 export async function clickAccountButton(page: Page, waitForText?: string) {
-  // await page.getByText(waitForText).waitFor()
   if (waitForText) {
     await page.locator('#accountButton').getByText(waitForText).waitFor()
   }
@@ -23,7 +21,6 @@ export async function clickAccountButton(page: Page, waitForText?: string) {
 }
 
 export async function clickSignInButtonWithRetry(page: Page) {
-  // click sign in button
   console.log('Clicking sign in button...')
   await page.getByText('CloseSign In').waitFor()
 
@@ -102,7 +99,6 @@ export async function connectAndSignWithMetamask(page: Page, clickMetamaskButton
     console.log(e)
   }
 
-  // EK TESTING
   try {
     console.log('connectAndSignWithMetamask: click sign button')
     const signButton = await popup.waitForSelector(`//button[contains(text(), 'Sign')]`, { timeout: 5000 })
@@ -110,7 +106,6 @@ export async function connectAndSignWithMetamask(page: Page, clickMetamaskButton
   } catch (e) {
     console.log(e)
   }
-  // END TEST
 
   // Wait and close
   try {

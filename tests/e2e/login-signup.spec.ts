@@ -73,8 +73,6 @@ test.describe('general artizen user', () => {
     // await clickMetamaskIcon(page)
 
     // Approve the connection when MetaMask pops up
-    // await metamask.approve()
-
     await connectAndSignWithMetamask(page, true, false)
 
     await page.waitForLoadState()
@@ -194,8 +192,6 @@ test.describe('admin user', () => {
 
   test.skip('admin user can create new season', async ({ page, metamask }) => {
     await page.goto('/admin/seasons')
-    // const createButton = await page.waitForSelector(`//button[contains(text(), 'Create New Season')]`)
-    // await createButton.click()
     await page.getByRole('button').filter({ hasText: 'Create New Season' }).click()
 
     await page.waitForLoadState()

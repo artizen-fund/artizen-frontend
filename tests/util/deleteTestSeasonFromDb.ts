@@ -6,7 +6,6 @@ export async function deleteTestSeasonFromDb() {
     baseURL: graphqlURL,
   })
 
-  // async function fetchGraphQL(operationsDoc, operationName, variables) {
   const result = await context.post('/v1/graphql/', {
     headers: {
       'X-Hasura-Admin-Secret': graphqlAdminSecret,
