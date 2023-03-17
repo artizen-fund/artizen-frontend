@@ -3,6 +3,8 @@ import { Page, BrowserContext } from 'playwright-core'
 
 import { Dappwright, getWallet, launch, MetaMaskWallet } from '@tenkeylabs/dappwright'
 
+import { graphqlURL, graphqlAdminSecret, deleteTestUserMutationDoc } from '../util/graphql'
+
 export const test = base.extend<{
   context: BrowserContext
   metamask: Dappwright
@@ -28,21 +30,6 @@ export const test = base.extend<{
 
 test.describe.configure({ mode: 'serial' }) // Avoid colliding browser sessions
 
-const graphqlURL = process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL
-  ? process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL
-  : 'https://artizen-dev.hasura.app/v1/graphql'
-const graphqlAdminSecret = process.env.HASURA_GRAPHQL_ADMIN_SECRET ? process.env.HASURA_GRAPHQL_ADMIN_SECRET : ''
-
-const deleteTestUserMutationDoc: string = `
-mutation MyMutation {
-delete_Users(where: {publicAddress: {_ilike: "0x7e4abd63a7c8314cc28d388303472353d884f292"}}) {
-  returning {
-    id
-  }
-}
-}
-`
-
 test.describe('general artizen user', () => {
   test.beforeAll(async ({ metamask }) => {
     // ensure that test user does not exist in db
@@ -53,11 +40,11 @@ test.describe('general artizen user', () => {
 
     // use Account 1 for general user tests
     // use Account 2 for admin user tests
-    await metamask.switchAccount(1)
+    // await metamask.switchAccount(1)
   })
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/') // is localhost:3000 available?
     await page.bringToFront()
   })
 
@@ -66,44 +53,30 @@ test.describe('general artizen user', () => {
     await deleteTestUserFromDb()
   })
 
-  test('new user can login via metamask', async ({ page, metamask, context }) => {
+  test.only('new user can login via metamask', async ({ page, metamask, context }) => {
     await page.waitForLoadState()
 
     // click sign in button
-    await page.getByText('CloseSign In').waitFor()
-    await page.locator('#accountButton').click()
-
-    // click metamask icon to open wallet
-    // await page.waitForTimeout(500)
-    // await page.waitForSelector('img[src="/assets/metamask.svg"]')
-    // await page.waitForTimeout(500)
-    await page.getByRole('img', { name: 'Metamask' }).waitFor()
-    await page.getByRole('img', { name: 'Metamask' }).click()
+    await clickSignInButton(page)
+    await clickMetamaskIcon(page)
 
     // Approve the connection when MetaMask pops up
     // This closes the metamask popup so we need to go through artizen sign in process again
     // to sign the transaction
     await metamask.approve()
 
-    await page.getByRole('button').filter({ hasText: 'Close' }).nth(1).click()
-    await page.locator('#accountButton').click()
-    await page.waitForSelector('img[src="/assets/metamask.svg"]')
-    await page.getByRole('img', { name: 'Metamask' }).waitFor()
-    await page.getByRole('img', { name: 'Metamask' }).click()
+    await closeWalletConnectModal(page)
+    await clickSignInButton(page)
+    await clickMetamaskIcon(page)
 
     await metamask.page.waitForLoadState()
     await metamask.sign()
 
     await page.waitForLoadState()
 
-    await page.waitForSelector('#accountButton')
-    await page.waitForLoadState('networkidle')
-    await page.waitForLoadState('domcontentloaded')
-
     await expect(page.getByText('Complete your profile')).toBeVisible({
       timeout: 20000,
     })
-    // await context.tracing.stop({ path: 'trace.zip' })
   })
 
   test('new user can complete profile', async ({ page, metamask }) => {
@@ -184,7 +157,7 @@ test.describe('admin user', () => {
     // metamask.switchAccount(2) // Account 2 is our test admin account
     const test_admin_wallet_pk = process.env.TEST_WALLET_PK ? process.env.TEST_WALLET_PK : ''
     await metamask.importPK(test_admin_wallet_pk)
-    
+
     // disconnect non-admin user metamask account from localhost
     await metamask.switchAccount(1)
     await metamask.page.getByTestId('account-options-menu-button').click()
@@ -192,7 +165,6 @@ test.describe('admin user', () => {
     await metamask.page.getByText('Disconnect').click()
     await metamask.page.getByRole('button', { name: 'Disconnect' }).click()
 
-    
     // await metamask.deleteAccount(1)
   })
 
@@ -296,7 +268,6 @@ test.describe('admin user', () => {
     await expect(page.getByText('playwright test title')).toBeVisible({
       timeout: 10000,
     })
-
   })
 })
 
@@ -305,6 +276,20 @@ const performPopupAction = async (page: Page, action: (popup: Page) => Promise<v
 
   await action(popup)
   if (!popup.isClosed()) await popup.waitForEvent('close')
+}
+
+async function closeWalletConnectModal(page: Page) {
+  await page.getByRole('button').filter({ hasText: 'Close' }).nth(1).click()
+}
+
+async function clickMetamaskIcon(page: Page) {
+  await page.getByRole('img', { name: 'Metamask' }).waitFor()
+  await page.getByRole('img', { name: 'Metamask' }).click()
+}
+
+async function clickSignInButton(page: Page) {
+  await page.getByText('CloseSign In').waitFor()
+  await page.locator('#accountButton').click()
 }
 
 async function deleteTestUserFromDb() {
