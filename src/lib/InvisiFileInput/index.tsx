@@ -45,10 +45,12 @@ interface IInvisiFileInput {
   setFile: (f: File) => void
   id?: string
   children?: React.ReactElement | Array<React.ReactElement>
+  initialState?: string
 }
 
-const InvisiFileInput = ({ setFile, children, ...props }: IInvisiFileInput) => {
-  const [preview, setPreview] = useState<string>()
+const InvisiFileInput = ({ setFile, children, initialState, ...props }: IInvisiFileInput) => {
+  console.log('initialState   ', initialState)
+  const [preview, setPreview] = useState<string | undefined>(initialState)
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pickedFile = e.target.files?.[0]
     if (!pickedFile) return

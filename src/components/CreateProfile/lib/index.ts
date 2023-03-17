@@ -5,14 +5,15 @@ import { useDebounce } from 'use-debounce'
 import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation, ICreateUsersMutation } from '@types'
 import { loggedInUserVar, useCloudinary } from '@lib'
 import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE, CREATE_USERS } from '@gql'
-import { initialState, FormState } from '@forms/createProfile'
+import { FormState } from '@forms/createProfile'
 
-const useCreateProfile = () => {
+const useCreateProfile = (initialFormState: FormState) => {
+  console.log('initialState  ', initialFormState)
   const { upload } = useCloudinary()
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const [data, setData] = useState<FormState>(initialState)
+  const [data, setData] = useState<FormState>(initialFormState)
   const [imageFile, setImageFile] = useState<File>()
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 

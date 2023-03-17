@@ -19,6 +19,7 @@ const NewProjectMembersModal = () => {
       console.log('Users', Users)
 
       if (Users.length === 0) {
+        setuserSelection(null)
         setShowNonUsers(true)
       } else {
         console.log('gets here')
@@ -34,6 +35,7 @@ const NewProjectMembersModal = () => {
   const Users = !loading && loadedUsers !== undefined && loadedUsers?.Users.length > 0 ? loadedUsers?.Users : null
 
   console.log('Users here  ', Users)
+  console.log('userSelected  ', userSelected)
 
   return (
     <Wrapper>
@@ -95,6 +97,7 @@ const NewProjectMembersModal = () => {
               toggleModal()
               setVisibleModalWithAttrs('createProfile', {
                 type: 'admin',
+                action: 'create',
                 callback: (data: any) => {
                   console.log('New user in here :::::::', data)
                   callback(data)
@@ -109,7 +112,23 @@ const NewProjectMembersModal = () => {
         {userSelected && (
           <>
             {!userSelected.claimed && (
-              <Button level={2} outline onClick={() => setuserSelection(null)}>
+              <Button
+                level={2}
+                outline
+                onClick={() => {
+                  toggleModal()
+                  setVisibleModalWithAttrs('createProfile', {
+                    scope: 'admin',
+                    action: 'update',
+                    initialState: userSelected,
+                    callback: (data: any) => {
+                      console.log('New user in here :::::::', data)
+                      callback(data)
+                      toggleModal()
+                    },
+                  })
+                }}
+              >
                 Edit Users Data
               </Button>
             )}

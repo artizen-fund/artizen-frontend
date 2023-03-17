@@ -5,13 +5,15 @@ import { breakpoint, palette } from '@theme'
 
 interface IAvatarForm {
   setFile: (input: File) => void
+  initialState?: string
 }
 
-const AvatarForm = ({ setFile }: IAvatarForm) => {
+const AvatarForm = ({ setFile, initialState }: IAvatarForm) => {
+  console.log('AvatarForm initialState  ', initialState)
   const IMAGE_UPLOAD_BUTTON_ID = 'avatarUploadImage'
   return (
     <Wrapper>
-      <InvisiFileInput id={IMAGE_UPLOAD_BUTTON_ID} {...{ setFile }}>
+      <InvisiFileInput id={IMAGE_UPLOAD_BUTTON_ID} {...{ setFile, initialState }}>
         <DropZone>
           <Glyph glyph="face" />
         </DropZone>

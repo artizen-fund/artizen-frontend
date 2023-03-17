@@ -121,7 +121,7 @@ const ProjectDetails = () => {
                   onClick={() => {
                     setVisibleModalWithAttrs('newProjectMemberModal', {
                       callback: (data: any) => {
-                        console.log('data in here:::::::', data)
+                        console.log('data in form news:::::::', data)
                         setTempLeadMember(data)
                         toggleModal()
                       },

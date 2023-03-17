@@ -44,6 +44,9 @@ export const StringControl = ({
    *   like toLowerCase()
    * So, this is the compromise. Not crazy about it. :\ -EJ
    */
+
+  console.log('local data', data)
+
   const [localData, setLocalData] = useState<string>(data || '')
   useEffect(() => {
     if (!localData) return

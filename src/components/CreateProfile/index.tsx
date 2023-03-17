@@ -5,22 +5,72 @@ import Link from 'next/link'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
 import { rgba, loggedInUserVar, LayoutContext } from '@lib'
-import { schema, uischema, initialState } from '@forms/createProfile'
+import { schema, uischema, FormState } from '@forms/createProfile'
 import { typography, palette, breakpoint } from '@theme'
 import useCreateProfile from './lib'
 import { createProfile as copy } from '@copy/common'
+
+interface FormStateAdmin extends FormState {
+  publicAddress: string
+}
+
+interface IAttibutes {
+  action?: 'update' | 'create'
+  callback?: () => void
+  scope: 'admin' | 'frontend'
+  initialState: FormStateAdmin
+}
 
 const CreateProfile = () => {
   const [processing, setProcessing] = useState(false)
   const { visibleModal, toggleModal, modalAttrs } = useContext(LayoutContext)
 
-  const { updateProfile, createProfile, additionalErrors, data, setData, setImageFile } = useCreateProfile()
+  const {
+    action,
+    initialState: {
+      artizenHandle,
+      firstName,
+      lastName,
+      email,
+      twitter,
+      externalUrl,
+      wallet,
+      profileImage,
+      publicAddress,
+    },
+    scope,
+    callback,
+  }: IAttibutes = modalAttrs
+
   const [acceptedToc, setAcceptedToc] = useState(true)
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
+  // const action = modalAttrs?.action
+
+  console.log('modalAttrs?.initialState   ', modalAttrs?.initialState)
+
+  const newInitialState: FormStateAdmin | FormState = modalAttrs?.initialState
+    ? {
+        artizenHandle,
+        firstName,
+        lastName,
+        email,
+        twitter,
+        externalUrl,
+        wallet,
+        profileImage,
+        publicAddress,
+      }
+    : {}
+
+  const { updateProfile, createProfile, additionalErrors, data, setData, setImageFile } =
+    useCreateProfile(newInitialState)
+
+  console.log('newInitialState  ', newInitialState)
+
   const finalUischema =
-    modalAttrs?.type === 'admin'
+    modalAttrs?.scope === 'admin'
       ? {
           ...uischema,
           ...{
@@ -37,7 +87,7 @@ const CreateProfile = () => {
       : uischema
 
   const finalSchema =
-    modalAttrs?.type === 'admin'
+    modalAttrs?.scope === 'admin'
       ? {
           ...schema,
           ...{
@@ -71,10 +121,7 @@ const CreateProfile = () => {
     setProcessing(true)
     try {
       const newProfile = await createProfile()
-
-      console.log('newProfile', newProfile)
-
-      modalAttrs.callback(newProfile)
+      modalAttrs?.callback(newProfile)
 
       setProcessing(false)
       toggleModal()
@@ -92,25 +139,25 @@ const CreateProfile = () => {
         hasFirstName={!!loggedInUser?.firstName}
         hasLastName={!!loggedInUser?.lastName}
         hasUsername={false}
-        type={modalAttrs?.type}
+        scope={modalAttrs?.scope}
       >
         <CloseButton onClick={() => toggleModal()} />
 
-        {modalAttrs?.type !== 'admin' && (
+        {modalAttrs?.scope !== 'admin' && (
           <Copy>
             <Headline>{copy.headline}</Headline>
             <SubTitle>{copy.subtitle}</SubTitle>
           </Copy>
         )}
 
-        <AvatarForm setFile={setImageFile} />
+        <AvatarForm setFile={setImageFile} initialState={profileImage as string} />
         <Form
-          {...{ schema: finalSchema, uischema: finalUischema, initialState, data, setData, additionalErrors }}
+          {...{ schema: finalSchema, uischema: finalUischema, data, setData, additionalErrors }}
           readonly={processing}
           submitDisabledFromOutside={!acceptedToc}
         >
           <SubmitButton
-            onClick={() => (modalAttrs?.type !== 'admin' ? updateProfileC() : createProfileC())}
+            onClick={() => (action === 'update' ? updateProfileC() : createProfileC())}
             stretch
             disabled={processing}
             level={1}
@@ -119,7 +166,7 @@ const CreateProfile = () => {
           </SubmitButton>
         </Form>
 
-        {modalAttrs?.type !== 'admin' && (
+        {scope !== 'admin' && (
           <CheckWrapper>
             <Check>
               <CheckboxControl
@@ -166,7 +213,7 @@ const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
 `
 
-const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; type: string }>`
+const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; scope: string }>`
   position: relative;
   z-index: 9999;
 
@@ -183,7 +230,7 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     'artizenHandle twitterHandle'
     'email email'
     'externalLink externalLink'
-    '${props => props.type === 'admin' && `publicAddress publicAddress`}'
+    '${props => props.scope === 'admin' && `publicAddress publicAddress`}'
     'tocCheck tocCheck'
     'submit submit'
     'why why';

@@ -41,8 +41,6 @@ export interface FormState extends Record<string, unknown> {
   wallet?: string
 }
 
-export const initialState: FormState = {}
-
 /*
 	This is the JSONForms UI layout. 
 	This will generate our labels and a default layout.
