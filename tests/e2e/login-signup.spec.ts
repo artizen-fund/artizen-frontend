@@ -4,6 +4,7 @@ import { Page, BrowserContext } from 'playwright-core'
 import { Dappwright, getWallet, launch, MetaMaskWallet } from '@tenkeylabs/dappwright'
 
 import { graphqlURL, graphqlAdminSecret, deleteTestUserMutationDoc } from '../util/graphql'
+import { waitFor } from '@testing-library/react'
 
 export const test = base.extend<{
   context: BrowserContext
@@ -57,34 +58,37 @@ test.describe('general artizen user', () => {
     await page.waitForLoadState()
 
     // click sign in button
-    await clickSignInButton(page)
+    await clickAccountButton(page, 'CloseSign In')
     await clickMetamaskIcon(page)
 
     // Approve the connection when MetaMask pops up
-    // This closes the metamask popup so we need to go through artizen sign in process again
-    // to sign the transaction
     await metamask.approve()
 
+    // This closes the metamask popup without signing the tx
+    // so we need to go through sign in process again...
     await closeWalletConnectModal(page)
-    await clickSignInButton(page)
+    await clickAccountButton(page, 'CloseSign In')
     await clickMetamaskIcon(page)
 
+    // ...to sign the transaction
     await metamask.page.waitForLoadState()
     await metamask.sign()
 
     await page.waitForLoadState()
 
+    // upon successful login, expect the new user profile form to appear
     await expect(page.getByText('Complete your profile')).toBeVisible({
       timeout: 20000,
     })
   })
 
-  test('new user can complete profile', async ({ page, metamask }) => {
+  test.only('new user can complete profile', async ({ page, metamask }) => {
     await expect(page.getByText('Complete your profile')).toBeVisible({
       timeout: 5000,
     })
     await page.waitForLoadState()
 
+    // if we go too fast, then the form validation prevents clicking Save Changes
     await page.waitForTimeout(100)
     await page.getByRole('textbox').nth(1).fill('Testfirstname')
     await page.waitForTimeout(100)
@@ -97,45 +101,38 @@ test.describe('general artizen user', () => {
     await page.getByText('Save Changes').click()
   })
 
-  test('user can logout', async ({ page, metamask }) => {
+  test.only('user can logout', async ({ page, metamask }) => {
     // TT = initials of Testfirstname Testlastname
-    await page.locator('#accountButton').getByText('TT').waitFor()
-    await page.locator('#accountButton').click()
-    await page.getByText('Sign Out').click()
-    console.log('logging out...')
+    await clickAccountButton(page, 'TT')
+    await clickLogout(page)
+
     await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible({
       timeout: 10000,
     })
   })
 
-  test('existing user can login', async ({ page, metamask }) => {
+  test.only('existing user can login', async ({ page, metamask }) => {
     await page.waitForLoadState()
 
     // click sign in button
-    await page.getByText('CloseSign In').waitFor()
-    await page.locator('#accountButton').click()
+    await clickAccountButton(page, 'CloseSign In')
 
     // click metamask icon to open wallet
-    await page.waitForSelector('img[src="/assets/metamask.svg"]')
-    await page.getByRole('img', { name: 'Metamask' }).click()
+    await clickMetamaskIcon(page)
 
     // Approve the connection when MetaMask pops up
     // This closes the metamask popup so we need to go through artizen sign in process again
     // to sign the transaction
     await metamask.sign()
 
-    await page.getByRole('button').filter({ hasText: 'Close' }).nth(1).click()
-    await page.locator('#accountButton').click()
-    await page.waitForSelector('img[src="/assets/metamask.svg"]')
-    await page.getByRole('img', { name: 'Metamask' }).click()
+    await closeWalletConnectModal(page)
+    await clickAccountButton(page, 'CloseSign In')
+
+    await clickMetamaskIcon(page)
 
     await metamask.sign()
 
     await page.waitForLoadState()
-
-    await page.waitForSelector('#accountButton')
-    await page.waitForLoadState('networkidle')
-    await page.waitForLoadState('domcontentloaded')
 
     await expect(page.locator('#accountButton').getByText('TT')).toBeVisible({
       timeout: 10000,
@@ -278,17 +275,25 @@ const performPopupAction = async (page: Page, action: (popup: Page) => Promise<v
   if (!popup.isClosed()) await popup.waitForEvent('close')
 }
 
+async function clickLogout(page: Page) {
+  await page.getByText('Sign Out').click()
+  console.log('logging out...')
+}
+
 async function closeWalletConnectModal(page: Page) {
   await page.getByRole('button').filter({ hasText: 'Close' }).nth(1).click()
 }
 
 async function clickMetamaskIcon(page: Page) {
-  await page.getByRole('img', { name: 'Metamask' }).waitFor()
+  // await page.getByRole('img', { name: 'Metamask' }).waitFor()
   await page.getByRole('img', { name: 'Metamask' }).click()
 }
 
-async function clickSignInButton(page: Page) {
-  await page.getByText('CloseSign In').waitFor()
+async function clickAccountButton(page: Page, waitForText?: string) {
+  // await page.getByText(waitForText).waitFor()
+  if (waitForText) {
+    await page.locator('#accountButton').getByText(waitForText).waitFor()
+  }
   await page.locator('#accountButton').click()
 }
 
