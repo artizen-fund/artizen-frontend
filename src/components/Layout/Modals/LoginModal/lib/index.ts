@@ -45,7 +45,8 @@ const useWalletConnect = () => {
       router.reload()
     } catch (e) {
       setConnecting(false)
-      console.error('error connecting user', e)
+      console.error('error connecting user')
+      console.error(e)
     }
   }
   // new MetaMaskConnector({ chains: [goerli] })
