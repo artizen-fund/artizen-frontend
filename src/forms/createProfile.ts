@@ -36,7 +36,7 @@ export interface FormState extends Record<string, unknown> {
   firstName?: string
   lastName?: string
   email?: string
-  twitter?: string
+  twitterHandle?: string
   externalUrl?: string
   wallet?: string
 }
