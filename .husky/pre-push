@@ -20,5 +20,3 @@ case $current_branch in
         yarn test:e2e:local
         ;; 
 esac
-
-exit 1
