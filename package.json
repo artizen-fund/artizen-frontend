@@ -16,7 +16,7 @@
     "lint": "next lint",
     "test:jest": "jest --watch",
     "test:quick": "start-server-and-test 'yarn dev' http-get://localhost:3000 'env-cmd -f .env.development npx synpress run -cf synpress.config.js'",
-    "test:e2e:local": "SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- yarn playwright test --project=chromium",
+    "test:e2e:local": "npx playwright install --with-deps chromium && SECRET_ENV=DevSecrets op run --env-file='.env_1password_template.txt' -- yarn playwright test --project=chromium",
     "test:e2e": "playwright test --project=chromium",
     "codegen": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "codegen-staging": "SECRET_ENV=StagingSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
