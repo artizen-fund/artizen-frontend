@@ -31,8 +31,6 @@ const CreateProfile = () => {
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  console.log('modalAttrs?.initialState   ', modalAttrs?.initialState)
-
   const newInitialState: FormStateAdmin | FormState = modalAttrs?.initialState
     ? {
         artizenHandle: modalAttrs?.initialState?.artizenHandle,
@@ -48,8 +46,6 @@ const CreateProfile = () => {
 
   const { updateProfile, createProfile, additionalErrors, data, setData, setImageFile } =
     useCreateProfile(newInitialState)
-
-  console.log('modalAttrs  here ', modalAttrs)
 
   const finalUischema =
     modalAttrs?.scope === 'admin'
@@ -84,15 +80,12 @@ const CreateProfile = () => {
         }
       : schema
 
-  console.log('schema.required?', schema.required)
-  console.log('finalSchema  ', finalSchema)
-
   const updateProfileC = async () => {
     setProcessing(true)
     try {
       const updatedProfile = await updateProfile(modalAttrs?.initialState?.id)
       const profileImage = updatedProfile.profileImage || modalAttrs?.initialState?.profileImage
-      console.log('updatedProfile', updatedProfile)
+
       modalAttrs?.callback({ ...updatedProfile, profileImage })
 
       setProcessing(false)

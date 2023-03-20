@@ -17,13 +17,10 @@ const NewProjectMembersModal = () => {
   const [loadUsers, { loading, data: loadedUsers }] = useLazyQuery<IGetUsersQuery>(GET_USERS, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ Users }) => {
-      console.log('Users', Users)
-
       if (Users.length === 0) {
         setuserSelection(null)
         setShowNonUsers(true)
       } else {
-        console.log('gets here')
         setShowNonUsers(false)
       }
     },
@@ -46,7 +43,6 @@ const NewProjectMembersModal = () => {
           value={searchData}
           onBlur={e => e.target.value === '' && !loading && setShowNonUsers(false)}
           onChange={e => {
-            console.log('e.target.value', e.target.value)
             setSearchDataData(e.target.value)
             loadUsers({
               variables: {
@@ -97,7 +93,6 @@ const NewProjectMembersModal = () => {
                 scope: 'admin',
                 action: 'create',
                 callback: (data: any) => {
-                  console.log('New user in here :::::::', data)
                   callback(data)
                   toggleModal()
                 },
@@ -120,7 +115,6 @@ const NewProjectMembersModal = () => {
                     action: 'update',
                     initialState: userSelected,
                     callback: (data: any) => {
-                      console.log('New user in here :::::::', data)
                       callback(data)
                       toggleModal()
                     },

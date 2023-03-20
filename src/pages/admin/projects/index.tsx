@@ -20,11 +20,9 @@ const Projects = () => {
 
   useEffect(() => {
     if (!errorLoadingProject) return
-    console.error('errorLoadingProject', errorLoadingProject)
   }, [errorLoadingProject])
 
   const openProject = (target: string) => () => {
-    console.log('gets here')
     router.push(`/admin/projects/${target}`)
   }
 

@@ -13,7 +13,7 @@ import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding } from '@com
 import { initialState, schema, FormState } from '@forms/createProjects'
 
 const testWallet = (walletAddress: string) => {
-  console.log('walletAddress', validateLib.validate(walletAddress, 'ETH'))
+  // console.log('walletAddress', validateLib.validate(walletAddress, 'ETH'))
 
   const isValid = validateLib.validate(walletAddress, 'ETH')
 
@@ -103,8 +103,6 @@ const ProjectDetails = () => {
     }
   }
 
-  console.log('tempLeadMember   ', tempLeadMember)
-
   return (
     <Layout>
       <CuratorCheck />
@@ -121,7 +119,6 @@ const ProjectDetails = () => {
                   onClick={() => {
                     setVisibleModalWithAttrs('newProjectMemberModal', {
                       callback: (data: any) => {
-                        console.log('data in form news:::::::', data)
                         setTempLeadMember(data)
                         toggleModal()
                       },
@@ -139,7 +136,6 @@ const ProjectDetails = () => {
                       setTempLeadMember(undefined)
                       setVisibleModalWithAttrs('newProjectMemberModal', {
                         callback: (data: any) => {
-                          console.log('data in here:::::::', data)
                           setTempLeadMember(data)
                           toggleModal()
                         },
@@ -166,8 +162,6 @@ const ProjectDetails = () => {
               addData={data => {
                 if (data.walletAddress && data.walletAddress?.length > 4) {
                   const error = testWallet(data.walletAddress)
-
-                  console.log('error   ', error)
 
                   setAdditionalErrors(error ? [error] : [])
 

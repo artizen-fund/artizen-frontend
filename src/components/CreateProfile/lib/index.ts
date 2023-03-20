@@ -8,7 +8,6 @@ import { UPDATE_USERS, CHECK_FOR_EXISTING_ARTIZENHANDLE, CREATE_USERS } from '@g
 import { FormState } from '@forms/createProfile'
 
 const useCreateProfile = (initialFormState: FormState) => {
-  console.log('initialState  ', initialFormState)
   const { upload } = useCloudinary()
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
@@ -62,8 +61,6 @@ const useCreateProfile = (initialFormState: FormState) => {
     })
     await addUserToCourier()
 
-    console.log('createUserR  ', createUserR)
-
     if (!createUserR.data?.insert_Users) {
       throw new Error('Error creating users in the admin form')
     }
@@ -80,7 +77,6 @@ const useCreateProfile = (initialFormState: FormState) => {
     let valuesTokeep: FormState = {}
 
     Object.keys(initialFormState).forEach(key => {
-      console.log(key)
       //values are different
       if (initialFormState[key] !== data[key]) {
         valuesToUpdate[key] = key === 'artizenHandle' ? data[key]?.toLowerCase() : data[key]
@@ -106,8 +102,6 @@ const useCreateProfile = (initialFormState: FormState) => {
     if (!updatedUser.data?.update_Users?.returning) {
       throw new Error('Error updating user in the admin form')
     }
-
-    console.log('from here::::', updatedUser.data?.update_Users)
 
     return updatedUser.data?.update_Users?.returning[0]
   }

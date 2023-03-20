@@ -129,7 +129,7 @@ test.describe('general artizen user', () => {
     await page.locator('#accountButton').getByText('TT').waitFor()
     await page.locator('#accountButton').click()
     await page.getByText('Sign Out').click()
-    console.log('logging out...')
+
     await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible({
       timeout: 10000,
     })
@@ -184,7 +184,7 @@ test.describe('admin user', () => {
     // metamask.switchAccount(2) // Account 2 is our test admin account
     const test_admin_wallet_pk = process.env.TEST_WALLET_PK ? process.env.TEST_WALLET_PK : ''
     await metamask.importPK(test_admin_wallet_pk)
-    
+
     // disconnect non-admin user metamask account from localhost
     await metamask.switchAccount(1)
     await metamask.page.getByTestId('account-options-menu-button').click()
@@ -192,7 +192,6 @@ test.describe('admin user', () => {
     await metamask.page.getByText('Disconnect').click()
     await metamask.page.getByRole('button', { name: 'Disconnect' }).click()
 
-    
     // await metamask.deleteAccount(1)
   })
 
@@ -296,7 +295,6 @@ test.describe('admin user', () => {
     await expect(page.getByText('playwright test title')).toBeVisible({
       timeout: 10000,
     })
-
   })
 })
 
@@ -324,5 +322,4 @@ async function deleteTestUserFromDb() {
   })
 
   const resJSON = await result.json()
-  console.log(JSON.stringify(resJSON))
 }
