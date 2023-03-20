@@ -15,6 +15,7 @@ const NewProjectMembersModal = () => {
   const [userSelected, setuserSelection] = useState<IUserPublicFragment | null>(null)
   const [showNonUsers, setShowNonUsers] = useState<boolean>(false)
   const [loadUsers, { loading, data: loadedUsers }] = useLazyQuery<IGetUsersQuery>(GET_USERS, {
+    fetchPolicy: 'no-cache',
     onCompleted: ({ Users }) => {
       console.log('Users', Users)
 
@@ -33,9 +34,6 @@ const NewProjectMembersModal = () => {
   const { callback } = modalAttrs
 
   const Users = !loading && loadedUsers !== undefined && loadedUsers?.Users.length > 0 ? loadedUsers?.Users : null
-
-  console.log('Users here  ', Users)
-  console.log('userSelected  ', userSelected)
 
   return (
     <Wrapper>
@@ -96,7 +94,7 @@ const NewProjectMembersModal = () => {
             onClick={() => {
               toggleModal()
               setVisibleModalWithAttrs('createProfile', {
-                type: 'admin',
+                scope: 'admin',
                 action: 'create',
                 callback: (data: any) => {
                   console.log('New user in here :::::::', data)

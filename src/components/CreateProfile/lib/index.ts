@@ -4,7 +4,7 @@ import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation, ICreateUsersMutation } from '@types'
 import { loggedInUserVar, useCloudinary } from '@lib'
-import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE, CREATE_USERS } from '@gql'
+import { UPDATE_USERS, CHECK_FOR_EXISTING_ARTIZENHANDLE, CREATE_USERS } from '@gql'
 import { FormState } from '@forms/createProfile'
 
 const useCreateProfile = (initialFormState: FormState) => {
@@ -17,12 +17,13 @@ const useCreateProfile = (initialFormState: FormState) => {
   const [imageFile, setImageFile] = useState<File>()
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USER)
+  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS)
   const [createUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
 
   /* this checks for existing handles while the user types */
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
+    skip: !!initialFormState,
     variables: {
       where: {
         _and: [{ artizenHandle: { _eq: newArtizenHandle?.toLowerCase() } }, { id: { _neq: loggedInUser?.id } }],
@@ -48,8 +49,6 @@ const useCreateProfile = (initialFormState: FormState) => {
   const createProfile = async () => {
     const profileImage = await uploadAvatar(imageFile)
 
-    console.log('data  ', data)
-
     const createUserR = await createUser({
       variables: {
         objects: [
@@ -72,21 +71,43 @@ const useCreateProfile = (initialFormState: FormState) => {
     return createUserR.data?.insert_Users?.returning[0]
   }
 
-  const updateProfile = async () => {
+  const updateProfile = async (userIdToUpdate: string) => {
     if (!loggedInUser) {
       throw new Error('User session not found')
     }
+
+    let valuesToUpdate: FormState = {}
+    let valuesTokeep: FormState = {}
+
+    Object.keys(initialFormState).forEach(key => {
+      console.log(key)
+      //values are different
+      if (initialFormState[key] !== data[key]) {
+        valuesToUpdate[key] = key === 'artizenHandle' ? data[key]?.toLowerCase() : data[key]
+      } else {
+        valuesTokeep[key] = data[key]
+      }
+    })
+
     const profileImage = await uploadAvatar(imageFile)
-    await updateUser({
+    const updatedUser = await updateUser({
       variables: {
-        ...loggedInUser,
-        ...data,
-        artizenHandle: data.artizenHandle?.toLowerCase() || loggedInUser.artizenHandle,
-        profileImage,
-        claimed: true,
+        where: {
+          id: {
+            _eq: userIdToUpdate,
+          },
+        },
+        _set: { ...valuesToUpdate, profileImage },
+        claimed: false,
       },
     })
     await addUserToCourier()
+
+    if (!updatedUser.data?.update_Users) {
+      throw new Error('Error updating user in the admin form')
+    }
+
+    return { ...valuesTokeep, ...valuesToUpdate, ...profileImage }
   }
 
   const uploadAvatar = async (imageFile?: File) => {

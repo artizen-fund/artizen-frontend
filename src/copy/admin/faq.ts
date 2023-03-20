@@ -12,7 +12,7 @@ const faq = [
   {
     question: "Why can I not edit a user's profile from the new project form?",
     answer:
-      "You can only edit users' profiles from users who have not yet login into their profile. You should email them and ask for an update",
+      "You can only edit users' profiles from users who still need to log in to their profiles. If you need to update a user profile that a user is actively using. You'd need to reach the user and request the changes",
   },
 ]
 

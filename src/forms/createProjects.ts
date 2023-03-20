@@ -25,20 +25,14 @@ export const schema: JsonSchema = {
       type: 'string',
       // eslint-disable-next-line
       title: "What's original about your project?",
-      minLength: 100,
-      maxLength: 400,
     },
     info3: {
       type: 'string',
       title: 'How will your project impact the world?',
-      minLength: 100,
-      maxLength: 400,
     },
     info4: {
       type: 'string',
       title: 'Why are you the right person to make this project?',
-      minLength: 100,
-      maxLength: 400,
     },
     impactTags: {
       type: 'string',

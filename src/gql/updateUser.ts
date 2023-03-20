@@ -14,6 +14,32 @@ export const UPDATE_USER_FROM_SERVER = gql`
   }
 `
 
+export const UPSERT_USERS = gql`
+  ${USER_PUBLIC}
+  ${USER_PRIVATE}
+  mutation UpsertUsers($objects: [Users_insert_input!]!, $on_conflict: Users_on_conflict) {
+    insert_Users(objects: $objects, on_conflict: $on_conflict) {
+      returning {
+        ...UserPublic
+        ...UserPrivate
+      }
+    }
+  }
+`
+
+export const UPDATE_USERS = gql`
+  ${USER_PUBLIC}
+  ${USER_PRIVATE}
+  mutation UpdateUsersF($_set: Users_set_input, $where: Users_bool_exp!) {
+    update_Users(where: $where, _set: $_set) {
+      returning {
+        ...UserPublic
+        ...UserPrivate
+      }
+    }
+  }
+`
+//TODO: Remove this mutation and use the one above which is more flexible
 export const UPDATE_USER = gql`
   ${USER_PUBLIC}
   ${USER_PRIVATE}

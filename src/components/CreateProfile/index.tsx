@@ -18,56 +18,38 @@ interface IAttibutes {
   action?: 'update' | 'create'
   callback?: () => void
   scope: 'admin' | 'frontend'
-  initialState: FormStateAdmin
+  initialState?: FormStateAdmin
 }
 
 const CreateProfile = () => {
   const [processing, setProcessing] = useState(false)
   const { visibleModal, toggleModal, modalAttrs } = useContext(LayoutContext)
 
-  const {
-    action,
-    initialState: {
-      artizenHandle,
-      firstName,
-      lastName,
-      email,
-      twitterHandle,
-      externalUrl,
-      wallet,
-      profileImage,
-      publicAddress,
-    },
-    scope,
-    callback,
-  }: IAttibutes = modalAttrs
+  const { action, initialState, scope, callback }: IAttibutes = modalAttrs
 
   const [acceptedToc, setAcceptedToc] = useState(true)
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  // const action = modalAttrs?.action
-
   console.log('modalAttrs?.initialState   ', modalAttrs?.initialState)
 
   const newInitialState: FormStateAdmin | FormState = modalAttrs?.initialState
     ? {
-        artizenHandle,
-        firstName,
-        lastName,
-        email,
-        twitterHandle,
-        externalUrl,
-        wallet,
-        profileImage,
-        publicAddress,
+        artizenHandle: modalAttrs?.initialState?.artizenHandle,
+        firstName: modalAttrs?.initialState?.firstName,
+        lastName: modalAttrs?.initialState?.lastName,
+        email: modalAttrs?.initialState?.email,
+        twitterHandle: modalAttrs?.initialState?.twitterHandle,
+        externalLink: modalAttrs?.initialState?.externalLink,
+        wallet: modalAttrs?.initialState?.wallet,
+        publicAddress: modalAttrs?.initialState?.publicAddress,
       }
     : {}
 
   const { updateProfile, createProfile, additionalErrors, data, setData, setImageFile } =
     useCreateProfile(newInitialState)
 
-  console.log('newInitialState  ', newInitialState)
+  console.log('modalAttrs  here ', modalAttrs)
 
   const finalUischema =
     modalAttrs?.scope === 'admin'
@@ -108,7 +90,11 @@ const CreateProfile = () => {
   const updateProfileC = async () => {
     setProcessing(true)
     try {
-      await updateProfile()
+      const updatedProfile = await updateProfile(modalAttrs?.initialState?.id)
+      const profileImage = updatedProfile.profileImage || modalAttrs?.initialState?.profileImage
+      console.log('updatedProfile', updatedProfile)
+      modalAttrs?.callback({ ...updatedProfile, profileImage })
+
       setProcessing(false)
       toggleModal()
     } catch (error) {
@@ -150,7 +136,7 @@ const CreateProfile = () => {
           </Copy>
         )}
 
-        <AvatarForm setFile={setImageFile} initialState={profileImage as string} />
+        <AvatarForm setFile={setImageFile} initialState={modalAttrs?.initialState?.profileImage} />
         <Form
           {...{ schema: finalSchema, uischema: finalUischema, data, setData, additionalErrors }}
           readonly={processing}
