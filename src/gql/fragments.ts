@@ -51,18 +51,9 @@ export const MEMBER = gql`
   }
 `
 
-export const IMPACT_TAG = gql`
-  fragment ImpactTag on ImpactTags {
-    id
-    label
-    value
-  }
-`
-
 export const PROJECT = gql`
   ${MEMBER}
   ${ARTIFACT}
-  ${IMPACT_TAG}
   fragment Project on Projects {
     id
     title
@@ -79,11 +70,7 @@ export const PROJECT = gql`
     members {
       ...Member
     }
-    ProjectImpactTags {
-      ImpactTag {
-        ...ImpactTag
-      }
-    }
+    impactTags
   }
 `
 
