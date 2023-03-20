@@ -59,6 +59,23 @@ yarn test
 yarn test:jest
 ```
 
+### Run Playwright end-to-end tests
+
+The following will start a local dev server and run playwright e2e tests against it:
+
+```bash
+yarn test:e2e:local
+```
+
+Note: playwright e2e tests will run automatically when you perform a `git push` command (via a pre-push
+git hook managed by husky). This is a good way to help ensure code quality but there are situations
+when you may want to bypass this check. Please use good judgement when providing the `--no-verify` flag
+to `git push` in these situations, i.e. use the following responsibly when pushing:
+
+```bash
+git push --no-verify
+```
+
 ## Manual tests:
 
 - Before setup, make sure you’re running the latest version of the Metamask extension for Chrome.
