@@ -1,5 +1,3 @@
-import { GlyphKey } from '@theme'
-
 const faq = [
   {
     question: 'How to create a new season?',
@@ -12,6 +10,7 @@ const faq = [
   {
     question: "Why can I not edit a user's profile from the new project form?",
     answer:
+      // eslint-disable-next-line
       "You can only edit users' profiles from users who still need to log in to their profiles. If you need to update a user profile that a user is actively using. You'd need to reach the user and request the changes",
   },
 ]
