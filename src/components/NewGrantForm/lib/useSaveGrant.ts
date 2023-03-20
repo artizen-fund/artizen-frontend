@@ -7,7 +7,6 @@ import {
   IInsert_ProjectMembersMutation,
   IGetUsersQuery,
   ICreateUsersMutation,
-  IUpdateUsersHereMutation,
 } from '@types'
 import { FormState, Project, ProjectMember } from '@forms/createGrants'
 import { mapArtifactsForDB, getGrantDates } from './'
@@ -19,7 +18,7 @@ const useSaveGrant = () => {
 
   // users
   const [insertUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
-  const [updateUser] = useMutation<IUpdateUsersHereMutation>(UPDATE_USERS)
+  const [updateUser] = useMutation(UPDATE_USERS)
   const apolloClient = useApolloClient()
   // note: we cannot use useLazyQuery() for GET_USERS as it does not cooperate with Promise.all()
 
