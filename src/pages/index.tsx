@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
-import { LOAD_GRANTS } from '@gql'
+import { GET_PROJECTS } from '@gql'
+import { IProjectsQuery } from '@types'
 
 import {
   HomeHeader,
@@ -24,26 +25,14 @@ import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, faq } from '@copy/home'
 
-const GrantPage = () => {
-  // const {
-  //   loading,
-  //   data: loadedGrantData,
-  //   error: errorLoadingGrant,
-  // } = useQuery<ILoadGrantsQuery>(LOAD_GRANTS, {
-  //   variables: {
-  //     limit: 1,
-  //     where: {
-  //       _and: [
-  //         {
-  //           status: {
-  //             _eq: 'published',
-  //           },
-  //         },
-  //         ...conditions,
-  //       ],
-  //     },
-  //   },
-  // })
+const IndexPage = () => {
+  const [limit, setLimit] = useState(9)
+
+  const { loading, data, error } = useQuery<IProjectsQuery>(GET_PROJECTS, {
+    variables: {
+      limit,
+    },
+  })
 
   return (
     <Layout>
@@ -54,12 +43,9 @@ const GrantPage = () => {
       <StyledPagePadding>
         <PagePadding>
           <Grid>
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
+            {data?.Projects.map(project => (
+              <ProjectCard {...{ project }} key={project.id} />
+            ))}
           </Grid>
         </PagePadding>
       </StyledPagePadding>
@@ -104,4 +90,4 @@ const Grid = styled.div`
   }
 `
 
-export default GrantPage
+export default IndexPage
