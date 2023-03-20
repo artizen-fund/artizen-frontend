@@ -3364,10 +3364,10 @@
     "@tanstack/query-core" "4.22.0"
     use-sync-external-store "^1.2.0"
 
-"@tenkeylabs/dappwright@^2.2.5":
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/@tenkeylabs/dappwright/-/dappwright-2.2.5.tgz#30b0a89992566f1a797653ca95b7d08ea96c5953"
-  integrity sha512-Go4ZXfkWg/KGaTyxGGUIM6PreNXL1iLZX/ctOK/QHBFiXUinaJNU3R/fuCRShSeY8f3d6kFMLukZJGe9T6uQpg==
+"@tenkeylabs/dappwright@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@tenkeylabs/dappwright/-/dappwright-2.2.6.tgz#b4ad8d677e25f5cc1fd469a129b669b12edf9201"
+  integrity sha512-jGz+GY5f31NSDP6LOXrZZVG5ykoxSDvVU421A9/I4qZMKCZSA2PXmC+Pvznn081aImOe2vehF2iUQSpC81HQ7A==
   dependencies:
     node-stream-zip "^1.13.0"
 
@@ -11745,7 +11745,7 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@^8.0.2:
+husky@^8.0.3:
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.3.tgz#4936d7212e46d1dea28fef29bb3a108872cd9184"
   integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
