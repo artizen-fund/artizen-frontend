@@ -21,6 +21,7 @@ export const schema: JsonSchema = {
     },
     info2: {
       type: 'string',
+      // eslint-disable-next-line
       title: "What's original about your project?",
     },
     info3: {
