@@ -8,8 +8,7 @@ import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } 
 import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
-import { rgba, LayoutContext } from '@lib'
-import { useDateHelpers } from '@lib'
+import { rgba, LayoutContext, useDateHelpers } from '@lib'
 import { capitalCase } from 'capital-case'
 
 const Seasons = () => {
