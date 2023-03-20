@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border: 1px solid ${rgba(palette.stone)};
   @media (prefers-color-scheme: dark) {
     border: 1px solid ${rgba(palette.barracuda)};
@@ -58,6 +58,15 @@ const Input = styled.input`
   ${typography.label.l0}
   @media (prefers-color-scheme: dark) {
     color: white;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type='number'] {
+    -moz-appearance: textfield;
   }
 `
 

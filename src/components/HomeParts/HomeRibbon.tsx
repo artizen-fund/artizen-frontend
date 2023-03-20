@@ -23,14 +23,19 @@ const Wrapper = styled(props => <PagePadding {...props} />)`
 
 const List = styled.ul`
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
   gap: 15px;
-  padding: 80px 0;
+  flex-direction: column;
+  padding: 0px 0;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 80px 0;
+  }
 `
 
 const Item = styled.li`
+  display: block;
   position: relative;
   padding: 0 25px;
   &:before {

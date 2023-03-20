@@ -16,6 +16,7 @@ const Tags = ({ tags }: { tags: Array<string> }) => (
 const Wrapper = styled.ul`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 16px;
   margin: 2em 0;
 `

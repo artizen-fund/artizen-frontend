@@ -18,13 +18,7 @@ const ProjectCard = (props: any) => (
     </Copy>
     <Img />
     <Footer>
-      <Cost>
-        <div>cost</div>
-        <Amount>
-          <span>Ξ 23.61</span>
-        </Amount>
-      </Cost>
-      <DonationBox blockchainId="abc123" />
+      <DonationBox blockchainId="abc123" unitPrice={23.61} />
     </Footer>
   </Wrapper>
 )
@@ -74,19 +68,6 @@ const Footer = styled.footer`
   flex-direction: row;
   justify-content: space-between;
   gap: 15px;
-`
-
-const Cost = styled.div`
-  ${typography.label.l2}
-  color: ${rgba(palette.barracuda)};
-`
-const Amount = styled.div`
-  white-space: nowrap;
-  ${typography.label.l0}
-  color: ${rgba(palette.night)};
-  @media (prefers-color-scheme: dark) {
-    color: white;
-  }
 `
 
 export default ProjectCard

@@ -11,14 +11,16 @@ import {
   useFullSignOut,
   WALLET_ERROR_UNSUPPORTED_OPERATION,
   WALLET_ERROR_INSUFFICIENT_FUNDS,
+  rgba,
 } from '@lib'
-import { breakpoint } from '@theme'
+import { breakpoint, typography, palette } from '@theme'
 
 interface IDonationBox {
   blockchainId: string | undefined
+  unitPrice: number
 }
 
-const DonationBox = ({ blockchainId }: IDonationBox) => {
+const DonationBox = ({ blockchainId, unitPrice }: IDonationBox) => {
   const { status } = useSession()
   const { disconnectAndSignout } = useFullSignOut()
   const { toggleModal } = useContext(LayoutContext)
@@ -89,18 +91,44 @@ const DonationBox = ({ blockchainId }: IDonationBox) => {
       <ScrollPoint id="donation-box" />
       {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
-        <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
-        <Button level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending}>
+        <MobileBreak>
+          <Cost>
+            <div>cost</div>
+            <Amount>
+              <span>Ξ {unitPrice}</span>
+            </Amount>
+          </Cost>
+          <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
+        </MobileBreak>
+        <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending}>
           {sending ? 'Processing Donation' : 'Mint'}
-        </Button>
+        </StyledButton>
       </>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
+  flex: 1;
   position: relative;
-  display: contents;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    align-items: center;
+    flex-direction: row;
+  }
+`
+
+const MobileBreak = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    display: contents;
+  }
 `
 
 const ScrollPoint = styled.div`
@@ -119,6 +147,24 @@ const SessionMask = styled.div`
   width: 100%;
   height: 100%;
   cursor: pointer;
+`
+
+const StyledButton = styled(props => <Button {...props} />)`
+  flex: 1;
+`
+
+const Cost = styled.div`
+  flex: 1;
+  ${typography.label.l2}
+  color: ${rgba(palette.barracuda)};
+`
+const Amount = styled.div`
+  white-space: nowrap;
+  ${typography.label.l0}
+  color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: white;
+  }
 `
 
 export default DonationBox

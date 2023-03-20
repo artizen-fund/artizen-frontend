@@ -12,18 +12,13 @@ const ArtifactCard = (props: any) => (
       <p>Nullam quis risus eget urna mollis ornare vel eu leo.</p>
     </Copy>
     <Footer>
-      <Cost>
-        <div>cost</div>
-        <Amount>
-          <span>Ξ 23.61</span>
-        </Amount>
-      </Cost>
-      <DonationBox blockchainId="abc123" />
+      <DonationBox blockchainId="abc123" unitPrice={23.61} />
     </Footer>
   </Wrapper>
 )
 
 const Wrapper = styled.article`
+  grid-area: card;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -61,20 +56,5 @@ const Footer = styled.footer`
   justify-content: space-between;
   gap: 16px;
 `
-
-const Cost = styled.div`
-  ${typography.label.l2}
-  color: ${rgba(palette.barracuda)};
-`
-const Amount = styled.div`
-  white-space: nowrap;
-  ${typography.label.l0}
-  color: ${rgba(palette.night)};
-  @media (prefers-color-scheme: dark) {
-    color: white;
-  }
-`
-
-const NumberInput = styled.div``
 
 export default ArtifactCard
