@@ -18,12 +18,9 @@ export const schema: JsonSchema = {
     info1: {
       type: 'string',
       title: 'What are you making?',
-      minLength: 100,
-      maxLength: 400,
     },
     info2: {
       type: 'string',
-      // eslint-disable-next-line
       title: "What's original about your project?",
     },
     info3: {

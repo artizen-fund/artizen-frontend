@@ -103,11 +103,13 @@ const useCreateProfile = (initialFormState: FormState) => {
     })
     await addUserToCourier()
 
-    if (!updatedUser.data?.update_Users) {
+    if (!updatedUser.data?.update_Users?.returning) {
       throw new Error('Error updating user in the admin form')
     }
 
-    return { ...valuesTokeep, ...valuesToUpdate, ...profileImage }
+    console.log('from here::::', updatedUser.data?.update_Users)
+
+    return updatedUser.data?.update_Users?.returning[0]
   }
 
   const uploadAvatar = async (imageFile?: File) => {
