@@ -73,8 +73,8 @@ const useCreateProfile = (initialFormState: FormState) => {
       throw new Error('User session not found')
     }
 
-    let valuesToUpdate: FormState = {}
-    let valuesTokeep: FormState = {}
+    const valuesToUpdate: FormState = {}
+    const valuesTokeep: FormState = {}
 
     Object.keys(initialFormState).forEach(key => {
       //values are different
