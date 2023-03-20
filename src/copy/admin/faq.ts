@@ -8,6 +8,7 @@ const faq = [
     answer: `To create a new project, you need to go to the [New Projects Page](/admin/projects/new) page and click on the **Create Project** button.`,
   },
   {
+    // eslint-disable-next-line
     question: "Why can I not edit a user's profile from the new project form?",
     answer:
       // eslint-disable-next-line
