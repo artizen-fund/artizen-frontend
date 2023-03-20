@@ -3,6 +3,7 @@ import { ErrorObject } from 'ajv'
 import { Form, Button, Spinner } from '@components'
 import { schema, uischema, FormState } from '@forms/createProjects'
 import { validateProjectMembers, useSaveProject, getGrantDates } from './lib'
+import { breakpoint } from '@theme'
 
 interface NewProjectFormProps {
   addData: (data: FormState) => void
