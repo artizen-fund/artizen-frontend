@@ -12,7 +12,6 @@ interface IFaq {
 }
 
 const Faq = function ({ copy }: IFaq) {
-  console.log('copy  ', copy)
   return (
     <PagePadding black>
       <List>

@@ -1,34 +1,35 @@
-import { useEffect } from 'react'
 import styled from 'styled-components'
 import { Icon, Button } from '@components'
-import { rgba } from '@lib'
-import { palette } from '@theme'
+import { IUserPublicFragment } from '@types'
 
 interface ICreatorBox {
-  name: string
-  avatar?: string
-  twitterHandle: string
-  url: string
+  member: IUserPublicFragment
 }
 
-const CreatorBox = ({ name, avatar, twitterHandle, url }: ICreatorBox) => (
+const CreatorBox = ({ member }: ICreatorBox) => (
   <Wrapper>
     <div>
       <Icon glyph="face" />
     </div>
     <Copy>
-      <Name>{name}</Name>
+      <Name>
+        {member.firstName} {member.lastName}
+      </Name>
       <Links>
-        <li>
-          <Button glyph="twitter" glyphOnly href={`https://twitter.com/${twitterHandle}`} level={2} outline>
-            Twitter
-          </Button>
-        </li>
-        <li>
-          <Button glyph="globe" glyphOnly href={url} level={2} outline>
-            {url}
-          </Button>
-        </li>
+        {member.twitterHandle && (
+          <li>
+            <Button glyph="twitter" glyphOnly href={`https://twitter.com/${member.twitterHandle}`} level={2} outline>
+              Twitter
+            </Button>
+          </li>
+        )}
+        {member.website && (
+          <li>
+            <Button glyph="globe" glyphOnly href={member.website} level={2} outline>
+              {member.website}
+            </Button>
+          </li>
+        )}
       </Links>
     </Copy>
   </Wrapper>
