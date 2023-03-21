@@ -24,6 +24,7 @@ export const test = base.extend<{
     const { browserContext, wallet } = await launch('', {
       wallet: 'metamask',
       version: MetaMaskWallet.recommendedVersion,
+      headless: true,
     })
 
     // Unlock the wallet
@@ -171,7 +172,7 @@ test.describe('admin user', () => {
     await page.waitForLoadState()
 
     // click sign in button
-    await clickAccountButton(page, 'CloseSign In')
+    await clickSignInButtonWithRetry(page)
 
     await connectAndSignWithMetamask(page, true, true)
 
@@ -179,6 +180,11 @@ test.describe('admin user', () => {
 
     // expect initials 'rr' for admin to be hidden by profile pic
     await expect(page.locator('#accountButton').getByText('rr')).toBeHidden({
+      timeout: 10000,
+    })
+
+    await clickAccountButton(page)
+    await expect(page.getByText('Hi ruben')).toBeVisible({
       timeout: 10000,
     })
   })
