@@ -34,6 +34,8 @@ const IndexPage = () => {
     },
   })
 
+  console.log('data', data)
+
   return (
     <Layout>
       <HomeHeader />
