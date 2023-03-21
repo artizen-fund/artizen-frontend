@@ -64,14 +64,19 @@ export const PROJECT = gql`
     walletAddress
     title
     metadata
+    impactTags
     impact
     artifacts {
       ...Artifact
     }
+    artifacts_aggregate {
+      aggregate {
+        count
+      }
+    }
     members {
       ...Member
     }
-    impactTags
   }
 `
 
@@ -99,6 +104,7 @@ export const SEASON = gql`
     endingDate
     createdAt
     updateAt
+    index
     submissions {
       ...Submission
     }

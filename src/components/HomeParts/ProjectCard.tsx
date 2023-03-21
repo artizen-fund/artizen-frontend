@@ -2,26 +2,35 @@ import styled from 'styled-components'
 import { rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Button, RankAndArtifactCount, DonationBox } from '@components'
+import { IProjectFragment } from '@types'
 
-const ProjectCard = (props: any) => (
-  <Wrapper>
-    <Header>
-      <RankAndArtifactCount rank={1} count={128} />
-      <ArtifactNumber>Artifact #28</ArtifactNumber>
-    </Header>
-    <Copy>
-      <h2>Project Name</h2>
-      <p>
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec id elit
-        non mi porta gravida at eget metus.
-      </p>
-    </Copy>
-    <Img />
-    <Footer>
-      <DonationBox blockchainId="abc123" unitPrice={23.61} />
-    </Footer>
-  </Wrapper>
-)
+interface IProjectCard {
+  project?: IProjectFragment
+  index: number
+}
+
+const BASE_ARTIFACT_PRICE = 0.01
+
+const ProjectCard = ({ project, index }: IProjectCard) => {
+  if (!project) return <></>
+  const latestArtifact = project.artifacts[0]
+  return (
+    <Wrapper>
+      <Header>
+        <RankAndArtifactCount rank={index + 1} count={project.artifacts_aggregate.aggregate?.count || 0} />
+        <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
+      </Header>
+      <Copy>
+        <h2>{project.title}</h2>
+        <p>{project.description}</p>
+      </Copy>
+      <Img src={latestArtifact.artwork} />
+      <Footer>
+        <DonationBox blockchainId="abc123" unitPrice={BASE_ARTIFACT_PRICE} />
+      </Footer>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.article`
   display: flex;
@@ -56,11 +65,25 @@ const Copy = styled.div`
   }
 `
 
-const Img = styled.div`
+const Img = styled.img`
+  object-fit: cover;
   width: 100%;
   height: 50px;
   background: green;
   border-radius: 16px;
+
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    width: 382px;
+    height: 382px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptopXL}px) {
+    width: 510px;
+    height: 510px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    width: 440px;
+    height: 440px;
+  }
 `
 
 const Footer = styled.footer`

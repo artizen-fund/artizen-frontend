@@ -43,7 +43,6 @@ const Form = <TStateInterface extends Record<string, unknown>>({
   children,
   ...props
 }: FormProps<TStateInterface>) => {
-  console.log('additionalErrors  ', additionalErrors)
   const [disabled, setDisabled] = useState(true)
   const [formErrors, setFormErrors] = useState<Array<JsonFormsError>>()
 
