@@ -64,6 +64,7 @@ export const PROJECT = gql`
     walletAddress
     title
     metadata
+    impact
     artifacts {
       ...Artifact
     }
