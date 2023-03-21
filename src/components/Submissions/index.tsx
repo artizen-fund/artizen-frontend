@@ -12,9 +12,10 @@ export default function Submissions({ submissions }: SubmissionsProps): JSX.Elem
   return (
     <StyledSubmissions>
       {submissions?.length === 0 && <NonSubmission>No submissions yet</NonSubmission>}
-      {submissions?.map((submissionData: ISubmissionFragment, index: number) => (
-        <Submission key={index} {...submissionData} />
-      ))}
+      {submissions?.map(
+        (submissionData: ISubmissionFragment, index: number) =>
+          submissionData?.project && <Submission key={index} {...submissionData} />,
+      )}
     </StyledSubmissions>
   )
 }

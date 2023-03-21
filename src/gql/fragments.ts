@@ -37,6 +37,8 @@ export const USER_PUBLIC = gql`
     instagramHandle
     bannerImage
     bio
+    externalLink
+    claimed
   }
 `
 

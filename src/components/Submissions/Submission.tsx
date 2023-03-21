@@ -10,12 +10,10 @@ import dayjs from 'dayjs'
 export default function Submission(submission: ISubmissionFragment): JSX.Element {
   const { push } = useRouter()
 
-  if (!submission.project) return <div>no project</div>
-
   return (
     <StyledSubmission onClick={() => push(`/admin/projects/${submission.project?.id}`)} id="submission-component">
       <Headline>Submitted on: {dayjs(submission.createdAt).format('MMMM DD YYYY, HH:mm')}</Headline>
-      <Project projectData={submission.project} displayType="brief" />
+      {submission.project && <Project projectData={submission.project} displayType="brief" />}
     </StyledSubmission>
   )
 }

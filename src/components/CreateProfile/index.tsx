@@ -5,29 +5,71 @@ import Link from 'next/link'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
 import { rgba, loggedInUserVar, LayoutContext } from '@lib'
-import { schema, uischema, initialState } from '@forms/createProfile'
+import { schema, uischema, adminSchema, adminUIschema, FormState, FormStateAdmin } from '@forms/createProfile'
 import { typography, palette, breakpoint } from '@theme'
 import useCreateProfile from './lib'
 import { createProfile as copy } from '@copy/common'
 
+interface IAttibutes {
+  action?: 'update' | 'create'
+  callback?: () => void
+  scope: 'admin' | 'frontend'
+  initialState?: FormStateAdmin
+}
+
 const CreateProfile = () => {
   const [processing, setProcessing] = useState(false)
-  const { visibleModal, toggleModal } = useContext(LayoutContext)
+  const { visibleModal, toggleModal, modalAttrs } = useContext(LayoutContext)
 
-  const { createProfile, additionalErrors, data, setData, setImageFile } = useCreateProfile()
+  const { action, initialState, scope, callback }: IAttibutes = modalAttrs
+
   const [acceptedToc, setAcceptedToc] = useState(true)
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const submit = async () => {
+  const newInitialState: FormStateAdmin | FormState = initialState
+    ? {
+        artizenHandle: initialState.artizenHandle,
+        firstName: initialState.firstName,
+        lastName: initialState.lastName,
+        email: initialState.email,
+        twitterHandle: initialState.twitterHandle,
+        externalLink: initialState.externalLink,
+        wallet: initialState.wallet,
+        publicAddress: initialState.publicAddress,
+      }
+    : {}
+
+  const { updateProfile, createProfile, additionalErrors, data, setData, setImageFile } =
+    useCreateProfile(newInitialState)
+
+  const updateProfileCallback = async () => {
     setProcessing(true)
     try {
-      await createProfile()
+      const updatedProfile = await updateProfile(modalAttrs?.initialState?.id)
+      const profileImage = updatedProfile?.profileImage || modalAttrs?.initialState?.profileImage
+
+      modalAttrs?.callback({ ...updatedProfile, profileImage })
+
       setProcessing(false)
       toggleModal()
     } catch (error) {
       setProcessing(false)
-      console.error('Error saving new user profile', error)
+      console.error('Error update user profile', error)
+    }
+  }
+
+  const createProfileC = async () => {
+    setProcessing(true)
+    try {
+      const newProfile = await createProfile()
+      modalAttrs?.callback(newProfile)
+
+      setProcessing(false)
+      toggleModal()
+    } catch (error) {
+      setProcessing(false)
+      alert(`Error saving new user profile ${error}`)
     }
   }
 
@@ -35,38 +77,58 @@ const CreateProfile = () => {
     <></> /* TODO: we have a new spinner for this in a separate PR */
   ) : (
     <Wrapper visible={visibleModal === 'createProfile'}>
-      <FormWrapper hasFirstName={!!loggedInUser?.firstName} hasLastName={!!loggedInUser?.lastName} hasUsername={false}>
+      <FormWrapper
+        hasFirstName={!!loggedInUser?.firstName}
+        hasLastName={!!loggedInUser?.lastName}
+        hasUsername={false}
+        scope={modalAttrs?.scope}
+      >
         <CloseButton onClick={() => toggleModal()} />
 
-        <Copy>
-          <Headline>{copy.headline}</Headline>
-          <SubTitle>{copy.subtitle}</SubTitle>
-        </Copy>
+        {modalAttrs?.scope !== 'admin' && (
+          <Copy>
+            <Headline>{copy.headline}</Headline>
+            <SubTitle>{copy.subtitle}</SubTitle>
+          </Copy>
+        )}
 
-        <AvatarForm setFile={setImageFile} />
+        <AvatarForm setFile={setImageFile} initialState={modalAttrs?.initialState?.profileImage} />
         <Form
-          {...{ schema, uischema, initialState, data, setData, additionalErrors }}
+          schema={modalAttrs?.scope === 'admin' ? adminSchema : schema}
+          uischema={modalAttrs?.scope === 'admin' ? adminUIschema : uischema}
+          {...{
+            data,
+            setData,
+            additionalErrors,
+          }}
           readonly={processing}
           submitDisabledFromOutside={!acceptedToc}
         >
-          <SubmitButton onClick={() => submit()} stretch disabled={processing} level={1}>
-            {copy.saveLabel}
+          <SubmitButton
+            onClick={() => (action === 'update' ? updateProfileCallback() : createProfileC())}
+            stretch
+            disabled={processing}
+            level={1}
+          >
+            {processing ? 'Saving' : copy.saveLabel}
           </SubmitButton>
         </Form>
 
-        <CheckWrapper>
-          <Check>
-            <CheckboxControl
-              data={acceptedToc}
-              path="not-used"
-              handleChange={() => setAcceptedToc(!acceptedToc)}
-              label=""
-            />
-            <CheckMessage>
-              <Link href="/toc">{copy.tocMessage}</Link>
-            </CheckMessage>
-          </Check>
-        </CheckWrapper>
+        {scope !== 'admin' && (
+          <CheckWrapper>
+            <Check>
+              <CheckboxControl
+                data={acceptedToc}
+                path="not-used"
+                handleChange={() => setAcceptedToc(!acceptedToc)}
+                label=""
+              />
+              <CheckMessage>
+                <Link href="/toc">{copy.tocMessage}</Link>
+              </CheckMessage>
+            </Check>
+          </CheckWrapper>
+        )}
       </FormWrapper>
     </Wrapper>
   )
@@ -99,7 +161,7 @@ const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
 `
 
-const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean }>`
+const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; scope: string }>`
   position: relative;
   z-index: 9999;
 
@@ -113,8 +175,10 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     'copy copy'
     'avatarForm avatarForm'
     'firstName lastName'
-    'artizenHandle artizenHandle'
+    'artizenHandle twitterHandle'
     'email email'
+    'externalLink externalLink'
+    '${props => props.scope === 'admin' && `publicAddress publicAddress`}'
     'tocCheck tocCheck'
     'submit submit'
     'why why';
@@ -164,6 +228,18 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   }
   *[id='#/properties/email'] {
     grid-area: email;
+  }
+
+  *[id='#/properties/twitterHandle'] {
+    grid-area: twitterHandle;
+  }
+
+  *[id='#/properties/externalLink'] {
+    grid-area: externalLink;
+  }
+
+  *[id='#/properties/wallet'] {
+    grid-area: wallet;
   }
 
   &.submitted {

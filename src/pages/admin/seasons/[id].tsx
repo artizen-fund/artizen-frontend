@@ -30,8 +30,6 @@ export default function SeasonPage(): JSX.Element {
     },
   })
 
-  console.log('loadedSeasonsData  ', loadedSeasonsData)
-
   return (
     <>
       {loading ? (
@@ -54,7 +52,7 @@ export default function SeasonPage(): JSX.Element {
                   <Subtitle
                     className="expand"
                     id={`submission-startingDate-${season.startingDate}`}
-                  >{`This Season run from: ${startingDate} to: ${endingDate}`}</Subtitle>
+                  >{`This Season runs from ${startingDate} to ${endingDate}`}</Subtitle>
                   <Subtitle>Projects submitted to this Season:</Subtitle>
                   {isOpenForSubmissions(season.startingDate, season.endingDate) && (
                     <Button level={2} onClick={() => push('/admin/projects')}>

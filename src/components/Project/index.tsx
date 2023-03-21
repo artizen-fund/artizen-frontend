@@ -22,7 +22,7 @@ export default function Project({ projectData, displayType }: ProjectProps): JSX
         <b>Logline:</b> {logline}
       </Item>
       <Item>
-        <b>By:</b> {leadMember?.firstName} {leadMember?.lastName}
+        <b>By:</b> {capitalCase(`${leadMember?.firstName} ${leadMember?.lastName}`)}
       </Item>
       <Item>
         <b>Impact Tags:</b> {impactTags}
@@ -64,8 +64,7 @@ const Wrapper = styled.div<{ displayType: string }>`
   display: grid;
   width: 100%;
   grid-template-rows: ${props => (props.displayType === 'brief' ? '1fr 1fr 1fr  1fr' : 'repeat(7, auto)')};
-  grid-template-columns: ${props => (props.displayType === 'brief' ? '104px 1fr 1fr' : ' 1fr 1fr')};
-  height: 100%;
+  grid-template-columns: ${props => (props.displayType === 'brief' ? '104px 1fr' : ' 1fr 1fr')};
 `
 
 const Headline = styled.div`
