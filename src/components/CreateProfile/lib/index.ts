@@ -50,7 +50,7 @@ const useCreateProfile = (initialFormState: FormState) => {
   const createProfile = async () => {
     const profileImage = await uploadAvatar(imageFile)
 
-    const createUserR = await createUser({
+    const newUserMutationReturn = await createUser({
       variables: {
         objects: [
           {
@@ -63,11 +63,11 @@ const useCreateProfile = (initialFormState: FormState) => {
     })
     await addUserToCourier()
 
-    if (!createUserR.data?.insert_Users) {
+    if (!newUserMutationReturn.data?.insert_Users) {
       throw new Error('Error creating users in the admin form')
     }
 
-    return createUserR.data?.insert_Users?.returning[0]
+    return newUserMutationReturn.data.insert_Users.returning[0]
   }
 
   const updateProfile = async (userIdToUpdate: string) => {

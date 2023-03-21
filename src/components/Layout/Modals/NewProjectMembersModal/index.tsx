@@ -32,6 +32,42 @@ const NewProjectMembersModal = () => {
 
   const Users = !loading && loadedUsers !== undefined && loadedUsers?.Users.length > 0 ? loadedUsers?.Users : null
 
+  const createNewUserCallBack = () => {
+    toggleModal()
+    setVisibleModalWithAttrs('createProfile', {
+      scope: 'admin',
+      action: 'create',
+      callback: (data: any) => {
+        callback(data)
+        toggleModal()
+      },
+    })
+  }
+
+  const editUser = () => {
+    toggleModal()
+    setVisibleModalWithAttrs('createProfile', {
+      scope: 'admin',
+      action: 'update',
+      initialState: userSelected,
+      callback: (data: any) => {
+        callback(data)
+        toggleModal()
+      },
+    })
+  }
+
+  const searchUser = (value: string) => {
+    setSearchDataData(e.target.value)
+    loadUsers({
+      variables: {
+        where: {
+          _or: [{ email: { _eq: e.target.value } }, { publicAddress: { _eq: e.target.value.toLocaleLowerCase() } }],
+        },
+      },
+    })
+  }
+
   return (
     <Wrapper>
       <Headline>Project Lead</Headline>
@@ -42,19 +78,7 @@ const NewProjectMembersModal = () => {
           placeholder={'Search users by email or public address'}
           value={searchData}
           onBlur={e => e.target.value === '' && !loading && setShowNonUsers(false)}
-          onChange={e => {
-            setSearchDataData(e.target.value)
-            loadUsers({
-              variables: {
-                where: {
-                  _or: [
-                    { email: { _eq: e.target.value } },
-                    { publicAddress: { _eq: e.target.value.toLocaleLowerCase() } },
-                  ],
-                },
-              },
-            })
-          }}
+          onChange={e => searchUser(e.target.value)}
         />
       </InputSearchWrapper>
       {showNonUsers && <NonUser>...user does not exists</NonUser>}
@@ -84,43 +108,14 @@ const NewProjectMembersModal = () => {
 
       <Menu>
         {!userSelected && (
-          <Button
-            level={2}
-            outline
-            onClick={() => {
-              toggleModal()
-              setVisibleModalWithAttrs('createProfile', {
-                scope: 'admin',
-                action: 'create',
-                callback: (data: any) => {
-                  callback(data)
-                  toggleModal()
-                },
-              })
-            }}
-          >
+          <Button level={2} outline onClick={() => createNewUserCallBack()}>
             Create New User
           </Button>
         )}
         {userSelected && (
           <>
             {!userSelected.claimed && (
-              <Button
-                level={2}
-                outline
-                onClick={() => {
-                  toggleModal()
-                  setVisibleModalWithAttrs('createProfile', {
-                    scope: 'admin',
-                    action: 'update',
-                    initialState: userSelected,
-                    callback: (data: any) => {
-                      callback(data)
-                      toggleModal()
-                    },
-                  })
-                }}
-              >
+              <Button level={2} outline onClick={() => editUser()}>
                 Edit Users Data
               </Button>
             )}
