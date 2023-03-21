@@ -8,13 +8,14 @@ import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } 
 import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
-import { rgba, LayoutContext } from '@lib'
+import { rgba, LayoutContext, useDateHelpers } from '@lib'
 import { capitalCase } from 'capital-case'
 
 const Seasons = () => {
   const router = useRouter()
   const { status } = useSession()
   const { toggleModal } = useContext(LayoutContext)
+  const { formatDate, getSeasonStatus } = useDateHelpers()
 
   const {
     loading,
@@ -25,15 +26,11 @@ const Seasons = () => {
     variables: {
       order_by: [
         {
-          startingDate: 'asc_nulls_last',
+          endingDate: 'desc',
         },
       ],
     },
   })
-
-  console.log('error', error)
-
-  console.log('loadedSeasonsData', loadedSeasonsData)
 
   const openSeason = (target: string) => () => {
     router.push(`/admin/seasons/${target}`)
@@ -60,18 +57,16 @@ const Seasons = () => {
         <StyledPagePadding>
           <Table title="Season List" {...{ sideItem }}>
             {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
-              const startingDate = moment(season.startingDate).format('MM-DD-YYYY HH:mm:ss')
-              const endingDate = moment(season.endingDate).format('MM-DD-YYYY HH:mm:ss')
+              const startingDate = formatDate(season.startingDate)
+              const endingDate = formatDate(season.endingDate)
+              const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
+
               return (
                 <StyledTableCell onClick={openSeason(season.id)} key={season.id} highlight>
                   <Title>{season.title && capitalCase(season.title)}</Title>
+                  <Status>{seasonStatus}</Status>
                   <DateLine>
-                    <div>
-                      Starts: <span>{startingDate}</span>
-                    </div>
-                    <div>
-                      Ends: <span>{endingDate}</span>
-                    </div>
+                    Runs from {startingDate} to {endingDate}
                   </DateLine>
                 </StyledTableCell>
               )
@@ -85,6 +80,9 @@ const Seasons = () => {
 
 const StyledTableCell = styled(props => <TableCell {...props} />)`
   cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr 96px;
+  height: 64px;
   &:hover {
     background-color: ${rgba(palette.stone)};
   }
@@ -96,8 +94,8 @@ const StyledTableCell = styled(props => <TableCell {...props} />)`
 `
 
 const Title = styled.div`
+  grid-row: 1/2;
   ${typography.label.l1}
-  flex: 1;
 `
 
 const DateLine = styled.div`
@@ -106,6 +104,14 @@ const DateLine = styled.div`
   align-items: flex-start !important;
   gap: 0 !important;
   ${typography.label.l3}
+`
+
+const Status = styled.div`
+  ${typography.label.l2}
+  color: ${palette.stone};
+  text-transform: uppercase;
+  self-align: flex-end;
+  grid-row: 1/3;
 `
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`

@@ -44,9 +44,12 @@ export const StringControl = ({
    *   like toLowerCase()
    * So, this is the compromise. Not crazy about it. :\ -EJ
    */
+
   const [localData, setLocalData] = useState<string>(data || '')
+
   useEffect(() => {
-    if (!localData) return
+    // TODO: Commented this out so the input field can be set as empty
+    // if (!localData) return
     handleChange(path, localData)
   }, [localData])
 

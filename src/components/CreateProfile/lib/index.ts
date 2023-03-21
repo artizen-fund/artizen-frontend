@@ -2,25 +2,29 @@ import { useState } from 'react'
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
-import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation } from '@types'
+import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation, ICreateUsersMutation } from '@types'
 import { loggedInUserVar, useCloudinary } from '@lib'
-import { UPDATE_USER, CHECK_FOR_EXISTING_ARTIZENHANDLE } from '@gql'
-import { initialState, FormState } from '@forms/createProfile'
+import { UPDATE_USERS, CHECK_FOR_EXISTING_ARTIZENHANDLE, CREATE_USERS } from '@gql'
+import { FormState } from '@forms/createProfile'
 
-const useCreateProfile = () => {
+const useCreateProfile = (initialFormState: FormState) => {
   const { upload } = useCloudinary()
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const [data, setData] = useState<FormState>(initialState)
+  const [data, setData] = useState<FormState>(initialFormState)
   const [imageFile, setImageFile] = useState<File>()
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USER)
+  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS, {
+    onError: error => console.error('UPDATE_USERS error ', error),
+  })
+  const [createUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
 
   /* this checks for existing handles while the user types */
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
+    skip: !!initialFormState,
     variables: {
       where: {
         _and: [{ artizenHandle: { _eq: newArtizenHandle?.toLowerCase() } }, { id: { _neq: loggedInUser?.id } }],
@@ -44,19 +48,75 @@ const useCreateProfile = () => {
   })
 
   const createProfile = async () => {
-    if (!loggedInUser) {
-      throw new Error('User session not found')
-    }
     const profileImage = await uploadAvatar(imageFile)
-    await updateUser({
+
+    const newUserMutationReturn = await createUser({
       variables: {
-        ...loggedInUser,
-        ...data,
-        artizenHandle: data.artizenHandle?.toLowerCase() || loggedInUser.artizenHandle,
-        profileImage,
+        objects: [
+          {
+            ...data,
+            artizenHandle: data.artizenHandle?.toLowerCase(),
+            profileImage,
+          },
+        ],
       },
     })
     await addUserToCourier()
+
+    if (!newUserMutationReturn.data?.insert_Users) {
+      throw new Error('Error creating users in the admin form')
+    }
+
+    return newUserMutationReturn.data.insert_Users.returning[0]
+  }
+
+  const updateProfile = async (userIdToUpdate: string) => {
+    if (!loggedInUser) {
+      throw new Error('User session not found')
+    }
+
+    const valuesToUpdate: FormState = {}
+    const valuesTokeep: FormState = {}
+
+    console.log('data ::: ', data)
+
+    Object.keys(initialFormState).forEach(key => {
+      console.log('initialFormState[key]  ', initialFormState[key])
+      console.log('data[key]  ', data[key])
+      //values are different
+      if (initialFormState[key] !== data[key]) {
+        return (valuesToUpdate[key] = key === 'artizenHandle' ? data[key]?.toLowerCase() : data[key])
+      } else {
+        return (valuesTokeep[key] = data[key])
+      }
+    })
+
+    console.log('valuesToUpdate   ', valuesToUpdate)
+
+    const profileImage = await uploadAvatar(imageFile)
+
+    console.log('to replace  ', { ...valuesToUpdate, claimed: false, profileImage })
+
+    const updatedUser = await updateUser({
+      variables: {
+        where: {
+          id: {
+            _eq: userIdToUpdate,
+          },
+        },
+        _set: { ...valuesToUpdate, claimed: false, profileImage },
+      },
+      onError: error => console.log('error form ::::', error),
+    })
+    await addUserToCourier()
+
+    console.log('updatedUser.data?.update_Users?.returning  ', updatedUser)
+
+    if (updatedUser.data?.update_Users?.returning.length === 0) {
+      throw new Error('Error updating user in the admin form')
+    }
+
+    return updatedUser.data?.update_Users?.returning[0]
   }
 
   const uploadAvatar = async (imageFile?: File) => {
@@ -81,7 +141,7 @@ const useCreateProfile = () => {
     })
   }
 
-  return { createProfile, additionalErrors, data, setData, setImageFile }
+  return { updateProfile, createProfile, additionalErrors, data, setData, setImageFile }
 }
 
 export default useCreateProfile

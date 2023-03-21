@@ -9,12 +9,13 @@ import { schema, uischema, initialState, FormState } from '@forms/createSeason'
 import { LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import utc from 'dayjs/plugin/utc'
 
 export default function NewSeasonForm(): JSX.Element {
   dayjs.extend(timezone)
   dayjs.extend(utc)
-  dayjs.extend(timezone)
+  dayjs.extend(isSameOrBefore)
 
   const { push } = useRouter()
   const { toggleModal } = useContext(LayoutContext)
@@ -50,81 +51,113 @@ export default function NewSeasonForm(): JSX.Element {
   //   loadData()
   // }, [])
 
-  console.log('ARTIZEN_TIMEZONE  ', ARTIZEN_TIMEZONE)
-
   // const startingDate = loadedSeasonsData?.Seasons[0]?.endingDate + 1
   const [data, setData] = useState<FormState>(initialState)
 
   const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const saveNewSeason = async () => {
-    setProcessing(true)
+  const checkIfEndingDateIsAfterStartingDate = (from: string, to: string) => {
+    const fromTime = dayjs.tz(from, ARTIZEN_TIMEZONE)
+    const toTime = dayjs.tz(to, ARTIZEN_TIMEZONE)
 
-    const newStartingDate = `${data.startingDate}T09:01:00`
-    const newEndingDate = `${data.endingDate}T09:00:00`
+    if (fromTime.isSameOrBefore(toTime)) {
+      setAdditionalErrors([])
+    } else {
+      setAdditionalErrors([
+        {
+          instancePath: '/endingDate',
+          message: 'Ending date must be after starting date',
+          schemaPath: '#/properties/endingDate',
+          keyword: '',
+          params: {},
+        },
+      ])
+    }
+  }
 
-    //check if there is a season already in the database
+  const checkIfThereIsSeasonDate = async (from: string, to: string) => {
+    console.log('checkIfThereIsSeasonDate  ', from, to)
     const { data: seasonInDB, error } = await loadSeason({
       variables: {
         where: {
-          endingDate: {
-            _gt: newStartingDate,
-          },
+          _or: [
+            { _and: [{ startingDate: { _gte: from } }, { startingDate: { _lt: to } }] },
+            { _and: [{ endingDate: { _gt: from } }, { endingDate: { _lte: to } }] },
+          ],
         },
       },
     })
 
-    console.log('error ', error)
-
-    console.log('seasonInDB', seasonInDB)
-
-    if (seasonInDB && seasonInDB.Seasons.length > 0) {
-      console.log('gets to alert')
-      alert('This season date conflicts with another season')
-      setProcessing(false)
-      return
+    if (error) {
+      throw new Error('Error loading season in checkIfThereIsSeasonDate')
     }
 
-    try {
-      const dateFronMutation = await insertSeason({
-        variables: { objects: [data] },
-      })
+    console.log('seasonInDB  ', seasonInDB.Seasons.length > 0)
 
-      const newSeasonData = dateFronMutation.data.insert_Seasons.returning[0]
-
-      if (!newSeasonData && newSeasonData.length === 0) {
-        throw new Error('Error saving new season')
-      }
-
-      toggleModal('createSeasonModal')
-
-      push(`/admin/seasons/${newSeasonData.id}`)
-    } catch (error) {
-      console.error('error saving new season', error)
-      setProcessing(false)
-      alert(error)
+    if (seasonInDB.Seasons.length > 0) {
+      setAdditionalErrors([
+        {
+          instancePath: '/startingDate',
+          message: 'There is a season running at this time',
+          schemaPath: '#/properties/startingDate',
+          keyword: '',
+          params: {},
+        },
+      ])
+    } else {
+      console.log('gets here')
+      setAdditionalErrors([])
     }
   }
+
+  const saveNewSeason = async () => {
+    setProcessing(true)
+
+    const dateFronMutation = await insertSeason({
+      variables: {
+        objects: [
+          {
+            title: data.title,
+            startingDate: `${data.startingDate}T09:01:00`,
+            endingDate: `${data.endingDate}T09:00:00`,
+          },
+        ],
+      },
+    })
+
+    const newSeasonData = dateFronMutation.data.insert_Seasons.returning[0]
+
+    if (!newSeasonData && newSeasonData.length === 0) {
+      throw new Error('Error saving new season')
+    }
+
+    toggleModal('createSeasonModal')
+
+    push(`/admin/seasons/${newSeasonData.id}`)
+  }
   return (
-    <>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Form
-          schema={schema}
-          uischema={uischema}
-          data={data}
-          setData={setData}
-          additionalErrors={additionalErrors}
-          readonly={processing}
-        >
-          <StyledButton onClick={saveNewSeason} stretch level={2}>
-            {processing ? 'Saving...' : 'Save'}
-          </StyledButton>
-        </Form>
-      )}
-    </>
+    <Form
+      schema={schema}
+      uischema={uischema}
+      data={data}
+      setData={async temData => {
+        console.log('temData', temData)
+        if (temData.startingDate && temData.endingDate) {
+          console.log('it gets to check')
+          await checkIfThereIsSeasonDate(temData.startingDate, temData.endingDate)
+          checkIfEndingDateIsAfterStartingDate(temData.startingDate, temData.endingDate)
+        }
+
+        setData(temData)
+      }}
+      additionalErrors={additionalErrors}
+      readonly={processing}
+    >
+      <StyledButton onClick={saveNewSeason} stretch level={2}>
+        {processing ? 'Saving...' : 'Save'}
+      </StyledButton>
+    </Form>
   )
 }
 

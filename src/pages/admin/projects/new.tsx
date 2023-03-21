@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { IUsers, Maybe } from '@types'
 import styled from 'styled-components'
@@ -9,11 +9,11 @@ import { useRouter } from 'next/router'
 import { INSERT_PROJECTS } from '@gql'
 import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
-import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding, Button } from '@components'
+import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding } from '@components'
 import { initialState, schema, FormState } from '@forms/createProjects'
 
 const testWallet = (walletAddress: string) => {
-  console.log('walletAddress', validateLib.validate(walletAddress, 'ETH'))
+  // console.log('walletAddress', validateLib.validate(walletAddress, 'ETH'))
 
   const isValid = validateLib.validate(walletAddress, 'ETH')
 
@@ -101,8 +101,6 @@ const ProjectDetails = () => {
     if (returning.length > 0) {
       push(`/admin/projects/${returning[0].id}`)
     }
-
-    console.log('insertProjectR   ', insertProjectR)
   }
 
   return (
@@ -121,7 +119,6 @@ const ProjectDetails = () => {
                   onClick={() => {
                     setVisibleModalWithAttrs('newProjectMemberModal', {
                       callback: (data: any) => {
-                        console.log('data in here:::::::', data)
                         setTempLeadMember(data)
                         toggleModal()
                       },
@@ -139,7 +136,6 @@ const ProjectDetails = () => {
                       setTempLeadMember(undefined)
                       setVisibleModalWithAttrs('newProjectMemberModal', {
                         callback: (data: any) => {
-                          console.log('data in here:::::::', data)
                           setTempLeadMember(data)
                           toggleModal()
                         },
@@ -166,8 +162,6 @@ const ProjectDetails = () => {
               addData={data => {
                 if (data.walletAddress && data.walletAddress?.length > 4) {
                   const error = testWallet(data.walletAddress)
-
-                  console.log('error   ', error)
 
                   setAdditionalErrors(error ? [error] : [])
 

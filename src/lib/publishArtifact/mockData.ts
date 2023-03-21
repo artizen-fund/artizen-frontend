@@ -42,6 +42,7 @@ const mockProject: IProjectFragment = {
         website: 'https://derp.com',
         profileImage: null,
         publicAddress: 'null',
+        claimed: false,
       },
     },
   ],

@@ -52,8 +52,6 @@ export default function ProjectDetails(): JSX.Element {
     },
   })
 
-  console.log('loadedSeasons  ', loadedSeasons)
-
   if (!loading && errorLoadingProject) {
     throw new Error('error loading project details', errorLoadingProject)
   }

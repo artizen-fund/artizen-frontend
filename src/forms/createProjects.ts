@@ -18,27 +18,18 @@ export const schema: JsonSchema = {
     info1: {
       type: 'string',
       title: 'What are you making?',
-      minLength: 100,
-      maxLength: 400,
     },
     info2: {
       type: 'string',
-      // eslint-disable-next-line
-      title: "What's original about your project?",
-      minLength: 100,
-      maxLength: 400,
+      title: 'How will your project impact the world?',
     },
     info3: {
       type: 'string',
-      title: 'How will your project impact the world?',
-      minLength: 100,
-      maxLength: 400,
+      title: 'What progress have you made?',
     },
     info4: {
       type: 'string',
-      title: 'Why are you the right person to make this project?',
-      minLength: 100,
-      maxLength: 400,
+      title: 'Why are you the right person?',
     },
     impactTags: {
       type: 'string',
@@ -56,7 +47,7 @@ export const schema: JsonSchema = {
       format: 'url',
     },
   },
-  required: ['title', 'logline', 'impactTags', 'walletAddress', 'info1', 'info2', 'info3', 'info4', 'artworkArtifact'],
+  required: ['title', 'logline', 'impactTags', 'walletAddress', 'artworkArtifact'],
 }
 
 export interface FormState extends Record<string, unknown> {
