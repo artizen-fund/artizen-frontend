@@ -5,14 +5,10 @@ import Link from 'next/link'
 import { Form, AvatarForm, CheckboxControl, CloseButton, Button } from '@components'
 import { CheckWrapper, Check, CheckMessage, Confirmation, Copy, Headline } from '../Layout/Header/SessionShelf/_common'
 import { rgba, loggedInUserVar, LayoutContext } from '@lib'
-import { schema, uischema, FormState } from '@forms/createProfile'
+import { schema, uischema, adminSchema, adminUIschema, FormState, FormStateAdmin } from '@forms/createProfile'
 import { typography, palette, breakpoint } from '@theme'
 import useCreateProfile from './lib'
 import { createProfile as copy } from '@copy/common'
-
-interface FormStateAdmin extends FormState {
-  publicAddress: string
-}
 
 interface IAttibutes {
   action?: 'update' | 'create'
@@ -31,60 +27,27 @@ const CreateProfile = () => {
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  const newInitialState: FormStateAdmin | FormState = modalAttrs?.initialState
+  const newInitialState: FormStateAdmin | FormState = initialState
     ? {
-        artizenHandle: modalAttrs?.initialState?.artizenHandle,
-        firstName: modalAttrs?.initialState?.firstName,
-        lastName: modalAttrs?.initialState?.lastName,
-        email: modalAttrs?.initialState?.email,
-        twitterHandle: modalAttrs?.initialState?.twitterHandle,
-        externalLink: modalAttrs?.initialState?.externalLink,
-        wallet: modalAttrs?.initialState?.wallet,
-        publicAddress: modalAttrs?.initialState?.publicAddress,
+        artizenHandle: initialState.artizenHandle,
+        firstName: initialState.firstName,
+        lastName: initialState.lastName,
+        email: initialState.email,
+        twitterHandle: initialState.twitterHandle,
+        externalLink: initialState.externalLink,
+        wallet: initialState.wallet,
+        publicAddress: initialState.publicAddress,
       }
     : {}
 
   const { updateProfile, createProfile, additionalErrors, data, setData, setImageFile } =
     useCreateProfile(newInitialState)
 
-  const finalUischema =
-    modalAttrs?.scope === 'admin'
-      ? {
-          ...uischema,
-          ...{
-            elements: [
-              ...uischema.elements,
-              {
-                type: 'Control',
-                scope: '#/properties/publicAddress',
-                label: 'Enter an public address',
-              },
-            ],
-          },
-        }
-      : uischema
-
-  const finalSchema =
-    modalAttrs?.scope === 'admin'
-      ? {
-          ...schema,
-          ...{
-            properties: {
-              ...schema.properties,
-              publicAddress: {
-                type: 'string',
-                minLength: 2,
-              },
-            },
-          },
-        }
-      : schema
-
   const updateProfileC = async () => {
     setProcessing(true)
     try {
       const updatedProfile = await updateProfile(modalAttrs?.initialState?.id)
-      const profileImage = updatedProfile.profileImage || modalAttrs?.initialState?.profileImage
+      const profileImage = updatedProfile?.profileImage || modalAttrs?.initialState?.profileImage
 
       modalAttrs?.callback({ ...updatedProfile, profileImage })
 
@@ -106,7 +69,7 @@ const CreateProfile = () => {
       toggleModal()
     } catch (error) {
       setProcessing(false)
-      console.error('Error saving new user profile', error)
+      alert(`Error saving new user profile ${error}`)
     }
   }
 
@@ -131,7 +94,13 @@ const CreateProfile = () => {
 
         <AvatarForm setFile={setImageFile} initialState={modalAttrs?.initialState?.profileImage} />
         <Form
-          {...{ schema: finalSchema, uischema: finalUischema, data, setData, additionalErrors }}
+          schema={modalAttrs?.scope === 'admin' ? adminSchema : schema}
+          uischema={modalAttrs?.scope === 'admin' ? adminUIschema : uischema}
+          {...{
+            data,
+            setData,
+            additionalErrors,
+          }}
           readonly={processing}
           submitDisabledFromOutside={!acceptedToc}
         >
@@ -141,7 +110,7 @@ const CreateProfile = () => {
             disabled={processing}
             level={1}
           >
-            {copy.saveLabel}
+            {processing ? 'Saving' : copy.saveLabel}
           </SubmitButton>
         </Form>
 

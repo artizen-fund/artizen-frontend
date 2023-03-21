@@ -21,11 +21,9 @@ export const schema: JsonSchema = {
     },
     twitterHandle: {
       type: 'string',
-      minLength: 2,
     },
     externalLink: {
       type: 'string',
-      minLength: 2,
     },
   },
   required: ['artizenHandle', 'firstName', 'lastName', 'email'],
@@ -39,6 +37,10 @@ export interface FormState extends Record<string, unknown> {
   twitterHandle?: string
   externalLink?: string
   wallet?: string
+}
+
+export interface FormStateAdmin extends FormState {
+  publicAddress: string
 }
 
 /*
@@ -81,4 +83,31 @@ export const uischema = {
       label: 'Enter an external link',
     },
   ],
+}
+
+export const adminUIschema = {
+  ...uischema,
+  ...{
+    elements: [
+      ...uischema.elements,
+      {
+        type: 'Control',
+        scope: '#/properties/publicAddress',
+        label: 'Enter an wallet address',
+      },
+    ],
+  },
+}
+
+export const adminSchema = {
+  ...schema,
+  ...{
+    properties: {
+      ...schema.properties,
+      publicAddress: {
+        type: 'string',
+        minLength: 2,
+      },
+    },
+  },
 }

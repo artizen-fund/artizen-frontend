@@ -65,7 +65,9 @@ const Seasons = () => {
                 <StyledTableCell onClick={openSeason(season.id)} key={season.id} highlight>
                   <Title>{season.title && capitalCase(season.title)}</Title>
                   <Status>{seasonStatus}</Status>
-                  <DateLine>{startingDate}</DateLine>
+                  <DateLine>
+                    Runs from {startingDate} to {endingDate}
+                  </DateLine>
                 </StyledTableCell>
               )
             })}
@@ -108,6 +110,7 @@ const Status = styled.div`
   ${typography.label.l2}
   color: ${palette.stone};
   text-transform: uppercase;
+  self-align: flex-end;
   grid-row: 1/3;
 `
 

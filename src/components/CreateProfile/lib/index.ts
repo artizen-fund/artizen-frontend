@@ -16,7 +16,9 @@ const useCreateProfile = (initialFormState: FormState) => {
   const [imageFile, setImageFile] = useState<File>()
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS)
+  const [updateUser] = useMutation<IUpdateUsersMutation>(UPDATE_USERS, {
+    onError: error => console.error('UPDATE_USERS error ', error),
+  })
   const [createUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
 
   /* this checks for existing handles while the user types */
@@ -76,16 +78,25 @@ const useCreateProfile = (initialFormState: FormState) => {
     const valuesToUpdate: FormState = {}
     const valuesTokeep: FormState = {}
 
+    console.log('data ::: ', data)
+
     Object.keys(initialFormState).forEach(key => {
+      console.log('initialFormState[key]  ', initialFormState[key])
+      console.log('data[key]  ', data[key])
       //values are different
       if (initialFormState[key] !== data[key]) {
-        valuesToUpdate[key] = key === 'artizenHandle' ? data[key]?.toLowerCase() : data[key]
+        return (valuesToUpdate[key] = key === 'artizenHandle' ? data[key]?.toLowerCase() : data[key])
       } else {
-        valuesTokeep[key] = data[key]
+        return (valuesTokeep[key] = data[key])
       }
     })
 
+    console.log('valuesToUpdate   ', valuesToUpdate)
+
     const profileImage = await uploadAvatar(imageFile)
+
+    console.log('to replace  ', { ...valuesToUpdate, claimed: false, profileImage })
+
     const updatedUser = await updateUser({
       variables: {
         where: {
@@ -93,13 +104,15 @@ const useCreateProfile = (initialFormState: FormState) => {
             _eq: userIdToUpdate,
           },
         },
-        _set: { ...valuesToUpdate, profileImage },
-        claimed: false,
+        _set: { ...valuesToUpdate, claimed: false, profileImage },
       },
+      onError: error => console.log('error form ::::', error),
     })
     await addUserToCourier()
 
-    if (!updatedUser.data?.update_Users?.returning) {
+    console.log('updatedUser.data?.update_Users?.returning  ', updatedUser)
+
+    if (updatedUser.data?.update_Users?.returning.length === 0) {
       throw new Error('Error updating user in the admin form')
     }
 

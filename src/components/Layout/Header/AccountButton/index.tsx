@@ -15,11 +15,8 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   const { data: session, status } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  console.log('AccountButton session  ', session)
-  console.log('AccountButton isConnected  ', isConnected)
-
   if (!isConnected && !!session) {
-    console.log('gets here')
+    console.warn('user session is not connected to the wallet')
     signOut()
   }
 

@@ -21,16 +21,15 @@ export const schema: JsonSchema = {
     },
     info2: {
       type: 'string',
-      // eslint-disable-next-line
-      title: "What's original about your project?",
+      title: 'How will your project impact the world?',
     },
     info3: {
       type: 'string',
-      title: 'How will your project impact the world?',
+      title: 'What progress have you made?',
     },
     info4: {
       type: 'string',
-      title: 'Why are you the right person to make this project?',
+      title: 'Why are you the right person?',
     },
     impactTags: {
       type: 'string',

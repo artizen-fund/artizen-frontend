@@ -45,11 +45,11 @@ export const StringControl = ({
    * So, this is the compromise. Not crazy about it. :\ -EJ
    */
 
-  console.log('local data', data)
-
   const [localData, setLocalData] = useState<string>(data || '')
+
   useEffect(() => {
-    if (!localData) return
+    // TODO: Commented this out so the input field can be set as empty
+    // if (!localData) return
     handleChange(path, localData)
   }, [localData])
 
