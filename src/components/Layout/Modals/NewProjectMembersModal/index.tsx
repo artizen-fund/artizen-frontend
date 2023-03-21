@@ -58,11 +58,11 @@ const NewProjectMembersModal = () => {
   }
 
   const searchUser = (value: string) => {
-    setSearchDataData(e.target.value)
+    setSearchDataData(value)
     loadUsers({
       variables: {
         where: {
-          _or: [{ email: { _eq: e.target.value } }, { publicAddress: { _eq: e.target.value.toLocaleLowerCase() } }],
+          _or: [{ email: { _eq: value } }, { publicAddress: { _eq: value.toLocaleLowerCase() } }],
         },
       },
     })
