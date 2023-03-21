@@ -43,7 +43,7 @@ const CreateProfile = () => {
   const { updateProfile, createProfile, additionalErrors, data, setData, setImageFile } =
     useCreateProfile(newInitialState)
 
-  const updateProfileC = async () => {
+  const updateProfileCallback = async () => {
     setProcessing(true)
     try {
       const updatedProfile = await updateProfile(modalAttrs?.initialState?.id)
@@ -105,7 +105,7 @@ const CreateProfile = () => {
           submitDisabledFromOutside={!acceptedToc}
         >
           <SubmitButton
-            onClick={() => (action === 'update' ? updateProfileC() : createProfileC())}
+            onClick={() => (action === 'update' ? updateProfileCallback() : createProfileC())}
             stretch
             disabled={processing}
             level={1}
