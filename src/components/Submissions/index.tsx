@@ -33,8 +33,7 @@ const NonSubmission = styled.div`
   ${typography.body.l3}
 
   @media (prefers-color-scheme: dark) {
-    color: ${rgba(palette.moon)};
-    background-color: ${rgba(palette.barracuda)};
+    background: ${rgba(palette.moon, 0.1)};
   }
 `
 

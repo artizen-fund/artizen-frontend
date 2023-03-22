@@ -9,8 +9,9 @@ import { useRouter } from 'next/router'
 import { INSERT_PROJECTS } from '@gql'
 import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
-import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding, Button } from '@components'
+import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding } from '@components'
 import { initialState, schema, FormState } from '@forms/createProjects'
+import slugify from 'slugify'
 
 const testWallet = (walletAddress: string) => {
   // console.log('walletAddress', validateLib.validate(walletAddress, 'ETH'))
@@ -44,6 +45,7 @@ const ProjectDetails = () => {
     const newProjectVars = {
       objects: [
         {
+          titleURL: project.title && slugify(project.title, { lower: true }),
           artifacts: {
             data: [
               {
