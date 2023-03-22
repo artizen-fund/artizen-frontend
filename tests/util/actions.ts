@@ -78,8 +78,8 @@ export async function connectAndSignWithMetamask(page: Page, clickMetamaskButton
   }
 
   if (toggleAccounts) {
-    await popup.getByRole('checkbox').nth(0).click()
-    await popup.getByRole('checkbox').nth(1).click()
+    await popup.getByRole('checkbox').nth(1).uncheck()
+    await popup.getByRole('checkbox').nth(2).check()
   }
 
   // Go through the prompts
