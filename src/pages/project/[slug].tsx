@@ -25,10 +25,11 @@ const ProjectPage = () => {
   } = useRouter()
 
   const { loading, data, error } = useQuery<IProjectsQuery>(GET_PROJECTS, {
+    skip: !slug,
     variables: {
       limit: 1,
       where: {
-        id: {
+        titleURL: {
           _eq: slug,
         },
       },
@@ -37,9 +38,9 @@ const ProjectPage = () => {
 
   const project = data?.Projects[0]
 
-  if (!!loading || !project) return <p>…loading…</p>
+  if (!!loading) return <p>…loading…</p>
 
-  const lead = project.members?.find(m => m.type === 'lead')?.user
+  const lead = project && project.members?.find(m => m.type === 'lead')?.user
 
   return (
     <Layout>
@@ -53,8 +54,8 @@ const ProjectPage = () => {
                   Share
                 </Button>
               </Topline>
-              <h1>{project.title}</h1>
-              <p>{project.logline}</p>
+              <h1>{project?.title}</h1>
+              <p>{project?.logline}</p>
               {/* <Tags tags={sampleTags} /> */}
 
               {lead && <CreatorBox member={lead} />}
@@ -63,7 +64,7 @@ const ProjectPage = () => {
             {/*<Leaderboard />*/}
 
             <LongDescription>
-              {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
+              {(project?.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
                 <div key={`metadatum-${index}`}>
                   <h2>{metadatum.title}</h2>
                   <p>{metadatum.value}</p>

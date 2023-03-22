@@ -25,6 +25,7 @@ export default function ProjectDetails(): JSX.Element {
     data: loadedProjectData,
     error: errorLoadingProject,
   } = useQuery<IProjectsQuery>(GET_PROJECTS, {
+    skip: !id,
     fetchPolicy: 'no-cache',
     variables: {
       where: {

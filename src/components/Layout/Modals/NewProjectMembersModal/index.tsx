@@ -136,8 +136,10 @@ const NewProjectMembersModal = () => {
 }
 
 const NonUser = styled.span`
-  color: ${rgba(palette.black)};
   ${typography.body.l3}
+  @media (prefers-color-scheme: light) {
+    color: ${rgba(palette.black)};
+  }
   text-transform: italic;
 `
 
