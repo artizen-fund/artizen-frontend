@@ -33,10 +33,9 @@ const CreateProfile = () => {
         firstName: initialState.firstName,
         lastName: initialState.lastName,
         email: initialState.email,
-        twitterHandle: initialState.twitterHandle,
-        externalLink: initialState.externalLink,
-        wallet: initialState.wallet,
-        publicAddress: initialState.publicAddress,
+        twitterHandle: initialState.twitterHandle || '',
+        externalLink: initialState.externalLink || '',
+        walletAddress: initialState.publicAddress,
       }
     : {}
 
@@ -83,7 +82,7 @@ const CreateProfile = () => {
         hasUsername={false}
         scope={modalAttrs?.scope}
       >
-        <CloseButton onClick={() => toggleModal()} />
+        <CloseButtonStyled visible={true} onClick={() => toggleModal()} />
 
         {modalAttrs?.scope !== 'admin' && (
           <Copy>
@@ -134,6 +133,12 @@ const CreateProfile = () => {
   )
 }
 
+const CloseButtonStyled = styled(props => <CloseButton {...props} />)`
+  position: absolute;
+  top: 0;
+  right: 0;
+`
+
 /* 
   Not using the normal Modal wrapper because we don't want a Close button
   and too much work to implement that feature right now /shrug
@@ -164,12 +169,9 @@ const SubmitButton = styled(props => <Button {...props} />)`
 const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; scope: string }>`
   position: relative;
   z-index: 9999;
-
   overflow-y: scroll;
   max-width: calc(100vw - 30px);
-
   display: grid;
-
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     'copy copy'
@@ -178,7 +180,7 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     'artizenHandle twitterHandle'
     'email email'
     'externalLink externalLink'
-    '${props => props.scope === 'admin' && `publicAddress publicAddress`}'
+    '${props => props.scope === 'admin' && `walletAddress walletAddress`}'
     'tocCheck tocCheck'
     'submit submit'
     'why why';
@@ -238,8 +240,8 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     grid-area: externalLink;
   }
 
-  *[id='#/properties/wallet'] {
-    grid-area: wallet;
+  *[id='#/properties/walletAddress'] {
+    grid-area: walletAddress;
   }
 
   &.submitted {

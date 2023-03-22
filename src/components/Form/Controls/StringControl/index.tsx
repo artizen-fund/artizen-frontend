@@ -50,7 +50,8 @@ export const StringControl = ({
   useEffect(() => {
     // TODO: Commented this out so the input field can be set as empty
     // if (!localData) return
-    handleChange(path, localData)
+    console.log('!!localData   ', path, !!localData)
+    handleChange(path, !!localData ? localData : '')
   }, [localData])
 
   const [parsedErrors, setParsedErrors] = useState<string[]>([])
