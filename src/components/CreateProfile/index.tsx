@@ -169,12 +169,9 @@ const SubmitButton = styled(props => <Button {...props} />)`
 const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; scope: string }>`
   position: relative;
   z-index: 9999;
-
   overflow-y: scroll;
   max-width: calc(100vw - 30px);
-
   display: grid;
-
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     'copy copy'

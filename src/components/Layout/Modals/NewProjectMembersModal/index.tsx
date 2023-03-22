@@ -181,24 +181,14 @@ const Wrapper = styled.div`
 
 const Headline = styled.h1`
   margin: 1rem 0;
-
-  @media (prefers-color-scheme: light) {
-    color: ${rgba(palette.black)};
-  }
   ${typography.title.l3}
 `
 
 const ItemText = styled.h3`
-  @media (prefers-color-scheme: light) {
-    color: ${rgba(palette.black, 0.6)};
-  }
   ${typography.body.l3}
 `
 
 const Subtitle = styled.h2`
-  @media (prefers-color-scheme: light) {
-    color: ${rgba(palette.black)};
-  }
   ${typography.title.l4}
 `
 
