@@ -104,7 +104,7 @@ const ProjectWrapper = styled.div`
   background: ${rgba(palette.white)};
   padding: 20px;
 
-  background-color: ${rgba(palette.night)};
+  background-color: ${rgba(palette.stone, 0.24)};
   ${typography.body.l3}
 
   @media (prefers-color-scheme: dark) {

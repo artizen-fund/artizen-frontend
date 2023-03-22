@@ -41,11 +41,15 @@ const LoginModal = ({ ...props }) => {
           </CheckMessage>
         </Check>
       </CheckWrapper>
-
-      <CloseButton onClick={() => toggleModal()} />
     </Wrapper>
   )
 }
+
+const CloseButtonSyled = styled(props => <CloseButton {...props} />)`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+`
 
 const Wrapper = styled.div`
   padding: 40px 25px;

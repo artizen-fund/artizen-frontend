@@ -31,44 +31,42 @@ export default function SeasonPage(): JSX.Element {
   })
 
   return (
-    <>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Layout>
-          <StyledPagePadding>
-            {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
-              const id = `submission-container-id-${season.id}`
-              const startingDate = formatDate(season.startingDate)
-              const endingDate = formatDate(season.endingDate)
-              const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
-              return (
-                <Wrapper key={id} id={id}>
-                  <Title id={`submission-title-${season.title}`}>{season.title && capitalCase(season.title)}</Title>
-                  <Title className="right-align" id={`submission-status-${seasonStatus}`}>
-                    <span style={{ fontWeight: 10 }}>status: </span>
-                    {capitalCase(seasonStatus)}
-                  </Title>
-                  <Subtitle
-                    className="expand"
-                    id={`submission-startingDate-${season.startingDate}`}
-                  >{`This Season runs from ${startingDate} to ${endingDate}`}</Subtitle>
-                  <Subtitle>Projects submitted to this Season:</Subtitle>
-                  {isOpenForSubmissions(season.startingDate, season.endingDate) && (
-                    <Button level={2} onClick={() => push('/admin/projects')}>
-                      Submit a project
-                    </Button>
-                  )}
-                  <SubmissionsWrapper>
-                    <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
-                  </SubmissionsWrapper>
-                </Wrapper>
-              )
-            })}
-          </StyledPagePadding>
-        </Layout>
-      )}
-    </>
+    <Layout>
+      <StyledPagePadding>
+        {loading ? (
+          <Spinner />
+        ) : (
+          loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
+            const id = `submission-container-id-${season.id}`
+            const startingDate = formatDate(season.startingDate)
+            const endingDate = formatDate(season.endingDate)
+            const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
+            return (
+              <Wrapper key={id} id={id}>
+                <Title id={`submission-title-${season.title}`}>{season.title && capitalCase(season.title)}</Title>
+                <Title className="right-align" id={`submission-status-${seasonStatus}`}>
+                  <span style={{ fontWeight: 10 }}>status: </span>
+                  {capitalCase(seasonStatus)}
+                </Title>
+                <Subtitle
+                  className="expand"
+                  id={`submission-startingDate-${season.startingDate}`}
+                >{`This Season runs from ${startingDate} to ${endingDate}`}</Subtitle>
+                <Subtitle>Projects submitted to this Season:</Subtitle>
+                {isOpenForSubmissions(season.startingDate, season.endingDate) && (
+                  <Button level={2} onClick={() => push('/admin/projects')}>
+                    Submit a project
+                  </Button>
+                )}
+                <SubmissionsWrapper>
+                  <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
+                </SubmissionsWrapper>
+              </Wrapper>
+            )
+          })
+        )}
+      </StyledPagePadding>
+    </Layout>
   )
 }
 

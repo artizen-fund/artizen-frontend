@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { INSERT_PROJECTS } from '@gql'
 import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
-import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding } from '@components'
+import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding, Button } from '@components'
 import { initialState, schema, FormState } from '@forms/createProjects'
 
 const testWallet = (walletAddress: string) => {
@@ -186,19 +186,22 @@ const AddProjectLeadBt = styled.div`
   align-items: center;
   padding: 6px;
   height: 100%;
-  background-color: ${rgba(palette.night)};
-  color: ${rgba(palette.white)};
+  background-color: ${rgba(palette.night, 0.1)};
+  color: ${rgba(palette.barracuda, 0.6)};
   cursor: pointer;
   border-radius: 99px;
   width: 50%;
   justify-self: center;
   transition: all 0.2s ease-in-out;
   &:hover {
-    color: ${rgba(palette.night)};
+    color: ${rgba(palette.barracuda)};
   }
   @media (prefers-color-scheme: dark) {
     background-color: ${rgba(palette.moon)};
     color: ${rgba(palette.barracuda)};
+    &:hover {
+      color: ${rgba(palette.night)};
+    }
   }
 `
 
@@ -217,7 +220,8 @@ const ProjectLeadMemberWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   background-color: ${rgba(palette.white, 1)};
-
+  border: 1px solid rgba(217, 219, 224, 1);
+  border-radius: 0px;
   .doubleLength {
     grid-column: 1 / span 2;
   }
@@ -257,7 +261,7 @@ const Subtitle = styled.h3`
   font-weight: 600;
   margin: 0;
   padding: 0;
-  color: ${rgba(palette.night)};
+  color: ${rgba(palette.night, 0.5)};
   @media (prefers-color-scheme: dark) {
     color: ${rgba(palette.barracuda)};
   }

@@ -36,6 +36,7 @@ const NewProjectMembersModal = () => {
     toggleModal()
     setVisibleModalWithAttrs('createProfile', {
       scope: 'admin',
+      setLocked: true,
       action: 'create',
       callback: (data: any) => {
         callback(data)
@@ -43,6 +44,8 @@ const NewProjectMembersModal = () => {
       },
     })
   }
+
+  console.log('userSelected   ', userSelected)
 
   const editUser = () => {
     toggleModal()
@@ -71,11 +74,10 @@ const NewProjectMembersModal = () => {
   return (
     <Wrapper>
       <Headline>Project Lead</Headline>
-
-      <div>Search User to add to the project:</div>
+      <Subtitle>Search User to add to the project:</Subtitle>
       <InputSearchWrapper>
         <input
-          placeholder={'Search users by email or public address'}
+          placeholder={'Search users by email or wallet address'}
           value={searchData}
           onBlur={e => e.target.value === '' && !loading && setShowNonUsers(false)}
           onChange={e => searchUser(e.target.value)}
@@ -95,11 +97,15 @@ const NewProjectMembersModal = () => {
                 classNames: 'doubleHeight',
               },
               {
-                renderer: (item: IUserPublicFragment) => `${item.firstName} ${item.lastName}`,
+                renderer: (item: IUserPublicFragment) => (
+                  <ItemText>
+                    {item.firstName} {item.lastName}
+                  </ItemText>
+                ),
               },
 
               {
-                renderer: (item: IUserPublicFragment) => `Public Address :${item.publicAddress}`,
+                renderer: (item: IUserPublicFragment) => <ItemText>Public Address: {item.publicAddress}</ItemText>,
               },
             ]}
           ></DropDownBlocks>
@@ -130,6 +136,7 @@ const NewProjectMembersModal = () => {
 }
 
 const NonUser = styled.span`
+  color: ${rgba(palette.black)};
   ${typography.body.l3}
   text-transform: italic;
 `
@@ -175,7 +182,24 @@ const Wrapper = styled.div`
 const Headline = styled.h1`
   margin: 1rem 0;
 
+  @media (prefers-color-scheme: light) {
+    color: ${rgba(palette.black)};
+  }
   ${typography.title.l3}
+`
+
+const ItemText = styled.h3`
+  @media (prefers-color-scheme: light) {
+    color: ${rgba(palette.black, 0.6)};
+  }
+  ${typography.body.l3}
+`
+
+const Subtitle = styled.h2`
+  @media (prefers-color-scheme: light) {
+    color: ${rgba(palette.black)};
+  }
+  ${typography.title.l4}
 `
 
 export default NewProjectMembersModal

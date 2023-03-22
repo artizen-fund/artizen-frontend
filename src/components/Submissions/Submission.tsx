@@ -11,7 +11,10 @@ export default function Submission(submission: ISubmissionFragment): JSX.Element
   const { push } = useRouter()
 
   return (
-    <StyledSubmission onClick={() => push(`/admin/projects/${submission.project?.id}`)} id="submission-component">
+    <StyledSubmission
+      onClick={() => push(`/admin/projects/${submission.project?.id}`)}
+      id={`submission-component-${submission.project?.id}`}
+    >
       <Headline>Submitted on: {dayjs(submission.createdAt).format('MMMM DD YYYY, HH:mm')}</Headline>
       {submission.project && <Project projectData={submission.project} displayType="brief" />}
     </StyledSubmission>
@@ -27,12 +30,11 @@ const StyledSubmission = styled.div`
   width: 100%;
   padding: 1rem;
   border-radius: 6px;
-  background-color: ${rgba(palette.night)};
   cursor: pointer;
+  ${typography.label.l3}
+  margin-bottom: 1rem;
+  background-color: ${rgba(palette.stone, 0.24)};
   @media (prefers-color-scheme: dark) {
     background: ${rgba(palette.moon, 0.1)};
   }
-  ${typography.label.l3}
-
-  margin-bottom: 1rem;
 `

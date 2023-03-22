@@ -35,27 +35,25 @@ const Projects = () => {
   return (
     <Layout>
       <StyledPagePadding>
-        <Wrapper>
-          {loading ? (
-            <Spinner />
-          ) : (
-            <>
-              <Header>Project List</Header>
-              <Button level={2} onClick={openProject('new')}>
-                Add New Project
-              </Button>
-              <ProjectList className="doubleLeght">
-                {loadedProjectData?.Projects.map((project: IProjectFragment) => {
-                  return (
-                    <ProjectWrapper key={project.id} onClick={openProject(project.id)}>
-                      <Project projectData={project} displayType="brief" />
-                    </ProjectWrapper>
-                  )
-                })}
-              </ProjectList>
-            </>
-          )}
-        </Wrapper>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Wrapper>
+            <Header>Project List</Header>
+            <Button level={2} onClick={openProject('new')}>
+              Add New Project
+            </Button>
+            <ProjectList className="doubleLeght">
+              {loadedProjectData?.Projects.map((project: IProjectFragment) => {
+                return (
+                  <ProjectWrapper key={project.id} onClick={openProject(project.id)}>
+                    <Project projectData={project} displayType="brief" />
+                  </ProjectWrapper>
+                )
+              })}
+            </ProjectList>
+          </Wrapper>
+        )}
       </StyledPagePadding>
     </Layout>
   )
@@ -80,8 +78,8 @@ const ProjectWrapper = styled.div`
   padding: 1rem;
   border-radius: 8px;
   margin: 1rem 0;
-  background-color: ${rgba(palette.night)};
   cursor: pointer;
+  background-color: ${rgba(palette.stone, 0.24)};
   @media (prefers-color-scheme: dark) {
     background: ${rgba(palette.moon, 0.1)};
   }
@@ -102,6 +100,7 @@ const Wrapper = styled.div`
   border-radius: 0.5rem;
   width: 100%;
   cursor: pointer;
+  align-items: center;
 
   .doubleLeght {
     grid-column: span 2;

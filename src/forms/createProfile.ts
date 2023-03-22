@@ -36,11 +36,10 @@ export interface FormState extends Record<string, unknown> {
   email?: string
   twitterHandle?: string
   externalLink?: string
-  wallet?: string
 }
 
 export interface FormStateAdmin extends FormState {
-  publicAddress: string
+  walletAddress: string
 }
 
 /*
@@ -92,7 +91,7 @@ export const adminUIschema = {
       ...uischema.elements,
       {
         type: 'Control',
-        scope: '#/properties/publicAddress',
+        scope: '#/properties/walletAddress',
         label: 'Enter an wallet address',
       },
     ],
@@ -102,9 +101,10 @@ export const adminUIschema = {
 export const adminSchema = {
   ...schema,
   ...{
+    // required: [...[schema.required], 'walletAddress'],
     properties: {
       ...schema.properties,
-      publicAddress: {
+      walletAddress: {
         type: 'string',
         minLength: 2,
       },

@@ -49,7 +49,6 @@ const ArtifactImage = styled.div<{ artwork?: Maybe<string>; displayType: string 
   height: ${props => (props.displayType === 'brief' ? '90px' : '360px')};
   text-align: center;
   grid-row: 1 / span 9;
-
   color: ${rgba(palette.night)};
   background-color: ${rgba(palette.stone)};
   background-image: url(${props => props.artwork});
