@@ -58,8 +58,7 @@ export const PROJECT = gql`
   ${ARTIFACT}
   fragment Project on Projects {
     id
-    impact
-    impactTags
+    title
     logline
     description
     creationDate
@@ -67,14 +66,17 @@ export const PROJECT = gql`
     walletAddress
     title
     metadata
+    impact
     artifacts {
       ...Artifact
     }
     members {
       ...Member
     }
+    impactTags
   }
 `
+
 export const SUBMISSION = gql`
   ${PROJECT}
   ${ARTIFACT}

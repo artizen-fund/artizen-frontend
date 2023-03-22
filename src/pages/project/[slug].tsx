@@ -13,6 +13,9 @@ import {
 } from '@components'
 import { LayoutContext } from '@lib'
 import { typography, breakpoint } from '@theme'
+import { useQuery } from '@apollo/client'
+import { GET_PROJECTS } from '@gql'
+import { IProjectsQuery } from '@types'
 
 const ProjectPage = () => {
   const { setVisibleModal } = useContext(LayoutContext)
@@ -21,14 +24,22 @@ const ProjectPage = () => {
     query: { slug },
   } = useRouter()
 
-  const sampleCreator = {
-    name: 'Creator name',
-    avatar: undefined,
-    twitterHandle: 'eric_wvgg',
-    url: 'https://wvgg.co',
-  }
+  const { loading, data, error } = useQuery<IProjectsQuery>(GET_PROJECTS, {
+    variables: {
+      limit: 1,
+      where: {
+        id: {
+          _eq: slug,
+        },
+      },
+    },
+  })
 
-  const sampleTags = ['Documentary', 'Sci-Fi', 'Empowering Women']
+  const project = data?.Projects[0]
+
+  if (!!loading || !project) return <p>…loading…</p>
+
+  const lead = project.members?.find(m => m.type === 'lead')?.user
 
   return (
     <Layout>
@@ -42,19 +53,23 @@ const ProjectPage = () => {
                   Share
                 </Button>
               </Topline>
-              <h1>Project Title</h1>
-              <p>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-                Curabitur blandit tempus porttitor.
-              </p>
-              <Tags tags={sampleTags} />
+              <h1>{project.title}</h1>
+              <p>{project.logline}</p>
+              {/* <Tags tags={sampleTags} /> */}
 
-              <CreatorBox {...sampleCreator} />
+              {lead && <CreatorBox member={lead} />}
             </Header>
 
             {/*<Leaderboard />*/}
 
-            <LongDescription />
+            <LongDescription>
+              {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
+                <div key={`metadatum-${index}`}>
+                  <h2>{metadatum.title}</h2>
+                  <p>{metadatum.value}</p>
+                </div>
+              ))}
+            </LongDescription>
           </Side>
           <Side>
             <ArtifactCard />
