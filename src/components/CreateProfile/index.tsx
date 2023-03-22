@@ -154,11 +154,9 @@ const Wrapper = styled.div<{ visible: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   opacity: ${props => (props.visible ? 1 : 0)};
   transition: opacity 0.3s ease-in-out;
   pointer-events: none;
-
   pointer-events: ${props => (props.visible ? 'all' : 'none')};
 `
 
@@ -169,12 +167,17 @@ const SubmitButton = styled(props => <Button {...props} />)`
 const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; scope: string }>`
   position: relative;
   z-index: 9999;
-
+  background-color: blue;
+  > div,
+  > form {
+    width: 100%;
+    background-color: red;
+    height: 100%;
+    overflow-y: scroll;
+  }
   overflow-y: scroll;
   max-width: calc(100vw - 30px);
-
   display: grid;
-
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     'copy copy'
