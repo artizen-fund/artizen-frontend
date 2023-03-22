@@ -11,6 +11,11 @@ const mockProject: IProjectFragment = {
   completionDate: '2022-01-02 00:00:00',
   walletAddress: '0x00000000000',
   title: 'Test Project',
+  artifacts_aggregate: {
+    aggregate: {
+      count: 1,
+    },
+  },
   artifacts: [
     {
       __typename: 'Artifacts',
@@ -40,7 +45,7 @@ const mockProject: IProjectFragment = {
         artizenHandle: 'herpderp',
         twitterHandle: 'derpherp',
         website: 'https://derp.com',
-        profileImage: null,
+        profileImage: undefined,
         publicAddress: 'null',
         claimed: false,
       },
@@ -54,7 +59,7 @@ const mockArtifact: IArtifactFragment = {
   name: 'test artifact',
   description: 'Donec sed odio dui.',
   artwork: 'https://artizenartifacts.com/herpderp.jpg',
-  video: null,
+  video: undefined,
   edition: '1',
   blockchainAddress: '0x0000000000',
   dateMinting: '2022-01-01 00:00:00',

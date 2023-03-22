@@ -19,18 +19,14 @@ interface IDropDownBlocks<T> {
 export const DropDownBlocks = <ObjectType extends { id?: string }>(props: IDropDownBlocks<ObjectType>) => {
   const { itemSelected, setItemSelected, items, structure, align } = props
 
-  console.log(' itemsss  ', items)
   return (
     <>
       {items.map(item => {
         const isSelected = itemSelected?.id === item.id
-        console.log(itemSelected?.id !== item.id)
 
         if (itemSelected?.id && itemSelected?.id !== item.id) {
           return null
         }
-
-        console.log('goes here')
 
         return (
           <ItemWrapper
