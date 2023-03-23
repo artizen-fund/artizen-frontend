@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
-import { GET_PROJECTS } from '@gql'
-import { IProjectsQuery } from '@types'
+import { LOAD_SEASONS } from '@gql'
+import { ILoadSeasonsQuery } from '@types'
 
 import {
   HomeHeader,
@@ -25,17 +25,16 @@ import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, faq } from '@copy/home'
 
-const IndexPage = () => {
-  const [limit, setLimit] = useState(9)
+const CURRENT_SEASON = 31
 
-  const { loading, data, error } = useQuery<IProjectsQuery>(GET_PROJECTS, {
+const IndexPage = () => {
+  const [limit, setLimit] = useState(15)
+
+  const { loading, data, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     variables: {
-      limit,
+      where: { index: { _eq: CURRENT_SEASON } },
     },
   })
-
-  console.log('data', data)
-
   return (
     <Layout>
       <HomeHeader />
@@ -45,8 +44,8 @@ const IndexPage = () => {
       <StyledPagePadding>
         <PagePadding>
           <Grid>
-            {data?.Projects.map(project => (
-              <ProjectCard {...{ project }} key={project.id} />
+            {data?.Seasons[0].submissions?.map((submission, index) => (
+              <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
             ))}
           </Grid>
         </PagePadding>

@@ -12,8 +12,6 @@ interface ProjectProps {
 export default function Project({ projectData, displayType }: ProjectProps): JSX.Element {
   const { title, metadata, walletAddress, impactTags, artifacts, logline, members } = projectData
 
-  console.log('metadata ', metadata)
-
   const leadMember = members?.find(member => member.type === 'lead')?.user
 
   return (

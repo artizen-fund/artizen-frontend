@@ -21,7 +21,6 @@ export const DropDownBlocks = <ObjectType extends { id?: string }>(props: IDropD
     <>
       {items.map(item => {
         const isSelected = itemSelected?.id === item.id
-        console.log(itemSelected?.id !== item.id)
 
         if (itemSelected?.id && itemSelected?.id !== item.id) {
           return null

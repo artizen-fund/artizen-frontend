@@ -4,8 +4,8 @@ import { ArtifactCount, Rank } from '@components'
 
 const RankAndArtifactCount = ({ rank, count }: { rank: number; count: number }) => (
   <Wrapper>
-    <Rank value={1} />
-    <ArtifactCount count={128} />
+    <Rank value={rank} />
+    <ArtifactCount count={count} />
   </Wrapper>
 )
 
