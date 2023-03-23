@@ -45,12 +45,6 @@ const LoginModal = ({ ...props }) => {
   )
 }
 
-const CloseButtonSyled = styled(props => <CloseButton {...props} />)`
-  position: absolute;
-  top: 0px;
-  right: 0px;
-`
-
 const Wrapper = styled.div`
   padding: 40px 25px;
   max-width: calc(100vw - 20px);

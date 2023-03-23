@@ -46,13 +46,13 @@ const DonationBox = ({ blockchainId, unitPrice }: IDonationBox) => {
       const returnTx = await donate(parseInt(blockchainId), (artifactQuantity * donationAmount).toString())
       // TODO: it'll only work when EK removes the transaction from the server
       // if there is transaction hash add a record
-      if (!returnTx.transactionHash) {
-        trackEventF(intercomEventEnum.DONATION_FAILED, {
-          amount: (artifactQuantity * donationAmount).toString(),
-          grantblockchainId: blockchainId,
-        })
-        throw new Error('Tx is empty')
-      }
+      // if (!returnTx.transactionHash) {
+      //   trackEventF(intercomEventEnum.DONATION_FAILED, {
+      //     amount: (artifactQuantity * donationAmount).toString(),
+      //     grantblockchainId: blockchainId,
+      //   })
+      //   throw new Error('Tx is empty')
+      // }
     } catch (e: any) {
       const errors: Array<ErrorObject> = []
       const message =

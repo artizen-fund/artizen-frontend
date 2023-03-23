@@ -49,6 +49,8 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
   useEffect(() => {
+    console.log('loggedInUser  ', loggedInUser)
+
     setAvatarDisplay(
       !loggedInUser
         ? undefined

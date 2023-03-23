@@ -76,37 +76,31 @@ const useCreateProfile = (initialFormState: FormState) => {
     }
 
     const valuesToUpdate: FormState = {}
-    const valuesTokeep: FormState = {}
 
-    console.log('data ::: ', data)
-
-    Object.keys(initialFormState).forEach(key => {
-      console.log('initialFormState[key]  ', initialFormState[key])
-      console.log('data[key]  ', data[key])
+    Object.keys(data).forEach(key => {
       //values are different
-      if (initialFormState[key] !== data[key]) {
+      if (data[key] !== initialFormState[key]) {
         return (valuesToUpdate[key] = key === 'artizenHandle' ? data[key]?.toLowerCase() : data[key])
-      } else {
-        return (valuesTokeep[key] = data[key])
       }
     })
-
     console.log('valuesToUpdate   ', valuesToUpdate)
+
+    console.log('userIdToUpdate  ', userIdToUpdate)
 
     const profileImage = await uploadAvatar(imageFile)
 
-    console.log('to replace  ', { ...valuesToUpdate, claimed: false, profileImage })
+    console.log('to replace  ', { ...valuesToUpdate, claimed: !initialFormState && true, profileImage })
 
     const updatedUser = await updateUser({
       variables: {
         where: {
           id: {
-            _eq: userIdToUpdate,
+            _eq: userIdToUpdate || loggedInUser.id,
           },
         },
-        _set: { ...valuesToUpdate, claimed: false, profileImage },
+        _set: { ...valuesToUpdate, claimed: !initialFormState && true, profileImage },
       },
-      onError: error => console.log('error form ::::', error),
+      onError: error => console.error('error form ::::', error),
     })
     await addUserToCourier()
 

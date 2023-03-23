@@ -29,7 +29,7 @@ const NonSubmission = styled.div`
   height: 100%;
   padding: 1rem;
   border-radius: 8px;
-  background-color: ${rgba(palette.night)};
+  background: ${rgba(palette.moon, 0.9)};
   ${typography.body.l3}
 
   @media (prefers-color-scheme: dark) {
