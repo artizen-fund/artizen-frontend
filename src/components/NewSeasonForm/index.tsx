@@ -94,9 +94,18 @@ export default function NewSeasonForm(): JSX.Element {
     const endingDate = `${data.endingDate}T09:00:00`
 
     // // //publish season to blockchain
-    // const publishedSeason = await publishSeason(data.startingDate, data.endingDate)
+    const publishedSeason = await publishSeason(data.startingDate, data.endingDate)
 
-    // console.log('publishedSeason   ', publishedSeason)
+    console.log('publishedSeason   ', publishedSeason)
+
+    if (!publishedSeason) {
+      throw new Error('Error publishing season to blockchain')
+    }
+
+    //get the new season id from blockchain and save it into the database
+    const newSeasonId = publishedSeason.events[0].args[0].toString()
+
+    console.log('newSeasonId   ', newSeasonId)
 
     const dateFronMutation = await insertSeason({
       variables: {
@@ -105,6 +114,7 @@ export default function NewSeasonForm(): JSX.Element {
             title: data.title,
             startingDate,
             endingDate,
+            index: Number(newSeasonId),
           },
         ],
       },
@@ -139,7 +149,7 @@ export default function NewSeasonForm(): JSX.Element {
       readonly={processing}
     >
       <StyledButton onClick={saveNewSeason} stretch level={2}>
-        {processing ? 'Saving...' : 'Save'}
+        {processing ? 'Publishing...' : 'Published'}
       </StyledButton>
     </Form>
   )
