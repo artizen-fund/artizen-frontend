@@ -35,7 +35,7 @@ const CreateProfile = () => {
         email: initialState.email,
         twitterHandle: initialState.twitterHandle || '',
         externalLink: initialState.externalLink || '',
-        walletAddress: initialState.publicAddress,
+        publicAddress: initialState.publicAddress,
       }
     : {}
 
@@ -48,7 +48,9 @@ const CreateProfile = () => {
       const updatedProfile = await updateProfile(modalAttrs?.initialState?.id)
       const profileImage = updatedProfile?.profileImage || modalAttrs?.initialState?.profileImage
 
-      modalAttrs?.callback({ ...updatedProfile, profileImage })
+      if (modalAttrs?.callback) {
+        modalAttrs?.callback({ ...updatedProfile, profileImage })
+      }
 
       setProcessing(false)
       toggleModal()
@@ -82,7 +84,7 @@ const CreateProfile = () => {
         hasUsername={false}
         scope={modalAttrs?.scope}
       >
-        <CloseButtonStyled visible={true} onClick={() => toggleModal()} />
+        {scope === 'admin' && <CloseButtonStyled visible={true} onClick={() => toggleModal()} />}
 
         {modalAttrs?.scope !== 'admin' && (
           <Copy>
@@ -154,11 +156,9 @@ const Wrapper = styled.div<{ visible: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   opacity: ${props => (props.visible ? 1 : 0)};
   transition: opacity 0.3s ease-in-out;
   pointer-events: none;
-
   pointer-events: ${props => (props.visible ? 'all' : 'none')};
 `
 
@@ -173,17 +173,38 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   max-width: calc(100vw - 30px);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas:
+
+  ${props =>
+    props.scope !== 'admin' &&
+    `
+    grid-template-areas:
     'copy copy'
     'avatarForm avatarForm'
     'firstName lastName'
     'artizenHandle twitterHandle'
     'email email'
     'externalLink externalLink'
-    '${props => props.scope === 'admin' && `walletAddress walletAddress`}'
     'tocCheck tocCheck'
     'submit submit'
     'why why';
+    `}
+
+  ${props =>
+    props.scope === 'admin' &&
+    `
+    grid-template-areas:
+    'copy copy'
+    'avatarForm avatarForm'
+    'firstName lastName'
+    'artizenHandle twitterHandle'
+    'email email'
+    'externalLink externalLink'
+    'publicAddress publicAddress'
+    'tocCheck tocCheck'
+    'submit submit'
+    'why why';
+    `}
+
   gap: 10px;
   margin-top: 15px;
   padding: 25px;
@@ -240,8 +261,8 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     grid-area: externalLink;
   }
 
-  *[id='#/properties/walletAddress'] {
-    grid-area: walletAddress;
+  *[id='#/properties/publicAddress'] {
+    grid-area: publicAddress;
   }
 
   &.submitted {

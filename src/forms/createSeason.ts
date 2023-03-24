@@ -31,8 +31,8 @@ export const schema: JsonSchema = {
 
 /* This is our local initialState. */
 export const initialState: FormState = {
-  startingDate: '01/01/1000',
-  endingDate: '',
+  startingDate: '2023-01-01',
+  endingDate: '2023-01-01',
   title: '',
 }
 

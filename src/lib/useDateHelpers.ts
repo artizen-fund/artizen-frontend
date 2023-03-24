@@ -46,5 +46,9 @@ export const useDateHelpers = () => {
     return dayjs(date).format('MMMM D, HH:mm')
   }
 
-  return { formatDate, getSeasonStatus, isOpenForSubmissions }
+  const getTimeUnix = (date: string) => {
+    return dayjs.tz(date, ARTIZEN_TIMEZONE).unix()
+  }
+
+  return { formatDate, getSeasonStatus, isOpenForSubmissions, getTimeUnix }
 }

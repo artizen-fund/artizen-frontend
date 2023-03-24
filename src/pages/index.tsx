@@ -25,7 +25,7 @@ import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, faq } from '@copy/home'
 
-const CURRENT_SEASON = 31
+const CURRENT_SEASON = 1
 
 const IndexPage = () => {
   const [limit, setLimit] = useState(15)
@@ -35,6 +35,7 @@ const IndexPage = () => {
       where: { index: { _eq: CURRENT_SEASON } },
     },
   })
+
   return (
     <Layout>
       <HomeHeader />
@@ -44,9 +45,11 @@ const IndexPage = () => {
       <StyledPagePadding>
         <PagePadding>
           <Grid>
-            {data?.Seasons[0].submissions?.map((submission, index) => (
-              <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
-            ))}
+            {!loading &&
+              data?.Seasons[0].submissions?.map(
+                (submission, index) =>
+                  submission.project && <ProjectCard project={submission.project} {...{ index }} key={submission.id} />,
+              )}
           </Grid>
         </PagePadding>
       </StyledPagePadding>

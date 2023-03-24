@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { INSERT_SEASONS, LOAD_SEASONS } from '@gql'
@@ -6,7 +6,7 @@ import { ErrorObject } from 'ajv'
 import { useRouter } from 'next/router'
 import { Form, Spinner, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createSeason'
-import { LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
+import { LayoutContext, ARTIZEN_TIMEZONE, useSeasons } from '@lib'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -23,39 +23,11 @@ export default function NewSeasonForm(): JSX.Element {
   const [loadSeason, { loading }] = useLazyQuery(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
   })
-
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     const { data } = await loadSeason({
-  //       variables: {
-  //         orderby: {
-  //           endingDate: 'desc',
-  //         },
-  //         limit: 1,
-  //       },
-  //     })
-
-  //     console.log('loadData', data)
-
-  //     if (data.Seasons.length > 0) {
-  //       const lastSeasonEndingTime = dayjs(data.Seasons[0].endingDate)
-
-  //       setData({
-  //         startingDate: lastSeasonEndingTime.format('YYYY-MM-DD'),
-  //         endingDate: lastSeasonEndingTime.add(28, 'day').format('YYYY-MM-DD'),
-  //         title: '',
-  //       })
-  //     }
-  //   }
-
-  //   loadData()
-  // }, [])
-
-  // const startingDate = loadedSeasonsData?.Seasons[0]?.endingDate + 1
   const [data, setData] = useState<FormState>(initialState)
-
   const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
+
+  const { publishSeason } = useSeasons()
 
   const checkIfEndingDateIsAfterStartingDate = (from: string, to: string) => {
     const fromTime = dayjs.tz(from, ARTIZEN_TIMEZONE)
@@ -112,15 +84,37 @@ export default function NewSeasonForm(): JSX.Element {
   }
 
   const saveNewSeason = async () => {
+    if (!data.startingDate || !data.endingDate) {
+      return
+    }
+
     setProcessing(true)
+
+    const startingDate = `${data.startingDate}T09:01:00`
+    const endingDate = `${data.endingDate}T09:00:00`
+
+    // // //publish season to blockchain
+    const publishedSeason = await publishSeason(data.startingDate, data.endingDate)
+
+    console.log('publishedSeason   ', publishedSeason)
+
+    if (!publishedSeason) {
+      throw new Error('Error publishing season to blockchain')
+    }
+
+    //get the new season id from blockchain and save it into the database
+    const newSeasonId = publishedSeason.events[0].args[0].toString()
+
+    console.log('newSeasonId   ', newSeasonId)
 
     const dateFronMutation = await insertSeason({
       variables: {
         objects: [
           {
             title: data.title,
-            startingDate: `${data.startingDate}T09:01:00`,
-            endingDate: `${data.endingDate}T09:00:00`,
+            startingDate,
+            endingDate,
+            index: Number(newSeasonId),
           },
         ],
       },
@@ -155,7 +149,7 @@ export default function NewSeasonForm(): JSX.Element {
       readonly={processing}
     >
       <StyledButton onClick={saveNewSeason} stretch level={2}>
-        {processing ? 'Saving...' : 'Save'}
+        {processing ? 'Publishing...' : 'Published'}
       </StyledButton>
     </Form>
   )

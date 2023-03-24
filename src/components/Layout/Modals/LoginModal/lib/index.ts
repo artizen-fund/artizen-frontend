@@ -48,7 +48,6 @@ const useWalletConnect = () => {
       console.error('error connecting user', e)
     }
   }
-  // new MetaMaskConnector({ chains: [goerli] })
   const connectMetamask = () => {
     toggleModal('connecting')
     connectWallet(new MetaMaskConnector({ chains }))
