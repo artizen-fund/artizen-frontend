@@ -65,6 +65,11 @@ const mockArtifact: IArtifactFragment = {
   dateMinting: '2022-01-01 00:00:00',
   token: '0x00000000',
   createdAt: '2022-01-01 00:00:00',
+  openEditionCopies_aggregate: {
+    aggregate: {
+      count: 1,
+    },
+  },
 }
 
 const mockImageResponse = {
