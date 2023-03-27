@@ -1,15 +1,15 @@
 const homeRibbon = [
   {
-    title: 'Fund new projects',
-    copy: 'Mint Artifacts to help creators raise money for new projects',
+    title: 'Open to all creators',
+    copy: 'From painters to coders, the Artizen Prize is open to all creators',
   },
   {
-    title: 'Climb our leaderboard',
-    copy: 'The more Artifacts minted, the higher a project climbs our leaderboard',
+    title: 'Make a positive impact',
+    copy: 'Curate and fund new projects that make a positive impact in the world',
   },
   {
-    title: 'Win the Artizen Award',
-    copy: 'Cash prize is awarded to the project with the most Artifacts minted',
+    title: 'Invest in culture',
+    copy: 'Buy cultural Artifacts from projects you love to help them win the Artizen Prize',
   },
 ]
 

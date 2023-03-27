@@ -28,7 +28,7 @@ export const schema: JsonSchema = {
     },
     info4: {
       type: 'string',
-      title: 'Why are you the right person?',
+      title: 'Why are you the right person to make this project?',
     },
     impactTags: {
       type: 'string',
