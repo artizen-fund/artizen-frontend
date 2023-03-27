@@ -12,8 +12,7 @@ export const schema: JsonSchema = {
     },
     logline: {
       type: 'string',
-      minLength: 20,
-      maxLength: 140,
+      minLength: 5,
     },
     info1: {
       type: 'string',

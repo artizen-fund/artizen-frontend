@@ -12,9 +12,6 @@ export const ARTIFACT = gql`
     name
     description
     artwork
-    video
-    edition
-    blockchainAddress
     dateMinting
     token
     createdAt
