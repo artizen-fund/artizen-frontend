@@ -18,6 +18,11 @@ export const ARTIFACT = gql`
     dateMinting
     token
     createdAt
+    openEditionCopies_aggregate {
+      aggregate {
+        count(columns: value)
+      }
+    }
   }
 `
 
@@ -70,11 +75,6 @@ export const PROJECT = gql`
     impact
     artifacts {
       ...Artifact
-    }
-    artifacts_aggregate {
-      aggregate {
-        count
-      }
     }
     members {
       ...Member

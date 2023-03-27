@@ -17,7 +17,10 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
   return (
     <Wrapper>
       <Header>
-        <RankAndArtifactCount rank={index + 1} count={project.artifacts_aggregate.aggregate?.count || 0} />
+        <RankAndArtifactCount
+          rank={index + 1}
+          count={latestArtifact.openEditionCopies_aggregate.aggregate?.count || 0}
+        />
         <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
       </Header>
       <Copy>

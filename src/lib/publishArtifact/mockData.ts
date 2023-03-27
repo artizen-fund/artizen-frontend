@@ -11,11 +11,6 @@ const mockProject: IProjectFragment = {
   completionDate: '2022-01-02 00:00:00',
   walletAddress: '0x00000000000',
   title: 'Test Project',
-  artifacts_aggregate: {
-    aggregate: {
-      count: 1,
-    },
-  },
   artifacts: [
     {
       __typename: 'Artifacts',
@@ -29,6 +24,11 @@ const mockProject: IProjectFragment = {
       dateMinting: 'dateMinting',
       token: 'token',
       createdAt: 'createdAt',
+      openEditionCopies_aggregate: {
+        aggregate: {
+          count: 1,
+        },
+      },
     },
   ],
   members: [
@@ -65,6 +65,11 @@ const mockArtifact: IArtifactFragment = {
   dateMinting: '2022-01-01 00:00:00',
   token: '0x00000000',
   createdAt: '2022-01-01 00:00:00',
+  openEditionCopies_aggregate: {
+    aggregate: {
+      count: 1,
+    },
+  },
 }
 
 const mockImageResponse = {
