@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
 import { Form, Button, Spinner } from '@components'
 import { schema, uischema, FormState } from '@forms/createProjects'
-import { validateProjectMembers, useSaveProject, getGrantDates } from './lib'
+import { useSaveProject } from './lib'
 import { breakpoint } from '@theme'
 
 interface NewProjectFormProps {
