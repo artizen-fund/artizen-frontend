@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import * as validateLib from 'wallet-address-validator'
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import { ErrorObject } from 'ajv'
 import { useDebounce } from 'use-debounce'
 import { ICheckForExistingArtizenHandleQuery, IUpdateUsersMutation, ICreateUsersMutation } from '@types'
 import { loggedInUserVar, useCloudinary } from '@lib'
 import { UPDATE_USERS, CHECK_FOR_EXISTING_ARTIZENHANDLE, CREATE_USERS } from '@gql'
-import { FormState } from '@forms/createProfile'
+import { FormState, FormStateAdmin } from '@forms/createProfile'
 
-const useCreateProfile = (initialFormState: FormState) => {
+const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
   const { upload } = useCloudinary()
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
@@ -21,8 +22,8 @@ const useCreateProfile = (initialFormState: FormState) => {
   })
   const [createUser] = useMutation<ICreateUsersMutation>(CREATE_USERS)
 
-  /* this checks for existing handles while the user types */
   const [newArtizenHandle] = useDebounce(data.artizenHandle, 500)
+  const [newPublicWallet] = useDebounce(data.publicAddress, 500)
   useQuery<ICheckForExistingArtizenHandleQuery>(CHECK_FOR_EXISTING_ARTIZENHANDLE, {
     skip: !!initialFormState,
     variables: {
@@ -33,19 +34,39 @@ const useCreateProfile = (initialFormState: FormState) => {
     onError: error => console.error('error ', error),
     fetchPolicy: 'no-cache',
     onCompleted: async ({ Users }) => {
-      const errors: Array<ErrorObject> = []
       if (Users.length > 0) {
-        errors.push({
+        additionalErrors.push({
           instancePath: '/artizenHandle',
           message: 'Handle is already in use',
           schemaPath: '#/properties/artizenHandle',
           keyword: '',
           params: {},
         })
+
+        setAdditionalErrors(additionalErrors)
       }
-      setAdditionalErrors(errors)
     },
   })
+
+  useEffect(() => {
+    if (newPublicWallet && !validateLib.validate(newPublicWallet, 'ETH')) {
+      console.log('gets to error')
+      additionalErrors.push({
+        instancePath: '/publicAddress',
+        message: 'Invalid ETH address',
+        schemaPath: '#/properties/publicAddress',
+        keyword: '',
+        params: {},
+      })
+
+      setAdditionalErrors(additionalErrors)
+    } else {
+      console.log('gets here')
+
+      const newArray = additionalErrors.filter(error => error.instancePath !== '/publicAddress')
+      setAdditionalErrors(newArray)
+    }
+  }, [newPublicWallet])
 
   const createProfile = async () => {
     const profileImage = await uploadAvatar(imageFile)

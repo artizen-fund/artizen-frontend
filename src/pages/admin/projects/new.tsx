@@ -13,22 +13,6 @@ import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding } from '@com
 import { initialState, schema, FormState } from '@forms/createProjects'
 import slugify from 'slugify'
 
-const testWallet = (walletAddress: string) => {
-  // console.log('walletAddress', validateLib.validate(walletAddress, 'ETH'))
-
-  const isValid = validateLib.validate(walletAddress, 'ETH')
-
-  return !isValid
-    ? {
-        instancePath: '/project/walletAddress',
-        message: 'Invalid blockchain address',
-        schemaPath: '#/properties/walletAddress',
-        keyword: '',
-        params: {},
-      }
-    : null
-}
-
 const ProjectDetails = () => {
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
   const { status } = useSession()
@@ -38,6 +22,24 @@ const ProjectDetails = () => {
   const [tempGenericProject, setTempGenericProject] = useState<FormState>(initialState)
   const [tempLeadMember, setTempLeadMember] = useState<IUsers>()
   const [insertProject, { loading }] = useMutation(INSERT_PROJECTS)
+
+  const testWallet = (walletAddress: string) => {
+    const isValid = validateLib.validate(walletAddress, 'ETH')
+
+    console.log('isValid  ', isValid)
+
+    return !isValid
+      ? [
+          {
+            instancePath: '/walletAddress',
+            message: 'Invalid blockchain address',
+            schemaPath: '#/properties/walletAddress',
+            keyword: '',
+            params: {},
+          },
+        ]
+      : []
+  }
 
   const saveProject = async () => {
     const { info1, info2, info3, info4, artworkArtifact, videoArtifact, ...project } = tempGenericProject
@@ -105,6 +107,8 @@ const ProjectDetails = () => {
     }
   }
 
+  console.log('additionalErrors   ', additionalErrors)
+
   return (
     <Layout>
       <CuratorCheck />
@@ -165,7 +169,7 @@ const ProjectDetails = () => {
                 if (data.walletAddress && data.walletAddress?.length > 4) {
                   const error = testWallet(data.walletAddress)
 
-                  setAdditionalErrors(error ? [error] : [])
+                  setAdditionalErrors(error)
 
                   setTempGenericProject(data)
                 } else {

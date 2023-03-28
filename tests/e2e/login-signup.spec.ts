@@ -144,6 +144,7 @@ test.describe('general artizen user', () => {
 
 test.describe('admin user', () => {
   test.beforeAll(async ({ metamask }) => {
+    console.log('metamask  ', metamask)
     // ensure that we're using the Goerli network
     await metamask.switchNetwork('Goerli')
 
@@ -184,7 +185,7 @@ test.describe('admin user', () => {
     })
 
     await clickAccountButton(page)
-    await expect(page.getByText('Hi ruben')).toBeVisible({
+    await expect(page.getByText('Hi Test')).toBeVisible({
       timeout: 10000,
     })
   })
