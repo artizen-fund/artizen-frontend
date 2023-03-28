@@ -18,10 +18,11 @@ import { GET_PROJECTS } from '@gql'
 import { IProjectsQuery } from '@types'
 
 const ProjectPage = () => {
-  const { setVisibleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
     query: { slug },
+    asPath,
   } = useRouter()
 
   const { loading, data, error } = useQuery<IProjectsQuery>(GET_PROJECTS, {
@@ -50,7 +51,7 @@ const ProjectPage = () => {
             <Header>
               <Topline>
                 <RankAndArtifactCount rank={1} count={128} />
-                <Button level={2} outline onClick={() => setVisibleModal('share')}>
+                <Button level={2} outline onClick={() => setVisibleModalWithAttrs('share', { destination: asPath })}>
                   Share
                 </Button>
               </Topline>

@@ -27,8 +27,8 @@ const IndexPage = () => {
   const { data } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     variables: {
       where: {
-        startingdate: { _gte: moment().tz(ARTIZEN_TIMEZONE).format() },
-        endingDate: { _lt: moment().tz(ARTIZEN_TIMEZONE).format() },
+        startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
+        endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
       },
     },
   })
