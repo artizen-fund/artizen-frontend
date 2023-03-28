@@ -14,8 +14,6 @@ import { initialState, schema, FormState } from '@forms/createProjects'
 import slugify from 'slugify'
 
 const testWallet = (walletAddress: string) => {
-  // console.log('walletAddress', validateLib.validate(walletAddress, 'ETH'))
-
   const isValid = validateLib.validate(walletAddress, 'ETH')
 
   return !isValid
