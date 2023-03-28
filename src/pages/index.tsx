@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
 import moment from 'moment-timezone'
 import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsQuery } from '@types'
+import { ISubscribeSeasonsSubscription } from '@types'
 import {
   HomeHeader,
   Layout,
@@ -23,7 +23,7 @@ import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
-  const { data } = useSubscription<ISubscribeSeasonsQuery>(SUBSCRIBE_SEASONS, {
+  const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
