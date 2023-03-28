@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useAccount } from 'wagmi'
 import { UPDATE_GRANTS, UPDATE_ARTIFACTS } from '@gql'
 import { useMutation } from '@apollo/client'
-import publishArtifact from '../publishArtifact'
+import publishArtifact from '../sendArtifactToIPFS'
 import moment from 'moment-timezone'
 import { IGrantFragment } from '@types'
 

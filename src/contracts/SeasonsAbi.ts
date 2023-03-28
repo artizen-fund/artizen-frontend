@@ -1,11 +1,7 @@
 const seasonsAbi = [
   { inputs: [{ internalType: 'string', name: 'message', type: 'string' }], name: 'ContractShutdown', type: 'error' },
   { inputs: [{ internalType: 'string', name: 'message', type: 'string' }], name: 'IncorrectAmount', type: 'error' },
-  {
-    inputs: [{ internalType: 'string', name: 'message', type: 'string' }],
-    name: 'IncorrectTimesGiven',
-    type: 'error',
-  },
+  { inputs: [{ internalType: 'string', name: 'message', type: 'string' }], name: 'IncorrectTimesGiven', type: 'error' },
   {
     inputs: [{ internalType: 'uint256', name: 'season', type: 'uint256' }],
     name: 'NoMoreSubmissionsToThisSeason',

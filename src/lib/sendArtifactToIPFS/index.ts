@@ -2,7 +2,7 @@ import { IArtifactFragment, IProjectFragment } from '@types'
 import { BigNumber, ethers } from 'ethers'
 import composeArtifactDescription from './composeArtifactDescription'
 import composeMetadataObject from './composeMetadataObject'
-import { publishImageNFT, publishVideoNFT, publishNFTRequest } from './publishNFTRequest'
+import { sendDataToAPI } from './sendDataToIPFS'
 
 interface MetadataObject {
   name: string
@@ -26,17 +26,26 @@ export default async (
   index: number,
 ) => {
   const latestTokenId: BigNumber = await nftContract?.getCurrentTokenId()
-  // The minted Artifact order is:
-  //     1. Creator
-  //     2. Community
-  //     3. Patron
   const artifactNumber = latestTokenId.add(index + 1) // can't + a BigNumber and a Number, so need to .add()
   const artifactName = `Artifact #${artifactNumber}`
   const allProjectMembersString = project.members.map(({ user }) => `${user?.firstName} ${user?.lastName}`).join(', ')
   const artifactDescription = composeArtifactDescription(project, artifact, allProjectMembersString)
 
-  const image = await publishImageNFT(artifact, artifactName)
-  const animation = await publishVideoNFT(artifact, artifactName)
+  const image = await sendDataToAPI(
+    JSON.stringify({
+      metadata: artifact.artwork,
+      name: `${artifactName}-image`,
+      description: artifact.description,
+    }),
+  )
+
+  const animation = await sendDataToAPI(
+    JSON.stringify({
+      metadata: artifact.artwork,
+      name: `${artifactName}-video`,
+      description: artifact.description,
+    }),
+  )
 
   const metadataObject: MetadataObject = composeMetadataObject(
     artifactName,
@@ -49,10 +58,10 @@ export default async (
     animation,
   )
 
-  const metadata = await publishNFTRequest(
+  const metadata = await sendDataToAPI(
     JSON.stringify({
       metadata: metadataObject,
-      name: `${artifact.name}-metadata`,
+      name: `${artifactName}-metadata`,
       description: artifact.description,
     }),
   )

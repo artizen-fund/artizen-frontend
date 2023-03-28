@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { withSentry } from '@sentry/nextjs'
 import { storeNFTFromContent, storeNFTFromUrl } from '@lib'
 
-const publishNFT = async (req: NextApiRequest, res: NextApiResponse) => {
+const uploadDataToIPFS = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { imagePath, name, metadata } = req.body
     if (metadata) {
@@ -20,4 +20,4 @@ const publishNFT = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default withSentry(publishNFT)
+export default withSentry(uploadDataToIPFS)
