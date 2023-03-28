@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
 import { LOAD_SEASONS } from '@gql'
@@ -21,18 +20,11 @@ import {
   ProjectCard,
 } from '@components'
 import { rgba, ARTIZEN_TIMEZONE } from '@lib'
-import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels, faq } from '@copy/home'
-import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone'
-import utc from 'dayjs/plugin/utc'
-
-const CURRENT_SEASON_INDEX = 1
+import { breakpoint, palette } from '@theme'
+import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
-  const [limit, setLimit] = useState(15)
-
-  const { loading, data, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
+  const { data } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     variables: {
       where: {
         startingdate: { _gte: moment().tz(ARTIZEN_TIMEZONE).format() },
