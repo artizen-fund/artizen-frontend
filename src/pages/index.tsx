@@ -5,7 +5,6 @@ import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
 import { LOAD_SEASONS } from '@gql'
 import { ILoadSeasonsQuery } from '@types'
-
 import {
   HomeHeader,
   Layout,
@@ -21,9 +20,12 @@ import {
   LeaderboardHeader,
   ProjectCard,
 } from '@components'
-import { rgba } from '@lib'
+import { rgba, ARTIZEN_TIMEZONE } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { header, alternatingPanels, faq } from '@copy/home'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 
 const CURRENT_SEASON_INDEX = 1
 
@@ -32,11 +34,13 @@ const IndexPage = () => {
 
   const { loading, data, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     variables: {
-      where: { index: { _eq: CURRENT_SEASON_INDEX } },
+      where: {
+        startingdate: { _gte: moment().tz(ARTIZEN_TIMEZONE).format() },
+        endingDate: { _lt: moment().tz(ARTIZEN_TIMEZONE).format() },
+      },
     },
   })
 
-  console.log('data', data)
   return (
     <Layout>
       <HomeHeader />
