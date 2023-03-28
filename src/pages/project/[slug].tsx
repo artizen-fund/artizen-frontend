@@ -11,11 +11,12 @@ import {
   CreatorBox,
   LongDescription,
 } from '@components'
-import { LayoutContext } from '@lib'
+import { LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
 import { typography, breakpoint } from '@theme'
-import { useQuery } from '@apollo/client'
-import { GET_PROJECTS } from '@gql'
-import { IProjectsQuery } from '@types'
+import { useQuery, useSubscription } from '@apollo/client'
+import { GET_PROJECTS, SUBSCRIBE_SEASONS } from '@gql'
+import { IProjectsQuery, ISubscribeSeasonsQuery } from '@types'
+import moment from 'moment-timezone'
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
@@ -37,7 +38,20 @@ const ProjectPage = () => {
     },
   })
 
+  const { data: allProjects } = useSubscription<ISubscribeSeasonsQuery>(SUBSCRIBE_SEASONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      where: {
+        startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
+        endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+      },
+      order_by: { submissions_aggregate: { count: 'asc' } },
+    },
+  })
+
   const project = data?.Projects[0]
+
+  console.log('allProjects', allProjects)
 
   if (!!loading) return <p>…loading…</p>
 
@@ -50,7 +64,10 @@ const ProjectPage = () => {
           <Side>
             <Header>
               <Topline>
-                <RankAndArtifactCount rank={1} count={128} />
+                <RankAndArtifactCount
+                  rank={1}
+                  count={project?.artifacts[0].openEditionCopies_aggregate.aggregate?.count || 0}
+                />
                 <Button level={2} outline onClick={() => setVisibleModalWithAttrs('share', { destination: asPath })}>
                   Share
                 </Button>

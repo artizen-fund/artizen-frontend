@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import styled from 'styled-components'
-import { useQuery } from '@apollo/client'
+import { useSubscription } from '@apollo/client'
 import moment from 'moment-timezone'
-import { LOAD_SEASONS } from '@gql'
-import { ILoadSeasonsQuery } from '@types'
+import { SUBSCRIBE_SEASONS } from '@gql'
+import { ISubscribeSeasonsQuery } from '@types'
 import {
   HomeHeader,
   Layout,
@@ -24,12 +23,14 @@ import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
-  const { data } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
+  const { data } = useSubscription<ISubscribeSeasonsQuery>(SUBSCRIBE_SEASONS, {
+    fetchPolicy: 'no-cache',
     variables: {
       where: {
         startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
         endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
       },
+      order_by: { submissions_aggregate: { count: 'asc' } },
     },
   })
 
