@@ -33,13 +33,25 @@ export const useSeasons = () => {
 
     //publish submuiission
 
-    const publishSubmissionTX = await seasonsContract?.createSubmission(season.index, submissionCount, ipfsHash)
+    const publishSubmissionTX = await seasonsContract?.createSubmission(
+      season.index,
+      submissionCount,
+      project.walletAddress,
+    )
 
     const publishSubmissionTXReceipt = await publishSubmissionTX.wait()
 
     console.log('publishSubmissionTXReceipt  ', publishSubmissionTXReceipt)
 
-    return publishSubmissionTXReceipt
+    if (publishSubmissionTXReceipt.events[0].event === 'SubmissionCreated') {
+      return {
+        status: 'SubmissionCreated',
+        artifactID: newSubmissionCount,
+        artifactIDIpfsHash: ipfsHash,
+      }
+    }
+
+    return null
   }
 
   return { publishSeason, publishSubmissions } as const

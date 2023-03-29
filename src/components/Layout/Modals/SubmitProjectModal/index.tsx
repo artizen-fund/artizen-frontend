@@ -34,8 +34,7 @@ const SubmitProjectModal = () => {
 
   const inputRef = useRef<ISeasonFragment[]>([])
 
-  console.log('dayjs().tz(ARTIZEN_TIMEZONE).format()  ', dayjs().tz(ARTIZEN_TIMEZONE).format())
-
+  const [processing, setProcessing] = useState(false)
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
   const [loadSeasons, { data: loadedSeasonsData }] = useLazyQuery<ILoadSeasonsQuery>(LOAD_SEASONS)
 
