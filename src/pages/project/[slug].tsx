@@ -11,17 +11,19 @@ import {
   CreatorBox,
   LongDescription,
 } from '@components'
-import { LayoutContext } from '@lib'
+import { LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
 import { typography, breakpoint } from '@theme'
-import { useQuery } from '@apollo/client'
-import { GET_PROJECTS } from '@gql'
-import { IProjectsQuery } from '@types'
+import { useQuery, useSubscription } from '@apollo/client'
+import { GET_PROJECTS, SUBSCRIBE_SEASONS } from '@gql'
+import { IProjectsQuery, ISubscribeSeasonsSubscription } from '@types'
+import moment from 'moment-timezone'
 
 const ProjectPage = () => {
-  const { setVisibleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
     query: { slug },
+    asPath,
   } = useRouter()
 
   const { loading, data, error } = useQuery<IProjectsQuery>(GET_PROJECTS, {
@@ -36,11 +38,27 @@ const ProjectPage = () => {
     },
   })
 
+  const { loading: loadingSeason, data: seasonData } = useSubscription<ISubscribeSeasonsSubscription>(
+    SUBSCRIBE_SEASONS,
+    {
+      fetchPolicy: 'no-cache',
+      variables: {
+        where: {
+          startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
+          endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+        },
+        order_by: { submissions_aggregate: { count: 'asc' } },
+      },
+    },
+  )
+
   const project = data?.Projects[0]
 
-  if (!!loading) return <p>…loading…</p>
+  if (!!loading || !!loadingSeason || !seasonData || !project) return <p>…loading…</p>
 
-  const lead = project && project.members?.find(m => m.type === 'lead')?.user
+  const lead = project.members?.find(m => m.type === 'lead')?.user
+
+  const rank = seasonData.Seasons[0].submissions?.findIndex(submission => submission.project?.id === project.id)
 
   return (
     <Layout>
@@ -49,13 +67,16 @@ const ProjectPage = () => {
           <Side>
             <Header>
               <Topline>
-                <RankAndArtifactCount rank={1} count={128} />
-                <Button level={2} outline onClick={() => setVisibleModal('share')}>
+                <RankAndArtifactCount
+                  rank={rank}
+                  count={project.artifacts[0].openEditionCopies_aggregate.aggregate?.count || 0}
+                />
+                <Button level={2} outline onClick={() => setVisibleModalWithAttrs('share', { destination: asPath })}>
                   Share
                 </Button>
               </Topline>
-              <h1>{project?.title}</h1>
-              <p>{project?.logline}</p>
+              <h1>{project.title}</h1>
+              <p>{project.logline}</p>
               {/* <Tags tags={sampleTags} /> */}
 
               {lead && <CreatorBox member={lead} />}
@@ -64,7 +85,7 @@ const ProjectPage = () => {
             {/*<Leaderboard />*/}
 
             <LongDescription>
-              {(project?.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
+              {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
                 <div key={`metadatum-${index}`}>
                   <h2>{metadatum.title}</h2>
                   <p>{metadatum.value}</p>

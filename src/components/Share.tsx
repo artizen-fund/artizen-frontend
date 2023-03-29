@@ -7,9 +7,9 @@ import { palette, breakpoint, typography } from '@theme'
 import { sharingModal } from '@copy/common'
 
 const Share = () => {
-  const { toggleModal } = useContext(LayoutContext)
+  const { modalAttrs } = useContext(LayoutContext)
 
-  const link = 'https://artizen.fund'
+  const link = `https://artizen.fund${!!modalAttrs?.destination ? modalAttrs.destination : ''}`
   const title = 'Artizen'
   const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     sharingModal.twitterMessage,

@@ -50,7 +50,6 @@ export const StringControl = ({
   useEffect(() => {
     // TODO: Commented this out so the input field can be set as empty
     // if (!localData) return
-    console.log('!!localData   ', path, !!localData)
     handleChange(path, !!localData ? localData : '')
   }, [localData])
 
