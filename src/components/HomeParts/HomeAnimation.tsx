@@ -8,37 +8,62 @@ const HomeAnimation = () => {
   const onLoad = (splineApp: any) => (spline.current = splineApp)
   return (
     <Wrapper>
-      <Spline scene="https://prod.spline.design/okXMrkvtXW9y1Q9b/scene.splinecode" onLoad={onLoad} />
+      <div>
+        <StyledSpline scene="https://prod.spline.design/LkyNHqmv6VPdWnml/scene.splinecode" onLoad={onLoad} />
+        <StyledSpline scene="https://prod.spline.design/TrfVmPw3GkShfJMY/scene.splinecode" onLoad={onLoad} dark />
+      </div>
     </Wrapper>
   )
 }
-
-// .682
 
 const Wrapper = styled.div`
   > div {
     width: auto !important;
     height: auto !important;
-    canvas {
-      width: calc(100vw - 40px) !important;
-      height: calc(68vw - 40px) !important;
-      @media only screen and (min-width: ${breakpoint.tablet}px) {
-        width: 400px !important;
-        height: calc(400px * 0.682) !important;
-      }
-      @media only screen and (min-width: ${breakpoint.laptop}px) {
-        width: 550px !important;
-        height: calc(550px * 0.682) !important;
-      }
-      @media only screen and (min-width: ${breakpoint.laptopXL}px) {
-        width: 600px !important;
-        height: calc(600px * 0.682) !important;
-      }
-      @media only screen and (min-width: ${breakpoint.desktop}px) {
-        width: 750px !important;
-        height: 512px !important;
-      }
+    position: relative;
+
+    @media only screen and (min-width: ${breakpoint.tablet}px) {
+      width: 400px !important;
+      height: 400px !important;
     }
+    @media only screen and (min-width: ${breakpoint.laptop}px) {
+      width: 550px !important;
+      height: 550px !important;
+    }
+    @media only screen and (min-width: ${breakpoint.laptopXL}px) {
+      width: 600px !important;
+      height: 600px !important;
+    }
+    @media only screen and (min-width: ${breakpoint.desktop}px) {
+      width: 750px !important;
+      height: 750px !important;
+    }
+  }
+`
+
+const StyledSpline = styled(props => <Spline {...props} />)<{ dark?: boolean }>`
+  display: ${props => (props.dark ? 'none' : 'block')};
+  @media only screen and (prefers-color-scheme: dark) {
+    display: ${props => (props.dark ? 'block' : 'none')};
+  }
+  width: calc(100vw - 40px) !important;
+  height: calc(100vw - 40px) !important;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    position: absolute;
+    left: -50px;
+    top: -50px;
+    width: 600px !important;
+    height: 600px !important;
+  }
+  @media only screen and (min-width: ${breakpoint.laptopXL}px) {
+    width: 700px !important;
+    height: 700px !important;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    left: -75px;
+    top: -75px;
+    width: 800px !important;
+    height: 800px !important;
   }
 `
 

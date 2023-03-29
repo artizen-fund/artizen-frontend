@@ -93,7 +93,7 @@ const DonationBox = ({ blockchainId, unitPrice }: IDonationBox) => {
       <>
         <MobileBreak>
           <Cost>
-            <div>cost</div>
+            <div>Cost</div>
             <Amount>
               <span>Ξ {unitPrice}</span>
             </Amount>
@@ -101,7 +101,7 @@ const DonationBox = ({ blockchainId, unitPrice }: IDonationBox) => {
           <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
         </MobileBreak>
         <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending}>
-          {sending ? 'Processing Donation' : 'Mint'}
+          {sending ? 'Processing Donation' : 'Buy'}
         </StyledButton>
       </>
     </Wrapper>

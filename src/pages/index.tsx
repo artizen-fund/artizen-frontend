@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/client'
+import { useSubscription } from '@apollo/client'
 import moment from 'moment-timezone'
-import { LOAD_SEASONS } from '@gql'
-import { ILoadSeasonsQuery } from '@types'
-
+import { SUBSCRIBE_SEASONS } from '@gql'
+import { ISubscribeSeasonsSubscription } from '@types'
 import {
   HomeHeader,
   Layout,
@@ -21,22 +18,22 @@ import {
   LeaderboardHeader,
   ProjectCard,
 } from '@components'
-import { rgba } from '@lib'
-import { typography, breakpoint, palette } from '@theme'
-import { header, alternatingPanels, faq } from '@copy/home'
-
-const CURRENT_SEASON_INDEX = 1
+import { rgba, ARTIZEN_TIMEZONE } from '@lib'
+import { breakpoint, palette } from '@theme'
+import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
-  const [limit, setLimit] = useState(15)
-
-  const { loading, data, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
+  const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+    fetchPolicy: 'no-cache',
     variables: {
-      where: { index: { _eq: CURRENT_SEASON_INDEX } },
+      where: {
+        startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
+        endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+      },
+      order_by: { submissions_aggregate: { count: 'asc' } },
     },
   })
 
-  console.log('data', data)
   return (
     <Layout>
       <HomeHeader />

@@ -1,7 +1,7 @@
 const applyForFundingBlurb = {
-  title: 'Apply for funding',
+  title: 'Submit Your Projects',
   subhead:
-    'Artizen is a community fund for art, tech, science, and design. We support projects at any stage of development from rough idea to released work, and in any medium from oil paintings to open source code.',
+    'The Artizen Prize is open to creators at the frontier of art, science, technology, and design. We support projects in any stage of development from rough idea to released work, and in any medium from oil paintings to open source code. ',
   trailingHead: 'Here’s what we’re looking for:',
   tiles: [
     {
@@ -23,9 +23,9 @@ const applyForFundingBlurb = {
       description: 'Build the team, learn the skills, and do the research to make your dream a reality.',
     },
   ],
-  buttonLabel: 'Apply',
+  buttonLabel: 'Submit your Projects',
   applyLink: 'https://artizen.typeform.com/apply',
-  disclaimer: 'Clicking apply redirects you to an external website.',
+  disclaimer: 'Clicking here redirects you to an external website.',
 }
 
 export { applyForFundingBlurb }
