@@ -38,6 +38,7 @@ const ProjectPage = () => {
     },
   })
 
+  //TODO: this code does assume that the project has been submitted to the active season which will not be the case when the season ends
   const { loading: loadingSeason, data: seasonData } = useSubscription<ISubscribeSeasonsSubscription>(
     SUBSCRIBE_SEASONS,
     {
@@ -59,6 +60,12 @@ const ProjectPage = () => {
   const lead = project.members?.find(m => m.type === 'lead')?.user
 
   const rank = seasonData.Seasons[0].submissions?.findIndex(submission => submission.project?.id === project.id)
+  //TODO: This make this to refresh
+  // const projectSubmissions = seasonData.Seasons[0].submissions?.filter(
+  //   submission => submission.project?.id === project.id,
+  // )
+
+  // console.log('projectSubmissions', projectSubmissions)
 
   return (
     <Layout>
@@ -93,8 +100,11 @@ const ProjectPage = () => {
               ))}
             </LongDescription>
           </Side>
+
           <Side>
-            <ArtifactCard />
+            {/* TODO: Artifacts should be an object instead of an array  */}
+            {/* This is wrong, we need to use the artifact from the submission */}
+            <ArtifactCard artifactData={project.artifacts[0]} />
           </Side>
         </Wrapper>
       </PagePadding>

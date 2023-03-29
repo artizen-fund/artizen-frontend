@@ -15,6 +15,19 @@ export const useSeasons = () => {
     console.log('tx from create season', tx)
   }
 
+  const mintOpenEditions = async (tokenId: string, amount: number) => {
+    console.log('mintOpenEditions call ')
+    const tx = await seasonsContract?.mintArtifact(0.02, [125], [2])
+
+    console.log('tx from mintOpenEditions', tx)
+
+    const mintOpenEditionsTx = await tx.wait()
+
+    console.log('mintOpenEditionsTxfr', mintOpenEditionsTx)
+
+    return mintOpenEditionsTx
+  }
+
   const publishSubmissions = async (season: ISeasonFragment, project: IProjectFragment) => {
     //get latest token id
     //getLatestTokenID
@@ -41,18 +54,14 @@ export const useSeasons = () => {
 
     const publishSubmissionTXReceipt = await publishSubmissionTX.wait()
 
-    console.log('publishSubmissionTXReceipt  ', publishSubmissionTXReceipt)
-
     if (publishSubmissionTXReceipt.events[0].event === 'SubmissionCreated') {
       return {
-        status: 'SubmissionCreated',
         artifactID: newSubmissionCount,
-        artifactIDIpfsHash: ipfsHash,
       }
     }
 
-    return null
+    return
   }
 
-  return { publishSeason, publishSubmissions } as const
+  return { publishSeason, publishSubmissions, mintOpenEditions } as const
 }

@@ -73,6 +73,9 @@ export const PROJECT = gql`
     metadata
     impactTags
     impact
+    submissions {
+      id
+    }
     artifacts {
       ...Artifact
     }

@@ -5,85 +5,86 @@ import { ErrorObject } from 'ajv'
 import { Button, Counter } from '@components'
 import {
   LayoutContext,
-  useDonate,
   trackEventF,
   intercomEventEnum,
   useFullSignOut,
   WALLET_ERROR_UNSUPPORTED_OPERATION,
   WALLET_ERROR_INSUFFICIENT_FUNDS,
   rgba,
+  useSeasons,
 } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 
 interface IDonationBox {
-  blockchainId: string | undefined
-  unitPrice: number
+  tokenId: string | undefined
 }
 
-const DonationBox = ({ blockchainId, unitPrice }: IDonationBox) => {
+const DonationBox = ({ tokenId }: IDonationBox) => {
   const { status } = useSession()
   const { disconnectAndSignout } = useFullSignOut()
   const { toggleModal } = useContext(LayoutContext)
 
-  const { donate } = useDonate()
+  const { mintOpenEditions } = useSeasons()
   const [sending, setSending] = useState<boolean>(false)
   const { setVisibleModal } = useContext(LayoutContext)
-  const [artifactQuantity, setArtifactQuantity] = useState(1)
+  const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
+
+  const unitPrice = '0.3'
 
   useEffect(() => console.log(artifactQuantity), [artifactQuantity])
 
-  const donationAmount = 0.01 // < todo: get this from Hasura
-
   const donateFn = async () => {
-    if (!blockchainId || !artifactQuantity) return
+    if (!tokenId || !artifactQuantity) return
     toggleModal('confirmTransaction')
     setSending(true)
     trackEventF(intercomEventEnum.DONATION_START, {
-      amount: (artifactQuantity * donationAmount).toString(),
-      grantblockchainId: blockchainId,
-    })
-    try {
-      const returnTx = await donate(parseInt(blockchainId), (artifactQuantity * donationAmount).toString())
-      // TODO: it'll only work when EK removes the transaction from the server
-      // if there is transaction hash add a record
-      // if (!returnTx.transactionHash) {
-      //   trackEventF(intercomEventEnum.DONATION_FAILED, {
-      //     amount: (artifactQuantity * donationAmount).toString(),
-      //     grantblockchainId: blockchainId,
-      //   })
-      //   throw new Error('Tx is empty')
-      // }
-    } catch (e: any) {
-      const errors: Array<ErrorObject> = []
-      const message =
-        e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
-          ? 'Insufficient funds'
-          : WALLET_ERROR_UNSUPPORTED_OPERATION
-          ? 'Connect wallet'
-          : 'Unknown error'
-      errors.push({
-        instancePath: '/donationAmount',
-        message,
-        schemaPath: '#/properties/donationAmount',
-        keyword: '',
-        params: {},
-      })
-
-      setSending(false)
-
-      if (e.code === WALLET_ERROR_UNSUPPORTED_OPERATION) {
-        disconnectAndSignout()
-      }
-    }
-
-    trackEventF(intercomEventEnum.DONATION_FINISHED, {
-      amount: (artifactQuantity * donationAmount).toString(),
-      grantblockchainId: blockchainId,
+      amount: artifactQuantity,
+      tokenId,
     })
 
-    toggleModal('shareTransaction')
+    const returnTx = await mintOpenEditions(tokenId, artifactQuantity)
+    // try {
+    //   const returnTx = await mintOpenEditions(tokenId, artifactQuantity)
+    //   // TODO: it'll only work when EK removes the transaction from the server
+    //   // if there is transaction hash add a record
+    //   // if (!returnTx.transactionHash) {
+    //   //   trackEventF(intercomEventEnum.DONATION_FAILED, {
+    //   //     amount: (artifactQuantity * donationAmount).toString(),
+    //   //     grantblockchainId: blockchainId,
+    //   //   })
+    //   //   throw new Error('Tx is empty')
+    //   // }
+    // } catch (e: any) {
+    //   const errors: Array<ErrorObject> = []
+    //   const message =
+    //     e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
+    //       ? 'Insufficient funds'
+    //       : WALLET_ERROR_UNSUPPORTED_OPERATION
+    //       ? 'Connect wallet'
+    //       : 'Unknown error'
+    //   errors.push({
+    //     instancePath: '/donationAmount',
+    //     message,
+    //     schemaPath: '#/properties/donationAmount',
+    //     keyword: '',
+    //     params: {},
+    //   })
 
-    setSending(false)
+    //   setSending(false)
+
+    //   if (e.code === WALLET_ERROR_UNSUPPORTED_OPERATION) {
+    //     disconnectAndSignout()
+    //   }
+    // }
+
+    // trackEventF(intercomEventEnum.DONATION_FINISHED, {
+    //   amount: artifactQuantity.toString(),
+    //   tokenId,
+    // })
+
+    // toggleModal('shareTransaction')
+
+    // setSending(false)
   }
 
   return (

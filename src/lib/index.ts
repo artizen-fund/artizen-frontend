@@ -32,7 +32,6 @@ export * from './useSendGrantNotification'
 export * from './useSeasons'
 export * from './useSendRewards'
 export * from './usePublishGrant'
-export * from './useDonate'
 export * from './useDateHelpers'
 
 export { default as sendArtifactToIPFS } from './sendArtifactToIPFS'
