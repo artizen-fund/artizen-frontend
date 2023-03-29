@@ -8,16 +8,13 @@ import { PinataPinResponse } from '@pinata/sdk'
 export default (
   artifactName: string,
   artifactDescription: string,
-  artifactNumber: BigNumber,
+  artifactNumber: number,
   project: IProjectFragment,
   artifact: IArtifactFragment,
   season: number,
   image: PinataPinResponse,
-  animation?: PinataPinResponse,
+  video?: PinataPinResponse,
 ) => {
-  if (!artifact.edition) {
-    throw new Error('Artifact is missing “edition” property')
-  }
   if (!project.title) {
     throw new Error('Project is missing “title” property')
   }
@@ -29,7 +26,7 @@ export default (
     name: artifactName,
     description: artifactDescription,
     image: `ipfs://${image.IpfsHash}`,
-    animation_url: animation ? `ipfs://${animation.IpfsHash}` : undefined,
+    animation_url: video ? `ipfs://${video.IpfsHash}` : undefined,
     background_color: '000000',
     external_url: `https://artizen.fund/projects/artifacts/artifact${artifactNumber}/`,
     attributes: [
@@ -43,7 +40,7 @@ export default (
         value: moment.tz(project.completionDate, ARTIZEN_TIMEZONE).unix(),
         display_type: 'date',
       },
-      { trait_type: 'Limited Series', value: artifact.edition },
+      // { trait_type: 'Limited Series', value: artifact.edition },
       { trait_type: 'Minted', value: `Season ${season}` },
       { trait_type: 'Project', value: project.title },
       { trait_type: 'Lead Creator', value: leadMemberTraitType },

@@ -1,4 +1,6 @@
 import { useDateHelpers, useSmartContracts } from '@lib'
+import { IProjectFragment, ISeasonFragment } from '@types'
+import { sendArtifactToIPFS } from '@lib'
 
 export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
@@ -13,5 +15,32 @@ export const useSeasons = () => {
     console.log('tx from create season', tx)
   }
 
-  return { publishSeason } as const
+  const publishSubmissions = async (season: ISeasonFragment, project: IProjectFragment) => {
+    //get latest token id
+    //getLatestTokenID
+    const tx = await seasonsContract?.submissionCount()
+    const submissionCount = await tx.toString()
+
+    console.log('latestTokenIDR  ', submissionCount)
+
+    const newSubmissionCount = parseInt(submissionCount) + 1
+
+    //TODO: add ipfs hash to artifact record in Hasura
+
+    const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, season, project)
+
+    console.log('ipfsHash  ', ipfsHash)
+
+    //publish submuiission
+
+    const publishSubmissionTX = await seasonsContract?.createSubmission(season.index, submissionCount, ipfsHash)
+
+    const publishSubmissionTXReceipt = await publishSubmissionTX.wait()
+
+    console.log('publishSubmissionTXReceipt  ', publishSubmissionTXReceipt)
+
+    return publishSubmissionTXReceipt
+  }
+
+  return { publishSeason, publishSubmissions } as const
 }

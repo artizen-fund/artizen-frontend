@@ -1,20 +1,20 @@
 import { IArtifactFragment, IProjectFragment } from '@types'
 
 const composeArtifactDescription = (
+  artifactName: string,
   project: IProjectFragment,
   artifact: IArtifactFragment,
   allProjectMembersString: string,
 ) =>
-  `**${artifact.name} minted by "${project.title}"**
-*${artifact.edition} Edition 1/1*
+  `**${artifactName} minted by ${project.title}**
   
 **About**: ${project.logline}
   
-**Impact**: ${project.impact}
+**Impact**: ${project.impactTags}
   
 **Team**: ${allProjectMembersString}
   
-This Artifact is in the [public domain](https://creativecommons.org/publicdomain/zero/1.0/).
+This Artifact is in the [public domain](https://creativecommons.org/publicdomain/zero/1.0/)
 
 **Supported by the [Artizen Fund](https://www.artizen.fund/) for human creativity**
 `

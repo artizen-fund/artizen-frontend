@@ -3,8 +3,14 @@ import { withSentry } from '@sentry/nextjs'
 import { storeNFTFromContent, storeNFTFromUrl } from '@lib'
 
 const uploadDataToIPFS = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log('req.body  ', req.body)
+
   try {
     const { imagePath, name, metadata } = req.body
+
+    console.log('imagePath  ', imagePath)
+    console.log('metadata  ', metadata)
+
     if (metadata) {
       const result = await storeNFTFromContent(metadata, name)
       return res.json(result)

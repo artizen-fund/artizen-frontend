@@ -1,4 +1,4 @@
-import { IArtifactFragment, IProjectFragment } from '@types'
+import { IArtifactFragment, IProjectFragment, ISeasonFragment } from '@types'
 import { BigNumber, ethers } from 'ethers'
 import composeArtifactDescription from './composeArtifactDescription'
 import composeMetadataObject from './composeMetadataObject'
@@ -18,52 +18,52 @@ interface MetadataObject {
   }>
 }
 
-export default async (
-  nftContract: ethers.Contract,
-  project: IProjectFragment,
-  artifact: IArtifactFragment,
-  season: number,
-  index: number,
-) => {
-  const latestTokenId: BigNumber = await nftContract?.getCurrentTokenId()
-  const artifactNumber = latestTokenId.add(index + 1) // can't + a BigNumber and a Number, so need to .add()
+const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragment, project: IProjectFragment) => {
   const artifactName = `Artifact #${artifactNumber}`
   const allProjectMembersString = project.members.map(({ user }) => `${user?.firstName} ${user?.lastName}`).join(', ')
-  const artifactDescription = composeArtifactDescription(project, artifact, allProjectMembersString)
+  const artifactToUpload = project.artifacts[0]
+
+  const artifactDescription = composeArtifactDescription(
+    artifactName,
+    project,
+    artifactToUpload,
+    allProjectMembersString,
+  )
 
   const image = await sendDataToAPI(
     JSON.stringify({
-      metadata: artifact.artwork,
+      imagePath: artifactToUpload.artwork,
       name: `${artifactName}-image`,
-      description: artifact.description,
     }),
   )
 
-  const animation = await sendDataToAPI(
-    JSON.stringify({
-      metadata: artifact.artwork,
-      name: `${artifactName}-video`,
-      description: artifact.description,
-    }),
-  )
+  const video = artifactToUpload.video
+    ? await sendDataToAPI(
+        JSON.stringify({
+          imagePath: artifactToUpload.video,
+          name: `${artifactName}-video`,
+        }),
+      )
+    : undefined
 
   const metadataObject: MetadataObject = composeMetadataObject(
     artifactName,
     artifactDescription,
     artifactNumber,
     project,
-    artifact,
-    season,
+    artifactToUpload,
+    season.index,
     image,
-    animation,
+    video,
   )
 
   const metadata = await sendDataToAPI(
     JSON.stringify({
       metadata: metadataObject,
       name: `${artifactName}-metadata`,
-      description: artifact.description,
     }),
   )
   return `ipfs://${metadata.IpfsHash}`
 }
+
+export default sendArtifactToIPFS

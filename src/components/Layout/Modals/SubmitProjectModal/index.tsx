@@ -16,6 +16,7 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useRouter } from 'next/router'
 import { capitalCase } from 'capital-case'
+import { useSeasons } from '@lib'
 
 // load season data from useQuery
 
@@ -25,23 +26,28 @@ const SubmitProjectModal = () => {
   dayjs.extend(timezone)
   dayjs.extend(isSameOrAfter)
   dayjs.extend(isSameOrBefore)
-  const { getSeasonStatus, formatDate } = useDateHelpers()
+  const { getSeasonStatus, formatDate, isOpenForSubmissions } = useDateHelpers()
+  const { publishSubmissions } = useSeasons()
 
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
   const { project } = modalAttrs
 
   const inputRef = useRef<ISeasonFragment[]>([])
 
+  console.log('dayjs().tz(ARTIZEN_TIMEZONE).format()  ', dayjs().tz(ARTIZEN_TIMEZONE).format())
+
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
-  const [loadSeasons, { data: loadedSeasonsData }] = useLazyQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
-    variables: {
-      where: {
-        endingDate: {
-          _gte: dayjs().tz(ARTIZEN_TIMEZONE).format(),
-        },
-      },
-    },
-  })
+  const [loadSeasons, { data: loadedSeasonsData }] = useLazyQuery<ILoadSeasonsQuery>(LOAD_SEASONS)
+
+  const loadActiveSeasons = () => {
+    loadSeasons()
+
+    const Seasons =
+      loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0 ? loadedSeasonsData?.Seasons : []
+
+    return Seasons.filter(({ startingDate, endingDate }) => isOpenForSubmissions(startingDate, endingDate))
+  }
+
   const [submitProjectMutaton] = useMutation(INSERT_SUBMISSION)
   const { reload } = useRouter()
 
@@ -49,35 +55,34 @@ const SubmitProjectModal = () => {
     console.log('inputRef.current  ', inputRef.current)
     if (inputRef.current.length > 0) return
 
-    loadSeasons()
-    const Seasons =
-      loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0 ? loadedSeasonsData?.Seasons : []
-
-    console.log('Seasons   ', Seasons)
+    const Seasons = loadActiveSeasons()
 
     const arrayWithoutSubmitedProjects = Seasons.filter(({ submissions }) => {
       const projectSubmited = submissions.find(
         ({ project: projectFromSubmission }) => projectFromSubmission?.id !== project.id,
       )
-
-      console.log('projectSubmited   ', projectSubmited)
       return submissions.length > 0 ? projectSubmited : true
     })
 
     if (arrayWithoutSubmitedProjects.length === 0) return
 
     inputRef.current = arrayWithoutSubmitedProjects
-
-    console.log('goes to load this:::::::::::', arrayWithoutSubmitedProjects)
   }, [inputRef.current, loadedSeasonsData, loadSeasons, project.id])
 
   const submitProject = async () => {
     // create a new project submission
     // submit the submission to the season with useMutation
 
-    console.log('projectId   ', project)
-    console.log('seasonSelected   ', seasonSelected)
+    if (!seasonSelected) {
+      return
+    }
 
+    //publish submissition to blockchain
+    const returnData = await publishSubmissions(seasonSelected, project)
+
+    console.log('returnData   ', returnData)
+
+    /*
     const submitProjectR = await submitProjectMutaton({
       variables: {
         objects: [
@@ -100,6 +105,7 @@ const SubmitProjectModal = () => {
 
     toggleModal()
     reload()
+    */
   }
 
   return (
