@@ -12,7 +12,7 @@ import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba, LayoutContext, isProd } from '@lib'
 
 const Header = () => {
-  const { visibleShelf, toggleShelf } = useContext(LayoutContext)
+  const { visibleShelf, toggleShelf, setVisibleShelf } = useContext(LayoutContext)
   const [shadowVisible, setShadowVisible] = useState(false)
   useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
 
@@ -41,11 +41,7 @@ const Header = () => {
                   Apply
                 </Link>
               </li>
-              <li>
-                <Link target="_blank" href="https://help.artizen.fund/en/articles/6782291-how-the-artizen-fund-works">
-                  How It Works
-                </Link>
-              </li>
+              <li onClick={() => setVisibleShelf('howItWorks')}>How It Works</li>
             </ul>
           </Nav>
           <DonateButton />
