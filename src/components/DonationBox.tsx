@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
 
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, useFullSignOut, rgba, useSeasons } from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, MINIMUM_DONATION_AMOUNT, rgba, useSeasons } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 
 interface IDonationBox {
@@ -24,7 +24,6 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
   // SUPER IMPORTANT: This is the price of the copies and
   // it's set in the smart contract, you cannot change it here
   // without updating the smart contract
-  const unitPrice = '0.01'
 
   useEffect(() => console.log(artifactQuantity), [artifactQuantity])
 
@@ -37,7 +36,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
       tokenId,
     })
 
-    const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, +unitPrice)
+    const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, MINIMUM_DONATION_AMOUNT)
 
     //All good, there is a txHash
     if (txHash) {
@@ -81,7 +80,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
           <Cost>
             <div>Cost</div>
             <Amount>
-              <span>Ξ {unitPrice}</span>
+              <span>Ξ {MINIMUM_DONATION_AMOUNT}</span>
             </Amount>
           </Cost>
           <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
@@ -141,10 +140,6 @@ const StyledButton = styled(props => <Button {...props} />)`
 
 const Cost = styled.div`
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
   ${typography.label.l2}
   color: ${rgba(palette.barracuda)};
 `
