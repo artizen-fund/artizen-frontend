@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, Icon } from '@components'
-import { rgba, LayoutContext, useDateHelpers } from '@lib'
+import { rgba, LayoutContext, useDateHelpers, useSeasons } from '@lib'
 
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
@@ -16,7 +16,6 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useRouter } from 'next/router'
 import { capitalCase } from 'capital-case'
-import { useSeasons } from '@lib'
 
 const SubmitProjectModal = () => {
   dayjs.extend(utc)

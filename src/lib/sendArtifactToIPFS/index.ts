@@ -51,7 +51,6 @@ const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragmen
     artifactDescription,
     artifactNumber,
     project,
-    artifactToUpload,
     season.index,
     image,
     video,

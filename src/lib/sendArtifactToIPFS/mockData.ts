@@ -5,10 +5,12 @@ const mockProject: IProjectFragment = {
   id: 'abc123',
   impact: 'test impact string',
   impactTags: `['tag1', 'tag2', 'tag3']`,
+  titleURL: 'test-title-url',
   logline: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur et.',
   description: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur et.',
   creationDate: '2022-01-01 00:00:00',
   completionDate: '2022-01-02 00:00:00',
+  submissions: [{ id: 'abc123', __typename: 'Submissions' }],
   walletAddress: '0x00000000000',
   title: 'Test Project',
   artifacts: [

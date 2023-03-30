@@ -10,7 +10,6 @@ export default (
   artifactDescription: string,
   artifactNumber: number,
   project: IProjectFragment,
-  artifact: IArtifactFragment,
   season: number,
   image: PinataPinResponse,
   video?: PinataPinResponse,
