@@ -29,7 +29,7 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
       </Copy>
       <Img src={latestArtifact.artwork} />
       <Footer>
-        <DonationBox blockchainId="abc123" unitPrice={BASE_ARTIFACT_PRICE} />
+        <DonationBox tokenId="abc123" />
       </Footer>
     </Wrapper>
   )
