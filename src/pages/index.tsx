@@ -23,7 +23,7 @@ import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
 // placeholder while we figure out a non-shifting key for the timestamp
-const CURRENT_SEASON = 5
+const CURRENT_SEASON = 3
 
 const IndexPage = () => {
   const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
