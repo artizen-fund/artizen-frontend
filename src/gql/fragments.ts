@@ -73,6 +73,10 @@ export const PROJECT = gql`
     metadata
     impactTags
     impact
+    titleURL
+    submissions {
+      id
+    }
     artifacts {
       ...Artifact
     }
@@ -88,6 +92,7 @@ export const SUBMISSION = gql`
   fragment Submission on Submissions {
     id
     createdAt
+    projectId
     project {
       ...Project
     }

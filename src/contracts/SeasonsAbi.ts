@@ -1,11 +1,7 @@
 const seasonsAbi = [
   { inputs: [{ internalType: 'string', name: 'message', type: 'string' }], name: 'ContractShutdown', type: 'error' },
   { inputs: [{ internalType: 'string', name: 'message', type: 'string' }], name: 'IncorrectAmount', type: 'error' },
-  {
-    inputs: [{ internalType: 'string', name: 'message', type: 'string' }],
-    name: 'IncorrectTimesGiven',
-    type: 'error',
-  },
+  { inputs: [{ internalType: 'string', name: 'message', type: 'string' }], name: 'IncorrectTimesGiven', type: 'error' },
   {
     inputs: [{ internalType: 'uint256', name: 'season', type: 'uint256' }],
     name: 'NoMoreSubmissionsToThisSeason',
@@ -17,6 +13,7 @@ const seasonsAbi = [
     type: 'error',
   },
   { inputs: [], name: 'SeasonDoesntExist', type: 'error' },
+  { inputs: [{ internalType: 'uint256', name: 'season', type: 'uint256' }], name: 'SeasonStillRunning', type: 'error' },
   { inputs: [], name: 'SubmissionDoesntExist', type: 'error' },
   {
     inputs: [{ internalType: 'string', name: 'message', type: 'string' }],
@@ -290,6 +287,16 @@ const seasonsAbi = [
     inputs: [{ internalType: 'uint256', name: 'seasonID', type: 'uint256' }],
     name: 'getTopSubmissionsOfSeason',
     outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'user', type: 'address' },
+      { internalType: 'uint256', name: 'tokenID', type: 'uint256' },
+    ],
+    name: 'getTotalAmountPurchasedPerToken',
+    outputs: [{ internalType: 'uint256', name: 'totalAmount', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },

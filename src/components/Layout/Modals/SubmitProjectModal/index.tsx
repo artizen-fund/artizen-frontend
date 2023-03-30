@@ -1,12 +1,12 @@
 import { useContext, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, Icon } from '@components'
-import { rgba, LayoutContext, ARTIZEN_TIMEZONE, useDateHelpers } from '@lib'
+import { rgba, LayoutContext, useDateHelpers, useSeasons } from '@lib'
 
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { LOAD_SEASONS, INSERT_SUBMISSION } from '@gql'
-import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
+import { LOAD_SEASONS, INSERT_SUBMISSION, UPDATE_ARTIFACTS } from '@gql'
+import { ISeasonFragment, IUpdate_Artifacts_ManyMutation } from '@types'
 import { DropDownBlocks } from '../lib/DropDownBlocks'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -17,68 +17,109 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useRouter } from 'next/router'
 import { capitalCase } from 'capital-case'
 
-// load season data from useQuery
-
 const SubmitProjectModal = () => {
   dayjs.extend(utc)
   dayjs.extend(isBetween)
   dayjs.extend(timezone)
   dayjs.extend(isSameOrAfter)
   dayjs.extend(isSameOrBefore)
-  const { getSeasonStatus, formatDate } = useDateHelpers()
+  const { getSeasonStatus, formatDate, isOpenForSubmissions } = useDateHelpers()
+  const { publishSubmissions } = useSeasons()
 
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
   const { project } = modalAttrs
 
   const inputRef = useRef<ISeasonFragment[]>([])
 
+  const [processing, setProcessing] = useState(false)
+  const [processTxt, setProcessTxt] = useState<string>('Submit')
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
-  const [loadSeasons, { data: loadedSeasonsData }] = useLazyQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
-    variables: {
-      where: {
-        endingDate: {
-          _gte: dayjs().tz(ARTIZEN_TIMEZONE).format(),
-        },
-      },
-    },
-  })
-  const [submitProjectMutaton] = useMutation(INSERT_SUBMISSION)
+  const [loadSeasons, { data: loadedSeasonsData }] = useLazyQuery(LOAD_SEASONS)
+  const [insertSubmissionMutaton] = useMutation(INSERT_SUBMISSION)
+  const [updateArtifactMutaton] = useMutation<IUpdate_Artifacts_ManyMutation>(UPDATE_ARTIFACTS)
   const { reload } = useRouter()
 
-  useEffect(() => {
-    console.log('inputRef.current  ', inputRef.current)
-    if (inputRef.current.length > 0) return
+  const loadActiveSeasons = () => {
+    loadSeasons({
+      variables: {
+        //TODO: review why this filter does not work
+        where: { submissions: { projectId: { _neq: project.id } } },
+      },
+    })
 
-    loadSeasons()
     const Seasons =
       loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0 ? loadedSeasonsData?.Seasons : []
 
-    console.log('Seasons   ', Seasons)
+    return Seasons.filter(
+      ({ startingDate, endingDate, submissions }: ISeasonFragment): boolean =>
+        isOpenForSubmissions(startingDate, endingDate) &&
+        submissions.filter(({ projectId }) => projectId === project.id).length === 0,
+    )
+  }
 
-    const arrayWithoutSubmitedProjects = Seasons.filter(({ submissions }) => {
+  useEffect(() => {
+    if (inputRef.current.length > 0) return
+
+    const Seasons = loadActiveSeasons()
+
+    const arrayWithoutSubmitedProjects = Seasons.filter(({ submissions }: ISeasonFragment) => {
       const projectSubmited = submissions.find(
         ({ project: projectFromSubmission }) => projectFromSubmission?.id !== project.id,
       )
-
-      console.log('projectSubmited   ', projectSubmited)
       return submissions.length > 0 ? projectSubmited : true
     })
 
     if (arrayWithoutSubmitedProjects.length === 0) return
 
     inputRef.current = arrayWithoutSubmitedProjects
-
-    console.log('goes to load this:::::::::::', arrayWithoutSubmitedProjects)
   }, [inputRef.current, loadedSeasonsData, loadSeasons, project.id])
 
   const submitProject = async () => {
     // create a new project submission
     // submit the submission to the season with useMutation
 
-    console.log('projectId   ', project)
-    console.log('seasonSelected   ', seasonSelected)
+    if (!seasonSelected) {
+      return
+    }
 
-    const submitProjectR = await submitProjectMutaton({
+    setProcessing(true)
+    setProcessTxt('Submitting...')
+
+    //publish submissition to blockchain
+    const returnData = await publishSubmissions(seasonSelected, project)
+
+    if (!returnData?.artifactID) {
+      setProcessTxt('Error publishing submission to blockchain, start again')
+      return
+    }
+
+    setProcessTxt(
+      `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
+    )
+
+    const { errors: updateArtifactError } = await updateArtifactMutaton({
+      variables: {
+        updates: [
+          {
+            where: { id: { _eq: project.artifacts[0].id } },
+            _set: { token: returnData.artifactID.toString() },
+          },
+        ],
+      },
+    })
+
+    if (updateArtifactError) {
+      setProcessTxt(
+        `Error updateing the Artifact in DB, Note Artifact is minted in blockchain with tokenId: ${returnData.artifactID}, Artifact ID in DB is ${project.artifacts[0].id}, add tokenId manually to DB record`,
+      )
+      return
+    }
+
+    setProcessTxt(
+      `Artifact updated, Adding new submission to DB with projectId: ${project.id}, artifactId: ${project.artifacts[0].id}, seasonId: ${seasonSelected?.id} `,
+    )
+
+    const { errors: insertSubmissionError } = await insertSubmissionMutaton({
       variables: {
         objects: [
           {
@@ -91,74 +132,80 @@ const SubmitProjectModal = () => {
       },
     })
 
-    const { data, errors } = submitProjectR
-
-    if (errors) {
-      console.log('errors   ', errors)
-      throw new Error(errors[0].message)
+    if (insertSubmissionError) {
+      setProcessTxt(`Error adding the submission to DB with this error: ${insertSubmissionError[0].message}`)
+      return
     }
 
+    setProcessTxt('Submission published to blockchain and record added to DB, closing modal')
+
+    setProcessing(false)
     toggleModal()
+
     reload()
   }
 
   return (
     <Wrapper>
       <Headline>Submit Project to Season</Headline>
-
-      {inputRef.current.length === 0 && (
-        <SchoolItems>
-          There are not active seasons, or has this project been submitted to all the available seasons
-        </SchoolItems>
-      )}
-
-      {inputRef.current.length > 0 && (
+      {!processing && (
         <>
-          <div>Search Season to submit the project to:</div>
+          {inputRef.current.length === 0 && (
+            <SchoolItems>
+              There are not active seasons, or has this project been submitted to all the available seasons
+            </SchoolItems>
+          )}
 
-          <SchoolItems>
-            <DropDownBlocks<ISeasonFragment>
-              itemSelected={seasonSelected}
-              setItemSelected={setSeasonSelection}
-              items={inputRef.current}
-              align="right"
-              structure={[
-                {
-                  renderer: (item: ISeasonFragment) => `${item.title && capitalCase(item.title)}`,
-                },
-                {
-                  renderer: (item: ISeasonFragment) =>
-                    `${capitalCase(getSeasonStatus(item.startingDate, item.endingDate))}`,
-                },
-                {
-                  renderer: (item: ISeasonFragment) =>
-                    `Running from: ${formatDate(item.startingDate)} - to: ${formatDate(item.endingDate)}`,
-                },
-              ]}
-            ></DropDownBlocks>
-          </SchoolItems>
+          {inputRef.current.length > 0 && (
+            <>
+              <div>Search Season to submit the project to:</div>
+
+              <SchoolItems>
+                <DropDownBlocks<ISeasonFragment>
+                  itemSelected={seasonSelected}
+                  setItemSelected={setSeasonSelection}
+                  items={inputRef.current}
+                  align="right"
+                  structure={[
+                    {
+                      renderer: (item: ISeasonFragment) => `${item.title && capitalCase(item.title)}`,
+                    },
+                    {
+                      renderer: (item: ISeasonFragment) =>
+                        `${capitalCase(getSeasonStatus(item.startingDate, item.endingDate))}`,
+                    },
+                    {
+                      renderer: (item: ISeasonFragment) =>
+                        `Running from: ${formatDate(item.startingDate)} - to: ${formatDate(item.endingDate)}`,
+                    },
+                  ]}
+                ></DropDownBlocks>
+              </SchoolItems>
+            </>
+          )}
+
+          <Menu>
+            <Button
+              level={2}
+              outline
+              onClick={() => {
+                setSeasonSelection(null)
+                toggleModal('createSeasonModal')
+              }}
+            >
+              Create New Season
+            </Button>
+            {seasonSelected && (
+              <>
+                <Button level={2} onClick={submitProject}>
+                  Submit Project
+                </Button>
+              </>
+            )}
+          </Menu>
         </>
       )}
-
-      <Menu>
-        <Button
-          level={2}
-          outline
-          onClick={() => {
-            setSeasonSelection(null)
-            toggleModal('createSeasonModal')
-          }}
-        >
-          Create New Season
-        </Button>
-        {seasonSelected && (
-          <>
-            <Button level={2} onClick={submitProject}>
-              Submit Project
-            </Button>
-          </>
-        )}
-      </Menu>
+      {processing && <div>{processTxt}</div>}
     </Wrapper>
   )
 }

@@ -3,7 +3,6 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
-import moment from 'moment-timezone'
 import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } from '@components'
 import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
@@ -17,11 +16,7 @@ const Seasons = () => {
   const { toggleModal } = useContext(LayoutContext)
   const { formatDate, getSeasonStatus } = useDateHelpers()
 
-  const {
-    loading,
-    data: loadedSeasonsData,
-    error,
-  } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
+  const { data: loadedSeasonsData, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       order_by: [

@@ -22,18 +22,16 @@ export * from './useCloudinary'
 export * from './useFormLocalStorage'
 export * from './useReadContract'
 export * from './useTabbedInfo'
-export * from './utilsCrypto'
 export * from './utilsServer'
 export * from './wagmiClient'
 export * from './constants'
 export * from './useFullSignOut'
 export * from './useSmartContracts'
-export * from './useSendGrantNotification'
 export * from './useSeasons'
-export * from './useSendRewards'
-export * from './usePublishGrant'
-export * from './useDonate'
 export * from './useDateHelpers'
+export * from './useGnosis'
+
+export { default as sendArtifactToIPFS } from './sendArtifactToIPFS'
 
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.
  *  Something to do with a circular import.

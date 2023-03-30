@@ -32,7 +32,7 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
         <Img src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`} />
       </Link>
       <Footer>
-        <DonationBox blockchainId="abc123" unitPrice={BASE_ARTIFACT_PRICE} />
+        <DonationBox tokenId={latestArtifact.token} />
       </Footer>
     </Wrapper>
   )

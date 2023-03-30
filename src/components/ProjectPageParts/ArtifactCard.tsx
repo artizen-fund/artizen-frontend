@@ -1,28 +1,25 @@
 import styled from 'styled-components'
-import { rgba, BASE_ARTIFACT_PRICE } from '@lib'
-import { typography, palette, breakpoint } from '@theme'
-import { Button, ArtifactCount, DonationBox, Rank } from '@components'
-import { IProjectFragment } from '@types'
+import { rgba } from '@lib'
+import { typography, palette } from '@theme'
+import { IArtifactFragment } from '@types'
+import { DonationBox } from '@components'
 
 interface IArtifactCard {
-  project: IProjectFragment
+  artifact: IArtifactFragment
 }
 
-const ArtifactCard = ({ project }: IArtifactCard) => {
-  const latestArtifact = project.artifacts[0]
-  return (
-    <Wrapper>
-      <Img src={latestArtifact.artwork} />
-      <Copy>
-        <h2>Artifact #{latestArtifact.token}</h2>
-        <OpenEdition>Open Edition</OpenEdition>
-      </Copy>
-      <Footer>
-        <DonationBox blockchainId="abc123" unitPrice={BASE_ARTIFACT_PRICE} />
-      </Footer>
-    </Wrapper>
-  )
-}
+const ArtifactCard = ({ artifact }: IArtifactCard) => (
+  <Wrapper>
+    <Img src={artifact.artwork} />
+    <Copy>
+      <h2>Artifact #{artifact.token}</h2>
+      <OpenEdition>Open Edition</OpenEdition>
+    </Copy>
+    <Footer>
+      <DonationBox tokenId={artifact.token} />
+    </Footer>
+  </Wrapper>
+)
 
 const Wrapper = styled.article`
   grid-area: card;

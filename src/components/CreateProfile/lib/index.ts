@@ -82,12 +82,22 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
         ],
       },
     })
-    await addUserToCourier()
 
     if (!newUserMutationReturn.data?.insert_Users) {
       throw new Error('Error creating users in the admin form')
     }
 
+    const newUser = newUserMutationReturn.data.insert_Users.returning[0]
+    // If there is a change in email, firstName or lastName, add to Courier
+    if (newUser.email && newUser.firstName && newUser.lastName) {
+      await addUserToCourier({
+        id: newUser.id,
+        email: newUser.email,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        type: 'addNewUser',
+      })
+    }
     return newUserMutationReturn.data.insert_Users.returning[0]
   }
 
@@ -104,28 +114,37 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
         return (valuesToUpdate[key] = key === 'artizenHandle' ? data[key]?.toLowerCase() : data[key])
       }
     })
-    console.log('valuesToUpdate   ', valuesToUpdate)
-
-    console.log('userIdToUpdate  ', userIdToUpdate)
 
     const profileImage = await uploadAvatar(imageFile)
 
-    console.log('to replace  ', { ...valuesToUpdate, claimed: !initialFormState && true, profileImage })
+    const userId = userIdToUpdate ? userIdToUpdate : loggedInUser.id ? loggedInUser.id : ''
+
+    if (!userId) {
+      throw new Error('User id not found')
+    }
 
     const updatedUser = await updateUser({
       variables: {
         where: {
           id: {
-            _eq: userIdToUpdate || loggedInUser.id,
+            _eq: userId,
           },
         },
         _set: { ...valuesToUpdate, claimed: !initialFormState && true, profileImage },
       },
       onError: error => console.error('error form ::::', error),
     })
-    await addUserToCourier()
-
-    console.log('updatedUser.data?.update_Users?.returning  ', updatedUser)
+    // If there is a change in email, firstName or lastName, update the user in courier
+    if (valuesToUpdate.email || valuesToUpdate.firstName || valuesToUpdate.lastName) {
+      //grap the email from the form if it was changed, otherwise grap it from the initial form state
+      const email = valuesToUpdate.email ? valuesToUpdate.email : initialFormState.email
+      const firstName = valuesToUpdate.firstName ? valuesToUpdate.firstName : initialFormState.firstName
+      const lastName = valuesToUpdate.lastName ? valuesToUpdate.lastName : initialFormState.lastName
+      email &&
+        firstName &&
+        lastName &&
+        (await addUserToCourier({ id: userId as string, email, firstName, lastName, type: 'updateUser' }))
+    }
 
     if (updatedUser.data?.update_Users?.returning.length === 0) {
       throw new Error('Error updating user in the admin form')
@@ -140,19 +159,14 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
     return cloudinaryResponse?.secure_url
   }
 
-  const addUserToCourier = async () => {
+  const addUserToCourier = async (data: ICourierAPI) => {
     await fetch('/api/syncCourier', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        id: loggedInUser!.id,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-      }),
+      body: JSON.stringify(data),
     })
   }
 

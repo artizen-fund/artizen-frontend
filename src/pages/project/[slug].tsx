@@ -12,7 +12,7 @@ import {
   LongDescription,
   Leaderboard,
 } from '@components'
-import { LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
+import { LayoutContext, ARTIZEN_TIMEZONE, useGnosis } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS } from '@gql'
@@ -24,6 +24,8 @@ const CURRENT_SEASON = 5
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+  //TODO: Do not deleted, EK needs this to test the code
+  // const { safeBalanceUSD } = useGnosis()
 
   const {
     query: { slug },
@@ -42,6 +44,7 @@ const ProjectPage = () => {
     },
   })
 
+  //TODO: this code does assume that the project has been submitted to the active season which will not be the case when the season ends
   const { loading: loadingSeason, data: seasonData } = useSubscription<ISubscribeSeasonsSubscription>(
     SUBSCRIBE_SEASONS,
     {
@@ -64,6 +67,12 @@ const ProjectPage = () => {
   const lead = project.members?.find(m => m.type === 'lead')?.user
 
   const rank = seasonData.Seasons[0].submissions?.findIndex(submission => submission.project?.id === project.id)
+  //TODO: This make this to refresh
+  // const projectSubmissions = seasonData.Seasons[0].submissions?.filter(
+  //   submission => submission.project?.id === project.id,
+  // )
+
+  // console.log('projectSubmissions', projectSubmissions)
 
   return (
     <Layout>
@@ -72,6 +81,8 @@ const ProjectPage = () => {
           <Side>
             <Header>
               <Topline>
+                {/* TODO: EK needs to look afte this code, it does not work */}
+                {/* <div>Safe balance: `${safeBalanceUSD}`</div> */}
                 <RankAndArtifactCount
                   rank={rank}
                   count={project.artifacts[0].openEditionCopies_aggregate.aggregate?.count || 0}
@@ -98,8 +109,11 @@ const ProjectPage = () => {
               ))}
             </LongDescription>
           </Side>
+
           <Side>
-            <ArtifactCard {...{ project }} />
+            {/* TODO: Artifacts should be an object instead of an array  */}
+            {/* This is wrong, we need to use the artifact from the submission */}
+            <ArtifactCard artifact={project.artifacts[0]} />
           </Side>
         </Wrapper>
       </PagePadding>
