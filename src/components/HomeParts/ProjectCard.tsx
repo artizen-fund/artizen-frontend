@@ -1,15 +1,14 @@
 import styled from 'styled-components'
-import { rgba } from '@lib'
+import { rgba, BASE_ARTIFACT_PRICE } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Button, RankAndArtifactCount, DonationBox } from '@components'
 import { IProjectFragment } from '@types'
+import Link from 'next/link'
 
 interface IProjectCard {
   project?: IProjectFragment
   index: number
 }
-
-const BASE_ARTIFACT_PRICE = 0.01
 
 const ProjectCard = ({ project, index }: IProjectCard) => {
   if (!project) return <></>
@@ -24,10 +23,14 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
         <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
       </Header>
       <Copy>
-        <h2>{project.title}</h2>
+        <Link href={`/project/${project.titleURL!}`}>
+          <h2>{project.title}</h2>
+        </Link>
         <p>{project.description}</p>
       </Copy>
-      <Img src={latestArtifact.artwork} />
+      <Link href={`/project/${project.titleURL!}`}>
+        <Img src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`} />
+      </Link>
       <Footer>
         <DonationBox tokenId={latestArtifact.token} />
       </Footer>

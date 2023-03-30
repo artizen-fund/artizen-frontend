@@ -1,23 +1,22 @@
 import styled from 'styled-components'
 import { rgba } from '@lib'
-import { typography, palette, breakpoint } from '@theme'
+import { typography, palette } from '@theme'
 import { IArtifactFragment } from '@types'
-import { Button, ArtifactCount, DonationBox, Rank } from '@components'
+import { DonationBox } from '@components'
 
 interface IArtifactCard {
-  artifactData: IArtifactFragment
+  artifact: IArtifactFragment
 }
 
-const ArtifactCard = ({ artifactData }: IArtifactCard) => (
+const ArtifactCard = ({ artifact }: IArtifactCard) => (
   <Wrapper>
-    <Img />
+    <Img src={artifact.artwork} />
     <Copy>
-      <h2>Project Name</h2>
+      <h2>Artifact #{artifact.token}</h2>
       <OpenEdition>Open Edition</OpenEdition>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo.</p>
     </Copy>
     <Footer>
-      <DonationBox tokenId={artifactData.token} />
+      <DonationBox tokenId={artifact.token} />
     </Footer>
   </Wrapper>
 )
@@ -36,9 +35,15 @@ const Wrapper = styled.article`
   }
 `
 
-const OpenEdition = styled.div``
+const OpenEdition = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+`
 
 const Copy = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   h2 {
     margin: 0.5em 0;
     ${typography.title.l2}
@@ -49,9 +54,8 @@ const Copy = styled.div`
   }
 `
 
-const Img = styled.div`
+const Img = styled.img`
   width: 100%;
-  height: 50px;
   background: green;
   border-radius: 16px;
 `

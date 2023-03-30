@@ -20,7 +20,7 @@ const Header = () => {
     <>
       <Wrapper {...{ shadowVisible }} className={visibleShelf ? 'visibleShelf' : ''}>
         <Items>
-          <Link href={`/grants/today`}>
+          <Link href={`/`}>
             <Logo />
           </Link>
           <MobileNavButton

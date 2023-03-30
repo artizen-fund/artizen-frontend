@@ -6,7 +6,10 @@ export const ARTIZEN_CURRENT_SEASON_NAME = 'Genesis'
 export const DEFAULT_GRANT_LENGTH_HOURS = 24
 export const DEFAULT_GRANT_GOAL_ETH = 1
 
-export const MINIMUM_DONATION_AMOUNT = 0.01
+// SUPER IMPORTANT: This is the price of the copies and
+// it's set in the smart contract, you cannot change it here
+// without updating the smart contract
+export const BASE_ARTIFACT_PRICE = 0.01
 
 export const WALLET_ERROR_UNSUPPORTED_OPERATION = 'UNSUPPORTED_OPERATION'
 export const WALLET_ERROR_INSUFFICIENT_FUNDS = 'INSUFFICIENT_FUNDS'

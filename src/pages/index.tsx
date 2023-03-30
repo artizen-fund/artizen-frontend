@@ -22,18 +22,21 @@ import { rgba, ARTIZEN_TIMEZONE } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
+// placeholder while we figure out a non-shifting key for the timestamp
+const CURRENT_SEASON = 5
+
 const IndexPage = () => {
   const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
-        endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+        index: { _eq: CURRENT_SEASON },
+        // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
+        // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
       },
       order_by: { submissions_aggregate: { count: 'asc' } },
     },
   })
-
   return (
     <Layout>
       <HomeHeader />
