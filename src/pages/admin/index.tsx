@@ -11,27 +11,21 @@ const Projects = () => {
   return (
     <Layout>
       <CuratorCheck />
-      {status !== 'authenticated' ? (
-        <h3>You need to login with the Curator Wallet</h3>
-      ) : (
-        <>
-          <StyledPagePadding>
-            <Wrapper>
-              <Title className="doubleWith">Welcome to Artizen Admin Area:</Title>
+      <StyledPagePadding>
+        <Wrapper>
+          <Title className="doubleWith">Welcome to Artizen Admin Area:</Title>
 
-              <MainAreaButton className="center-align" onClick={() => push('/admin/seasons')}>
-                Seasons
-              </MainAreaButton>
-              <MainAreaButton className="center-align" onClick={() => push('/admin/projects')}>
-                Projects
-              </MainAreaButton>
-            </Wrapper>
-          </StyledPagePadding>
-          <div className="doubleWith">
-            <Faq copy={faq} />
-          </div>
-        </>
-      )}
+          <MainAreaButton className="center-align" onClick={() => push('/admin/seasons')}>
+            Seasons
+          </MainAreaButton>
+          <MainAreaButton className="center-align" onClick={() => push('/admin/projects')}>
+            Projects
+          </MainAreaButton>
+        </Wrapper>
+      </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }
