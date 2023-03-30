@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
 
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, MINIMUM_DONATION_AMOUNT, rgba, useSeasons } from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, BASE_ARTIFACT_PRICE, rgba, useSeasons } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 
 interface IDonationBox {
@@ -21,10 +21,6 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
   const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
 
-  // SUPER IMPORTANT: This is the price of the copies and
-  // it's set in the smart contract, you cannot change it here
-  // without updating the smart contract
-
   useEffect(() => console.log(artifactQuantity), [artifactQuantity])
 
   const donateFn = async () => {
@@ -36,7 +32,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
       tokenId,
     })
 
-    const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, MINIMUM_DONATION_AMOUNT)
+    const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, BASE_ARTIFACT_PRICE)
 
     //All good, there is a txHash
     if (txHash) {
@@ -80,7 +76,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
           <Cost>
             <div>Cost</div>
             <Amount>
-              <span>Ξ {MINIMUM_DONATION_AMOUNT}</span>
+              <span>Ξ {BASE_ARTIFACT_PRICE}</span>
             </Amount>
           </Cost>
           <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
