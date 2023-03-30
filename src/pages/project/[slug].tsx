@@ -20,7 +20,8 @@ import moment from 'moment-timezone'
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const { safeBalanceUSD } = useGnosis()
+  //TODO: Do not deleted, EK needs this to test the code
+  // const { safeBalanceUSD } = useGnosis()
 
   const {
     query: { slug },

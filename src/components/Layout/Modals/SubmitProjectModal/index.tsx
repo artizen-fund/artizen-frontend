@@ -6,12 +6,7 @@ import { rgba, LayoutContext, useDateHelpers } from '@lib'
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { LOAD_SEASONS, INSERT_SUBMISSION, UPDATE_ARTIFACTS } from '@gql'
-import {
-  ILoadSeasonsQuery,
-  ISeasonFragment,
-  IUpdate_Artifacts_ManyMutation,
-  IMutation_RootUpdate_Artifacts_ManyArgs,
-} from '@types'
+import { ISeasonFragment, IUpdate_Artifacts_ManyMutation } from '@types'
 import { DropDownBlocks } from '../lib/DropDownBlocks'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -22,8 +17,6 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useRouter } from 'next/router'
 import { capitalCase } from 'capital-case'
 import { useSeasons } from '@lib'
-
-// load season data from useQuery
 
 const SubmitProjectModal = () => {
   dayjs.extend(utc)
@@ -40,6 +33,7 @@ const SubmitProjectModal = () => {
   const inputRef = useRef<ISeasonFragment[]>([])
 
   const [processing, setProcessing] = useState(false)
+  const [processTxt, setProcessTxt] = useState<string>('Submit')
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
   const [loadSeasons, { data: loadedSeasonsData }] = useLazyQuery(LOAD_SEASONS)
   const [insertSubmissionMutaton] = useMutation(INSERT_SUBMISSION)
@@ -49,6 +43,7 @@ const SubmitProjectModal = () => {
   const loadActiveSeasons = () => {
     loadSeasons({
       variables: {
+        //TODO: review why this filter does not work
         where: { submissions: { projectId: { _neq: project.id } } },
       },
     })
@@ -56,13 +51,14 @@ const SubmitProjectModal = () => {
     const Seasons =
       loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0 ? loadedSeasonsData?.Seasons : []
 
-    return Seasons.filter(({ startingDate, endingDate }: ISeasonFragment): boolean =>
-      isOpenForSubmissions(startingDate, endingDate),
+    return Seasons.filter(
+      ({ startingDate, endingDate, submissions }: ISeasonFragment): boolean =>
+        isOpenForSubmissions(startingDate, endingDate) &&
+        submissions.filter(({ projectId }) => projectId === project.id).length === 0,
     )
   }
 
   useEffect(() => {
-    console.log('inputRef.current  ', inputRef.current)
     if (inputRef.current.length > 0) return
 
     const Seasons = loadActiveSeasons()
@@ -88,15 +84,19 @@ const SubmitProjectModal = () => {
     }
 
     setProcessing(true)
+    setProcessTxt('Submitting...')
 
     //publish submissition to blockchain
     const returnData = await publishSubmissions(seasonSelected, project)
 
     if (!returnData?.artifactID) {
-      return new Error('Error publishing submission to blockchain')
+      setProcessTxt('Error publishing submission to blockchain, start again')
+      return
     }
 
-    console.log('returnData   ', returnData)
+    setProcessTxt(
+      `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
+    )
 
     const { errors: updateArtifactError } = await updateArtifactMutaton({
       variables: {
@@ -110,9 +110,15 @@ const SubmitProjectModal = () => {
     })
 
     if (updateArtifactError) {
-      console.log('updateArtifactError   ', updateArtifactError)
-      throw new Error(`updateArtifactMutaton ${updateArtifactError[0].message} `)
+      setProcessTxt(
+        `Error updateing the Artifact in DB, Note Artifact is minted in blockchain with tokenId: ${returnData.artifactID}, Artifact ID in DB is ${project.artifacts[0].id}, add tokenId manually to DB record`,
+      )
+      return
     }
+
+    setProcessTxt(
+      `Artifact updated, Adding new submission to DB with projectId: ${project.id}, artifactId: ${project.artifacts[0].id}, seasonId: ${seasonSelected?.id} `,
+    )
 
     const { errors: insertSubmissionError } = await insertSubmissionMutaton({
       variables: {
@@ -128,11 +134,16 @@ const SubmitProjectModal = () => {
     })
 
     if (insertSubmissionError) {
-      console.log('errors   ', insertSubmissionError)
-      throw new Error(`updateArtifactMutaton ${insertSubmissionError[0].message} `)
+      setProcessTxt(`Error adding the submission to DB with this error: ${insertSubmissionError[0].message}`)
+      return
     }
+
+    setProcessTxt('Submission published to blockchain and record added to DB, closing modal')
+
     setProcessing(false)
     toggleModal()
+
+    reload()
   }
 
   return (
@@ -195,7 +206,7 @@ const SubmitProjectModal = () => {
           </Menu>
         </>
       )}
-      {processing && <div>Publising... </div>}
+      {processing && <div>{processTxt}</div>}
     </Wrapper>
   )
 }

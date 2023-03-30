@@ -1,12 +1,13 @@
-import { useDateHelpers, useSmartContracts, useFullSignOut } from '@lib'
-import { IProjectFragment, ISeasonFragment } from '@types'
-import { ethers } from 'ethers'
 import {
+  useDateHelpers,
+  useSmartContracts,
+  useFullSignOut,
   sendArtifactToIPFS,
   WALLET_ERROR_UNSUPPORTED_OPERATION,
   WALLET_ERROR_INSUFFICIENT_FUNDS,
-  WALLET_ERROR_ACTION_REJECTED,
 } from '@lib'
+import { IProjectFragment, ISeasonFragment } from '@types'
+import { ethers } from 'ethers'
 
 export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
@@ -34,9 +35,6 @@ export const useSeasons = () => {
     console.log('mintOpenEditions call ')
 
     const finalAmount = unitPrice * amount
-
-    console.log('unitPrice  ', finalAmount)
-    console.log('amount divided ', amount / 100)
 
     try {
       const tx = await seasonsContract?.mintArtifact([tokenId], [amount], {
