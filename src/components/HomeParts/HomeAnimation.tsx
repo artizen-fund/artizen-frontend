@@ -6,6 +6,7 @@ import { breakpoint } from '@theme'
 const HomeAnimation = () => {
   const spline = useRef()
   const onLoad = (splineApp: any) => (spline.current = splineApp)
+  return <p>animation</p>
   return (
     <Wrapper>
       <div>

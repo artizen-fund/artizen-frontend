@@ -155,6 +155,10 @@ const StyledButton = styled(props => <Button {...props} />)`
 
 const Cost = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   ${typography.label.l2}
   color: ${rgba(palette.barracuda)};
 `

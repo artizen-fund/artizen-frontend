@@ -1,21 +1,28 @@
 import styled from 'styled-components'
-import { rgba } from '@lib'
+import { rgba, BASE_ARTIFACT_PRICE } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Button, ArtifactCount, DonationBox, Rank } from '@components'
+import { IProjectFragment } from '@types'
 
-const ArtifactCard = (props: any) => (
-  <Wrapper>
-    <Img />
-    <Copy>
-      <h2>Project Name</h2>
-      <OpenEdition>Open Edition</OpenEdition>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo.</p>
-    </Copy>
-    <Footer>
-      <DonationBox blockchainId="abc123" unitPrice={23.61} />
-    </Footer>
-  </Wrapper>
-)
+interface IArtifactCard {
+  project: IProjectFragment
+}
+
+const ArtifactCard = ({ project }: IArtifactCard) => {
+  const latestArtifact = project.artifacts[0]
+  return (
+    <Wrapper>
+      <Img src={latestArtifact.artwork} />
+      <Copy>
+        <h2>Artifact #{latestArtifact.token}</h2>
+        <OpenEdition>Open Edition</OpenEdition>
+      </Copy>
+      <Footer>
+        <DonationBox blockchainId="abc123" unitPrice={BASE_ARTIFACT_PRICE} />
+      </Footer>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.article`
   grid-area: card;
@@ -31,9 +38,15 @@ const Wrapper = styled.article`
   }
 `
 
-const OpenEdition = styled.div``
+const OpenEdition = styled.div`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+`
 
 const Copy = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   h2 {
     margin: 0.5em 0;
     ${typography.title.l2}
@@ -44,9 +57,8 @@ const Copy = styled.div`
   }
 `
 
-const Img = styled.div`
+const Img = styled.img`
   width: 100%;
-  height: 50px;
   background: green;
   border-radius: 16px;
 `

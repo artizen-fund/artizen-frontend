@@ -64,12 +64,12 @@ export const PROJECT = gql`
   fragment Project on Projects {
     id
     title
+    titleURL
     logline
     description
     creationDate
     completionDate
     walletAddress
-    title
     metadata
     impactTags
     impact

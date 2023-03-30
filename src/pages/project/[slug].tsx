@@ -10,6 +10,7 @@ import {
   ArtifactCard,
   CreatorBox,
   LongDescription,
+  Leaderboard,
 } from '@components'
 import { LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
 import { typography, breakpoint } from '@theme'
@@ -17,6 +18,9 @@ import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS } from '@gql'
 import { IProjectsQuery, ISubscribeSeasonsSubscription } from '@types'
 import moment from 'moment-timezone'
+
+// placeholder while we figure out a non-shifting key for the timestamp
+const CURRENT_SEASON = 5
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
@@ -44,8 +48,9 @@ const ProjectPage = () => {
       fetchPolicy: 'no-cache',
       variables: {
         where: {
-          startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
-          endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+          index: { _eq: CURRENT_SEASON },
+          // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
+          // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
         },
         order_by: { submissions_aggregate: { count: 'asc' } },
       },
@@ -77,12 +82,12 @@ const ProjectPage = () => {
               </Topline>
               <h1>{project.title}</h1>
               <p>{project.logline}</p>
-              {/* <Tags tags={sampleTags} /> */}
+              <Tags tags={project.impactTags?.split(',') || []} />
 
               {lead && <CreatorBox member={lead} />}
             </Header>
 
-            {/*<Leaderboard />*/}
+            <Leaderboard artifact={project.artifacts[0]} />
 
             <LongDescription>
               {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
@@ -94,7 +99,7 @@ const ProjectPage = () => {
             </LongDescription>
           </Side>
           <Side>
-            <ArtifactCard />
+            <ArtifactCard {...{ project }} />
           </Side>
         </Wrapper>
       </PagePadding>
