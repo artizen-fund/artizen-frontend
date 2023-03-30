@@ -33,6 +33,7 @@ export * from './useSeasons'
 export * from './useSendRewards'
 export * from './usePublishGrant'
 export * from './useDateHelpers'
+export * from './useGnosis'
 
 export { default as sendArtifactToIPFS } from './sendArtifactToIPFS'
 

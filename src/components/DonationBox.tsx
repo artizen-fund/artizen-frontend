@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
-import { router } from 'next/router'
+
 import { Button, Counter } from '@components'
 import { LayoutContext, trackEventF, intercomEventEnum, useFullSignOut, rgba, useSeasons } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
@@ -13,7 +13,7 @@ interface IDonationBox {
 
 const DonationBox = ({ tokenId }: IDonationBox) => {
   const { status } = useSession()
-  const { reload } = router
+
   const { toggleModal } = useContext(LayoutContext)
 
   const { mintOpenEditions } = useSeasons()

@@ -11,7 +11,7 @@ import {
   CreatorBox,
   LongDescription,
 } from '@components'
-import { LayoutContext, ARTIZEN_TIMEZONE } from '@lib'
+import { LayoutContext, ARTIZEN_TIMEZONE, useGnosis } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS } from '@gql'
@@ -20,6 +20,7 @@ import moment from 'moment-timezone'
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+  const { safeBalanceUSD } = useGnosis()
 
   const {
     query: { slug },
@@ -74,6 +75,8 @@ const ProjectPage = () => {
           <Side>
             <Header>
               <Topline>
+                {/* TODO: EK needs to look afte this code, it does not work */}
+                {/* <div>Safe balance: `${safeBalanceUSD}`</div> */}
                 <RankAndArtifactCount
                   rank={rank}
                   count={project.artifacts[0].openEditionCopies_aggregate.aggregate?.count || 0}
