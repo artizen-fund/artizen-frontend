@@ -41,7 +41,11 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
 
     //All good, there is a txHash
     if (txHash) {
-      //update DB
+      // NOTE: This will trigger an blockchain
+      // event which is captured by event linterner script (EK's owned)
+      // event linterner script writes a openEditions record in Hasura
+      // which is then picked up by the subscription and the UI is updated
+      // and sends Courier email and inapp notification to the donor
 
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
