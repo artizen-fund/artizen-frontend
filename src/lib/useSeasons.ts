@@ -14,6 +14,9 @@ export const useSeasons = () => {
   const { getTimeUnix } = useDateHelpers()
   const { disconnectAndSignout } = useFullSignOut()
 
+  // Publish season to smart contract,
+  // this method is called from src/component/NewSeasonForm in the
+  // SeasonForm component when the user clicks the publish button
   const publishSeason = async (startTime: string, endTime: string) => {
     const startTimeUnix = getTimeUnix(startTime)
     const endTimeUnix = getTimeUnix(endTime)
@@ -27,6 +30,12 @@ export const useSeasons = () => {
     error?: string
   }
 
+  //Mints open editions when users click the button
+  //buy within project/slug
+  //Take into account that the project
+  //page shows the button to all the projects even if
+  //they have not  yet been published to the blockchain,
+  //and this method fails if the Artifact to buy open editions from has not tokenId
   const mintOpenEditions = async (
     tokenId: string,
     amount: number,
@@ -70,6 +79,9 @@ export const useSeasons = () => {
     }
   }
 
+  // Publishes project submissions to smart contract.
+  // When curators publish a submission from the project submission modal
+  // within the admin projects.
   const publishSubmissions = async (season: ISeasonFragment, project: IProjectFragment) => {
     //get latest token id
     //getLatestTokenID

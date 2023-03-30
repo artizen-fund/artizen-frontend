@@ -41,7 +41,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
 
     //All good, there is a txHash
     if (txHash) {
-      // NOTE: This will trigger an blockchain
+      // NOTE: This will trigger a blockchain
       // event which is captured by event linterner script (EK's owned)
       // event linterner script writes a openEditions record in Hasura
       // which is then picked up by the subscription and the UI is updated

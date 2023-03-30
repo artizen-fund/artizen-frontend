@@ -16,11 +16,7 @@ const Seasons = () => {
   const { toggleModal } = useContext(LayoutContext)
   const { formatDate, getSeasonStatus } = useDateHelpers()
 
-  const {
-    loading,
-    data: loadedSeasonsData,
-    error,
-  } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
+  const { data: loadedSeasonsData, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       order_by: [
