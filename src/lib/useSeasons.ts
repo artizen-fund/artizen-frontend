@@ -1,31 +1,75 @@
-import { useDateHelpers, useSmartContracts } from '@lib'
+import { useDateHelpers, useSmartContracts, useFullSignOut } from '@lib'
 import { IProjectFragment, ISeasonFragment } from '@types'
-import { sendArtifactToIPFS } from '@lib'
+import { ethers } from 'ethers'
+import {
+  sendArtifactToIPFS,
+  WALLET_ERROR_UNSUPPORTED_OPERATION,
+  WALLET_ERROR_INSUFFICIENT_FUNDS,
+  WALLET_ERROR_ACTION_REJECTED,
+} from '@lib'
 
 export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
   const { getTimeUnix } = useDateHelpers()
+  const { disconnectAndSignout } = useFullSignOut()
 
   const publishSeason = async (startTime: string, endTime: string) => {
     const startTimeUnix = getTimeUnix(startTime)
     const endTimeUnix = getTimeUnix(endTime)
     const tx = await seasonsContract?.createSeason(startTimeUnix, endTimeUnix)
-    return await tx.wait()
-
     console.log('tx from create season', tx)
+    return await tx.wait()
   }
 
-  const mintOpenEditions = async (tokenId: string, amount: number) => {
+  interface IMintOpenEditionsResponse {
+    txHash?: string
+    error?: string
+  }
+
+  const mintOpenEditions = async (
+    tokenId: string,
+    amount: number,
+    unitPrice: number,
+  ): Promise<IMintOpenEditionsResponse> => {
     console.log('mintOpenEditions call ')
-    const tx = await seasonsContract?.mintArtifact(0.02, [125], [2])
 
-    console.log('tx from mintOpenEditions', tx)
+    const finalAmount = unitPrice * amount
 
-    const mintOpenEditionsTx = await tx.wait()
+    console.log('unitPrice  ', finalAmount)
+    console.log('amount divided ', amount / 100)
 
-    console.log('mintOpenEditionsTxfr', mintOpenEditionsTx)
+    try {
+      const tx = await seasonsContract?.mintArtifact([tokenId], [amount], {
+        value: ethers.utils.parseEther(finalAmount.toString()),
+      })
 
-    return mintOpenEditionsTx
+      const mintOpenEditionsTx = await tx.wait()
+
+      if (!mintOpenEditionsTx.transactionHash) {
+        return {
+          error: 'mintOpenEditionsTx failed',
+        }
+      }
+
+      console.log('mintOpenEditionsTxfr', mintOpenEditionsTx)
+
+      return {
+        txHash: mintOpenEditionsTx.transactionHash,
+      }
+    } catch (e: any) {
+      console.log('mintOpenEditions error ', e.code)
+
+      //TODO: I am not sure if this will happen again but just in case
+      if (e.code === WALLET_ERROR_UNSUPPORTED_OPERATION) {
+        disconnectAndSignout()
+      }
+
+      const message = e.code === WALLET_ERROR_INSUFFICIENT_FUNDS ? 'Insufficient funds' : 'Unknown error'
+
+      return {
+        error: message,
+      }
+    }
   }
 
   const publishSubmissions = async (season: ISeasonFragment, project: IProjectFragment) => {

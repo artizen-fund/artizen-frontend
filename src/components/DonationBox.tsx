@@ -2,17 +2,9 @@ import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
+import { router } from 'next/router'
 import { Button, Counter } from '@components'
-import {
-  LayoutContext,
-  trackEventF,
-  intercomEventEnum,
-  useFullSignOut,
-  WALLET_ERROR_UNSUPPORTED_OPERATION,
-  WALLET_ERROR_INSUFFICIENT_FUNDS,
-  rgba,
-  useSeasons,
-} from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, useFullSignOut, rgba, useSeasons } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 
 interface IDonationBox {
@@ -21,7 +13,7 @@ interface IDonationBox {
 
 const DonationBox = ({ tokenId }: IDonationBox) => {
   const { status } = useSession()
-  const { disconnectAndSignout } = useFullSignOut()
+  const { reload } = router
   const { toggleModal } = useContext(LayoutContext)
 
   const { mintOpenEditions } = useSeasons()
@@ -29,7 +21,10 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
   const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
 
-  const unitPrice = '0.3'
+  // SUPER IMPORTANT: This is the price of the copies and
+  // it's set in the smart contract, you cannot change it here
+  // without updating the smart contract
+  const unitPrice = '0.01'
 
   useEffect(() => console.log(artifactQuantity), [artifactQuantity])
 
@@ -42,49 +37,35 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
       tokenId,
     })
 
-    const returnTx = await mintOpenEditions(tokenId, artifactQuantity)
-    // try {
-    //   const returnTx = await mintOpenEditions(tokenId, artifactQuantity)
-    //   // TODO: it'll only work when EK removes the transaction from the server
-    //   // if there is transaction hash add a record
-    //   // if (!returnTx.transactionHash) {
-    //   //   trackEventF(intercomEventEnum.DONATION_FAILED, {
-    //   //     amount: (artifactQuantity * donationAmount).toString(),
-    //   //     grantblockchainId: blockchainId,
-    //   //   })
-    //   //   throw new Error('Tx is empty')
-    //   // }
-    // } catch (e: any) {
-    //   const errors: Array<ErrorObject> = []
-    //   const message =
-    //     e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
-    //       ? 'Insufficient funds'
-    //       : WALLET_ERROR_UNSUPPORTED_OPERATION
-    //       ? 'Connect wallet'
-    //       : 'Unknown error'
-    //   errors.push({
-    //     instancePath: '/donationAmount',
-    //     message,
-    //     schemaPath: '#/properties/donationAmount',
-    //     keyword: '',
-    //     params: {},
-    //   })
+    const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, +unitPrice)
 
-    //   setSending(false)
+    //All good, there is a txHash
+    if (txHash) {
+      //update DB
 
-    //   if (e.code === WALLET_ERROR_UNSUPPORTED_OPERATION) {
-    //     disconnectAndSignout()
-    //   }
-    // }
+      trackEventF(intercomEventEnum.DONATION_FINISHED, {
+        amount: artifactQuantity.toString(),
+        tokenId,
+      })
 
-    // trackEventF(intercomEventEnum.DONATION_FINISHED, {
-    //   amount: artifactQuantity.toString(),
-    //   tokenId,
-    // })
+      toggleModal('shareTransaction')
+    }
 
-    // toggleModal('shareTransaction')
+    //Show error
+    if (error) {
+      const errors: Array<ErrorObject> = []
+      errors.push({
+        instancePath: '/donationAmount',
+        message: error,
+        schemaPath: '#/properties/donationAmount',
+        keyword: '',
+        params: {},
+      })
+    }
 
-    // setSending(false)
+    //Close modal if there is no error neither txHash, like when users have rejected transactions,
+    toggleModal()
+    setSending(false)
   }
 
   return (
