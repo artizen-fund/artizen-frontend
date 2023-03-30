@@ -2,87 +2,73 @@ import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
+
 import { Button, Counter } from '@components'
-import {
-  LayoutContext,
-  useDonate,
-  trackEventF,
-  intercomEventEnum,
-  useFullSignOut,
-  WALLET_ERROR_UNSUPPORTED_OPERATION,
-  WALLET_ERROR_INSUFFICIENT_FUNDS,
-  rgba,
-} from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, useFullSignOut, rgba, useSeasons } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 
 interface IDonationBox {
-  blockchainId: string | undefined
-  unitPrice: number
+  tokenId: string | undefined
 }
 
-const DonationBox = ({ blockchainId, unitPrice }: IDonationBox) => {
+const DonationBox = ({ tokenId }: IDonationBox) => {
   const { status } = useSession()
-  const { disconnectAndSignout } = useFullSignOut()
+
   const { toggleModal } = useContext(LayoutContext)
 
-  const { donate } = useDonate()
+  const { mintOpenEditions } = useSeasons()
   const [sending, setSending] = useState<boolean>(false)
   const { setVisibleModal } = useContext(LayoutContext)
-  const [artifactQuantity, setArtifactQuantity] = useState(1)
+  const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
+
+  // SUPER IMPORTANT: This is the price of the copies and
+  // it's set in the smart contract, you cannot change it here
+  // without updating the smart contract
+  const unitPrice = '0.01'
 
   useEffect(() => console.log(artifactQuantity), [artifactQuantity])
 
-  const donationAmount = 0.01 // < todo: get this from Hasura
-
   const donateFn = async () => {
-    if (!blockchainId || !artifactQuantity) return
+    if (!tokenId || !artifactQuantity) return
     toggleModal('confirmTransaction')
     setSending(true)
     trackEventF(intercomEventEnum.DONATION_START, {
-      amount: (artifactQuantity * donationAmount).toString(),
-      grantblockchainId: blockchainId,
+      amount: artifactQuantity,
+      tokenId,
     })
-    try {
-      const returnTx = await donate(parseInt(blockchainId), (artifactQuantity * donationAmount).toString())
-      // TODO: it'll only work when EK removes the transaction from the server
-      // if there is transaction hash add a record
-      // if (!returnTx.transactionHash) {
-      //   trackEventF(intercomEventEnum.DONATION_FAILED, {
-      //     amount: (artifactQuantity * donationAmount).toString(),
-      //     grantblockchainId: blockchainId,
-      //   })
-      //   throw new Error('Tx is empty')
-      // }
-    } catch (e: any) {
+
+    const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, +unitPrice)
+
+    //All good, there is a txHash
+    if (txHash) {
+      // NOTE: This will trigger a blockchain
+      // event which is captured by event linterner script (EK's owned)
+      // event linterner script writes a openEditions record in Hasura
+      // which is then picked up by the subscription and the UI is updated
+      // and sends Courier email and inapp notification to the donor
+
+      trackEventF(intercomEventEnum.DONATION_FINISHED, {
+        amount: artifactQuantity.toString(),
+        tokenId,
+      })
+
+      toggleModal('shareTransaction')
+    }
+
+    //Show error
+    if (error) {
       const errors: Array<ErrorObject> = []
-      const message =
-        e.code === WALLET_ERROR_INSUFFICIENT_FUNDS
-          ? 'Insufficient funds'
-          : WALLET_ERROR_UNSUPPORTED_OPERATION
-          ? 'Connect wallet'
-          : 'Unknown error'
       errors.push({
         instancePath: '/donationAmount',
-        message,
+        message: error,
         schemaPath: '#/properties/donationAmount',
         keyword: '',
         params: {},
       })
-
-      setSending(false)
-
-      if (e.code === WALLET_ERROR_UNSUPPORTED_OPERATION) {
-        disconnectAndSignout()
-      }
     }
 
-    trackEventF(intercomEventEnum.DONATION_FINISHED, {
-      amount: (artifactQuantity * donationAmount).toString(),
-      grantblockchainId: blockchainId,
-    })
-
-    toggleModal('shareTransaction')
-
+    //Close modal if there is no error neither txHash, like when users have rejected transactions,
+    toggleModal()
     setSending(false)
   }
 

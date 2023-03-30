@@ -66,35 +66,47 @@ export default function ProjectDetails(): JSX.Element {
         {status !== 'authenticated' || loading ? (
           <Spinner minHeight="75vh" />
         ) : (
-          <ProjectContainer>
-            <Title>{project?.title && capitalCase(project?.title)}</Title>
+          <>
             <Button
               level={2}
+              outline
               onClick={() => {
-                setVisibleModalWithAttrs('submitProjectModal', {
-                  project,
-                })
+                push(`/project/${project?.titleURL}`)
               }}
             >
-              Submit to a Season
+              Open Project Page
             </Button>
-            <SeasonSubmissionsContainer>
-              {!loadingSeasons &&
-                loadedSeasons.Seasons.map((season: ISeasonFragment) => {
-                  return (
-                    <SeasonItem key={season.id} onClick={() => push(`/admin/seasons/${season.id}`)}>
-                      This project was submitted to season: <b>{season.title && capitalCase(season.title)}</b>
-                    </SeasonItem>
-                  )
-                })}
-            </SeasonSubmissionsContainer>
+            <ProjectContainer>
+              <Title>{project?.title && capitalCase(project?.title)}</Title>
+              <Button
+                level={2}
+                onClick={() => {
+                  setVisibleModalWithAttrs('submitProjectModal', {
+                    project,
+                  })
+                }}
+              >
+                Submit to a Season
+              </Button>
 
-            {loadedProjectData && (
-              <ProjectWrapper className="expand">
-                <Project projectData={loadedProjectData?.Projects[0]} displayType="full" />
-              </ProjectWrapper>
-            )}
-          </ProjectContainer>
+              <SeasonSubmissionsContainer>
+                {!loadingSeasons &&
+                  loadedSeasons.Seasons.map((season: ISeasonFragment) => {
+                    return (
+                      <SeasonItem key={season.id} onClick={() => push(`/admin/seasons/${season.id}`)}>
+                        This project was submitted to season: <b>{season.title && capitalCase(season.title)}</b>
+                      </SeasonItem>
+                    )
+                  })}
+              </SeasonSubmissionsContainer>
+
+              {loadedProjectData && (
+                <ProjectWrapper className="expand">
+                  <Project projectData={loadedProjectData?.Projects[0]} displayType="full" />
+                </ProjectWrapper>
+              )}
+            </ProjectContainer>
+          </>
         )}
       </StyledPagePadding>
     </Layout>

@@ -7,9 +7,8 @@ describe('composeMetadataObject', () => {
     const result = composeMetadataObject(
       'Test Artifact Name',
       'Test artifact description goes here',
-      BigNumber.from('1'),
+      1,
       mockProject,
-      mockArtifact,
       1,
       mockImageResponse,
     )

@@ -1,9 +1,14 @@
 import styled from 'styled-components'
 import { rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
+import { IArtifactFragment } from '@types'
 import { Button, ArtifactCount, DonationBox, Rank } from '@components'
 
-const ArtifactCard = (props: any) => (
+interface IArtifactCard {
+  artifactData: IArtifactFragment
+}
+
+const ArtifactCard = ({ artifactData }: IArtifactCard) => (
   <Wrapper>
     <Img />
     <Copy>
@@ -12,7 +17,7 @@ const ArtifactCard = (props: any) => (
       <p>Nullam quis risus eget urna mollis ornare vel eu leo.</p>
     </Copy>
     <Footer>
-      <DonationBox blockchainId="abc123" unitPrice={23.61} />
+      <DonationBox tokenId={artifactData.token} />
     </Footer>
   </Wrapper>
 )

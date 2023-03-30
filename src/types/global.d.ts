@@ -84,6 +84,14 @@ declare global {
     buttonLabel?: string
     children?: React.ReactElement
   }
+
+  interface ICourierAPI {
+    email: string
+    id: string
+    firstName: string
+    lastName: string
+    type: 'updateUser' | 'addNewUser'
+  }
 }
 
 export {}

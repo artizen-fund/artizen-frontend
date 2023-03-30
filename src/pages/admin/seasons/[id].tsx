@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { LOAD_SEASONS } from '@gql'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
-import { Spinner, Layout, Submissions, Button, PagePadding } from '@components'
+import { Spinner, Layout, Submissions, Button, PagePadding, CuratorCheck } from '@components'
 import { typography } from '@theme'
 import { useDateHelpers } from '@lib'
 import { capitalCase } from 'capital-case'
@@ -32,6 +32,7 @@ export default function SeasonPage(): JSX.Element {
 
   return (
     <Layout>
+      <CuratorCheck />
       <StyledPagePadding>
         {loading ? (
           <Spinner />
