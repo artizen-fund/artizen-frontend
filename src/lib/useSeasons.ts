@@ -97,20 +97,15 @@ export const useSeasons = () => {
     const newSubmissionCount = parseInt(submissionCount) + 1
 
     //TODO: add ipfs hash to artifact record in Hasura
-
     const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, season, project)
 
     console.log('ipfsHash  ', ipfsHash)
 
-    //publish submuiission
-
-    const publishSubmissionTX = await seasonsContract?.createSubmission(
-      season.index,
-      submissionCount,
-      project.walletAddress,
-    )
+    const publishSubmissionTX = await seasonsContract?.createSubmission(season.index, ipfsHash, project.walletAddress)
 
     const publishSubmissionTXReceipt = await publishSubmissionTX.wait()
+
+    console.log('publishSubmissionTXReceipt::::::  ', publishSubmissionTXReceipt)
 
     if (publishSubmissionTXReceipt.events[0].event === 'SubmissionCreated') {
       return {

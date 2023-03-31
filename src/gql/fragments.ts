@@ -117,3 +117,17 @@ export const SEASON = gql`
     }
   }
 `
+
+export const OPEN_EDITIONS_COPIES = gql`
+  fragment OpenEditionCopy on OpenEditionCopies {
+    value
+    copies
+    user {
+      id
+      firstName
+      lastName
+      artizenHandle
+      profileImage
+    }
+  }
+`

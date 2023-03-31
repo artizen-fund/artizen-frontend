@@ -1,5 +1,4 @@
-import { IArtifactFragment, IProjectFragment, ISeasonFragment } from '@types'
-import { BigNumber, ethers } from 'ethers'
+import { IProjectFragment, ISeasonFragment } from '@types'
 import composeArtifactDescription from './composeArtifactDescription'
 import composeMetadataObject from './composeMetadataObject'
 import { sendDataToAPI } from './sendDataToIPFS'
@@ -23,12 +22,9 @@ const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragmen
   const allProjectMembersString = project.members.map(({ user }) => `${user?.firstName} ${user?.lastName}`).join(', ')
   const artifactToUpload = project.artifacts[0]
 
-  const artifactDescription = composeArtifactDescription(
-    artifactName,
-    project,
-    artifactToUpload,
-    allProjectMembersString,
-  )
+  const artifactDescription = composeArtifactDescription(artifactName, project, allProjectMembersString)
+
+  console.log('artifactToUpload.artwork  ', artifactToUpload)
 
   const image = await sendDataToAPI(
     JSON.stringify({
@@ -36,6 +32,8 @@ const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragmen
       name: `${artifactName}-image`,
     }),
   )
+
+  console.log('image uploaded ', image)
 
   const video = artifactToUpload.video
     ? await sendDataToAPI(
