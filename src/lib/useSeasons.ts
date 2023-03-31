@@ -2,6 +2,7 @@ import {
   useDateHelpers,
   useSmartContracts,
   useFullSignOut,
+  useGnosis,
   sendArtifactToIPFS,
   WALLET_ERROR_UNSUPPORTED_OPERATION,
   WALLET_ERROR_INSUFFICIENT_FUNDS,
@@ -13,6 +14,7 @@ export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
   const { getTimeUnix } = useDateHelpers()
   const { disconnectAndSignout } = useFullSignOut()
+  const { updateSafeBalance } = useGnosis()
 
   // Publish season to smart contract,
   // this method is called from src/component/NewSeasonForm in the
@@ -59,6 +61,8 @@ export const useSeasons = () => {
       }
 
       console.log('mintOpenEditionsTxfr', mintOpenEditionsTx)
+
+      // updateSafeBalance()
 
       return {
         txHash: mintOpenEditionsTx.transactionHash,

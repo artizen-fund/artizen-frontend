@@ -23,7 +23,7 @@ const CURRENT_SEASON = 5
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const { safeBalanceStr } = useGnosis()
+  const { safeBalanceETH, safeBalanceUSD } = useGnosis()
 
   const {
     query: { slug },
@@ -79,7 +79,9 @@ const ProjectPage = () => {
           <Side>
             <Header>
               <Topline>
-                <div>Safe balance: {safeBalanceStr}</div>
+                <div>
+                  Safe balance: {safeBalanceETH} ETH | ${safeBalanceUSD}
+                </div>
                 <RankAndArtifactCount
                   rank={rank}
                   count={project.artifacts[0].openEditionCopies_aggregate.aggregate?.count || 0}

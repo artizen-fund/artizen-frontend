@@ -1,8 +1,10 @@
 import { useEvmNativeBalance, useEvmTokenPrice } from '@moralisweb3/next'
 import { EvmChain } from 'moralis/common-evm-utils'
 import { ethers } from 'ethers'
+import { useState } from 'react'
 
 export const useGnosis = () => {
+  const [_, updateSafeBalance] = useState()
   const safeAddress = '0x71717DAAFF29E17641F64392f24fa21022e1C332'
   const addressOfUSDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
 
@@ -30,13 +32,18 @@ export const useGnosis = () => {
 
   const USDtoETHstr = USDCTokenPriceData?.nativePrice?.ether
 
-  let safeBalanceStr, safeBalanceETH, safeBalanceUSD, USDtoETH
-  if (!isFetching && USDtoETHstr !== undefined) {
-    USDtoETH = parseFloat(ethers.utils.formatEther(parseInt(USDtoETHstr)))
-    safeBalanceETH = parseFloat(safeBalance?.balance.ether ? safeBalance?.balance.ether : '').toFixed(2)
-    safeBalanceUSD = (parseFloat(safeBalanceETH) / USDtoETH).toFixed(2)
-    safeBalanceStr = `${safeBalanceETH} ETH | $ ${safeBalanceUSD}`
-  }
+  const USDtoETH =
+    !isFetching && USDtoETHstr !== undefined ? parseFloat(ethers.utils.formatEther(parseInt(USDtoETHstr))) : undefined
 
-  return { safeBalanceStr, safeBalanceETH, safeBalanceUSD, USDtoETH }
+  const safeBalanceETH =
+    !isFetching && USDtoETHstr !== undefined
+      ? parseFloat(safeBalance?.balance.ether ? safeBalance?.balance.ether : '').toFixed(2)
+      : undefined
+
+  const safeBalanceUSD =
+    !isFetching && USDtoETHstr !== undefined && safeBalanceETH !== undefined && USDtoETH !== undefined
+      ? (parseFloat(safeBalanceETH) / USDtoETH).toFixed(2)
+      : undefined
+
+  return { updateSafeBalance, safeBalanceETH, safeBalanceUSD, USDtoETH }
 }
