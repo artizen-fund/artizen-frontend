@@ -64,11 +64,9 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
       ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(114, 124, 140, 0.64)')}
     );
   }
-  backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
 
   border-bottom: 0.5px solid transparent;
-  transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
-    backdrop-filter 0.3s ease-in-out;
+  transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out;
 `
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`

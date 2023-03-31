@@ -10,7 +10,11 @@ const HomeAnimation = () => {
     <Wrapper>
       <div>
         <StyledSpline scene="https://prod.spline.design/LkyNHqmv6VPdWnml/scene.splinecode" onLoad={onLoad} />
-        <StyledSpline scene="https://prod.spline.design/TrfVmPw3GkShfJMY/scene.splinecode" onLoad={onLoad} dark />
+        <StyledSpline
+          scene="https://prod.spline.design/TrfVmPw3GkShfJMY/scene.splinecode"
+          onLoad={onLoad}
+          dark={true}
+        />
       </div>
     </Wrapper>
   )

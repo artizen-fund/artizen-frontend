@@ -36,15 +36,9 @@ const Header = () => {
         <Items>
           <Nav>
             <ul>
-              <li>
-                <Link target="_blank" href="https://artizen.link/apply">
-                  Apply
-                </Link>
-              </li>
               <li onClick={() => setVisibleShelf('howItWorks')}>How It Works</li>
             </ul>
           </Nav>
-          <DonateButton />
           <AccountButton id="accountButton" active={visibleShelf === 'session'} />
         </Items>
       </Wrapper>

@@ -18,12 +18,9 @@ import {
   LeaderboardHeader,
   ProjectCard,
 } from '@components'
-import { rgba, ARTIZEN_TIMEZONE } from '@lib'
+import { rgba, CURRENT_SEASON } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
-
-// placeholder while we figure out a non-shifting key for the timestamp
-const CURRENT_SEASON = 3
 
 const IndexPage = () => {
   const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
@@ -87,6 +84,9 @@ const Grid = styled.div`
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+  @media only screen and (min-width: ${breakpoint.laptopXL}px) {
+    grid-template-columns: repeat(3, 1fr);
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     grid-template-columns: repeat(3, 1fr);

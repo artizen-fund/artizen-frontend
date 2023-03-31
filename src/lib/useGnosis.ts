@@ -10,6 +10,7 @@ export const useGnosis = () => {
     address: safeAddress,
     chain: EvmChain.ETHEREUM,
   })
+
   const { data: USDCTokenPriceData, error: USDCTokenPriceError } = useEvmTokenPrice({
     address: addressOfUSDC,
     chain: EvmChain.ETHEREUM,
