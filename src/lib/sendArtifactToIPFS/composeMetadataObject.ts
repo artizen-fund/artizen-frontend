@@ -27,7 +27,7 @@ export default (
     image: `ipfs://${image.IpfsHash}`,
     animation_url: video ? `ipfs://${video.IpfsHash}` : undefined,
     background_color: '000000',
-    external_url: `https://artizen.fund/projects/artifacts/artifact${artifactNumber}/`,
+    external_url: `https://artizen.fund/project/${project.titleURL}/artifacts/${artifactNumber}/`,
     attributes: [
       {
         trait_type: 'Project Created',

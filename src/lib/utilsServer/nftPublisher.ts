@@ -8,7 +8,6 @@ import pinataSDK from '@pinata/sdk'
  * @param {string} name a name for the NFT
  */
 export async function storeNFTFromUrl(imageUrl: string, name: string) {
-  console.log('name  ', name)
   const pinataJWTKey = assert(assert(process.env.PINATA_JWT_KEY, 'PINATA_JWT_KEY'))
   const pinata = new pinataSDK({
     pinataJWTKey,
@@ -16,28 +15,14 @@ export async function storeNFTFromUrl(imageUrl: string, name: string) {
 
   const options = {
     pinataMetadata: {
-      name: 'test',
+      name,
     },
   }
 
-  // const response = await fetch(
-  //   'https://res.cloudinary.com/kaleidoscope/image/upload/v1680049481/website/n8zsl4zjuatamxynjokd.jpg',
-  // )
+  const response = await fetch(imageUrl)
+  const result = await pinata.pinFileToIPFS(response.body, options)
 
-  // console.log('response  ', response)
-
-  // Fetch the original image
-  return (
-    fetch('https://res.cloudinary.com/kaleidoscope/image/upload/v1680049481/website/n8zsl4zjuatamxynjokd.jpg')
-      // Retrieve its body as ReadableStream
-      .then(response => {
-        return pinata.pinFileToIPFS(response.body, options).then(result => {
-          console.log('result  ', result)
-
-          return result
-        })
-      })
-  )
+  return result
 }
 
 /**
