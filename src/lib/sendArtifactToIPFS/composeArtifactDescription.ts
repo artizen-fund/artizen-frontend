@@ -1,11 +1,6 @@
 import { IArtifactFragment, IProjectFragment } from '@types'
 
-const composeArtifactDescription = (
-  artifactName: string,
-  project: IProjectFragment,
-  artifact: IArtifactFragment,
-  allProjectMembersString: string,
-) =>
+const composeArtifactDescription = (artifactName: string, project: IProjectFragment, allProjectMembersString: string) =>
   `**${artifactName} minted by ${project.title}**
   
 **About**: ${project.logline}

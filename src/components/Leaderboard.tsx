@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
-import { useGnosis, aggregateDonators } from '@lib'
+import { aggregateDonators } from '@lib'
 import { IOpenEditionsSubscription } from '@types'
-// import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
   openEditions?: IOpenEditionsSubscription

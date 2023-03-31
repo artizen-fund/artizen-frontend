@@ -26,11 +26,7 @@ const InputPalette = css`
 
   &:focus,
   &.hasData,
-<<<<<<< HEAD
   /* &:not([value='']), */
-=======
-  /* &:not([value='']),*/
->>>>>>> 79d7ce14547b393f789a34c79f3aa60624912030
   &:not(:placeholder-shown) {
     border-color: ${rgba(palette.night)};
   }

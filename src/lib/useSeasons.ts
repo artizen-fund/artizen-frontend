@@ -2,6 +2,7 @@ import {
   useDateHelpers,
   useSmartContracts,
   useFullSignOut,
+  useGnosis,
   sendArtifactToIPFS,
   WALLET_ERROR_UNSUPPORTED_OPERATION,
   WALLET_ERROR_INSUFFICIENT_FUNDS,
@@ -13,6 +14,7 @@ export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
   const { getTimeUnix } = useDateHelpers()
   const { disconnectAndSignout } = useFullSignOut()
+  const { updateSafeBalance } = useGnosis()
 
   // Publish season to smart contract,
   // this method is called from src/component/NewSeasonForm in the
@@ -60,6 +62,8 @@ export const useSeasons = () => {
 
       console.log('mintOpenEditionsTxfr', mintOpenEditionsTx)
 
+      // updateSafeBalance()
+
       return {
         txHash: mintOpenEditionsTx.transactionHash,
       }
@@ -93,20 +97,15 @@ export const useSeasons = () => {
     const newSubmissionCount = parseInt(submissionCount) + 1
 
     //TODO: add ipfs hash to artifact record in Hasura
-
     const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, season, project)
 
     console.log('ipfsHash  ', ipfsHash)
 
-    //publish submuiission
-
-    const publishSubmissionTX = await seasonsContract?.createSubmission(
-      season.index,
-      submissionCount,
-      project.walletAddress,
-    )
+    const publishSubmissionTX = await seasonsContract?.createSubmission(season.index, ipfsHash, project.walletAddress)
 
     const publishSubmissionTXReceipt = await publishSubmissionTX.wait()
+
+    console.log('publishSubmissionTXReceipt::::::  ', publishSubmissionTXReceipt)
 
     if (publishSubmissionTXReceipt.events[0].event === 'SubmissionCreated') {
       return {

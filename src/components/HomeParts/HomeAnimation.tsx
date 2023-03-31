@@ -10,11 +10,7 @@ const HomeAnimation = () => {
     <Wrapper>
       <div>
         <StyledSpline scene="https://prod.spline.design/LkyNHqmv6VPdWnml/scene.splinecode" onLoad={onLoad} />
-        <StyledSpline
-          scene="https://prod.spline.design/TrfVmPw3GkShfJMY/scene.splinecode"
-          onLoad={onLoad}
-          dark={true}
-        />
+        <StyledSpline scene="https://prod.spline.design/TrfVmPw3GkShfJMY/scene.splinecode" onLoad={onLoad} $dark />
       </div>
     </Wrapper>
   )
@@ -45,7 +41,7 @@ const Wrapper = styled.div`
   }
 `
 
-const StyledSpline = styled(props => <Spline {...props} />)<{ dark?: boolean }>`
+const StyledSpline = styled(props => <Spline {...props} />)<{ $dark?: boolean }>`
   display: ${props => (props.dark ? 'none' : 'block')};
   @media only screen and (prefers-color-scheme: dark) {
     display: ${props => (props.dark ? 'block' : 'none')};

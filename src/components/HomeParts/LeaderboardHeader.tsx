@@ -1,7 +1,7 @@
 import { useInViewport } from 'react-in-viewport'
 import { useRef } from 'react'
 import styled from 'styled-components'
-import { rgba, assetPath } from '@lib'
+import { rgba, assetPath, useGnosis } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding } from '@components'
 
@@ -9,6 +9,8 @@ const LeaderboardHeader = () => {
   const trigger = useRef<HTMLDivElement>(null)
 
   const { inViewport } = useInViewport(trigger)
+
+  const { safeBalanceETH, safeBalanceUSD } = useGnosis()
 
   return (
     <Wrapper shadowVisible={!inViewport}>
@@ -20,7 +22,9 @@ const LeaderboardHeader = () => {
           <Stats>
             <Stat>
               <Label>Artizen Award</Label>
-              <Data>Ξ 23</Data>
+              <Data>
+                {safeBalanceETH} ETH | ${safeBalanceUSD}
+              </Data>
             </Stat>
             <Stat>
               <Label>Cycle</Label>

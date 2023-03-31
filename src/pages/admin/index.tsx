@@ -14,7 +14,6 @@ const Projects = () => {
       <StyledPagePadding>
         <Wrapper>
           <Title className="doubleWith">Welcome to Artizen Admin Area:</Title>
-
           <MainAreaButton className="center-align" onClick={() => push('/admin/seasons')}>
             Seasons
           </MainAreaButton>
