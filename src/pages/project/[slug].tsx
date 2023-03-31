@@ -23,8 +23,7 @@ const CURRENT_SEASON = 5
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  //TODO: Do not deleted, EK needs this to test the code
-  // const { safeBalanceUSD } = useGnosis()
+  const { safeBalanceETH, safeBalanceUSD } = useGnosis()
 
   const {
     query: { slug },
@@ -80,8 +79,9 @@ const ProjectPage = () => {
           <Side>
             <Header>
               <Topline>
-                {/* TODO: EK needs to look afte this code, it does not work */}
-                {/* <div>Safe balance: `${safeBalanceUSD}`</div> */}
+                <div>
+                  Safe balance: {safeBalanceETH} ETH | ${safeBalanceUSD}
+                </div>
                 <RankAndArtifactCount
                   rank={rank}
                   count={project.artifacts[0].openEditionCopies_aggregate.aggregate?.count || 0}
