@@ -4,11 +4,14 @@ import styled from 'styled-components'
 import { rgba, assetPath } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding } from '@components'
+import { useGnosis } from '@lib'
 
 const LeaderboardHeader = () => {
   const trigger = useRef<HTMLDivElement>(null)
 
   const { inViewport } = useInViewport(trigger)
+
+  const { safeBalanceStr } = useGnosis()
 
   return (
     <Wrapper shadowVisible={!inViewport}>
@@ -20,7 +23,7 @@ const LeaderboardHeader = () => {
           <Stats>
             <Stat>
               <Label>Artizen Award</Label>
-              <Data>Ξ 23</Data>
+              <Data>{safeBalanceStr}</Data>
             </Stat>
             <Stat>
               <Label>Cycle</Label>

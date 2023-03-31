@@ -10,27 +10,33 @@ export const useGnosis = () => {
     address: safeAddress,
     chain: EvmChain.ETHEREUM,
   })
-  const { data: USDCTokenPriceData, error: USDCTokenPriceError } = useEvmTokenPrice({
+
+  if (safeBalanceError) {
+    console.error('safeBalanceError: ', safeBalanceError)
+  }
+
+  const {
+    data: USDCTokenPriceData,
+    error: USDCTokenPriceError,
+    isFetching,
+  } = useEvmTokenPrice({
     address: addressOfUSDC,
     chain: EvmChain.ETHEREUM,
   })
 
-  if (safeBalanceError) {
-    console.log('safeBalanceError', safeBalanceError)
+  if (USDCTokenPriceError) {
+    console.error('USDCTokenPriceError: ', USDCTokenPriceError)
   }
 
-  console.log(`safeBalance: ${safeBalance}`)
-  console.log(`USDCTokenPriceData: ${USDCTokenPriceData}`)
+  const USDtoETHstr = USDCTokenPriceData?.nativePrice?.ether
 
-  const USDtoETH = parseFloat(
-    ethers.utils.formatEther(
-      parseInt(USDCTokenPriceData?.nativePrice?.ether ? USDCTokenPriceData?.nativePrice?.ether : ''),
-    ),
-  )
-
-  const safeBalanceETH = parseFloat(safeBalance?.balance.ether ? safeBalance?.balance.ether : '').toFixed(2)
-  const safeBalanceUSD = (parseFloat(safeBalanceETH) / USDtoETH).toFixed(2)
-  const safeBalanceStr = `${safeBalanceETH} ETH | $ ${safeBalanceUSD}`
+  let safeBalanceStr, safeBalanceETH, safeBalanceUSD, USDtoETH
+  if (!isFetching && USDtoETHstr !== undefined) {
+    USDtoETH = parseFloat(ethers.utils.formatEther(parseInt(USDtoETHstr)))
+    safeBalanceETH = parseFloat(safeBalance?.balance.ether ? safeBalance?.balance.ether : '').toFixed(2)
+    safeBalanceUSD = (parseFloat(safeBalanceETH) / USDtoETH).toFixed(2)
+    safeBalanceStr = `${safeBalanceETH} ETH | $ ${safeBalanceUSD}`
+  }
 
   return { safeBalanceStr, safeBalanceETH, safeBalanceUSD, USDtoETH }
 }
