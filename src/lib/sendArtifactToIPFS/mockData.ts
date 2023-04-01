@@ -28,7 +28,9 @@ const mockProject: IProjectFragment = {
       createdAt: 'createdAt',
       openEditionCopies_aggregate: {
         aggregate: {
-          count: 1,
+          sum: {
+            copies: 1,
+          },
         },
       },
     },
