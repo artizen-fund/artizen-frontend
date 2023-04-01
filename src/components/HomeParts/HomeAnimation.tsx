@@ -42,9 +42,9 @@ const Wrapper = styled.div`
 `
 
 const StyledSpline = styled(props => <Spline {...props} />)<{ $dark?: boolean }>`
-  display: ${props => (props.dark ? 'none' : 'block')};
+  display: ${props => (props.$dark ? 'none' : 'block')};
   @media only screen and (prefers-color-scheme: dark) {
-    display: ${props => (props.dark ? 'block' : 'none')};
+    display: ${props => (props.$dark ? 'block' : 'none')};
   }
   width: calc(100vw - 40px) !important;
   height: calc(100vw - 40px) !important;
