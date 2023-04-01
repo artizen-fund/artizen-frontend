@@ -1,4 +1,5 @@
 import { IOpenEditionsSubscription } from '@types'
+import { uniqBy } from 'lodash'
 
 /*
   A User might donate multiple times. 
@@ -16,8 +17,10 @@ interface UserOnLeaderboard {
 }
 
 const aggregateDonators = (data: IOpenEditionsSubscription): Array<UserOnLeaderboard> => {
-  const users = [...new Set(data.OpenEditionCopies.map(item => item.user))]
+  const users = uniqBy(data.OpenEditionCopies, openEdition => openEdition.user.id).map(openEdition => openEdition.user)
+
   if (!users) return []
+
   return users
     .map(user => ({
       ...user,

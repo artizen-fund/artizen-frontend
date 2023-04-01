@@ -11,6 +11,9 @@ export const DEFAULT_GRANT_GOAL_ETH = 1
 // without updating the smart contract
 export const BASE_ARTIFACT_PRICE = 0.01
 
+// placeholder while we figure out a non-shifting key for the timestamp
+export const CURRENT_SEASON = 3
+
 export const WALLET_ERROR_UNSUPPORTED_OPERATION = 'UNSUPPORTED_OPERATION'
 export const WALLET_ERROR_INSUFFICIENT_FUNDS = 'INSUFFICIENT_FUNDS'
 export const WALLET_ERROR_ACTION_REJECTED = 'ACTION_REJECTED'

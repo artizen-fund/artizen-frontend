@@ -12,14 +12,11 @@ import {
   LongDescription,
   Leaderboard,
 } from '@components'
-import { LayoutContext, useGnosis } from '@lib'
+import { LayoutContext, useGnosis, CURRENT_SEASON } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
-import { GET_PROJECTS, SUBSCRIBE_SEASONS } from '@gql'
-import { IProjectsQuery, ISubscribeSeasonsSubscription } from '@types'
-
-// placeholder while we figure out a non-shifting key for the timestamp
-const CURRENT_SEASON = 5
+import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
+import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription } from '@types'
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
@@ -60,7 +57,19 @@ const ProjectPage = () => {
 
   const project = data?.Projects[0]
 
-  if (!!loading || !!loadingSeason || !seasonData || !project) return <p>…loading…</p>
+  const { data: openEditions } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      where: {
+        artifactId: { _eq: project?.artifacts[0].id },
+      },
+    },
+  })
+
+  if (!!loading || !!loadingSeason || !seasonData || !project) {
+    // todo: we have a loading placeholder somewhere
+    return <></>
+  }
 
   const lead = project.members?.find(m => m.type === 'lead')?.user
 
@@ -70,7 +79,7 @@ const ProjectPage = () => {
   //   submission => submission.project?.id === project.id,
   // )
 
-  // console.log('projectSubmissions', projectSubmissions)
+  const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
 
   return (
     <Layout>
@@ -82,10 +91,7 @@ const ProjectPage = () => {
                 <div>
                   Safe balance: {safeBalanceETH} ETH | ${safeBalanceUSD}
                 </div>
-                <RankAndArtifactCount
-                  rank={rank}
-                  count={project.artifacts[0].openEditionCopies_aggregate.aggregate?.count || 0}
-                />
+                <RankAndArtifactCount rank={rank} count={count} />
                 <Button level={2} outline onClick={() => setVisibleModalWithAttrs('share', { destination: asPath })}>
                   Share
                 </Button>
@@ -97,7 +103,7 @@ const ProjectPage = () => {
               {lead && <CreatorBox member={lead} />}
             </Header>
 
-            <Leaderboard artifact={project.artifacts[0]} />
+            <Leaderboard openEditions={openEditions} />
 
             <LongDescription>
               {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (

@@ -16,10 +16,7 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
   return (
     <Wrapper>
       <Header>
-        <RankAndArtifactCount
-          rank={index + 1}
-          count={latestArtifact.openEditionCopies_aggregate.aggregate?.count || 0}
-        />
+        <RankAndArtifactCount rank={index} count={latestArtifact.openEditionCopies_aggregate.aggregate?.count || 0} />
         <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
       </Header>
       <Copy>
@@ -41,6 +38,7 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
 const Wrapper = styled.article`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 20px;
   padding: 40px;
   background-color: ${rgba(palette.white)};
@@ -83,8 +81,8 @@ const Img = styled.img`
     height: 382px;
   }
   @media only screen and (min-width: ${breakpoint.laptopXL}px) {
-    width: 510px;
-    height: 510px;
+    width: 300px;
+    height: 300px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     width: 440px;
