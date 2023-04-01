@@ -69,7 +69,9 @@ const mockArtifact: IArtifactFragment = {
   createdAt: '2022-01-01 00:00:00',
   openEditionCopies_aggregate: {
     aggregate: {
-      count: 1,
+      sum: {
+        copies: 1,
+      },
     },
   },
 }

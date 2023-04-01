@@ -12,15 +12,14 @@ import {
   LongDescription,
   Leaderboard,
 } from '@components'
-import { LayoutContext, useGnosis, CURRENT_SEASON } from '@lib'
+import { LayoutContext, CURRENT_SEASON } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
-import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription } from '@types'
+import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = () => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const { safeBalanceETH, safeBalanceUSD } = useGnosis()
 
   const {
     query: { slug },
@@ -50,7 +49,6 @@ const ProjectPage = () => {
           // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
           // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
         },
-        order_by: { submissions_aggregate: { count: 'asc' } },
       },
     },
   )
@@ -73,7 +71,14 @@ const ProjectPage = () => {
 
   const lead = project.members?.find(m => m.type === 'lead')?.user
 
-  const rank = seasonData.Seasons[0].submissions?.findIndex(submission => submission.project?.id === project.id)
+  const rank = seasonData.Seasons[0].submissions
+    ?.sort(
+      (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+        s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+        s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+    )
+    .findIndex(submission => submission.project?.id === project.id)
+
   //TODO: This make this to refresh
   // const projectSubmissions = seasonData.Seasons[0].submissions?.filter(
   //   submission => submission.project?.id === project.id,
@@ -88,9 +93,6 @@ const ProjectPage = () => {
           <Side>
             <Header>
               <Topline>
-                <div>
-                  Safe balance: {safeBalanceETH} ETH | ${safeBalanceUSD}
-                </div>
                 <RankAndArtifactCount rank={rank} count={count} />
                 <Button level={2} outline onClick={() => setVisibleModalWithAttrs('share', { destination: asPath })}>
                   Share

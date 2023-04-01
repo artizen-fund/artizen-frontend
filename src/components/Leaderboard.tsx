@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
-import { aggregateDonators } from '@lib'
+import { aggregateDonators, useGnosis } from '@lib'
 import { IOpenEditionsSubscription } from '@types'
 
 interface ILeaderboard {
@@ -13,12 +13,7 @@ const DEFAULT_LIMIT = 3
 const Leaderboard = ({ openEditions }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
-  const [amountRaised, setAmountRaised] = useState<number>(0)
-
-  useEffect(() => {
-    if (!openEditions?.OpenEditionCopies) return
-    setAmountRaised(openEditions.OpenEditionCopies.map(o => o.value * (o.copies || 0))?.reduce((x, y) => x + y, 0))
-  }, [openEditions])
+  const { safeBalanceETH, safeBalanceUSD } = useGnosis()
 
   if (!openEditions) return <Spinner minHeight="65px" />
 
@@ -30,9 +25,8 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
         {limit === DEFAULT_LIMIT ? 'See All' : 'See Less'}
       </Button>
     )
-
   return (
-    <StyledTable title={`Ξ${amountRaised} $xxx in Artifact sales`} {...{ sideItem }}>
+    <StyledTable title={`Ξ${safeBalanceETH} $${safeBalanceUSD} in Artifact sales`} {...{ sideItem }}>
       {aggregateDonators(openEditions).map((user, index) => (
         <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
           <div>

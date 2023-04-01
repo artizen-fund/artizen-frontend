@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
 import moment from 'moment-timezone'
 import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription } from '@types'
+import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 import {
   HomeHeader,
   Layout,
@@ -31,9 +31,10 @@ const IndexPage = () => {
         // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
         // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
       },
-      order_by: { submissions_aggregate: { count: 'asc' } },
     },
   })
+
+  console.log('data', data)
   return (
     <Layout>
       <HomeHeader />
@@ -43,9 +44,15 @@ const IndexPage = () => {
       <StyledPagePadding>
         <PagePadding>
           <Grid>
-            {data?.Seasons[0].submissions?.map((submission, index) => (
-              <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
-            ))}
+            {data?.Seasons[0].submissions
+              ?.sort(
+                (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+                  s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+                  s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+              )
+              .map((submission: ISubmissionFragment, index: number) => (
+                <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
+              ))}
           </Grid>
         </PagePadding>
       </StyledPagePadding>

@@ -20,7 +20,9 @@ export const ARTIFACT = gql`
     createdAt
     openEditionCopies_aggregate {
       aggregate {
-        count(columns: value)
+        sum {
+          copies
+        }
       }
     }
   }
