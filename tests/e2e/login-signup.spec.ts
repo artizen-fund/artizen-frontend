@@ -117,22 +117,10 @@ test.describe('general artizen user', () => {
     await page.waitForLoadState()
 
     // click sign in button
-    await clickAccountButton(page, 'CloseSign In')
-
-    // click metamask icon to open wallet
-    await clickMetamaskIcon(page)
+    await clickSignInButtonWithRetry(page)
 
     // Approve the connection when MetaMask pops up
-    // This closes the metamask popup so we need to go through artizen sign in process again
-    // to sign the transaction
-    await metamask.sign()
-
-    await closeWalletConnectModal(page)
-    await clickAccountButton(page, 'CloseSign In')
-
-    await clickMetamaskIcon(page)
-
-    await metamask.sign()
+    await connectAndSignWithMetamask(page, true, false)
 
     await page.waitForLoadState()
 
