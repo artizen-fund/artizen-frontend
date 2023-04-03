@@ -1,77 +1,57 @@
-import { useInViewport } from 'react-in-viewport'
-import { useRef } from 'react'
 import styled from 'styled-components'
-import { rgba, assetPath, useGnosis } from '@lib'
+import { rgba, assetPath, useGnosis, CURRENT_SEASON } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { PagePadding } from '@components'
+import { PagePadding, Countdown } from '@components'
+import { useSubscription } from '@apollo/client'
+import { SUBSCRIBE_SEASONS } from '@gql'
+import { ISubscribeSeasonsSubscription } from '@types'
 
 const LeaderboardHeader = () => {
-  const trigger = useRef<HTMLDivElement>(null)
-
-  const { inViewport } = useInViewport(trigger)
-
   const { safeBalanceETH, safeBalanceUSD } = useGnosis()
 
+  const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      where: {
+        index: { _eq: CURRENT_SEASON },
+        // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
+        // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+      },
+      order_by: { submissions_aggregate: { count: 'asc' } },
+    },
+  })
+
   return (
-    <Wrapper shadowVisible={!inViewport}>
-      <Trigger ref={trigger} />
-      <StyledPagePadding>
-        <Content>
-          <Title>Leaderboard</Title>
+    <StyledPagePadding>
+      <Content>
+        <Title>Leaderboard</Title>
 
-          <Stats>
-            <Stat>
-              <Label>Artizen Award</Label>
-              <Data>
-                {safeBalanceETH} ETH | ${safeBalanceUSD}
-              </Data>
-            </Stat>
-            <Stat>
-              <Label>Cycle</Label>
-              <Data>Season 2</Data>
-            </Stat>
-            <Stat>
-              <Label>Ends in</Label>
-              <Data>13d : 8h : 44m</Data>
-            </Stat>
-          </Stats>
+        <Stats>
+          <Stat>
+            <Label>Artizen Award</Label>
+            <Data>
+              {safeBalanceETH} ETH | ${safeBalanceUSD}
+            </Data>
+          </Stat>
+          <Stat>
+            <Label>Cycle</Label>
+            <Data>Season {CURRENT_SEASON}</Data>
+          </Stat>
+          <Stat>
+            <Label>Ends in</Label>
+            <Data>
+              <Countdown date={data?.Seasons[0].endingDate} />
+            </Data>
+          </Stat>
+        </Stats>
 
-          <OfficialSelection>
-            <img src={assetPath('/assets/officialSelection.svg')} />
-          </OfficialSelection>
-        </Content>
-      </StyledPagePadding>
-    </Wrapper>
+        <OfficialSelection>
+          <img src={assetPath('/assets/officialSelection.svg')} />
+        </OfficialSelection>
+      </Content>
+    </StyledPagePadding>
   )
 }
-
-const Trigger = styled.div`
-  position: absolute;
-  top: -10px;
-  width: 1px;
-  height: 1px;
-`
-
-const Wrapper = styled.header<{ shadowVisible: boolean }>`
-  position: sticky;
-  z-index: 102;
-  top: 0px;
-  left: 0;
-
-  background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
-  filter: drop-shadow(
-    ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
-  );
-  @media (prefers-color-scheme: dark) {
-    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
-    filter: drop-shadow(
-      ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(114, 124, 140, 0.64)')}
-    );
-  }
-
-  border-bottom: 0.5px solid transparent;
-  transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out;
-`
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   padding: 20px 0;

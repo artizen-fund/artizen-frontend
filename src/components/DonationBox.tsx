@@ -21,8 +21,6 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
   const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
 
-  useEffect(() => console.log(artifactQuantity), [artifactQuantity])
-
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
     toggleModal('confirmTransaction')
@@ -74,7 +72,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
       <>
         <MobileBreak>
           <Cost>
-            <div>Cost</div>
+            <div>Price</div>
             <Amount>
               <span>Ξ {BASE_ARTIFACT_PRICE}</span>
             </Amount>
