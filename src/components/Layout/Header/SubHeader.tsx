@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { rgba, useGnosis, CURRENT_SEASON } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { PagePadding, Icon, Countdown } from '@components'
+import { Glyph, Icon, Countdown } from '@components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription } from '@types'
@@ -38,7 +38,11 @@ const SubHeader = ({ visible }: ISubHeader) => {
             <Stat>
               <Label>Prize funds</Label>
               <Data>
-                Ξ {safeBalanceETH} | ${safeBalanceUSD}
+                Ξ {safeBalanceETH}
+                <CashTrend>
+                  ${safeBalanceUSD}
+                  <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
+                </CashTrend>
               </Data>
             </Stat>
             <Stat>
@@ -61,6 +65,16 @@ const SubHeader = ({ visible }: ISubHeader) => {
     </>
   )
 }
+
+const CashTrend = styled.div`
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+`
 
 const Wrapper = styled.header<{ visible: boolean }>`
   position: fixed;
@@ -142,6 +156,11 @@ const Label = styled.h3`
 `
 
 const Data = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: bottom;
+  gap: 16px;
   ${typography.title.l4}
 `
 

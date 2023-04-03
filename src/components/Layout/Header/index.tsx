@@ -15,7 +15,7 @@ const Header = () => {
   const trigger = useRef<HTMLDivElement>(null)
 
   const { visibleShelf, toggleShelf, setVisibleShelf } = useContext(LayoutContext)
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
   useScrollPosition(({ currPos }) => setVisible(currPos.y < window.innerHeight), [], undefined, true, 50)
 
   return (
