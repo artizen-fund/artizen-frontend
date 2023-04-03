@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription } from '@types'
+import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 import {
   HomeHeader,
   Layout,
