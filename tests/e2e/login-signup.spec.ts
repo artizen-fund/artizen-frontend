@@ -24,7 +24,7 @@ export const test = base.extend<{
     const { browserContext, wallet } = await launch('', {
       wallet: 'metamask',
       version: MetaMaskWallet.recommendedVersion,
-      headless: true,
+      headless: process.env.PLAYWRIGHT_HEADLESS === 'false' ? false : true,
     })
 
     // Unlock the wallet
