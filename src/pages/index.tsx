@@ -55,9 +55,15 @@ const IndexPage = () => {
       <StyledPagePadding>
         <PagePadding>
           <Grid>
-            {data?.Seasons[0].submissions?.map((submission, index) => (
-              <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
-            ))}
+            {data?.Seasons[0].submissions
+              ?.sort(
+                (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+                  s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+                  s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+              )
+              .map((submission, index) => (
+                <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
+              ))}
           </Grid>
         </PagePadding>
       </StyledPagePadding>
