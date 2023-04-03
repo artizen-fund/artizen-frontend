@@ -85,7 +85,7 @@ const StyledGlyph = styled(props => <Glyph {...props} />)<Pick<ButtonProps, 'gly
   height: 100% !important;
 `
 
-const ButtonStyle = css<Partial<ButtonProps>>`
+export const ButtonStyle = css<Partial<ButtonProps>>`
   appearance: none;
   border: 0;
   outline: 0;
@@ -205,7 +205,7 @@ const ButtonPalette = css<Partial<ButtonProps>>`
   }
 `
 
-const ButtonTypography = css<Partial<ButtonProps>>`
+export const ButtonTypography = css<Partial<ButtonProps>>`
   font-style: normal;
   font-weight: 700;
   text-align: center;

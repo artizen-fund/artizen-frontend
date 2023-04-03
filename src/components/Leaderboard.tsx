@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
-import { aggregateDonators, useGnosis } from '@lib'
+import { aggregateDonators, useGnosis, rgba } from '@lib'
 import { IOpenEditionsSubscription } from '@types'
+import { palette } from '@theme'
 
 interface ILeaderboard {
   openEditions?: IOpenEditionsSubscription
@@ -25,20 +26,33 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
         {limit === DEFAULT_LIMIT ? 'See All' : 'See Less'}
       </Button>
     )
+
+  const title = (
+    <div>
+      Ξ{safeBalanceETH} <Grey>&nbsp; ${safeBalanceUSD} in Artifact sales</Grey>
+    </div>
+  )
+
   return (
-    <StyledTable title={`Ξ${safeBalanceETH} $${safeBalanceUSD} in Artifact sales`} {...{ sideItem }}>
+    <StyledTable title={title} {...{ sideItem }}>
       {aggregateDonators(openEditions).map((user, index) => (
         <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
           <div>
             <TableAvatar profileImage={user.profileImage} />
             <Name>{user?.artizenHandle}</Name>
           </div>
-          <Amount>minted {user.copies}</Amount>
+          <Amount>
+            <span>owns</span> {user.copies}
+          </Amount>
         </StyledTableCell>
       ))}
     </StyledTable>
   )
 }
+
+const Grey = styled.span`
+  color: ${rgba(palette.barracuda)};
+`
 
 const StyledTable = styled(props => <Table {...props} />)`
   margin: 24px 0;
@@ -62,6 +76,9 @@ const Name = styled.div`
 
 const Amount = styled.div`
   white-space: nowrap;
+  span {
+    color: ${rgba(palette.barracuda)};
+  }
 `
 
 export default Leaderboard

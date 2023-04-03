@@ -15,7 +15,7 @@ const Header = () => {
   const trigger = useRef<HTMLDivElement>(null)
 
   const { visibleShelf, toggleShelf, setVisibleShelf } = useContext(LayoutContext)
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
   useScrollPosition(({ currPos }) => setVisible(currPos.y < window.innerHeight), [], undefined, true, 50)
 
   return (
@@ -161,9 +161,8 @@ const MobileNavButton = styled(props => <Button {...props} />)`
 const Trigger = styled.div`
   position: absolute;
   top: 95vh;
-  width: 10px;
-  height: 10px;
-  background: magenta;
+  width: 1px;
+  height: 1px;
 `
 
 export default Header

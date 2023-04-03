@@ -5,7 +5,7 @@ import { palette, typography } from '@theme'
 
 const ArtifactCount = ({ count }: { count: number }) => (
   <Wrapper>
-    <span>{count} minted</span> <Glyph glyph="trend" level={2} color="barracuda" />
+    <span>{count} minted</span> <Glyph glyph="trend" level={2} color="barracuda" darkColor="barracuda" />
   </Wrapper>
 )
 
