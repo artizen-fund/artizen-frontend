@@ -161,9 +161,8 @@ const MobileNavButton = styled(props => <Button {...props} />)`
 const Trigger = styled.div`
   position: absolute;
   top: 95vh;
-  width: 10px;
-  height: 10px;
-  background: magenta;
+  width: 1px;
+  height: 1px;
 `
 
 export default Header
