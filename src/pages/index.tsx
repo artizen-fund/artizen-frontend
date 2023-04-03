@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
-import moment from 'moment-timezone'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 import {
@@ -21,8 +20,20 @@ import {
 import { rgba, CURRENT_SEASON } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 
 const IndexPage = () => {
+  dayjs.extend(utc)
+  dayjs.extend(isBetween)
+  dayjs.extend(timezone)
+  dayjs.extend(isSameOrAfter)
+  dayjs.extend(isSameOrBefore)
+
   const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
@@ -31,8 +42,10 @@ const IndexPage = () => {
         // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
         // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
       },
+      order_by: { submissions_aggregate: { count: 'asc' } },
     },
   })
+
   return (
     <Layout>
       <HomeHeader />
@@ -48,7 +61,7 @@ const IndexPage = () => {
                   s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
                   s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
               )
-              .map((submission: ISubmissionFragment, index: number) => (
+              .map((submission, index) => (
                 <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
               ))}
           </Grid>

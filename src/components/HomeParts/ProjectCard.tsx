@@ -26,7 +26,7 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
         <Link href={`/project/${project.titleURL!}`}>
           <h2>{project.title}</h2>
         </Link>
-        <p>{project.description}</p>
+        <p>{project.logline}</p>
       </Copy>
       <Link href={`/project/${project.titleURL!}`}>
         <Img src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`} />
@@ -65,7 +65,7 @@ const ArtifactNumber = styled.div`
 
 const Copy = styled.div`
   h2 {
-    ${typography.title.l2}
+    ${typography.title.l3}
   }
   p {
     ${typography.body.l3}
