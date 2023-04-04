@@ -1,10 +1,18 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { ApolloProvider } from '@apollo/client'
 import { Toast } from '@trycourier/react-toast'
 import { StyledToast } from '@components'
-import { initIntercom, CourierNotification, LayoutContextProvider, getWagmiClient, initializeApollo } from '@lib'
+import {
+  initIntercom,
+  CourierNotification,
+  LayoutContextProvider,
+  getWagmiClient,
+  initializeApollo,
+  isProd,
+  withAuth,
+} from '@lib'
 import packageJson from '../../package.json'
 
 import '@public/styles/reset.css'
@@ -41,6 +49,6 @@ const App = ({
   )
 }
 
+// we can't run the password blocker for now because it blocks tests
 // export default isProd() ? App : dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
-// ^ temporary shim to retain authguard on staging
-export default dynamic(() => Promise.resolve(App), { ssr: false })
+export default isProd() ? App : dynamic(() => Promise.resolve(App), { ssr: false })

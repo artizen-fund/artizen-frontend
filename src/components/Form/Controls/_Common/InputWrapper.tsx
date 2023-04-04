@@ -26,7 +26,7 @@ const InputPalette = css`
 
   &:focus,
   &.hasData,
-  &:not([value='']),
+  /* &:not([value='']), */
   &:not(:placeholder-shown) {
     border-color: ${rgba(palette.night)};
   }
@@ -81,18 +81,14 @@ export default styled.div<{
   select {
     appearance: none;
     outline: none;
-
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 100%;
-
     border-width: 1px 1px 1px 1px;
     border-style: solid;
     border-radius: 0px;
-
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, border-width 0.1s ease-in-out,
       color 0.3s ease-in-out;
     will-change: background, border, color;

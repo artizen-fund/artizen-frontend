@@ -11,6 +11,9 @@ import {
   ConfirmTransactionModal,
   ProcessTransactionModal,
   ShareTransactionModal,
+  CreateSeasonModal,
+  SubmitProjectModal,
+  NewProjectMembersModal,
 } from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
@@ -64,6 +67,13 @@ const Modals = () => {
         return <AlertModal headline="derp" message="herp derp derp" />
       case 'media':
         return <MediaModal />
+      case 'createSeasonModal':
+        return <CreateSeasonModal />
+      case 'submitProjectModal':
+        return <SubmitProjectModal />
+      case 'newProjectMemberModal':
+        return <NewProjectMembersModal />
+
       default:
         return <></>
     }

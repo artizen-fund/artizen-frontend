@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 
+// note: this is all deprecated
+
 export const useScrollToDonationBox = () => {
   const { pathname, push } = useRouter()
   return () => {

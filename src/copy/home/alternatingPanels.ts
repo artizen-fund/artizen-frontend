@@ -4,19 +4,19 @@ const alternatingPanels: Array<IAlternatingPanel> = [
   {
     image: '/assets/illustrations/home/about.png',
     imageDark: '/assets/illustrations/home/about-dark.png',
-    title: 'Earn Artifacts from Winners',
-    copy: 'Artifacts are unique works of art that capture the spark of inspiration behind a project. Every day, a new series of three Artifacts is minted by our grant winner and awarded to:',
+    title: 'Reward Positive Impact',
+    copy: 'Artifacts are a new type of NFT designed to reward positive impact. Think carbon credits, but for any project that does good in the world. Each Artifact documents how a project plans to:',
     list: [
       {
-        label: 'The Top Donor',
+        label: 'Transform Lives',
         glyph: 'trend',
       },
       {
-        label: 'The Project Creator',
+        label: 'Revitalize Communities',
         glyph: 'palette',
       },
       {
-        label: 'Our Community Treasury',
+        label: 'Regenerate Ecosystems',
         glyph: 'artToken',
       },
     ],
@@ -26,8 +26,8 @@ const alternatingPanels: Array<IAlternatingPanel> = [
   {
     image: '/assets/illustrations/home/trust.png',
     imageDark: '/assets/illustrations/home/trust-dark.png',
-    title: 'Curate Our Grants',
-    copy: 'Artifacts give you the power to curate our grants. Every day, a new grant winner is selected by our community of Artifact holders. Join us to vote for your favorite projects and champion the creators you love.',
+    title: 'Curate our Official Selection',
+    copy: 'Artifacts give you the power to curate our winners. The more Artifacts you own, the greater your voting power. Join us to vote for your favorite projects and champion the creators you love.',
     list: [
       {
         label: 'Review Submissions',
@@ -38,7 +38,7 @@ const alternatingPanels: Array<IAlternatingPanel> = [
         glyph: 'tick',
       },
       {
-        label: 'New Winner Selected Every Day',
+        label: 'Curate New Selection Each Season',
         glyph: 'crown',
       },
     ],
@@ -48,19 +48,19 @@ const alternatingPanels: Array<IAlternatingPanel> = [
   {
     image: '/assets/illustrations/home/about.png',
     imageDark: '/assets/illustrations/home/about-dark.png',
-    title: 'Join Our Movement',
-    copy: 'Artizen is built by our community of Artifact holders. Together we’re on a mission to unlock human creativity and reinvent how the world funds art, science, and public goods of every kind.',
+    title: 'Join a Vibrant Community',
+    copy: 'When you own an Artifact, you join a vibrant community of artists, scientists, coders, and creators of every kind. Together we’re on a mission to unlock human creativity.',
     list: [
       {
-        label: 'Support Creators',
+        label: 'Connect at Private Gatherings',
         glyph: 'donate',
       },
       {
-        label: 'Reinvent Grant Funding',
+        label: 'Collaborate with Friends',
         glyph: 'intersect',
       },
       {
-        label: 'Unlock Human Creativity',
+        label: 'Elevate Each Other',
         glyph: 'globe',
       },
     ],

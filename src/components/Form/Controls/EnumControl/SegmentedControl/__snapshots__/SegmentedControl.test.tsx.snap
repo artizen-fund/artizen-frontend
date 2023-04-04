@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentedControl renders SegmentedControl unchanged 1`] = `
+<div>
+  <div
+    class="sc-ae927758-0 egPuqj"
+    label="Segmented enum control test"
+  />
+</div>
+`;

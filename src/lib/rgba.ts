@@ -7,7 +7,6 @@
 	rgba([255, 0, 255]) // rgba(255, 0, 255, 1)
 */
 import { palette, Palette } from '@theme'
-
 export const rgba = (color: keyof Palette | Array<number> | 'transparent', alpha?: number) => {
   let rgb = ''
   switch (true) {

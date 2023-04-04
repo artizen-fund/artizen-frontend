@@ -1,29 +1,38 @@
 import { useContext, useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import { useAccount } from 'wagmi'
 import { useQuery, useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGetUserQuery, Maybe, IUsers } from '@types'
+import { IGetUserQuery, Maybe } from '@types'
 import { rgba, loggedInUserVar, LayoutContext, textCrop } from '@lib'
 import { GET_USER } from '@gql'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
   const { isConnected } = useAccount()
-  const { setVisibleModal, toggleShelf } = useContext(LayoutContext)
+  const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
   const { data: session, status } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
+  if (!isConnected && !!session) {
+    console.warn('user session is not connected to the wallet')
+    signOut()
+  }
+
   useQuery<IGetUserQuery>(GET_USER, {
-    skip: !session || !session?.user?.publicAddress || !isConnected,
+    skip: !isConnected || !session || !session?.user?.publicAddress,
     variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
     onCompleted: data => {
+      console.log('get to onCompleted')
       if (!loggedInUser || loggedInUser.id !== data.Users[0].id) {
         //TODO: there is really not need to use useReactiveVar. We can move this query function to a hook and use it everywhere the user data is needed
         // useReactiveVar forces rerender the whole website, bad stuff
         loggedInUserVar(data.Users[0])
       }
+    },
+    onError: error => {
+      console.log('onError ', error)
     },
   })
 
@@ -54,7 +63,9 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       !!loggedInUser &&
       (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName || !loggedInUser.artizenHandle)
     ) {
-      setVisibleModal('createProfile')
+      setVisibleModalWithAttrs('createProfile', {
+        action: 'update',
+      })
     }
   }, [loggedInUser])
 

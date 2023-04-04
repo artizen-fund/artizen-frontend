@@ -18,6 +18,13 @@ export const ARTIFACT = gql`
     dateMinting
     token
     createdAt
+    openEditionCopies_aggregate {
+      aggregate {
+        sum {
+          copies
+        }
+      }
+    }
   }
 `
 
@@ -37,6 +44,8 @@ export const USER_PUBLIC = gql`
     instagramHandle
     bannerImage
     bio
+    externalLink
+    claimed
   }
 `
 
@@ -53,18 +62,74 @@ export const MEMBER = gql`
 
 export const PROJECT = gql`
   ${MEMBER}
+  ${ARTIFACT}
   fragment Project on Projects {
     id
-    impact
-    impactTags
+    title
+    titleURL
     logline
     description
     creationDate
     completionDate
     walletAddress
-    title
+    metadata
+    impactTags
+    impact
+    titleURL
+    submissions {
+      id
+    }
+    artifacts {
+      ...Artifact
+    }
     members {
       ...Member
+    }
+  }
+`
+
+export const SUBMISSION = gql`
+  ${PROJECT}
+  ${ARTIFACT}
+  fragment Submission on Submissions {
+    id
+    createdAt
+    projectId
+    project {
+      ...Project
+    }
+    artifacts {
+      ...Artifact
+    }
+  }
+`
+
+export const SEASON = gql`
+  ${SUBMISSION}
+  fragment Season on Seasons {
+    id
+    title
+    startingDate
+    endingDate
+    createdAt
+    updateAt
+    index
+    submissions {
+      ...Submission
+    }
+  }
+`
+
+export const OPEN_EDITIONS_COPIES = gql`
+  fragment OpenEditionCopy on OpenEditionCopies {
+    value
+    copies
+    user {
+      id
+      firstName
+      lastName
+      artizenHandle
+      profileImage
     }
   }
 `
