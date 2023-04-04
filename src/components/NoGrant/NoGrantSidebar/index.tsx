@@ -8,59 +8,27 @@ import { GET_ADJACENT_GRANT } from '@gql'
 import Link from 'next/link'
 
 const GrantsExplorer = () => {
-  const { data: prevGrantData } = useQuery<IGetAdjacentGrantQuery>(GET_ADJACENT_GRANT, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      order_by: { blockchainId: 'desc' },
-      where: {
-        _and: [
-          {
-            status: {
-              _eq: 'published',
-            },
-          },
-        ],
-      },
-    },
-  })
-  const previousGrantLink = `/grants/${prevGrantData?.Grants?.[0]?.blockchainId || 'today'}`
-
   return (
-    <StyledStickyCanvas>
-      <Wrapper>
-        <Bar>
-          <Button
-            glyphOnly
-            glyph="arrow"
-            glyphRotation={90}
-            href={previousGrantLink}
-            level={2}
-            disabled={!prevGrantData?.Grants || prevGrantData.Grants.length < 1}
-          >
-            previous
-          </Button>
-          <Copy>
-            <GrantDate>No active project yet</GrantDate>
-            {/* <Description>{formatDate('now')}</Description> */}
-          </Copy>
-          <Button glyphOnly glyph="arrow" glyphRotation={-90} href="/404" level={2} disabled={true}>
-            next
-          </Button>
-        </Bar>
-        <Body>
-          <Header>Season #02 coming soon</Header>
+    <Wrapper>
+      <Bar>
+        <Copy>
+          <GrantDate>No active project yet</GrantDate>
+          {/* <Description>{formatDate('now')}</Description> */}
+        </Copy>
+      </Bar>
+      <Body>
+        <Header>Season #02 coming soon</Header>
 
-          <Message>
-            Season #01 raised $30,000+ for creators around the world. Apply today for season #02 to get your project
-            funded.
-          </Message>
+        <Message>
+          Season #01 raised $30,000+ for creators around the world. Apply today for season #02 to get your project
+          funded.
+        </Message>
 
-          <Button href="https://artizen.typeform.com/apply">Apply for funding</Button>
+        <Button href="https://artizen.typeform.com/apply">Apply for funding</Button>
 
-          <HowItWorks href="/derp">Or see how it works here</HowItWorks>
-        </Body>
-      </Wrapper>
-    </StyledStickyCanvas>
+        <HowItWorks href="/derp">Or see how it works here</HowItWorks>
+      </Body>
+    </Wrapper>
   )
 }
 
@@ -81,11 +49,8 @@ const Bar = styled.nav`
   padding: 24px;
 `
 
-const StyledStickyCanvas = styled(props => <StickyCanvas {...props} />)`
-  grid-area: sidebar;
-`
-
 const Wrapper = styled(props => <StickyContent {...props} />)`
+  grid-area: sidebar;
   background-color: ${rgba(palette.white)};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   @media (prefers-color-scheme: dark) {
