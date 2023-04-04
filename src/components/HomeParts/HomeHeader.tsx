@@ -4,7 +4,10 @@ import { header } from '@copy/home'
 import { typography, breakpoint } from '@theme'
 
 const HomeHeader = () => {
-  const scrollToLeaderboard = () => alert('todo')
+  const scrollToLeaderboard = () => {
+    const submissionsMarker = document.querySelector('#submissionsMarker')
+    submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+  }
   return (
     <PagePadding>
       <Header>
@@ -34,6 +37,8 @@ const Header = styled.header`
 `
 
 const Copy = styled.header`
+  position: relative;
+  z-index: 1;
   flex: 1;
   h1 {
     ${typography.title.l1};

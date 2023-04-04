@@ -102,20 +102,19 @@ const CashTrend = styled.div`
 `
 
 const Wrapper = styled.header<{ visible: boolean }>`
+  display: none;
   position: fixed;
   z-index: 102;
-
   height: 64px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    display: block;
     height: 72px;
+    transform: translateY(${props => (props.visible ? 0 : -100)}px);
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     height: 88px;
   }
   width: 100%;
-
-  transform: translateY(${props => (props.visible ? 0 : -100)}px);
-
   left: 0;
   background: ${props => rgba(palette.white, props.visible ? 0.98 : 1)};
   filter: drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.48));
