@@ -3,12 +3,18 @@ import { rgba, useGnosis, CURRENT_SEASON } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Glyph, Icon, Countdown } from '@components'
 import { useSubscription } from '@apollo/client'
-import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription } from '@types'
+import { SUBSCRIBE_SEASONS, SUBSCRIBE_LEADERBOARD } from '@gql'
+import { ISubscribeSeasonsSubscription, ILeaderboardSubscription } from '@types'
 
 interface ISubHeader {
   visible: boolean
 }
+
+/* NOTE: 
+    This lists the top donator to _all_ projects.
+    ex. if @andy buys five artifacts each in five submission, they're marked as buying 25.
+    If we want to change that to "largest contributor to any single submission," change the map/reducer below.
+*/
 
 const SubHeader = ({ visible }: ISubHeader) => {
   const { safeBalanceETH, safeBalanceUSD } = useGnosis()
@@ -24,6 +30,21 @@ const SubHeader = ({ visible }: ISubHeader) => {
       order_by: { submissions_aggregate: { count: 'asc' } },
     },
   })
+
+  const { data: leaderboard } = useSubscription<ILeaderboardSubscription>(SUBSCRIBE_LEADERBOARD, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      where: { openEditionCopies: { artifact: { submissions: { season: { index: { _eq: CURRENT_SEASON } } } } } },
+    },
+  })
+
+  const consolidatedLeaderboard = leaderboard?.Users.map((user, i) => {
+    return {
+      artizenHandle: user.artizenHandle,
+      profileImage: user.profileImage,
+      rank: user.openEditionCopies.reduce((x, copy) => x + copy.copies! * copy.value!, 0) || 0,
+    }
+  }).sort((u1, u2) => u2.rank - u1.rank)
 
   return (
     <>
@@ -55,10 +76,12 @@ const SubHeader = ({ visible }: ISubHeader) => {
                 <Countdown date={data?.Seasons[0].endingDate} />
               </Data>
             </Stat>
-            <Stat>
-              <Label>Current leader</Label>
-              <Data>Derp</Data>
-            </Stat>
+            {typeof consolidatedLeaderboard === 'object' && consolidatedLeaderboard.length > 0 && (
+              <Stat>
+                <Label>Current leader</Label>
+                <Data>@{consolidatedLeaderboard?.[0].artizenHandle}</Data>
+              </Stat>
+            )}
           </Stats>
         </Content>
       </Wrapper>
