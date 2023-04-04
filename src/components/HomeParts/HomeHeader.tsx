@@ -4,7 +4,10 @@ import { header } from '@copy/home'
 import { typography, breakpoint } from '@theme'
 
 const HomeHeader = () => {
-  const scrollToLeaderboard = () => alert('todo')
+  const scrollToLeaderboard = () => {
+    const submissionsMarker = document.querySelector('#submissionsMarker')
+    submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+  }
   return (
     <PagePadding>
       <Header>
