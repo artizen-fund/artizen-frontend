@@ -26,13 +26,7 @@ const Header = () => {
           <Link href={`/`}>
             <Logo />
           </Link>
-          <MobileNavButton
-            onClick={() => toggleShelf('howItWorks')}
-            glyph={glyphKey.arrow}
-            glyphOnRight
-            outline
-            level={1}
-          >
+          <MobileNavButton onClick={() => toggleShelf('howItWorks')} outline level={1}>
             Menu
           </MobileNavButton>
         </Items>
@@ -73,6 +67,7 @@ const Wrapper = styled.header<{ visible: boolean }>`
   width: 100%;
   height: 64px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    transform: translateY(${props => (props.visible ? 0 : -100)}px);
     height: 72px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
@@ -89,7 +84,6 @@ const Wrapper = styled.header<{ visible: boolean }>`
     filter: drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.48));
   }
 
-  transform: translateY(${props => (props.visible ? 0 : -100)}px);
   transition: transform 0.3s ease-in-out;
 `
 
@@ -97,9 +91,9 @@ const Items = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    gap: 20px;
+    gap: 24px;
   }
 `
 

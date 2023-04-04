@@ -15,22 +15,24 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
   const latestArtifact = project.artifacts[0]
   return (
     <Wrapper>
-      <Header>
-        <RankAndArtifactCount
-          rank={index}
-          count={latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0}
-        />
-        <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
-      </Header>
-      <Copy>
-        <Link href={`/project/${project.titleURL!}`}>
-          <h2>{project.title}</h2>
-        </Link>
-        <p>{project.logline}</p>
-      </Copy>
-      <Link href={`/project/${project.titleURL!}`}>
+      <AllCopy>
+        <Header>
+          <RankAndArtifactCount
+            rank={index}
+            count={latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0}
+          />
+          <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
+        </Header>
+        <Copy>
+          <Link href={`/project/${project.titleURL!}`}>
+            <h2>{project.title}</h2>
+          </Link>
+          <p>{project.logline}</p>
+        </Copy>
+      </AllCopy>
+      <StyledLink href={`/project/${project.titleURL!}`}>
         <Img src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`} />
-      </Link>
+      </StyledLink>
       <Footer>
         <DonationBox tokenId={latestArtifact.token} />
       </Footer>
@@ -38,12 +40,30 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
   )
 }
 
-const Wrapper = styled.article`
+const AllCopy = styled.div`
+  grid-area: copy;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 20px;
-  padding: 40px;
+  padding: 0px 20px 0 20px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    padding: 0;
+  }
+`
+
+const StyledLink = styled(props => <Link {...props} />)`
+  grid-area: art;
+`
+
+const Wrapper = styled.article`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'art' 'copy' 'footer';
+  gap: 20px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    grid-template-areas: 'copy' 'art' 'footer';
+    padding: 40px;
+  }
   background-color: ${rgba(palette.white)};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   border-radius: 16px;
@@ -77,9 +97,10 @@ const Img = styled.img`
   width: 100%;
   height: auto;
   background: ${rgba(palette.algae)};
-  border-radius: 16px;
+  border-radius: 16px 16px 0 0;
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    border-radius: 16px;
     width: 382px;
     height: 382px;
   }
@@ -94,10 +115,16 @@ const Img = styled.img`
 `
 
 const Footer = styled.footer`
+  grid-area: footer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   gap: 15px;
+  padding: 0 20px 20px 20px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    padding: 0;
+    gap: 20px;
+  }
 `
 
 export default ProjectCard
