@@ -16,6 +16,7 @@ import {
   HomeRibbon,
   LeaderboardHeader,
   ProjectCard,
+  NoGrant,
 } from '@components'
 import { rgba, CURRENT_SEASON } from '@lib'
 import { breakpoint, palette } from '@theme'
@@ -51,22 +52,27 @@ const IndexPage = () => {
       <HomeHeader />
       <PartnersRibbon />
       <HomeRibbon />
-      <LeaderboardHeader />
-      <StyledPagePadding>
-        <PagePadding>
-          <Grid>
-            {data?.Seasons[0].submissions
-              ?.sort(
-                (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-                  s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-                  s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-              )
-              .map((submission, index) => (
-                <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
-              ))}
-          </Grid>
-        </PagePadding>
-      </StyledPagePadding>
+      {!!CURRENT_SEASON && (
+        <>
+          <LeaderboardHeader />
+          <StyledPagePadding>
+            <PagePadding>
+              <Grid>
+                {data?.Seasons[0].submissions
+                  ?.sort(
+                    (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+                      s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+                      s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+                  )
+                  .map((submission, index) => (
+                    <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
+                  ))}
+              </Grid>
+            </PagePadding>
+          </StyledPagePadding>
+        </>
+      )}
+      {!CURRENT_SEASON && <NoGrant />}
       <Newsletter />
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (
