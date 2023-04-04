@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
 
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, BASE_ARTIFACT_PRICE, rgba, useSeasons } from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useSeasons } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 
 interface IDonationBox {
@@ -12,6 +12,11 @@ interface IDonationBox {
 }
 
 const DonationBox = ({ tokenId }: IDonationBox) => {
+  const BASE_ARTIFACT_PRICE = assertFloat(
+    process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
+    'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
+  )
+
   const { status } = useSession()
 
   const { toggleModal } = useContext(LayoutContext)

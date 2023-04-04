@@ -18,7 +18,7 @@ import {
   ProjectCard,
   NoGrant,
 } from '@components'
-import { rgba, CURRENT_SEASON } from '@lib'
+import { rgba, assert } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 import dayjs from 'dayjs'
@@ -34,6 +34,8 @@ const IndexPage = () => {
   dayjs.extend(timezone)
   dayjs.extend(isSameOrAfter)
   dayjs.extend(isSameOrBefore)
+
+  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
 
   const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',

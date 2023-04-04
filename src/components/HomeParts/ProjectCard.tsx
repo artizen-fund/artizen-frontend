@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { rgba, BASE_ARTIFACT_PRICE } from '@lib'
+import { rgba } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { Button, RankAndArtifactCount, DonationBox } from '@components'
+import { RankAndArtifactCount, DonationBox } from '@components'
 import { IProjectFragment } from '@types'
 import Link from 'next/link'
 

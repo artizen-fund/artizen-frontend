@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { rgba, useGnosis, CURRENT_SEASON } from '@lib'
+import { rgba, useGnosis, assert } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Glyph, Icon, Countdown } from '@components'
 import { useSubscription } from '@apollo/client'
@@ -18,6 +18,8 @@ interface ISubHeader {
 
 const SubHeader = ({ visible }: ISubHeader) => {
   const { safeBalanceETH, safeBalanceUSD } = useGnosis()
+
+  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
 
   const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
