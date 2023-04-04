@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { rgba, assetPath, useGnosis, CURRENT_SEASON } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { PagePadding, Countdown } from '@components'
+import { PagePadding, Countdown, Glyph } from '@components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription } from '@types'
@@ -30,7 +30,11 @@ const LeaderboardHeader = () => {
           <Stat>
             <Label>Prize Funds</Label>
             <Data>
-              {safeBalanceETH} ETH | ${safeBalanceUSD}
+              {safeBalanceETH} ETH
+              <CashTrend>
+                ${safeBalanceUSD}
+                <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
+              </CashTrend>
             </Data>
           </Stat>
           <Stat>
@@ -75,6 +79,14 @@ const Title = styled.h2`
 `
 
 const OfficialSelection = styled.div`
+  img {
+    max-width: 140px;
+  }
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    img {
+      max-width: none;
+    }
+  }
   grid-area: laurels;
   display: flex;
   flex-direction: row;
@@ -90,7 +102,12 @@ const Stats = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 60px;
+
+  justify-content: space-between;
+  @media only screen and (min-width: 744px) {
+    gap: 60px;
+    justify-content: flex-start;
+  }
 `
 
 const Stat = styled.div`
@@ -115,7 +132,25 @@ const Label = styled.h3`
 `
 
 const Data = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: bottom;
+  gap: 16px;
   ${typography.title.l4}
+`
+
+const CashTrend = styled.div`
+  @media only screen and (max-width: 733px) {
+    display: none;
+  }
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
 `
 
 export default LeaderboardHeader

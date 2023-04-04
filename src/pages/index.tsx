@@ -69,6 +69,7 @@ const IndexPage = () => {
                   ))}
               </Grid>
             </PagePadding>
+            <SubmissionsMarker id="submissionsMarker" />
           </StyledPagePadding>
         </>
       )}
@@ -98,6 +99,13 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
     border-style: solid;
     border-color: rgba(114, 124, 140, 0.4);
   }
+`
+
+const SubmissionsMarker = styled.div`
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 1px;
 `
 
 const Grid = styled.div`

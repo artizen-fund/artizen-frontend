@@ -96,14 +96,14 @@ export const ButtonStyle = css<Partial<ButtonProps>>`
   align-items: center;
   justify-content: center;
 
-  height: ${props => sizeForLevel('mobile', props.level || 0)}px;
+  min-height: ${props => sizeForLevel('mobile', props.level || 0)}px;
   gap: ${props => gapForLevel('mobile', props.level)}px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    height: ${props => sizeForLevel('laptop', props.level || 0)}px;
+    min-height: ${props => sizeForLevel('laptop', props.level || 0)}px;
     gap: ${props => gapForLevel('laptop', props.level)}px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: ${props => sizeForLevel('desktop', props.level || 0)}px;
+    min-height: ${props => sizeForLevel('desktop', props.level || 0)}px;
     gap: ${props => gapForLevel('desktop', props.level)}px;
   }
 
