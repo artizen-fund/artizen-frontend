@@ -132,7 +132,6 @@ test.describe('general artizen user', () => {
 
 test.describe('admin user', () => {
   test.beforeAll(async ({ metamask }) => {
-    console.log('metamask  ', metamask)
     // ensure that we're using the Goerli network
     await metamask.switchNetwork('Goerli')
 
@@ -168,12 +167,12 @@ test.describe('admin user', () => {
     await page.waitForLoadState()
 
     // expect initials 'rr' for admin to be hidden by profile pic
-    await expect(page.locator('#accountButton').getByText('rr')).toBeHidden({
+    await expect(page.locator('#accountButton').getByText('tt')).toBeVisible({
       timeout: 10000,
     })
 
-    await clickAccountButton(page)
-    await expect(page.getByText('Hi Test')).toBeVisible({
+    await clickAccountButton(page, 'tt')
+    await expect(page.getByText('Hi testadmin')).toBeVisible({
       timeout: 10000,
     })
   })
