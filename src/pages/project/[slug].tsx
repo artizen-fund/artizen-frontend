@@ -12,13 +12,15 @@ import {
   LongDescription,
   Leaderboard,
 } from '@components'
-import { LayoutContext, CURRENT_SEASON } from '@lib'
+import { LayoutContext, assert } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
 import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = () => {
+  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
+
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
