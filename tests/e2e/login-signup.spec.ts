@@ -24,7 +24,7 @@ export const test = base.extend<{
     const { browserContext, wallet } = await launch('', {
       wallet: 'metamask',
       version: MetaMaskWallet.recommendedVersion,
-      headless: true,
+      headless: process.env.PLAYWRIGHT_HEADLESS === 'false' ? false : true,
     })
 
     // Unlock the wallet
@@ -117,22 +117,10 @@ test.describe('general artizen user', () => {
     await page.waitForLoadState()
 
     // click sign in button
-    await clickAccountButton(page, 'CloseSign In')
-
-    // click metamask icon to open wallet
-    await clickMetamaskIcon(page)
+    await clickSignInButtonWithRetry(page)
 
     // Approve the connection when MetaMask pops up
-    // This closes the metamask popup so we need to go through artizen sign in process again
-    // to sign the transaction
-    await metamask.sign()
-
-    await closeWalletConnectModal(page)
-    await clickAccountButton(page, 'CloseSign In')
-
-    await clickMetamaskIcon(page)
-
-    await metamask.sign()
+    await connectAndSignWithMetamask(page, true, false)
 
     await page.waitForLoadState()
 
@@ -144,7 +132,6 @@ test.describe('general artizen user', () => {
 
 test.describe('admin user', () => {
   test.beforeAll(async ({ metamask }) => {
-    console.log('metamask  ', metamask)
     // ensure that we're using the Goerli network
     await metamask.switchNetwork('Goerli')
 
@@ -180,12 +167,12 @@ test.describe('admin user', () => {
     await page.waitForLoadState()
 
     // expect initials 'rr' for admin to be hidden by profile pic
-    await expect(page.locator('#accountButton').getByText('rr')).toBeHidden({
+    await expect(page.locator('#accountButton').getByText('tt')).toBeVisible({
       timeout: 10000,
     })
 
-    await clickAccountButton(page)
-    await expect(page.getByText('Hi Test')).toBeVisible({
+    await clickAccountButton(page, 'tt')
+    await expect(page.getByText('Hi testadmin')).toBeVisible({
       timeout: 10000,
     })
   })

@@ -5,7 +5,7 @@ async function globalSetup(config: FullConfig) {
   const [metamask, page, context] = await dappwright.bootstrap('', {
     wallet: 'metamask',
     version: MetaMaskWallet.recommendedVersion,
-    headless: true,
+    headless: process.env.PLAYWRIGHT_HEADLESS === 'false' ? false : true,
   })
 
   await metamask.switchNetwork('Goerli')
