@@ -37,6 +37,8 @@ const Header = styled.header`
 `
 
 const Copy = styled.header`
+  position: relative;
+  z-index: 1;
   flex: 1;
   h1 {
     ${typography.title.l1};

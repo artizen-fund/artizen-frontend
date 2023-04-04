@@ -75,8 +75,8 @@ const Copy = styled.div`
 const Img = styled.img`
   object-fit: cover;
   width: 100%;
-  height: 50px;
-  background: green;
+  height: auto;
+  background: ${rgba(palette.algae)};
   border-radius: 16px;
 
   @media only screen and (min-width: ${breakpoint.laptop}px) {
