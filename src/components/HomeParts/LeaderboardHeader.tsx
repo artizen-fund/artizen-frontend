@@ -28,7 +28,7 @@ const LeaderboardHeader = () => {
 
         <Stats>
           <Stat>
-            <Label>Artizen Award</Label>
+            <Label>Prize Funds</Label>
             <Data>
               {safeBalanceETH} ETH | ${safeBalanceUSD}
             </Data>
