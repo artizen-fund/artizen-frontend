@@ -37,6 +37,7 @@ export * from './ProjectPageParts'
 export * from './Layout/StickyContent'
 export * from './SettingsParts'
 export * from './Table'
+export * from './NoGrant'
 
 export * from './Layout/Modals/AlertModal'
 export { default as CreateSeasonModal } from './Layout/Modals/CreateSeasonModal'
