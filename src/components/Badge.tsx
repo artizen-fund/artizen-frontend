@@ -52,7 +52,7 @@ const Wrapper = styled.div<
 
     color: ${rgba(palette.white)};
 
-    font-family: 'Roc Grotesk', sans-serif;
+    font-family: 'Roc Grotesk', arial, sans-serif;
     font-style: normal;
     font-weight: 700;
     display: flex;

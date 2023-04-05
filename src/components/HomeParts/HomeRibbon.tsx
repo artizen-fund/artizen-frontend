@@ -30,7 +30,7 @@ const List = styled.ul`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding: 80px 0;
+    padding: 0px 0;
   }
 `
 

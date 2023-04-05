@@ -9,7 +9,7 @@ const HomeHeader = () => {
     submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
   }
   return (
-    <PagePadding>
+    <StyledPagePadding>
       <Header>
         <HomeAnimation />
         <Copy>
@@ -22,9 +22,13 @@ const HomeHeader = () => {
           </Button>
         </Copy>
       </Header>
-    </PagePadding>
+    </StyledPagePadding>
   )
 }
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  padding-bottom: 0;
+`
 
 const Header = styled.header`
   display: flex;

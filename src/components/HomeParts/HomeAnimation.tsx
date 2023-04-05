@@ -10,7 +10,8 @@ const HomeAnimation = () => {
   return (
     <Wrapper>
       <div>
-        <Img src={assetPath('/assets/no-animation.png?fm=webp')} />
+        <Img src={assetPath('/assets/animation-placeholder.png?fm=webp')} />
+        <Img src={assetPath('/assets/animation-placeholder-dark.png?fm=webp')} $dark />
         {/* <StyledSpline scene="https://prod.spline.design/LkyNHqmv6VPdWnml/scene.splinecode" onLoad={onLoad} /> */}
         {/* <StyledSpline scene="https://prod.spline.design/TrfVmPw3GkShfJMY/scene.splinecode" onLoad={onLoad} $dark /> */}
       </div>
@@ -44,12 +45,10 @@ const Wrapper = styled.div`
 `
 
 const StyledSpline = styled(props => <Spline {...props} />)<{ $dark?: boolean }>`
-  /*
   display: ${props => (props.$dark ? 'none' : 'block')};
   @media only screen and (prefers-color-scheme: dark) {
     display: ${props => (props.$dark ? 'block' : 'none')};
   }
-*/
   width: calc(100vw - 40px) !important;
   height: calc(100vw - 40px) !important;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
