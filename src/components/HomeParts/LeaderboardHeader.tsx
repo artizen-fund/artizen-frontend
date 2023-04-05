@@ -59,6 +59,9 @@ const LeaderboardHeader = () => {
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   padding: 20px 0;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding: 50px 0;
+  }
 `
 
 const Content = styled.div`
