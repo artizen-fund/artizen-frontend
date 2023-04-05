@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'roc-grotesk', verdana, sans-serif;
+  font-family: 'roc-grotesk', verdana, arial, sans-serif;
   font-weight: 600;
   -webkit-text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
