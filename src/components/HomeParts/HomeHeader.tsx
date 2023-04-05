@@ -9,20 +9,26 @@ const HomeHeader = () => {
     submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
   }
   return (
-    <Header>
-      <HomeAnimation />
-      <Copy>
-        <div>
-          <h1>{header.title}</h1>
-          <h2>{header.subtitle}</h2>
-        </div>
-        <Button level={0} onClick={scrollToLeaderboard}>
-          {header.buttonLabel}
-        </Button>
-      </Copy>
-    </Header>
+    <StyledPagePadding>
+      <Header>
+        <HomeAnimation />
+        <Copy>
+          <div>
+            <h1>{header.title}</h1>
+            <h2>{header.subtitle}</h2>
+          </div>
+          <Button level={0} onClick={scrollToLeaderboard}>
+            {header.buttonLabel}
+          </Button>
+        </Copy>
+      </Header>
+    </StyledPagePadding>
   )
 }
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  padding-bottom: 0;
+`
 
 const Header = styled.header`
   display: flex;
