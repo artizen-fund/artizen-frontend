@@ -63,7 +63,9 @@ const SubHeader = ({ visible }: ISubHeader) => {
               <Data>
                 Ξ {safeBalanceETH}
                 <CashTrend>
-                  ${safeBalanceUSD}
+                  {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                    parseFloat(safeBalanceUSD || '0'),
+                  )}
                   <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
                 </CashTrend>
               </Data>

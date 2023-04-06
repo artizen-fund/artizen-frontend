@@ -8,15 +8,18 @@ import SubHeader from './SubHeader'
 import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
-import { breakpoint, palette, glyphKey } from '@theme'
+import { breakpoint, palette } from '@theme'
 import { rgba, LayoutContext, isProd } from '@lib'
+import { useRouter } from 'next/router'
 
 const Header = () => {
+  const { pathname } = useRouter()
   const trigger = useRef<HTMLDivElement>(null)
 
   const { visibleShelf, toggleShelf, setVisibleShelf } = useContext(LayoutContext)
   const [visible, setVisible] = useState(true)
-  useScrollPosition(({ currPos }) => setVisible(currPos.y < window.innerHeight), [], undefined, true, 50)
+  const headerFlipPoint = pathname === '/' && typeof window !== 'undefined' ? window.innerHeight : 10
+  useScrollPosition(({ currPos }) => setVisible(currPos.y < headerFlipPoint), [], undefined, true, 50)
 
   return (
     <>
