@@ -34,7 +34,9 @@ const LeaderboardHeader = () => {
             <Data>
               {safeBalanceETH} ETH
               <CashTrend>
-                ${safeBalanceUSD}
+                {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                  parseFloat(safeBalanceUSD || '0'),
+                )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
               </CashTrend>
             </Data>
