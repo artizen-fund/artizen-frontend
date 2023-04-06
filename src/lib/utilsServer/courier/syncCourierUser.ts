@@ -1,28 +1,30 @@
 import { assert } from '@lib'
 import { getClient, sendNotification } from './'
-import { FormState } from '@forms/createProfile'
-import { template } from 'lodash'
 
-export const createUserCourierProfile = async (recipientId: string, userData: FormState) => {
+export const syncCourierUser = async (data: ICourierAPI) => {
   const courier = getClient()
+
+  const { id, email, firstName, lastName, type } = data
+
   try {
     await courier.mergeProfile({
-      recipientId,
+      recipientId: id,
       profile: {
-        email: userData.email,
-        given_name: userData.firstName,
-        family_name: userData.lastName,
+        email,
+        given_name: firstName,
+        family_name: lastName,
       },
     })
     const TEMPLATE_ID = assert(process.env.COURIER_WELCOME_TEMPLATE_ID, 'COURIER_WELCOME_TEMPLATE_ID')
-
-    sendNotification(
-      {
-        firstName: userData.firstName,
-      },
-      TEMPLATE_ID,
-      userData.email,
-    )
+    if (type === 'addNewUser') {
+      sendNotification(
+        {
+          firstName,
+        },
+        TEMPLATE_ID,
+        email,
+      )
+    }
   } catch (err) {
     console.error('error syncing user in courier')
   }

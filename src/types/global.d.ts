@@ -33,6 +33,9 @@ declare global {
     | 'confirmTransaction'
     | 'processTransaction'
     | 'shareTransaction'
+    | 'createSeasonModal'
+    | 'submitProjectModal'
+    | 'newProjectMemberModal'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
@@ -80,6 +83,14 @@ declare global {
     destination?: string
     buttonLabel?: string
     children?: React.ReactElement
+  }
+
+  interface ICourierAPI {
+    email: string
+    id: string
+    firstName: string
+    lastName: string
+    type: 'updateUser' | 'addNewUser'
   }
 }
 

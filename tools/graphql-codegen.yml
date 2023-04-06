@@ -15,6 +15,7 @@ generates:
       enumPrefix: false
       wrapFieldDefinitions: true
       fieldWrapperValue: Partial<T>
+      maybeValue: 'T | undefined'
       namingConvention:
         enumValues: keep
 hooks:

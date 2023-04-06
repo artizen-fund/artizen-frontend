@@ -85,7 +85,7 @@ const StyledGlyph = styled(props => <Glyph {...props} />)<Pick<ButtonProps, 'gly
   height: 100% !important;
 `
 
-const ButtonStyle = css<Partial<ButtonProps>>`
+export const ButtonStyle = css<Partial<ButtonProps>>`
   appearance: none;
   border: 0;
   outline: 0;
@@ -96,14 +96,14 @@ const ButtonStyle = css<Partial<ButtonProps>>`
   align-items: center;
   justify-content: center;
 
-  height: ${props => sizeForLevel('mobile', props.level || 0)}px;
+  min-height: ${props => sizeForLevel('mobile', props.level || 0)}px;
   gap: ${props => gapForLevel('mobile', props.level)}px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    height: ${props => sizeForLevel('laptop', props.level || 0)}px;
+    min-height: ${props => sizeForLevel('laptop', props.level || 0)}px;
     gap: ${props => gapForLevel('laptop', props.level)}px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: ${props => sizeForLevel('desktop', props.level || 0)}px;
+    min-height: ${props => sizeForLevel('desktop', props.level || 0)}px;
     gap: ${props => gapForLevel('desktop', props.level)}px;
   }
 
@@ -205,7 +205,7 @@ const ButtonPalette = css<Partial<ButtonProps>>`
   }
 `
 
-const ButtonTypography = css<Partial<ButtonProps>>`
+export const ButtonTypography = css<Partial<ButtonProps>>`
   font-style: normal;
   font-weight: 700;
   text-align: center;

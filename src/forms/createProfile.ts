@@ -19,6 +19,12 @@ export const schema: JsonSchema = {
       type: 'string',
       minLength: 2,
     },
+    twitterHandle: {
+      type: 'string',
+    },
+    externalLink: {
+      type: 'string',
+    },
   },
   required: ['artizenHandle', 'firstName', 'lastName', 'email'],
 }
@@ -28,9 +34,13 @@ export interface FormState extends Record<string, unknown> {
   firstName?: string
   lastName?: string
   email?: string
+  twitterHandle?: string
+  externalLink?: string
 }
 
-export const initialState: FormState = {}
+export interface FormStateAdmin extends FormState {
+  publicAddress: string
+}
 
 /*
 	This is the JSONForms UI layout. 
@@ -61,5 +71,43 @@ export const uischema = {
       scope: '#/properties/email',
       label: 'Enter your Email',
     },
+    {
+      type: 'Control',
+      scope: '#/properties/twitterHandle',
+      label: 'Enter your Twitter',
+    },
+    {
+      type: 'Control',
+      scope: '#/properties/externalLink',
+      label: 'Enter an external link',
+    },
   ],
+}
+
+export const adminUIschema = {
+  ...uischema,
+  ...{
+    elements: [
+      ...uischema.elements,
+      {
+        type: 'Control',
+        scope: '#/properties/publicAddress',
+        label: 'Enter an wallet address',
+      },
+    ],
+  },
+}
+
+export const adminSchema = {
+  ...schema,
+  ...{
+    // required: [...[schema.required], 'walletAddress'],
+    properties: {
+      ...schema.properties,
+      publicAddress: {
+        type: 'string',
+        minLength: 2,
+      },
+    },
+  },
 }

@@ -4,7 +4,7 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    donationAmount: {
+    donationQuantity: {
       type: 'number',
     },
   },
@@ -16,12 +16,12 @@ export const schema: JsonSchema = {
 	All values must be optional, as an unfilled form will conform to this state.
 */
 export interface FormState extends Record<string, unknown> {
-  donationAmount?: number
+  donationQuantity?: number
 }
 
 /* This is our local initialState. */
 export const initialState: FormState = {
-  donationAmount: 0.01,
+  donationQuantity: 1,
 }
 
 /*
@@ -35,10 +35,11 @@ export const uischema = {
   elements: [
     {
       type: 'Control',
-      scope: '#/properties/donationAmount',
-      label: 'Enter Your Donation (ETH)',
+      scope: '#/properties/donationQuantity',
+      label: 'Enter Your Donation',
       options: {
-        precision: 0.01,
+        precision: 1,
+        style: 'counter',
       },
     },
   ],

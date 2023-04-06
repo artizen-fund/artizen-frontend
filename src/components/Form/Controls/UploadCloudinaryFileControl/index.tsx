@@ -63,6 +63,7 @@ const UploadCloudinaryFileControl = ({
         {...{ required, onBlur }}
         disabled={true}
         type="string"
+        style={{ backgroundColor: 'white' }}
         placeholder={uischema?.options?.placeholder || ' '}
         value={!!data ? 'uploaded' : ''}
         onChange={() => {

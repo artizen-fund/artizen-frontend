@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Onionskin renders correctly 1`] = `
-<div
-  className="sc-104c23ae-0 dHICok"
-  onClick={[Function]}
-/>
-`;

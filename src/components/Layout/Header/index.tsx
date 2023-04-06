@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import { Button, Logo, Modals } from '@components'
 import AccountButton from './AccountButton'
-import DonateButton from './DonateButton'
+import SubHeader from './SubHeader'
 import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
@@ -12,61 +12,49 @@ import { breakpoint, palette, glyphKey } from '@theme'
 import { rgba, LayoutContext, isProd } from '@lib'
 
 const Header = () => {
-  const { visibleShelf, toggleShelf } = useContext(LayoutContext)
-  const [shadowVisible, setShadowVisible] = useState(false)
-  useScrollPosition(({ currPos }) => setShadowVisible(currPos.y > 0), [], undefined, true, 50)
+  const trigger = useRef<HTMLDivElement>(null)
+
+  const { visibleShelf, toggleShelf, setVisibleShelf } = useContext(LayoutContext)
+  const [visible, setVisible] = useState(true)
+  useScrollPosition(({ currPos }) => setVisible(currPos.y < window.innerHeight), [], undefined, true, 50)
 
   return (
     <>
-      <Wrapper {...{ shadowVisible }} className={visibleShelf ? 'visibleShelf' : ''}>
+      <Trigger ref={trigger} />
+      <Wrapper {...{ visible }} className={visibleShelf ? 'visibleShelf' : ''}>
         <Items>
-          <Link href={`/grants/today`}>
+          <Link href={`/`}>
             <Logo />
           </Link>
-          <MobileNavButton
-            onClick={() => toggleShelf('howItWorks')}
-            glyph={glyphKey.arrow}
-            glyphOnRight
-            outline
-            level={1}
-          >
+          <MobileNavButton onClick={() => toggleShelf('howItWorks')} outline level={1}>
             Menu
           </MobileNavButton>
         </Items>
         <Items>
           <Nav>
             <ul>
-              <li>
-                <Link target="_blank" href="https://artizen.link/apply">
-                  Apply
-                </Link>
-              </li>
-              <li>
-                <Link target="_blank" href="https://help.artizen.fund/en/articles/6782291-how-the-artizen-fund-works">
-                  How It Works
-                </Link>
-              </li>
+              <li onClick={() => setVisibleShelf('howItWorks')}>How It Works</li>
             </ul>
           </Nav>
-          <DonateButton />
           <AccountButton id="accountButton" active={visibleShelf === 'session'} />
         </Items>
       </Wrapper>
-      <Shelf shelfKey="session" {...{ shadowVisible }}>
+      <Shelf shelfKey="session" shadowVisible={true}>
         <SessionShelf hideShelf={() => toggleShelf()} />
       </Shelf>
-      <Shelf shelfKey="howItWorks" {...{ shadowVisible }}>
+      <Shelf shelfKey="howItWorks" shadowVisible={true}>
         <HowItWorks />
       </Shelf>
+      <SubHeader visible={!visible} />
       <DebugTool production={isProd()} />
       <Modals />
     </>
   )
 }
 
-const Wrapper = styled.header<{ shadowVisible: boolean }>`
+const Wrapper = styled.header<{ visible: boolean }>`
   position: fixed;
-  z-index: 102;
+  z-index: 103;
   top: 0;
   left: 0;
 
@@ -79,6 +67,7 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
   width: 100%;
   height: 64px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
+    transform: translateY(${props => (props.visible ? 0 : -100)}px);
     height: 72px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
@@ -88,39 +77,23 @@ const Wrapper = styled.header<{ shadowVisible: boolean }>`
     padding: 0 calc((100vw - 1600px) / 2);
   }
 
-  background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
-  filter: drop-shadow(
-    ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
-  );
+  background: ${props => rgba(palette.white, props.visible ? 0.98 : 1)};
+  filter: drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.48));
   @media (prefers-color-scheme: dark) {
-    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
-    filter: drop-shadow(
-      ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(114, 124, 140, 0.64)')}
-    );
+    background: ${props => rgba(palette.slate, 0.98)};
+    filter: drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.48));
   }
-  backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
 
-  border-bottom: 0.5px solid transparent;
-  transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
-    backdrop-filter 0.3s ease-in-out;
-  &.visibleShelf {
-    filter: drop-shadow(0px 0.5px 0px rgba(217, 219, 224, 1));
-    border-color: ${rgba(palette.stone)};
-    @media (prefers-color-scheme: dark) {
-      border-color: ${rgba(palette.barracuda, 0.64)};
-    }
-    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
-      backdrop-filter 0.3s ease-in-out;
-  }
+  transition: transform 0.3s ease-in-out;
 `
 
 const Items = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    gap: 20px;
+    gap: 24px;
   }
 `
 
@@ -177,6 +150,13 @@ const MobileNavButton = styled(props => <Button {...props} />)`
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     display: none !important;
   }
+`
+
+const Trigger = styled.div`
+  position: absolute;
+  top: 95vh;
+  width: 1px;
+  height: 1px;
 `
 
 export default Header

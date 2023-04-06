@@ -1,4 +1,5 @@
-import { reduceWithPrecision } from '@lib'
+import { IOpenEditionsSubscription } from '@types'
+import { uniqBy } from 'lodash'
 
 /*
   A User might donate multiple times. 
@@ -6,18 +7,28 @@ import { reduceWithPrecision } from '@lib'
   We also use this calculation on the Grant View page to find the winner.
 */
 
-interface UserWithDonations {
-  donations: Array<{
-    amount: number
-  }>
+interface UserOnLeaderboard {
+  __typename?: string
+  firstName?: string
+  lastName?: string
+  artizenHandle?: string
+  profileImage?: string
+  copies: number
 }
 
-const aggregateDonators = <T extends UserWithDonations>(donatingUsers: Array<T>) =>
-  donatingUsers
-    .map(u => {
-      const aggregateDonation = reduceWithPrecision(u.donations.map(d => d.amount))((a: number, b: number) => a + b)
-      return { ...u, aggregateDonation }
-    })
-    .sort((a, b) => (a.aggregateDonation > b.aggregateDonation ? -1 : 1))
+const aggregateDonators = (data: IOpenEditionsSubscription): Array<UserOnLeaderboard> => {
+  const users = uniqBy(data.OpenEditionCopies, openEdition => openEdition.user.id).map(openEdition => openEdition.user)
+
+  if (!users) return []
+
+  return users
+    .map(user => ({
+      ...user,
+      copies: data.OpenEditionCopies.filter(item => item.user.id === user.id)
+        .map(item => item.copies || 0)
+        .reduce((x, y) => x + y, 0),
+    }))
+    .sort((a, b) => (a.copies > b.copies ? -1 : 1))
+}
 
 export { aggregateDonators }

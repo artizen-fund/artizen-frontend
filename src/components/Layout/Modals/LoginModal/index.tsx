@@ -41,8 +41,6 @@ const LoginModal = ({ ...props }) => {
           </CheckMessage>
         </Check>
       </CheckWrapper>
-
-      <CloseButton onClick={() => toggleModal()} />
     </Wrapper>
   )
 }

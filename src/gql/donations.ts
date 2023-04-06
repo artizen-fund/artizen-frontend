@@ -32,7 +32,7 @@ export const SUBSCRIBE_DONATIONS = gql`
     publicAddress
   }
 
-  subscription leaderboard($where: Users_bool_exp, $whereDonations: Donations_bool_exp, $limit: Int!) {
+  subscription donationsLeaderboard($where: Users_bool_exp, $whereDonations: Donations_bool_exp, $limit: Int!) {
     Users(where: $where, limit: $limit) {
       ...UserWithDonation
     }

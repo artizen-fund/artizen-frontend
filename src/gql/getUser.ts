@@ -13,10 +13,12 @@ export const GET_USER = gql`
 `
 
 export const GET_USERS = gql`
+  ${USER_PUBLIC}
+  ${USER_PRIVATE}
   query getUsers($where: Users_bool_exp) {
     Users(where: $where) {
-      id
-      email
+      ...UserPublic
+      ...UserPrivate
     }
   }
 `
