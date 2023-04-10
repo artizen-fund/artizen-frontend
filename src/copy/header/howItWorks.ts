@@ -16,8 +16,8 @@ const howItWorks = [
     destination: 'https://vote.artizen.fund',
   },
   {
-    illustration: 'how-it-works/about.svg',
-    illustrationDark: 'how-it-works/about-dark.svg',
+    illustration: 'how-it-works/faq.svg',
+    illustrationDark: 'how-it-works/faq-dark.svg',
     title: 'Win the Artizen Prize',
     copy: 'Each season, we award a large cash prize to the project with the most Artifacts sold',
     buttonLabel: 'See Leaderboard',

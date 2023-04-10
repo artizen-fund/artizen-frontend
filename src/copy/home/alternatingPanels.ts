@@ -21,7 +21,7 @@ const alternatingPanels: Array<IAlternatingPanel> = [
       },
     ],
     buttonLabel: 'Learn More',
-    destination: 'https://help.artizen.fund/en/articles/6782291-welcome-to-the-artizen-fund',
+    destination: 'https://help.artizen.fund/en/articles/6746680-artifacts-reward-positive-impact',
   },
   {
     image: '/assets/illustrations/home/trust.png',
