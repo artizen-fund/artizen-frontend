@@ -55,7 +55,7 @@ export default function SeasonPage(): JSX.Element {
                 >{`This Season runs from ${startingDate} to ${endingDate}`}</Subtitle>
                 <Subtitle>Projects submitted to this Season:</Subtitle>
                 {isOpenForSubmissions(season.startingDate, season.endingDate) && (
-                  <Button level={2} onClick={() => push('/admin/projects')}>
+                   level={2} onClick={() => push('/admin/projects')}>
                     Submit a project
                   </Button>
                 )}
