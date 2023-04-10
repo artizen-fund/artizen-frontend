@@ -5,6 +5,11 @@ import { breakpoint, palette, typography } from '@theme'
 import { howItWorks } from '@copy/header'
 
 const HowItWorks = () => {
+  const scrollToLeaderboard = () => {
+    const submissionsMarker = document.querySelector('#submissionsMarker')
+    submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <Wrapper>
       {howItWorks.map(cell => (
@@ -15,6 +20,11 @@ const HowItWorks = () => {
             <Description>{cell.copy}</Description>
             {!!cell.destination && (
               <Button outline level={2} href={cell.destination}>
+                {cell.buttonLabel}
+              </Button>
+            )}
+            {!cell.destination && (
+              <Button outline level={2} onClick={scrollToLeaderboard}>
                 {cell.buttonLabel}
               </Button>
             )}

@@ -21,7 +21,6 @@ const howItWorks = [
     title: 'Win the Artizen Prize',
     copy: 'Each season, we award a large cash prize to the project with the most Artifacts sold',
     buttonLabel: 'See Leaderboard',
-    destination: '/#leaderboard',
   },
 ]
 
