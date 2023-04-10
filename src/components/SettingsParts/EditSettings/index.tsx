@@ -17,8 +17,6 @@ const EditSettings = () => {
     if (!!data || !loggedInUser) return
     setData({
       ...initialState,
-      firstName: loggedInUser?.firstName || initialState.firstName,
-      lastName: loggedInUser?.lastName || initialState.lastName,
       email: loggedInUser?.email || initialState.email,
     })
   }, [loggedInUser])
@@ -60,7 +58,6 @@ const FormWrapper = styled.div`
   display: grid;
   gap: 10px;
   grid-template-areas:
-    'firstName lastName'
     'email email'
     'phoneNumber phoneNumber'
     'saveChanges saveChanges';
@@ -72,14 +69,6 @@ const FormWrapper = styled.div`
   .vertical-layout,
   .vertical-layout-item {
     display: contents;
-  }
-
-  *[id='#/properties/firstName'] {
-    grid-area: firstName;
-  }
-
-  *[id='#/properties/lastName'] {
-    grid-area: lastName;
   }
 
   *[id='#/properties/email'] {

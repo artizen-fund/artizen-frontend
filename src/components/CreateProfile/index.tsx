@@ -30,8 +30,6 @@ const CreateProfile = () => {
   const newInitialState: FormStateAdmin | FormState = initialState
     ? {
         artizenHandle: initialState.artizenHandle,
-        firstName: initialState.firstName,
-        lastName: initialState.lastName,
         email: initialState.email,
         twitterHandle: initialState.twitterHandle || '',
         externalLink: initialState.externalLink || '',
@@ -78,12 +76,7 @@ const CreateProfile = () => {
     <></> /* TODO: we have a new spinner for this in a separate PR */
   ) : (
     <Wrapper visible={visibleModal === 'createProfile'}>
-      <FormWrapper
-        hasFirstName={!!loggedInUser?.firstName}
-        hasLastName={!!loggedInUser?.lastName}
-        hasUsername={false}
-        scope={modalAttrs?.scope}
-      >
+      <FormWrapper hasUsername={false} scope={modalAttrs?.scope}>
         {scope === 'admin' && <CloseButtonStyled visible={true} onClick={() => toggleModal()} />}
 
         {modalAttrs?.scope !== 'admin' && (
@@ -166,7 +159,7 @@ const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
 `
 
-const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; scope: string }>`
+const FormWrapper = styled.div<{ hasUsername: boolean; scope: string }>`
   position: relative;
   z-index: 9999;
   overflow-y: scroll;
@@ -180,9 +173,9 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     grid-template-areas:
     'copy copy'
     'avatarForm avatarForm'
-    'firstName lastName'
-    'artizenHandle twitterHandle'
+    'artizenHandle artizenHandle'
     'email email'
+    'twitterHandle twitterHandle'
     'externalLink externalLink'
     'tocCheck tocCheck'
     'submit submit'
@@ -195,9 +188,9 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     grid-template-areas:
     'copy copy'
     'avatarForm avatarForm'
-    'firstName lastName'
-    'artizenHandle twitterHandle'
+    'artizenHandle artizenHandle'
     'email email'
+    'twitterHandle twitterHandle'
     'externalLink externalLink'
     'publicAddress publicAddress'
     'tocCheck tocCheck'
@@ -240,15 +233,10 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     display: contents;
   }
 
-  *[id='#/properties/firstName'] {
-    grid-area: firstName;
-  }
-  *[id='#/properties/lastName'] {
-    grid-area: lastName;
-  }
   *[id='#/properties/artizenHandle'] {
     grid-area: artizenHandle;
   }
+
   *[id='#/properties/email'] {
     grid-area: email;
   }
@@ -266,8 +254,6 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   }
 
   &.submitted {
-    *[id='#/properties/firstName'],
-    *[id='#/properties/lastName'],
     *[id='#/properties/email'],
     *[id='#/properties/artizenHandle'],
     ${SubmitButton} {
@@ -281,15 +267,6 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
 
 const SubTitle = styled.h2`
   ${typography.body.l2}
-`
-
-const Why = styled.p`
-  margin: 1em auto;
-  ${typography.label.l1}
-  text-align: center;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  grid-area: why;
 `
 
 export default CreateProfile

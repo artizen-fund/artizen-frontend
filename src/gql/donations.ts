@@ -47,8 +47,6 @@ export const GET_DONATIONS = gql`
       grantId
     }
     email
-    firstName
-    lastName
     publicAddress
   }
 

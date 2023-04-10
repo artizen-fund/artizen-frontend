@@ -51,8 +51,6 @@ export const mockGetUserData = [
             id: '1',
             publicAddress: '0x0000000',
             email: 'rene@artizen.fund',
-            firstName: 'René',
-            lastName: 'Pinnell',
             profileImage: 'https://images.com/rene.jpg',
             createdAt: 'nene',
             twitterHandle: 'nene',

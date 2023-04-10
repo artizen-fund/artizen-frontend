@@ -18,9 +18,7 @@ const CreatorBox = ({ member }: ICreatorBox) => {
         </AvatarImage>
       </div>
       <Copy>
-        <Name>
-          {member.firstName} {member.lastName}
-        </Name>
+        <Name>{member.artizenHandle}</Name>
         <Links>
           {member.twitterHandle && (
             <li>

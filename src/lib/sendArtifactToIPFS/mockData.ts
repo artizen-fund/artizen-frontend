@@ -44,8 +44,6 @@ const mockProject: IProjectFragment = {
         __typename: 'Users',
         createdAt: '',
         id: 'abc345',
-        firstName: 'Herp',
-        lastName: 'Derp',
         artizenHandle: 'herpderp',
         twitterHandle: 'derpherp',
         website: 'https://derp.com',

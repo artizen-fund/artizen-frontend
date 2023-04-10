@@ -91,8 +91,6 @@ const useSaveGrant = () => {
       variables: {
         objects: [
           {
-            firstName: member.firstName,
-            lastName: member.lastName,
             publicAddress: member?.wallet?.toLowerCase(),
             externalLink: member.externalLink,
             email: member.email,
@@ -115,8 +113,6 @@ const useSaveGrant = () => {
           },
         },
         _set: {
-          firstName: member.firstName,
-          lastName: member.lastName,
           externalLink: member.externalLink,
         },
       },

@@ -92,10 +92,6 @@ test.describe('general artizen user', () => {
 
     // if we go too fast, then the form validation prevents clicking Save Changes
     await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(1).fill('Testfirstname')
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(2).fill('Testlastname')
-    await page.waitForTimeout(100)
     await page.getByRole('textbox').nth(3).fill('Testusername')
     await page.waitForTimeout(100)
     await page.getByRole('textbox').nth(4).fill('e2etesting@email.ghostinspector.com')

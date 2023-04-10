@@ -88,13 +88,11 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
     }
 
     const newUser = newUserMutationReturn.data.insert_Users.returning[0]
-    // If there is a change in email, firstName or lastName, add to Courier
-    if (newUser.email && newUser.firstName && newUser.lastName) {
+    // If there is a change in email, add to Courier
+    if (newUser.email) {
       await addUserToCourier({
         id: newUser.id,
         email: newUser.email,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
         type: 'addNewUser',
       })
     }
@@ -135,15 +133,10 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
       onError: error => console.error('error form ::::', error),
     })
     // If there is a change in email, firstName or lastName, update the user in courier
-    if (valuesToUpdate.email || valuesToUpdate.firstName || valuesToUpdate.lastName) {
+    if (valuesToUpdate.email) {
       //grap the email from the form if it was changed, otherwise grap it from the initial form state
       const email = valuesToUpdate.email ? valuesToUpdate.email : initialFormState.email
-      const firstName = valuesToUpdate.firstName ? valuesToUpdate.firstName : initialFormState.firstName
-      const lastName = valuesToUpdate.lastName ? valuesToUpdate.lastName : initialFormState.lastName
-      email &&
-        firstName &&
-        lastName &&
-        (await addUserToCourier({ id: userId as string, email, firstName, lastName, type: 'updateUser' }))
+      email && (await addUserToCourier({ id: userId as string, email, type: 'updateUser' }))
     }
 
     if (updatedUser.data?.update_Users?.returning.length === 0) {

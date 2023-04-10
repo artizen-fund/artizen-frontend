@@ -45,8 +45,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
     <Wrapper>
       <Commands>
         <Top>
-          {user.firstName && <Welcome>Hi {user.firstName}</Welcome>}
-          {!user.firstName && <Welcome>Welcome</Welcome>}
+          <Welcome>Welcome</Welcome>
           <Message>Thanks for supporting the future of public goods.</Message>
           <Buttons>
             <Button onClick={() => goToSettings('profile')} stretch outline level={1} glyph="face">

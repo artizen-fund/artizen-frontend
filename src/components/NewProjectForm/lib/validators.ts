@@ -5,18 +5,13 @@ export const thereIsOneLead = (projectMembers: Array<ProjectMember>) =>
   projectMembers.filter(({ type, wallet }) => type === 'lead' && wallet !== undefined).length === 1
 
 export const thereIsIncompleteInformationFilled = (projectMembers: Array<ProjectMember>) =>
-  projectMembers.filter(
-    ({ firstName, lastName, externalLink, email, wallet, type }) =>
-      !firstName || !lastName || !externalLink || !email || !wallet || !type,
-  ).length > 0
+  projectMembers.filter(({ externalLink, email, wallet, type }) => !externalLink || !email || !wallet || !type).length >
+  0
 
 export const getUsersWalletIsNotCorrect = (projectMembersR: Array<ProjectMember>) =>
   projectMembersR
     .filter(({ wallet }) => !validateLib.validate(wallet, 'ETH'))
-    .map(
-      ({ firstName, lastName, wallet }) =>
-        `${firstName} ${lastName} wallet is not a valid ETH wallet, wallet number: ${wallet}`,
-    )
+    .map(({ wallet }) => `wallet number '${wallet}' is not a valid ETH wallet`)
 
 export const validateProjectMembers = (projectMembers: Array<ProjectMember>) => {
   /* "shouldn't this be in the additionalValidators of the form component?"

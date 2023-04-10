@@ -153,7 +153,7 @@ const ProjectDetails = () => {
 
                   <LeadUserWrapper>
                     <AvatarImage profileImage={tempLeadMember.profileImage}></AvatarImage>
-                    <Subtitle>{`Name: ${tempLeadMember.firstName} ${tempLeadMember.lastName}`}</Subtitle>
+                    <Subtitle>@{`Name: ${tempLeadMember.artizenHandle}`}</Subtitle>
                     <Subtitle>{`Wallet: ${tempLeadMember.publicAddress}`}</Subtitle>
                     <Subtitle>{`Email: ${tempLeadMember.email}`}</Subtitle>
                     <Subtitle>{`Twitter: ${tempLeadMember.twitterHandle}`}</Subtitle>
