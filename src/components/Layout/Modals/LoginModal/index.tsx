@@ -19,7 +19,7 @@ const LoginModal = ({ ...props }) => {
       <Subhead>{copy.subhead}</Subhead>
 
       <Tiles>
-        <Tile onClick={() => connectMetamask()} {...{ enabled }}>
+        <Tile id="btMetamask" onClick={() => connectMetamask()} {...{ enabled }}>
           <img src={assetPath('/assets/metamask.svg')} alt="Metamask" />
           Metamask
         </Tile>
@@ -51,18 +51,36 @@ const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.phablet}px) {
     padding: 40px;
     max-width: 507px;
+    #btMetamask {
+      display: none;
+    }
+  }
+
+  @media only screen and (min-width: ${breakpoint.mobile}px) {
+    #btMetamask {
+      display: none;
+    }
   }
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     max-width: none;
     width: 416px;
+    #btMetamask {
+      display: none;
+    }
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     padding: 65px;
     width: 568px;
+    #btMetamask {
+      display: flex;
+    }
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     padding: 80px;
     width: 840px;
+    #btMetamask {
+      display: flex;
+    }
   }
   background: ${rgba(palette.white)};
   @media (prefers-color-scheme: dark) {
