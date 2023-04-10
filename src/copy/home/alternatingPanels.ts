@@ -53,11 +53,11 @@ const alternatingPanels: Array<IAlternatingPanel> = [
     list: [
       {
         label: 'Connect at Private Gatherings',
-        glyph: 'donate',
+        glyph: 'lock',
       },
       {
         label: 'Collaborate with Friends',
-        glyph: 'intersect',
+        glyph: 'speechBubble',
       },
       {
         label: 'Elevate Each Other',

@@ -46,6 +46,7 @@ export const glyphKey: GlyphKey = {
   polygon: 'polygon',
   power: 'power',
   refresh: 'refresh',
+  speechBubble: 'speechBubble',
   swap: 'swap',
   tag: 'tag',
   tick: 'tick',
