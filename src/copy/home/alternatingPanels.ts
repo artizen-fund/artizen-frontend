@@ -9,7 +9,7 @@ const alternatingPanels: Array<IAlternatingPanel> = [
     list: [
       {
         label: 'Transform Lives',
-        glyph: 'trend',
+        glyph: 'heart',
       },
       {
         label: 'Revitalize Communities',

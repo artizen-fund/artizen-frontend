@@ -31,6 +31,7 @@ export const glyphKey: GlyphKey = {
   github: 'github',
   glob: 'globe',
   hamburger: 'hamburger',
+  heart: 'heart',
   info: 'info',
   infoLarge: 'infoLarge',
   instagram: 'instagram',
