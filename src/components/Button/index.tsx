@@ -56,7 +56,15 @@ const Button = ({
         target={props.target ? props.target : href.substring(0, 4) === 'http' ? '_blank' : '_top'}
       >
         <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-          {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+          {glyph && (
+            <StyledGlyph
+              {...{ glyph }}
+              rotation={glyphRotation}
+              color={outline ? 'night' : 'moon'}
+              darkColor={outline ? 'moon' : 'night'}
+              level={2}
+            />
+          )}
           <span>{children}</span>
         </ButtonLink>
       </Link>
@@ -65,7 +73,15 @@ const Button = ({
   if (!!props.onClick) {
     return (
       <StyledButton className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-        {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+        {glyph && (
+          <StyledGlyph
+            {...{ glyph }}
+            rotation={glyphRotation}
+            color={outline ? 'night' : 'moon'}
+            darkColor={outline ? 'moon' : 'night'}
+            level={2}
+          />
+        )}
         <span>{children}</span>
       </StyledButton>
     )
@@ -73,7 +89,15 @@ const Button = ({
   if (!!props.htmlFor) {
     return (
       <StyledLabel className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-        {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+        {glyph && (
+          <StyledGlyph
+            {...{ glyph }}
+            rotation={glyphRotation}
+            color={outline ? 'night' : 'moon'}
+            darkColor={outline ? 'moon' : 'night'}
+            level={2}
+          />
+        )}
         <span>{children}</span>
       </StyledLabel>
     )
@@ -81,9 +105,7 @@ const Button = ({
   throw 'Error: requires link or button action.'
 }
 
-const StyledGlyph = styled(props => <Glyph {...props} />)<Pick<ButtonProps, 'glyphOnRight'>>`
-  height: 100% !important;
-`
+const StyledGlyph = styled(props => <Glyph {...props} />)<Pick<ButtonProps, 'glyphOnRight'>>``
 
 export const ButtonStyle = css<Partial<ButtonProps>>`
   appearance: none;
