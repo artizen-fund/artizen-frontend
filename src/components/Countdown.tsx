@@ -6,7 +6,7 @@ import { typography } from '@theme'
 import { ARTIZEN_TIMEZONE } from '@lib'
 
 export interface CountdownProps {
-  date: string
+  date: Partial<any>
   onComplete?: () => void
 }
 
