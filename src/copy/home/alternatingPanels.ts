@@ -61,7 +61,7 @@ const alternatingPanels: Array<IAlternatingPanel> = [
       },
       {
         label: 'Elevate Each Other',
-        glyph: 'globe',
+        glyph: 'ladder',
       },
     ],
     buttonLabel: 'Learn More',

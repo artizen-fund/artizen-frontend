@@ -36,6 +36,7 @@ export const glyphKey: GlyphKey = {
   infoLarge: 'infoLarge',
   instagram: 'instagram',
   intersect: 'intersect',
+  ladder: 'ladder',
   lock: 'lock',
   mathMinus: 'mathMinus',
   mathPlus: 'mathPlus',
