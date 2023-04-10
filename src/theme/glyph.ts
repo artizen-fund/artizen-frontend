@@ -13,6 +13,7 @@ export const glyphKey: GlyphKey = {
   calendar: 'calendar',
   certificate: 'certificate',
   coins: 'coins',
+  communities: 'communities',
   countdown: 'countdown',
   creditCard: 'creditCard',
   cross: 'cross',

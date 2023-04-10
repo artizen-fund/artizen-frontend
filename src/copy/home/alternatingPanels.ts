@@ -13,11 +13,11 @@ const alternatingPanels: Array<IAlternatingPanel> = [
       },
       {
         label: 'Revitalize Communities',
-        glyph: 'palette',
+        glyph: 'communities',
       },
       {
         label: 'Regenerate Ecosystems',
-        glyph: 'artToken',
+        glyph: 'globe',
       },
     ],
     buttonLabel: 'Learn More',
