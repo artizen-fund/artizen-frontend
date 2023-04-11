@@ -60,8 +60,8 @@ const FormWrapper = styled.div`
   gap: 10px;
   grid-template-areas:
     'artizenHandle'
-    'phoneNumber phoneNumber'
-    'saveChanges saveChanges';
+    'phoneNumber'
+    'saveChanges';
 
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
