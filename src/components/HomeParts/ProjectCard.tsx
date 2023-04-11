@@ -90,6 +90,9 @@ const Copy = styled.div`
   p {
     ${typography.body.l3}
   }
+  @media only screen and (max-width: 743px) {
+    display: none;
+  }
 `
 
 const Img = styled.img`

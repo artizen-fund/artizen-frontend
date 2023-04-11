@@ -6,7 +6,7 @@ import { typography } from '@theme'
 import { ARTIZEN_TIMEZONE } from '@lib'
 
 export interface CountdownProps {
-  date: string
+  date: Partial<any>
   onComplete?: () => void
 }
 
@@ -34,7 +34,7 @@ const Countdown = ({ date, onComplete }: CountdownProps) => {
       <span key="resetting">resetting</span>
     ) : (
       <span key={`${days}.${hours}.${minutes}.${seconds}`}>
-        {hours + days * 24}h: {minutes}m: {seconds}s
+        {days}d: {hours}h: {minutes}m
       </span>
     )
   }

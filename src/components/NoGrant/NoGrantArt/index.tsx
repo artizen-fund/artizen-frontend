@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 import { palette, breakpoint } from '@theme'
-import { rgba } from '@lib'
+import { rgba, assetPath } from '@lib'
 
 const NoGrantArt = () => {
   return (
     <Wrapper>
-      <Poster src="/assets/noGrant.jpg" />
-      <DarkPoster src="/assets/noGrant-dark.jpg" />
+      <Poster src={assetPath('/assets/animation-placeholder.png?fm=webp')} />
+      <DarkPoster src={assetPath('/assets/animation-placeholder-dark.png?fm=webp')} />
     </Wrapper>
   )
 }

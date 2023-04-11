@@ -14,7 +14,7 @@ const Share = () => {
   const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     sharingModal.twitterMessage,
   )}&url=${encodeURIComponent(link)}`
-  const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+  const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&t=${encodeURIComponent(
     sharingModal.facebookMessage,
   )}`
   const redditLink = `http://www.reddit.com/submit?url=${encodeURIComponent(

@@ -4,24 +4,15 @@ import { typography, palette, breakpoint } from '@theme'
 import { PagePadding, Countdown, Glyph } from '@components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription } from '@types'
+import { ISubscribeSeasonsSubscription, ISeasonFragment } from '@types'
 
-const LeaderboardHeader = () => {
+interface LeaderboardHeaderProps {
+  index: number
+  endingDate: Partial<any>
+}
+
+const LeaderboardHeader = ({ index, endingDate }: LeaderboardHeaderProps): JSX.Element => {
   const { safeBalanceETH, safeBalanceUSD } = useGnosis()
-
-  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
-
-  const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      where: {
-        index: { _eq: CURRENT_SEASON },
-        // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
-        // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
-      },
-      order_by: { submissions_aggregate: { count: 'asc' } },
-    },
-  })
 
   return (
     <StyledPagePadding>
@@ -34,19 +25,21 @@ const LeaderboardHeader = () => {
             <Data>
               {safeBalanceETH} ETH
               <CashTrend>
-                ${safeBalanceUSD}
+                {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                  parseFloat(safeBalanceUSD || '0'),
+                )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
               </CashTrend>
             </Data>
           </Stat>
           <Stat>
             <Label>Cycle</Label>
-            <Data>Season {CURRENT_SEASON}</Data>
+            <Data>Season {index}</Data>
           </Stat>
           <Stat>
             <Label>Ends in</Label>
             <Data>
-              <Countdown date={data?.Seasons[0].endingDate} />
+              <Countdown date={endingDate} />
             </Data>
           </Stat>
         </Stats>
@@ -61,6 +54,9 @@ const LeaderboardHeader = () => {
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   padding: 20px 0;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding: 50px 0;
+  }
 `
 
 const Content = styled.div`

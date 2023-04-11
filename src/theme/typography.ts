@@ -4,7 +4,7 @@ import { breakpoint, typeface } from '@theme'
 export const typography = {
   title: {
     l1: css`
-      font-family: ${typeface.rocGrotesk};
+      font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 700;
       font-size: 34px;
       line-height: 34px;
@@ -23,7 +23,7 @@ export const typography = {
       }
     `,
     l2: css`
-      font-family: ${typeface.rocGrotesk};
+      font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 600;
       font-size: 28px;
       line-height: 30px;
@@ -38,7 +38,7 @@ export const typography = {
       }
     `,
     l3: css`
-      font-family: ${typeface.rocGrotesk};
+      font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 600;
       font-size: 24px;
       line-height: 26px;
@@ -53,7 +53,7 @@ export const typography = {
       }
     `,
     l4: css`
-      font-family: ${typeface.rocGrotesk};
+      font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 600;
       font-size: 20px;
       line-height: 22px;
@@ -114,7 +114,7 @@ export const typography = {
   },
   label: {
     l0: css`
-      font-family: ${typeface.rocGrotesk};
+      font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 600;
       font-size: 16px;
       letter-spacing: 0.5px;
@@ -126,7 +126,7 @@ export const typography = {
       }
     `,
     l1: css`
-      font-family: ${typeface.rocGrotesk};
+      font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 600;
       font-size: 13px;
       letter-spacing: 0.5px;
@@ -138,7 +138,7 @@ export const typography = {
       }
     `,
     l2: css`
-      font-family: ${typeface.rocGrotesk};
+      font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 600;
       font-size: 12px;
       letter-spacing: 0.5px;
@@ -150,7 +150,7 @@ export const typography = {
       }
     `,
     l3: css`
-      font-family: ${typeface.rocGrotesk};
+      font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 600;
       font-size: 10px;
       letter-spacing: 0.5px;
