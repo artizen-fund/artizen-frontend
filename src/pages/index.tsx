@@ -37,7 +37,7 @@ const IndexPage = () => {
 
   const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
 
-  const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+  const { data, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -49,14 +49,18 @@ const IndexPage = () => {
     },
   })
 
+  if (error) {
+    return <>Error Loading Season</>
+  }
+
   return (
     <Layout>
       <HomeHeader />
       <PartnersRibbon />
       <HomeRibbon />
-      {!!CURRENT_SEASON && (
+      {!!CURRENT_SEASON && data?.Seasons[0] && (
         <>
-          <LeaderboardHeader />
+          <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
           <StyledPagePadding>
             <PagePadding>
               <Grid>
