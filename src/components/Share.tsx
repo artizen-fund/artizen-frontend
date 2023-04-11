@@ -19,9 +19,7 @@ const Share = () => {
   const { modalTitle, modalDescription, shareCopy } = sharing[mode || 'home']
 
   const link = `https://artizen.fund${!!destination ? destination : ''}`
-
   const parsedShareCopy = shareCopy.replace('SHARE_LINK', link).replace('PROJECT_TITLE', projectTitle || '')
-
   const title = 'Artizen'
   const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(parsedShareCopy)}`
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&t=${encodeURIComponent(

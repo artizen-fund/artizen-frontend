@@ -7,7 +7,6 @@ import { palette } from '@theme'
 
 interface ILeaderboard {
   openEditions?: IOpenEditionsSubscription
-  numberMinted: number
 }
 
 const DEFAULT_LIMIT = 3
