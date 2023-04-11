@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { StickyContent, StickyCanvas, Button } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { IGetAdjacentGrantQuery } from '@types'
+// import { IGetAdjacentGrantQuery } from '@types'
 import { rgba } from '@lib'
 import { useQuery } from '@apollo/client'
-import { GET_ADJACENT_GRANT } from '@gql'
+// import { GET_ADJACENT_GRANT } from '@gql'
 import Link from 'next/link'
 
 const GrantsExplorer = () => {

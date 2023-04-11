@@ -45,8 +45,6 @@ export const UPDATE_USER = gql`
   ${USER_PRIVATE}
   mutation UpdateUsers(
     $id: uuid!
-    $firstName: String
-    $lastName: String
     $profileImage: String
     $twitterHandle: String
     $discordHandle: String
@@ -61,8 +59,6 @@ export const UPDATE_USER = gql`
     update_Users(
       where: { id: { _eq: $id } }
       _set: {
-        firstName: $firstName
-        lastName: $lastName
         profileImage: $profileImage
         twitterHandle: $twitterHandle
         discordHandle: $discordHandle

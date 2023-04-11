@@ -5,34 +5,32 @@ import { breakpoint, palette } from '@theme'
 import { rgba, sizeForLevel } from '@lib'
 
 interface ICreatorBox {
-  member: IUserPublicFragment
+  user: IUserPublicFragment
 }
 
-const CreatorBox = ({ member }: ICreatorBox) => {
-  console.log('member', member)
+const CreatorBox = ({ user }: ICreatorBox) => {
+  console.log('member', user)
   return (
     <Wrapper>
       <div>
-        <AvatarImage profileImage={member.profileImage}>
-          {!member.profileImage && <Glyph glyph="face" level={1} color="moon" darkColor="night" />}
+        <AvatarImage profileImage={user.profileImage}>
+          {!user.profileImage && <Glyph glyph="face" level={1} color="moon" darkColor="night" />}
         </AvatarImage>
       </div>
       <Copy>
-        <Name>
-          {member.firstName} {member.lastName}
-        </Name>
+        <Name>{user.artizenHandle}</Name>
         <Links>
-          {member.twitterHandle && (
+          {user.twitterHandle && (
             <li>
-              <Button glyph="twitter" glyphOnly href={`https://twitter.com/${member.twitterHandle}`} level={2} outline>
+              <Button glyph="twitter" glyphOnly href={`https://twitter.com/${user.twitterHandle}`} level={2} outline>
                 Twitter
               </Button>
             </li>
           )}
-          {member.website && (
+          {user.website && (
             <li>
-              <Button glyph="globe" glyphOnly href={member.website} level={2} outline>
-                {member.website}
+              <Button glyph="globe" glyphOnly href={user.website} level={2} outline>
+                {user.website}
               </Button>
             </li>
           )}
