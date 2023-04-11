@@ -22,7 +22,7 @@ export default function Project({ projectData, displayType }: ProjectProps): JSX
         <b>Logline:</b> {logline}
       </Item>
       <Item>
-        <b>By:</b> {capitalCase(`${leadMember?.firstName} ${leadMember?.lastName}`)}
+        <b>By:</b> {capitalCase(`${leadMember?.artizenHandle}`)}
       </Item>
       <Item>
         <b>Impact Tags:</b> {impactTags}

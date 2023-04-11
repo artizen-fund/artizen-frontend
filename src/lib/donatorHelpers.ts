@@ -9,8 +9,6 @@ import { uniqBy } from 'lodash'
 
 interface UserOnLeaderboard {
   __typename?: string
-  firstName?: string
-  lastName?: string
   artizenHandle?: string
   profileImage?: string
   copies: number

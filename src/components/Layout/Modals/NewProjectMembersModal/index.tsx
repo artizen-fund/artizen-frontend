@@ -97,11 +97,7 @@ const NewProjectMembersModal = () => {
                 classNames: 'doubleHeight',
               },
               {
-                renderer: (item: IUserPublicFragment) => (
-                  <ItemText>
-                    {item.firstName} {item.lastName}
-                  </ItemText>
-                ),
+                renderer: (item: IUserPublicFragment) => <ItemText>{item.artizenHandle}</ItemText>,
               },
 
               {
