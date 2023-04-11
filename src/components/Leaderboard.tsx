@@ -29,10 +29,12 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
 
   const title = (
     <div>
-      Ξ{safeBalanceETH}{' '}
+      Ξ{safeBalanceETH}
       <Grey>
-        &nbsp;
-        {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(parseFloat(safeBalanceUSD || '0'))}
+        {' '}
+        {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+          parseFloat(safeBalanceUSD || '0'),
+        )}{' '}
         in Artifact sales
       </Grey>
     </div>
