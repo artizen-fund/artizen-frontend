@@ -19,10 +19,10 @@ interface MetadataObject {
 
 const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragment, project: IProjectFragment) => {
   const artifactName = `Artifact #${artifactNumber}`
-  const allProjectMembersString = project.members.map(({ user }) => `${user?.firstName} ${user?.lastName}`).join(', ')
+  const allProjectMembersString = project.members.map(({ user }) => (user ? user.artizenHandle : ''))[0]
   const artifactToUpload = project.artifacts[0]
 
-  const artifactDescription = composeArtifactDescription(artifactName, project, allProjectMembersString)
+  const artifactDescription = composeArtifactDescription(artifactName, project, allProjectMembersString || '')
 
   console.log('artifactToUpload.artwork  ', artifactToUpload)
 

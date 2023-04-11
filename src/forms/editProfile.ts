@@ -11,11 +11,6 @@ export const schema: JsonSchema = {
     bio: {
       type: 'string',
     },
-    website: {
-      type: 'string',
-      minLength: 12,
-      format: 'url',
-    },
     twitterHandle: {
       type: 'string',
       // todo: regex?

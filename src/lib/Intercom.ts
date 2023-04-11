@@ -19,10 +19,7 @@ export function initIntercom() {
   const appId = assert(process.env.NEXT_PUBLIC_INTERCOM_APP_ID, 'NEXT_PUBLIC_INTERCOM_APP_ID')
 
   const startIntercom = useCallback(() => {
-    const name =
-      loggedInUser?.firstName && loggedInUser?.firstName
-        ? `${loggedInUser?.firstName} ${loggedInUser?.lastName}`
-        : undefined
+    const name = loggedInUser?.artizenHandle ? `${loggedInUser?.artizenHandle}` : undefined
 
     loadIntercom({
       appId,

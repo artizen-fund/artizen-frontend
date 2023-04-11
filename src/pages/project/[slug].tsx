@@ -104,7 +104,7 @@ const ProjectPage = () => {
               <p>{project.logline}</p>
               <Tags tags={project.impactTags?.split(',') || []} />
 
-              {lead && <CreatorBox member={lead} />}
+              {lead && <CreatorBox user={lead} />}
             </Header>
 
             <Leaderboard openEditions={openEditions} />
