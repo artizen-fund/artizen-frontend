@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
-import { aggregateDonators, useGnosis, rgba } from '@lib'
+import { aggregateDonators, rgba, assertFloat, useGnosis } from '@lib'
 import { IOpenEditionsSubscription } from '@types'
 import { palette } from '@theme'
 
@@ -14,9 +14,11 @@ const DEFAULT_LIMIT = 3
 const Leaderboard = ({ openEditions }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
-  const { safeBalanceETH, safeBalanceUSD } = useGnosis()
+  const { USDtoETH } = useGnosis()
 
   if (!openEditions) return <Spinner minHeight="65px" />
+
+  const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
 
   const sideItem =
     aggregateDonators(openEditions).length < DEFAULT_LIMIT ? (
@@ -27,12 +29,19 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
       </Button>
     )
 
+  const BASE_ARTIFACT_PRICE = assertFloat(
+    process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
+    'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
+  )
+
   const title = (
     <div>
-      Ξ{safeBalanceETH}{' '}
+      Ξ{count * BASE_ARTIFACT_PRICE}
       <Grey>
-        &nbsp;
-        {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(parseFloat(safeBalanceUSD || '0'))}
+        {' '}
+        {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+          (count * BASE_ARTIFACT_PRICE) / USDtoETH!,
+        )}{' '}
         in Artifact sales
       </Grey>
     </div>

@@ -68,6 +68,15 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
     }
   }, [newPublicWallet])
 
+  const sendUserToCourier = async (id: string, email: string, artizenHandle: string) => {
+    await addUserToCourier({
+      id,
+      email,
+      artizenHandle,
+      type: 'addNewUser',
+    })
+  }
+
   const createProfile = async () => {
     const profileImage = await uploadAvatar(imageFile)
 
@@ -88,23 +97,21 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
     }
 
     const newUser = newUserMutationReturn.data.insert_Users.returning[0]
-    // If there is a change in email, firstName or lastName, add to Courier
-    if (newUser.email && newUser.firstName && newUser.lastName) {
-      await addUserToCourier({
-        id: newUser.id,
-        email: newUser.email,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        type: 'addNewUser',
-      })
+
+    console.log('user is created::::', newUser)
+    // If there is a change in email, or artizenHandle, update profile in Courier
+    if (newUser.email && newUser.artizenHandle) {
+      await sendUserToCourier(newUser.id, newUser.email, newUser.artizenHandle)
     }
     return newUserMutationReturn.data.insert_Users.returning[0]
   }
 
-  const updateProfile = async (userIdToUpdate: string) => {
+  const updateProfile = async (userIdToUpdate: string, sendWelcomeEmail: boolean) => {
     if (!loggedInUser) {
       throw new Error('User session not found')
     }
+
+    console.log('updateProfile   ', updateProfile)
 
     const valuesToUpdate: FormState = {}
 
@@ -130,24 +137,35 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
             _eq: userId,
           },
         },
-        _set: { ...valuesToUpdate, claimed: !initialFormState && true, profileImage },
+        _set: { ...valuesToUpdate, claimed: sendWelcomeEmail, profileImage },
       },
       onError: error => console.error('error form ::::', error),
     })
-    // If there is a change in email, firstName or lastName, update the user in courier
-    if (valuesToUpdate.email || valuesToUpdate.firstName || valuesToUpdate.lastName) {
+    // If there is a change in email, or artizenHandle, update the user's profile in courier
+    if (valuesToUpdate.email || valuesToUpdate.artizenHandle) {
       //grap the email from the form if it was changed, otherwise grap it from the initial form state
       const email = valuesToUpdate.email ? valuesToUpdate.email : initialFormState.email
-      const firstName = valuesToUpdate.firstName ? valuesToUpdate.firstName : initialFormState.firstName
-      const lastName = valuesToUpdate.lastName ? valuesToUpdate.lastName : initialFormState.lastName
+      const artizenHandle = valuesToUpdate.artizenHandle ? valuesToUpdate.artizenHandle : initialFormState.artizenHandle
+
       email &&
-        firstName &&
-        lastName &&
-        (await addUserToCourier({ id: userId as string, email, firstName, lastName, type: 'updateUser' }))
+        artizenHandle &&
+        (await addUserToCourier({ id: userId as string, email, artizenHandle, type: 'updateUser' }))
     }
 
     if (updatedUser.data?.update_Users?.returning.length === 0) {
       throw new Error('Error updating user in the admin form')
+    }
+
+    if (
+      sendWelcomeEmail &&
+      updatedUser.data?.update_Users?.returning[0].email &&
+      updatedUser.data?.update_Users?.returning[0].artizenHandle
+    ) {
+      await sendUserToCourier(
+        updatedUser.data?.update_Users?.returning[0].id,
+        updatedUser.data?.update_Users?.returning[0].email,
+        updatedUser.data?.update_Users?.returning[0].artizenHandle,
+      )
     }
 
     return updatedUser.data?.update_Users?.returning[0]

@@ -1,7 +1,7 @@
 import { PinataPinResponse } from '@pinata/sdk'
 
 const sendDataToAPI = async (data: string): Promise<PinataPinResponse> => {
-  console.log('data  ', data)
+  console.log('data in here ', data)
   const response = await fetch('/api/uploadDataToIPFS', {
     method: 'POST',
     headers: {

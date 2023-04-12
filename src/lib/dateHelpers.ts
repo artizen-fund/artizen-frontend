@@ -1,5 +1,4 @@
 import { monthNames } from '@copy/common'
-import { IGrantFragment } from '@types'
 
 // we're storing some dates as yyyy-mm-dd, convert to pretty string
 export const formatStringDate = (dumbDate: string) => {
@@ -24,10 +23,10 @@ export const getDaysAgoFromDate = (start: number) => {
 
 const GMT_OFFSET = `0800`
 
-export const isCurrentGrant = (grant?: IGrantFragment) => {
-  if (!grant) return false
-  const now = new Date()
-  const grantStarts = new Date(`${grant.startingDate}-${GMT_OFFSET}`)
-  const grantEnds = new Date(`${grant.closingDate}-${GMT_OFFSET}`)
-  return grantStarts <= now && grantEnds > now
-}
+// export const isCurrentGrant = (grant?: IGrantFragment) => {
+//   if (!grant) return false
+//   const now = new Date()
+//   const grantStarts = new Date(`${grant.startingDate}-${GMT_OFFSET}`)
+//   const grantEnds = new Date(`${grant.closingDate}-${GMT_OFFSET}`)
+//   return grantStarts <= now && grantEnds > now
+// }
