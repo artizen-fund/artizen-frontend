@@ -48,39 +48,27 @@ const LoginModal = ({ ...props }) => {
 const Wrapper = styled.div`
   padding: 40px 25px;
   max-width: calc(100vw - 20px);
-  @media only screen and (min-width: ${breakpoint.phablet}px) {
-    padding: 40px;
-    max-width: 507px;
+  @media (hover: none) and (max-width: ${breakpoint.tablet}px) {
     #btMetamask {
       display: none;
     }
   }
 
-  @media only screen and (min-width: ${breakpoint.mobile}px) {
-    #btMetamask {
-      display: none;
-    }
+  @media only screen and (min-width: ${breakpoint.phablet}px) {
+    padding: 40px;
+    max-width: 507px;
   }
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     max-width: none;
     width: 416px;
-    #btMetamask {
-      display: none;
-    }
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     padding: 65px;
     width: 568px;
-    #btMetamask {
-      display: flex;
-    }
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     padding: 80px;
     width: 840px;
-    #btMetamask {
-      display: flex;
-    }
   }
   background: ${rgba(palette.white)};
   @media (prefers-color-scheme: dark) {
