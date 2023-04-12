@@ -17,7 +17,7 @@ interface ISubHeader {
 */
 
 const SubHeader = ({ visible }: ISubHeader) => {
-  const { safeBalanceETH, safeBalanceUSD } = useGnosis()
+  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
   const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
 
@@ -52,10 +52,10 @@ const SubHeader = ({ visible }: ISubHeader) => {
             <Stat>
               <Label>Prize funds</Label>
               <Data>
-                Ξ {safeBalanceETH}
+                Ξ {artizenPrizeAmountETH}
                 <CashTrend>
                   {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                    parseFloat(safeBalanceUSD || '0'),
+                    parseFloat(artizenPrizeAmountUSD || '0'),
                   )}
                   <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
                 </CashTrend>
