@@ -1,5 +1,6 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba } from '@lib'
+import { rgba, LayoutContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { RankAndArtifactCount, DonationBox } from '@components'
 import { IProjectFragment } from '@types'
@@ -11,8 +12,10 @@ interface IProjectCard {
 }
 
 const ProjectCard = ({ project, index }: IProjectCard) => {
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
+  console.log('latestArtifact', latestArtifact)
   return (
     <Wrapper>
       <AllCopy>
@@ -30,9 +33,15 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
           <p>{project.logline}</p>
         </Copy>
       </AllCopy>
-      <StyledLink href={`/project/${project.titleURL!}`}>
-        <Img src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`} />
-      </StyledLink>
+      <Img
+        src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`}
+        onClick={() =>
+          setVisibleModalWithAttrs('media', {
+            videoFile: latestArtifact.video,
+            imageFile: latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg'),
+          })
+        }
+      />
       <Footer>
         <DonationBox tokenId={latestArtifact.token} />
       </Footer>
@@ -117,6 +126,7 @@ const Img = styled.img`
     width: 440px;
     height: 440px;
   }
+  cursor: pointer;
 `
 
 const Footer = styled.footer`
