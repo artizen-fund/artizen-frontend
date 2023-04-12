@@ -52,10 +52,11 @@ const Tag = styled.li`
   }
 
   border-radius: 9999px;
-  border: 1px solid transparent;
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi) {
     border-width: 0.5px;
   }
+
+  cursor: default;
 `
 
 export default Tags

@@ -62,6 +62,7 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 const Content = styled.div`
   display: grid;
   grid-template-areas: 'title laurels' 'stats stats';
+  grid-template-rows: repeat(2, 1fr);
   gap: 30px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     grid-template-areas: 'title laurels' 'stats laurels';
@@ -77,12 +78,14 @@ const Title = styled.h2`
 `
 
 const OfficialSelection = styled.div`
+  max-width: 140px;
   img {
-    max-width: 140px;
+    width: 100%;
   }
   @media only screen and (min-width: ${breakpoint.tablet}px) {
+    max-width: none;
     img {
-      max-width: none;
+      max-width: 300px;
     }
   }
   grid-area: laurels;
@@ -110,17 +113,19 @@ const Stats = styled.div`
 
 const Stat = styled.div`
   position: relative;
-  &:before {
-    content: ' ';
-    position: absolute;
-    top: 0;
-    left: -30px;
-    width: 1px;
-    height: 100%;
-    background-color: ${rgba(palette.stone)};
-  }
-  &:first-child:before {
-    display: none;
+  @media only screen and (min-width: 744px) {
+    &:before {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: -30px;
+      width: 1px;
+      height: 100%;
+      background-color: ${rgba(palette.stone)};
+    }
+    &:first-child:before {
+      display: none;
+    }
   }
 `
 

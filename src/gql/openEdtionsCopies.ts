@@ -9,19 +9,3 @@ export const SUBSCRIBE_OPEN_EDITIONS = gql`
     }
   }
 `
-
-// note: I wrote this to find the top contributor
-// but it may be more efficient than the query above
-
-export const SUBSCRIBE_LEADERBOARD = gql`
-  subscription leaderboard($where: Users_bool_exp) {
-    Users(where: $where) {
-      openEditionCopies {
-        copies
-        value
-      }
-      artizenHandle
-      profileImage
-    }
-  }
-`

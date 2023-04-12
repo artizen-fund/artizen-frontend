@@ -7,7 +7,7 @@ import { Button, PagePadding } from '@components'
 import SocialLinks from './SocialLinks'
 
 const Footer = () => {
-  const { setVisibleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   return (
     <Wrapper>
       <PagePadding black>
@@ -63,7 +63,13 @@ const Footer = () => {
           <Column>
             <Headline>Join the mission to fund human creativity.</Headline>
             <Buttons>
-              <Button onClick={() => setVisibleModal('share')} stretch inverted outline level={1}>
+              <Button
+                onClick={() => setVisibleModalWithAttrs('share', { mode: 'home' })}
+                stretch
+                inverted
+                outline
+                level={1}
+              >
                 Share Now
               </Button>
             </Buttons>
