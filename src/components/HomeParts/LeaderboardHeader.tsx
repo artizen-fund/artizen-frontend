@@ -12,7 +12,7 @@ interface LeaderboardHeaderProps {
 }
 
 const LeaderboardHeader = ({ index, endingDate }: LeaderboardHeaderProps): JSX.Element => {
-  const { safeBalanceETH, safeBalanceUSD } = useGnosis()
+  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
   return (
     <StyledPagePadding>
@@ -23,10 +23,10 @@ const LeaderboardHeader = ({ index, endingDate }: LeaderboardHeaderProps): JSX.E
           <Stat>
             <Label>Prize Funds</Label>
             <Data>
-              {safeBalanceETH} ETH
+              {artizenPrizeAmountETH} ETH
               <CashTrend>
                 {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                  parseFloat(safeBalanceUSD || '0'),
+                  parseFloat(artizenPrizeAmountUSD || '0'),
                 )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
               </CashTrend>
