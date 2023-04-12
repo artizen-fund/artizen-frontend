@@ -62,19 +62,17 @@ const IndexPage = () => {
         <>
           <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
           <StyledPagePadding>
-            <PagePadding>
-              <Grid>
-                {data?.Seasons[0].submissions
-                  ?.sort(
-                    (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-                      s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-                      s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-                  )
-                  .map((submission, index) => (
-                    <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
-                  ))}
-              </Grid>
-            </PagePadding>
+            <Grid>
+              {data?.Seasons[0].submissions
+                ?.sort(
+                  (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+                    s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+                    s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+                )
+                .map((submission, index) => (
+                  <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
+                ))}
+            </Grid>
             <SubmissionsMarker id="submissionsMarker" />
           </StyledPagePadding>
         </>
@@ -105,6 +103,7 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
     border-style: solid;
     border-color: rgba(114, 124, 140, 0.4);
   }
+  padding-top: 0px !important;
 `
 
 const SubmissionsMarker = styled.div`

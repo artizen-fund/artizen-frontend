@@ -96,7 +96,17 @@ const ProjectPage = () => {
             <Header>
               <Topline>
                 <RankAndArtifactCount rank={rank} count={count} />
-                <Button level={2} outline onClick={() => setVisibleModalWithAttrs('share', { destination: asPath })}>
+                <Button
+                  level={2}
+                  outline
+                  onClick={() =>
+                    setVisibleModalWithAttrs('share', {
+                      mode: 'project',
+                      destination: asPath,
+                      projectTitle: project.title,
+                    })
+                  }
+                >
                   Share
                 </Button>
               </Topline>

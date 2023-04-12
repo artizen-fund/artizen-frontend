@@ -91,7 +91,9 @@ const Copy = styled.div`
     ${typography.body.l3}
   }
   @media only screen and (max-width: 743px) {
-    display: none;
+    p {
+      display: none;
+    }
   }
 `
 

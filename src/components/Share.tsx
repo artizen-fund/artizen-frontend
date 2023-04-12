@@ -4,21 +4,29 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Button } from '@components'
 import { rgba, LayoutContext } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
-import { sharingModal } from '@copy/common'
+import { sharing } from '@copy/common'
+
+interface ShareModalAttrs {
+  mode?: 'home' | 'project' | 'postTransaction'
+  destination?: string
+  projectTitle?: string
+}
 
 const Share = () => {
   const { modalAttrs } = useContext(LayoutContext)
+  const { mode, destination, projectTitle } = modalAttrs as ShareModalAttrs
 
-  const link = `https://artizen.fund${!!modalAttrs?.destination ? modalAttrs.destination : ''}`
+  const { modalTitle, modalDescription, shareCopy } = sharing[mode || 'home']
+
+  const link = `https://artizen.fund${!!destination ? destination : ''}`
+  const parsedShareCopy = shareCopy.replace('SHARE_LINK', link).replace('PROJECT_TITLE', projectTitle || '')
   const title = 'Artizen'
-  const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    sharingModal.twitterMessage,
-  )}&url=${encodeURIComponent(link)}`
+  const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(parsedShareCopy)}`
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&t=${encodeURIComponent(
-    sharingModal.facebookMessage,
+    parsedShareCopy,
   )}`
   const redditLink = `http://www.reddit.com/submit?url=${encodeURIComponent(
-    sharingModal.redditMessage,
+    parsedShareCopy,
   )}&title=${encodeURIComponent('Artizen Fund')}`
   const mailLink = encodeURIComponent(link)
 
@@ -27,8 +35,8 @@ const Share = () => {
   return (
     <Wrapper>
       <Copy>
-        <Header>{sharingModal.headline}</Header>
-        <Subheader>{sharingModal.subhead}</Subheader>
+        <Header>{modalTitle}</Header>
+        <Subheader>{modalDescription}</Subheader>
       </Copy>
       <Row>
         <ButtonWithLabel color="moon">
