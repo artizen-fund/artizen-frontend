@@ -54,17 +54,14 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         ? undefined
         : !!loggedInUser.profileImage
         ? 'avatar'
-        : !!loggedInUser.firstName && !!loggedInUser.lastName
+        : !!loggedInUser.artizenHandle
         ? 'initials'
         : 'placeholder',
     )
-    if (
-      status === 'authenticated' &&
-      !!loggedInUser &&
-      (!loggedInUser.email || !loggedInUser.firstName || !loggedInUser.lastName || !loggedInUser.artizenHandle)
-    ) {
+    if (status === 'authenticated' && !!loggedInUser && (!loggedInUser.email || !loggedInUser.artizenHandle)) {
       setVisibleModalWithAttrs('createProfile', {
         action: 'update',
+        sendWelcomeEmail: true,
       })
     }
   }, [loggedInUser])
@@ -92,10 +89,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
           <Glyph glyph="face" level={1} color="night" darkColor="moon" />
         </AvatarImage>
         <Initials active={avatarDisplay === 'initials'}>
-          <SizedType>
-            {loggedInUser?.firstName?.substring(0, 1)}
-            {loggedInUser?.lastName?.substring(0, 1)}
-          </SizedType>
+          <SizedType>{loggedInUser?.artizenHandle?.substring(0, 1)}</SizedType>
         </Initials>
       </IconWrapper>
     </Wrapper>

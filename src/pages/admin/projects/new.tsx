@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { INSERT_PROJECTS } from '@gql'
 import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
+import { capitalCase } from 'capital-case'
 import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding } from '@components'
 import { initialState, schema, FormState } from '@forms/createProjects'
 import slugify from 'slugify'
@@ -153,7 +154,7 @@ const ProjectDetails = () => {
 
                   <LeadUserWrapper>
                     <AvatarImage profileImage={tempLeadMember.profileImage}></AvatarImage>
-                    <Subtitle>{`Name: ${tempLeadMember.firstName} ${tempLeadMember.lastName}`}</Subtitle>
+                    <Subtitle>{`Nickname: ${tempLeadMember.artizenHandle}`}</Subtitle>
                     <Subtitle>{`Wallet: ${tempLeadMember.publicAddress}`}</Subtitle>
                     <Subtitle>{`Email: ${tempLeadMember.email}`}</Subtitle>
                     <Subtitle>{`Twitter: ${tempLeadMember.twitterHandle}`}</Subtitle>

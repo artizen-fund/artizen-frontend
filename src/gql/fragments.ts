@@ -32,8 +32,6 @@ export const USER_PUBLIC = gql`
   fragment UserPublic on Users {
     id
     publicAddress
-    firstName
-    lastName
     profileImage
     createdAt
     twitterHandle
@@ -126,8 +124,6 @@ export const OPEN_EDITIONS_COPIES = gql`
     copies
     user {
       id
-      firstName
-      lastName
       artizenHandle
       profileImage
     }

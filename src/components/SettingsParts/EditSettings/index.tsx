@@ -17,8 +17,7 @@ const EditSettings = () => {
     if (!!data || !loggedInUser) return
     setData({
       ...initialState,
-      firstName: loggedInUser?.firstName || initialState.firstName,
-      lastName: loggedInUser?.lastName || initialState.lastName,
+      artizenHandle: loggedInUser?.artizenHandle || initialState.artizenHandle,
       email: loggedInUser?.email || initialState.email,
     })
   }, [loggedInUser])
@@ -60,10 +59,9 @@ const FormWrapper = styled.div`
   display: grid;
   gap: 10px;
   grid-template-areas:
-    'firstName lastName'
-    'email email'
-    'phoneNumber phoneNumber'
-    'saveChanges saveChanges';
+    'artizenHandle'
+    'phoneNumber'
+    'saveChanges';
 
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
@@ -74,12 +72,8 @@ const FormWrapper = styled.div`
     display: contents;
   }
 
-  *[id='#/properties/firstName'] {
-    grid-area: firstName;
-  }
-
-  *[id='#/properties/lastName'] {
-    grid-area: lastName;
+  *[id='#/properties/artizenHandle'] {
+    grid-area: artizenHandle;
   }
 
   *[id='#/properties/email'] {
@@ -89,12 +83,6 @@ const FormWrapper = styled.div`
   *[id='#/properties/phoneNumber'] {
     grid-area: phoneNumber;
   }
-`
-
-const NotificationsBanner = styled.div`
-  grid-area: socialLinksBanner;
-  margin-top: 20px;
-  ${typography.label.l1}
 `
 
 const StyledButton = styled(props => <Button {...props} />)`

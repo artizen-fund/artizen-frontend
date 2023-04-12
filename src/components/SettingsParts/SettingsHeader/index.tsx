@@ -30,9 +30,7 @@ const SettingsHeader = ({ children }: { children: React.ReactElement }) => {
       </PersonalBannerGraphic>
       <Main>
         <Content>
-          <Name>
-            {loggedInUser.firstName} {loggedInUser.lastName}
-          </Name>
+          <Name>{loggedInUser.artizenHandle}</Name>
           <HandleLine>
             {loggedInUser.artizenHandle && <span>@{loggedInUser.artizenHandle}</span>}
             <span>Joined {dateJoined}</span>

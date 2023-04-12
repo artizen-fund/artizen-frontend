@@ -62,8 +62,6 @@ export const useSeasons = () => {
 
       console.log('mintOpenEditionsTxfr', mintOpenEditionsTx)
 
-      // updateSafeBalance()
-
       return {
         txHash: mintOpenEditionsTx.transactionHash,
       }
