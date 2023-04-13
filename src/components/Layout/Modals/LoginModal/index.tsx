@@ -41,10 +41,10 @@ const LoginModal = ({ ...props }) => {
         <Tile
           id="btMetamask"
           onClick={async () => {
-            const provider = await detectEthereumProvider({ mustBeMetaMask: true })
-            console.log('provider 222  ', provider)
-
-            isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
+            // const provider = await detectEthereumProvider({ mustBeMetaMask: true })
+            // console.log('provider 222  ', provider)
+            connectMetamask()
+            // isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
           }}
           {...{ enabled }}
         >
@@ -76,6 +76,12 @@ const LoginModal = ({ ...props }) => {
 const Wrapper = styled.div`
   padding: 40px 25px;
   max-width: calc(100vw - 20px);
+
+  @media (hover: none) and (max-width: ${breakpoint.tablet}px) {
+    #btMetamask {
+      display: none;
+    }
+  }
 
   @media only screen and (min-width: ${breakpoint.phablet}px) {
     padding: 40px;
