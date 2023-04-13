@@ -102,7 +102,6 @@ const Wrapper = styled.div`
   gap: 10px;
   grid-template-areas:
     'copy copy'
-    'firstName lastName'
     'email email'
     'submit submit'
     'optIn optIn';
@@ -115,12 +114,10 @@ const Wrapper = styled.div`
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 12px;
     grid-template-areas:
-      'copy copy firstName lastName'
       'copy copy email email'
       'optIn optIn submit submit';
     &.submitted {
       grid-template-areas:
-        'copy copy confirmation confirmation'
         'copy copy confirmation confirmation'
         'optIn optIn confirmation confirmation';
     }
@@ -138,14 +135,6 @@ const Wrapper = styled.div`
     grid-area: email;
   }
 
-  *[id='#/properties/FNAME'] {
-    grid-area: firstName;
-  }
-
-  *[id='#/properties/LNAME'] {
-    grid-area: lastName;
-  }
-
   *[id='#/properties/OPTIN'] {
     grid-area: optIn;
     text-align: center;
@@ -161,8 +150,6 @@ const Wrapper = styled.div`
 
   &.submitted {
     *[id='#/properties/EMAIL'],
-    *[id='#/properties/FNAME'],
-    *[id='#/properties/LNAME'],
     ${StyledButton} {
       display: none;
     }

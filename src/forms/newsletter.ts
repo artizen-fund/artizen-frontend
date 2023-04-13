@@ -4,14 +4,6 @@ import { newsletter } from '@copy/common'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    FNAME: {
-      type: 'string',
-      minLength: 2,
-    },
-    LNAME: {
-      type: 'string',
-      minLength: 2,
-    },
     EMAIL: {
       type: 'string',
       format: 'email',
@@ -33,16 +25,6 @@ export const initialState: FormState = { OPTIN: true }
 export const uischema = {
   type: 'VerticalLayout',
   elements: [
-    {
-      type: 'Control',
-      scope: '#/properties/FNAME',
-      label: 'First Name',
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/LNAME',
-      label: 'Last Name',
-    },
     {
       type: 'Control',
       scope: '#/properties/EMAIL',

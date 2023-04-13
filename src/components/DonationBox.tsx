@@ -54,15 +54,11 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
     }
 
     //Show error
-    if (error) {
-      const errors: Array<ErrorObject> = []
-      errors.push({
-        instancePath: '/donationAmount',
-        message: error,
-        schemaPath: '#/properties/donationAmount',
-        keyword: '',
-        params: {},
-      })
+    if (error === 'Insufficient funds') {
+      //insufficientFunds
+      toggleModal('insufficientFunds')
+      setSending(false)
+      return
     }
 
     //Close modal if there is no error neither txHash, like when users have rejected transactions,

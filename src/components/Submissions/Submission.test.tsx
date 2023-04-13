@@ -7,6 +7,8 @@ import Submissions from './index'
 // use the render function from @testing-library/react
 // use the container property from the render function
 
+// TODO: remove firstName, lastName
+
 const mockProject = {
   __typename: 'Projects',
   id: 'abc123',

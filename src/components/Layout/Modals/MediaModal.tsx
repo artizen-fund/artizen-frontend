@@ -16,7 +16,7 @@ const MediaModal = () => {
             loop={true}
             autoPlay={true}
             controls={false}
-            muted={true}
+            muted={false}
             onCanPlay={() => setLoaded(true)}
             className={loaded ? 'visible' : ''}
           >

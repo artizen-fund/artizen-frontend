@@ -3,15 +3,32 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { CloseButton, CheckboxControl } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
-import { rgba, assetPath, LayoutContext, textCrop } from '@lib'
+import { rgba, assetPath, LayoutContext, textCrop, assert } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
+import detectEthereumProvider from '@metamask/detect-provider'
 import { connectWallet as copy } from '@copy/common'
+import { useRouter } from 'next/router'
 import useWalletConnect from './lib'
 
 const LoginModal = ({ ...props }) => {
   const { toggleModal } = useContext(LayoutContext)
   const { connectMetamask, connectOtherWallet } = useWalletConnect()
   const [enabled, setEnabled] = useState(true)
+  const { push } = useRouter()
+
+  const isMobile = navigator.maxTouchPoints > 1
+
+  console.log('its mobile===', isMobile)
+
+  const redirectToMetamaskBrowser = () => {
+    // Metamask deeplink generated with: https://metamask.github.io/metamask-deeplinks/#
+    const NEXT_PUBLIC_APP_DOMAIN = assert(process.env.NEXT_PUBLIC_APP_DOMAIN, 'NEXT_PUBLIC_APP_DOMAIN')
+    const newUrl = `https://metamask.app.link/dapp/${NEXT_PUBLIC_APP_DOMAIN}`
+
+    console.log('newUrl   ', newUrl)
+
+    push(newUrl)
+  }
 
   return (
     <Wrapper {...props}>
@@ -19,7 +36,18 @@ const LoginModal = ({ ...props }) => {
       <Subhead>{copy.subhead}</Subhead>
 
       <Tiles>
-        <Tile id="btMetamask" onClick={() => connectMetamask()} {...{ enabled }}>
+        {/* EricJ: I really need to check if it's a mobile regarless of the screensize, 
+        so I am trying maxTouchPoints as recommended with MDN but happy to use a more relaiable approach */}
+        <Tile
+          id="btMetamask"
+          onClick={async () => {
+            // const provider = await detectEthereumProvider({ mustBeMetaMask: true })
+            // console.log('provider 222  ', provider)
+            connectMetamask()
+            // isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
+          }}
+          {...{ enabled }}
+        >
           <img src={assetPath('/assets/metamask.svg')} alt="Metamask" />
           Metamask
         </Tile>
@@ -34,7 +62,7 @@ const LoginModal = ({ ...props }) => {
         <Check>
           <CheckboxControl data={enabled} path="not-used" handleChange={() => setEnabled(!enabled)} label="" />
           <CheckMessage>
-            {/* todo: move this to Copy doc */}
+            {/* TODO: move this to Copy doc */}
             <Link href="https://help.artizen.fund/en/articles/4761373-privacy-policy" target="_blank">
               {copy.privacyMessage}
             </Link>
@@ -48,6 +76,7 @@ const LoginModal = ({ ...props }) => {
 const Wrapper = styled.div`
   padding: 40px 25px;
   max-width: calc(100vw - 20px);
+
   @media (hover: none) and (max-width: ${breakpoint.tablet}px) {
     #btMetamask {
       display: none;
