@@ -6,11 +6,11 @@ import { breakpoint, palette, typography } from '@theme'
 import { howItWorks } from '@copy/header'
 
 const HowItWorks = () => {
-  const { setVisibleShelf } = useContext(LayoutContext)
+  const { toggleShelf } = useContext(LayoutContext)
   const scrollToLeaderboard = () => {
     const submissionsMarker = document.querySelector('#submissionsMarker')
     submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
-    setVisibleShelf(undefined)
+    toggleShelf()
   }
 
   return (
