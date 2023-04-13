@@ -1,5 +1,6 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba } from '@lib'
+import { rgba, LayoutContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { IArtifactFragment } from '@types'
 import { DonationBox } from '@components'
@@ -8,20 +9,32 @@ interface IArtifactCard {
   artifact: IArtifactFragment
 }
 
-const ArtifactCard = ({ artifact }: IArtifactCard) => (
-  <Wrapper>
-    <Img src={artifact.artwork} />
-    <AllCopy>
-      <Copy>
-        <h2>Artifact #{artifact.token}</h2>
-        <OpenEdition>Open Edition</OpenEdition>
-      </Copy>
-      <Footer>
-        <DonationBox tokenId={artifact.token} />
-      </Footer>
-    </AllCopy>
-  </Wrapper>
-)
+const ArtifactCard = ({ artifact }: IArtifactCard) => {
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+
+  return (
+    <Wrapper>
+      <Img
+        src={artifact.artwork}
+        onClick={() =>
+          setVisibleModalWithAttrs('media', {
+            videoFile: artifact.video,
+            imageFile: artifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg'),
+          })
+        }
+      />
+      <AllCopy>
+        <Copy>
+          <h2>Artifact #{artifact.token}</h2>
+          <OpenEdition>Open Edition</OpenEdition>
+        </Copy>
+        <Footer>
+          <DonationBox tokenId={artifact.token} />
+        </Footer>
+      </AllCopy>
+    </Wrapper>
+  )
+}
 
 const AllCopy = styled.div`
   padding: 0 20px 20px 20px;
