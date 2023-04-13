@@ -10,7 +10,7 @@ const HowItWorks = () => {
   const scrollToLeaderboard = () => {
     const submissionsMarker = document.querySelector('#submissionsMarker')
     submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
-    setVisibleShelf()
+    setVisibleShelf(undefined)
   }
 
   return (
