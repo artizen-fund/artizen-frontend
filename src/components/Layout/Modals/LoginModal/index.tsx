@@ -42,7 +42,7 @@ const LoginModal = ({ ...props }) => {
           id="btMetamask"
           onClick={async () => {
             const provider = await detectEthereumProvider({ mustBeMetaMask: true })
-            console.log('provider  ', provider)
+            console.log('provider 222  ', provider)
 
             isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
           }}
