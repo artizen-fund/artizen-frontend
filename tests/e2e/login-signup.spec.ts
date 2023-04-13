@@ -92,20 +92,15 @@ test.describe('general artizen user', () => {
 
     // if we go too fast, then the form validation prevents clicking Save Changes
     await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(1).fill('Testfirstname')
+    await page.getByRole('textbox').nth(1).fill('testnickname')
     await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(2).fill('Testlastname')
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(3).fill('Testusername')
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(4).fill('e2etesting@email.ghostinspector.com')
+    await page.getByRole('textbox').nth(2).fill('e2etesting@email.ghostinspector.com')
     await page.waitForTimeout(100)
     await page.getByText('Save Changes').click()
   })
 
   test('user can logout', async ({ page, metamask }) => {
-    // TT = initials of Testfirstname Testlastname
-    await clickAccountButton(page, 'TT')
+    await clickAccountButton(page, 't')
     await clickLogout(page)
 
     await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible({
@@ -124,7 +119,7 @@ test.describe('general artizen user', () => {
 
     await page.waitForLoadState()
 
-    await expect(page.locator('#accountButton').getByText('TT')).toBeVisible({
+    await expect(page.locator('#accountButton').getByText('t')).toBeVisible({
       timeout: 10000,
     })
   })
@@ -167,12 +162,12 @@ test.describe('admin user', () => {
     await page.waitForLoadState()
 
     // expect initials 'rr' for admin to be hidden by profile pic
-    await expect(page.locator('#accountButton').getByText('tt')).toBeVisible({
+    await expect(page.locator('#accountButton').getByText('e')).toBeVisible({
       timeout: 10000,
     })
 
-    await clickAccountButton(page, 'tt')
-    await expect(page.getByText('Hi testadmin')).toBeVisible({
+    await clickAccountButton(page, 'e')
+    await expect(page.getByText('Hi testcurator')).toBeVisible({
       timeout: 10000,
     })
   })
@@ -184,23 +179,31 @@ test.describe('admin user', () => {
     })
   })
 
+  // wip
   test.skip('admin user can create new season', async ({ page, metamask }) => {
     await page.goto('/admin/seasons')
+    const today = new Date().toISOString().slice(0, 10)
+    const tomorrowMs = new Date().getTime() + 86400000
+    const tomorrow = new Date(tomorrowMs).toISOString().slice(0, 10)
+    const startDate = '2023-01-01'
+    const endDate = '2023-01-02'
+
     await page.getByRole('button').filter({ hasText: 'Create New Season' }).click()
 
     await page.waitForLoadState()
 
     await page.waitForTimeout(100)
     await page.getByRole('textbox').nth(0).fill('playwright test title')
-    await page.waitForTimeout(100)
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(1).fill('2023-01-01')
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(2).fill('2023-01-02')
-    await page.waitForTimeout(100)
-    await page.getByText('Save Draft').click()
+    await page.waitForTimeout(300)
+    await page.getByRole('textbox').nth(1).fill(startDate)
+    await page.waitForTimeout(300)
+    await page.getByRole('textbox').nth(2).fill(endDate)
+    await page.waitForTimeout(300)
+    await page.getByText('Published').click()
 
     await page.waitForLoadState()
+
+    await metamask.confirmTransaction()
 
     // see if new season detail page appears
     await expect(page.getByText('playwright test title')).toBeVisible({
