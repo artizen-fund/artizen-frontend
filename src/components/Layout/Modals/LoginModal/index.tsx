@@ -43,7 +43,7 @@ const LoginModal = ({ ...props }) => {
           onClick={async () => {
             const provider = await detectEthereumProvider()
             console.log('provider  ', provider)
-            isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
+            isMobile ? redirectToMetamaskBrowser() : connectMetamask()
           }}
           {...{ enabled }}
         >
