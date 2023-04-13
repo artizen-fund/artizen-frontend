@@ -62,6 +62,7 @@ const IndexPage = () => {
         <>
           <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
           <StyledPagePadding>
+            <SubmissionsMarker id="submissionsMarker" />
             <Grid>
               {data?.Seasons[0].submissions
                 ?.sort(
@@ -73,7 +74,6 @@ const IndexPage = () => {
                   <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
                 ))}
             </Grid>
-            <SubmissionsMarker id="submissionsMarker" />
           </StyledPagePadding>
         </>
       )}
@@ -108,8 +108,8 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 
 const SubmissionsMarker = styled.div`
   position: absolute;
-  top: 0;
-  width: 10px;
+  top: -260px;
+  width: 1px;
   height: 1px;
 `
 
