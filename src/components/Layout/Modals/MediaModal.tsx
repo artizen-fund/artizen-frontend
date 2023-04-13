@@ -26,7 +26,7 @@ const MediaModal = () => {
             />
           </Video>
         )}
-        {!!modalAttrs.imageFile && <Image className={loaded ? 'visible' : ''} src={modalAttrs.imageFile} />}
+        {!modalAttrs.videoFile && <Image className={loaded ? 'visible' : ''} src={modalAttrs.imageFile} />}
       </Content>
     </Wrapper>
   )
@@ -52,7 +52,7 @@ const PopupStyle = css`
   /* transition out timing */
   transition: opacity 0.15s 0s ease-in-out, transform 0.15s 0s ease-in-out;
   max-width: 96vmin;
-  max-height: 96vmin;
+  max-height: 90vmin;
   &.visible {
     opacity: 1;
     transform: scale(1);
