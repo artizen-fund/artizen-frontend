@@ -132,6 +132,7 @@ test.describe('admin user', () => {
 
     // import test admin wallet
     await importTestAdminWallet(metamask)
+    await metamask.page.waitForTimeout(500) // adding a delay to reduce frequency of "metamask encountered an error" issue
 
     // disconnect other user metamask account from localhost
     await disconnectAccount(metamask, 1)
