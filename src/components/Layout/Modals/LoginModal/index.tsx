@@ -41,10 +41,10 @@ const LoginModal = ({ ...props }) => {
         <Tile
           id="btMetamask"
           onClick={async () => {
-            const provider = await detectEthereumProvider({ mustBeMetaMask: true })
-            console.log('provider 222  ', provider)
-
-            isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
+            // const provider = await detectEthereumProvider({ mustBeMetaMask: true })
+            // console.log('provider 222  ', provider)
+            connectMetamask()
+            // isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
           }}
           {...{ enabled }}
         >
