@@ -5,6 +5,7 @@ import { CloseButton, CheckboxControl } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
 import { rgba, assetPath, LayoutContext, textCrop, assert } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
+import detectEthereumProvider from '@metamask/detect-provider'
 import { connectWallet as copy } from '@copy/common'
 import { useRouter } from 'next/router'
 import useWalletConnect from './lib'
@@ -39,11 +40,15 @@ const LoginModal = ({ ...props }) => {
         so I am trying maxTouchPoints as recommended with MDN but happy to use a more relaiable approach */}
         <Tile
           id="btMetamask"
-          onClick={() => (isMobile ? redirectToMetamaskBrowser() : connectMetamask())}
+          onClick={async () => {
+            const provider = await detectEthereumProvider()
+            console.log('provider  ', provider)
+            isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
+          }}
           {...{ enabled }}
         >
           <img src={assetPath('/assets/metamask.svg')} alt="Metamask" />
-          {isMobile ? 'Open in Metamask App' : 'Metamask'}
+          Metamask
         </Tile>
 
         <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
