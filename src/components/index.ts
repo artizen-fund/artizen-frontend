@@ -47,6 +47,9 @@ export { default as LoginModal } from './Layout/Modals/LoginModal'
 export { default as MediaModal } from './Layout/Modals/MediaModal'
 export { default as ProcessTransactionModal } from './Layout/Modals/ProcessTransactionModal'
 export { default as ShareTransactionModal } from './Layout/Modals/ShareTransactionModal'
+
+export { default as InsufficientFunds } from './Layout/Modals/InsufficientFunds'
+
 export { default as SubmitProjectModal } from './Layout/Modals/SubmitProjectModal'
 export { default as NewProjectMembersModal } from './Layout/Modals/NewProjectMembersModal'
 

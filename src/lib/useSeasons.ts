@@ -75,6 +75,8 @@ export const useSeasons = () => {
 
       const message = e.code === WALLET_ERROR_INSUFFICIENT_FUNDS ? 'Insufficient funds' : 'Unknown error'
 
+      console.log('message  ', message)
+
       return {
         error: message,
       }

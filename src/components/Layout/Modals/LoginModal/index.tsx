@@ -48,7 +48,7 @@ const LoginModal = ({ ...props }) => {
           {...{ enabled }}
         >
           <img src={assetPath('/assets/metamask.svg')} alt="Metamask" />
-          {isMobile ? 'Metamask App' : 'Metamask'}
+          Metamask
         </Tile>
 
         <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
