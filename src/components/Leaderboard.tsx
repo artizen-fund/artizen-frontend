@@ -10,6 +10,7 @@ interface ILeaderboard {
 }
 
 const DEFAULT_LIMIT = 3
+const FIXED_PRECISION = 2
 
 const Leaderboard = ({ openEditions }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
@@ -36,7 +37,7 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
 
   const title = (
     <div>
-      Ξ{count * BASE_ARTIFACT_PRICE}
+      Ξ{(count * BASE_ARTIFACT_PRICE).toFixed(FIXED_PRECISION)}
       <Grey>
         {' '}
         {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
@@ -49,6 +50,7 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
 
   return (
     <StyledTable title={title} {...{ sideItem }}>
+      <SubmissionsMarker id="submissionsMarker" />
       {aggregateDonators(openEditions).map((user, index) => (
         <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
           <div>
@@ -64,11 +66,19 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
   )
 }
 
+const SubmissionsMarker = styled.div`
+  position: absolute;
+  top: -80px;
+  width: 1px;
+  height: 1px;
+`
+
 const Grey = styled.span`
   color: ${rgba(palette.barracuda)};
 `
 
 const StyledTable = styled(props => <Table {...props} />)`
+  position: relative;
   margin: 24px 0;
 `
 
