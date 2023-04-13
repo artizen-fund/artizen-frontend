@@ -60,6 +60,7 @@ const useWalletConnect = () => {
         chains,
         options: {
           qrcode: true,
+          projectId: '1cfa6214f74719cb6dccea797e0ff417',
         },
       }),
     )
