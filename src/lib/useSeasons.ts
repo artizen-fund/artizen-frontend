@@ -6,6 +6,7 @@ import {
   sendArtifactToIPFS,
   WALLET_ERROR_UNSUPPORTED_OPERATION,
   WALLET_ERROR_INSUFFICIENT_FUNDS,
+  WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT,
 } from '@lib'
 import { IProjectFragment, ISeasonFragment } from '@types'
 import { ethers } from 'ethers'
@@ -73,9 +74,10 @@ export const useSeasons = () => {
         disconnectAndSignout()
       }
 
-      const message = e.code === WALLET_ERROR_INSUFFICIENT_FUNDS ? 'Insufficient funds' : 'Unknown error'
-
-      console.log('message  ', message)
+      const message =
+        (e.code === WALLET_ERROR_INSUFFICIENT_FUNDS && 'Insufficient funds') ||
+        (e.code === WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT && 'Insufficient funds') ||
+        'Unknown error'
 
       return {
         error: message,
