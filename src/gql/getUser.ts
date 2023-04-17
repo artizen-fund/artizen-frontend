@@ -36,6 +36,7 @@ export const GET_USERS_AND_CURATORS = gql`
   }
 `
 
+// note: should remove firstName, lastName form mockdata
 export const mockGetUserData = [
   {
     request: {

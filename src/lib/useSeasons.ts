@@ -79,6 +79,8 @@ export const useSeasons = () => {
         (e.code === WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT && 'Insufficient funds') ||
         'Unknown error'
 
+      console.log('message  ', message)
+
       return {
         error: message,
       }
