@@ -15,7 +15,6 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
-  console.log('latestArtifact', latestArtifact)
   return (
     <Wrapper>
       <AllCopy>
