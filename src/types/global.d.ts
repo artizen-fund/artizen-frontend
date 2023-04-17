@@ -10,7 +10,9 @@ declare global {
   }
 
   interface Window {
-    Intercom: object
+    Intercom: {
+      name?: string
+    }
     location: string
   }
 
