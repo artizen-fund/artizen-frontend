@@ -1,15 +1,4 @@
-import { createContext, useEffect, useState } from 'react'
-import { useReactiveVar } from '@apollo/client'
-import { loggedInUserVar, isServer } from '@lib'
-
-/* TODO: rename this
- *  candidates:
- *    - uiContext
- *    - layoutContext
- *    - siteLayoutContext
- */
-
-export type DonationStatus = 'initiated' | 'processing' | 'completed' | ''
+import { createContext, useState } from 'react'
 
 interface ILayoutContext {
   visibleShelf?: HeaderShelfType
