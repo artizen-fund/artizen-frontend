@@ -49,6 +49,14 @@ export default function SeasonPage(): JSX.Element {
                   <span style={{ fontWeight: 10 }}>status: </span>
                   {capitalCase(seasonStatus)}
                 </Title>
+                <Button
+                  level={2}
+                  onClick={() => {
+                    //call the hook to close the season
+                  }}
+                >
+                  Close Season
+                </Button>
                 <Subtitle
                   className="expand"
                   id={`submission-startingDate-${season.startingDate}`}

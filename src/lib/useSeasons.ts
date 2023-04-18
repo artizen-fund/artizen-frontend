@@ -17,6 +17,10 @@ export const useSeasons = () => {
   const { disconnectAndSignout } = useFullSignOut()
   const { updateSafeBalance } = useGnosis()
 
+  //create the function
+  //add the function name to the return object
+  //import the function in the component where you want to use it (/pages/seasons/[id].tsx)
+
   // Publish season to smart contract,
   // this method is called from src/component/NewSeasonForm in the
   // SeasonForm component when the user clicks the publish button
