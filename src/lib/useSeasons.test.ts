@@ -2,19 +2,22 @@ import { publishSeason, publishSubmissions, mintOpenEditions } from './useSeason
 import { mockSeason, mockSubmission } from './mockData'
 
 describe('publishSeason', () => {
-  it('fetches correct pinata response', () => {
+  it('publishes a season with correct details', () => {
     //TODO
   })
 })
 
 describe('publishSubmissions', () => {
-  it('fetches correct pinata response', () => {
+  it('publishes a submission with correct details', () => {
     //TODO
   })
 })
 
 describe('mintOpenEditions', () => {
-  it('fetches correct pinata response', () => {
+  it('throws error if artifact has no tokenID', () => {
+    //TODO
+  })
+  it('throws error if artifact has no tokenID', () => {
     //TODO
   })
 })

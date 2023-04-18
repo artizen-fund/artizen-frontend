@@ -39,7 +39,7 @@ const mockProject: IProjectFragment = {
     },
   },
   members:{
-    __typename: 'ProjectMembers'
+    __typename: 'ProjectMembers',
     id: 124,
     type: "type",
     user: {
