@@ -8,6 +8,7 @@ import {
   initIntercom,
   CourierNotification,
   LayoutContextProvider,
+  SeasonContextProvider,
   getWagmiClient,
   initializeApollo,
   isProd,
@@ -39,9 +40,11 @@ const App = ({
         <ApolloProvider client={apolloClient}>
           <CourierNotification>
             <Toast theme={StyledToast} position="top-right" />
-            <LayoutContextProvider>
-              <Component {...pageProps} />
-            </LayoutContextProvider>
+            <SeasonContextProvider>
+              <LayoutContextProvider>
+                <Component {...pageProps} />
+              </LayoutContextProvider>
+            </SeasonContextProvider>
           </CourierNotification>
         </ApolloProvider>
       </SessionProvider>
