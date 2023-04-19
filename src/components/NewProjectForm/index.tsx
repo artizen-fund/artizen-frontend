@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
 import { Form, Button, Spinner } from '@components'
 import { schema, uischema, FormState } from '@forms/createProjects'
-import { useSaveProject } from './lib'
 import { breakpoint } from '@theme'
 
 interface NewProjectFormProps {
@@ -14,46 +13,6 @@ interface NewProjectFormProps {
 }
 
 const NewProjectForm = ({ addData, tempValue, processing, saveNewProject, additionalErrors }: NewProjectFormProps) => {
-  const { insertProject, insertMembers, insertGrant } = useSaveProject()
-
-  // const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
-
-  // useEffect(() => {
-  //   if (!debouncedData) return
-
-  //   // set additional form validators here
-  //   const errors: Array<ErrorObject> = []
-  //   if (!validateLib.validate(debouncedData.project.walletAddress, 'ETH')) {
-  //     errors.push({
-  //       instancePath: '/project/walletAddress',
-  //       message: 'Invalid blockchain address',
-  //       schemaPath: '#/properties/project/properties/walletAddress',
-  //       keyword: '',
-  //       params: {},
-  //     })
-  //   }
-  //   setAdditionalErrors(errors)
-  // }, [debouncedData])
-
-  // const saveNewProject = async () => {
-  //   // if (!data || !validateProjectMembers(data.projectMembers)) return
-  //   setProcessing(true)
-
-  //   addData(generalData)
-
-  //   console.log(' generalData: ', generalData)
-
-  //   // try {
-  //   //   const projectId = await insertProject(data.project)
-  //   //   await insertMembers(data.projectMembers, projectId)
-  //   //   const newGrantDate = await insertGrant(data, projectId)
-  //   //   push(`/admin/grants/${newGrantDate}`)
-  //   // } catch (error) {
-  //   //   setProcessing(false)
-  //   //   alert(error)
-  //   // }
-  // }
-
   return (
     <Wrapper>
       <WrapperForm>

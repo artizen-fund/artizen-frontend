@@ -9,19 +9,19 @@ const alternatingPanels: Array<IAlternatingPanel> = [
     list: [
       {
         label: 'Transform Lives',
-        glyph: 'trend',
+        glyph: 'heart',
       },
       {
         label: 'Revitalize Communities',
-        glyph: 'palette',
+        glyph: 'communities',
       },
       {
         label: 'Regenerate Ecosystems',
-        glyph: 'artToken',
+        glyph: 'globe',
       },
     ],
     buttonLabel: 'Learn More',
-    destination: 'https://help.artizen.fund/en/articles/6782291-welcome-to-the-artizen-fund',
+    destination: 'https://help.artizen.fund/en/articles/6746680-artifacts-reward-positive-impact',
   },
   {
     image: '/assets/illustrations/home/trust.png',
@@ -53,15 +53,15 @@ const alternatingPanels: Array<IAlternatingPanel> = [
     list: [
       {
         label: 'Connect at Private Gatherings',
-        glyph: 'donate',
+        glyph: 'lock',
       },
       {
         label: 'Collaborate with Friends',
-        glyph: 'intersect',
+        glyph: 'speechBubble',
       },
       {
         label: 'Elevate Each Other',
-        glyph: 'globe',
+        glyph: 'ladder',
       },
     ],
     buttonLabel: 'Learn More',

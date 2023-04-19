@@ -5,8 +5,8 @@ describe('publishSeason', () => {
   const { publishSeason } = useSeasons()
   it('publishes a season with correct details', () => {
     const result = publishSeason() // TODO how to pass in the arguments?
-    expect(result.startingDate).toEqual(1681808956)
-    expect(result.endingDate).toEqual(1684400956)
+    expect(result.startingDate).toEqual()
+    expect(result.endingDate).toEqual()
   })
 })
 

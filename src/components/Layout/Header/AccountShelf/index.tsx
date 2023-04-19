@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
 import { rgba, assetPath, useFullSignOut } from '@lib'
+import { capitalCase } from 'capital-case'
 import { IUsers } from '@types'
 
 interface IAccountShelf {
@@ -12,28 +13,6 @@ interface IAccountShelf {
 
 const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
   const { disconnectAndSignout } = useFullSignOut()
-  // const stats = [
-  //   {
-  //     glyph: 'donate',
-  //     unit: '$800',
-  //     label: 'donated',
-  //   },
-  //   {
-  //     glyph: 'palette',
-  //     unit: '42',
-  //     label: 'collected',
-  //   },
-  //   {
-  //     glyph: 'wallet',
-  //     unit: '$0',
-  //     label: 'collected',
-  //   },
-  //   {
-  //     glyph: 'token',
-  //     unit: '100',
-  //     label: '$ART',
-  //   },
-  // ]
 
   const router = useRouter()
   const goToSettings = (section: string) => {
@@ -45,8 +24,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
     <Wrapper>
       <Commands>
         <Top>
-          {user.firstName && <Welcome>Hi {user.firstName}</Welcome>}
-          {!user.firstName && <Welcome>Welcome</Welcome>}
+          {user.artizenHandle && <Welcome>Hi {capitalCase(user.artizenHandle)}</Welcome>}
           <Message>Thanks for supporting the future of public goods.</Message>
           <Buttons>
             <Button onClick={() => goToSettings('profile')} stretch outline level={1} glyph="face">

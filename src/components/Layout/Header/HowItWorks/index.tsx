@@ -1,10 +1,18 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
-import { rgba, assetPath } from '@lib'
+import { rgba, assetPath, LayoutContext } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { howItWorks } from '@copy/header'
 
 const HowItWorks = () => {
+  const { toggleShelf } = useContext(LayoutContext)
+  const scrollToLeaderboard = () => {
+    const submissionsMarker = document.querySelector('#submissionsMarker')
+    submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+    toggleShelf()
+  }
+
   return (
     <Wrapper>
       {howItWorks.map(cell => (
@@ -15,6 +23,11 @@ const HowItWorks = () => {
             <Description>{cell.copy}</Description>
             {!!cell.destination && (
               <Button outline level={2} href={cell.destination}>
+                {cell.buttonLabel}
+              </Button>
+            )}
+            {!cell.destination && (
+              <Button outline level={2} onClick={scrollToLeaderboard}>
                 {cell.buttonLabel}
               </Button>
             )}

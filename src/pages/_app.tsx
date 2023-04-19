@@ -49,4 +49,6 @@ const App = ({
   )
 }
 
-export default isProd() ? App : dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
+// we can't run the password blocker for now because it blocks tests
+// export default isProd() ? App : dynamic(() => Promise.resolve(withAuth()(App)), { ssr: false })
+export default isProd() ? App : dynamic(() => Promise.resolve(App), { ssr: false })

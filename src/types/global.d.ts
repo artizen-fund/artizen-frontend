@@ -10,7 +10,9 @@ declare global {
   }
 
   interface Window {
-    Intercom: object
+    Intercom: {
+      name?: string
+    }
     location: string
   }
 
@@ -36,6 +38,7 @@ declare global {
     | 'createSeasonModal'
     | 'submitProjectModal'
     | 'newProjectMemberModal'
+    | 'insufficientFunds'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
@@ -68,8 +71,6 @@ declare global {
     topDonor: string
   }
 
-  type NewUserData = { firstName?: string; lastName?: string }
-
   interface IAlternatingPanel {
     image: string
     imageDark?: string
@@ -88,8 +89,7 @@ declare global {
   interface ICourierAPI {
     email: string
     id: string
-    firstName: string
-    lastName: string
+    artizenHandle: string
     type: 'updateUser' | 'addNewUser'
   }
 }

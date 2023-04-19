@@ -12,6 +12,7 @@ import { createProfile as copy } from '@copy/common'
 
 interface IAttibutes {
   action?: 'update' | 'create'
+  sendWelcomeEmail: boolean
   callback?: () => void
   scope: 'admin' | 'frontend'
   initialState?: FormStateAdmin
@@ -21,7 +22,7 @@ const CreateProfile = () => {
   const [processing, setProcessing] = useState(false)
   const { visibleModal, toggleModal, modalAttrs } = useContext(LayoutContext)
 
-  const { action, initialState, scope, callback }: IAttibutes = modalAttrs
+  const { action, initialState, scope, callback, sendWelcomeEmail }: IAttibutes = modalAttrs
 
   const [acceptedToc, setAcceptedToc] = useState(true)
 
@@ -30,8 +31,6 @@ const CreateProfile = () => {
   const newInitialState: FormStateAdmin | FormState = initialState
     ? {
         artizenHandle: initialState.artizenHandle,
-        firstName: initialState.firstName,
-        lastName: initialState.lastName,
         email: initialState.email,
         twitterHandle: initialState.twitterHandle || '',
         externalLink: initialState.externalLink || '',
@@ -45,7 +44,7 @@ const CreateProfile = () => {
   const updateProfileCallback = async () => {
     setProcessing(true)
     try {
-      const updatedProfile = await updateProfile(modalAttrs?.initialState?.id)
+      const updatedProfile = await updateProfile(modalAttrs?.initialState?.id, sendWelcomeEmail)
       const profileImage = updatedProfile?.profileImage || modalAttrs?.initialState?.profileImage
 
       if (modalAttrs?.callback) {
@@ -78,12 +77,7 @@ const CreateProfile = () => {
     <></> /* TODO: we have a new spinner for this in a separate PR */
   ) : (
     <Wrapper visible={visibleModal === 'createProfile'}>
-      <FormWrapper
-        hasFirstName={!!loggedInUser?.firstName}
-        hasLastName={!!loggedInUser?.lastName}
-        hasUsername={false}
-        scope={modalAttrs?.scope}
-      >
+      <FormWrapper scope={modalAttrs?.scope}>
         {scope === 'admin' && <CloseButtonStyled visible={true} onClick={() => toggleModal()} />}
 
         {modalAttrs?.scope !== 'admin' && (
@@ -166,7 +160,7 @@ const SubmitButton = styled(props => <Button {...props} />)`
   grid-area: submit;
 `
 
-const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; hasUsername: boolean; scope: string }>`
+const FormWrapper = styled.div<{ scope: string }>`
   position: relative;
   z-index: 9999;
   overflow-y: scroll;
@@ -180,7 +174,6 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     grid-template-areas:
     'copy copy'
     'avatarForm avatarForm'
-    'firstName lastName'
     'artizenHandle twitterHandle'
     'email email'
     'externalLink externalLink'
@@ -195,7 +188,6 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     grid-template-areas:
     'copy copy'
     'avatarForm avatarForm'
-    'firstName lastName'
     'artizenHandle twitterHandle'
     'email email'
     'externalLink externalLink'
@@ -240,12 +232,6 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
     display: contents;
   }
 
-  *[id='#/properties/firstName'] {
-    grid-area: firstName;
-  }
-  *[id='#/properties/lastName'] {
-    grid-area: lastName;
-  }
   *[id='#/properties/artizenHandle'] {
     grid-area: artizenHandle;
   }
@@ -266,8 +252,6 @@ const FormWrapper = styled.div<{ hasFirstName: boolean; hasLastName: boolean; ha
   }
 
   &.submitted {
-    *[id='#/properties/firstName'],
-    *[id='#/properties/lastName'],
     *[id='#/properties/email'],
     *[id='#/properties/artizenHandle'],
     ${SubmitButton} {

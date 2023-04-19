@@ -2,13 +2,12 @@ import { useContext } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { breakpoint, palette, typography } from '@theme'
-import { rgba, LayoutContext, textCrop, useScrollToDonationBox } from '@lib'
+import { rgba, LayoutContext, textCrop } from '@lib'
 import { Button, PagePadding } from '@components'
 import SocialLinks from './SocialLinks'
 
 const Footer = () => {
-  const { setVisibleModal } = useContext(LayoutContext)
-  const scrollToDonationBox = useScrollToDonationBox()
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   return (
     <Wrapper>
       <PagePadding black>
@@ -64,10 +63,13 @@ const Footer = () => {
           <Column>
             <Headline>Join the mission to fund human creativity.</Headline>
             <Buttons>
-              <Button onClick={() => scrollToDonationBox()} stretch inverted level={1} glyph="donate">
-                Donate
-              </Button>
-              <Button onClick={() => setVisibleModal('share')} stretch inverted outline level={1}>
+              <Button
+                onClick={() => setVisibleModalWithAttrs('share', { mode: 'home' })}
+                stretch
+                inverted
+                outline
+                level={1}
+              >
                 Share Now
               </Button>
             </Buttons>

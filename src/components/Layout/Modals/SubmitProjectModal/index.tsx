@@ -41,10 +41,10 @@ const SubmitProjectModal = () => {
 
   const loadActiveSeasons = () => {
     loadSeasons({
-      variables: {
-        //TODO: review why this filter does not work
-        where: { submissions: { projectId: { _neq: project.id } } },
-      },
+      // variables: {
+      //   //TODO: review why this filter does not work
+      //   where: { submissions: { projectId: { _neq: project.id } } },
+      // },
     })
 
     const Seasons =

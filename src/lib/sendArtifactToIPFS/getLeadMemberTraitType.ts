@@ -5,8 +5,8 @@ export default (members: Array<IMemberFragment>) => {
   if (!lead?.user) {
     throw new Error('Lead not found')
   }
-  if (!lead.user.firstName || !lead.user.lastName) {
+  if (!lead.user.artizenHandle) {
     throw new Error('Lead is missing required data')
   }
-  return `${lead.user.firstName} ${lead.user.lastName}`
+  return `${lead.user.artizenHandle}`
 }

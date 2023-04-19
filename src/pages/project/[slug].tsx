@@ -12,19 +12,16 @@ import {
   LongDescription,
   Leaderboard,
 } from '@components'
-import { LayoutContext, useGnosis } from '@lib'
+import { LayoutContext, assert } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
-import { GET_PROJECTS, SUBSCRIBE_SEASONS } from '@gql'
-import { IProjectsQuery, ISubscribeSeasonsSubscription } from '@types'
-
-// placeholder while we figure out a non-shifting key for the timestamp
-const CURRENT_SEASON = 5
+import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
+import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = () => {
+  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
+
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  //TODO: Do not deleted, EK needs this to test the code
-  // const { safeBalanceUSD } = useGnosis()
 
   const {
     query: { slug },
@@ -54,24 +51,42 @@ const ProjectPage = () => {
           // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
           // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
         },
-        order_by: { submissions_aggregate: { count: 'asc' } },
       },
     },
   )
 
   const project = data?.Projects[0]
 
-  if (!!loading || !!loadingSeason || !seasonData || !project) return <p>…loading…</p>
+  const { data: openEditions } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      where: {
+        artifactId: { _eq: project?.artifacts[0].id },
+      },
+    },
+  })
+
+  if (!!loading || !!loadingSeason || !seasonData || !project) {
+    // todo: we have a loading placeholder somewhere
+    return <></>
+  }
 
   const lead = project.members?.find(m => m.type === 'lead')?.user
 
-  const rank = seasonData.Seasons[0].submissions?.findIndex(submission => submission.project?.id === project.id)
+  const rank = seasonData.Seasons[0].submissions
+    ?.sort(
+      (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+        s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+        s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+    )
+    .findIndex(submission => submission.project?.id === project.id)
+
   //TODO: This make this to refresh
   // const projectSubmissions = seasonData.Seasons[0].submissions?.filter(
   //   submission => submission.project?.id === project.id,
   // )
 
-  // console.log('projectSubmissions', projectSubmissions)
+  const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
 
   return (
     <Layout>
@@ -80,13 +95,18 @@ const ProjectPage = () => {
           <Side>
             <Header>
               <Topline>
-                {/* TODO: EK needs to look afte this code, it does not work */}
-                {/* <div>Safe balance: `${safeBalanceUSD}`</div> */}
-                <RankAndArtifactCount
-                  rank={rank}
-                  count={project.artifacts[0].openEditionCopies_aggregate.aggregate?.count || 0}
-                />
-                <Button level={2} outline onClick={() => setVisibleModalWithAttrs('share', { destination: asPath })}>
+                <RankAndArtifactCount rank={rank} count={count} />
+                <Button
+                  level={2}
+                  outline
+                  onClick={() =>
+                    setVisibleModalWithAttrs('share', {
+                      mode: 'project',
+                      destination: asPath,
+                      projectTitle: project.title,
+                    })
+                  }
+                >
                   Share
                 </Button>
               </Topline>
@@ -94,10 +114,10 @@ const ProjectPage = () => {
               <p>{project.logline}</p>
               <Tags tags={project.impactTags?.split(',') || []} />
 
-              {lead && <CreatorBox member={lead} />}
+              {lead && <CreatorBox user={lead} />}
             </Header>
 
-            <Leaderboard artifact={project.artifacts[0]} />
+            <Leaderboard openEditions={openEditions} />
 
             <LongDescription>
               {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (

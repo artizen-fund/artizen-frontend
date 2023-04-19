@@ -2,16 +2,28 @@ import styled from 'styled-components'
 import { PagePadding, Button, HomeAnimation } from '@components'
 import { header } from '@copy/home'
 import { typography, breakpoint } from '@theme'
+import { useGnosis } from '@lib'
 
 const HomeHeader = () => {
-  const scrollToLeaderboard = () => alert('todo')
+  const scrollToLeaderboard = () => {
+    const submissionsMarker = document.querySelector('#submissionsMarker')
+    submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const { safeBalanceUSD } = useGnosis()
+
+  const title = header.title.replace(
+    /SAFE_BALANCE_USD/,
+    Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(parseFloat(safeBalanceUSD || '0')),
+  )
+
   return (
-    <PagePadding>
+    <StyledPagePadding>
       <Header>
         <HomeAnimation />
         <Copy>
           <div>
-            <h1>{header.title}</h1>
+            <h1>{title}</h1>
             <h2>{header.subtitle}</h2>
           </div>
           <Button level={0} onClick={scrollToLeaderboard}>
@@ -19,9 +31,13 @@ const HomeHeader = () => {
           </Button>
         </Copy>
       </Header>
-    </PagePadding>
+    </StyledPagePadding>
   )
 }
+
+const StyledPagePadding = styled(props => <PagePadding {...props} />)`
+  padding-bottom: 0;
+`
 
 const Header = styled.header`
   display: flex;
@@ -34,6 +50,8 @@ const Header = styled.header`
 `
 
 const Copy = styled.header`
+  position: relative;
+  z-index: 1;
   flex: 1;
   h1 {
     ${typography.title.l1};

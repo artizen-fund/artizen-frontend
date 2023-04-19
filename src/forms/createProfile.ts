@@ -3,14 +3,6 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    firstName: {
-      type: 'string',
-      minLength: 2,
-    },
-    lastName: {
-      type: 'string',
-      minLength: 2,
-    },
     email: {
       type: 'string',
       minLength: 2,
@@ -26,13 +18,11 @@ export const schema: JsonSchema = {
       type: 'string',
     },
   },
-  required: ['artizenHandle', 'firstName', 'lastName', 'email'],
+  required: ['artizenHandle', 'email'],
 }
 
 export interface FormState extends Record<string, unknown> {
   artizenHandle?: string
-  firstName?: string
-  lastName?: string
   email?: string
   twitterHandle?: string
   externalLink?: string
@@ -51,16 +41,6 @@ export interface FormStateAdmin extends FormState {
 export const uischema = {
   type: 'VerticalLayout',
   elements: [
-    {
-      type: 'Control',
-      scope: '#/properties/firstName',
-      label: 'First Name',
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/lastName',
-      label: 'Last Name',
-    },
     {
       type: 'Control',
       scope: '#/properties/artizenHandle',

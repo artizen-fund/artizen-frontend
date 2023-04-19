@@ -1,46 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
-import { useSubscription, useReactiveVar } from '@apollo/client'
-import { reduceWithPrecision, aggregateDonators, loggedInUserVar, rgba } from '@lib'
-import { IOpenEditionsSubscription, IUserWithDonationFragment, IArtifactFragment } from '@types'
+import { aggregateDonators, rgba, assertFloat, useGnosis } from '@lib'
+import { IOpenEditionsSubscription } from '@types'
 import { palette } from '@theme'
-import { SUBSCRIBE_DONATIONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
-// import truncateEthAddress from 'truncate-eth-address'
 
 interface ILeaderboard {
-  artifact: IArtifactFragment
+  openEditions?: IOpenEditionsSubscription
 }
 
 const DEFAULT_LIMIT = 3
+const FIXED_PRECISION = 2
 
-const Leaderboard = ({ artifact }: ILeaderboard) => {
+const Leaderboard = ({ openEditions }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
-  const [amountRaised, setAmountRaised] = useState<number>(0)
+  const { USDtoETH } = useGnosis()
 
-  const { loading, error, data } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      where: {
-        artifactId: { _eq: artifact.id },
-      },
-    },
-  })
+  if (!openEditions) return <Spinner minHeight="65px" />
 
-  if (error) {
-    console.error('error retrieving open editions', error)
-  }
-
-  useEffect(() => {
-    if (!data?.OpenEditionCopies) return
-    setAmountRaised(data.OpenEditionCopies.map(o => o.value * (o.copies || 0))?.reduce((x, y) => x + y, 0))
-  }, [data])
-
-  if (!!loading || !data) return <Spinner minHeight="65px" />
+  const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
 
   const sideItem =
-    aggregateDonators(data).length < DEFAULT_LIMIT ? (
+    aggregateDonators(openEditions).length < DEFAULT_LIMIT ? (
       <></>
     ) : (
       <Button outline level={2} onClick={() => setLimit(limit === DEFAULT_LIMIT ? 9999 : DEFAULT_LIMIT)}>
@@ -48,23 +30,56 @@ const Leaderboard = ({ artifact }: ILeaderboard) => {
       </Button>
     )
 
+  const BASE_ARTIFACT_PRICE = assertFloat(
+    process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
+    'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
+  )
+
+  const title = (
+    <div>
+      Ξ{(count * BASE_ARTIFACT_PRICE).toFixed(FIXED_PRECISION)}
+      <Grey>
+        {' '}
+        {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+          (count * BASE_ARTIFACT_PRICE) / USDtoETH!,
+        )}{' '}
+        in Artifact sales
+      </Grey>
+    </div>
+  )
+
   return (
-    <StyledTable title={`Ξ${amountRaised} $xxx in Artifact sales`} {...{ sideItem }}>
-      {aggregateDonators(data).map((user, index) => (
+    <StyledTable title={title} {...{ sideItem }}>
+      <SubmissionsMarker id="submissionsMarker" />
+      {aggregateDonators(openEditions).map((user, index) => (
         <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
           <div>
             <TableAvatar profileImage={user.profileImage} />
             <Name>{user?.artizenHandle}</Name>
           </div>
-          <Amount>minted {user.copies}</Amount>
+          <Amount>
+            <span>owns</span> {user.copies}
+          </Amount>
         </StyledTableCell>
       ))}
     </StyledTable>
   )
 }
 
+const SubmissionsMarker = styled.div`
+  position: absolute;
+  top: -80px;
+  width: 1px;
+  height: 1px;
+`
+
+const Grey = styled.span`
+  color: ${rgba(palette.barracuda)};
+`
+
 const StyledTable = styled(props => <Table {...props} />)`
-  margin-top: 24px;
+  position: relative;
+  margin: 24px 0;
 `
 
 const StyledTableCell = styled(props => <TableCell {...props} />)<{ hidden: boolean }>`
@@ -85,6 +100,9 @@ const Name = styled.div`
 
 const Amount = styled.div`
   white-space: nowrap;
+  span {
+    color: ${rgba(palette.barracuda)};
+  }
 `
 
 export default Leaderboard

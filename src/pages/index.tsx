@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
-import moment from 'moment-timezone'
 import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription } from '@types'
+import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 import {
   HomeHeader,
   Layout,
@@ -17,16 +16,28 @@ import {
   HomeRibbon,
   LeaderboardHeader,
   ProjectCard,
+  NoGrant,
 } from '@components'
-import { rgba, ARTIZEN_TIMEZONE } from '@lib'
+import { rgba, assert } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
-
-// placeholder while we figure out a non-shifting key for the timestamp
-const CURRENT_SEASON = 3
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 
 const IndexPage = () => {
-  const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+  dayjs.extend(utc)
+  dayjs.extend(isBetween)
+  dayjs.extend(timezone)
+  dayjs.extend(isSameOrAfter)
+  dayjs.extend(isSameOrBefore)
+
+  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
+
+  const { data, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -37,21 +48,36 @@ const IndexPage = () => {
       order_by: { submissions_aggregate: { count: 'asc' } },
     },
   })
+
+  if (error) {
+    return <>Error Loading Season</>
+  }
+
   return (
     <Layout>
       <HomeHeader />
       <PartnersRibbon />
       <HomeRibbon />
-      <LeaderboardHeader />
-      <StyledPagePadding>
-        <PagePadding>
-          <Grid>
-            {data?.Seasons[0].submissions?.map((submission, index) => (
-              <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
-            ))}
-          </Grid>
-        </PagePadding>
-      </StyledPagePadding>
+      {!!CURRENT_SEASON && data?.Seasons[0] && (
+        <>
+          <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
+          <StyledPagePadding>
+            <SubmissionsMarker id="submissionsMarker" />
+            <Grid>
+              {data?.Seasons[0].submissions
+                ?.sort(
+                  (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+                    s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+                    s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+                )
+                .map((submission, index) => (
+                  <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
+                ))}
+            </Grid>
+          </StyledPagePadding>
+        </>
+      )}
+      {!CURRENT_SEASON && <NoGrant />}
       <Newsletter />
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (
@@ -77,6 +103,14 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
     border-style: solid;
     border-color: rgba(114, 124, 140, 0.4);
   }
+  padding-top: 0px !important;
+`
+
+const SubmissionsMarker = styled.div`
+  position: absolute;
+  top: -260px;
+  width: 1px;
+  height: 1px;
 `
 
 const Grid = styled.div`
@@ -87,6 +121,9 @@ const Grid = styled.div`
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+  @media only screen and (min-width: ${breakpoint.laptopXL}px) {
+    grid-template-columns: repeat(3, 1fr);
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     grid-template-columns: repeat(3, 1fr);

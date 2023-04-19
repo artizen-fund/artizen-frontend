@@ -4,20 +4,17 @@ import { JsonSchema } from '@jsonforms/core'
 export const schema: JsonSchema = {
   type: 'object',
   properties: {
-    firstName: {
+    artizenHandle: {
       type: 'string',
       minLength: 2,
     },
-    lastName: {
-      type: 'string',
-      minLength: 2,
-    },
+
     email: {
       type: 'string',
       format: 'email',
     },
   },
-  required: ['firstName', 'lastName', 'email'],
+  required: ['artizenHandle', 'email'],
 }
 
 /*
@@ -25,8 +22,7 @@ export const schema: JsonSchema = {
 	All values must be optional, as an unfilled form will conform to this state.
 */
 export interface FormState extends Record<string, unknown> {
-  firstName?: string
-  lastName?: string
+  artizenHandle?: string
   email?: string
 }
 
@@ -44,13 +40,8 @@ export const uischema = {
   elements: [
     {
       type: 'Control',
-      scope: '#/properties/firstName',
-      label: 'First Name',
-    },
-    {
-      type: 'Control',
-      scope: '#/properties/lastName',
-      label: 'Last Name',
+      scope: '#/properties/artizenHandle',
+      label: 'handle',
     },
     {
       type: 'Control',

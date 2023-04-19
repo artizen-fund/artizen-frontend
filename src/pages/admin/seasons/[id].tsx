@@ -7,6 +7,7 @@ import { Spinner, Layout, Submissions, Button, PagePadding, CuratorCheck } from 
 import { typography } from '@theme'
 import { useDateHelpers } from '@lib'
 import { capitalCase } from 'capital-case'
+import { useSeasons } from 'src/lib/useSeasons.ts'
 
 export default function SeasonPage(): JSX.Element {
   const { formatDate, getSeasonStatus, isOpenForSubmissions } = useDateHelpers()
@@ -29,6 +30,8 @@ export default function SeasonPage(): JSX.Element {
       ],
     },
   })
+
+  const { closeSeason } = useSeasons()
 
   return (
     <Layout>
@@ -53,6 +56,12 @@ export default function SeasonPage(): JSX.Element {
                   className="expand"
                   id={`submission-startingDate-${season.startingDate}`}
                 >{`This Season runs from ${startingDate} to ${endingDate}`}</Subtitle>
+                {!isOpenForSubmissions(season.startingDate, season.endingDate) && (
+                  <Button level={1} onClick={() => closeSeason(season.id.toString())}>
+                    {' '}
+                    Close Season
+                  </Button>
+                )}
                 <Subtitle>Projects submitted to this Season:</Subtitle>
                 {isOpenForSubmissions(season.startingDate, season.endingDate) && (
                   <Button level={2} onClick={() => push('/admin/projects')}>

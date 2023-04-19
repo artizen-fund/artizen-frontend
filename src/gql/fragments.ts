@@ -20,7 +20,9 @@ export const ARTIFACT = gql`
     createdAt
     openEditionCopies_aggregate {
       aggregate {
-        count(columns: value)
+        sum {
+          copies
+        }
       }
     }
   }
@@ -30,8 +32,6 @@ export const USER_PUBLIC = gql`
   fragment UserPublic on Users {
     id
     publicAddress
-    firstName
-    lastName
     profileImage
     createdAt
     twitterHandle
@@ -114,6 +114,18 @@ export const SEASON = gql`
     index
     submissions {
       ...Submission
+    }
+  }
+`
+
+export const OPEN_EDITIONS_COPIES = gql`
+  fragment OpenEditionCopy on OpenEditionCopies {
+    value
+    copies
+    user {
+      id
+      artizenHandle
+      profileImage
     }
   }
 `

@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
 
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, BASE_ARTIFACT_PRICE, rgba, useSeasons } from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useSeasons } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 
 interface IDonationBox {
@@ -12,6 +12,11 @@ interface IDonationBox {
 }
 
 const DonationBox = ({ tokenId }: IDonationBox) => {
+  const BASE_ARTIFACT_PRICE = assertFloat(
+    process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
+    'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
+  )
+
   const { status } = useSession()
 
   const { toggleModal } = useContext(LayoutContext)
@@ -20,8 +25,6 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
   const [sending, setSending] = useState<boolean>(false)
   const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
-
-  useEffect(() => console.log(artifactQuantity), [artifactQuantity])
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
@@ -37,10 +40,10 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
     //All good, there is a txHash
     if (txHash) {
       // NOTE: This will trigger a blockchain
-      // event which is captured by event linterner script (EK's owned)
-      // event linterner script writes a openEditions record in Hasura
+      // event which is captured by event listener script (EK's owned)
+      // event listener script writes a openEditions record in Hasura
       // which is then picked up by the subscription and the UI is updated
-      // and sends Courier email and inapp notification to the donor
+      // and sends Courier email and in-app notification to the donor
 
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
@@ -51,15 +54,11 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
     }
 
     //Show error
-    if (error) {
-      const errors: Array<ErrorObject> = []
-      errors.push({
-        instancePath: '/donationAmount',
-        message: error,
-        schemaPath: '#/properties/donationAmount',
-        keyword: '',
-        params: {},
-      })
+    if (error === 'Insufficient funds') {
+      //insufficientFunds
+      toggleModal('insufficientFunds')
+      setSending(false)
+      return
     }
 
     //Close modal if there is no error neither txHash, like when users have rejected transactions,
@@ -74,7 +73,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
       <>
         <MobileBreak>
           <Cost>
-            <div>Cost</div>
+            <div>Price</div>
             <Amount>
               <span>Ξ {BASE_ARTIFACT_PRICE}</span>
             </Amount>
@@ -82,7 +81,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
           <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
         </MobileBreak>
         <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending}>
-          {sending ? 'Processing Donation' : 'Buy'}
+          {sending ? 'Buying' : 'Buy'}
         </StyledButton>
       </>
     </Wrapper>

@@ -2,9 +2,11 @@ import {
   useDateHelpers,
   useSmartContracts,
   useFullSignOut,
+  useGnosis,
   sendArtifactToIPFS,
   WALLET_ERROR_UNSUPPORTED_OPERATION,
   WALLET_ERROR_INSUFFICIENT_FUNDS,
+  WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT,
 } from '@lib'
 import { IProjectFragment, ISeasonFragment } from '@types'
 import { ethers } from 'ethers'
@@ -13,6 +15,7 @@ export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
   const { getTimeUnix } = useDateHelpers()
   const { disconnectAndSignout } = useFullSignOut()
+  const { updateSafeBalance } = useGnosis()
 
   // Publish season to smart contract,
   // this method is called from src/component/NewSeasonForm in the
@@ -71,7 +74,10 @@ export const useSeasons = () => {
         disconnectAndSignout()
       }
 
-      const message = e.code === WALLET_ERROR_INSUFFICIENT_FUNDS ? 'Insufficient funds' : 'Unknown error'
+      const message =
+        (e.code === WALLET_ERROR_INSUFFICIENT_FUNDS && 'Insufficient funds') ||
+        (e.code === WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT && 'Insufficient funds') ||
+        'Unknown error'
 
       return {
         error: message,
@@ -93,20 +99,15 @@ export const useSeasons = () => {
     const newSubmissionCount = parseInt(submissionCount) + 1
 
     //TODO: add ipfs hash to artifact record in Hasura
-
     const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, season, project)
 
     console.log('ipfsHash  ', ipfsHash)
 
-    //publish submuiission
-
-    const publishSubmissionTX = await seasonsContract?.createSubmission(
-      season.index,
-      submissionCount,
-      project.walletAddress,
-    )
+    const publishSubmissionTX = await seasonsContract?.createSubmission(season.index, ipfsHash, project.walletAddress)
 
     const publishSubmissionTXReceipt = await publishSubmissionTX.wait()
+
+    console.log('publishSubmissionTXReceipt::::::  ', publishSubmissionTXReceipt)
 
     if (publishSubmissionTXReceipt.events[0].event === 'SubmissionCreated') {
       return {
@@ -117,5 +118,11 @@ export const useSeasons = () => {
     return
   }
 
-  return { publishSeason, publishSubmissions, mintOpenEditions } as const
+  const closeSeason = async (seasonID: string) => {
+    const tx = await seasonsContract?.closeSeason(seasonID)
+    console.log('tx from close season', tx)
+    return await tx.wait()
+  }
+
+  return { publishSeason, publishSubmissions, mintOpenEditions, closeSeason } as const
 }

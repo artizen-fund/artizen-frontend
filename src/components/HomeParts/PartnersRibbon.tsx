@@ -35,6 +35,10 @@ const Label = styled.h2`
 `
 
 const Partners = styled.ul`
+  position: relative;
+  margin-left: -24px;
+  width: calc(100% + 48px);
+  padding: 0 24px;
   display: flex;
   flex-direction: row;
   gap: 30px;
@@ -43,6 +47,19 @@ const Partners = styled.ul`
     display: contents;
     gap: 0;
   }
+  /* TODO: need more time on this
+  &:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    pointer-events: none;
+    content: ' ';
+  }
+  */
 `
 
 const Partner = styled.li`

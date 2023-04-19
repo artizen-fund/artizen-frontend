@@ -56,7 +56,15 @@ const Button = ({
         target={props.target ? props.target : href.substring(0, 4) === 'http' ? '_blank' : '_top'}
       >
         <ButtonLink className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-          {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+          {glyph && (
+            <StyledGlyph
+              {...{ glyph }}
+              rotation={glyphRotation}
+              color={outline ? 'night' : 'moon'}
+              darkColor={outline ? 'moon' : 'night'}
+              level={2}
+            />
+          )}
           <span>{children}</span>
         </ButtonLink>
       </Link>
@@ -65,7 +73,15 @@ const Button = ({
   if (!!props.onClick) {
     return (
       <StyledButton className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-        {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+        {glyph && (
+          <StyledGlyph
+            {...{ glyph }}
+            rotation={glyphRotation}
+            color={outline ? 'night' : 'moon'}
+            darkColor={outline ? 'moon' : 'night'}
+            level={2}
+          />
+        )}
         <span>{children}</span>
       </StyledButton>
     )
@@ -73,7 +89,15 @@ const Button = ({
   if (!!props.htmlFor) {
     return (
       <StyledLabel className={iClassName} {...{ level, outline, glyphOnly, glyphOnRight, stretch }} {...props}>
-        {glyph && <StyledGlyph {...{ glyph }} rotation={glyphRotation} />}
+        {glyph && (
+          <StyledGlyph
+            {...{ glyph }}
+            rotation={glyphRotation}
+            color={outline ? 'night' : 'moon'}
+            darkColor={outline ? 'moon' : 'night'}
+            level={2}
+          />
+        )}
         <span>{children}</span>
       </StyledLabel>
     )
@@ -81,11 +105,9 @@ const Button = ({
   throw 'Error: requires link or button action.'
 }
 
-const StyledGlyph = styled(props => <Glyph {...props} />)<Pick<ButtonProps, 'glyphOnRight'>>`
-  height: 100% !important;
-`
+const StyledGlyph = styled(props => <Glyph {...props} />)<Pick<ButtonProps, 'glyphOnRight'>>``
 
-const ButtonStyle = css<Partial<ButtonProps>>`
+export const ButtonStyle = css<Partial<ButtonProps>>`
   appearance: none;
   border: 0;
   outline: 0;
@@ -96,14 +118,14 @@ const ButtonStyle = css<Partial<ButtonProps>>`
   align-items: center;
   justify-content: center;
 
-  height: ${props => sizeForLevel('mobile', props.level || 0)}px;
+  min-height: ${props => sizeForLevel('mobile', props.level || 0)}px;
   gap: ${props => gapForLevel('mobile', props.level)}px;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    height: ${props => sizeForLevel('laptop', props.level || 0)}px;
+    min-height: ${props => sizeForLevel('laptop', props.level || 0)}px;
     gap: ${props => gapForLevel('laptop', props.level)}px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
-    height: ${props => sizeForLevel('desktop', props.level || 0)}px;
+    min-height: ${props => sizeForLevel('desktop', props.level || 0)}px;
     gap: ${props => gapForLevel('desktop', props.level)}px;
   }
 
@@ -205,7 +227,7 @@ const ButtonPalette = css<Partial<ButtonProps>>`
   }
 `
 
-const ButtonTypography = css<Partial<ButtonProps>>`
+export const ButtonTypography = css<Partial<ButtonProps>>`
   font-style: normal;
   font-weight: 700;
   text-align: center;

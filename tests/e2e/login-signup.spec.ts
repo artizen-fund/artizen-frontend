@@ -24,7 +24,7 @@ export const test = base.extend<{
     const { browserContext, wallet } = await launch('', {
       wallet: 'metamask',
       version: MetaMaskWallet.recommendedVersion,
-      headless: true,
+      headless: process.env.PLAYWRIGHT_HEADLESS === 'false' ? false : true,
     })
 
     // Unlock the wallet
@@ -92,20 +92,15 @@ test.describe('general artizen user', () => {
 
     // if we go too fast, then the form validation prevents clicking Save Changes
     await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(1).fill('Testfirstname')
+    await page.getByRole('textbox').nth(1).fill('testnickname')
     await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(2).fill('Testlastname')
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(3).fill('Testusername')
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(4).fill('e2etesting@email.ghostinspector.com')
+    await page.getByRole('textbox').nth(2).fill('e2etesting@email.ghostinspector.com')
     await page.waitForTimeout(100)
     await page.getByText('Save Changes').click()
   })
 
   test('user can logout', async ({ page, metamask }) => {
-    // TT = initials of Testfirstname Testlastname
-    await clickAccountButton(page, 'TT')
+    await clickAccountButton(page, 't')
     await clickLogout(page)
 
     await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible({
@@ -117,26 +112,14 @@ test.describe('general artizen user', () => {
     await page.waitForLoadState()
 
     // click sign in button
-    await clickAccountButton(page, 'CloseSign In')
-
-    // click metamask icon to open wallet
-    await clickMetamaskIcon(page)
+    await clickSignInButtonWithRetry(page)
 
     // Approve the connection when MetaMask pops up
-    // This closes the metamask popup so we need to go through artizen sign in process again
-    // to sign the transaction
-    await metamask.sign()
-
-    await closeWalletConnectModal(page)
-    await clickAccountButton(page, 'CloseSign In')
-
-    await clickMetamaskIcon(page)
-
-    await metamask.sign()
+    await connectAndSignWithMetamask(page, true, false)
 
     await page.waitForLoadState()
 
-    await expect(page.locator('#accountButton').getByText('TT')).toBeVisible({
+    await expect(page.locator('#accountButton').getByText('t')).toBeVisible({
       timeout: 10000,
     })
   })
@@ -144,12 +127,12 @@ test.describe('general artizen user', () => {
 
 test.describe('admin user', () => {
   test.beforeAll(async ({ metamask }) => {
-    console.log('metamask  ', metamask)
     // ensure that we're using the Goerli network
     await metamask.switchNetwork('Goerli')
 
     // import test admin wallet
     await importTestAdminWallet(metamask)
+    await metamask.page.waitForTimeout(500) // adding a delay to reduce frequency of "metamask encountered an error" issue
 
     // disconnect other user metamask account from localhost
     await disconnectAccount(metamask, 1)
@@ -180,12 +163,12 @@ test.describe('admin user', () => {
     await page.waitForLoadState()
 
     // expect initials 'rr' for admin to be hidden by profile pic
-    await expect(page.locator('#accountButton').getByText('rr')).toBeHidden({
+    await expect(page.locator('#accountButton').getByText('e')).toBeVisible({
       timeout: 10000,
     })
 
-    await clickAccountButton(page)
-    await expect(page.getByText('Hi Test')).toBeVisible({
+    await clickAccountButton(page, 'e')
+    await expect(page.getByText('Hi testcurator')).toBeVisible({
       timeout: 10000,
     })
   })
@@ -197,23 +180,31 @@ test.describe('admin user', () => {
     })
   })
 
+  // wip
   test.skip('admin user can create new season', async ({ page, metamask }) => {
     await page.goto('/admin/seasons')
+    const today = new Date().toISOString().slice(0, 10)
+    const tomorrowMs = new Date().getTime() + 86400000
+    const tomorrow = new Date(tomorrowMs).toISOString().slice(0, 10)
+    const startDate = '2023-01-01'
+    const endDate = '2023-01-02'
+
     await page.getByRole('button').filter({ hasText: 'Create New Season' }).click()
 
     await page.waitForLoadState()
 
     await page.waitForTimeout(100)
     await page.getByRole('textbox').nth(0).fill('playwright test title')
-    await page.waitForTimeout(100)
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(1).fill('2023-01-01')
-    await page.waitForTimeout(100)
-    await page.getByRole('textbox').nth(2).fill('2023-01-02')
-    await page.waitForTimeout(100)
-    await page.getByText('Save Draft').click()
+    await page.waitForTimeout(300)
+    await page.getByRole('textbox').nth(1).fill(startDate)
+    await page.waitForTimeout(300)
+    await page.getByRole('textbox').nth(2).fill(endDate)
+    await page.waitForTimeout(300)
+    await page.getByText('Published').click()
 
     await page.waitForLoadState()
+
+    await metamask.confirmTransaction()
 
     // see if new season detail page appears
     await expect(page.getByText('playwright test title')).toBeVisible({

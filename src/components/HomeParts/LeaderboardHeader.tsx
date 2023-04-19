@@ -1,83 +1,68 @@
-import { useInViewport } from 'react-in-viewport'
-import { useRef } from 'react'
 import styled from 'styled-components'
-import { rgba, assetPath } from '@lib'
+import { rgba, assetPath, useGnosis, assert } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { PagePadding } from '@components'
+import { PagePadding, Countdown, Glyph } from '@components'
+import { useSubscription } from '@apollo/client'
+import { SUBSCRIBE_SEASONS } from '@gql'
+import { ISubscribeSeasonsSubscription, ISeasonFragment } from '@types'
 
-const LeaderboardHeader = () => {
-  const trigger = useRef<HTMLDivElement>(null)
+interface LeaderboardHeaderProps {
+  index: number
+  endingDate: Partial<any>
+}
 
-  const { inViewport } = useInViewport(trigger)
+const LeaderboardHeader = ({ index, endingDate }: LeaderboardHeaderProps): JSX.Element => {
+  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
   return (
-    <Wrapper shadowVisible={!inViewport}>
-      <Trigger ref={trigger} />
-      <StyledPagePadding>
-        <Content>
-          <Title>Leaderboard</Title>
+    <StyledPagePadding>
+      <Content>
+        <Title>Leaderboard</Title>
 
-          <Stats>
-            <Stat>
-              <Label>Artizen Award</Label>
-              <Data>Ξ 23</Data>
-            </Stat>
-            <Stat>
-              <Label>Cycle</Label>
-              <Data>Season 2</Data>
-            </Stat>
-            <Stat>
-              <Label>Ends in</Label>
-              <Data>13d : 8h : 44m</Data>
-            </Stat>
-          </Stats>
+        <Stats>
+          <Stat>
+            <Label>Prize Funds</Label>
+            <Data>
+              {artizenPrizeAmountETH} ETH
+              <CashTrend>
+                {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                  parseFloat(artizenPrizeAmountUSD || '0'),
+                )}
+                <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
+              </CashTrend>
+            </Data>
+          </Stat>
+          <Stat>
+            <Label>Cycle</Label>
+            <Data>Season {index}</Data>
+          </Stat>
+          <Stat>
+            <Label>Ends in</Label>
+            <Data>
+              <Countdown date={endingDate} />
+            </Data>
+          </Stat>
+        </Stats>
 
-          <OfficialSelection>
-            <img src={assetPath('/assets/officialSelection.svg')} />
-          </OfficialSelection>
-        </Content>
-      </StyledPagePadding>
-    </Wrapper>
+        <OfficialSelection>
+          <img src={assetPath('/assets/officialSelection.svg')} />
+        </OfficialSelection>
+      </Content>
+    </StyledPagePadding>
   )
 }
 
-const Trigger = styled.div`
-  position: absolute;
-  top: -10px;
-  width: 1px;
-  height: 1px;
-`
-
-const Wrapper = styled.header<{ shadowVisible: boolean }>`
-  position: sticky;
-  z-index: 102;
-  top: 0px;
-  left: 0;
-
-  background: ${props => rgba(palette.white, props.shadowVisible ? 0.98 : 1)};
-  filter: drop-shadow(
-    ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(217, 219, 224, 1)')}
-  );
-  @media (prefers-color-scheme: dark) {
-    background: ${props => rgba(palette.slate, props.shadowVisible ? 0.98 : 1)};
-    filter: drop-shadow(
-      ${props => (props.shadowVisible ? '0px 4px 16px rgba(0, 0, 0, 0.48)' : '0px 0.5px 0px rgba(114, 124, 140, 0.64)')}
-    );
-  }
-  backdrop-filter: blur(${props => (props.shadowVisible ? 16 : 0)}px);
-
-  border-bottom: 0.5px solid transparent;
-  transition: border-color 0.3s 0.15s ease-in-out, background-color 0.3s ease-in-out, filter 0.3s ease-in-out,
-    backdrop-filter 0.3s ease-in-out;
-`
-
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   padding: 20px 0;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    padding: 50px 0;
+  }
 `
 
 const Content = styled.div`
   display: grid;
   grid-template-areas: 'title laurels' 'stats stats';
+  grid-template-rows: repeat(2, 1fr);
   gap: 30px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     grid-template-areas: 'title laurels' 'stats laurels';
@@ -93,6 +78,16 @@ const Title = styled.h2`
 `
 
 const OfficialSelection = styled.div`
+  max-width: 140px;
+  img {
+    width: 100%;
+  }
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    max-width: none;
+    img {
+      max-width: 300px;
+    }
+  }
   grid-area: laurels;
   display: flex;
   flex-direction: row;
@@ -108,22 +103,29 @@ const Stats = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 60px;
+
+  justify-content: space-between;
+  @media only screen and (min-width: 744px) {
+    gap: 60px;
+    justify-content: flex-start;
+  }
 `
 
 const Stat = styled.div`
   position: relative;
-  &:before {
-    content: ' ';
-    position: absolute;
-    top: 0;
-    left: -30px;
-    width: 1px;
-    height: 100%;
-    background-color: ${rgba(palette.stone)};
-  }
-  &:first-child:before {
-    display: none;
+  @media only screen and (min-width: 744px) {
+    &:before {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: -30px;
+      width: 1px;
+      height: 100%;
+      background-color: ${rgba(palette.stone)};
+    }
+    &:first-child:before {
+      display: none;
+    }
   }
 `
 
@@ -133,7 +135,25 @@ const Label = styled.h3`
 `
 
 const Data = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: bottom;
+  gap: 16px;
   ${typography.title.l4}
+`
+
+const CashTrend = styled.div`
+  @media only screen and (max-width: 733px) {
+    display: none;
+  }
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
 `
 
 export default LeaderboardHeader

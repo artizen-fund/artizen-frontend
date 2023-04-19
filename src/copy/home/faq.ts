@@ -20,7 +20,8 @@ Artifacts are a new type of NFT designed to help creators raise money for their 
   {
     question: 'How are projects curated for the Official Selection?',
     answer: `
-Projects are curated for the Official Selection through a community-driven process where Artifact owners review and evaluate submissions based on Artizen's curatorial guidelines: originality, impact, and feasibility. Each Artifact equals one vote, granting more voting power to those with more Artifacts. The strongest projects, as determined by community voting and adherence to the guidelines, form the Official Selection, where they create and sell Artifacts to raise funds and compete for the Artizen Prize. 
+Projects are curated for the Official Selection through a community-driven process where Artifact owners review and evaluate submissions based on Artizen's curatorial guidelines: originality, impact, and feasibility. Each Artifact equals one vote, granting more voting power to those with more Artifacts. The strongest projects, as determined by community voting and adherence to the guidelines, form the Official Selection, where they create and sell Artifacts to raise funds and compete for the Artizen Prize.
+
 [Curate our Official Selection](https://help.artizen.fund/en/articles/6604061-curate-our-grants)
 `,
   },
@@ -29,7 +30,7 @@ Projects are curated for the Official Selection through a community-driven proce
     answer: `
 Projects win the Artizen Prize by garnering the most support from the community in the form of Artifacts sold. Throughout the season, projects in the Official Selection sell Artifacts to raise funds and climb the leaderboard. At the end of the season, the project with the most Artifacts sold is declared the winner, receiving the prestigious Artizen Prize along with financial support and recognition.
 
-[Artifacts represent impact claims](https://help.artizen.fund/en/articles/6604399-apply-for-grant-funding)
+[Win the Artizen Prize](https://help.artizen.fund/en/articles/6604399-submit-projects-to-artizen-prize)
   `,
   },
   {
