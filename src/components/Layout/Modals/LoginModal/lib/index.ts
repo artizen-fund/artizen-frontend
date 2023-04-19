@@ -18,7 +18,8 @@ const useWalletConnect = () => {
   const { requestChallengeAsync } = useAuthRequestChallengeEvm()
   const router = useRouter()
 
-  const connectWallet = async (connector: Connector) => {
+  // TODO: do not delete this, this potentially fixed the issue with walletconnect on mobile redirecting to the app store
+  const connectMetamask = async () => {
     if (isConnected) {
       await disconnectAsync()
     }
@@ -27,7 +28,7 @@ const useWalletConnect = () => {
 
     try {
       const { account: publicAddress, chain } = await connectAsync({
-        connector,
+        connector: new MetaMaskConnector({ chains }),
         chainId,
       })
 
@@ -48,23 +49,60 @@ const useWalletConnect = () => {
       console.error('error connecting user', e)
     }
   }
-  const connectMetamask = () => {
-    toggleModal('connecting')
-    connectWallet(new MetaMaskConnector({ chains }))
-  }
 
-  const connectOtherWallet = () => {
-    toggleModal('connecting')
-    connectWallet(
-      new WalletConnectConnector({
-        chains,
-        options: {
-          qrcode: true,
-          projectId: '1cfa6214f74719cb6dccea797e0ff417',
-        },
-      }),
-    )
+  const connectOtherWallet = async () => {
+    if (isConnected) {
+      await disconnectAsync()
+    }
+    setConnecting(true)
+    const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+
+    try {
+      const { account: publicAddress, chain } = await connectAsync({
+        connector: new WalletConnectConnector({
+          chains,
+          options: {
+            qrcode: true,
+            projectId: '1cfa6214f74719cb6dccea797e0ff417',
+          },
+        }),
+        chainId,
+      })
+
+      const challenge = await requestChallengeAsync({ address: publicAddress, chainId: chain.id })
+      if (!challenge) {
+        throw new Error('failed walletconnect challenge')
+      }
+      const { message } = challenge
+
+      const signature = await signMessageAsync({ message })
+      await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
+
+      setConnecting(false)
+      // Force reload due to JWT is not available or is still linked to old session when first created. Wagmi renders an error when the smart contracts are called.
+      router.reload()
+    } catch (e) {
+      setConnecting(false)
+      console.error('error connecting user', e)
+    }
   }
+  // const connectMetamask = () => {
+  //   toggleModal('connecting')
+  //   connectWallet(new MetaMaskConnector({ chains }))
+  // }
+
+  // const connectOtherWallet = () => {
+  //   toggleModal('connecting')
+  //   connectWallet(
+  //     new WalletConnectConnector({
+  //       chains,
+  //       options: {
+  //         qrcode: true,
+  //         projectId: '1cfa6214f74719cb6dccea797e0ff417',
+  //       },
+  //     }),
+  //   )
+  // }
 
   return { connectMetamask, connectOtherWallet, connecting }
 }
