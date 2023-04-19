@@ -19,6 +19,7 @@ const useWalletConnect = () => {
   const router = useRouter()
 
   // TODO: do not delete this, this potentially fixed the issue with walletconnect on mobile redirecting to the app store
+  // do not delete, please
   const connectMetamask = async () => {
     if (isConnected) {
       await disconnectAsync()
