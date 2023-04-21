@@ -57,8 +57,7 @@ export default function SeasonPage(): JSX.Element {
                   id={`submission-startingDate-${season.startingDate}`}
                 >{`This Season runs from ${startingDate} to ${endingDate}`}</Subtitle>
                 {!isOpenForSubmissions(season.startingDate, season.endingDate) && (
-                  <Button level={1} onClick={() => closeSeason(season.id.toString())}>
-                    {' '}
+                  <Button level={1} onClick={() => closeSeason(season.index)}>
                     Close Season
                   </Button>
                 )}

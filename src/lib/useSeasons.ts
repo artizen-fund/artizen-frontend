@@ -9,7 +9,7 @@ import {
   WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT,
 } from '@lib'
 import { IProjectFragment, ISeasonFragment } from '@types'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
@@ -118,8 +118,10 @@ export const useSeasons = () => {
     return
   }
 
-  const closeSeason = async (seasonID: string) => {
-    const tx = await seasonsContract?.closeSeason(seasonID)
+  const closeSeason = async (seasonIndex: number) => {
+    console.log('season ID', typeof seasonIndex, seasonIndex)
+
+    const tx = await seasonsContract?.closeSeason(seasonIndex)
     console.log('tx from close season', tx)
     return await tx.wait()
   }

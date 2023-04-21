@@ -1,18 +1,36 @@
+import { renderHook } from '@testing-library/react'
 import { useSeasons } from './useSeasons'
 import { mockSeason, mockProject } from './mockData'
+import { MockConnector } from '@wagmi/core/connectors/mock'
+import { mainnet } from '@wagmi/core/chains'
+import { providers } from 'ethers'
 
 describe('publishSeason', () => {
-  const { publishSeason } = useSeasons()
+const connector = new MockConnector({
+  options: {
+    chainId: mainnet.id,
+    signer: new providers.JsonRpcSigner(…),
+  },
+})
   it('publishes a season with correct details', () => {
-    const result = publishSeason() // TODO how to pass in the arguments?
-    expect(result.startingDate).toEqual()
-    expect(result.endingDate).toEqual()
+    const { result } = renderHook(() => useSeasons())
+
+    act(() => {
+      result.current.publishSeason('19-04-2023 09:00', '19-05-2023 09:00')
+    })
+
+    expect(result.current.startingDate).toEqual(1681920000)
+    expect(result.current.endingDate).toEqual(1684512000)
   })
 })
 
 describe('publishSubmissions', () => {
   it('publishes a submission with correct details', () => {
-    //TODO
+    const { result } = renderHook(() => useSeasons())
+
+    act(() => {
+      result.current.publishSubmissions(mockSeason, mockProject)
+    })
   })
 })
 
