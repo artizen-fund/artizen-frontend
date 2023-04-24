@@ -18,6 +18,7 @@ import {
   LeaderboardHeader,
   ProjectCard,
   NoGrant,
+  HomeLoadingShimmer,
 } from '@components'
 import { rgba, SeasonContext } from '@lib'
 import { breakpoint, palette } from '@theme'
@@ -36,16 +37,13 @@ const IndexPage = () => {
     },
   })
 
-  if (error) {
-    return <>Error Loading Season</>
-  }
-
   return (
     <Layout>
       <HomeHeader />
       <PartnersRibbon />
       <HomeRibbon />
-      {data?.Seasons[0] && (
+      {loading && <HomeLoadingShimmer />}
+      {!loading && data?.Seasons[0] && (
         <>
           <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
           <StyledPagePadding>
@@ -64,7 +62,7 @@ const IndexPage = () => {
           </StyledPagePadding>
         </>
       )}
-      {(!!loading || !data?.Seasons[0]) && <NoGrant />}
+      {!loading && !data?.Seasons[0] && <NoGrant />}
       <Newsletter />
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (

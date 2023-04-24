@@ -1,17 +1,18 @@
 import styled from 'styled-components'
 import { rgba, assetPath, useGnosis, assert } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { PagePadding, Countdown, Glyph } from '@components'
+import { PagePadding, Countdown, Glyph, Spinner } from '@components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription, ISeasonFragment } from '@types'
 
 interface LeaderboardHeaderProps {
-  index: number
-  endingDate: Partial<any>
+  index?: number
+  endingDate?: Partial<any>
+  loading?: boolean
 }
 
-const LeaderboardHeader = ({ index, endingDate }: LeaderboardHeaderProps): JSX.Element => {
+const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProps): JSX.Element => {
   const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
   return (
@@ -22,25 +23,32 @@ const LeaderboardHeader = ({ index, endingDate }: LeaderboardHeaderProps): JSX.E
         <Stats>
           <Stat>
             <Label>Prize Funds</Label>
-            <Data>
-              {artizenPrizeAmountETH} ETH
-              <CashTrend>
-                {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                  parseFloat(artizenPrizeAmountUSD || '0'),
-                )}
-                <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
-              </CashTrend>
-            </Data>
+            {!!loading && <Data>…</Data>}
+            {!loading && (
+              <Data>
+                {artizenPrizeAmountETH} ETH
+                <CashTrend>
+                  {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                    parseFloat(artizenPrizeAmountUSD || '0'),
+                  )}
+                  <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
+                </CashTrend>
+              </Data>
+            )}
           </Stat>
           <Stat>
             <Label>Cycle</Label>
-            <Data>Season {index}</Data>
+            {!!loading && <Data>…</Data>}
+            {!loading && <Data>Season {index}</Data>}
           </Stat>
           <Stat>
             <Label>Ends in</Label>
-            <Data>
-              <Countdown date={endingDate} />
-            </Data>
+            {!!loading && <Data>…</Data>}
+            {!loading && !!endingDate && (
+              <Data>
+                <Countdown date={endingDate} />
+              </Data>
+            )}
           </Stat>
         </Stats>
 
