@@ -90,7 +90,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
       }, 1000 * 60)
       return
     }
-    setCurrentSeasonId(data.Seasons[0].id)
+    setCurrentSeasonId(data.Seasons[0]?.id)
     return () => {
       clearTimeout(checkAgainIfNotFound)
     }
