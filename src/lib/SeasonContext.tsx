@@ -84,13 +84,13 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
   // 3. use the season ID for the subscription
   useEffect(() => {
     let checkAgainIfNotFound: NodeJS.Timeout
-    if (!data && !loading) {
+    if (!data || !data.Seasons[0] || loading) {
       checkAgainIfNotFound = setTimeout(() => {
         refreshTimestamp()
       }, 1000 * 60)
       return
     }
-    setCurrentSeasonId(data?.Seasons[0].id)
+    setCurrentSeasonId(data.Seasons[0].id)
     return () => {
       clearTimeout(checkAgainIfNotFound)
     }
@@ -105,7 +105,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
   }, [])
 
   const refreshTimestamp = () => {
-    if (!data) return
+    if (!data || !data.Seasons[0]) return
     const now = dayjs()
     if (now.isSameOrAfter(data.Seasons[0].endingDate)) {
       // 5. refresh the timestamp; updates cascade.
