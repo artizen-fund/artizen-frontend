@@ -19,22 +19,24 @@ const CreatorBox = ({ user }: ICreatorBox) => {
       </div>
       <Copy>
         <Name>{user.artizenHandle}</Name>
-        <Links>
-          {user.twitterHandle && (
-            <li>
-              <Button glyph="twitter" glyphOnly href={`https://twitter.com/${user.twitterHandle}`} level={2} outline>
-                Twitter
-              </Button>
-            </li>
-          )}
-          {user.website && (
-            <li>
-              <Button glyph="globe" glyphOnly href={user.website} level={2} outline>
-                {user.website}
-              </Button>
-            </li>
-          )}
-        </Links>
+        {(user.twitterHandle || user.website) && (
+          <Links>
+            {user.twitterHandle && (
+              <li>
+                <Button glyph="twitter" glyphOnly href={`https://twitter.com/${user.twitterHandle}`} level={2} outline>
+                  Twitter
+                </Button>
+              </li>
+            )}
+            {user.website && (
+              <li>
+                <Button glyph="globe" glyphOnly href={user.website} level={2} outline>
+                  {user.website}
+                </Button>
+              </li>
+            )}
+          </Links>
+        )}
       </Copy>
     </Wrapper>
   )
@@ -51,6 +53,9 @@ const Copy = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  > * {
+    margin: auto 0;
+  }
 `
 
 const Name = styled.div``

@@ -94,7 +94,7 @@ export default function NewSeasonForm(): JSX.Element {
     const endingDate = `${data.endingDate}T09:00:00`
 
     // // //publish season to blockchain
-    const publishedSeason = await publishSeason(data.startingDate, data.endingDate)
+    const publishedSeason = await publishSeason(startingDate, endingDate)
 
     console.log('publishedSeason   ', publishedSeason)
 

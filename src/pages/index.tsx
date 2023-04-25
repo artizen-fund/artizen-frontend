@@ -1,3 +1,5 @@
+import { useContext, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
@@ -17,33 +19,22 @@ import {
   LeaderboardHeader,
   ProjectCard,
   NoGrant,
+  HomeLoadingShimmer,
 } from '@components'
-import { rgba, assert } from '@lib'
+import { rgba, SeasonContext } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
-import isBetween from 'dayjs/plugin/isBetween'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 
 const IndexPage = () => {
-  dayjs.extend(utc)
-  dayjs.extend(isBetween)
-  dayjs.extend(timezone)
-  dayjs.extend(isSameOrAfter)
-  dayjs.extend(isSameOrBefore)
+  const { asPath } = useRouter()
 
-  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
+  const { currentSeasonId } = useContext(SeasonContext)
 
-  const { data, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+  const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        index: { _eq: CURRENT_SEASON },
-        // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
-        // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+        id: { _eq: currentSeasonId },
       },
       order_by: { submissions_aggregate: { count: 'asc' } },
     },
@@ -53,12 +44,21 @@ const IndexPage = () => {
     return <>Error Loading Season</>
   }
 
+  useEffect(() => {
+    const hash = asPath.split('#')[1]
+    if (!!hash && hash === 'submissions') {
+      const submissionsMarker = document.querySelector('#submissionsMarker')
+      submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [])
+
   return (
     <Layout>
       <HomeHeader />
       <PartnersRibbon />
       <HomeRibbon />
-      {!!CURRENT_SEASON && data?.Seasons[0] && (
+      {loading && <HomeLoadingShimmer />}
+      {!loading && data?.Seasons[0] && (
         <>
           <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
           <StyledPagePadding>
@@ -77,7 +77,7 @@ const IndexPage = () => {
           </StyledPagePadding>
         </>
       )}
-      {!CURRENT_SEASON && <NoGrant />}
+      {!loading && !data?.Seasons[0] && <NoGrant />}
       <Newsletter />
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (
