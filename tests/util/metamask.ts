@@ -39,6 +39,13 @@ export async function disconnectAccount(metamask: Dappwright, accountNumber: num
 }
 
 export async function importTestAdminWallet(metamask: Dappwright) {
-  const test_admin_wallet_pk = process.env.TEST_WALLET_PK ? process.env.TEST_WALLET_PK : ''
-  await metamask.importPK(test_admin_wallet_pk)
+  const testAdminWalletPk = process.env.TEST_ADMIN_WALLET_PK ? process.env.TEST_ADMIN_WALLET_PK : ''
+  await metamask.importPK(testAdminWalletPk)
+  console.log("imported test admin wallet")
+}
+
+export async function importTestUserWallet(metamask: Dappwright) {
+  const testUserWalletPk = process.env.TEST_USER_WALLET_PK ? process.env.TEST_USER_WALLET_PK : ''
+  await metamask.importPK(testUserWalletPk)
+  console.log("imported test user wallet")
 }
