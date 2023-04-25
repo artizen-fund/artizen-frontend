@@ -12,14 +12,14 @@ import {
   LongDescription,
   Leaderboard,
 } from '@components'
-import { LayoutContext, assert } from '@lib'
+import { LayoutContext, SeasonContext } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
 import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = () => {
-  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
+  const { currentSeasonId } = useContext(SeasonContext)
 
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
@@ -47,9 +47,7 @@ const ProjectPage = () => {
       fetchPolicy: 'no-cache',
       variables: {
         where: {
-          index: { _eq: CURRENT_SEASON },
-          // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
-          // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+          id: { _eq: currentSeasonId },
         },
       },
     },
@@ -87,7 +85,6 @@ const ProjectPage = () => {
   // )
 
   const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
-
   return (
     <Layout>
       <PagePadding>
@@ -104,6 +101,8 @@ const ProjectPage = () => {
                       mode: 'project',
                       destination: asPath,
                       projectTitle: project.title,
+                      artizenHandle: project?.members?.find(m => m.type === 'lead')?.user?.artizenHandle,
+                      twitterHandle: project?.members?.find(m => m.type === 'lead')?.user?.twitterHandle,
                     })
                   }
                 >

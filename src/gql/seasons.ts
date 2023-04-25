@@ -19,6 +19,15 @@ export const SUBSCRIBE_SEASONS = gql`
   }
 `
 
+export const GET_SEASON_FOR_TIME = gql`
+  query seasonForTime($where: Seasons_bool_exp) {
+    Seasons(limit: 1, where: $where) {
+      id
+      endingDate
+    }
+  }
+`
+
 export const INSERT_SEASONS = gql`
   ${SEASON}
   mutation insertSeasons($objects: [Seasons_insert_input!]!) {

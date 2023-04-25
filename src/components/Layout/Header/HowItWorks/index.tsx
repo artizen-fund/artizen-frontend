@@ -4,12 +4,18 @@ import { Button } from '@components'
 import { rgba, assetPath, LayoutContext } from '@lib'
 import { breakpoint, palette, typography } from '@theme'
 import { howItWorks } from '@copy/header'
+import { useRouter } from 'next/router'
 
 const HowItWorks = () => {
+  const router = useRouter()
   const { toggleShelf } = useContext(LayoutContext)
   const scrollToLeaderboard = () => {
-    const submissionsMarker = document.querySelector('#submissionsMarker')
-    submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+    if (router.pathname !== '/') {
+      router.push('/#submissions')
+    } else {
+      const submissionsMarker = document.querySelector('#submissionsMarker')
+      submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+    }
     toggleShelf()
   }
 

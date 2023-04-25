@@ -1,5 +1,6 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, useGnosis, assert } from '@lib'
+import { rgba, useGnosis, SeasonContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Glyph, Icon, Countdown } from '@components'
 import { useSubscription } from '@apollo/client'
@@ -17,15 +18,14 @@ interface ISubHeader {
 */
 
 const SubHeader = ({ visible }: ISubHeader) => {
+  const { currentSeasonId } = useContext(SeasonContext)
   const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
-
-  const CURRENT_SEASON = assert(process.env.NEXT_PUBLIC_CURRENT_SEASON, 'NEXT_PUBLIC_CURRENT_SEASON')
 
   const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        index: { _eq: CURRENT_SEASON },
+        id: { _eq: currentSeasonId },
         // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
         // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
       },
@@ -63,7 +63,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
             </Stat>
             <Stat>
               <Label>Cycle</Label>
-              <Data>Season {CURRENT_SEASON}</Data>
+              <Data>Season {data?.Seasons[0].index}</Data>
             </Stat>
             <Stat>
               <Label>Ends in</Label>
