@@ -7,7 +7,7 @@ const CloseButton = styled(props => (
     Close
   </Button>
 ))<{ visible: boolean }>`
-  position: absolute;
+  position: absolute !important;
   z-index: 1002;
   top: -28px;
   right: -28px;
