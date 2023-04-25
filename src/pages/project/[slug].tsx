@@ -85,7 +85,6 @@ const ProjectPage = () => {
   // )
 
   const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
-
   return (
     <Layout>
       <PagePadding>
@@ -102,6 +101,8 @@ const ProjectPage = () => {
                       mode: 'project',
                       destination: asPath,
                       projectTitle: project.title,
+                      artizenHandle: project?.members?.find(m => m.type === 'lead')?.user?.artizenHandle,
+                      twitterHandle: project?.members?.find(m => m.type === 'lead')?.user?.twitterHandle,
                     })
                   }
                 >

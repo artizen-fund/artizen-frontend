@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
@@ -25,6 +26,8 @@ import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
+  const { asPath } = useRouter()
+
   const { currentSeasonId } = useContext(SeasonContext)
 
   const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
@@ -36,6 +39,18 @@ const IndexPage = () => {
       order_by: { submissions_aggregate: { count: 'asc' } },
     },
   })
+
+  if (error) {
+    return <>Error Loading Season</>
+  }
+
+  useEffect(() => {
+    const hash = asPath.split('#')[1]
+    if (!!hash && hash === 'submissions') {
+      const submissionsMarker = document.querySelector('#submissionsMarker')
+      submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [])
 
   return (
     <Layout>
