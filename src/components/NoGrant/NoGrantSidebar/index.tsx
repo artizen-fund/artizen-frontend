@@ -13,11 +13,10 @@ const GrantsExplorer = () => {
       <Bar>
         <Copy>
           <GrantDate>No active project yet</GrantDate>
-          {/* <Description>{formatDate('now')}</Description> */}
         </Copy>
       </Bar>
       <Body>
-        <Header>Season #02 coming soon</Header>
+        <Header>New season coming soon</Header>
 
         <Message>
           Season #01 raised $30,000+ for creators around the world. Apply today for season #02 to get your project

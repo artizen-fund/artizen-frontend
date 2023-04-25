@@ -22,7 +22,9 @@ export const useSeasons = () => {
   // SeasonForm component when the user clicks the publish button
   const publishSeason = async (startTime: string, endTime: string) => {
     const startTimeUnix = getTimeUnix(startTime)
+    console.log('endTime  ', endTime)
     const endTimeUnix = getTimeUnix(endTime)
+    console.log('endTimeUnix  ', endTimeUnix)
     const tx = await seasonsContract?.createSeason(startTimeUnix, endTimeUnix)
     console.log('tx from create season', tx)
     return await tx.wait()

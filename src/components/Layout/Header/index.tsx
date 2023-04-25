@@ -16,7 +16,7 @@ const Header = () => {
   const { pathname } = useRouter()
   const trigger = useRef<HTMLDivElement>(null)
 
-  const { visibleShelf, toggleShelf, setVisibleShelf } = useContext(LayoutContext)
+  const { visibleShelf, toggleShelf } = useContext(LayoutContext)
   const [visible, setVisible] = useState(true)
   const headerFlipPoint = pathname === '/' && typeof window !== 'undefined' ? window.innerHeight : 10
   useScrollPosition(({ currPos }) => setVisible(currPos.y < headerFlipPoint), [], undefined, true, 50)
@@ -36,7 +36,7 @@ const Header = () => {
         <Items>
           <Nav>
             <ul>
-              <li onClick={() => setVisibleShelf('howItWorks')}>How It Works</li>
+              <li onClick={() => toggleShelf('howItWorks')}>How It Works</li>
             </ul>
           </Nav>
           <AccountButton id="accountButton" active={visibleShelf === 'session'} />
