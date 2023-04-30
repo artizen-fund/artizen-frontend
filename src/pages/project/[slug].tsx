@@ -11,6 +11,10 @@ import {
   CreatorBox,
   LongDescription,
   Leaderboard,
+  Shimmer,
+  ProjectDescriptionShimmer,
+  ProjectLeaderboardShimmer,
+  ProjectCardShimmer,
 } from '@components'
 import { LayoutContext, SeasonContext } from '@lib'
 import { typography, breakpoint } from '@theme'
@@ -54,6 +58,9 @@ const ProjectPage = () => {
   )
 
   const project = data?.Projects[0]
+  if (!project) {
+    return <></>
+  }
 
   const { data: openEditions } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
     fetchPolicy: 'no-cache',
@@ -64,14 +71,9 @@ const ProjectPage = () => {
     },
   })
 
-  if (!!loading || !!loadingSeason || !seasonData || !project) {
-    // todo: we have a loading placeholder somewhere
-    return <></>
-  }
-
   const lead = project.members?.find(m => m.type === 'lead')?.user
 
-  const rank = seasonData.Seasons[0].submissions
+  const rank = seasonData?.Seasons[0].submissions
     ?.sort(
       (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
         s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
@@ -91,47 +93,55 @@ const ProjectPage = () => {
         <Wrapper>
           <Side>
             <Header>
-              <Topline>
-                <RankAndArtifactCount rank={rank} count={count} />
-                <Button
-                  level={2}
-                  outline
-                  onClick={() =>
-                    setVisibleModalWithAttrs('share', {
-                      mode: 'project',
-                      destination: asPath,
-                      projectTitle: project.title,
-                      artizenHandle: project?.members?.find(m => m.type === 'lead')?.user?.artizenHandle,
-                      twitterHandle: project?.members?.find(m => m.type === 'lead')?.user?.twitterHandle,
-                    })
-                  }
-                >
-                  Share
-                </Button>
-              </Topline>
-              <h1>{project.title}</h1>
-              <p>{project.logline}</p>
-              <Tags tags={project.impactTags?.split(',') || []} />
-
-              {lead && <CreatorBox user={lead} />}
+              {loading && <ProjectDescriptionShimmer />}
+              {!loading && (
+                <>
+                  <Topline>
+                    {rank && <RankAndArtifactCount rank={rank} count={count} />}
+                    <Button
+                      level={2}
+                      outline
+                      onClick={() =>
+                        setVisibleModalWithAttrs('share', {
+                          mode: 'project',
+                          destination: asPath,
+                          projectTitle: project.title,
+                          artizenHandle: project?.members?.find(m => m.type === 'lead')?.user?.artizenHandle,
+                          twitterHandle: project?.members?.find(m => m.type === 'lead')?.user?.twitterHandle,
+                        })
+                      }
+                    >
+                      Share
+                    </Button>
+                  </Topline>
+                  <h1>{project.title}</h1>
+                  <p>{project.logline}</p>
+                  <Tags tags={project.impactTags?.split(',') || []} />
+                  {lead && <CreatorBox user={lead} />}
+                </>
+              )}
             </Header>
 
-            <Leaderboard openEditions={openEditions} />
+            {loading && <ProjectLeaderboardShimmer />}
+            {!loading && <Leaderboard openEditions={openEditions} />}
 
-            <LongDescription>
-              {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
-                <div key={`metadatum-${index}`}>
-                  <h2>{metadatum.title}</h2>
-                  <p>{metadatum.value}</p>
-                </div>
-              ))}
-            </LongDescription>
+            {!loading && (
+              <LongDescription>
+                {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
+                  <div key={`metadatum-${index}`}>
+                    <h2>{metadatum.title}</h2>
+                    <p>{metadatum.value}</p>
+                  </div>
+                ))}
+              </LongDescription>
+            )}
           </Side>
 
           <Side>
             {/* TODO: Artifacts should be an object instead of an array  */}
             {/* This is wrong, we need to use the artifact from the submission */}
-            <ArtifactCard artifact={project.artifacts[0]} />
+            {loading && <ProjectCardShimmer />}
+            {!loading && <ArtifactCard artifact={project.artifacts[0]} />}
           </Side>
         </Wrapper>
       </PagePadding>
