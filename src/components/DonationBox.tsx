@@ -2,16 +2,17 @@ import { useState, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { ErrorObject } from 'ajv'
-
 import { Button, Counter } from '@components'
 import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useSeasons } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
+import { IProjectFragment } from '@types'
 
 interface IDonationBox {
   tokenId: string | undefined
+  project: IProjectFragment
 }
 
-const DonationBox = ({ tokenId }: IDonationBox) => {
+const DonationBox = ({ tokenId, project }: IDonationBox) => {
   const BASE_ARTIFACT_PRICE = assertFloat(
     process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
@@ -19,7 +20,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
 
   const { status } = useSession()
 
-  const { toggleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
 
   const { mintOpenEditions } = useSeasons()
   const [sending, setSending] = useState<boolean>(false)
@@ -50,7 +51,11 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
         tokenId,
       })
 
-      toggleModal('shareTransaction')
+      setVisibleModalWithAttrs('shareTransaction', {
+        mode: 'postTransaction',
+        destination: `/projects/${project.titleURL}`,
+        projecTitle: project.title,
+      })
     }
 
     //Show error
