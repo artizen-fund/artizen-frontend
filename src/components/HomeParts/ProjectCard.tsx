@@ -15,6 +15,7 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
+  const artist = project.members.find(m => m.type === 'lead')?.user
   return (
     <Wrapper>
       <AllCopy>
@@ -32,21 +33,51 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
           <p>{project.logline}</p>
         </Copy>
       </AllCopy>
-      <Img
-        src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`}
-        onClick={() =>
-          setVisibleModalWithAttrs('media', {
-            videoFile: latestArtifact.video,
-            imageFile: latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg'),
-          })
-        }
-      />
+      <ImageWrapper>
+        {artist && (
+          <Artist>
+            <Avatar src={artist.profileImage} />
+            <div>{artist.artizenHandle}</div>
+          </Artist>
+        )}
+        <Img
+          src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`}
+          onClick={() =>
+            setVisibleModalWithAttrs('media', {
+              videoFile: latestArtifact.video,
+              imageFile: latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg'),
+            })
+          }
+        />
+      </ImageWrapper>
       <Footer>
         <DonationBox tokenId={latestArtifact.token} {...{ project }} />
       </Footer>
     </Wrapper>
   )
 }
+
+const Artist = styled.div`
+  position: absolute;
+  z-index: 2;
+  bottom: 16px;
+  left: 16px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+
+  color: white;
+  ${typography.label.l2}
+`
+
+const Avatar = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.14));
+`
 
 const AllCopy = styled.div`
   grid-area: copy;
@@ -103,6 +134,10 @@ const Copy = styled.div`
       display: none;
     }
   }
+`
+
+const ImageWrapper = styled.div`
+  position: relative;
 `
 
 const Img = styled.img`
