@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { CheckboxControl } from '@components'
+import { CheckboxControl, Icon, Button } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
 import { rgba, assetPath, LayoutContext, textCrop, assert } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
@@ -74,9 +74,10 @@ const LoginModal = ({ ...props }) => {
           <Headline>{signInWalletMessage.headline}</Headline>
           <Subhead>{signInWalletMessage.subhead}</Subhead>
           <Tiles>
-            <Tile id="signMessage" onClick={() => signEnMessage()} {...{ enabled }}>
-              <MessageIcon />
-              {signInWalletMessage.buttonCopy}
+            <Tile id="signMessage" enabled={true}>
+              <Button glyph="external" level={1} outline onClick={() => signEnMessage()} {...{ enabled }}>
+                {signInWalletMessage.buttonCopy}
+              </Button>
             </Tile>
           </Tiles>
         </>
@@ -85,16 +86,6 @@ const LoginModal = ({ ...props }) => {
     </Wrapper>
   )
 }
-
-const MessageIcon = styled.div`
-  color: ${rgba(palette.night)};
-  @media (prefers-color-scheme: dark) {
-    color: ${rgba(palette.moon)};
-  }
-  background-image: url('/assets/message-icon.svg');
-  width: 75px;
-  height: 75px;
-`
 
 const Wrapper = styled.div`
   padding: 40px 25px;
