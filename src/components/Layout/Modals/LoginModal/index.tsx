@@ -75,7 +75,7 @@ const LoginModal = ({ ...props }) => {
           <Subhead>{signInWalletMessage.subhead}</Subhead>
           <Tiles>
             <Tile id="signMessage" onClick={() => signEnMessage()} {...{ enabled }}>
-              <img src={assetPath('/assets/message-icon.svg')} alt="signMessageIcon" style={{ width: '75px' }} />
+              <MessageIcon />
               {signInWalletMessage.buttonCopy}
             </Tile>
           </Tiles>
@@ -85,6 +85,16 @@ const LoginModal = ({ ...props }) => {
     </Wrapper>
   )
 }
+
+const MessageIcon = styled.div`
+  color: ${rgba(palette.night)};
+  @media (prefers-color-scheme: dark) {
+    color: ${rgba(palette.moon)};
+  }
+  background-image: url('/assets/message-icon.svg');
+  width: 75px;
+  height: 75px;
+`
 
 const Wrapper = styled.div`
   padding: 40px 25px;
