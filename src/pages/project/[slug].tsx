@@ -11,6 +11,8 @@ import {
   CreatorBox,
   LongDescription,
   Leaderboard,
+  ProjectDescriptionShimmer,
+  ProjectLeaderboardShimmer,
 } from '@components'
 import { LayoutContext, SeasonContext } from '@lib'
 import { typography, breakpoint } from '@theme'
@@ -64,7 +66,7 @@ const ProjectPage = () => {
     },
   })
 
-  if (!!loading || !!loadingSeason || !seasonData || !project) {
+  if (!!loadingSeason || !seasonData || !project) {
     // todo: we have a loading placeholder somewhere
     return <></>
   }
@@ -91,32 +93,38 @@ const ProjectPage = () => {
         <Wrapper>
           <Side>
             <Header>
-              <Topline>
-                <RankAndArtifactCount rank={rank} count={count} />
-                <Button
-                  level={2}
-                  outline
-                  onClick={() =>
-                    setVisibleModalWithAttrs('share', {
-                      mode: 'project',
-                      destination: asPath,
-                      projectTitle: project.title,
-                      artizenHandle: project?.members?.find(m => m.type === 'lead')?.user?.artizenHandle,
-                      twitterHandle: project?.members?.find(m => m.type === 'lead')?.user?.twitterHandle,
-                    })
-                  }
-                >
-                  Share
-                </Button>
-              </Topline>
-              <h1>{project.title}</h1>
-              <p>{project.logline}</p>
-              <Tags tags={project.impactTags?.split(',') || []} />
+              {loading && <ProjectDescriptionShimmer />}
+              {!loading && (
+                <>
+                  <Topline>
+                    <RankAndArtifactCount rank={rank} count={count} />
+                    <Button
+                      level={2}
+                      outline
+                      onClick={() =>
+                        setVisibleModalWithAttrs('share', {
+                          mode: 'project',
+                          destination: asPath,
+                          projectTitle: project.title,
+                          artizenHandle: project?.members?.find(m => m.type === 'lead')?.user?.artizenHandle,
+                          twitterHandle: project?.members?.find(m => m.type === 'lead')?.user?.twitterHandle,
+                        })
+                      }
+                    >
+                      Share
+                    </Button>
+                  </Topline>
+                  <h1>{project.title}</h1>
+                  <p>{project.logline}</p>
+                  <Tags tags={project.impactTags?.split(',') || []} />
 
-              {lead && <CreatorBox user={lead} />}
+                  {lead && <CreatorBox user={lead} />}
+                </>
+              )}
             </Header>
 
-            <Leaderboard openEditions={openEditions} />
+            {loading && <ProjectLeaderboardShimmer />}
+            {!loading && <Leaderboard openEditions={openEditions} />}
 
             <LongDescription>
               {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
