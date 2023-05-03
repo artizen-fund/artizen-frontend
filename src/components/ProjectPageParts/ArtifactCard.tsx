@@ -2,16 +2,17 @@ import { useContext } from 'react'
 import styled from 'styled-components'
 import { rgba, LayoutContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { IArtifactFragment } from '@types'
+import { IArtifactFragment, IProjectFragment } from '@types'
 import { DonationBox } from '@components'
 
 interface IArtifactCard {
   artifact: IArtifactFragment
+  project: IProjectFragment
 }
 
-const ArtifactCard = ({ artifact }: IArtifactCard) => {
+const ArtifactCard = ({ artifact, project }: IArtifactCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-
+  console.log('project', project)
   return (
     <Wrapper>
       <Img
@@ -29,7 +30,7 @@ const ArtifactCard = ({ artifact }: IArtifactCard) => {
           <OpenEdition>Open Edition</OpenEdition>
         </Copy>
         <Footer>
-          <DonationBox tokenId={artifact.token} />
+          <DonationBox tokenId={artifact.token} project={project} />
         </Footer>
       </AllCopy>
     </Wrapper>

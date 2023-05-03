@@ -131,7 +131,7 @@ const ProjectPage = () => {
           <Side>
             {/* TODO: Artifacts should be an object instead of an array  */}
             {/* This is wrong, we need to use the artifact from the submission */}
-            <ArtifactCard artifact={project.artifacts[0]} />
+            <ArtifactCard artifact={project.artifacts[0]} project={project} />
           </Side>
         </Wrapper>
       </PagePadding>
