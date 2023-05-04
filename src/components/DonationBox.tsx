@@ -40,7 +40,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     address: SEASON_CONTRACT as `0x${string}`,
     abi: SeasonsAbi,
     functionName: 'mintArtifact',
-    args: [[130], [artifactQuantity]],
+    args: [[tokenId], [artifactQuantity]],
     chainId: goerli.id,
     overrides: {
       value: ethers.utils.parseEther('0.01'),
