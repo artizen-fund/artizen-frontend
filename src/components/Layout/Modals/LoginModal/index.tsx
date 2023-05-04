@@ -1,74 +1,88 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { CloseButton, CheckboxControl } from '@components'
+import { CheckboxControl, Icon, Button } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
 import { rgba, assetPath, LayoutContext, textCrop, assert } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
-import detectEthereumProvider from '@metamask/detect-provider'
-import { connectWallet as copy } from '@copy/common'
-import { useRouter } from 'next/router'
-import useWalletConnect from './lib'
+import { connectWallet, signInWalletMessage } from '@copy/common'
+import { useWalletAuthFlow, ConnectingComp } from './lib/'
 
 const LoginModal = ({ ...props }) => {
   const { toggleModal } = useContext(LayoutContext)
-  const { connectMetamask, connectOtherWallet } = useWalletConnect()
+  const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
   const [enabled, setEnabled] = useState(true)
-  const { push } = useRouter()
 
   const isMobile = navigator.maxTouchPoints > 1
 
   console.log('its mobile===', isMobile)
 
-  const redirectToMetamaskBrowser = () => {
-    // Metamask deeplink generated with: https://metamask.github.io/metamask-deeplinks/#
-    const NEXT_PUBLIC_APP_DOMAIN = assert(process.env.NEXT_PUBLIC_APP_DOMAIN, 'NEXT_PUBLIC_APP_DOMAIN')
-    const newUrl = `https://metamask.app.link/dapp/${NEXT_PUBLIC_APP_DOMAIN}`
+  console.log('currentFlow  ', currentFlow)
 
-    console.log('newUrl   ', newUrl)
+  useEffect(() => {
+    if (isAuthenticated()) {
+      toggleModal()
+    }
+  }, [isAuthenticated])
 
-    push(newUrl)
-  }
-
+  //TODO: Write a wrapper component with tiles
+  //and abstract the connect to wallet and the sign message components
   return (
     <Wrapper {...props}>
-      <Headline>{copy.headline}</Headline>
-      <Subhead>{copy.subhead}</Subhead>
-
-      <Tiles>
-        {/* EricJ: I really need to check if it's a mobile regarless of the screensize, 
+      {currentFlow === 'toConnect' && (
+        <>
+          <Headline>{connectWallet.headline}</Headline>
+          <Subhead>{connectWallet.subhead}</Subhead>
+          <Tiles>
+            {/* EricJ: I really need to check if it's a mobile regarless of the screensize, 
         so I am trying maxTouchPoints as recommended with MDN but happy to use a more relaiable approach */}
-        <Tile
-          id="btMetamask"
-          onClick={async () => {
-            // const provider = await detectEthereumProvider({ mustBeMetaMask: true })
-            // console.log('provider 222  ', provider)
-            connectMetamask()
-            // isMobile && !provider ? redirectToMetamaskBrowser() : connectMetamask()
-          }}
-          {...{ enabled }}
-        >
-          <img src={assetPath('/assets/metamask.svg')} alt="Metamask" />
-          Metamask
-        </Tile>
+            {!isMobile && (
+              <Tile
+                id="btMetamask"
+                onClick={() => {
+                  connectMetamask()
+                }}
+                {...{ enabled }}
+              >
+                <img src={assetPath('/assets/metamask.svg')} alt="Metamask" />
+                Metamask
+              </Tile>
+            )}
 
-        <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
-          <img src={assetPath('/assets/walletConnect.svg')} alt="WalletConnect" />
-          WalletConnect
-        </Tile>
-      </Tiles>
+            <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
+              <img src={assetPath('/assets/walletConnect.svg')} alt="WalletConnect" />
+              WalletConnect
+            </Tile>
+          </Tiles>
 
-      <CheckWrapper>
-        <Check>
-          <CheckboxControl data={enabled} path="not-used" handleChange={() => setEnabled(!enabled)} label="" />
-          <CheckMessage>
-            {/* TODO: move this to Copy doc */}
-            <Link href="https://help.artizen.fund/en/articles/4761373-privacy-policy" target="_blank">
-              {copy.privacyMessage}
-            </Link>
-          </CheckMessage>
-        </Check>
-      </CheckWrapper>
+          <CheckWrapper>
+            <Check>
+              <CheckboxControl data={enabled} path="not-used" handleChange={() => setEnabled(!enabled)} label="" />
+              <CheckMessage>
+                {/* TODO: move this to Copy doc */}
+                <Link href="https://help.artizen.fund/en/articles/4761373-privacy-policy" target="_blank">
+                  {connectWallet.privacyMessage}
+                </Link>
+              </CheckMessage>
+            </Check>
+          </CheckWrapper>
+        </>
+      )}
+
+      {currentFlow === 'toSignMessage' && (
+        <>
+          <Headline>{signInWalletMessage.headline}</Headline>
+          <Subhead>{signInWalletMessage.subhead}</Subhead>
+          <Tiles>
+            <Tile id="signMessage" enabled={true}>
+              <Button glyph="external" level={1} outline onClick={() => signEnMessage()} {...{ enabled }}>
+                {signInWalletMessage.buttonCopy}
+              </Button>
+            </Tile>
+          </Tiles>
+        </>
+      )}
+      {currentFlow === 'connecting' && <ConnectingComp />}
     </Wrapper>
   )
 }
@@ -76,12 +90,6 @@ const LoginModal = ({ ...props }) => {
 const Wrapper = styled.div`
   padding: 40px 25px;
   max-width: calc(100vw - 20px);
-
-  @media (hover: none) and (max-width: ${breakpoint.tablet}px) {
-    #btMetamask {
-      display: none;
-    }
-  }
 
   @media only screen and (min-width: ${breakpoint.phablet}px) {
     padding: 40px;

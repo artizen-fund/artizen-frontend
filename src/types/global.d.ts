@@ -31,7 +31,6 @@ declare global {
     | 'alert'
     | 'media'
     | 'login'
-    | 'connecting'
     | 'confirmTransaction'
     | 'processTransaction'
     | 'shareTransaction'

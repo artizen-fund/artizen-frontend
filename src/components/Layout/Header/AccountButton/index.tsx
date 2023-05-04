@@ -75,7 +75,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         <SizedType>Close</SizedType>
       </TextLabel>
       <TextLabel visible={status !== 'loading' && !loggedInUser && !active}>
-        <SizedType>Sign In</SizedType>
+        <SizedType>Connect</SizedType>
       </TextLabel>
       <HamburgerGlyph
         visible={status !== 'loading' && !!loggedInUser && !active}
