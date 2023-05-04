@@ -27,11 +27,20 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     'NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS',
   )
 
+  const { status } = useSession()
+
+  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
+
+  const { mintOpenEditions } = useSeasons()
+  const [sending, setSending] = useState<boolean>(false)
+  const { setVisibleModal } = useContext(LayoutContext)
+  const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
+
   const { config } = usePrepareContractWrite({
     address: SEASON_CONTRACT as `0x${string}`,
     abi: SeasonsAbi,
     functionName: 'mintArtifact',
-    args: [[130], [1]],
+    args: [[130], [artifactQuantity]],
     chainId: goerli.id,
     overrides: {
       value: ethers.utils.parseEther('0.01'),
@@ -42,15 +51,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   })
 
   const { write, isLoading, isSuccess } = useContractWrite(config)
-
-  const { status } = useSession()
-
-  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
-
-  const { mintOpenEditions } = useSeasons()
-  const [sending, setSending] = useState<boolean>(false)
-  const { setVisibleModal } = useContext(LayoutContext)
-  const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
