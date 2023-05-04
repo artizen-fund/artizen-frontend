@@ -50,7 +50,23 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     },
   })
 
-  const { write, isLoading, isSuccess } = useContractWrite(config)
+  const { write, isLoading, isSuccess, isError } = useContractWrite({
+    ...config,
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+
+      if (error) {
+        console.log('error useContractWrite', error)
+      }
+
+      if (data) {
+        data.wait().then((receipt: any) => {
+          console.log('receipt', receipt)
+          alert(`receipt: ${receipt.blockHash}`)
+        })
+      }
+    },
+  })
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
@@ -113,7 +129,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
           <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
         </MobileBreak>
         <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending || !write}>
-          {sending ? 'Buying' : 'Buy'}
+          {isLoading ? 'Buying' : 'Buy'}
         </StyledButton>
       </>
     </Wrapper>
