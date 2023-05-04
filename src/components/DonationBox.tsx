@@ -43,7 +43,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     args: [[tokenId], [artifactQuantity]],
     chainId: goerli.id,
     overrides: {
-      value: ethers.utils.parseEther('0.01'),
+      value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
     },
     onError: e => {
       console.log('error prepering contract', e)
