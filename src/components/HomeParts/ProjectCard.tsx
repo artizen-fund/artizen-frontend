@@ -50,9 +50,7 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
           }
         />
       </ImageWrapper>
-      <Footer>
-        <DonationBox tokenId={latestArtifact.token} {...{ project }} />
-      </Footer>
+      <Footer>{latestArtifact.token && <DonationBox tokenId={latestArtifact.token} {...{ project }} />}</Footer>
     </Wrapper>
   )
 }
