@@ -50,7 +50,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     },
   })
 
-  const { write, isLoading, isSuccess, isError } = useContractWrite({
+  const { writeAsync, isLoading, isSuccess, isError } = useContractWrite({
     ...config,
     onSettled(data, error) {
       console.log('Settled', { data, error })
@@ -77,7 +77,9 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       tokenId,
     })
 
-    write?.()
+    const response = await writeAsync?.()
+
+    console.log('response', response)
 
     // const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, BASE_ARTIFACT_PRICE)
 
