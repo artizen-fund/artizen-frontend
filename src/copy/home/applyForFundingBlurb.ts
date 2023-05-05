@@ -1,7 +1,7 @@
 const applyForFundingBlurb = {
   title: 'Submit Your Projects',
   subhead:
-    'The Artizen Prize is open to creators at the frontier of art, science, technology, and design. We support projects in any stage of development from rough idea to released work, and in any medium from oil paintings to open source code. ',
+    'Artizen is open to creators at the frontier of art, science, technology, and design. We support projects in any stage of development from rough idea to released work, and in any medium from oil paintings to open source code. ',
   trailingHead: 'Here’s what we’re looking for:',
   tiles: [
     {

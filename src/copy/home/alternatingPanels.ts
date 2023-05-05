@@ -2,10 +2,10 @@ import { GlyphKey } from '@theme'
 
 const alternatingPanels: Array<IAlternatingPanel> = [
   {
-    image: '/assets/illustrations/home/about.png',
-    imageDark: '/assets/illustrations/home/about-dark.png',
-    title: 'Reward Positive Impact',
-    copy: 'Artifacts are a new type of NFT designed to reward positive impact. Think carbon credits, but for any project that does good in the world. Each Artifact documents how a project plans to:',
+    image: '/assets/illustrations/home/artifacts.png',
+    imageDark: '/assets/illustrations/home/artifacts-dark.png',
+    title: 'Invest in positive impact',
+    copy: 'Each Artifact is an open edition NFT designed to capture the essence of a project and its impact on the world. Think carbon credits, but for human creativity. Artifacts document how a project plans to:',
     list: [
       {
         label: 'Transform Lives',
@@ -24,39 +24,39 @@ const alternatingPanels: Array<IAlternatingPanel> = [
     destination: 'https://help.artizen.fund/en/articles/6746680-artifacts-reward-positive-impact',
   },
   {
-    image: '/assets/illustrations/home/trust.png',
-    imageDark: '/assets/illustrations/home/trust-dark.png',
-    title: 'Curate our Official Selection',
-    copy: 'Artifacts give you the power to curate our winners. The more Artifacts you own, the greater your voting power. Join us to vote for your favorite projects and champion the creators you love.',
+    image: '/assets/illustrations/home/leaderboard.png',
+    imageDark: '/assets/illustrations/home/leaderboard-dark.png',
+    title: 'Fund projects you love',
+    copy: 'Buy Artifacts to help raise money for projects you love. Every Artifact you buy unlocks match funding. And cash prizes are awarded to the projects with the most Artifacts sold.  ',
     list: [
       {
-        label: 'Review Submissions',
+        label: 'Raise Money for New Projects',
         glyph: 'eye',
       },
       {
-        label: 'Vote for Projects You Love',
+        label: 'Unlock Match Funding',
         glyph: 'tick',
       },
       {
-        label: 'Curate New Selection Each Season',
+        label: 'Award Cash Prizes',
         glyph: 'crown',
       },
     ],
     buttonLabel: 'Learn More',
-    destination: 'https://help.artizen.fund/en/articles/6604061-curate-our-grants',
+    destination: 'https://help.artizen.fund/en/articles/7730702-match-funding-for-artifact-sales',
   },
   {
     image: '/assets/illustrations/home/about.png',
     imageDark: '/assets/illustrations/home/about-dark.png',
     title: 'Join a Vibrant Community',
-    copy: 'When you own an Artifact, you join a vibrant community of artists, scientists, coders, and creators of every kind. Together we’re on a mission to unlock human creativity.',
+    copy: 'When you buy an Artifact, you join a vibrant community of artists, scientists, coders, and creators of every kind.  Together we curate our Official Selection, collaborate on projects, and elevate each other.',
     list: [
       {
         label: 'Connect at Private Gatherings',
         glyph: 'lock',
       },
       {
-        label: 'Collaborate with Friends',
+        label: 'Curate our Official Selection',
         glyph: 'speechBubble',
       },
       {
