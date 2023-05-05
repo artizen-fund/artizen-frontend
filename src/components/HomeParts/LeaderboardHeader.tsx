@@ -1,10 +1,7 @@
 import styled from 'styled-components'
-import { rgba, assetPath, useGnosis, assert } from '@lib'
+import { rgba, assetPath, useGnosis } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { PagePadding, Countdown, Glyph, Spinner } from '@components'
-import { useSubscription } from '@apollo/client'
-import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription, ISeasonFragment } from '@types'
+import { PagePadding, Countdown, Glyph } from '@components'
 
 interface LeaderboardHeaderProps {
   index?: number
@@ -18,7 +15,7 @@ const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProp
   return (
     <StyledPagePadding>
       <Content>
-        <Title>Leaderboard</Title>
+        <Title>Top Artifacts</Title>
 
         <Stats>
           <Stat>

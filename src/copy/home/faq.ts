@@ -2,11 +2,11 @@ import { GlyphKey } from '@theme'
 
 const faq = [
   {
-    question: 'How does the Artizen Prize work?',
+    question: 'How does Artizen work?',
     answer: `
-Artizen awards cash prizes to creators who make an impact in the world through art, science, technology, and design. Submissions are reviewed and curated by the Artizen community. Projects in the Official Selection sell cultural Artifacts in the form of NFTs to raise funds and climb our leaderboard. At the end of each season, the project with the most Artifacts sold wins the prestigious Artizen Prize, receiving financial support and recognition.
+Artizen helps creators raise money for projects that impact the world through art, science, technology, and design. Submissions are reviewed and curated by the Artizen community. Projects in the Official Selection sell cultural Artifacts in the form of NFTs to raise funds and climb the leaderboard. At the end of each season, the project with the most Artifacts sold wins the prestigious Artizen Prize, receiving financial support and recognition.
 
-[How it works](https://help.artizen.fund/en/articles/6782291-welcome-to-artizen)
+[How Artizen works](https://help.artizen.fund/en/articles/6782291-welcome-to-artizen)
 `,
   },
   {
@@ -15,6 +15,14 @@ Artizen awards cash prizes to creators who make an impact in the world through a
 Artifacts are a new type of NFT designed to help creators raise money for their projects. Minted on Ethereum as an open edition ERC-1155, each Artifact represents a unique work of art that captures the spark of inspiration behind a project and its intended impact on the world. Only projects that make it into the Official Selection are allowed to create and sell Artifacts. Artifacts also serve as a membership pass to Artizen, empowering owners to curate projects, join a vibrant community of creators, and invest in positive impact.
 
 [Learn what makes Artifacts special](https://help.artizen.fund/en/articles/6604052-what-are-artifacts)
+`,
+  },
+  {
+    question: 'How does match funding work?',
+    answer: `
+For every Artifact you buy, Artizen will match dollar for dollar while funding lasts. If you buy 10 Artifacts, Artizen will also buy 10 Artifacts from the same creator, effectively doubling the financial support for that project. This unique approach allows you to amplify your impact for projects you love.
+
+[Learn more about match funding](https://help.artizen.fund/en/articles/7730702-match-funding-for-artifact-sales)
 `,
   },
   {
