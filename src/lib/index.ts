@@ -31,6 +31,7 @@ export * from './useSmartContracts'
 export * from './useSeasons'
 export * from './useDateHelpers'
 export * from './useGnosis'
+export * from './useMintArtifacts'
 
 export { default as sendArtifactToIPFS } from './sendArtifactToIPFS'
 

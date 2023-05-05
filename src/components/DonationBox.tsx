@@ -7,12 +7,21 @@ import { ethers } from 'ethers'
 import { usePrepareContractWrite, useContractWrite, useBalance } from 'wagmi'
 import { ErrorObject } from 'ajv'
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, assert, rgba, useSeasons } from '@lib'
+import {
+  LayoutContext,
+  trackEventF,
+  intercomEventEnum,
+  assertFloat,
+  assert,
+  rgba,
+  useSeasons,
+  useMintArtifacts,
+} from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { IProjectFragment } from '@types'
 
 interface IDonationBox {
-  tokenId: string | undefined
+  tokenId: string
   project: IProjectFragment
 }
 
@@ -36,30 +45,35 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
 
-  const { config } = usePrepareContractWrite({
-    address: SEASON_CONTRACT as `0x${string}`,
-    abi: SeasonsAbi,
-    functionName: 'mintArtifact',
-    args: [[tokenId], [artifactQuantity]],
-    chainId: goerli.id,
-    overrides: {
-      value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
-    },
-    onError: e => {
-      console.log('error prepering contract', e)
-    },
+  const { writeAsync } = useMintArtifacts({
+    tokenId,
+    artifactQuantity,
   })
 
-  const { writeAsync, isLoading, isSuccess, isError } = useContractWrite({
-    ...config,
-    onSettled(data, error) {
-      console.log('Settled', { data, error })
+  // const { config } = usePrepareContractWrite({
+  //   address: SEASON_CONTRACT as `0x${string}`,
+  //   abi: SeasonsAbi,
+  //   functionName: 'mintArtifact',
+  //   args: [[tokenId], [artifactQuantity]],
+  //   chainId: goerli.id,
+  //   overrides: {
+  //     value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
+  //   },
+  //   onError: e => {
+  //     console.log('error prepering contract', e)
+  //   },
+  // })
 
-      if (error) {
-        console.log('error useContractWrite', error)
-      }
-    },
-  })
+  // const { writeAsync, isLoading, isSuccess, isError } = useContractWrite({
+  //   ...config,
+  //   onSettled(data, error) {
+  //     console.log('Settled', { data, error })
+
+  //     if (error) {
+  //       console.log('error useContractWrite', error)
+  //     }
+  //   },
+  // })
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
@@ -92,38 +106,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       })
     }
 
-    // const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, BASE_ARTIFACT_PRICE)
-
-    // //All good, there is a txHash
-    // if (txHash) {
-    //   // NOTE: This will trigger a blockchain
-    //   // event which is captured by event listener script (EK's owned)
-    //   // event listener script writes a openEditions record in Hasura
-    //   // which is then picked up by the subscription and the UI is updated
-    //   // and sends Courier email and in-app notification to the donor
-
-    //   trackEventF(intercomEventEnum.DONATION_FINISHED, {
-    //     amount: artifactQuantity.toString(),
-    //     tokenId,
-    //   })
-
-    //   setVisibleModalWithAttrs('shareTransaction', {
-    //     mode: 'postTransaction',
-    //     destination: `/projects/${project.titleURL}`,
-    //     projecTitle: project.title,
-    //   })
-    // }
-
-    // //Show error
-    // if (error === 'Insufficient funds') {
-    //   //insufficientFunds
-    //   toggleModal('insufficientFunds')
-    //   setSending(false)
-    //   return
-    // }
-
-    //Close modal if there is no error neither txHash, like when users have rejected transactions,
-    toggleModal()
     setSending(false)
   }
 
