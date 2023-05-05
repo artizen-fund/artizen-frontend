@@ -58,13 +58,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       if (error) {
         console.log('error useContractWrite', error)
       }
-
-      if (data) {
-        data.wait().then((receipt: any) => {
-          console.log('receipt', receipt)
-          alert(`receipt: ${receipt.blockHash}`)
-        })
-      }
     },
   })
 
@@ -77,9 +70,27 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       tokenId,
     })
 
-    const response = await writeAsync?.()
+    const writeContract = await writeAsync?.()
 
-    console.log('response', response)
+    toggleModal()
+
+    const result = await writeContract?.wait()
+
+    console.log('response', result?.blockHash)
+
+    if (result?.blockHash) {
+      console.log('gets here')
+      trackEventF(intercomEventEnum.DONATION_FINISHED, {
+        amount: artifactQuantity.toString(),
+        tokenId,
+      })
+
+      setVisibleModalWithAttrs('shareTransaction', {
+        mode: 'postTransaction',
+        destination: `/projects/${project.titleURL}`,
+        projecTitle: project.title,
+      })
+    }
 
     // const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, BASE_ARTIFACT_PRICE)
 
@@ -130,8 +141,8 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
           </Cost>
           <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
         </MobileBreak>
-        <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending || !write}>
-          {isLoading ? 'Buying' : 'Buy'}
+        <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending || !writeAsync}>
+          {sending ? 'Buying' : 'Buy'}
         </StyledButton>
       </>
     </Wrapper>
