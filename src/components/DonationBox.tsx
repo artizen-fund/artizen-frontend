@@ -50,31 +50,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     artifactQuantity,
   })
 
-  // const { config } = usePrepareContractWrite({
-  //   address: SEASON_CONTRACT as `0x${string}`,
-  //   abi: SeasonsAbi,
-  //   functionName: 'mintArtifact',
-  //   args: [[tokenId], [artifactQuantity]],
-  //   chainId: goerli.id,
-  //   overrides: {
-  //     value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
-  //   },
-  //   onError: e => {
-  //     console.log('error prepering contract', e)
-  //   },
-  // })
-
-  // const { writeAsync, isLoading, isSuccess, isError } = useContractWrite({
-  //   ...config,
-  //   onSettled(data, error) {
-  //     console.log('Settled', { data, error })
-
-  //     if (error) {
-  //       console.log('error useContractWrite', error)
-  //     }
-  //   },
-  // })
-
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
     toggleModal('confirmTransaction')

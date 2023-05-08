@@ -1,8 +1,7 @@
 import { usePrepareContractWrite, useContractWrite, useBalance } from 'wagmi'
 import { SeasonsAbi } from '@contracts'
-import { goerli } from 'wagmi/chains'
 import { ethers } from 'ethers'
-import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, assert, rgba, useSeasons } from '@lib'
+import { assertFloat, assert, assertInt } from '@lib'
 
 interface useMintArtifactsProps {
   tokenId: string
@@ -15,6 +14,8 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     'NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS',
   )
 
+  const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+
   const BASE_ARTIFACT_PRICE = assertFloat(
     process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
@@ -25,7 +26,7 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     abi: SeasonsAbi,
     functionName: 'mintArtifact',
     args: [[tokenId], [artifactQuantity]],
-    chainId: goerli.id,
+    chainId,
     overrides: {
       value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
     },
