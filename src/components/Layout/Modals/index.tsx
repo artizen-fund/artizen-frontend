@@ -7,14 +7,13 @@ import {
   AlertModal,
   MediaModal,
   LoginModal,
-  ConnectingModal,
   ConfirmTransactionModal,
   ProcessTransactionModal,
   ShareTransactionModal,
   CreateSeasonModal,
   SubmitProjectModal,
   NewProjectMembersModal,
-  InsufficientFunds,
+  ErrorModal,
 } from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
@@ -48,8 +47,6 @@ const Modals = () => {
     // TODO: the animation timing above isn't working, so instead of switching on
     // displayedVisibleModal, I'm just gonna go off the real thing for now.
     switch (visibleModal) {
-      case 'connecting':
-        return <ConnectingModal />
       case 'confirmTransaction':
         return <ConfirmTransactionModal />
       case 'processTransaction':
@@ -74,8 +71,8 @@ const Modals = () => {
         return <SubmitProjectModal />
       case 'newProjectMemberModal':
         return <NewProjectMembersModal />
-      case 'insufficientFunds':
-        return <InsufficientFunds />
+      case 'errorModal':
+        return <ErrorModal />
 
       default:
         return <></>

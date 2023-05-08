@@ -1,6 +1,6 @@
 export const graphqlURL = process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL
   ? process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL
-  : 'https://artizen-dev.hasura.app/v1/graphql'
+  : 'https://artizen-test.hasura.app/v1/graphql'
 
 export const graphqlAdminSecret = process.env.HASURA_GRAPHQL_ADMIN_SECRET ? process.env.HASURA_GRAPHQL_ADMIN_SECRET : ''
 
@@ -23,3 +23,17 @@ delete_Seasons(where: {title: {_like: "playwright test title"}}) {
 }
 }
 `
+
+export function getCreatorIdByArtifactTokenIdGql(tokenId: string) {
+  return `
+query getCreatorIdByArtifactTokenId {
+  Projects(where: {artifacts: {token: {_eq: "${tokenId}"}}}) {
+    members(where: {type: {_eq: "lead"}}) {
+      user {
+        publicAddress
+      }
+    }
+  }
+}
+`
+}

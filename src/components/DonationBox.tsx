@@ -1,30 +1,63 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { SeasonsAbi } from '@contracts'
+import { goerli } from 'wagmi/chains'
 import styled from 'styled-components'
+import { ethers } from 'ethers'
+import { usePrepareContractWrite, useContractWrite, useBalance } from 'wagmi'
 import { ErrorObject } from 'ajv'
-
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useSeasons } from '@lib'
+import {
+  LayoutContext,
+  trackEventF,
+  intercomEventEnum,
+  assertFloat,
+  assert,
+  rgba,
+  useSeasons,
+  useMintArtifacts,
+} from '@lib'
 import { breakpoint, typography, palette } from '@theme'
+import { IProjectFragment } from '@types'
 
 interface IDonationBox {
-  tokenId: string | undefined
+  tokenId: string
+  project: IProjectFragment
 }
 
-const DonationBox = ({ tokenId }: IDonationBox) => {
+const DonationBox = ({ tokenId, project }: IDonationBox) => {
   const BASE_ARTIFACT_PRICE = assertFloat(
     process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
+  const SEASON_CONTRACT = assert(
+    process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
+    'NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS',
+  )
+
   const { status } = useSession()
 
-  const { toggleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
 
   const { mintOpenEditions } = useSeasons()
   const [sending, setSending] = useState<boolean>(false)
   const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
+
+  const { writeAsync, error } = useMintArtifacts({
+    tokenId,
+    artifactQuantity,
+  })
+
+  useEffect(() => {
+    if (error) {
+      console.log('error', error)
+      setVisibleModalWithAttrs('errorModal', {
+        error,
+      })
+    }
+  }, [error])
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
@@ -35,34 +68,25 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
       tokenId,
     })
 
-    const { error, txHash } = await mintOpenEditions(tokenId, artifactQuantity, BASE_ARTIFACT_PRICE)
+    const writeContract = await writeAsync?.()
 
-    //All good, there is a txHash
-    if (txHash) {
-      // NOTE: This will trigger a blockchain
-      // event which is captured by event listener script (EK's owned)
-      // event listener script writes a openEditions record in Hasura
-      // which is then picked up by the subscription and the UI is updated
-      // and sends Courier email and in-app notification to the donor
+    toggleModal()
 
+    const result = await writeContract?.wait()
+
+    if (result?.blockHash) {
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
         tokenId,
       })
 
-      toggleModal('shareTransaction')
+      setVisibleModalWithAttrs('shareTransaction', {
+        mode: 'postTransaction',
+        destination: `/projects/${project.titleURL}`,
+        projecTitle: project.title,
+      })
     }
 
-    //Show error
-    if (error === 'Insufficient funds') {
-      //insufficientFunds
-      toggleModal('insufficientFunds')
-      setSending(false)
-      return
-    }
-
-    //Close modal if there is no error neither txHash, like when users have rejected transactions,
-    toggleModal()
     setSending(false)
   }
 
@@ -80,7 +104,7 @@ const DonationBox = ({ tokenId }: IDonationBox) => {
           </Cost>
           <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
         </MobileBreak>
-        <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending}>
+        <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending || !writeAsync}>
           {sending ? 'Buying' : 'Buy'}
         </StyledButton>
       </>

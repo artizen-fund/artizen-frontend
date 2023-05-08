@@ -30,7 +30,10 @@ const IndexPage = () => {
 
   const { currentSeasonId } = useContext(SeasonContext)
 
+  console.log('currentSeasonId  ', currentSeasonId)
+
   const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+    skip: !currentSeasonId,
     fetchPolicy: 'no-cache',
     variables: {
       where: {

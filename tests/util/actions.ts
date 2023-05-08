@@ -118,3 +118,13 @@ export async function connectAndSignWithMetamask(page: Page, clickMetamaskButton
   if (!popup.isClosed()) await popup.waitForEvent('close')
   return popup
 }
+
+export async function signMetamaskPopup(popup: Page) {
+  try {
+    console.log('popup: click sign button')
+    const signButton = await popup.waitForSelector(`//button[contains(text(), 'Sign')]`, { timeout: 5000 })
+    await signButton.click({ timeout: 1000 })
+  } catch (e) {
+    console.log(e)
+  }
+}

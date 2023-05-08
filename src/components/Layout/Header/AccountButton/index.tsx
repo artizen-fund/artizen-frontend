@@ -24,7 +24,6 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     skip: !isConnected || !session || !session?.user?.publicAddress,
     variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
     onCompleted: data => {
-      console.log('get to onCompleted')
       if (!loggedInUser || loggedInUser.id !== data.Users[0].id) {
         //TODO: there is really not need to use useReactiveVar. We can move this query function to a hook and use it everywhere the user data is needed
         // useReactiveVar forces rerender the whole website, bad stuff
@@ -75,7 +74,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         <SizedType>Close</SizedType>
       </TextLabel>
       <TextLabel visible={status !== 'loading' && !loggedInUser && !active}>
-        <SizedType>Sign In</SizedType>
+        <SizedType>Connect</SizedType>
       </TextLabel>
       <HamburgerGlyph
         visible={status !== 'loading' && !!loggedInUser && !active}
