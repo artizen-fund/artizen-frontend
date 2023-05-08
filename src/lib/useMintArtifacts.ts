@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { SeasonsAbi } from '@contracts'
 import { ethers } from 'ethers'
-import { assertFloat, assert, assertInt, WALLET_CHAIN_MISSMATCH } from '@lib'
+import { assertFloat, assert, assertInt, WALLET_CHAIN_MISMATCH } from '@lib'
 
 interface useMintArtifactsProps {
   tokenId: string
@@ -36,7 +36,7 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
       console.log('error usePrepareContractWrite here', e.message)
       let error = e.message
 
-      if (error.includes(WALLET_CHAIN_MISSMATCH)) {
+      if (error.includes(WALLET_CHAIN_MISMATCH)) {
         const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
         error = `You're logged on wrong change, please logout and login again using: ${chainName}`
       }

@@ -39,8 +39,6 @@ declare global {
     | 'newProjectMemberModal'
     | 'errorModal'
 
-  type DonationMethod = 'usd' | 'polygon' | 'ethereum'
-
   type Donation = {
     address: string
     amount: string
@@ -49,26 +47,7 @@ declare global {
     userAddress: string
   }
 
-  type DonationStageStatus = 'WAITING' | 'PROCESSING' | 'COMPLETE'
-
   type DonationStageFunction = (setStatus: (s: StageStatus) => void, setMessage: (s: string) => void) => void
-
-  type IRaffle = {
-    cancelled: boolean
-    ended: boolean
-    donationCount: BigNumber
-    endTime: BigNumber
-    startTime: BigNumber
-    minimumDonationAmount: BigNumber
-    nftContract: string
-    nftOwner: string
-    raffleID: BigNumber
-    tokenAllocation: BigNumber
-    tokenBuffer: BigNumber
-    tokenID: BigNumber
-    topDonatedAmount: BigNumber
-    topDonor: string
-  }
 
   interface IAlternatingPanel {
     image: string
