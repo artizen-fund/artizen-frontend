@@ -29,9 +29,7 @@ const ArtifactCard = ({ artifact, project }: IArtifactCard) => {
           <h2>Artifact #{artifact.token}</h2>
           <OpenEdition>Open Edition</OpenEdition>
         </Copy>
-        <Footer>
-          <DonationBox tokenId={artifact.token} project={project} />
-        </Footer>
+        <Footer>{artifact.token && <DonationBox tokenId={artifact.token} project={project} />}</Footer>
       </AllCopy>
     </Wrapper>
   )

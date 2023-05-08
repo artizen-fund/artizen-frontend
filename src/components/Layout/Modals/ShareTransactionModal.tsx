@@ -13,6 +13,7 @@ interface ShareModalAttrs {
 }
 
 const ShareTransactionModal = () => {
+  console.log('ShareTransactionModal loaded')
   const { toggleModal } = useContext(LayoutContext)
 
   // note: this all shared with Share.tsx

@@ -35,12 +35,8 @@ export const useSeasons = () => {
     error?: string
   }
 
-  //Mints open editions when users click the button
-  //buy within project/slug
-  //Take into account that the project
-  //page shows the button to all the projects even if
-  //they have not  yet been published to the blockchain,
-  //and this method fails if the Artifact to buy open editions from has not tokenId
+  // TODO: Still need to migrate the errors to the new hook useMintArtifacts
+  // Once the errors are mapped to the new hook, we can delete this function
   const mintOpenEditions = async (
     tokenId: string,
     amount: number,
