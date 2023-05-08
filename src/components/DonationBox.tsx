@@ -54,7 +54,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     if (error) {
       console.log('error', error)
       setVisibleModalWithAttrs('errorModal', {
-        message: error,
+        error,
       })
     }
   }, [error])

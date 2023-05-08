@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { SeasonsAbi } from '@contracts'
 import { ethers } from 'ethers'
-import { assertFloat, assert, assertInt } from '@lib'
+import { assertFloat, assert, assertInt, WALLET_ERROR_UNSUPPORTED_OPERATION } from '@lib'
 
 interface useMintArtifactsProps {
   tokenId: string

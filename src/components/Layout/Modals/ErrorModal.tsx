@@ -7,11 +7,12 @@ import { palette, breakpoint, typography } from '@theme'
 import { sharing } from '@copy/common'
 
 const ErrorModal = () => {
-  const { toggleModal } = useContext(LayoutContext)
+  const { toggleModal, modalAttrs } = useContext(LayoutContext)
+  const { error } = modalAttrs as any
 
   return (
     <Wrapper>
-      <Tile>Insufficient Funds in your wallet</Tile>
+      <Tile>{error}</Tile>
       <CloseButton onClick={() => toggleModal()} />
     </Wrapper>
   )
@@ -30,7 +31,7 @@ const Tile = styled.div`
 
 const Wrapper = styled.div`
   position: relative;
-  width: 100%;
+  width: 85%;
   display: flex;
   flex-direction: column;
   max-width: 500px;
