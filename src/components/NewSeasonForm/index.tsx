@@ -65,8 +65,6 @@ export default function NewSeasonForm(): JSX.Element {
       throw new Error('Error loading season in checkIfThereIsSeasonDate')
     }
 
-    console.log('seasonInDB  ', seasonInDB.Seasons.length > 0)
-
     if (seasonInDB.Seasons.length > 0) {
       setAdditionalErrors([
         {
@@ -96,16 +94,12 @@ export default function NewSeasonForm(): JSX.Element {
     // // //publish season to blockchain
     const publishedSeason = await publishSeason(startingDate, endingDate)
 
-    console.log('publishedSeason   ', publishedSeason)
-
     if (!publishedSeason) {
       throw new Error('Error publishing season to blockchain')
     }
 
     //get the new season id from blockchain and save it into the database
     const newSeasonId = publishedSeason.events[0].args[0].toString()
-
-    console.log('newSeasonId   ', newSeasonId)
 
     const dateFronMutation = await insertSeason({
       variables: {
@@ -136,9 +130,7 @@ export default function NewSeasonForm(): JSX.Element {
       uischema={uischema}
       data={data}
       setData={async temData => {
-        console.log('temData', temData)
         if (temData.startingDate && temData.endingDate) {
-          console.log('it gets to check')
           await checkIfThereIsSeasonDate(temData.startingDate, temData.endingDate)
           checkIfEndingDateIsAfterStartingDate(temData.startingDate, temData.endingDate)
         }

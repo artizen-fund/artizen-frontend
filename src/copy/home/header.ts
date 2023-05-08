@@ -1,8 +1,8 @@
 const header = {
-  title: 'Cash Prizes for Human Creativity',
+  title: 'Buy Artifacts to Fund Creativity',
   subtitle:
-    'Each season, we award cash prizes to creators who impact the world through art, science, technology, and design.',
-  buttonLabel: 'See Leaderboard',
+    'Buy cultural Artifacts to help creators raise money for new projects at the frontier of art, science, technology, and design.',
+  buttonLabel: 'See Artifacts',
 }
 
 export { header }

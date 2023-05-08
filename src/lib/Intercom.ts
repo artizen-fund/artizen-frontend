@@ -30,12 +30,7 @@ export function initIntercom() {
   }
 
   useEffect(() => {
-    //TODO: Keep this console log until we are sure Intercom is on production
-    console.log('useEffect  loggedInUser  ', loggedInUser)
-    console.log('useEffect window.Intercom.name ', window.Intercom?.name)
-
     if (window.Intercom && !!loggedInUser && window.Intercom?.name !== loggedInUser?.artizenHandle) {
-      console.log('update Intercom to name ', loggedInUser?.artizenHandle)
       updateIntercom('update', {
         email: loggedInUser?.email,
         name: loggedInUser?.artizenHandle,
@@ -43,7 +38,6 @@ export function initIntercom() {
     }
 
     if (!window.Intercom && !loggedInUser) {
-      console.log('start Intercom')
       startIntercom()
     }
   }, [loggedInUser])

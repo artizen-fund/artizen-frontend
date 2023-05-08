@@ -24,6 +24,7 @@ export const GET_SEASON_FOR_TIME = gql`
     Seasons(limit: 1, where: $where) {
       id
       endingDate
+      startingDate
     }
   }
 `

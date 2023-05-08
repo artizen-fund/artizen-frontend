@@ -1,16 +1,8 @@
 import { createContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_SEASON_FOR_TIME } from '@gql'
-import utc from 'dayjs/plugin/utc'
-import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import { ARTIZEN_TIMEZONE, HASURA_TIMEZONE_FORMAT } from './constants'
 import { ISeasonForTimeQuery } from '@types'
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.extend(isSameOrAfter)
+import { useDateHelpers } from '@lib'
 
 /* 
 
@@ -55,13 +47,13 @@ interface ISeasonContext {
 export const SeasonContext = createContext<ISeasonContext>({})
 
 export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
+  const { getNowWithFormat, isSeasonActive } = useDateHelpers()
   const [localTimestamp, setLocalTimestamp] = useState<string>()
   const [currentSeasonId, setCurrentSeasonId] = useState<string>()
 
   // 1. cache a timestamp upon site load
   useEffect(() => {
-    const now = dayjs()
-    setLocalTimestamp(dayjs.tz(now, ARTIZEN_TIMEZONE).format(HASURA_TIMEZONE_FORMAT))
+    setLocalTimestamp(getNowWithFormat())
   }, [])
 
   // 2. use a normal query to look for an existing season ID and endDate
@@ -75,11 +67,9 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     },
   })
 
-  useEffect(() => {
-    if (error) {
-      console.error('error retrieving current season', error)
-    }
-  }, [error])
+  if (error) {
+    console.error('error retrieving current season', error)
+  }
 
   // 3. use the season ID for the subscription
   useEffect(() => {
@@ -106,10 +96,10 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
 
   const refreshTimestamp = () => {
     if (!data || !data.Seasons[0]) return
-    const now = dayjs()
-    if (now.isSameOrAfter(data.Seasons[0].endingDate)) {
+
+    if (isSeasonActive(data.Seasons[0]?.startingDate, data.Seasons[0]?.endingDate)) {
       // 5. refresh the timestamp; updates cascade.
-      setLocalTimestamp(dayjs.tz(now, ARTIZEN_TIMEZONE).format(HASURA_TIMEZONE_FORMAT))
+      setLocalTimestamp(getNowWithFormat())
     }
   }
 

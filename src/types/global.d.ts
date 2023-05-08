@@ -31,14 +31,13 @@ declare global {
     | 'alert'
     | 'media'
     | 'login'
-    | 'connecting'
     | 'confirmTransaction'
     | 'processTransaction'
     | 'shareTransaction'
     | 'createSeasonModal'
     | 'submitProjectModal'
     | 'newProjectMemberModal'
-    | 'insufficientFunds'
+    | 'errorModal'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 

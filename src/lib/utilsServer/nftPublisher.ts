@@ -22,6 +22,8 @@ export async function storeNFTFromUrl(imageUrl: string, name: string) {
   const response = await fetch(imageUrl)
   const result = await pinata.pinFileToIPFS(response.body, options)
 
+  console.log('storeNFTFromUrl result', result)
+
   return result
 }
 
@@ -41,8 +43,6 @@ export async function storeNFTFromContent(metadata: any, name: string) {
       name,
     },
   }
-
-  console.log('metadata  storeNFTFromContent  ', metadata)
 
   const result = await pinata.pinJSONToIPFS(metadata, options)
 

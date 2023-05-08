@@ -9,10 +9,9 @@ import { importTestAdminWallet, disconnectAccount } from '../util/metamask'
 import {
   clickAccountButton,
   clickSignInButtonWithRetry,
-  clickMetamaskIcon,
-  closeWalletConnectModal,
   clickLogout,
   connectAndSignWithMetamask,
+  signMetamaskPopup
 } from '../util/actions'
 
 export const test = base.extend<{
@@ -65,17 +64,32 @@ test.describe('general artizen user', () => {
   })
 
   test('new user can login via metamask', async ({ page, metamask, context }) => {
+    page.on('popup', (popup) => {
+      console.log('got page popup event')
+      popup.bringToFront()
+    })
+
+    metamask.page.on('popup', (popup) => {
+      console.log('got metamask popup event')
+      popup.bringToFront()
+    })
+
     await page.waitForLoadState()
 
     // click sign in button
-    // await clickAccountButton(page, 'CloseSign In')
     await clickSignInButtonWithRetry(page)
-
-    // await clickMetamaskIcon(page)
 
     // Approve the connection when MetaMask pops up
     await connectAndSignWithMetamask(page, true, false)
 
+    await page.waitForTimeout(5000)
+
+    const popup = page.context().pages().at(-1)
+    if (popup !== undefined) {
+      await signMetamaskPopup(popup)
+    }
+    
+  
     await page.waitForLoadState()
 
     // upon successful login, expect the new user profile form to appear
@@ -136,9 +150,12 @@ test.describe('admin user', () => {
 
     // disconnect other user metamask account from localhost
     await disconnectAccount(metamask, 1)
+    console.log("disconnected account 1")
 
     // ensure test season is not in db
     await deleteTestSeasonFromDb()
+
+    metamask.page.on('pageerror', (page) => {console.log('pageerror')})
   })
 
   test.beforeEach(async ({ page }) => {
@@ -146,9 +163,10 @@ test.describe('admin user', () => {
     await page.bringToFront()
   })
 
-  test.afterAll(async () => {
+  test.afterAll(async ({ metamask }) => {
     // clean up: remove test season from db
     await deleteTestSeasonFromDb()
+    await metamask.deleteAccount(2)
   })
 
   test('admin user can login', async ({ page, metamask }) => {
@@ -160,14 +178,20 @@ test.describe('admin user', () => {
 
     await connectAndSignWithMetamask(page, true, true)
 
+    await page.waitForTimeout(5000)
+
+    const popup = page.context().pages().at(-1)
+    if (popup !== undefined) {
+      await signMetamaskPopup(popup)
+    }
+
     await page.waitForLoadState()
 
-    // expect initials 'rr' for admin to be hidden by profile pic
-    await expect(page.locator('#accountButton').getByText('e')).toBeVisible({
+    await expect(page.locator('#accountButton').getByText('t')).toBeVisible({
       timeout: 10000,
     })
 
-    await clickAccountButton(page, 'e')
+    await clickAccountButton(page, 't')
     await expect(page.getByText('Hi testcurator')).toBeVisible({
       timeout: 10000,
     })

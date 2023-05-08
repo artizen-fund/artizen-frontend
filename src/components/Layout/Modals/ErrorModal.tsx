@@ -6,12 +6,13 @@ import { rgba, LayoutContext } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
 import { sharing } from '@copy/common'
 
-const InsufficientFunds = () => {
-  const { toggleModal } = useContext(LayoutContext)
+const ErrorModal = () => {
+  const { toggleModal, modalAttrs } = useContext(LayoutContext)
+  const { error } = modalAttrs as any
 
   return (
     <Wrapper>
-      <Tile>Insufficient Funds in your wallet</Tile>
+      <Tile>{error}</Tile>
       <CloseButton onClick={() => toggleModal()} />
     </Wrapper>
   )
@@ -35,7 +36,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   max-width: 500px;
   gap: 30px;
-
   padding: 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     width: 416px;
@@ -99,4 +99,4 @@ const StyledButton = styled(props => <Button {...props} />)`
   }
 `
 
-export default InsufficientFunds
+export default ErrorModal
