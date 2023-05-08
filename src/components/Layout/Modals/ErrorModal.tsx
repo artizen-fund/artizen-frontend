@@ -6,7 +6,7 @@ import { rgba, LayoutContext } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
 import { sharing } from '@copy/common'
 
-const InsufficientFunds = () => {
+const ErrorModal = () => {
   const { toggleModal } = useContext(LayoutContext)
 
   return (
@@ -99,4 +99,4 @@ const StyledButton = styled(props => <Button {...props} />)`
   }
 `
 
-export default InsufficientFunds
+export default ErrorModal

@@ -45,8 +45,6 @@ const NewProjectMembersModal = () => {
     })
   }
 
-  console.log('userSelected   ', userSelected)
-
   const editUser = () => {
     toggleModal()
     setVisibleModalWithAttrs('createProfile', {

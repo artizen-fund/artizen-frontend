@@ -27,8 +27,6 @@ const ProjectDetails = () => {
   const testWallet = (walletAddress: string) => {
     const isValid = validateLib.validate(walletAddress, 'ETH')
 
-    console.log('isValid  ', isValid)
-
     return !isValid
       ? [
           {

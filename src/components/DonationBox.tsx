@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { SeasonsAbi } from '@contracts'
 import { goerli } from 'wagmi/chains'
@@ -45,10 +45,19 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
 
-  const { writeAsync } = useMintArtifacts({
+  const { writeAsync, error } = useMintArtifacts({
     tokenId,
     artifactQuantity,
   })
+
+  useEffect(() => {
+    if (error) {
+      console.log('error', error)
+      setVisibleModalWithAttrs('errorModal', {
+        message: error,
+      })
+    }
+  }, [error])
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
@@ -65,10 +74,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
     const result = await writeContract?.wait()
 
-    console.log('response', result?.blockHash)
-
     if (result?.blockHash) {
-      console.log('gets here')
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
         tokenId,

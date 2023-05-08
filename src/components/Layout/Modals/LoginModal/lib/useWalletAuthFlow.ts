@@ -19,7 +19,6 @@ const useWalletAuthFlow = () => {
       // Verify signature when sign message succeeds
       // const address = verifyMessage(variables.message, data);
       // recoveredAddress.current = address;
-      console.log('data  ', data)
 
       signIn('moralis-auth', {
         message: variables.message,
@@ -94,8 +93,6 @@ const useWalletAuthFlow = () => {
   }
 
   const isAuthenticated = () => status === 'authenticated'
-
-  console.log('status  ', status)
 
   const connectWalletFlow = status !== 'authenticated' && !messageToSign && !isConnected
 

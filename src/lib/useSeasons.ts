@@ -101,6 +101,8 @@ export const useSeasons = () => {
 
     console.log('ipfsHash  ', ipfsHash)
 
+    console.log('season.index  ', season.index)
+
     const publishSubmissionTX = await seasonsContract?.createSubmission(season.index, ipfsHash, project.walletAddress)
 
     const publishSubmissionTXReceipt = await publishSubmissionTX.wait()

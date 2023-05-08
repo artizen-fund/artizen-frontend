@@ -1,4 +1,5 @@
-import { usePrepareContractWrite, useContractWrite, useBalance } from 'wagmi'
+import { useState } from 'react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { SeasonsAbi } from '@contracts'
 import { ethers } from 'ethers'
 import { assertFloat, assert, assertInt } from '@lib'
@@ -9,6 +10,7 @@ interface useMintArtifactsProps {
 }
 
 export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifactsProps) => {
+  const [errorState, setErrorState] = useState<string | null>(null)
   const SEASON_CONTRACT = assert(
     process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
     'NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS',
@@ -21,7 +23,7 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const { config, error } = usePrepareContractWrite({
+  const { config } = usePrepareContractWrite({
     address: SEASON_CONTRACT as `0x${string}`,
     abi: SeasonsAbi,
     functionName: 'mintArtifact',
@@ -31,7 +33,8 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
       value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
     },
     onError: e => {
-      console.log('error prepering contract', e)
+      console.log('error usePrepareContractWrite here', e.message)
+      setErrorState(e.message)
     },
   })
 
@@ -42,9 +45,10 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
 
       if (error) {
         console.log('error useContractWrite', error)
+        setErrorState(error.message)
       }
     },
   })
 
-  return { error: isError || error, isLoading, isSuccess, writeAsync }
+  return { error: errorState, isLoading, isSuccess, writeAsync }
 }

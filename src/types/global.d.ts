@@ -37,7 +37,7 @@ declare global {
     | 'createSeasonModal'
     | 'submitProjectModal'
     | 'newProjectMemberModal'
-    | 'insufficientFunds'
+    | 'errorModal'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
