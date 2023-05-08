@@ -50,7 +50,6 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
 
   useEffect(() => {
     if (newPublicWallet && !validateLib.validate(newPublicWallet, 'ETH')) {
-      console.log('gets to error')
       additionalErrors.push({
         instancePath: '/publicAddress',
         message: 'Invalid ETH address',
@@ -98,7 +97,6 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
 
     const newUser = newUserMutationReturn.data.insert_Users.returning[0]
 
-    console.log('user is created::::', newUser)
     // If there is a change in email, or artizenHandle, update profile in Courier
     if (newUser.email && newUser.artizenHandle) {
       await sendUserToCourier(newUser.id, newUser.email, newUser.artizenHandle)
@@ -110,8 +108,6 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
     if (!loggedInUser) {
       throw new Error('User session not found')
     }
-
-    console.log('updateProfile   ', updateProfile)
 
     const valuesToUpdate: FormState = {}
 

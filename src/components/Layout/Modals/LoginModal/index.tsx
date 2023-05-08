@@ -15,10 +15,6 @@ const LoginModal = ({ ...props }) => {
 
   const isMobile = navigator.maxTouchPoints > 1
 
-  console.log('its mobile===', isMobile)
-
-  console.log('currentFlow  ', currentFlow)
-
   useEffect(() => {
     if (isAuthenticated()) {
       toggleModal()

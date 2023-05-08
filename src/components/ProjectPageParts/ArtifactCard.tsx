@@ -12,7 +12,6 @@ interface IArtifactCard {
 
 const ArtifactCard = ({ artifact, project }: IArtifactCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  console.log('project', project)
   return (
     <Wrapper>
       <Img

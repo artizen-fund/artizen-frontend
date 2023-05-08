@@ -3,13 +3,8 @@ import { withSentry } from '@sentry/nextjs'
 import { storeNFTFromContent, storeNFTFromUrl } from '@lib'
 
 const uploadDataToIPFS = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('req.body  ', req.body)
-
   try {
     const { imagePath, name, metadata } = req.body
-
-    console.log('imagePath  ', imagePath)
-    console.log('metadata  ', metadata)
 
     if (metadata) {
       const result = await storeNFTFromContent(metadata, name)
@@ -21,7 +16,7 @@ const uploadDataToIPFS = async (req: NextApiRequest, res: NextApiResponse) => {
 
     throw new Error('Missing imagePath or metadata!')
   } catch (error) {
-    console.error(error)
+    console.error('error  uploadDataToIPFS  ', error)
     res.status(500).end()
   }
 }

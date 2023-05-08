@@ -11,9 +11,9 @@ const sendDataToAPI = async (data: string): Promise<PinataPinResponse> => {
     body: data,
   })
 
-  console.log('response from sendDataToAPI  ', response)
+  const result = await response.json()
 
-  return response.json()
+  return result
 }
 
 export { sendDataToAPI }

@@ -24,16 +24,12 @@ const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragmen
 
   const artifactDescription = composeArtifactDescription(artifactName, project, allProjectMembersString || '')
 
-  console.log('artifactToUpload.artwork  ', artifactToUpload)
-
   const image = await sendDataToAPI(
     JSON.stringify({
       imagePath: artifactToUpload.artwork,
       name: `${artifactName}-image`,
     }),
   )
-
-  console.log('image uploaded ', image)
 
   const video = artifactToUpload.video
     ? await sendDataToAPI(
