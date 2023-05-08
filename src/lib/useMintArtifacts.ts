@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { SeasonsAbi } from '@contracts'
 import { ethers } from 'ethers'
-import { assertFloat, assert, assertInt, WALLET_ERROR_UNSUPPORTED_OPERATION } from '@lib'
+import { assertFloat, assert, assertInt, WALLET_CHAIN_MISSMATCH } from '@lib'
 
 interface useMintArtifactsProps {
   tokenId: string
@@ -34,7 +34,12 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     },
     onError: e => {
       console.log('error usePrepareContractWrite here', e.message)
-      setErrorState(e.message)
+      let error = e.message
+      if (error.includes(WALLET_CHAIN_MISSMATCH)) {
+        const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
+        error = `${WALLET_CHAIN_MISSMATCH} ${chainName}`
+      }
+      setErrorState(error)
     },
   })
 

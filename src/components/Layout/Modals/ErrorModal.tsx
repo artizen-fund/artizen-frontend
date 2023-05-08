@@ -31,12 +31,11 @@ const Tile = styled.div`
 
 const Wrapper = styled.div`
   position: relative;
-  width: 85%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   max-width: 500px;
   gap: 30px;
-
   padding: 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     width: 416px;
