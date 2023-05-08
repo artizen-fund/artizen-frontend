@@ -23,7 +23,7 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const { config } = usePrepareContractWrite({
+  const { config, error } = usePrepareContractWrite({
     address: SEASON_CONTRACT as `0x${string}`,
     abi: SeasonsAbi,
     functionName: 'mintArtifact',
@@ -55,6 +55,9 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
       }
     },
   })
+
+  console.log('useMintArtifacts  isError', isError)
+  console.log('useMintArtifacts error', error)
 
   return { error: errorState, isLoading, isSuccess, writeAsync }
 }
