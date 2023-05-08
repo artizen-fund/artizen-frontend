@@ -44,7 +44,7 @@ async function getMetamaskPopupAfterClick(page: Page) {
 
   // might need to click "Send Message" button
   try {
-    await page.locator('#signMessage').getByRole("button").click({timeout: 1000})
+    await page.locator('#signMessage').getByRole("button").click({timeout: 5000})
   } catch (e) {
     console.log(e)
   }
