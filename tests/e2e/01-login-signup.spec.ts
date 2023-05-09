@@ -89,7 +89,6 @@ test.describe('general artizen user', () => {
       await signMetamaskPopup(popup)
     }
     
-  
     await page.waitForLoadState()
 
     // upon successful login, expect the new user profile form to appear
@@ -117,7 +116,7 @@ test.describe('general artizen user', () => {
     await clickAccountButton(page, 't')
     await clickLogout(page)
 
-    await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible({
+    await expect(page.locator('#accountButton').getByText('Connect')).toBeVisible({
       timeout: 10000,
     })
   })
@@ -133,7 +132,14 @@ test.describe('general artizen user', () => {
 
     await page.waitForLoadState()
 
-    await expect(page.locator('#accountButton').getByText('t')).toBeVisible({
+    await page.waitForTimeout(5000)
+
+    const popup = page.context().pages().at(-1)
+    if (popup !== undefined) {
+      await signMetamaskPopup(popup)
+    }
+    
+    await expect(page.locator('#accountButton').getByText('t', {exact: true})).toBeVisible({
       timeout: 10000,
     })
   })
@@ -187,7 +193,7 @@ test.describe('admin user', () => {
 
     await page.waitForLoadState()
 
-    await expect(page.locator('#accountButton').getByText('t')).toBeVisible({
+    await expect(page.locator('#accountButton').getByText('t', {exact: true})).toBeVisible({
       timeout: 10000,
     })
 
