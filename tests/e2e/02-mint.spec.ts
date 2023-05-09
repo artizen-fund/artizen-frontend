@@ -88,7 +88,7 @@ test.describe('existing user', () => {
 
     await page.waitForLoadState()
 
-    await expect(page.locator('#accountButton').getByText('t')).toBeVisible({
+    await expect(page.locator('#accountButton').getByText('t', {exact: true})).toBeVisible({
       timeout: 10000,
     })
 
