@@ -1,6 +1,5 @@
 import moment from 'moment-timezone'
 import { IArtifactFragment, IProjectFragment } from '@types'
-import { BigNumber } from 'ethers'
 import { ARTIZEN_TIMEZONE } from '@lib'
 import getLeadMemberTraitType from './getLeadMemberTraitType'
 import { PinataPinResponse } from '@pinata/sdk'

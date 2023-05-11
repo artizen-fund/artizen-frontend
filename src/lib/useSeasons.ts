@@ -9,7 +9,7 @@ import {
   WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT,
 } from '@lib'
 import { IProjectFragment, ISeasonFragment } from '@types'
-import { ethers } from 'ethers'
+import { parseEther } from 'viem'
 
 export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
@@ -48,7 +48,7 @@ export const useSeasons = () => {
 
     try {
       const tx = await seasonsContract?.mintArtifact([tokenId], [amount], {
-        value: ethers.utils.parseEther(finalAmount.toString()),
+        value: parseEther(`${finalAmount}`),
       })
 
       const mintOpenEditionsTx = await tx.wait()

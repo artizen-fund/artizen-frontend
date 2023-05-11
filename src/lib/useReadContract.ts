@@ -1,8 +1,9 @@
-import { ContractInterface, ethers } from 'ethers'
+import { ContractInterface } from 'ethers'
 import { useEffect, useState } from 'react'
 
 export const useReadContract = <T>(
   contractAddress: string,
+  //TODO: Stop using ethers and replace it for view, fix this type
   contractAbi: ContractInterface,
   methodName: string,
   attr: Array<any> = [],

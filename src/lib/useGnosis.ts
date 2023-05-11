@@ -1,6 +1,7 @@
 import { useEvmNativeBalance, useEvmTokenPrice } from '@moralisweb3/next'
 import { EvmChain } from 'moralis/common-evm-utils'
-import { ethers } from 'ethers'
+import { parseEther, parseGwei } from 'viem'
+import { formatEther } from 'viem'
 import { useState } from 'react'
 import { assert, assertFloat } from '@lib'
 
@@ -53,8 +54,7 @@ export const useGnosis = () => {
 
   const USDtoETHstr = USDCTokenPriceData?.nativePrice?.ether
 
-  const USDtoETH =
-    !isFetching && USDtoETHstr !== undefined ? parseFloat(ethers.utils.formatEther(parseInt(USDtoETHstr))) : undefined
+  const USDtoETH = !isFetching && USDtoETHstr !== undefined ? parseFloat(formatEther(BigInt(USDtoETHstr))) : undefined
 
   const safeBalanceETH =
     !isFetching && USDtoETHstr !== undefined

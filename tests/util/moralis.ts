@@ -1,5 +1,5 @@
-import { BigNumber } from 'ethers'
 import Moralis from 'moralis'
+import { formatUnits } from 'viem'
 
 const seasonsContractAddress = !!process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS
   ? process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS
@@ -29,18 +29,18 @@ async function getOECcount(address: string, tokenId: string): Promise<number> {
   return -1
 }
 
-async function getWalletBalance(address: string): Promise<BigNumber> {
+async function getWalletBalance(address: string): Promise<bigint> {
   try {
     const response = await Moralis.EvmApi.balance.getNativeBalance({
       chain: '0x5',
       address: address,
     })
-    return BigNumber.from(response.toJSON().balance)
+    return formatUnits(response.toJSON().balance, 9)
   } catch (e) {
     console.error(e)
   }
 
-  return BigNumber.from(-1)
+  return formatUnits(-1)
 }
 
 export { getOECcount, getWalletBalance, seasonsContractAddress }

@@ -1,6 +1,5 @@
 import composeMetadataObject from './composeMetadataObject'
 // import { mockProject, mockArtifact, mockImageResponse } from './mockData'
-import { BigNumber } from 'ethers'
 
 describe('composeMetadataObject', () => {
   // it('composes a metadataObject based on a project and artifact', () => {

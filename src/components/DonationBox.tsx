@@ -1,11 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { SeasonsAbi } from '@contracts'
-import { goerli } from 'wagmi/chains'
 import styled from 'styled-components'
-import { ethers } from 'ethers'
-import { usePrepareContractWrite, useContractWrite, useBalance } from 'wagmi'
-import { ErrorObject } from 'ajv'
 import { Button, Counter } from '@components'
 import {
   LayoutContext,
