@@ -1,6 +1,7 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import { useReactiveVar } from '@apollo/client'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
@@ -21,16 +22,18 @@ import {
   NoGrant,
   HomeLoadingShimmer,
 } from '@components'
-import { rgba, SeasonContext } from '@lib'
+import { rgba, SeasonContext, loggedInUserVar } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
   const { asPath } = useRouter()
+  const [loadingAll, setLoadingAll] = useState(true)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
+
+  console.log('loggedInUser   ', loggedInUser)
 
   const { currentSeasonId } = useContext(SeasonContext)
-
-  console.log('currentSeasonId  ', currentSeasonId)
 
   const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     skip: !currentSeasonId,
@@ -40,6 +43,9 @@ const IndexPage = () => {
         id: { _eq: currentSeasonId },
       },
       order_by: { submissions_aggregate: { count: 'asc' } },
+    },
+    onData: () => {
+      setLoadingAll(false)
     },
   })
 
@@ -60,8 +66,8 @@ const IndexPage = () => {
       <HomeHeader />
       <PartnersRibbon />
       <HomeRibbon />
-      {loading && <HomeLoadingShimmer />}
-      {!loading && data?.Seasons[0] && (
+      {loadingAll && <HomeLoadingShimmer />}
+      {!loadingAll && data?.Seasons[0] && (
         <>
           <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
           <StyledPagePadding>
@@ -80,7 +86,7 @@ const IndexPage = () => {
           </StyledPagePadding>
         </>
       )}
-      {!loading && !data?.Seasons[0] && <NoGrant />}
+      {!loadingAll && !data?.Seasons[0] && <NoGrant />}
       <Newsletter />
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (

@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/client'
 // import { GET_ADJACENT_GRANT } from '@gql'
 import Link from 'next/link'
 
-const GrantsExplorer = () => {
+const NoGrantSidebar = () => {
   return (
     <Wrapper>
       <Bar>
@@ -92,4 +92,4 @@ const GrantDate = styled.div`
   ${typography.title.l4}
 `
 
-export default GrantsExplorer
+export default NoGrantSidebar
