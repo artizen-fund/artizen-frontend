@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { SeasonsAbi } from '@contracts'
 import { ethers } from 'ethers'
-import { assertFloat, assert, assertInt, WALLET_CHAIN_MISMATCH } from '@lib'
+import { assertFloat, assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND } from '@lib'
 
 interface useMintArtifactsProps {
   tokenId: string
@@ -34,11 +34,16 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     },
     onError: e => {
       console.log('error usePrepareContractWrite here', e.message)
+
       let error = e.message
 
       if (error.includes(WALLET_CHAIN_MISMATCH)) {
         const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
         error = `You're logged on wrong change, please logout and login again using: ${chainName}`
+        setErrorState(error)
+      }
+      if (error.includes(WALLET_NO_FOUND)) {
+        error = `You do not have enough funds in your wallet to mint this open edition`
         setErrorState(error)
       }
     },
