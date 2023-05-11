@@ -1,11 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { SeasonsAbi } from '@contracts'
-import { goerli } from 'wagmi/chains'
 import styled from 'styled-components'
-import { ethers } from 'ethers'
-import { usePrepareContractWrite, useContractWrite, useBalance } from 'wagmi'
-import { ErrorObject } from 'ajv'
 import { Button, Counter } from '@components'
 import {
   LayoutContext,
@@ -31,16 +26,9 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const SEASON_CONTRACT = assert(
-    process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
-    'NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS',
-  )
-
   const { status } = useSession()
 
   const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
-
-  const { mintOpenEditions } = useSeasons()
   const [sending, setSending] = useState<boolean>(false)
   const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
@@ -49,15 +37,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     tokenId,
     artifactQuantity,
   })
-
-  useEffect(() => {
-    if (error) {
-      console.log('error', error)
-      setVisibleModalWithAttrs('errorModal', {
-        error,
-      })
-    }
-  }, [error])
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
@@ -104,7 +83,19 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
           </Cost>
           <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
         </MobileBreak>
-        <StyledButton level={1} onClick={() => donateFn()} disabled={artifactQuantity <= 0 || sending || !writeAsync}>
+        <StyledButton
+          level={1}
+          onClick={() => {
+            if (error) {
+              setVisibleModalWithAttrs('errorModal', {
+                error,
+              })
+              return
+            }
+
+            donateFn()
+          }}
+        >
           {sending ? 'Buying' : 'Buy'}
         </StyledButton>
       </>
