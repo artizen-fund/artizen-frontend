@@ -42,6 +42,7 @@ The most efficient thing to do (AFAIK) is…
 
 interface ISeasonContext {
   currentSeasonId?: string
+  loadingSeasonId?: boolean
 }
 
 export const SeasonContext = createContext<ISeasonContext>({})
@@ -107,6 +108,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     <SeasonContext.Provider
       value={{
         currentSeasonId,
+        loadingSeasonId: loading,
       }}
     >
       {children}
