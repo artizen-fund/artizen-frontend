@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useReactiveVar } from '@apollo/client'
-import { useSubscription } from '@apollo/client'
+import { useReactiveVar, useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 import {
