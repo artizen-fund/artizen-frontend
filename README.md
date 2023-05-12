@@ -34,6 +34,7 @@ Check [CONTRIBUTING.md](https://github.com/artizen-fund/artizen-frontend/blob/ma
 - [RPC Provider with Alchemy](https://www.alchemy.com/)
 - [Web2 Image hosting and transformation with Cloudinary](https://cloudinary.com/)
 - [User support and help pages with Intercom](https://www.intercom.com/)
+- [IPFS storage with Pinata](https://pinata.cloud/)
 
 ## folder structure
 
