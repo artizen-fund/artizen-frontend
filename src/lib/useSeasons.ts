@@ -9,7 +9,7 @@ import {
   WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT,
 } from '@lib'
 import { IProjectFragment, ISeasonFragment } from '@types'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
@@ -22,9 +22,7 @@ export const useSeasons = () => {
   // SeasonForm component when the user clicks the publish button
   const publishSeason = async (startTime: string, endTime: string) => {
     const startTimeUnix = getTimeUnix(startTime)
-    console.log('endTime  ', endTime)
     const endTimeUnix = getTimeUnix(endTime)
-    console.log('endTimeUnix  ', endTimeUnix)
     const tx = await seasonsContract?.createSeason(startTimeUnix, endTimeUnix)
     console.log('tx from create season', tx)
     return await tx.wait()
@@ -35,8 +33,12 @@ export const useSeasons = () => {
     error?: string
   }
 
-  // TODO: Still need to migrate the errors to the new hook useMintArtifacts
-  // Once the errors are mapped to the new hook, we can delete this function
+  //Mints open editions when users click the button
+  //buy within project/slug
+  //Take into account that the project
+  //page shows the button to all the projects even if
+  //they have not  yet been published to the blockchain,
+  //and this method fails if the Artifact to buy open editions from has not tokenId
   const mintOpenEditions = async (
     tokenId: string,
     amount: number,
@@ -101,8 +103,6 @@ export const useSeasons = () => {
 
     console.log('ipfsHash  ', ipfsHash)
 
-    console.log('season.index  ', season.index)
-
     const publishSubmissionTX = await seasonsContract?.createSubmission(season.index, ipfsHash, project.walletAddress)
 
     const publishSubmissionTXReceipt = await publishSubmissionTX.wait()
@@ -118,5 +118,13 @@ export const useSeasons = () => {
     return
   }
 
-  return { publishSeason, publishSubmissions, mintOpenEditions } as const
+  const closeSeason = async (seasonIndex: number) => {
+    console.log('season ID', typeof seasonIndex, seasonIndex)
+
+    const tx = await seasonsContract?.closeSeason(seasonIndex)
+    console.log('tx from close season', tx)
+    return await tx.wait()
+  }
+
+  return { publishSeason, publishSubmissions, mintOpenEditions, closeSeason } as const
 }
