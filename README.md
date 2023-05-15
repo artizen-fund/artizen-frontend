@@ -66,7 +66,7 @@ We recommend using 1Password to manage your secrets. File: `.env_1password_templ
 
 ## Database
 
-Metadata is mainly saved in Hasura. You can find the schema in `hasura/schema.graphql`. You can also find the schema in the Hasura console.
+Metadata is mainly saved in Hasura. You can find the schema in the file `databd-schema.json`. You can import it in your Hasura console.
 
 Web3 data is saved in the stage memory of Season smart contract. Find more information in the their [Season Contract Repository](https://github.com/artizen-fund/seasons-contracts)
 
