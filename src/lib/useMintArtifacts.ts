@@ -55,6 +55,9 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
       console.log('Settled', { data, error })
 
       if (error) {
+        //capture here error: UserRejectedRequestError: User rejected request
+        // when tx is reject due to users canceling the transaction
+
         console.log('error useContractWrite', error)
         setErrorState(error.message)
       }
