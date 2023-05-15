@@ -49,7 +49,7 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     },
   })
 
-  const { writeAsync, isLoading, isSuccess, isError } = useContractWrite({
+  const { writeAsync, isLoading, isSuccess } = useContractWrite({
     ...config,
     onSettled(data, error) {
       console.log('Settled', { data, error })

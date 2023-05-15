@@ -86,6 +86,9 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         <StyledButton
           level={1}
           onClick={() => {
+            //TODO: Migrate this, because it only captures errors from contract preparations
+            // which happen before the transaction is sent, but errors from useContract are
+            // not captured here. We need to capture those errors and pass them to the modal
             if (error) {
               setVisibleModalWithAttrs('errorModal', {
                 error,

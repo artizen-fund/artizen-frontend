@@ -27,6 +27,8 @@ const useWalletAuthFlow = () => {
       })
     },
     onError(error) {
+      //delete all the data and refresh the page when error is:
+      //ConnectorNotFoundError: Connector not found
       console.log('error signMessage  ', error)
     },
   })
@@ -75,12 +77,10 @@ const useWalletAuthFlow = () => {
   }
 
   const connectMetamask = () => {
-    // toggleModal('connecting')
     connectWallet(new MetaMaskConnector({ chains }))
   }
 
   const connectOtherWallet = () => {
-    // toggleModal('connecting')
     connectWallet(
       new WalletConnectConnector({
         chains,
