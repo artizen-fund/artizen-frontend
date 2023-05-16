@@ -57,7 +57,7 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <HomeHeader season={data?.Seasons[0]} />
+      <HomeHeader season={data?.Seasons[0]} {...{ loading }} />
       <PartnersRibbon />
       <HomeRibbon />
       {loading && <HomeLoadingShimmer />}

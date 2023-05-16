@@ -8,9 +8,10 @@ import { ISeasonFragment } from '@types'
 
 interface IHomeHeader {
   season?: ISeasonFragment
+  loading?: boolean
 }
 
-const HomeHeader = ({ season }: IHomeHeader) => {
+const HomeHeader = ({ season, loading }: IHomeHeader) => {
   const { isSeasonActive } = useContext(SeasonContext)
 
   const scrollToLeaderboard = () => {
@@ -34,12 +35,12 @@ const HomeHeader = ({ season }: IHomeHeader) => {
             <h1>{title}</h1>
             <h2>{header.subtitle}</h2>
           </div>
-          {!!isSeasonActive && (
+          {!loading && !!isSeasonActive && (
             <Button level={0} onClick={scrollToLeaderboard}>
               {header.buttonLabel}
             </Button>
           )}
-          {!isSeasonActive && (
+          {!loading && !isSeasonActive && (
             <Row>
               <Button level={0} href="https://artizen.typeform.com/apply">
                 Submit to Season 3
