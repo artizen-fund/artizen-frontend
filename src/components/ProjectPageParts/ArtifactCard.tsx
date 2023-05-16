@@ -8,9 +8,10 @@ import { DonationBox } from '@components'
 interface IArtifactCard {
   artifact: IArtifactFragment
   project: IProjectFragment
+  seasonIsActive: boolean
 }
 
-const ArtifactCard = ({ artifact, project }: IArtifactCard) => {
+const ArtifactCard = ({ artifact, project, seasonIsActive }: IArtifactCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   return (
     <Wrapper>
@@ -28,7 +29,9 @@ const ArtifactCard = ({ artifact, project }: IArtifactCard) => {
           <h2>Artifact #{artifact.token}</h2>
           <OpenEdition>Open Edition</OpenEdition>
         </Copy>
-        <Footer>{artifact.token && <DonationBox tokenId={artifact.token} project={project} />}</Footer>
+        {seasonIsActive && (
+          <Footer>{artifact.token && <DonationBox tokenId={artifact.token} project={project} />}</Footer>
+        )}
       </AllCopy>
     </Wrapper>
   )
