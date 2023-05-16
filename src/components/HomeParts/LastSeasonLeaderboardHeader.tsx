@@ -1,10 +1,6 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-<<<<<<< HEAD
-import { rgba, assetPath, useDateHelpers, formatDate, SeasonContext } from '@lib'
-=======
 import { rgba, assetPath, useDateHelpers, formatDate, useGnosis } from '@lib'
->>>>>>> 5364bcbc311488754d38f020e5027d2fcfae36c4
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding, Glyph } from '@components'
 import { useQuery } from '@apollo/client'
@@ -16,24 +12,20 @@ interface LeaderboardHeaderProps {
 }
 
 const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => {
-  const { seasonIndex } = useContext(SeasonContext)
   const [localTimestamp, setLocalTimestamp] = useState<string>()
   const { getNowWithFormat } = useDateHelpers()
   useEffect(() => {
-    const localTime = getNowWithFormat()
-    console.log('localTime  ', localTime)
-    setLocalTimestamp(localTime)
+    setLocalTimestamp(getNowWithFormat())
   }, [])
   const { USDtoETH } = useGnosis()
-
-  console.log('seasonIndex  ', seasonIndex)
 
   const { data: latestSeason, error } = useQuery<ISeasonForTimeQuery>(GET_SEASON_FOR_TIME, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        index: { _eq: 2 },
+        endingDate: { _lt: localTimestamp },
       },
+      order_by: { startingDate: 'desc' },
     },
   })
 
