@@ -49,7 +49,7 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
               {season.amountRaised} ETH
               <CashTrend>
                 {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                  parseFloat(season.amountRaised! / USDtoETH!),
+                  season.amountRaised / USDtoETH!,
                 )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
               </CashTrend>
