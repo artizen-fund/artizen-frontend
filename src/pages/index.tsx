@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useReactiveVar, useSubscription } from '@apollo/client'
+import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 import {
@@ -17,34 +17,29 @@ import {
   PartnersRibbon,
   HomeRibbon,
   LeaderboardHeader,
+  LastSeasonLeaderboardHeader,
   ProjectCard,
-  NoGrant,
+  ProjectCardPreviousSeason,
   HomeLoadingShimmer,
 } from '@components'
-import { rgba, SeasonContext, loggedInUserVar } from '@lib'
+import { rgba, SeasonContext, useDateHelpers } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
   const { asPath } = useRouter()
-  const [loadingAll, setLoadingAll] = useState(true)
-  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const { isSeasonActive } = useDateHelpers()
 
-  console.log('loggedInUser   ', loggedInUser)
-
-  const { currentSeasonId } = useContext(SeasonContext)
+  const { seasonId } = useContext(SeasonContext)
 
   const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
-    skip: !currentSeasonId,
+    skip: !seasonId,
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        id: { _eq: currentSeasonId },
+        id: { _eq: seasonId },
       },
       order_by: { submissions_aggregate: { count: 'asc' } },
-    },
-    onData: () => {
-      setLoadingAll(false)
     },
   })
 
@@ -60,13 +55,31 @@ const IndexPage = () => {
     }
   }, [])
 
+  const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
+
   return (
     <Layout>
-      <HomeHeader />
+      <HomeHeader season={data?.Seasons[0]} />
       <PartnersRibbon />
       <HomeRibbon />
-      {loadingAll && <HomeLoadingShimmer />}
-      {!loadingAll && data?.Seasons[0] && (
+      {loading && <HomeLoadingShimmer />}
+      {!loading && !seasonIsActive && (
+        <>
+          <LastSeasonLeaderboardHeader />
+          <StyledPagePadding>
+            {data?.Seasons[0].submissions
+              ?.sort(
+                (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+                  s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+                  s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+              )
+              .map((submission, index) => (
+                <ProjectCardPreviousSeason project={submission.project} {...{ index }} key={submission.id} />
+              ))}
+          </StyledPagePadding>
+        </>
+      )}
+      {!loading && seasonIsActive && data?.Seasons[0] && (
         <>
           <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
           <StyledPagePadding>
@@ -85,7 +98,6 @@ const IndexPage = () => {
           </StyledPagePadding>
         </>
       )}
-      {!loadingAll && !data?.Seasons[0] && <NoGrant />}
       <Newsletter />
       <AlternatingPanels>
         {alternatingPanels.map((panel, i) => (

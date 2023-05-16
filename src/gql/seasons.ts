@@ -20,9 +20,10 @@ export const SUBSCRIBE_SEASONS = gql`
 `
 
 export const GET_SEASON_FOR_TIME = gql`
-  query seasonForTime($where: Seasons_bool_exp) {
-    Seasons(limit: 1, where: $where) {
+  query seasonForTime($where: Seasons_bool_exp, $order_by: [Seasons_order_by!]) {
+    Seasons(limit: 1, where: $where, order_by: $order_by) {
       id
+      index
       endingDate
       startingDate
     }

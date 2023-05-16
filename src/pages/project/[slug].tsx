@@ -21,7 +21,7 @@ import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
 import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = () => {
-  const { currentSeasonId } = useContext(SeasonContext)
+  const { seasonId } = useContext(SeasonContext)
 
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
@@ -49,7 +49,7 @@ const ProjectPage = () => {
       fetchPolicy: 'no-cache',
       variables: {
         where: {
-          id: { _eq: currentSeasonId },
+          id: { _eq: seasonId },
         },
       },
     },
