@@ -67,7 +67,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
       where: {
         endingDate: { _gt: localTimestamp },
       },
-      order_by: { field: 'startingDate', order: 'asc' },
+      order_by: { startingDate: 'asc' },
     },
   })
 

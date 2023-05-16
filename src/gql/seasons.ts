@@ -26,6 +26,7 @@ export const GET_SEASON_FOR_TIME = gql`
       index
       endingDate
       startingDate
+      amountRaised
     }
   }
 `

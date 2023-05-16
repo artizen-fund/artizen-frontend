@@ -50,7 +50,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
             <Stat>
               <Label>Funds Awarded</Label>
               <Data>
-                Ξ {/* data?.Seasons[0].amountRaised */}
+                Ξ {data?.Seasons[0].amountRaised}
                 <CashTrend>
                   {/*
                     TODO: convert amountRaised to USD

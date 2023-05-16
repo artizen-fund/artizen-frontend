@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { rgba, assetPath, useDateHelpers, formatDate } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { PagePadding } from '@components'
+import { PagePadding, Glyph } from '@components'
 import { useQuery } from '@apollo/client'
 import { GET_SEASON_FOR_TIME } from '@gql'
 import { ISeasonForTimeQuery } from '@types'
@@ -27,34 +27,39 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
       order_by: { startingDate: 'desc' },
     },
   })
+
+  console.log('error  in here ', error)
+
   if (!latestSeason || !!loading) return <></>
+
+  const season = latestSeason.Seasons[0]
+
+  console.log('season.amountRaised  ', season.amountRaised)
 
   return (
     <StyledPagePadding>
       <Content>
-        <Title>Season {latestSeason.Seasons[0]?.index} ended</Title>
+        <Title>Season {season.index} ended</Title>
 
         <Stats>
           <Stat>
             <Label>Funds Awarded</Label>
             <Data>
-              {/* 
-                  <CashTrend>
-                    {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                      parseFloat(latestSeason[0].amountRaised || '0'),
-                    )}
-                    <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
-                  </CashTrend>
-                */}
+              <CashTrend>
+                {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                  parseFloat(season.amountRaised || '0'),
+                )}
+                <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
+              </CashTrend>
             </Data>
           </Stat>
           <Stat>
             <Label>Cycle</Label>
-            <Data>Season {latestSeason.Seasons[0]?.index}</Data>
+            <Data>Season {season.index}</Data>
           </Stat>
           <Stat>
             <Label>Ended on</Label>
-            <Data>{formatDate(latestSeason.Seasons[0]?.endingDate)}</Data>
+            <Data>{formatDate(season.endingDate)}</Data>
           </Stat>
         </Stats>
 
