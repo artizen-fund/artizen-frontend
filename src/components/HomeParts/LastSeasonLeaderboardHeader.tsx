@@ -1,6 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
+<<<<<<< HEAD
 import { rgba, assetPath, useDateHelpers, formatDate, SeasonContext } from '@lib'
+=======
+import { rgba, assetPath, useDateHelpers, formatDate, useGnosis } from '@lib'
+>>>>>>> 5364bcbc311488754d38f020e5027d2fcfae36c4
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding, Glyph } from '@components'
 import { useQuery } from '@apollo/client'
@@ -20,6 +24,7 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
     console.log('localTime  ', localTime)
     setLocalTimestamp(localTime)
   }, [])
+  const { USDtoETH } = useGnosis()
 
   console.log('seasonIndex  ', seasonIndex)
 
@@ -38,7 +43,7 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
 
   const season = latestSeason.Seasons[0]
 
-  console.log('season.amountRaised  ', season.amountRaised)
+  console.log('season.amountRaised  ', season.amountRaised, USDtoETH)
 
   return (
     <StyledPagePadding>
@@ -49,9 +54,10 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
           <Stat>
             <Label>Funds Awarded</Label>
             <Data>
+              {season.amountRaised} ETH
               <CashTrend>
                 {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                  parseFloat(season.amountRaised || '0'),
+                  season.amountRaised / USDtoETH!,
                 )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
               </CashTrend>

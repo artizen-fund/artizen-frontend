@@ -43,10 +43,6 @@ const IndexPage = () => {
     },
   })
 
-  if (error) {
-    return <>Error Loading Season</>
-  }
-
   useEffect(() => {
     const hash = asPath.split('#')[1]
     if (!!hash && hash === 'submissions') {
