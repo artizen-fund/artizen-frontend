@@ -41,7 +41,7 @@ const HomeHeader = ({ season }: IHomeHeader) => {
           )}
           {!isSeasonActive && (
             <Row>
-              <Button level={0} onClick={scrollToLeaderboard}>
+              <Button level={0} href="https://artizen.typeform.com/apply">
                 Submit to Season 3
               </Button>
               {/* !!season && (
