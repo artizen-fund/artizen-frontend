@@ -41,3 +41,14 @@ export const INSERT_SEASONS = gql`
     }
   }
 `
+
+export const UPDATE_SEASON_WITH_AMOUNT_RAISED = gql`
+  ${SEASON}
+  mutation updateSeasons($index: Int, $amountRaised: numeric) {
+    update_Seasons(where: { index: { _eq: $index } }, _set: { amountRaised: $amountRaised }) {
+      returning {
+        ...Season
+      }
+    }
+  }
+`
