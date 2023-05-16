@@ -43,10 +43,6 @@ const IndexPage = () => {
     },
   })
 
-  if (error) {
-    return <>Error Loading Season</>
-  }
-
   useEffect(() => {
     const hash = asPath.split('#')[1]
     if (!!hash && hash === 'submissions') {
@@ -56,6 +52,10 @@ const IndexPage = () => {
   }, [])
 
   const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
+
+  if (error) {
+    return <>Error Loading Season</>
+  }
 
   return (
     <Layout>
@@ -67,15 +67,17 @@ const IndexPage = () => {
         <>
           <LastSeasonLeaderboardHeader />
           <StyledPagePadding>
-            {data?.Seasons[0].submissions
-              ?.sort(
-                (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-                  s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-                  s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-              )
-              .map((submission, index) => (
-                <ProjectCardPreviousSeason project={submission.project} {...{ index }} key={submission.id} />
-              ))}
+            <Grid>
+              {data?.Seasons[0].submissions
+                ?.sort(
+                  (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+                    s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+                    s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+                )
+                .map((submission, index) => (
+                  <ProjectCardPreviousSeason project={submission.project} {...{ index }} key={submission.id} />
+                ))}
+            </Grid>
           </StyledPagePadding>
         </>
       )}
