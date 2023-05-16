@@ -4,7 +4,11 @@ import NoGrantArt from './NoGrantArt'
 import NoGrantSidebar from './NoGrantSidebar'
 import { PagePadding } from '@components'
 
-const NoGrant = () => (
+interface INoGrant {
+  startDate?: string
+}
+
+const NoGrant = ({ startDate }: INoGrant) => (
   <PagePadding>
     <Wrapper>
       <NoGrantArt />
