@@ -7,7 +7,7 @@ import { Spinner, Layout, Submissions, Button, PagePadding, CuratorCheck } from 
 import { typography } from '@theme'
 import { useDateHelpers } from '@lib'
 import { capitalCase } from 'capital-case'
-import { useSeasons } from 'src/lib/useSeasons.ts'
+import { useSeasons } from 'src/lib/useSeasons'
 
 export default function SeasonPage(): JSX.Element {
   const { formatDate, getSeasonStatus, isOpenForSubmissions } = useDateHelpers()
