@@ -57,6 +57,8 @@ const IndexPage = () => {
 
   const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
 
+  console.log('data?.Seasons[0]  ', data?.Seasons[0])
+
   return (
     <Layout>
       <HomeHeader season={data?.Seasons[0]} />
@@ -66,16 +68,19 @@ const IndexPage = () => {
       {!loading && !seasonIsActive && (
         <>
           <LastSeasonLeaderboardHeader />
+          <SubmissionsMarker id="submissionsMarker" />
           <StyledPagePadding>
-            {data?.Seasons[0].submissions
-              ?.sort(
-                (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-                  s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-                  s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-              )
-              .map((submission, index) => (
-                <ProjectCardPreviousSeason project={submission.project} {...{ index }} key={submission.id} />
-              ))}
+            <Grid>
+              {data?.Seasons[0].submissions
+                ?.sort(
+                  (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+                    s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+                    s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+                )
+                .map((submission, index) => (
+                  <ProjectCardPreviousSeason project={submission.project} {...{ index }} key={submission.id} />
+                ))}
+            </Grid>
           </StyledPagePadding>
         </>
       )}

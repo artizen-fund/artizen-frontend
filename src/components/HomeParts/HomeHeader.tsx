@@ -42,7 +42,7 @@ const HomeHeader = ({ season }: IHomeHeader) => {
           {!seasonIsActive && (
             <Row>
               <Button level={0} onClick={scrollToLeaderboard}>
-                Apply for Funding
+                Submit to Season 3
               </Button>
               {!!season && (
                 <>
