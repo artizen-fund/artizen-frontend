@@ -14,14 +14,15 @@ import {
   ProjectDescriptionShimmer,
   ProjectLeaderboardShimmer,
 } from '@components'
-import { LayoutContext, SeasonContext } from '@lib'
+import { LayoutContext, SeasonContext, useDateHelpers } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
 import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = () => {
-  const { currentSeasonId } = useContext(SeasonContext)
+  const { seasonId } = useContext(SeasonContext)
+  const { isSeasonActive } = useDateHelpers()
 
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
@@ -49,7 +50,7 @@ const ProjectPage = () => {
       fetchPolicy: 'no-cache',
       variables: {
         where: {
-          id: { _eq: currentSeasonId },
+          id: { _eq: seasonId },
         },
       },
     },
@@ -70,6 +71,8 @@ const ProjectPage = () => {
     // todo: we have a loading placeholder somewhere
     return <></>
   }
+
+  const seasonIsActive = isSeasonActive(seasonData.Seasons[0].startingDate, seasonData.Seasons[0]?.endingDate)
 
   const lead = project.members?.find(m => m.type === 'lead')?.user
 
@@ -139,7 +142,7 @@ const ProjectPage = () => {
           <Side>
             {/* TODO: Artifacts should be an object instead of an array  */}
             {/* This is wrong, we need to use the artifact from the submission */}
-            <ArtifactCard artifact={project.artifacts[0]} project={project} />
+            <ArtifactCard artifact={project.artifacts[0]} project={project} {...{ seasonIsActive }} />
           </Side>
         </Wrapper>
       </PagePadding>

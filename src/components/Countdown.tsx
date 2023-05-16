@@ -30,6 +30,10 @@ const Countdown = ({ date, onComplete }: CountdownProps) => {
   }, [])
 
   const renderer = ({ days, hours, minutes, seconds, completed }: IRendererProps) => {
+    if (!!completed) {
+      if (typeof window === 'undefined') return
+      window.location.reload()
+    }
     return completed ? (
       <span key="resetting">resetting</span>
     ) : (
