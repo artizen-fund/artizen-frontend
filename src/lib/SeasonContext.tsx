@@ -44,7 +44,7 @@ interface ISeasonContext {
   seasonId?: string
   loadingSeasonId?: boolean
   seasonIndex?: number
-  isSeasonActive: boolean
+  isSeasonActive?: boolean
 }
 
 export const SeasonContext = createContext<ISeasonContext>({})
