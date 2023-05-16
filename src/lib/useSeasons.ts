@@ -8,14 +8,21 @@ import {
   WALLET_ERROR_INSUFFICIENT_FUNDS,
   WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT,
 } from '@lib'
+import { UPDATE_SEASONS } from '@gql'
+
 import { IProjectFragment, ISeasonFragment } from '@types'
 import { BigNumber, ethers } from 'ethers'
+import { useMutation } from '@apollo/client'
 
 export const useSeasons = () => {
   const { seasonsContract } = useSmartContracts()
   const { getTimeUnix } = useDateHelpers()
   const { disconnectAndSignout } = useFullSignOut()
-  const { updateSafeBalance } = useGnosis()
+  const { artizenPrizeAmountETH } = useGnosis()
+
+  const [updateSeason] = useMutation(UPDATE_SEASONS, {
+    onError: error => console.error('UPDATE_SEASONS error ', error),
+  })
 
   // Publish season to smart contract,
   // this method is called from src/component/NewSeasonForm in the
@@ -123,7 +130,25 @@ export const useSeasons = () => {
 
     const tx = await seasonsContract?.closeSeason(seasonIndex)
     console.log('tx from close season', tx)
-    return await tx.wait()
+    const txResponse = await tx.wait()
+
+    const amountRaised = artizenPrizeAmountETH
+
+    console.log(`amountRaised = ${amountRaised}`)
+
+    const updateSeasonResult = await updateSeason({
+      variables: {
+        where: {
+          index: { _eq: seasonIndex },
+        },
+        _set: {
+          amountRaised,
+        },
+      },
+      onError: error => console.error('Error updating season', error),
+    })
+
+    return txResponse
   }
 
   return { publishSeason, publishSubmissions, mintOpenEditions, closeSeason } as const
