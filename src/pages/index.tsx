@@ -53,9 +53,7 @@ const IndexPage = () => {
 
   const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
 
-  if (error) {
-    return <>Error Loading Season</>
-  }
+  console.log('data?.Seasons[0]  ', data?.Seasons[0])
 
   return (
     <Layout>
@@ -66,6 +64,7 @@ const IndexPage = () => {
       {!loading && !seasonIsActive && (
         <>
           <LastSeasonLeaderboardHeader />
+          <SubmissionsMarker id="submissionsMarker" />
           <StyledPagePadding>
             <Grid>
               {data?.Seasons[0].submissions

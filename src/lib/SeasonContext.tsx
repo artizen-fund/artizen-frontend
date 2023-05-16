@@ -43,6 +43,7 @@ The most efficient thing to do (AFAIK) is…
 interface ISeasonContext {
   seasonId?: string
   loadingSeasonId?: boolean
+  seasonIndex?: number
 }
 
 export const SeasonContext = createContext<ISeasonContext>({})
@@ -51,6 +52,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
   const { getNowWithFormat } = useDateHelpers()
   const [localTimestamp, setLocalTimestamp] = useState<string>()
   const [seasonId, setSeasonId] = useState<string>() // current or next season
+  const [seasonIndex, setSeasonIndex] = useState<number>() // current or next season
 
   // 1. cache a timestamp upon site load
   useEffect(() => {
@@ -75,6 +77,8 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     console.error('error retrieving season', error)
   }
 
+  console.log('data  ISeasonForTimeQuery ', data)
+
   // 3. use the season ID for the subscription
   useEffect(() => {
     let checkAgainIfNotFound: NodeJS.Timeout
@@ -86,6 +90,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
       return
     }
     setSeasonId(data.Seasons[0]?.id)
+    setSeasonIndex(data.Seasons[0]?.index)
     return () => {
       clearTimeout(checkAgainIfNotFound)
     }
@@ -108,6 +113,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     <SeasonContext.Provider
       value={{
         seasonId,
+        seasonIndex,
         loadingSeasonId: loading,
       }}
     >
