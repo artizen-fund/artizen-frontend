@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, assetPath, useDateHelpers, formatDate, useGnosis } from '@lib'
+import { rgba, assetPath, formatDate, useGnosis, SeasonContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding, Glyph } from '@components'
 import { useQuery } from '@apollo/client'
@@ -12,30 +12,24 @@ interface LeaderboardHeaderProps {
 }
 
 const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => {
-  const [localTimestamp, setLocalTimestamp] = useState<string>()
-  const { getNowWithFormat } = useDateHelpers()
-  useEffect(() => {
-    setLocalTimestamp(getNowWithFormat())
-  }, [])
+  const { seasonId } = useContext(SeasonContext)
   const { USDtoETH } = useGnosis()
 
   const { data: latestSeason, error } = useQuery<ISeasonForTimeQuery>(GET_SEASON_FOR_TIME, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        endingDate: { _lt: localTimestamp },
+        id: { _eq: seasonId },
       },
-      order_by: { startingDate: 'desc' },
+      order_by: { startingDate: 'asc' },
     },
   })
 
-  console.log('error  in here ', error)
+  console.warn('error  in here ', error)
 
   if (!latestSeason || !!loading) return <></>
 
   const season = latestSeason.Seasons[0]
-
-  console.log('season.amountRaised  ', season.amountRaised, USDtoETH)
 
   return (
     <StyledPagePadding>
