@@ -67,9 +67,9 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        endingDate: { _gt: localTimestamp },
+        endingDate: { _lt: localTimestamp },
       },
-      order_by: { startingDate: 'asc' },
+      order_by: { startingDate: 'desc' },
     },
   })
 
