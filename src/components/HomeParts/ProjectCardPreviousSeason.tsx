@@ -87,17 +87,13 @@ const AllCopy = styled.div`
   }
 `
 
-const StyledLink = styled(props => <Link {...props} />)`
-  grid-area: art;
-`
-
 const Wrapper = styled.article`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-areas: 'art' 'copy' 'footer';
+  grid-template-areas: 'art' 'copy';
   gap: 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    grid-template-areas: 'copy' 'art' 'footer';
+    grid-template-areas: 'copy' 'art';
     padding: 40px;
   }
   background-color: ${rgba(palette.white)};
