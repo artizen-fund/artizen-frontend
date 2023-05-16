@@ -112,6 +112,7 @@ export const SEASON = gql`
     createdAt
     updateAt
     index
+    amountRaised
     submissions {
       ...Submission
     }

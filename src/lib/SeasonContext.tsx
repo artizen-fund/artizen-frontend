@@ -41,8 +41,10 @@ The most efficient thing to do (AFAIK) is…
 */
 
 interface ISeasonContext {
-  currentSeasonId?: string
+  seasonId?: string
   loadingSeasonId?: boolean
+  seasonIndex?: number
+  isSeasonActive?: boolean
 }
 
 export const SeasonContext = createContext<ISeasonContext>({})
@@ -50,7 +52,8 @@ export const SeasonContext = createContext<ISeasonContext>({})
 export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
   const { getNowWithFormat, isSeasonActive } = useDateHelpers()
   const [localTimestamp, setLocalTimestamp] = useState<string>()
-  const [currentSeasonId, setCurrentSeasonId] = useState<string>()
+  const [seasonId, setSeasonId] = useState<string>() // current or next season
+  const [seasonIndex, setSeasonIndex] = useState<number>() // current or next season
 
   // 1. cache a timestamp upon site load
   useEffect(() => {
@@ -58,30 +61,37 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
   }, [])
 
   // 2. use a normal query to look for an existing season ID and endDate
+  // This query looks for the next ending date in-the-future;
+  // if startingDate <= localTimestamp, it is the current season.
+  // if staringDate > localTimestamp, it's the next season.
   const { loading, data, error } = useQuery<ISeasonForTimeQuery>(GET_SEASON_FOR_TIME, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        startingDate: { _lte: localTimestamp },
-        endingDate: { _gt: localTimestamp },
+        startingDate: { _lt: localTimestamp },
       },
+      order_by: { startingDate: 'desc' },
     },
   })
 
   if (error) {
-    console.error('error retrieving current season', error)
+    console.error('error retrieving season', error)
   }
+
+  console.log('data  ISeasonForTimeQuery ', data)
 
   // 3. use the season ID for the subscription
   useEffect(() => {
     let checkAgainIfNotFound: NodeJS.Timeout
+    console.log('data', data)
     if (!data || !data.Seasons[0] || loading) {
       checkAgainIfNotFound = setTimeout(() => {
         refreshTimestamp()
       }, 1000 * 60)
       return
     }
-    setCurrentSeasonId(data.Seasons[0]?.id)
+    setSeasonId(data.Seasons[0]?.id)
+    setSeasonIndex(data.Seasons[0]?.index)
     return () => {
       clearTimeout(checkAgainIfNotFound)
     }
@@ -97,18 +107,16 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
 
   const refreshTimestamp = () => {
     if (!data || !data.Seasons[0]) return
-
-    if (isSeasonActive(data.Seasons[0]?.startingDate, data.Seasons[0]?.endingDate)) {
-      // 5. refresh the timestamp; updates cascade.
-      setLocalTimestamp(getNowWithFormat())
-    }
+    setLocalTimestamp(getNowWithFormat())
   }
 
   return (
     <SeasonContext.Provider
       value={{
-        currentSeasonId,
+        seasonId,
+        seasonIndex,
         loadingSeasonId: loading,
+        isSeasonActive: isSeasonActive(data?.Seasons[0].startingDate, data?.Seasons[0].endingDate),
       }}
     >
       {children}

@@ -1,10 +1,18 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
-import { PagePadding, Button, HomeAnimation } from '@components'
+import { PagePadding, Button, HomeAnimation, Countdown } from '@components'
 import { header } from '@copy/home'
-import { typography, breakpoint } from '@theme'
-import { useGnosis } from '@lib'
+import { typography, breakpoint, palette } from '@theme'
+import { useGnosis, rgba, SeasonContext } from '@lib'
+import { ISeasonFragment } from '@types'
 
-const HomeHeader = () => {
+interface IHomeHeader {
+  season?: ISeasonFragment
+}
+
+const HomeHeader = ({ season }: IHomeHeader) => {
+  const { isSeasonActive } = useContext(SeasonContext)
+
   const scrollToLeaderboard = () => {
     const submissionsMarker = document.querySelector('#submissionsMarker')
     submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
@@ -26,14 +34,38 @@ const HomeHeader = () => {
             <h1>{title}</h1>
             <h2>{header.subtitle}</h2>
           </div>
-          <Button level={0} onClick={scrollToLeaderboard}>
-            {header.buttonLabel}
-          </Button>
+          {!!isSeasonActive && (
+            <Button level={0} onClick={scrollToLeaderboard}>
+              {header.buttonLabel}
+            </Button>
+          )}
+          {!isSeasonActive && (
+            <Row>
+              <Button level={0} href="https://artizen.typeform.com/apply">
+                Submit to Season 3
+              </Button>
+              {/* !!season && (
+                <Col>
+                  <Label>Starts in</Label>
+                  <Data>
+                    <Countdown date={season.startingDate} />
+                  </Data>
+                </Col>
+              ) */}
+            </Row>
+          )}
         </Copy>
       </Header>
     </StyledPagePadding>
   )
 }
+
+const Col = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  justify-content: space-around;
+`
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   padding-bottom: 0;
@@ -60,7 +92,7 @@ const Copy = styled.header`
     margin-top: 0.5em;
     ${typography.body.l1};
   }
-  div {
+  > div {
     margin-bottom: 30px;
     @media only screen and (min-width: ${breakpoint.tablet}px) {
       margin-bottom: 45px;
@@ -69,6 +101,26 @@ const Copy = styled.header`
       margin-bottom: 60px;
     }
   }
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+`
+
+const Label = styled.h3`
+  ${typography.label.l1}
+  color: ${rgba(palette.barracuda)};
+`
+
+const Data = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: bottom;
+  gap: 16px;
+  ${typography.title.l4}
 `
 
 export default HomeHeader

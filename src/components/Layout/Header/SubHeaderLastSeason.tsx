@@ -1,12 +1,11 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, useGnosis, SeasonContext, useDateHelpers } from '@lib'
+import { rgba, SeasonContext, formatDate } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
-import { Glyph, Icon, Countdown } from '@components'
+import { Glyph, Icon } from '@components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
-import SubHeaderLastSeason from './SubHeaderLastSeason'
 
 interface ISubHeader {
   visible: boolean
@@ -20,9 +19,8 @@ interface ISubHeader {
 
 const SubHeader = ({ visible }: ISubHeader) => {
   const { seasonId } = useContext(SeasonContext)
-  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
-  const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+  const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -33,18 +31,11 @@ const SubHeader = ({ visible }: ISubHeader) => {
     },
   })
 
-  const { isSeasonActive } = useDateHelpers()
-  const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
-
   const leader = data?.Seasons[0].submissions?.sort(
     (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
       s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
       s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
   )[0]
-
-  if (!seasonIsActive) {
-    return <SubHeaderLastSeason visible={visible} />
-  }
 
   return (
     <>
@@ -52,18 +43,21 @@ const SubHeader = ({ visible }: ISubHeader) => {
         <Content>
           <Title>
             <Icon glyph="crown" level={2} />
-            <div>Buy Artifacts to fund projects</div>
+            <div>Season Ended</div>
           </Title>
 
           <Stats>
             <Stat>
-              <Label>Prize funds</Label>
+              <Label>Funds Awarded</Label>
               <Data>
-                Ξ {artizenPrizeAmountETH}
+                Ξ {data?.Seasons[0].amountRaised}
                 <CashTrend>
-                  {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                    parseFloat(artizenPrizeAmountUSD || '0'),
-                  )}
+                  {/*
+                    TODO: convert amountRaised to USD
+                    {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                      parseFloat(artizenPrizeAmountUSD || '0'),
+                    )}
+                  */}
                   <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
                 </CashTrend>
               </Data>
@@ -73,13 +67,11 @@ const SubHeader = ({ visible }: ISubHeader) => {
               <Data>Season {data?.Seasons[0].index}</Data>
             </Stat>
             <Stat>
-              <Label>Ends in</Label>
-              <Data>
-                <Countdown date={data?.Seasons[0].endingDate} />
-              </Data>
+              <Label>Ended</Label>
+              <Data>{formatDate(data?.Seasons[0]?.endingDate)}</Data>
             </Stat>
             <Stat>
-              <Label>Current leader</Label>
+              <Label>Winner</Label>
               <Data>{leader?.project?.title}</Data>
             </Stat>
           </Stats>
