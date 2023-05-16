@@ -1,8 +1,9 @@
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { PagePadding, Button, HomeAnimation, Countdown } from '@components'
 import { header } from '@copy/home'
 import { typography, breakpoint, palette } from '@theme'
-import { useGnosis, rgba, useDateHelpers } from '@lib'
+import { useGnosis, rgba, SeasonContext } from '@lib'
 import { ISeasonFragment } from '@types'
 
 interface IHomeHeader {
@@ -10,8 +11,7 @@ interface IHomeHeader {
 }
 
 const HomeHeader = ({ season }: IHomeHeader) => {
-  const { isSeasonActive } = useDateHelpers()
-  const seasonIsActive = isSeasonActive(season?.startingDate, season?.endingDate)
+  const { isSeasonActive } = useContext(SeasonContext)
 
   const scrollToLeaderboard = () => {
     const submissionsMarker = document.querySelector('#submissionsMarker')
@@ -34,24 +34,24 @@ const HomeHeader = ({ season }: IHomeHeader) => {
             <h1>{title}</h1>
             <h2>{header.subtitle}</h2>
           </div>
-          {!!seasonIsActive && (
+          {!!isSeasonActive && (
             <Button level={0} onClick={scrollToLeaderboard}>
               {header.buttonLabel}
             </Button>
           )}
-          {!seasonIsActive && (
+          {!isSeasonActive && (
             <Row>
               <Button level={0} onClick={scrollToLeaderboard}>
                 Submit to Season 3
               </Button>
-              {!!season && (
-                <>
+              {/* !!season && (
+                <Col>
                   <Label>Starts in</Label>
                   <Data>
                     <Countdown date={season.startingDate} />
                   </Data>
-                </>
-              )}
+                </Col>
+              ) */}
             </Row>
           )}
         </Copy>
