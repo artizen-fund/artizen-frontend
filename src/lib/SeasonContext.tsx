@@ -44,12 +44,13 @@ interface ISeasonContext {
   seasonId?: string
   loadingSeasonId?: boolean
   seasonIndex?: number
+  isSeasonActive: boolean
 }
 
 export const SeasonContext = createContext<ISeasonContext>({})
 
 export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
-  const { getNowWithFormat } = useDateHelpers()
+  const { getNowWithFormat, isSeasonActive } = useDateHelpers()
   const [localTimestamp, setLocalTimestamp] = useState<string>()
   const [seasonId, setSeasonId] = useState<string>() // current or next season
   const [seasonIndex, setSeasonIndex] = useState<number>() // current or next season
@@ -67,9 +68,9 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        endingDate: { _gt: localTimestamp },
+        startingDate: { _lt: localTimestamp },
       },
-      order_by: { startingDate: 'asc' },
+      order_by: { startingDate: 'desc' },
     },
   })
 
@@ -115,6 +116,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
         seasonId,
         seasonIndex,
         loadingSeasonId: loading,
+        isSeasonActive: isSeasonActive(data?.Seasons[0].startingDate, data?.Seasons[0].endingDate),
       }}
     >
       {children}
