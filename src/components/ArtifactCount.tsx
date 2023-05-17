@@ -12,7 +12,7 @@ const ArtifactCount = ({ count }: { count: number }) => (
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
 
   ${typography.label.l1}
