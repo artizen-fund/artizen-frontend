@@ -12,7 +12,7 @@ const RankAndArtifactCount = ({
 }: {
   rank: number
   count: number
-  seasonIsActive: boolean
+  seasonIsActive?: boolean
 }) => (
   <Wrapper>
     <Rank value={rank + 1} />
