@@ -41,3 +41,14 @@ export const INSERT_SEASONS = gql`
     }
   }
 `
+
+export const UPDATE_SEASONS = gql`
+  ${SEASON}
+  mutation updateSeasons($where: Seasons_bool_exp!, $_set: Seasons_set_input) {
+    update_Seasons(where: $where, _set: $_set) {
+      returning {
+        ...Season
+      }
+    }
+  }
+`
