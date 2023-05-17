@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
+
 import {
   Layout,
   PagePadding,
@@ -14,8 +15,8 @@ import {
   ProjectDescriptionShimmer,
   ProjectLeaderboardShimmer,
 } from '@components'
-import { LayoutContext, SeasonContext, useDateHelpers } from '@lib'
-import { typography, breakpoint } from '@theme'
+import { LayoutContext, SeasonContext, useDateHelpers, rgba } from '@lib'
+import { typography, breakpoint, palette } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
 import { IProjectsQuery, ISubscribeSeasonsSubscription, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
@@ -31,7 +32,7 @@ const ProjectPage = () => {
     asPath,
   } = useRouter()
 
-  const { loading, data, error } = useQuery<IProjectsQuery>(GET_PROJECTS, {
+  const { loading, data } = useQuery<IProjectsQuery>(GET_PROJECTS, {
     skip: !slug,
     variables: {
       limit: 1,
@@ -89,6 +90,8 @@ const ProjectPage = () => {
   //   submission => submission.project?.id === project.id,
   // )
 
+  console.log('seasonIsActive', seasonIsActive)
+
   const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
   return (
     <Layout>
@@ -100,7 +103,10 @@ const ProjectPage = () => {
               {!loading && (
                 <>
                   <Topline>
-                    <RankAndArtifactCount rank={rank} count={count} />
+                    <div>
+                      <RankAndArtifactCount rank={rank} count={count} seasonIsActive={seasonIsActive} />
+                    </div>
+
                     <Button
                       level={2}
                       outline
