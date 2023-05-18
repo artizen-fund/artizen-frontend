@@ -38,6 +38,10 @@ const SubmissionEnded = styled.div`
   @media only screen and (min-width: ${breakpoint.phablet}px) {
     display: none;
   }
+
+  @media only screen and (min-width: ${breakpoint.mobile}px) {
+    display: none;
+  }
 `
 
 const Wrapper = styled.div`
