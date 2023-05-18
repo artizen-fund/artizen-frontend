@@ -9,12 +9,14 @@ import { assetPath } from '@lib'
 
 interface LayoutProps {
   children: React.ReactNode
+  head?: React.ReactNode
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, head }: LayoutProps) => {
   return (
     <Wrapper>
-      <Head>
+      {head}
+      {/* <Head>
         <title>{copy.title}</title>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, user-scalable=no" />
@@ -41,7 +43,7 @@ const Layout = ({ children }: LayoutProps) => {
         <link id="icon" rel="icon" href={assetPath('/assets/metatags/favicon-32x32.png')} />
         <link rel="mask-icon" href={assetPath('/assets/metatags/safari-pinned-tab.svg')} color="#1ACC6C" />
         <meta name="theme-color" content="#1ACC6C" />
-      </Head>
+      </Head> */}
       <Header />
       <Main>{children}</Main>
       <Footer />
