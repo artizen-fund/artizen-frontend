@@ -34,7 +34,7 @@ const SubmitProjectModal = () => {
   const [processing, setProcessing] = useState(false)
   const [processTxt, setProcessTxt] = useState<string>('Submit')
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
-  const [loadSeasons, { data: loadedSeasonsData }] = useLazyQuery(LOAD_SEASONS)
+  const [loadSeasons, { data: loadedSeasonsData, error }] = useLazyQuery(LOAD_SEASONS)
   const [insertSubmissionMutaton] = useMutation(INSERT_SUBMISSION)
   const [updateArtifactMutaton] = useMutation<IUpdate_Artifacts_ManyMutation>(UPDATE_ARTIFACTS)
   const { reload } = useRouter()
@@ -50,6 +50,8 @@ const SubmitProjectModal = () => {
     const Seasons =
       loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0 ? loadedSeasonsData?.Seasons : []
 
+    console.log('loadedSeasonsData  ', loadedSeasonsData)
+
     return Seasons.filter(
       ({ startingDate, endingDate, submissions }: ISeasonFragment): boolean =>
         isOpenForSubmissions(startingDate, endingDate) &&
@@ -61,6 +63,8 @@ const SubmitProjectModal = () => {
     if (inputRef.current.length > 0) return
 
     const Seasons = loadActiveSeasons()
+
+    console.log('Seasons  ', Seasons)
 
     const arrayWithoutSubmitedProjects = Seasons.filter(({ submissions }: ISeasonFragment) => {
       const projectSubmited = submissions.find(
