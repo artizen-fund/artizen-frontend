@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ArtifactCount, Rank } from '@components'
-import { typography, palette } from '@theme'
+import { typography, palette, breakpoint } from '@theme'
 import { rgba } from '@lib'
 
 // note that rank comes from an array with starting index 0
@@ -34,6 +34,9 @@ const SubmissionEnded = styled.div`
   span {
     font-weight: 800 !important;
     ${typography.label.l3}
+  }
+  @media only screen and (min-width: ${breakpoint.phablet}px) {
+    display: none;
   }
 `
 
