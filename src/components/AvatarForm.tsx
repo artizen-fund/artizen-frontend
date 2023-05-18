@@ -55,6 +55,7 @@ const DropZone = styled.div<{ preview?: string }>`
   align-items: center;
   width: 80px;
   height: 80px;
+
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     width: 100px;
     height: 100px;
