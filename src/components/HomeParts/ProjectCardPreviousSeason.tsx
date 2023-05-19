@@ -42,7 +42,6 @@ const ProjectCardPreviousSeason = ({ project, index }: IProjectCard) => {
           </Artist>
         )}
         <ArtistBoxGradient />
-
         <Img
           src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`}
           onClick={() =>
