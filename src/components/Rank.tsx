@@ -6,10 +6,14 @@ import numeral from 'numeral'
 
 const Rank = ({ value }: { value: number }) => (
   <Wrapper>
-    {value === 1 && <Glyph glyph="crown" level={2} color="algae" darkColor="algae" />}
+    {value === 1 && <StyledGlyph glyph="crown" level={1} color="algae" darkColor="algae" />}
     <span>{numeral(value).format('Oo')}</span>
   </Wrapper>
 )
+
+const StyledGlyph = styled(props => <Glyph {...props} />)`
+  --iconSize: 16px;
+`
 
 const Wrapper = styled.div`
   display: flex;
