@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { rgba, LayoutContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { RankAndArtifactCount, DonationBox } from '@components'
+import { capitalCase } from 'capital-case'
 import { IProjectFragment } from '@types'
 import Link from 'next/link'
 
@@ -28,7 +29,7 @@ const ProjectCardPreviousSeason = ({ project, index }: IProjectCard) => {
         </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>
-            <h2>{project.title}</h2>
+            <h2>{project.title && capitalCase(project.title)}</h2>
           </Link>
           <p>{project.logline}</p>
         </Copy>
@@ -40,6 +41,7 @@ const ProjectCardPreviousSeason = ({ project, index }: IProjectCard) => {
             <div>{artist.artizenHandle}</div>
           </Artist>
         )}
+        <ArtistBoxGradient />
         <Img
           src={`${latestArtifact.artwork?.replace('/upload', '/upload/w_1000').replace('.png', '.jpg')}`}
           onClick={() =>
@@ -54,12 +56,26 @@ const ProjectCardPreviousSeason = ({ project, index }: IProjectCard) => {
   )
 }
 
+const ArtistBoxGradient = styled.div`
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 80%);
+  z-index: 2;
+  display: flex;
+  position: absolute;
+  bottom: 6px;
+  flex-direction: row;
+  height: 100px;
+  align-items: center;
+  width: 100%;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    bottom: 0;
+  }
+`
+
 const Artist = styled.div`
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   bottom: 16px;
   left: 16px;
-
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -80,10 +96,12 @@ const AllCopy = styled.div`
   grid-area: copy;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   padding: 0px 20px 0 20px;
+  margin: 0 0 20px 0;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     padding: 0;
+    gap: 20px;
   }
 `
 
@@ -91,10 +109,11 @@ const Wrapper = styled.article`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas: 'art' 'copy';
-  gap: 20px;
+  gap: 10px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     grid-template-areas: 'copy' 'art';
     padding: 40px;
+    gap: 20px;
   }
   background-color: ${rgba(palette.white)};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
@@ -131,6 +150,21 @@ const Copy = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  @media only screen and (min-width: ${breakpoint.laptop}px) {
+    border-radius: 16px;
+    width: 382px;
+    height: 382px;
+  }
+  @media only screen and (min-width: ${breakpoint.laptopXL}px) {
+    width: 300px;
+    height: 300px;
+  }
+  @media only screen and (min-width: ${breakpoint.desktop}px) {
+    width: 440px;
+    height: 440px;
+  }
 `
 
 const Img = styled.img`
