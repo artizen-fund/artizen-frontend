@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { rgba, LayoutContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { RankAndArtifactCount, DonationBox } from '@components'
-import { capitalCase } from 'capital-case'
+import { titleCase } from 'title-case'
 import { IProjectFragment } from '@types'
 import Link from 'next/link'
 
@@ -29,7 +29,7 @@ const ProjectCardPreviousSeason = ({ project, index }: IProjectCard) => {
         </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>
-            <h2>{project.title && capitalCase(project.title)}</h2>
+            <h2>{project.title && titleCase(project.title)}</h2>
           </Link>
           <p>{project.logline}</p>
         </Copy>
@@ -57,7 +57,7 @@ const ProjectCardPreviousSeason = ({ project, index }: IProjectCard) => {
 }
 
 const ArtistBoxGradient = styled.div`
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 80%);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0) 100%);
   z-index: 2;
   display: flex;
   position: absolute;
@@ -80,7 +80,6 @@ const Artist = styled.div`
   flex-direction: row;
   gap: 8px;
   align-items: center;
-
   color: white;
   ${typography.label.l2}
 `
@@ -150,6 +149,8 @@ const Copy = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
+  grid-area: art;
+  align-self: end;
   border-radius: 16px 16px 0 0;
   overflow: hidden;
   @media only screen and (min-width: ${breakpoint.laptop}px) {
@@ -188,19 +189,6 @@ const Img = styled.img`
     height: 440px;
   }
   cursor: pointer;
-`
-
-const Footer = styled.footer`
-  grid-area: footer;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 15px;
-  padding: 0 20px 20px 20px;
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
-    padding: 0;
-    gap: 20px;
-  }
 `
 
 export default ProjectCardPreviousSeason
