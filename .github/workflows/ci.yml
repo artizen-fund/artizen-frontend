@@ -1,0 +1,20 @@
+name: Trigger CI
+on:
+  push:
+    branches-ignore:    
+      - 'main'
+      - 'staging'
+      - 'dev'
+
+jobs:
+  triggerCI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GH_REMOTE_REPO_PAT }}
+          repository: artizen-fund/artizen-fund-ci
+          event-type: preview
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "branchname": "${{ github.ref_name }}", "dry_run":false}'
+  
