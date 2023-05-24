@@ -14,7 +14,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.GH_FRONTEND_CI_REPO_PAT }}
-          repository: artizen-fund/artizen-fund-ci
+          repository: artizen-fund/artizen-frontend-ci
           event-type: preview
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "branchname": "${{ github.ref_name }}", "dry_run":false}'
   
