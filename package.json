@@ -27,7 +27,7 @@
     "codegen-test": "SECRET_ENV=TestSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "codegen-prod": "SECRET_ENV=ProdSecrets op run --env-file='.env_1password_template.txt' -- graphql-codegen --config ./tools/graphql-codegen.yml -r dotenv/config",
     "test:online": "env-cmd -f .env_1password_template.txt synpress run -cf synpress.config.js",
-    "postinstall": "husky install"
+    "postinstall": "if command -v git &> /dev/null; then husky install; fi"
   },
   "dependencies": {
     "@apollo/client": "3.7.1",
