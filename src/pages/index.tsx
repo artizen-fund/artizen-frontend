@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
-import { SUBSCRIBE_SEASONS, LOAD_SEASONS } from '@gql'
+import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 import {
   HomeHeader,
@@ -22,7 +22,7 @@ import {
   ProjectCardPreviousSeason,
   HomeLoadingShimmer,
 } from '@components'
-import { rgba, SeasonContext, useDateHelpers, createApolloClient, assert } from '@lib'
+import { rgba, SeasonContext, useDateHelpers } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
@@ -113,28 +113,6 @@ const IndexPage = () => {
       <ApplyForFundingBlurb />
     </Layout>
   )
-}
-
-export async function getStaticProps() {
-  const apolloClient = createApolloClient()
-  const season = await apolloClient.query({
-    query: LOAD_SEASONS,
-    variables: {
-      where: {
-        index: { _eq: 2 },
-      },
-    },
-  })
-
-  console.log('season getStaticProps  ', season)
-
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      test: 'test',
-    },
-  }
 }
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
