@@ -9,3 +9,12 @@ export const SUBSCRIBE_OPEN_EDITIONS = gql`
     }
   }
 `
+
+export const LOAD_OPEN_EDITIONS = gql`
+  ${OPEN_EDITIONS_COPIES}
+  query openEditionsQuery($limit: Int, $where: OpenEditionCopies_bool_exp) {
+    OpenEditionCopies(limit: $limit, where: $where) {
+      ...OpenEditionCopy
+    }
+  }
+`

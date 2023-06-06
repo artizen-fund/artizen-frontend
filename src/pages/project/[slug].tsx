@@ -18,7 +18,7 @@ import {
 import { LayoutContext, SeasonContext, useDateHelpers, createApolloClient } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
-import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS } from '@gql'
+import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
 import {
   IProjectsQuery,
   IProjectFragment,
@@ -33,7 +33,8 @@ const ProjectPage = ({ project }: any) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   //this should be only done when the season is active otherwise we should use the season from the project
-  const { data: openEditions } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
+  const { data: openEditionsSub } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
+    skip: isSeasonActive,
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -41,6 +42,18 @@ const ProjectPage = ({ project }: any) => {
       },
     },
   })
+
+  const { data: openEditionsQuery } = useQuery(LOAD_OPEN_EDITIONS, {
+    skip: !isSeasonActive,
+    fetchPolicy: 'no-cache',
+    variables: {
+      where: {
+        artifactId: { _eq: project?.artifacts[0].id },
+      },
+    },
+  })
+
+  const openEditions = openEditionsSub || openEditionsQuery
 
   const {
     query: { slug },
@@ -52,6 +65,7 @@ const ProjectPage = ({ project }: any) => {
     SUBSCRIBE_SEASONS,
     {
       fetchPolicy: 'no-cache',
+      skip: !isSeasonActive,
       variables: {
         where: {
           id: { _eq: seasonId },
@@ -73,9 +87,9 @@ const ProjectPage = ({ project }: any) => {
       )
       .findIndex(submission => submission.project?.id === project.id) || 0
 
-  console.log('rank', rank)
+  console.log('openEditions?.OpenEditionCopies', openEditions?.OpenEditionCopies)
 
-  const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
+  const count = openEditions?.OpenEditionCopies.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
 
   console.log('lead', lead)
 
@@ -316,11 +330,11 @@ export async function getStaticProps({ params: { slug } }: { params: IGetStaticP
 
   console.log('tags here  ', GET_PROJECTS)
 
-  const fethcall = await fetch('https://artizen-dev.hasura.app/v1/graphql', {
+  const fethcall = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL as string, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-hasura-admin-secret': 'nfpmLTbqha4sxq74J286zZyGCU4Kocq',
+      'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET as string,
     },
     body: JSON.stringify({
       query: `query projects($limit: Int, $where: Projects_bool_exp) {
@@ -371,6 +385,17 @@ export async function getStaticProps({ params: { slug } }: { params: IGetStaticP
             dateMinting
             token
             createdAt
+            openEditionCopies {
+              value
+              copies
+              user {
+                id
+                artizenHandle
+                profileImage
+              }
+              
+              
+            }
             openEditionCopies_aggregate {
               aggregate {
                 sum {
@@ -392,6 +417,8 @@ export async function getStaticProps({ params: { slug } }: { params: IGetStaticP
   })
 
   const project = await fethcall.json()
+
+  console.log('error  ', project)
 
   console.log('project getStaticProps  ', project.data.Projects[0])
 
