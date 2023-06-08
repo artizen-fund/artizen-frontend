@@ -15,7 +15,11 @@ export default function SeasonPage(): JSX.Element {
     query: { id },
     push,
   } = useRouter()
-  const { loading, data: loadedSeasonsData } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
+  const {
+    loading,
+    data: loadedSeasonsData,
+    error,
+  } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -33,9 +37,11 @@ export default function SeasonPage(): JSX.Element {
 
   const { closeSeason } = useSeasons()
 
+  console.log('error  ', error)
+  console.log('loadedSeasonsData  ', loadedSeasonsData)
+
   return (
     <Layout>
-      <CuratorCheck />
       <StyledPagePadding>
         {loading ? (
           <Spinner />

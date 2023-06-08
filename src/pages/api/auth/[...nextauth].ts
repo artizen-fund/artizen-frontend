@@ -91,7 +91,7 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }: { session: Session; token: JWT; user: User }) => {
       const secret = assert(process.env.JWT_SECRET, 'JWT_SECRET')
       console.log('secret here:::::  ', secret)
-      const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS512' })
+      const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
 
       return {
         ...session,
@@ -103,7 +103,7 @@ export const authOptions: NextAuthOptions = {
   jwt: {
     encode: ({ secret, token }: JWTEncodeParams) => {
       const encodedToken = jsonwebtoken.sign(token as object, secret, {
-        algorithm: 'HS512',
+        algorithm: 'HS256',
       })
       console.log('from encode')
       return encodedToken
@@ -113,7 +113,7 @@ export const authOptions: NextAuthOptions = {
         throw new Error('Error decoding JWT: missing token')
       }
       const decodedToken = jsonwebtoken.verify(token, secret, {
-        algorithms: ['HS512'],
+        algorithms: ['HS256'],
       })
       return decodedToken as JWT
     },

@@ -12,8 +12,9 @@ const CuratorCheck = () => {
 
   useEffect(() => {
     console.log('status  ', status)
+    console.log('data in here ', data?.user)
     if (status === 'unauthenticated' || (!!data && !data.user?.isCurator)) {
-      // router.push('/')
+      router.push('/')
     }
   }, [status, data])
   return <></>

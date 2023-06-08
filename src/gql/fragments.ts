@@ -73,7 +73,6 @@ export const PROJECT = gql`
     metadata
     impactTags
     impact
-    titleURL
     submissions {
       id
     }
