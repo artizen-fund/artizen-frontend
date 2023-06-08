@@ -90,7 +90,8 @@ export const authOptions: NextAuthOptions = {
     },
     session: async ({ session, token }: { session: Session; token: JWT; user: User }) => {
       const secret = assert(process.env.JWT_SECRET, 'JWT_SECRET')
-      const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })
+      console.log('secret here:::::  ', secret)
+      const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS512' })
 
       return {
         ...session,

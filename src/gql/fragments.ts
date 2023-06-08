@@ -130,3 +130,22 @@ export const OPEN_EDITIONS_COPIES = gql`
     }
   }
 `
+
+export const MATCH_FUNDS = gql`
+  fragment MatchFund on MatchFunds {
+    id
+    name
+    goal
+    projectRequirements
+  }
+`
+
+export const SPONSORS = gql`
+  fragment Sponsor on Sponsors {
+    id
+    name
+    logotype
+    url
+    participation
+  }
+`

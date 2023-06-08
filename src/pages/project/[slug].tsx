@@ -418,8 +418,6 @@ export async function getStaticProps({ params: { slug } }: { params: IGetStaticP
 
   const project = await fethcall.json()
 
-  console.log('error  ', project)
-
   console.log('project getStaticProps  ', project.data.Projects[0])
 
   // By returning { props: { posts } }, the Blog component
