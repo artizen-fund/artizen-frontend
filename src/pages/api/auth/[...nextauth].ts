@@ -103,7 +103,7 @@ export const authOptions: NextAuthOptions = {
   jwt: {
     encode: ({ secret, token }: JWTEncodeParams) => {
       const encodedToken = jsonwebtoken.sign(token as object, secret, {
-        algorithm: 'HS256',
+        algorithm: 'HS512',
       })
       return encodedToken
     },
@@ -112,7 +112,7 @@ export const authOptions: NextAuthOptions = {
         throw new Error('Error decoding JWT: missing token')
       }
       const decodedToken = jsonwebtoken.verify(token, secret, {
-        algorithms: ['HS256'],
+        algorithms: ['HS512'],
       })
       return decodedToken as JWT
     },

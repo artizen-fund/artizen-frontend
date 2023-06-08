@@ -1,12 +1,14 @@
 import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-// import { useAccount } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 const CuratorCheck = () => {
   const router = useRouter()
   const { status, data } = useSession()
-  // const { isConnected } = useAccount()
+  const { isConnected } = useAccount()
+
+  console.log('isConnected ', isConnected)
 
   useEffect(() => {
     console.log('status  ', status)
