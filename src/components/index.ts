@@ -51,6 +51,7 @@ export { default as ErrorModal } from './Layout/Modals/ErrorModal'
 
 export { default as SubmitProjectModal } from './Layout/Modals/SubmitProjectModal'
 export { default as NewProjectMembersModal } from './Layout/Modals/NewProjectMembersModal'
+export { default as SponsorModal } from './Layout/Modals/SponsorModal'
 
 export { default as CheckboxControl } from './Form/Controls/BooleanControl/CheckboxControl'
 export { default as SwitchControl } from './Form/Controls/BooleanControl/SwitchControl'

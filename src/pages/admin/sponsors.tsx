@@ -1,80 +1,131 @@
+import { useEffect, useContext } from 'react'
+import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
+import { rgba, LayoutContext } from '@lib'
 import styled from 'styled-components'
-import { Layout, PagePadding, Faq, CuratorCheck } from '@components'
-import { typography, palette } from '@theme'
-import { rgba } from '@lib'
-import { faq } from '@copy/admin'
+import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck } from '@components'
+import { GET_SPONSORS } from '@gql'
+import { IProjectsQuery, ISponsorFragment } from '@types'
+import { palette, typography } from '@theme'
 
 const Sponsors = () => {
-  const { push } = useRouter()
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+  const router = useRouter()
+  const {
+    loading,
+    data: loadedSponsorData,
+    error: errorSponsorData,
+  } = useQuery(GET_SPONSORS, {
+    fetchPolicy: 'no-cache',
+  })
+
+  console.log('loadedSponsorData', loadedSponsorData)
+
+  if (errorSponsorData) {
+    console.error('errorSponsorData', errorSponsorData)
+    return <div>Error loading sponsors</div>
+  }
+
+  const openProject = (target: string) => () => {
+    router.push(`/admin/projects/${target}`)
+  }
+
+  const sideItem = (
+    <Button onClick={openProject('new')} level={2} outline>
+      Create new Project
+    </Button>
+  )
 
   return (
     <Layout>
-      <CuratorCheck />
       <StyledPagePadding>
-        <Wrapper>
-          <Title className="doubleWith">Welcome to Artizen Admin Area:</Title>
-          <MainAreaButton className="center-align" onClick={() => push('/admin/seasons')}>
-            Seasons
-          </MainAreaButton>
-          <MainAreaButton className="center-align" onClick={() => push('/admin/projects')}>
-            Projects
-          </MainAreaButton>
-        </Wrapper>
+        <CuratorCheck />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Wrapper>
+            <Header>Sponsors List</Header>
+            <Button
+              level={2}
+              onClick={() => {
+                setVisibleModalWithAttrs('sponsorModal', {})
+              }}
+            >
+              Add New Sponsor
+            </Button>
+            <ProjectList className="doubleLeght">
+              {loadedSponsorData?.Sponsors.map((sponsor: ISponsorFragment) => {
+                return (
+                  <ProjectWrapper key={sponsor.id}>
+                    <div>{sponsor.name}</div>
+                  </ProjectWrapper>
+                )
+              })}
+            </ProjectList>
+          </Wrapper>
+        )}
       </StyledPagePadding>
-      <div className="doubleWith">
-        <Faq copy={faq} />
-      </div>
     </Layout>
   )
 }
 
+const ProjectList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`
+
+const ProjectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  cursor: pointer;
+  background-color: ${rgba(palette.stone, 0.24)};
+  @media (prefers-color-scheme: dark) {
+    background: ${rgba(palette.moon, 0.1)};
+  }
+`
+
+const Header = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  ${typography.title.l3}
+`
+
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
 
-  .doubleWith {
+  .doubleLeght {
     grid-column: span 2;
   }
-
-  .center-align {
-    align-self: center;
-    justify-self: center;
-  }
 `
 
-const MainSessionWapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const MainAreaButton = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid ${rgba(palette.stone, 0.24)};
-  border-radius: 0.5rem;
+const StyledTableCell = styled(TableCell)`
   padding: 1rem;
-  height: 130px;
-  width: 200px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  background-color: ${rgba(palette.stone, 0.24)};
-  &:hover {
-    background-color: ${rgba(palette.stone)};
-  }
-  @media (prefers-color-scheme: dark) {
-    &:hover {
-      background-color: ${rgba(palette.barracuda)};
-    }
-  }
 `
 
-const Title = styled.div`
-  ${typography.label.l1}
-  margin: 0 0 2rem 0;
+const Title = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0;
 `
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`

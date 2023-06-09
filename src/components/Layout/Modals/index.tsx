@@ -14,6 +14,7 @@ import {
   SubmitProjectModal,
   NewProjectMembersModal,
   ErrorModal,
+  SponsorModal,
 } from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
@@ -73,6 +74,8 @@ const Modals = () => {
         return <NewProjectMembersModal />
       case 'errorModal':
         return <ErrorModal />
+      case 'sponsorModal':
+        return <SponsorModal />
 
       default:
         return <></>
