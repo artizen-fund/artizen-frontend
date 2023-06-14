@@ -1,14 +1,16 @@
 import { useEffect, useContext } from 'react'
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { rgba, LayoutContext } from '@lib'
+import { rgba, LayoutContext, useCloudinary } from '@lib'
 import styled from 'styled-components'
 import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck } from '@components'
 import { GET_SPONSORS } from '@gql'
 import { IProjectsQuery, ISponsorFragment } from '@types'
 import { palette, typography } from '@theme'
+import { capitalCase } from 'capital-case'
 
 const Sponsors = () => {
+  const { addParamsToLink } = useCloudinary()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   const router = useRouter()
   const {
@@ -53,15 +55,20 @@ const Sponsors = () => {
             >
               Add New Sponsor
             </Button>
-            <ProjectList className="doubleLeght">
+            <SponsorList className="doubleLeght">
               {loadedSponsorData?.Sponsors.map((sponsor: ISponsorFragment) => {
                 return (
-                  <ProjectWrapper key={sponsor.id}>
-                    <div>{sponsor.name}</div>
-                  </ProjectWrapper>
+                  <SponsorWrapper key={sponsor.id}>
+                    <SponsorTitle>{capitalCase(sponsor.name)}</SponsorTitle>
+                    <SponsorFinance>{sponsor.participation}</SponsorFinance>
+                    <SponsorURL href={sponsor.url} target="_blank">
+                      {sponsor.url}
+                    </SponsorURL>
+                    <SponsorLogotype src={addParamsToLink(sponsor.logotype, 'w_200,c_fill', 'image')} />
+                  </SponsorWrapper>
                 )
               })}
-            </ProjectList>
+            </SponsorList>
           </Wrapper>
         )}
       </StyledPagePadding>
@@ -69,7 +76,7 @@ const Sponsors = () => {
   )
 }
 
-const ProjectList = styled.div`
+const SponsorList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,21 +85,47 @@ const ProjectList = styled.div`
   height: 100%;
 `
 
-const ProjectWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const SponsorWrapper = styled.div`
+  display: grid;
+  gap: 10px;
+  grid-template-areas: 'title title finance' 'logotype logotype url';
   width: 100%;
-  height: 100%;
-  padding: 1rem;
   border-radius: 8px;
   margin: 1rem 0;
   cursor: pointer;
+  padding: 1rem;
   background-color: ${rgba(palette.stone, 0.24)};
+
+  .vertical-layout,
+  .vertical-layout-item {
+    display: contents;
+  }
+
   @media (prefers-color-scheme: dark) {
     background: ${rgba(palette.moon, 0.1)};
   }
+`
+const SponsorFinance = styled.div`
+  grid-area: finance;
+  text-align: right;
+`
+
+const SponsorTitle = styled.div`
+  grid-area: title;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  ${typography.title.l3}
+`
+
+const SponsorLogotype = styled.img`
+  grid-area: logotype;
+`
+
+const SponsorURL = styled.a`
+  grid-area: url;
+  text-align: right;
+  ${typography.body.l1}
 `
 
 const Header = styled.h1`

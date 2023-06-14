@@ -41,9 +41,9 @@ const SponsorModal = () => {
       <CloseButton onClick={() => toggleModal()} />
       <WrapperForm>
         <Form data={tempValue} setData={addData} {...{ schema, uischema }} readonly={processing}>
-          <StyledButton onClick={saveNewSponsor} stretch level={0}>
+          <Button onClick={saveNewSponsor} stretch level={0}>
             {processing ? 'Saving...' : 'Save'}
-          </StyledButton>
+          </Button>
         </Form>
       </WrapperForm>
     </Wrapper>
@@ -152,21 +152,6 @@ const Row = styled.div`
 
 const Buttons = styled(props => <Row {...props} />)`
   gap: 10px;
-`
-
-const StyledButton = styled(props => <Button {...props} />)`
-  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-  transition: background-color 0.25s ease-in-out, transform 0.4s cubic-bezier(0.42, 0.97, 0.52, 1.49);
-
-  @media only screen and (min-width: ${breakpoint.tablet}px) {
-    &:hover {
-      background-color: ${rgba(palette.algae)};
-      transform: translate3d(0, -4px, 0) scale3d(1.08, 1.08, 1);
-      & * {
-        background-color: ${rgba(palette.white)};
-      }
-    }
-  }
 `
 
 export default SponsorModal
