@@ -9,3 +9,14 @@ export const GET_MATCH_FUNDS = gql`
     }
   }
 `
+
+export const CREATE_MATCH_FUNDS = gql`
+  ${MATCH_FUNDS}
+  mutation createMatchFunds($objects: [MatchFunds_insert_input!]!) {
+    insert_MatchFunds(objects: $objects) {
+      returning {
+        ...MatchFund
+      }
+    }
+  }
+`

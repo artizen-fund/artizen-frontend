@@ -39,6 +39,7 @@ declare global {
     | 'newProjectMemberModal'
     | 'errorModal'
     | 'sponsorModal'
+    | 'matchFundsModal'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 
