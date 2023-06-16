@@ -20,6 +20,12 @@ const Projects = () => {
           <MainAreaButton className="center-align" onClick={() => push('/admin/projects')}>
             Projects
           </MainAreaButton>
+          <MainAreaButton className="center-align" onClick={() => push('/admin/matchfunds')}>
+            Match Funds
+          </MainAreaButton>
+          <MainAreaButton className="center-align" onClick={() => push('/admin/sponsors')}>
+            Sponsors
+          </MainAreaButton>
         </Wrapper>
       </StyledPagePadding>
       <div className="doubleWith">
@@ -35,7 +41,7 @@ const Wrapper = styled.div`
   grid-gap: 1rem;
 
   .doubleWith {
-    grid-column: span 2;
+    grid-column: span 4;
   }
 
   .center-align {

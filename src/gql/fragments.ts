@@ -130,15 +130,6 @@ export const OPEN_EDITIONS_COPIES = gql`
   }
 `
 
-export const MATCH_FUNDS = gql`
-  fragment MatchFund on MatchFunds {
-    id
-    name
-    goal
-    projectRequirements
-  }
-`
-
 export const SPONSORS = gql`
   fragment Sponsor on Sponsors {
     id
@@ -146,5 +137,32 @@ export const SPONSORS = gql`
     logotype
     url
     participation
+  }
+`
+
+export const SPONSORS_IN_MATCH_FUND = gql`
+  ${SPONSORS}
+  fragment SponsorInMatchFund on SponsorInMatchFunds {
+    id
+    created_at
+    updated_at
+    contribution
+    sponsor {
+      ...Sponsor
+    }
+  }
+`
+
+export const MATCH_FUNDS = gql`
+  ${SPONSORS_IN_MATCH_FUND}
+  fragment MatchFund on MatchFunds {
+    id
+    name
+    goal
+    projectRequirements
+    url
+    sponsorInMatchFunds {
+      ...SponsorInMatchFund
+    }
   }
 `

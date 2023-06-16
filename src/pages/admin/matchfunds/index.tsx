@@ -4,13 +4,13 @@ import { useRouter } from 'next/router'
 
 import { rgba, LayoutContext } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck } from '@components'
+import { Button, Layout, Spinner, PagePadding, CuratorCheck } from '@components'
 import { GET_MATCH_FUNDS } from '@gql'
 import { IGetMatchFundsQuery, IMatchFundFragment } from '@types'
 import { palette, typography } from '@theme'
 
 const MatchFunds = () => {
-  const { query } = useRouter()
+  const { query, push } = useRouter()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
@@ -33,7 +33,7 @@ const MatchFunds = () => {
           <Spinner />
         ) : (
           <Wrapper>
-            <Header>Sponsors List</Header>
+            <Header>Match Funds</Header>
             <Button
               level={2}
               onClick={() => {
@@ -45,8 +45,8 @@ const MatchFunds = () => {
             <SponsorList className="doubleLeght">
               {loadedMatchFundsData?.MatchFunds.map((matchFund: IMatchFundFragment) => {
                 return (
-                  <SponsorWrapper key={matchFund.id}>
-                    <SponsorTitle></SponsorTitle>
+                  <SponsorWrapper key={matchFund.id} onClick={() => push(`/admin/matchfunds/${matchFund.id}`)}>
+                    <SponsorTitle>{matchFund.name}</SponsorTitle>
                     <SponsorLogotype src="sdasdasd" />
                   </SponsorWrapper>
                 )

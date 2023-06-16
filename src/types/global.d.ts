@@ -40,6 +40,7 @@ declare global {
     | 'errorModal'
     | 'sponsorModal'
     | 'matchFundsModal'
+    | 'addSponsorToMatchFund'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 

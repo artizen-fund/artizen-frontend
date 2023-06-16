@@ -53,6 +53,7 @@ export { default as SubmitProjectModal } from './Layout/Modals/SubmitProjectModa
 export { default as NewProjectMembersModal } from './Layout/Modals/NewProjectMembersModal'
 export { default as SponsorModal } from './Layout/Modals/SponsorModal'
 export { default as MatchFundsModal } from './Layout/Modals/MatchFundsModal'
+export { default as AddSponsorToMatchFund } from './Layout/Modals/AddSponsorToMatchFund'
 
 export { default as CheckboxControl } from './Form/Controls/BooleanControl/CheckboxControl'
 export { default as SwitchControl } from './Form/Controls/BooleanControl/SwitchControl'

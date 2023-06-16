@@ -62,6 +62,10 @@ export const uischema = {
     {
       type: 'Control',
       scope: '#/properties/projectRequirements',
+      options: {
+        multi: true,
+        format: 'text',
+      },
     },
   ],
 }
