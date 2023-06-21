@@ -47,7 +47,7 @@ const MatchFunds = () => {
                 return (
                   <SponsorWrapper key={matchFund.id} onClick={() => push(`/admin/matchfunds/${matchFund.id}`)}>
                     <SponsorTitle>{matchFund.name}</SponsorTitle>
-                    <SponsorLogotype src="sdasdasd" />
+                    {/* <SponsorLogotype src="sdasdasd" /> */}
                   </SponsorWrapper>
                 )
               })}

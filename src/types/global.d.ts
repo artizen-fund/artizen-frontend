@@ -41,6 +41,8 @@ declare global {
     | 'sponsorModal'
     | 'matchFundsModal'
     | 'addSponsorToMatchFund'
+    | 'addProjectsToMatchFund'
+    | 'updateMatchFundsSeasonAmount'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 

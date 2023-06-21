@@ -85,39 +85,6 @@ export const PROJECT = gql`
   }
 `
 
-export const SUBMISSION = gql`
-  ${PROJECT}
-  ${ARTIFACT}
-  fragment Submission on Submissions {
-    id
-    createdAt
-    projectId
-    project {
-      ...Project
-    }
-    artifacts {
-      ...Artifact
-    }
-  }
-`
-
-export const SEASON = gql`
-  ${SUBMISSION}
-  fragment Season on Seasons {
-    id
-    title
-    startingDate
-    endingDate
-    createdAt
-    updateAt
-    index
-    amountRaised
-    submissions {
-      ...Submission
-    }
-  }
-`
-
 export const OPEN_EDITIONS_COPIES = gql`
   fragment OpenEditionCopy on OpenEditionCopies {
     value
@@ -163,6 +130,55 @@ export const MATCH_FUNDS = gql`
     url
     sponsorInMatchFunds {
       ...SponsorInMatchFund
+    }
+  }
+`
+
+export const SUBMISSION_IN_MATCH_FUND = gql`
+  fragment SubmissionInMatchFund on SubmissionInMatchFunds {
+    id
+    matchFundId
+    submissionId
+    matchFund {
+      ...MatchFund
+    }
+  }
+`
+
+export const SUBMISSION = gql`
+  ${PROJECT}
+  ${ARTIFACT}
+  fragment Submission on Submissions {
+    id
+    createdAt
+    projectId
+    project {
+      ...Project
+    }
+    artifacts {
+      ...Artifact
+    }
+    matchFunds {
+      id
+      matchFundId
+    }
+  }
+`
+
+export const SEASON = gql`
+  ${SUBMISSION}
+  fragment Season on Seasons {
+    id
+    title
+    startingDate
+    endingDate
+    createdAt
+    updateAt
+    index
+    amountRaised
+    matchFundPooled
+    submissions {
+      ...Submission
     }
   }
 `

@@ -2,96 +2,105 @@ import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { CREATE_SPONSOR } from '@gql'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { UPDATE_SEASONS } from '@gql'
 import { Button, CloseButton, Icon, Form } from '@components'
 import { rgba, LayoutContext } from '@lib'
-import { schema, uischema, FormState, initialState } from '@forms/createSponsor'
+import { schema, uischema, FormState, initialState } from '@forms/createMatchFund'
 import { palette, breakpoint, typography } from '@theme'
-import { sharing } from '@copy/common'
 
-const SponsorModal = () => {
+const UpdateMatchFundsSeasonAmount = () => {
   const { reload } = useRouter()
   const { toggleModal, modalAttrs } = useContext(LayoutContext)
-  const { error } = modalAttrs as any
-  const [tempValue, setTempValue] = useState<FormState>(initialState)
+  const { season } = modalAttrs as any
+  const [tempValue, setTempValue] = useState<number>(season.matchFundPooled)
   const [processing, setProcessing] = useState(false)
 
-  const [createSponsor] = useMutation(CREATE_SPONSOR, {
-    onError: error => console.error('CREATE_SPONSOR error ', error),
+  const [updateSeasons, { loading }] = useMutation(UPDATE_SEASONS, {
+    onError: error => console.error('UPDATE_SEASONS error ', error),
   })
 
-  function addData(data: FormState) {
-    setTempValue(data)
-  }
-
-  const saveNewSponsor = async () => {
+  const saveNewMatchFund = async (newMatchFund: number) => {
     console.log('saveNewSponsor', tempValue)
 
-    const { data } = await createSponsor({
+    console.log('season', season)
+
+    const { data } = await updateSeasons({
       variables: {
-        objects: [tempValue],
+        // objects: [
+        //   {
+        //     matchFundPooled: tempValue,
+        //   },
+        // ],
+        where: {
+          id: {
+            _eq: season.id,
+          },
+        },
+        _set: {
+          matchFundPooled: tempValue,
+        },
       },
     })
 
     if (data) {
+      toggleModal()
       reload()
     }
-
-    console.log('data   ', data)
   }
 
   return (
     <Wrapper>
-      <Tile>{error}</Tile>
+      <Headline>Update Match Fund Amount In Season</Headline>
+      <Subtitle>
+        This amount is used to estimate the match funds allowcate to the projects on competition during this season
+      </Subtitle>
       <CloseButton onClick={() => toggleModal()} />
-      <WrapperForm>
-        <Form data={tempValue} setData={addData} {...{ schema, uischema }} readonly={processing}>
-          <Button onClick={saveNewSponsor} stretch level={0}>
-            {processing ? 'Saving...' : 'Save'}
-          </Button>
-        </Form>
-      </WrapperForm>
+      <Input
+        type="number"
+        onChange={e => {
+          setTempValue(Number(e.target.value))
+        }}
+        value={tempValue}
+      />
+      <Button onClick={() => saveNewMatchFund(tempValue)}>{loading ? 'Updating' : 'Update'}</Button>
     </Wrapper>
   )
 }
 
+const Headline = styled.h1`
+  ${typography.title.l3}
+`
+
+const Subtitle = styled.h2`
+  ${typography.label.l1}
+`
+
+const Input = styled.input`
+  width: auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  ${typography.title.l4}
+  @media (prefers-color-scheme: dark) {
+    color: white;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  border: 1px solid ${rgba(palette.barracuda)};
+`
+
 const WrapperForm = styled.div`
-  display: grid;
   gap: 10px;
-  // grid-template-areas:
-  //   'title logline'
-  //   'impactTags walletAddress'
-  //   'info1 info1'
-  //   'info2 info2'
-  //   'info3 info3'
-  //   'info4 info4'
-  //   'artworkArtifact videoArtifact';
-
-  // @media only screen and (min-width: ${breakpoint.desktop}px) {
-  //   gap: 16px;
-  // }
-
-  // .vertical-layout,
-  // .vertical-layout-item {
-  //   display: contents;
-  // }
-
-  // *[id='#/properties/name'] {
-  //   grid-area: name;
-  // }
-
-  // *[id='#/properties/url'] {
-  //   grid-area: url;
-  // }
-
-  // *[id='#/properties/logotype'] {
-  //   grid-area: logotype;
-  // }
-
-  // *[id='#/properties/number'] {
-  //   grid-area: number;
-  // }
 `
 
 const Tile = styled.div`
@@ -110,7 +119,6 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  max-width: 500px;
   gap: 30px;
   padding: 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
@@ -118,7 +126,7 @@ const Wrapper = styled.div`
     padding: 30px;
   }
   @media only screen and (min-width: ${breakpoint.laptop}px) {
-    width: 568px;
+    width: 768px;
     padding: 40px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
@@ -160,4 +168,4 @@ const Buttons = styled(props => <Row {...props} />)`
   gap: 10px;
 `
 
-export default SponsorModal
+export default UpdateMatchFundsSeasonAmount

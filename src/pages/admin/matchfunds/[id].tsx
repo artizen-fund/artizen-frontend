@@ -82,19 +82,34 @@ export default function MatchFundDetails(): JSX.Element {
                       </SponsorItem>
                     )
                   })}
+                  <Button
+                    level={2}
+                    outline
+                    onClick={() => {
+                      console.log('matchFund  ', matchFund)
+                      setVisibleModalWithAttrs('addSponsorToMatchFund', {
+                        matchFund,
+                      })
+                    }}
+                  >
+                    Add Sponsor
+                  </Button>
                 </SponsorList>
-                <Button
-                  level={2}
-                  outline
-                  onClick={() => {
-                    console.log('matchFund  ', matchFund)
-                    setVisibleModalWithAttrs('addSponsorToMatchFund', {
-                      matchFund,
-                    })
-                  }}
-                >
-                  Add Sponsor
-                </Button>
+                <SupportedProjectList>
+                  Projects:
+                  <Button
+                    level={2}
+                    outline
+                    onClick={() => {
+                      console.log('matchFund  ', matchFund)
+                      setVisibleModalWithAttrs('addProjectsToMatchFund', {
+                        matchFund,
+                      })
+                    }}
+                  >
+                    Add Projects
+                  </Button>
+                </SupportedProjectList>
               </MatchFundContainer>
             )}
           </MatchFundWrapper>
@@ -109,6 +124,10 @@ const Body = styled.div`
 `
 
 const SponsorList = styled.div`
+  ${typography.title.l3}
+`
+
+const SupportedProjectList = styled.div`
   ${typography.title.l3}
 `
 

@@ -1,27 +1,25 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '@components'
-import { useRouter } from 'next/router'
 import { rgba, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { InputWrapper } from '../../../components/Form/Controls/_Common'
-import { GET_SPONSORS, INSERT_SPONSOR_IN_MATCH } from '@gql'
-import { IGetSponsorsQuery, ISponsorFragment, Maybe } from '@types'
+import { InputWrapper } from '../../Form/Controls/_Common'
+import { INSERT_SPONSOR_IN_MATCH, LOAD_SUBMISSIONS } from '@gql'
+import { IGetSponsorsQuery, ISubmissionFragment, Maybe } from '@types'
 import { DropDownBlocks } from './lib/DropDownBlocks'
 import { capitalCase } from 'capital-case'
 
-const AddSponsorToMatchFund = () => {
+const AddProjectsToMatchFund = () => {
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
-  const { push } = useRouter()
-  const [sponsorSelected, setSponsorSelection] = useState<ISponsorFragment | null>(null)
+  const [sponsorSelected, setSponsorSelection] = useState<ISubmissionFragment | null>(null)
   const [showNonUsers, setShowNonUsers] = useState<boolean>(false)
   const [insertSponsorToMatch] = useMutation(INSERT_SPONSOR_IN_MATCH)
-  const [loadSponsors, { loading, data: loadedSponsors, error }] = useLazyQuery<IGetSponsorsQuery>(GET_SPONSORS, {
+  const [loadSubmissions, { loading, data: loadedSubmissions, error }] = useLazyQuery(LOAD_SUBMISSIONS, {
     fetchPolicy: 'no-cache',
-    onCompleted: ({ Sponsors }) => {
-      console.log('loaded Sponsors  ', Sponsors)
-      if (Sponsors.length === 0) {
+    onCompleted: ({ Submissions }) => {
+      console.log('loaded loadSubmissions  ', Submissions)
+      if (Submissions.length === 0) {
         setSponsorSelection(null)
         setShowNonUsers(true)
       } else {
@@ -36,41 +34,50 @@ const AddSponsorToMatchFund = () => {
 
   const { matchFund } = modalAttrs
 
-  const sponsors =
-    !loading && loadedSponsors !== undefined && loadedSponsors?.Sponsors.length > 0 ? loadedSponsors?.Sponsors : null
+  console.log('loadedSponsors  ', loadedSubmissions)
+
+  const submissions =
+    !loading && loadedSubmissions !== undefined && loadedSubmissions?.Submissions.length > 0
+      ? loadedSubmissions?.Submissions
+      : null
 
   const createNewUserCallBack = () => {
     toggleModal()
-    push('/admin/sponsors')
   }
 
-  const addSponsorToMatchFund = async (sponsorSelected: ISponsorFragment) => {
-    console.log('sponsorSelected  ', sponsorSelected)
-    console.log('matchFund  ', matchFund)
-    const data = await insertSponsorToMatch({
-      onError: error => console.error('INSERT_SPONSOR_IN_MATCH error ', error),
-      variables: {
-        objects: [
-          {
-            matchFundId: matchFund.id,
-            sponsorId: sponsorSelected.id,
-            contribution: sponsorSelected.participation,
-          },
-        ],
-      },
-    })
+  console.log('submissions  ', submissions)
 
-    console.log('data   ', data)
-    toggleModal()
-  }
+  // const addSponsorToMatchFund = async (sponsorSelected: ISponsorFragment) => {
+  //   console.log('sponsorSelected  ', sponsorSelected)
+  //   console.log('matchFund  ', matchFund)
+  //   const data = await insertSponsorToMatch({
+  //     onError: error => console.error('INSERT_SPONSOR_IN_MATCH error ', error),
+  //     variables: {
+  //       objects: [
+  //         {
+  //           matchFundId: matchFund.id,
+  //           sponsorId: sponsorSelected.id,
+  //           contribution: sponsorSelected.participation,
+  //         },
+  //       ],
+  //     },
+  //   })
+
+  //   console.log('data   ', data)
+  //   toggleModal()
+  // }
 
   const searchSponsors = (value: string) => {
     console.log('value  ', value)
     setSearchDataData(value)
-    loadSponsors({
+    loadSubmissions({
       variables: {
         where: {
-          name: { _eq: value },
+          project: {
+            title: {
+              _eq: value,
+            },
+          },
         },
       },
     })
@@ -78,31 +85,33 @@ const AddSponsorToMatchFund = () => {
 
   return (
     <Wrapper>
-      <Headline>Sponsors</Headline>
-      <Subtitle>Search sponsors to add to {capitalCase(matchFund.name)}:</Subtitle>
+      <Headline>Project Submissions</Headline>
+      <Subtitle>Search project submission to add to {capitalCase(matchFund.name)}:</Subtitle>
       <InputSearchWrapper>
         <input
-          placeholder={'Search sponsors by name'}
+          placeholder={'Search project by name'}
           value={searchData}
           onBlur={e => e.target.value === '' && !loading && setShowNonUsers(false)}
           onChange={e => searchSponsors(e.target.value)}
         />
       </InputSearchWrapper>
-      {showNonUsers && <NonUser>...sponsor does not exists</NonUser>}
-      {sponsors && (
+      {showNonUsers && <NonUser>...project does not exists or has not be submitted to season</NonUser>}
+      {submissions && (
         <SchoolItems>
-          <DropDownBlocks<ISponsorFragment>
+          <DropDownBlocks<ISubmissionFragment>
             itemSelected={sponsorSelected}
             setItemSelected={setSponsorSelection}
-            items={sponsors}
+            items={submissions}
             align="left"
             structure={[
               {
-                renderer: (item: ISponsorFragment) => <AvatarImage profileImage={item.logotype}></AvatarImage>,
+                renderer: (item: ISubmissionFragment) => (
+                  <AvatarImage profileImage={item.project?.artifacts[0].artwork}></AvatarImage>
+                ),
                 classNames: 'doubleHeight',
               },
               {
-                renderer: (item: ISponsorFragment) => <ItemText>{item.name}</ItemText>,
+                renderer: (item: ISubmissionFragment) => <ItemText>{item.project?.title}</ItemText>,
               },
             ]}
           ></DropDownBlocks>
@@ -110,15 +119,15 @@ const AddSponsorToMatchFund = () => {
       )}
 
       <Menu>
-        {!sponsorSelected && (
+        {/* {!sponsorSelected && (
           <Button level={2} outline onClick={() => createNewUserCallBack()}>
             Create New Sponsor
           </Button>
-        )}
+        )} */}
         {sponsorSelected && (
           <>
-            <Button level={2} onClick={() => addSponsorToMatchFund(sponsorSelected)}>
-              Add Sponsor
+            <Button stretch level={2} onClick={() => {}}>
+              Add Project Submission
             </Button>
           </>
         )}
@@ -173,17 +182,17 @@ const Wrapper = styled.div`
   width: calc(100vw - 320px);
 `
 
+const ItemText = styled.h3`
+  ${typography.body.l3}
+`
+
 const Headline = styled.h1`
   margin: 1rem 0;
   ${typography.title.l3}
-`
-
-const ItemText = styled.h3`
-  ${typography.body.l3}
 `
 
 const Subtitle = styled.h2`
   ${typography.title.l4}
 `
 
-export default AddSponsorToMatchFund
+export default AddProjectsToMatchFund
