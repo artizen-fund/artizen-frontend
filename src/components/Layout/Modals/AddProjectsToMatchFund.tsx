@@ -5,21 +5,21 @@ import { rgba, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { InputWrapper } from '../../Form/Controls/_Common'
-import { INSERT_SPONSOR_IN_MATCH, LOAD_SUBMISSIONS } from '@gql'
-import { IGetSponsorsQuery, ISubmissionFragment, Maybe } from '@types'
+import { INSERT_SPONSOR_IN_MATCH, GET_MATCH_FUNDS } from '@gql'
+import { IGetSponsorsQuery, ISubmissionFragment, Maybe, IMatchFundFragment } from '@types'
 import { DropDownBlocks } from './lib/DropDownBlocks'
 import { capitalCase } from 'capital-case'
 
 const AddProjectsToMatchFund = () => {
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
-  const [sponsorSelected, setSponsorSelection] = useState<ISubmissionFragment | null>(null)
+  const [sponsorSelected, setSponsorSelection] = useState<IMatchFundFragment | null>(null)
   const [showNonUsers, setShowNonUsers] = useState<boolean>(false)
   const [insertSponsorToMatch] = useMutation(INSERT_SPONSOR_IN_MATCH)
-  const [loadSubmissions, { loading, data: loadedSubmissions, error }] = useLazyQuery(LOAD_SUBMISSIONS, {
+  const [loadMatchFund, { loading, data: loadedMatchFund, error }] = useLazyQuery(GET_MATCH_FUNDS, {
     fetchPolicy: 'no-cache',
-    onCompleted: ({ Submissions }) => {
-      console.log('loaded loadSubmissions  ', Submissions)
-      if (Submissions.length === 0) {
+    onCompleted: ({ MatchFunds }) => {
+      console.log('loaded loadSubmissions  ', MatchFunds)
+      if (MatchFunds.length === 0) {
         setSponsorSelection(null)
         setShowNonUsers(true)
       } else {
@@ -32,20 +32,20 @@ const AddProjectsToMatchFund = () => {
 
   const [searchData, setSearchDataData] = useState<string>('')
 
-  const { matchFund } = modalAttrs
+  const { project } = modalAttrs
 
-  console.log('loadedSponsors  ', loadedSubmissions)
+  console.log('loadedSponsors  ', loadedMatchFund)
 
-  const submissions =
-    !loading && loadedSubmissions !== undefined && loadedSubmissions?.Submissions.length > 0
-      ? loadedSubmissions?.Submissions
+  const matchFund =
+    !loading && loadedMatchFund !== undefined && loadedMatchFund?.MatchFunds.length > 0
+      ? loadedMatchFund?.MatchFunds
       : null
 
   const createNewUserCallBack = () => {
     toggleModal()
   }
 
-  console.log('submissions  ', submissions)
+  // console.log('submissions  ', submissions)
 
   // const addSponsorToMatchFund = async (sponsorSelected: ISponsorFragment) => {
   //   console.log('sponsorSelected  ', sponsorSelected)
@@ -70,13 +70,11 @@ const AddProjectsToMatchFund = () => {
   const searchSponsors = (value: string) => {
     console.log('value  ', value)
     setSearchDataData(value)
-    loadSubmissions({
+    loadMatchFund({
       variables: {
         where: {
-          project: {
-            title: {
-              _eq: value,
-            },
+          name: {
+            _eq: value,
           },
         },
       },
@@ -86,32 +84,28 @@ const AddProjectsToMatchFund = () => {
   return (
     <Wrapper>
       <Headline>Project Submissions</Headline>
-      <Subtitle>Search project submission to add to {capitalCase(matchFund.name)}:</Subtitle>
+      <Subtitle>Search match funds to add {capitalCase(project.title)}:</Subtitle>
       <InputSearchWrapper>
         <input
-          placeholder={'Search project by name'}
+          placeholder={'Search match funds by name'}
           value={searchData}
           onBlur={e => e.target.value === '' && !loading && setShowNonUsers(false)}
           onChange={e => searchSponsors(e.target.value)}
         />
       </InputSearchWrapper>
       {showNonUsers && <NonUser>...project does not exists or has not be submitted to season</NonUser>}
-      {submissions && (
+
+      {matchFund && (
         <SchoolItems>
-          <DropDownBlocks<ISubmissionFragment>
+          <DropDownBlocks<IMatchFundFragment>
             itemSelected={sponsorSelected}
             setItemSelected={setSponsorSelection}
-            items={submissions}
+            items={matchFund}
             align="left"
             structure={[
               {
-                renderer: (item: ISubmissionFragment) => (
-                  <AvatarImage profileImage={item.project?.artifacts[0].artwork}></AvatarImage>
-                ),
+                renderer: (item: IMatchFundFragment) => <ItemText>{item.name}</ItemText>,
                 classNames: 'doubleHeight',
-              },
-              {
-                renderer: (item: ISubmissionFragment) => <ItemText>{item.project?.title}</ItemText>,
               },
             ]}
           ></DropDownBlocks>
@@ -119,16 +113,16 @@ const AddProjectsToMatchFund = () => {
       )}
 
       <Menu>
-        {/* {!sponsorSelected && (
+        {!sponsorSelected && (
           <Button level={2} outline onClick={() => createNewUserCallBack()}>
             Create New Sponsor
           </Button>
-        )} */}
+        )}
         {sponsorSelected && (
           <>
-            <Button stretch level={2} onClick={() => {}}>
-              Add Project Submission
-            </Button>
+            {/* <Button level={2} onClick={() => addSponsorToMatchFund(sponsorSelected)}>
+              Add Project
+            </Button> */}
           </>
         )}
       </Menu>

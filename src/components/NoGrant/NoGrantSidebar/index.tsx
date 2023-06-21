@@ -23,7 +23,7 @@ const NoGrantSidebar = () => {
           funded.
         </Message>
 
-        <Button href="https://artizen.typeform.com/apply">Apply for funding</Button>
+        <Button href=" https://vote.artizen.fund/submit">Apply for funding</Button>
 
         <HowItWorks href="/derp">Or see how it works here</HowItWorks>
       </Body>

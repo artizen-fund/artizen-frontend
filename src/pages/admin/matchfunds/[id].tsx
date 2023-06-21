@@ -102,9 +102,9 @@ export default function MatchFundDetails(): JSX.Element {
                     outline
                     onClick={() => {
                       console.log('matchFund  ', matchFund)
-                      setVisibleModalWithAttrs('addProjectsToMatchFund', {
-                        matchFund,
-                      })
+                      // setVisibleModalWithAttrs('addProjectsToMatchFund', {
+                      //   matchFund,
+                      // })
                     }}
                   >
                     Add Projects

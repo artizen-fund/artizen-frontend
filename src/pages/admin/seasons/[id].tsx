@@ -75,10 +75,6 @@ export default function SeasonPage(): JSX.Element {
                   </span>
                 )}
 
-                <Subtitle
-                  id={`submission-startingDate-${season.startingDate}`}
-                >{`This season runs from ${startingDate} to ${endingDate}`}</Subtitle>
-
                 <MatchFoundMoney className="right-align">
                   <span style={{ fontWeight: 10 }}>Match Fund: </span> {season.matchFundPooled}{' '}
                   <a
@@ -93,14 +89,19 @@ export default function SeasonPage(): JSX.Element {
                   </a>
                 </MatchFoundMoney>
 
-                <div>
-                  <Subtitle>Projects submitted to this Season:</Subtitle>
+                <Subtitle
+                  id={`submission-startingDate-${season.startingDate}`}
+                >{`This season runs from ${startingDate} to ${endingDate}`}</Subtitle>
+
+                <div className="right-align">
                   {isOpenForSubmissions(season.startingDate, season.endingDate) && (
                     <Button level={2} onClick={() => push('/admin/projects')}>
                       Submit a project
                     </Button>
                   )}
                 </div>
+
+                <Subtitle>Projects submitted to this Season:</Subtitle>
 
                 <SubmissionsWrapper>
                   <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
@@ -148,11 +149,9 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 `
 
 const Subtitle = styled.h3`
-  font-size: 1rem;
-  font-weight: 100;
   margin: 0;
   padding: 0;
-  ${typography.body.l1}
+  ${typography.body.l3}
 `
 
 const Title = styled.h1`

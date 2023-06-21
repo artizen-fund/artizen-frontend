@@ -67,17 +67,22 @@ export default function ProjectDetails(): JSX.Element {
           <Spinner minHeight="75vh" />
         ) : (
           <>
-            <Button
-              level={2}
-              outline
-              onClick={() => {
-                push(`/project/${project?.titleURL}`)
-              }}
-            >
-              Open Project Page
-            </Button>
             <ProjectContainer>
-              <Title>{project?.title && capitalCase(project?.title)}</Title>
+              <div>
+                <Title>{project?.title && capitalCase(project?.title)}</Title>
+                <Button
+                  glyph="external"
+                  glyphOnly
+                  level={2}
+                  outline
+                  onClick={() => {
+                    push(`/project/${project?.titleURL}`)
+                  }}
+                >
+                  Open Project Page
+                </Button>
+              </div>
+
               <Button
                 level={2}
                 onClick={() => {
@@ -87,6 +92,16 @@ export default function ProjectDetails(): JSX.Element {
                 }}
               >
                 Submit to a Season
+              </Button>
+              <Button
+                level={2}
+                onClick={() => {
+                  setVisibleModalWithAttrs('addProjectsToMatchFund', {
+                    project,
+                  })
+                }}
+              >
+                Add to Match Fund
               </Button>
 
               <SeasonSubmissionsContainer>
@@ -133,17 +148,16 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 
 const ProjectContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(30px);
-  grid-gap: 20px;
+  grid-template-columns: 60% 20% 20%;
   margin: 20px 0;
 
   .expand {
-    grid-column: 1 / 3;
+    grid-column: 1 / 5;
   }
 `
 
 const SeasonSubmissionsContainer = styled.div`
-  grid-column: 1 / 3;
+  grid-column: 1 / 5;
 `
 
 const SeasonItem = styled.div`
@@ -166,8 +180,10 @@ const SeasonItem = styled.div`
 
 const Title = styled.h1`
   font-size: 1.5rem;
+
+  float: left;
   font-weight: 600;
-  margin: 0;
+  margin: 0 10px 0 0;
   padding: 0;
   color: ${palette.night};
 `
