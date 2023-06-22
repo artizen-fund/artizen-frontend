@@ -2,17 +2,19 @@ import styled from 'styled-components'
 import { useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+
 import { useQuery } from '@apollo/client'
 import { palette, typography } from '@theme'
 import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
 import { GET_PROJECTS, LOAD_SEASONS } from '@gql'
-import { LayoutContext, rgba } from '@lib'
+import { LayoutContext, rgba, useDateHelpers } from '@lib'
 import { capitalCase } from 'capital-case'
 
 import { IProjectsQuery, ISeasonFragment } from '@types'
 
 export default function ProjectDetails(): JSX.Element {
   const { status } = useSession()
+  const { isOpenForSubmissions } = useDateHelpers()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
@@ -43,6 +45,11 @@ export default function ProjectDetails(): JSX.Element {
   } = useQuery(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
+      order_by: [
+        {
+          startingDate: 'desc',
+        },
+      ],
       where: {
         submissions: {
           projectId: {
@@ -58,6 +65,8 @@ export default function ProjectDetails(): JSX.Element {
   }
 
   const project = loadedProjectData?.Projects[0]
+
+  console.log('loadedSeasons  ', loadedSeasons)
 
   return (
     <Layout>
@@ -93,23 +102,45 @@ export default function ProjectDetails(): JSX.Element {
               >
                 Submit to a Season
               </Button>
-              <Button
-                level={2}
-                onClick={() => {
-                  setVisibleModalWithAttrs('addProjectsToMatchFund', {
-                    project,
-                  })
-                }}
-              >
-                Add to Match Fund
-              </Button>
 
               <SeasonSubmissionsContainer>
                 {!loadingSeasons &&
                   loadedSeasons.Seasons.map((season: ISeasonFragment) => {
+                    const projectSubmission = season.submissions.find(submission => submission.projectId === id)
+                    const submissionInMatchFundsArray = projectSubmission?.matchFunds || []
                     return (
-                      <SeasonItem key={season.id} onClick={() => push(`/admin/seasons/${season.id}`)}>
-                        This project was submitted to season: <b>{season.title && capitalCase(season.title)}</b>
+                      <SeasonItem key={season.id}>
+                        <div>
+                          Submitted to season: <b>{season.title && capitalCase(season.title)}</b>
+                        </div>
+                        {isOpenForSubmissions(season.startingDate, season.endingDate) && (
+                          <div
+                            className="button"
+                            onClick={() => {
+                              setVisibleModalWithAttrs('addProjectsToMatchFund', {
+                                projectSubmission,
+                              })
+                            }}
+                          >
+                            Add to Match Fund
+                          </div>
+                        )}
+                        {submissionInMatchFundsArray.length > 0 && (
+                          <div>
+                            <>It is in the following match funds: </>
+                            {submissionInMatchFundsArray.map(SubmissionInMatchFunds => {
+                              console.log('SubmissionInMatchFunds  ', SubmissionInMatchFunds)
+                              return (
+                                <a
+                                  onClick={() => push(`/admin/matchfunds/${SubmissionInMatchFunds.matchFund.id}`)}
+                                  key={SubmissionInMatchFunds.id}
+                                >
+                                  {capitalCase(SubmissionInMatchFunds.matchFund.name)}
+                                </a>
+                              )
+                            })}
+                          </div>
+                        )}
                       </SeasonItem>
                     )
                   })}
@@ -148,19 +179,40 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 
 const ProjectContainer = styled.div`
   display: grid;
-  grid-template-columns: 60% 20% 20%;
+  grid-template-columns: 70% 30%;
   margin: 20px 0;
 
   .expand {
-    grid-column: 1 / 5;
+    grid-column: 1 / 3;
   }
 `
 
 const SeasonSubmissionsContainer = styled.div`
-  grid-column: 1 / 5;
+  grid-column: 1 / 3;
 `
 
 const SeasonItem = styled.div`
+  display: grid;
+  grid-template-columns: 70% 30%;
+  padding: 10px;
+  border: 1px dotted ${rgba(palette.uiWarning, 0.5)};
+  border-radius: 5px;
+  margin: 10px 0;
+
+  .button {
+    cursor: pointer;
+    padding: 5px;
+    font-size: 0.8rem;
+    border-radius: 10px;
+    border: 1px dotted ${rgba(palette.uiWarning, 1)};
+    text-align: center;
+    &:hover {
+      background: ${rgba(palette.uiWarning, 0.1)};
+    }
+  }
+`
+
+const SeasonItemButton = styled.div`
   display: flex
   flex-direction: column;
   justify-content: space-between;

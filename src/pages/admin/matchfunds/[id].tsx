@@ -69,16 +69,13 @@ export default function MatchFundDetails(): JSX.Element {
                 <SponsorList>
                   Sponsors:
                   {matchFund.sponsorInMatchFunds.map((sponsorInMatchFundFragment: ISponsorInMatchFundFragment) => {
-                    const {
-                      id,
-                      sponsor: { name, id: sponsorId, participation, logotype },
-                    } = sponsorInMatchFundFragment
+                    const { id, sponsor } = sponsorInMatchFundFragment
 
                     return (
                       <SponsorItem key={id}>
-                        <img style={{ width: 200 }} src={logotype} />
-                        <div>{capitalCase(name)}</div>
-                        <div>{participation}</div>
+                        <img style={{ width: 200 }} src={sponsor?.logotype} />
+                        <div>{sponsor?.name && capitalCase(sponsor?.name)}</div>
+                        <div>{sponsor?.participation}</div>
                       </SponsorItem>
                     )
                   })}

@@ -13,7 +13,7 @@ import { size } from 'lodash'
 
 export default function SeasonPage(): JSX.Element {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const { formatDate, getSeasonStatus, isOpenForSubmissions } = useDateHelpers()
+  const { formatDate, getSeasonStatus, isOpenForSubmissions, isSeasonEnded } = useDateHelpers()
   const {
     query: { id },
     push,
@@ -54,18 +54,17 @@ export default function SeasonPage(): JSX.Element {
             const startingDate = formatDate(season.startingDate)
             const endingDate = formatDate(season.endingDate)
             const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
+            const isSeasonEndedV: boolean = season.isClosed || isSeasonEnded(season.startingDate, season.endingDate)
+            const isOpenForSubmissionsV: boolean =
+              !season.isClosed || isOpenForSubmissions(season.startingDate, season.endingDate)
+
+            console.log('isOpenForSubmissionsV    ', isOpenForSubmissionsV)
+
             return (
               <Wrapper key={id} id={id}>
-                <Title className="expand" id={`submission-title-${season.title}`}>
-                  {season.title && capitalCase(season.title)}
-                </Title>
+                <Title id={`submission-title-${season.title}`}>{season.title && capitalCase(season.title)}</Title>
 
-                <Title id={`submission-status-${seasonStatus}`}>
-                  <span style={{ fontWeight: 10 }}>status: </span>
-                  {capitalCase(seasonStatus)}
-                </Title>
-
-                {!isOpenForSubmissions(season.startingDate, season.endingDate) && (
+                {isSeasonEndedV && !season.isClosed && (
                   <span
                     style={{ fontWeight: 10, fontSize: 18, textDecoration: 'underline' }}
                     className="right-align"
@@ -75,33 +74,42 @@ export default function SeasonPage(): JSX.Element {
                   </span>
                 )}
 
-                <MatchFoundMoney className="right-align">
+                <Title id={`submission-status-${seasonStatus}`}>
+                  <span style={{ fontWeight: 10 }}>status: </span>
+                  {capitalCase(seasonStatus)}
+                </Title>
+
+                <MatchFoundMoney>
                   <span style={{ fontWeight: 10 }}>Match Fund: </span> {season.matchFundPooled}{' '}
-                  <a
-                    style={{ fontWeight: 10, fontSize: 18, textDecoration: 'underline' }}
-                    onClick={() => {
-                      setVisibleModalWithAttrs('updateMatchFundsSeasonAmount', {
-                        season,
-                      })
-                    }}
-                  >
-                    edit
-                  </a>
+                  {isOpenForSubmissionsV && (
+                    <a
+                      style={{ fontWeight: 10, fontSize: 18, textDecoration: 'underline' }}
+                      onClick={() => {
+                        setVisibleModalWithAttrs('updateMatchFundsSeasonAmount', {
+                          season,
+                        })
+                      }}
+                    >
+                      edit
+                    </a>
+                  )}
                 </MatchFoundMoney>
 
-                <Subtitle
-                  id={`submission-startingDate-${season.startingDate}`}
-                >{`This season runs from ${startingDate} to ${endingDate}`}</Subtitle>
+                <div className="expand">
+                  <Subtitle
+                    style={{ float: 'left' }}
+                  >{`This season runs from ${startingDate} to ${endingDate}`}</Subtitle>
 
-                <div className="right-align">
-                  {isOpenForSubmissions(season.startingDate, season.endingDate) && (
-                    <Button level={2} onClick={() => push('/admin/projects')}>
-                      Submit a project
-                    </Button>
-                  )}
+                  <div className="right-align" style={{ float: 'right' }}>
+                    {isOpenForSubmissionsV && (
+                      <Button level={2} onClick={() => push('/admin/projects')}>
+                        Submit a project
+                      </Button>
+                    )}
+                  </div>
                 </div>
 
-                <Subtitle>Projects submitted to this Season:</Subtitle>
+                <Subtitle className="expand">Projects submitted to this Season:</Subtitle>
 
                 <SubmissionsWrapper>
                   <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />

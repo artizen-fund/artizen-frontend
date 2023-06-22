@@ -104,7 +104,6 @@ export const authOptions: NextAuthOptions = {
       const encodedToken = jsonwebtoken.sign(token as object, secret, {
         algorithm: 'HS256',
       })
-      console.log('from encode')
       return encodedToken
     },
     decode: async ({ secret, token }: JWTDecodeParams) => {

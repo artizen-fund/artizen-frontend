@@ -137,10 +137,10 @@ export const MATCH_FUNDS = gql`
 export const SUBMISSION_IN_MATCH_FUND = gql`
   fragment SubmissionInMatchFund on SubmissionInMatchFunds {
     id
-    matchFundId
     submissionId
     matchFund {
-      ...MatchFund
+      id
+      name
     }
   }
 `
@@ -148,6 +148,7 @@ export const SUBMISSION_IN_MATCH_FUND = gql`
 export const SUBMISSION = gql`
   ${PROJECT}
   ${ARTIFACT}
+  ${SUBMISSION_IN_MATCH_FUND}
   fragment Submission on Submissions {
     id
     createdAt
@@ -159,8 +160,7 @@ export const SUBMISSION = gql`
       ...Artifact
     }
     matchFunds {
-      id
-      matchFundId
+      ...SubmissionInMatchFund
     }
   }
 `
@@ -177,6 +177,7 @@ export const SEASON = gql`
     index
     amountRaised
     matchFundPooled
+    isClosed
     submissions {
       ...Submission
     }

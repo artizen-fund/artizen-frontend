@@ -1,20 +1,23 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { rgba, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { InputWrapper } from '../../Form/Controls/_Common'
-import { INSERT_SPONSOR_IN_MATCH, GET_MATCH_FUNDS } from '@gql'
+import { INSERT_SUBMISSION_IN_MATCH_FUND, GET_MATCH_FUNDS } from '@gql'
 import { IGetSponsorsQuery, ISubmissionFragment, Maybe, IMatchFundFragment } from '@types'
 import { DropDownBlocks } from './lib/DropDownBlocks'
 import { capitalCase } from 'capital-case'
 
 const AddProjectsToMatchFund = () => {
+  const { reload } = useRouter()
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
   const [sponsorSelected, setSponsorSelection] = useState<IMatchFundFragment | null>(null)
   const [showNonUsers, setShowNonUsers] = useState<boolean>(false)
-  const [insertSponsorToMatch] = useMutation(INSERT_SPONSOR_IN_MATCH)
+  const [insertSubmissionInMatchFund] = useMutation(INSERT_SUBMISSION_IN_MATCH_FUND)
+  const { projectSubmission } = modalAttrs
   const [loadMatchFund, { loading, data: loadedMatchFund, error }] = useLazyQuery(GET_MATCH_FUNDS, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ MatchFunds }) => {
@@ -32,8 +35,6 @@ const AddProjectsToMatchFund = () => {
 
   const [searchData, setSearchDataData] = useState<string>('')
 
-  const { project } = modalAttrs
-
   console.log('loadedSponsors  ', loadedMatchFund)
 
   const matchFund =
@@ -47,25 +48,27 @@ const AddProjectsToMatchFund = () => {
 
   // console.log('submissions  ', submissions)
 
-  // const addSponsorToMatchFund = async (sponsorSelected: ISponsorFragment) => {
-  //   console.log('sponsorSelected  ', sponsorSelected)
-  //   console.log('matchFund  ', matchFund)
-  //   const data = await insertSponsorToMatch({
-  //     onError: error => console.error('INSERT_SPONSOR_IN_MATCH error ', error),
-  //     variables: {
-  //       objects: [
-  //         {
-  //           matchFundId: matchFund.id,
-  //           sponsorId: sponsorSelected.id,
-  //           contribution: sponsorSelected.participation,
-  //         },
-  //       ],
-  //     },
-  //   })
+  const addSponsorToMatchFund = async (matchFundSelected: IMatchFundFragment) => {
+    console.log('sponsorSelected  ', sponsorSelected)
+    console.log('matchFund  ', matchFund)
+    const data = await insertSubmissionInMatchFund({
+      onError: error => console.error('INSERT_SPONSOR_IN_MATCH error ', error),
+      variables: {
+        objects: [
+          {
+            matchFundId: matchFundSelected.id,
+            submissionId: projectSubmission.id,
+          },
+        ],
+      },
+    })
 
-  //   console.log('data   ', data)
-  //   toggleModal()
-  // }
+    console.log('data   ', data)
+    if (data) {
+      toggleModal()
+      reload()
+    }
+  }
 
   const searchSponsors = (value: string) => {
     console.log('value  ', value)
@@ -81,10 +84,12 @@ const AddProjectsToMatchFund = () => {
     })
   }
 
+  console.log('projectSubmission  ', projectSubmission)
+
   return (
     <Wrapper>
-      <Headline>Project Submissions</Headline>
-      <Subtitle>Search match funds to add {capitalCase(project.title)}:</Subtitle>
+      <Headline>Add project submission to match fund</Headline>
+      <Subtitle>Add match funds name to add {capitalCase(projectSubmission.project.title)}:</Subtitle>
       <InputSearchWrapper>
         <input
           placeholder={'Search match funds by name'}
@@ -120,9 +125,9 @@ const AddProjectsToMatchFund = () => {
         )}
         {sponsorSelected && (
           <>
-            {/* <Button level={2} onClick={() => addSponsorToMatchFund(sponsorSelected)}>
+            <Button level={2} onClick={() => addSponsorToMatchFund(sponsorSelected)}>
               Add Project
-            </Button> */}
+            </Button>
           </>
         )}
       </Menu>
