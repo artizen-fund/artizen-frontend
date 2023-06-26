@@ -6,7 +6,6 @@ import { useQuery } from '@apollo/client'
 import { palette, typography } from '@theme'
 import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
 import { GET_MATCH_FUNDS, LOAD_SEASONS } from '@gql'
-import { ISubmissionInMatchFundFragment } from '@types'
 import { LayoutContext, rgba } from '@lib'
 import { capitalCase } from 'capital-case'
 
@@ -15,6 +14,7 @@ import {
   ISeasonFragment,
   ISponsorInMatchFundFragment,
   SponsorInMatchFundFragmentDoc,
+  ISubmissionInMatchFundFragment,
 } from '@types'
 
 export default function MatchFundDetails(): JSX.Element {
