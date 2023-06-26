@@ -14,6 +14,11 @@ import {
   SubmitProjectModal,
   NewProjectMembersModal,
   ErrorModal,
+  SponsorModal,
+  MatchFundsModal,
+  AddSponsorToMatchFund,
+  AddProjectsToMatchFund,
+  UpdateMatchFundsSeasonAmount,
 } from '@components'
 import { LayoutContext } from '@lib'
 import { breakpoint } from '@theme'
@@ -73,6 +78,16 @@ const Modals = () => {
         return <NewProjectMembersModal />
       case 'errorModal':
         return <ErrorModal />
+      case 'sponsorModal':
+        return <SponsorModal />
+      case 'matchFundsModal':
+        return <MatchFundsModal />
+      case 'addSponsorToMatchFund':
+        return <AddSponsorToMatchFund />
+      case 'addProjectsToMatchFund':
+        return <AddProjectsToMatchFund />
+      case 'updateMatchFundsSeasonAmount':
+        return <UpdateMatchFundsSeasonAmount />
 
       default:
         return <></>

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { useAuthRequestChallengeEvm } from '@moralisweb3/next'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
-import { assertInt, getWagmiClient, LayoutContext } from '@lib'
+import { assertInt, getWagmiClient, LayoutContext, assert } from '@lib'
 import { signIn, useSession } from 'next-auth/react'
 
 const useWalletAuthFlow = () => {
@@ -17,7 +17,6 @@ const useWalletAuthFlow = () => {
   const { signMessage } = useSignMessage({
     onSuccess(data, variables) {
       // Verify signature when sign message succeeds
-      // const address = verifyMessage(variables.message, data);
       // recoveredAddress.current = address;
 
       signIn('moralis-auth', {
@@ -62,9 +61,6 @@ const useWalletAuthFlow = () => {
 
       setMessageToSign(message)
 
-      // const signature = await signMessageAsync({ message })
-      // await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' })
-
       setConnecting(false)
       // Force reload due to JWT is not available or is still linked to old session when first created. Wagmi renders an error when the smart contracts are called.
       // router.reload()
@@ -86,7 +82,7 @@ const useWalletAuthFlow = () => {
         chains,
         options: {
           qrcode: true,
-          projectId: '1cfa6214f74719cb6dccea797e0ff417',
+          projectId: assert(process.env.NEXT_PUBLIC_WALLET_CONNECTOR_ID, 'NEXT_PUBLIC_WALLET_CONNECTOR_ID'),
         },
       }),
     )

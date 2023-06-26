@@ -24,8 +24,9 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
       order_by: { startingDate: 'asc' },
     },
   })
-
-  console.warn('error  in here ', error)
+  if (error) {
+    console.warn('error  in here ', error)
+  }
 
   if (!latestSeason || !!loading) return <></>
 

@@ -18,10 +18,6 @@ const Projects = () => {
     fetchPolicy: 'no-cache',
   })
 
-  useEffect(() => {
-    if (!errorLoadingProject) return
-  }, [errorLoadingProject])
-
   const openProject = (target: string) => () => {
     router.push(`/admin/projects/${target}`)
   }

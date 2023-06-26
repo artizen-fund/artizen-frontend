@@ -73,7 +73,6 @@ export const PROJECT = gql`
     metadata
     impactTags
     impact
-    titleURL
     submissions {
       id
     }
@@ -86,18 +85,76 @@ export const PROJECT = gql`
   }
 `
 
+export const OPEN_EDITIONS_COPIES = gql`
+  fragment OpenEditionCopy on OpenEditionCopies {
+    value
+    copies
+    user {
+      id
+      artizenHandle
+      profileImage
+    }
+  }
+`
+
+export const SPONSORS = gql`
+  fragment Sponsor on Sponsors {
+    id
+    name
+    logotype
+    url
+    participation
+  }
+`
+
+export const SPONSORS_IN_MATCH_FUND = gql`
+  ${SPONSORS}
+  fragment SponsorInMatchFund on SponsorInMatchFunds {
+    id
+    created_at
+    updated_at
+    contribution
+    sponsor {
+      ...Sponsor
+    }
+  }
+`
+
+export const SUBMISSION_IN_MATCH_FUND = gql`
+  ${PROJECT}
+  fragment SubmissionInMatchFund on SubmissionInMatchFunds {
+    id
+    submissionId
+    matchFund {
+      id
+      name
+    }
+    submission {
+      id
+      project {
+        ...Project
+      }
+    }
+  }
+`
+
 export const SUBMISSION = gql`
   ${PROJECT}
   ${ARTIFACT}
+  ${SUBMISSION_IN_MATCH_FUND}
   fragment Submission on Submissions {
     id
-    createdAt
     projectId
+    createdAt
+    updatedAt
     project {
       ...Project
     }
     artifacts {
       ...Artifact
+    }
+    matchFunds {
+      ...SubmissionInMatchFund
     }
   }
 `
@@ -113,20 +170,28 @@ export const SEASON = gql`
     updateAt
     index
     amountRaised
+    matchFundPooled
+    isClosed
     submissions {
       ...Submission
     }
   }
 `
 
-export const OPEN_EDITIONS_COPIES = gql`
-  fragment OpenEditionCopy on OpenEditionCopies {
-    value
-    copies
-    user {
-      id
-      artizenHandle
-      profileImage
+export const MATCH_FUNDS = gql`
+  ${SPONSORS_IN_MATCH_FUND}
+  ${SUBMISSION_IN_MATCH_FUND}
+  fragment MatchFund on MatchFunds {
+    id
+    name
+    goal
+    projectRequirements
+    url
+    sponsorInMatchFunds {
+      ...SponsorInMatchFund
+    }
+    submissions {
+      ...SubmissionInMatchFund
     }
   }
 `

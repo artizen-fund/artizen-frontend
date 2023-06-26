@@ -143,6 +143,7 @@ export const useSeasons = () => {
         },
         _set: {
           amountRaised,
+          isClosed: true,
         },
       },
       onError: error => console.error('Error updating season', error),

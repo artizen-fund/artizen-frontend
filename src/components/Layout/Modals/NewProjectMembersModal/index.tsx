@@ -5,7 +5,7 @@ import { rgba, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { InputWrapper } from '../../../../components/Form/Controls/_Common'
-import { GET_USERS, INSERT_PROJECTS_MEMBERS } from '@gql'
+import { GET_USERS } from '@gql'
 import { IGetUsersQuery, IUserPublicFragment, Maybe } from '@types'
 import { DropDownBlocks } from '../lib/DropDownBlocks'
 
@@ -25,7 +25,7 @@ const NewProjectMembersModal = () => {
       }
     },
   })
-  const [submitProjectMutaton] = useMutation(INSERT_PROJECTS_MEMBERS)
+
   const [searchData, setSearchDataData] = useState<string>('')
 
   const { callback } = modalAttrs

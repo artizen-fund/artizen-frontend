@@ -52,16 +52,22 @@ export const useDateHelpers = () => {
     return 'unknown'
   }
 
-  const isOpenForSubmissions = (startDate: string, endDate: string) => {
-    const seasonStatus = getSeasonStatus(startDate, endDate)
-
-    return seasonStatus === SEASON_ACTIVE || seasonStatus === SEASON_UPCOMING
-  }
-
   const isSeasonActive = (startDate: string, endDate: string) => {
     const seasonStatus = getSeasonStatus(startDate, endDate)
 
     return seasonStatus === SEASON_ACTIVE
+  }
+
+  const isSeasonEnded = (startDate: string, endDate: string) => {
+    const seasonStatus = getSeasonStatus(startDate, endDate)
+
+    return seasonStatus === SEASON_ENDED
+  }
+
+  const isOpenForSubmissions = (startDate: string, endDate: string) => {
+    const seasonStatus = getSeasonStatus(startDate, endDate)
+
+    return seasonStatus === SEASON_ACTIVE || seasonStatus === SEASON_UPCOMING || !isSeasonEnded(startDate, endDate)
   }
 
   const formatDate = (date: string) => {
@@ -72,5 +78,14 @@ export const useDateHelpers = () => {
     return dayjs.tz(date, ARTIZEN_TIMEZONE).unix()
   }
 
-  return { getNow, getNowWithFormat, formatDate, isSeasonActive, getSeasonStatus, isOpenForSubmissions, getTimeUnix }
+  return {
+    getNow,
+    getNowWithFormat,
+    formatDate,
+    isSeasonActive,
+    getSeasonStatus,
+    isOpenForSubmissions,
+    isSeasonEnded,
+    getTimeUnix,
+  }
 }

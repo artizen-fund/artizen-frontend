@@ -137,6 +137,7 @@ const SubmitProjectModal = () => {
     })
 
     if (insertSubmissionError) {
+      console.log('insertSubmissionError  ', insertSubmissionError)
       setProcessTxt(`Error adding the submission to DB with this error: ${insertSubmissionError[0].message}`)
       return
     }
@@ -156,7 +157,7 @@ const SubmitProjectModal = () => {
         <>
           {inputRef.current.length === 0 && (
             <SchoolItems>
-              There are not active seasons, or has this project been submitted to all the available seasons
+              There are not active seasons, or has this project been submitted to all the available active seasons
             </SchoolItems>
           )}
 
