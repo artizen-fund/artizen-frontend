@@ -145,6 +145,8 @@ export const SUBMISSION = gql`
   fragment Submission on Submissions {
     id
     projectId
+    createdAt
+    updatedAt
     project {
       ...Project
     }
