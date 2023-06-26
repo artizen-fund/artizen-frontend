@@ -24,7 +24,7 @@ const applyForFundingBlurb = {
     },
   ],
   buttonLabel: 'Submit your Projects',
-  applyLink: 'https://artizen.typeform.com/apply',
+  applyLink: 'https://vote.artizen.fund/submit',
   disclaimer: 'Clicking here redirects you to an external website.',
 }
 

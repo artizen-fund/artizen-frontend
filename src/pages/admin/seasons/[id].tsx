@@ -55,8 +55,7 @@ export default function SeasonPage(): JSX.Element {
             const endingDate = formatDate(season.endingDate)
             const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
             const isSeasonEndedV: boolean = season.isClosed || isSeasonEnded(season.startingDate, season.endingDate)
-            const isOpenForSubmissionsV: boolean =
-              !season.isClosed || isOpenForSubmissions(season.startingDate, season.endingDate)
+            const isOpenForSubmissionsV: boolean = isOpenForSubmissions(season.startingDate, season.endingDate)
 
             console.log('isOpenForSubmissionsV    ', isOpenForSubmissionsV)
 
@@ -74,12 +73,12 @@ export default function SeasonPage(): JSX.Element {
                   </span>
                 )}
 
-                <Title id={`submission-status-${seasonStatus}`}>
-                  <span style={{ fontWeight: 10 }}>status: </span>
-                  {capitalCase(seasonStatus)}
-                </Title>
+                <Subtitle id={`submission-status-${seasonStatus}`}>
+                  Status:
+                  <span style={{ fontWeight: 'bold' }}>{capitalCase(seasonStatus)}</span>
+                </Subtitle>
 
-                <MatchFoundMoney>
+                <Subtitle className={isOpenForSubmissionsV ? '' : 'right-align'}>
                   <span style={{ fontWeight: 10 }}>Match Fund: </span> {season.matchFundPooled}{' '}
                   {isOpenForSubmissionsV && (
                     <a
@@ -93,7 +92,7 @@ export default function SeasonPage(): JSX.Element {
                       edit
                     </a>
                   )}
-                </MatchFoundMoney>
+                </Subtitle>
 
                 <div className="expand">
                   <Subtitle
@@ -109,7 +108,9 @@ export default function SeasonPage(): JSX.Element {
                   </div>
                 </div>
 
-                <Subtitle className="expand">Projects submitted to this Season:</Subtitle>
+                <Title style={{ margin: '32px 0 0 0' }} className="expand">
+                  Projects submitted to this Season:
+                </Title>
 
                 <SubmissionsWrapper>
                   <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
@@ -122,10 +123,6 @@ export default function SeasonPage(): JSX.Element {
     </Layout>
   )
 }
-
-const MatchFoundMoney = styled.div`
-  ${typography.title.l3}
-`
 
 const SubmissionsWrapper = styled.div`
   grid-column: 1 / 3;
@@ -159,7 +156,7 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 const Subtitle = styled.h3`
   margin: 0;
   padding: 0;
-  ${typography.body.l3}
+  ${typography.body.l1}
 `
 
 const Title = styled.h1`

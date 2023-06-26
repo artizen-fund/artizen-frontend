@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client'
 import { palette, typography } from '@theme'
 import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
 import { GET_MATCH_FUNDS, LOAD_SEASONS } from '@gql'
+import { ISubmissionInMatchFundFragment } from '@types'
 import { LayoutContext, rgba } from '@lib'
 import { capitalCase } from 'capital-case'
 
@@ -42,6 +43,7 @@ export default function MatchFundDetails(): JSX.Element {
   })
 
   if (!loading && errorMatchFund) {
+    console.log('errorMatchFund  ', errorMatchFund)
     throw new Error('error loading match fund details', errorMatchFund)
   }
 
@@ -64,10 +66,23 @@ export default function MatchFundDetails(): JSX.Element {
             {matchFund && (
               <MatchFundContainer>
                 <Title>{capitalCase(matchFund.name)}</Title>
-                <Title>Ξ {matchFund.goal}</Title>
-                <Body>URL: {matchFund.url}</Body>
+                <Body>
+                  URL: <a href={matchFund.url}>{matchFund.url}</a>
+                </Body>
+                <Button
+                  level={2}
+                  outline
+                  onClick={() => {
+                    console.log('matchFund  ', matchFund)
+                    setVisibleModalWithAttrs('addSponsorToMatchFund', {
+                      matchFund,
+                    })
+                  }}
+                >
+                  Add Sponsor
+                </Button>
                 <SponsorList>
-                  Sponsors:
+                  Sponsors List:
                   {matchFund.sponsorInMatchFunds.map((sponsorInMatchFundFragment: ISponsorInMatchFundFragment) => {
                     const { id, sponsor } = sponsorInMatchFundFragment
 
@@ -79,26 +94,15 @@ export default function MatchFundDetails(): JSX.Element {
                       </SponsorItem>
                     )
                   })}
-                  <Button
-                    level={2}
-                    outline
-                    onClick={() => {
-                      console.log('matchFund  ', matchFund)
-                      setVisibleModalWithAttrs('addSponsorToMatchFund', {
-                        matchFund,
-                      })
-                    }}
-                  >
-                    Add Sponsor
-                  </Button>
                 </SponsorList>
                 <SupportedProjectList>
-                  Projects:
+                  Projects List:
                   <Button
                     level={2}
                     outline
                     onClick={() => {
                       console.log('matchFund  ', matchFund)
+                      push(`/admin/projects`)
                       // setVisibleModalWithAttrs('addProjectsToMatchFund', {
                       //   matchFund,
                       // })
@@ -106,6 +110,27 @@ export default function MatchFundDetails(): JSX.Element {
                   >
                     Add Projects
                   </Button>
+                  {matchFund.submissions.map((submission: ISubmissionInMatchFundFragment) => {
+                    const project = submission.submission?.project
+
+                    return (
+                      <div
+                        key={project?.id}
+                        style={{ background: 'white', padding: '16px', margin: '16px 0', cursor: 'pointer' }}
+                        onClick={() => push(`/admin/projects/${project?.id}`)}
+                      >
+                        {project && (
+                          <Project
+                            displayType="brief"
+                            projectData={project}
+                            // onClick={() => {
+                            //   push(`/admin/projects/${project.id}`)
+                            // }}
+                          />
+                        )}
+                      </div>
+                    )
+                  })}
                 </SupportedProjectList>
               </MatchFundContainer>
             )}
@@ -121,11 +146,15 @@ const Body = styled.div`
 `
 
 const SponsorList = styled.div`
-  ${typography.title.l3}
+  ${typography.title.l4}
+`
+
+const Title = styled.h1`
+  ${typography.title.l2}
 `
 
 const SupportedProjectList = styled.div`
-  ${typography.title.l3}
+  ${typography.title.l4}
 `
 
 const SponsorItem = styled.div`
@@ -163,12 +192,4 @@ const MatchFundContainer = styled.div`
   .expand {
     grid-column: 1 / 3;
   }
-`
-
-const Title = styled.h1`
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
-  padding: 0;
-  color: ${palette.night};
 `

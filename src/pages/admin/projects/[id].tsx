@@ -104,14 +104,16 @@ export default function ProjectDetails(): JSX.Element {
               </Button>
 
               <SeasonSubmissionsContainer>
+                Submissions List:
                 {!loadingSeasons &&
                   loadedSeasons.Seasons.map((season: ISeasonFragment) => {
                     const projectSubmission = season.submissions.find(submission => submission.projectId === id)
                     const submissionInMatchFundsArray = projectSubmission?.matchFunds || []
                     return (
                       <SeasonItem key={season.id}>
-                        <div>
-                          Submitted to season: <b>{season.title && capitalCase(season.title)}</b>
+                        <div style={{ cursor: 'pointer' }} onClick={() => push(`/admin/seasons/${season.id}`)}>
+                          Season:&nbsp;
+                          <b>{season.title && capitalCase(season.title)}</b>
                         </div>
                         {isOpenForSubmissions(season.startingDate, season.endingDate) && (
                           <div
@@ -126,19 +128,24 @@ export default function ProjectDetails(): JSX.Element {
                           </div>
                         )}
                         {submissionInMatchFundsArray.length > 0 && (
-                          <div>
-                            <>It is in the following match funds: </>
-                            {submissionInMatchFundsArray.map(SubmissionInMatchFunds => {
-                              console.log('SubmissionInMatchFunds  ', SubmissionInMatchFunds)
-                              return (
-                                <a
-                                  onClick={() => push(`/admin/matchfunds/${SubmissionInMatchFunds.matchFund.id}`)}
-                                  key={SubmissionInMatchFunds.id}
-                                >
-                                  {capitalCase(SubmissionInMatchFunds.matchFund.name)}
-                                </a>
-                              )
-                            })}
+                          <div style={{ margin: '12px 0 8px 0' }} className="extend">
+                            <>It was in the following match funds: </>
+                            <ul>
+                              {submissionInMatchFundsArray.map((SubmissionInMatchFunds, index) => {
+                                console.log('SubmissionInMatchFunds  ', SubmissionInMatchFunds)
+                                return (
+                                  <li key={SubmissionInMatchFunds.id}>
+                                    <a
+                                      style={{ cursor: 'pointer' }}
+                                      onClick={() => push(`/admin/matchfunds/${SubmissionInMatchFunds.matchFund.id}`)}
+                                      key={SubmissionInMatchFunds.id}
+                                    >
+                                      {capitalCase(SubmissionInMatchFunds.matchFund.name)}
+                                    </a>
+                                  </li>
+                                )
+                              })}
+                            </ul>
                           </div>
                         )}
                       </SeasonItem>
@@ -209,6 +216,10 @@ const SeasonItem = styled.div`
     &:hover {
       background: ${rgba(palette.uiWarning, 0.1)};
     }
+  }
+
+  .extend {
+    grid-column: 1 / 3;
   }
 `
 

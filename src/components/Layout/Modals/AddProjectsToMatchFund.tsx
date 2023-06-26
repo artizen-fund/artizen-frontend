@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { rgba, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
-import { useLazyQuery, useMutation } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import { InputWrapper } from '../../Form/Controls/_Common'
 import { INSERT_SUBMISSION_IN_MATCH_FUND, GET_MATCH_FUNDS } from '@gql'
 import { IGetSponsorsQuery, ISubmissionFragment, Maybe, IMatchFundFragment } from '@types'
@@ -18,8 +18,23 @@ const AddProjectsToMatchFund = () => {
   const [showNonUsers, setShowNonUsers] = useState<boolean>(false)
   const [insertSubmissionInMatchFund] = useMutation(INSERT_SUBMISSION_IN_MATCH_FUND)
   const { projectSubmission } = modalAttrs
-  const [loadMatchFund, { loading, data: loadedMatchFund, error }] = useLazyQuery(GET_MATCH_FUNDS, {
+
+  console.log('projectSubmission  id', projectSubmission.id)
+  const {
+    loading,
+    data: loadedMatchFund,
+    error,
+  } = useQuery(GET_MATCH_FUNDS, {
     fetchPolicy: 'no-cache',
+    variables: {
+      where: {
+        submissions: {
+          id: {
+            _neq: projectSubmission.id,
+          },
+        },
+      },
+    },
     onCompleted: ({ MatchFunds }) => {
       console.log('loaded loadSubmissions  ', MatchFunds)
       if (MatchFunds.length === 0) {
@@ -70,36 +85,12 @@ const AddProjectsToMatchFund = () => {
     }
   }
 
-  const searchSponsors = (value: string) => {
-    console.log('value  ', value)
-    setSearchDataData(value)
-    loadMatchFund({
-      variables: {
-        where: {
-          name: {
-            _eq: value,
-          },
-        },
-      },
-    })
-  }
-
   console.log('projectSubmission  ', projectSubmission)
 
   return (
     <Wrapper>
       <Headline>Add project submission to match fund</Headline>
       <Subtitle>Add match funds name to add {capitalCase(projectSubmission.project.title)}:</Subtitle>
-      <InputSearchWrapper>
-        <input
-          placeholder={'Search match funds by name'}
-          value={searchData}
-          onBlur={e => e.target.value === '' && !loading && setShowNonUsers(false)}
-          onChange={e => searchSponsors(e.target.value)}
-        />
-      </InputSearchWrapper>
-      {showNonUsers && <NonUser>...project does not exists or has not be submitted to season</NonUser>}
-
       {matchFund && (
         <SchoolItems>
           <DropDownBlocks<IMatchFundFragment>
@@ -109,7 +100,7 @@ const AddProjectsToMatchFund = () => {
             align="left"
             structure={[
               {
-                renderer: (item: IMatchFundFragment) => <ItemText>{item.name}</ItemText>,
+                renderer: (item: IMatchFundFragment) => <ItemText>{capitalCase(item.name)}</ItemText>,
                 classNames: 'doubleHeight',
               },
             ]}
@@ -182,7 +173,7 @@ const Wrapper = styled.div`
 `
 
 const ItemText = styled.h3`
-  ${typography.body.l3}
+  ${typography.body.l1}
 `
 
 const Headline = styled.h1`

@@ -120,27 +120,20 @@ export const SPONSORS_IN_MATCH_FUND = gql`
   }
 `
 
-export const MATCH_FUNDS = gql`
-  ${SPONSORS_IN_MATCH_FUND}
-  fragment MatchFund on MatchFunds {
-    id
-    name
-    goal
-    projectRequirements
-    url
-    sponsorInMatchFunds {
-      ...SponsorInMatchFund
-    }
-  }
-`
-
 export const SUBMISSION_IN_MATCH_FUND = gql`
+  ${PROJECT}
   fragment SubmissionInMatchFund on SubmissionInMatchFunds {
     id
     submissionId
     matchFund {
       id
       name
+    }
+    submission {
+      id
+      project {
+        ...Project
+      }
     }
   }
 `
@@ -151,7 +144,6 @@ export const SUBMISSION = gql`
   ${SUBMISSION_IN_MATCH_FUND}
   fragment Submission on Submissions {
     id
-    createdAt
     projectId
     project {
       ...Project
@@ -180,6 +172,24 @@ export const SEASON = gql`
     isClosed
     submissions {
       ...Submission
+    }
+  }
+`
+
+export const MATCH_FUNDS = gql`
+  ${SPONSORS_IN_MATCH_FUND}
+  ${SUBMISSION_IN_MATCH_FUND}
+  fragment MatchFund on MatchFunds {
+    id
+    name
+    goal
+    projectRequirements
+    url
+    sponsorInMatchFunds {
+      ...SponsorInMatchFund
+    }
+    submissions {
+      ...SubmissionInMatchFund
     }
   }
 `

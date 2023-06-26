@@ -137,6 +137,7 @@ const SubmitProjectModal = () => {
     })
 
     if (insertSubmissionError) {
+      console.log('insertSubmissionError  ', insertSubmissionError)
       setProcessTxt(`Error adding the submission to DB with this error: ${insertSubmissionError[0].message}`)
       return
     }
