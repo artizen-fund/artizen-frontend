@@ -4,10 +4,11 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import { palette, typography } from '@theme'
-import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
+import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project, Faq } from '@components'
 import { GET_MATCH_FUNDS } from '@gql'
 import { LayoutContext, rgba } from '@lib'
 import { capitalCase } from 'capital-case'
+import { faq } from '@copy/admin'
 
 import { IGetMatchFundsQuery, ISponsorInMatchFundFragment, ISubmissionInMatchFundFragment } from '@types'
 
@@ -132,6 +133,9 @@ export default function MatchFundDetails(): JSX.Element {
             )}
           </MatchFundWrapper>
         )}
+        <div className="doubleWith">
+          <Faq copy={faq} />
+        </div>
       </StyledPagePadding>
     </Layout>
   )

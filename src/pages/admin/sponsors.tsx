@@ -1,9 +1,10 @@
 import { useEffect, useContext } from 'react'
 import { useQuery } from '@apollo/client'
+import { faq } from '@copy/admin'
 import { useRouter } from 'next/router'
 import { rgba, LayoutContext, useCloudinary } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck } from '@components'
+import { Button, Layout, Spinner, Table, TableCell, PagePadding, CuratorCheck, Faq } from '@components'
 import { GET_SPONSORS } from '@gql'
 import { IProjectsQuery, ISponsorFragment } from '@types'
 import { palette, typography } from '@theme'
@@ -12,7 +13,7 @@ import { capitalCase } from 'capital-case'
 const Sponsors = () => {
   const { addParamsToLink } = useCloudinary()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const router = useRouter()
+  const { push } = useRouter()
   const {
     loading,
     data: loadedSponsorData,
@@ -27,16 +28,6 @@ const Sponsors = () => {
     console.error('errorSponsorData', errorSponsorData)
     return <div>Error loading sponsors</div>
   }
-
-  const openProject = (target: string) => () => {
-    router.push(`/admin/projects/${target}`)
-  }
-
-  const sideItem = (
-    <Button onClick={openProject('new')} level={2} outline>
-      Create new Project
-    </Button>
-  )
 
   return (
     <Layout>
@@ -65,6 +56,9 @@ const Sponsors = () => {
                       {sponsor.url}
                     </SponsorURL>
                     <SponsorLogotype src={addParamsToLink(sponsor.logotype, 'w_200,c_fill', 'image')} />
+                    <AddToMatchBT stretch outline level={2} onClick={() => push('/admin/matchfunds')}>
+                      Add Sponsor to Match Fund
+                    </AddToMatchBT>
                   </SponsorWrapper>
                 )
               })}
@@ -72,6 +66,9 @@ const Sponsors = () => {
           </Wrapper>
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }
@@ -88,7 +85,7 @@ const SponsorList = styled.div`
 const SponsorWrapper = styled.div`
   display: grid;
   gap: 10px;
-  grid-template-areas: 'title title finance' 'logotype logotype url';
+  grid-template-areas: 'title title finance' 'logotype logotype url' 'button button button';
   width: 100%;
   border-radius: 8px;
   margin: 1rem 0;
@@ -107,6 +104,11 @@ const SponsorWrapper = styled.div`
 `
 const SponsorFinance = styled.div`
   grid-area: finance;
+  text-align: right;
+`
+
+const AddToMatchBT = styled(props => <Button {...props} />)`
+  grid-area: button;
   text-align: right;
 `
 

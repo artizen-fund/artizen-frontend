@@ -3,7 +3,8 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
-import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } from '@components'
+import { faq } from '@copy/admin'
+import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding, Faq } from '@components'
 import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
@@ -78,6 +79,9 @@ const Seasons = () => {
           </Table>
         </StyledPagePadding>
       )}
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

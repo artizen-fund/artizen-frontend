@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import { use, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-
+import { faq } from '@copy/admin'
 import { useQuery, useMutation } from '@apollo/client'
 import { palette, typography } from '@theme'
-import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
+import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project, Faq } from '@components'
 import { GET_PROJECTS, LOAD_SEASONS, UPDATE_SUBMISSION_IN_MATCH_FUND } from '@gql'
 import { LayoutContext, rgba, useDateHelpers } from '@lib'
 import { capitalCase } from 'capital-case'
@@ -210,6 +210,9 @@ export default function ProjectDetails(): JSX.Element {
           </>
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

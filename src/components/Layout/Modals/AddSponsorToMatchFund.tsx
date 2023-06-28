@@ -23,15 +23,6 @@ const AddSponsorToMatchFund = () => {
     error,
   } = useQuery<IGetSponsorsQuery>(GET_SPONSORS, {
     fetchPolicy: 'no-cache',
-    // onCompleted: ({ Sponsors }) => {
-    //   console.log('loaded Sponsors  ', Sponsors)
-    //   if (Sponsors.length === 0) {
-    //     setSponsorSelection(null)
-    //     setShowNonUsers(true)
-    //   } else {
-    //     setShowNonUsers(false)
-    //   }
-    // },
   })
 
   console.log('error  ', error)
@@ -41,7 +32,13 @@ const AddSponsorToMatchFund = () => {
   const { matchFund } = modalAttrs
 
   const sponsors =
-    !loading && loadedSponsors !== undefined && loadedSponsors?.Sponsors.length > 0 ? loadedSponsors?.Sponsors : null
+    !loading && loadedSponsors !== undefined && loadedSponsors?.Sponsors.length > 0
+      ? loadedSponsors?.Sponsors.filter(
+          sponsor =>
+            sponsor.sponsorInMatchFunds.filter(sponsorInMatchFund => sponsorInMatchFund.matchFundId === matchFund.id)
+              .length === 0,
+        )
+      : null
 
   const createNewUserCallBack = () => {
     toggleModal()
@@ -71,12 +68,20 @@ const AddSponsorToMatchFund = () => {
     }
   }
 
+  console.log('sponsors  ', sponsors)
+
   return (
     <Wrapper>
       <Headline>Sponsors</Headline>
       <Subtitle>Select a sponsor to be added to {capitalCase(matchFund.name)}:</Subtitle>
-
-      {sponsors && (
+      {loading && <div style={{ margin: '16px 0' }}>Loading...</div>}
+      {!sponsors ||
+        (sponsors.length === 0 && (
+          <div style={{ margin: '16px 0' }}>
+            There is not available sponsors, or all the sponsors are already added to this Match Fund
+          </div>
+        ))}
+      {sponsors && sponsors.length > 0 && (
         <SchoolItems>
           <DropDownBlocks<ISponsorFragment>
             itemSelected={sponsorSelected}

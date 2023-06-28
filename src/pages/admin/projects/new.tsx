@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { IUsers, Maybe } from '@types'
+import { faq } from '@copy/admin'
 import styled from 'styled-components'
 import { palette } from '@theme'
 import { LayoutContext, rgba } from '@lib'
@@ -10,7 +11,7 @@ import { INSERT_PROJECTS } from '@gql'
 import * as validateLib from 'wallet-address-validator'
 import { ErrorObject } from 'ajv'
 import { capitalCase } from 'capital-case'
-import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding } from '@components'
+import { CuratorCheck, Layout, NewProjectForm, Spinner, PagePadding, Faq } from '@components'
 import { initialState, schema, FormState } from '@forms/createProjects'
 import slugify from 'slugify'
 
@@ -181,6 +182,9 @@ const ProjectDetails = () => {
           </Wrapper>
         )}
       </PagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

@@ -1,9 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
+import { faq } from '@copy/admin'
 import { useEffect } from 'react'
 import { rgba } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck } from '@components'
+import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck, Faq } from '@components'
 import { GET_PROJECTS } from '@gql'
 import { IProjectsQuery, IProjectFragment } from '@types'
 import { palette, typography } from '@theme'
@@ -52,6 +53,9 @@ const Projects = () => {
           </Wrapper>
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }
