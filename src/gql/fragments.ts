@@ -104,6 +104,10 @@ export const SPONSORS = gql`
     logotype
     url
     participation
+    sponsorInMatchFunds {
+      id
+      matchFundId
+    }
   }
 `
 
@@ -125,6 +129,9 @@ export const SUBMISSION_IN_MATCH_FUND = gql`
   fragment SubmissionInMatchFund on SubmissionInMatchFunds {
     id
     submissionId
+    createdAt
+    updatedAt
+    status
     matchFund {
       id
       name

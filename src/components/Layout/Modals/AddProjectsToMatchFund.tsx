@@ -27,13 +27,14 @@ const AddProjectsToMatchFund = () => {
   } = useQuery(GET_MATCH_FUNDS, {
     fetchPolicy: 'no-cache',
     variables: {
-      where: {
-        submissions: {
-          id: {
-            _neq: projectSubmission.id,
-          },
-        },
-      },
+      // where: {
+      //   submissions: {
+      //     // submissionId: {
+      //     //   _eq: projectSubmission.id,
+      //     // },
+      //     _or: [{ submissionId: { _neq: projectSubmission.id } }, { submissionId: { _is_null: true } }],
+      //   },
+      // },
     },
     onCompleted: ({ MatchFunds }) => {
       console.log('loaded loadSubmissions  ', MatchFunds)
@@ -54,7 +55,23 @@ const AddProjectsToMatchFund = () => {
 
   const matchFund =
     !loading && loadedMatchFund !== undefined && loadedMatchFund?.MatchFunds.length > 0
-      ? loadedMatchFund?.MatchFunds
+      ? loadedMatchFund?.MatchFunds.filter(
+          (matchFund: IMatchFundFragment) =>
+            matchFund.submissions.filter(submission => {
+              console.log('submission in the loop ', submission)
+              console.log('projectSubmission in the loop ', projectSubmission)
+              console.log(
+                'submission.submission.id !== projectSubmission.id  ',
+                submission.submissionId === projectSubmission.id,
+                '--- ',
+                submission.submission.id,
+                'projectSubmission.id:',
+                projectSubmission.id,
+              )
+              console.log('------------------')
+              return submission.status === 'active' && submission.submission.id === projectSubmission.id
+            }).length === 0,
+        )
       : null
 
   const createNewUserCallBack = () => {

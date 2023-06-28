@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import { useContext } from 'react'
+import { use, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
-import { useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import { palette, typography } from '@theme'
 import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
-import { GET_PROJECTS, LOAD_SEASONS } from '@gql'
+import { GET_PROJECTS, LOAD_SEASONS, UPDATE_SUBMISSION_IN_MATCH_FUND } from '@gql'
 import { LayoutContext, rgba, useDateHelpers } from '@lib'
 import { capitalCase } from 'capital-case'
 
@@ -14,11 +14,18 @@ import { IProjectsQuery, ISeasonFragment } from '@types'
 
 export default function ProjectDetails(): JSX.Element {
   const { status } = useSession()
-  const { isOpenForSubmissions } = useDateHelpers()
+  const { isOpenForSubmissions, getSeasonStatus } = useDateHelpers()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+
+  const [setSubmissionInMatchFund] = useMutation(UPDATE_SUBMISSION_IN_MATCH_FUND, {
+    onError: error => {
+      console.log('setSubmissionInMatchFund error  ', error)
+    },
+  })
 
   const {
     push,
+    reload,
     query: { id },
   } = useRouter()
 
@@ -59,6 +66,31 @@ export default function ProjectDetails(): JSX.Element {
       },
     },
   })
+
+  const setStatusClose = (submissionInMatchFundId: string) => async () => {
+    const data = await setSubmissionInMatchFund({
+      variables: {
+        where: {
+          id: {
+            _eq: submissionInMatchFundId,
+          },
+        },
+        _set: {
+          status: 'closed',
+        },
+      },
+    })
+
+    console.log('data  ', data)
+
+    if (data) {
+      reload()
+    }
+  }
+
+  if (!loadingSeasons && errorLoadingSeasons) {
+    throw new Error('error loading seasons', errorLoadingSeasons)
+  }
 
   if (!loading && errorLoadingProject) {
     throw new Error('error loading project details', errorLoadingProject)
@@ -108,16 +140,53 @@ export default function ProjectDetails(): JSX.Element {
                 {!loadingSeasons &&
                   loadedSeasons.Seasons.map((season: ISeasonFragment) => {
                     const projectSubmission = season.submissions.find(submission => submission.projectId === id)
-                    const submissionInMatchFundsArray = projectSubmission?.matchFunds || []
+                    const submissionInMatchFundsArray =
+                      projectSubmission?.matchFunds.filter(
+                        submissionInMatchFund => submissionInMatchFund.status === 'active',
+                      ) || []
                     return (
                       <SeasonItem key={season.id}>
                         <div style={{ cursor: 'pointer' }} onClick={() => push(`/admin/seasons/${season.id}`)}>
-                          Season:&nbsp;
+                          Project is part of:&nbsp;
                           <b>{season.title && capitalCase(season.title)}</b>
                         </div>
+                        <div style={{ textAlign: 'right' }}>
+                          Season Status: {getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()}
+                        </div>
+
+                        {submissionInMatchFundsArray.length > 0 && (
+                          <div style={{ margin: '12px 0 8px 0' }} className="extend">
+                            <>Project is in the following match funds: </>
+                            <ul>
+                              {submissionInMatchFundsArray.map(submissionInMatchFund => {
+                                return (
+                                  <MatchFundListItem key={submissionInMatchFund.id}>
+                                    <a
+                                      style={{ cursor: 'pointer' }}
+                                      onClick={() => push(`/admin/matchfunds/${submissionInMatchFund.matchFund.id}`)}
+                                      key={submissionInMatchFund.id}
+                                    >
+                                      {capitalCase(submissionInMatchFund.matchFund.name)}
+                                    </a>
+                                    <Button
+                                      glyph="cross"
+                                      glyphOnly
+                                      onClick={setStatusClose(submissionInMatchFund.id)}
+                                      level={2}
+                                      outline
+                                    >
+                                      Close
+                                    </Button>
+                                  </MatchFundListItem>
+                                )
+                              })}
+                            </ul>
+                          </div>
+                        )}
+
                         {isOpenForSubmissions(season.startingDate, season.endingDate) && (
                           <div
-                            className="button"
+                            className="button expand"
                             onClick={() => {
                               setVisibleModalWithAttrs('addProjectsToMatchFund', {
                                 projectSubmission,
@@ -125,27 +194,6 @@ export default function ProjectDetails(): JSX.Element {
                             }}
                           >
                             Add to Match Fund
-                          </div>
-                        )}
-                        {submissionInMatchFundsArray.length > 0 && (
-                          <div style={{ margin: '12px 0 8px 0' }} className="extend">
-                            <>It was in the following match funds: </>
-                            <ul>
-                              {submissionInMatchFundsArray.map((SubmissionInMatchFunds, index) => {
-                                console.log('SubmissionInMatchFunds  ', SubmissionInMatchFunds)
-                                return (
-                                  <li key={SubmissionInMatchFunds.id}>
-                                    <a
-                                      style={{ cursor: 'pointer' }}
-                                      onClick={() => push(`/admin/matchfunds/${SubmissionInMatchFunds.matchFund.id}`)}
-                                      key={SubmissionInMatchFunds.id}
-                                    >
-                                      {capitalCase(SubmissionInMatchFunds.matchFund.name)}
-                                    </a>
-                                  </li>
-                                )
-                              })}
-                            </ul>
                           </div>
                         )}
                       </SeasonItem>
@@ -165,6 +213,14 @@ export default function ProjectDetails(): JSX.Element {
     </Layout>
   )
 }
+
+const MatchFundListItem = styled.li`
+  display: grid;
+  grid-template-columns: 1fr 32px;
+  padding: 10px;
+  border: 1px solid ${rgba(palette.black, 0.1)};
+  margin: 10px 0;
+`
 
 const ProjectWrapper = styled.div`
   background: ${rgba(palette.white)};

@@ -38,7 +38,7 @@ const Projects = () => {
           <Wrapper>
             <Header>Project List</Header>
             <Button level={2} onClick={openProject('new')}>
-              Add New Project
+              New Project
             </Button>
             <ProjectList className="doubleLeght">
               {loadedProjectData?.Projects.map((project: IProjectFragment) => {
