@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import { useContext } from 'react'
+import { faq } from '@copy/admin'
 import styled from 'styled-components'
 import { LOAD_SEASONS } from '@gql'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
-import { Spinner, Layout, Submissions, Button, PagePadding, CuratorCheck } from '@components'
+import { Spinner, Layout, Submissions, Button, PagePadding, CuratorCheck, Faq } from '@components'
 import { typography } from '@theme'
 import { useDateHelpers, LayoutContext } from '@lib'
 import { capitalCase } from 'capital-case'
@@ -45,6 +46,7 @@ export default function SeasonPage(): JSX.Element {
 
   return (
     <Layout>
+      <CuratorCheck />
       <StyledPagePadding>
         {loading ? (
           <Spinner />
@@ -120,6 +122,9 @@ export default function SeasonPage(): JSX.Element {
           })
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

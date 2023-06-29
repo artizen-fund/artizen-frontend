@@ -1,13 +1,14 @@
 import { useQuery } from '@apollo/client'
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
-
+import { faq } from '@copy/admin'
 import { rgba, LayoutContext } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, PagePadding, CuratorCheck } from '@components'
+import { Button, Layout, Spinner, PagePadding, CuratorCheck, Faq, Breadcrumbs } from '@components'
 import { GET_MATCH_FUNDS } from '@gql'
 import { IGetMatchFundsQuery, IMatchFundFragment } from '@types'
 import { palette, typography } from '@theme'
+import { capitalCase } from 'capital-case'
 
 const MatchFunds = () => {
   const { query, push } = useRouter()
@@ -28,6 +29,20 @@ const MatchFunds = () => {
   return (
     <Layout>
       <StyledPagePadding>
+        <Breadcrumbs
+          schema={[
+            {
+              path: '/admin',
+              name: 'Admin',
+              isActive: false,
+            },
+            {
+              path: '/admin/matchfunds',
+              name: 'Match Funds',
+              isActive: true,
+            },
+          ]}
+        />
         <CuratorCheck />
         {loading ? (
           <Spinner />
@@ -40,21 +55,30 @@ const MatchFunds = () => {
                 setVisibleModalWithAttrs('matchFundsModal', {})
               }}
             >
-              Add New Match Fund
+              Create New Match Fund
             </Button>
-            <SponsorList className="doubleLeght">
+            <MatchFundList className="doubleLeght">
               {loadedMatchFundsData?.MatchFunds.map((matchFund: IMatchFundFragment) => {
+                console.log('matchFund  ', matchFund)
+                const sponsors = matchFund.sponsorInMatchFunds.map(
+                  sponsorInMatchFund => sponsorInMatchFund.sponsor && capitalCase(sponsorInMatchFund.sponsor.name),
+                )
+                console.log('sponsors  ', sponsors)
                 return (
-                  <SponsorWrapper key={matchFund.id} onClick={() => push(`/admin/matchfunds/${matchFund.id}`)}>
-                    <SponsorTitle>{matchFund.name}</SponsorTitle>
+                  <MatchFundWrapper key={matchFund.id} onClick={() => push(`/admin/matchfunds/${matchFund.id}`)}>
+                    <Title>{capitalCase(matchFund.name)}</Title>
+                    <Subtitle>{sponsors.toString()}</Subtitle>
                     {/* <SponsorLogotype src="sdasdasd" /> */}
-                  </SponsorWrapper>
+                  </MatchFundWrapper>
                 )
               })}
-            </SponsorList>
+            </MatchFundList>
           </Wrapper>
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }
@@ -87,7 +111,7 @@ const Wrapper = styled.div`
   }
 `
 
-const SponsorList = styled.div`
+const MatchFundList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -96,37 +120,25 @@ const SponsorList = styled.div`
   height: 100%;
 `
 
-const SponsorWrapper = styled.div`
-  display: grid;
+const MatchFundWrapper = styled.div`
   gap: 10px;
-  grid-template-areas: 'title title finance' 'logotype logotype url';
   width: 100%;
   border-radius: 8px;
   margin: 1rem 0;
   cursor: pointer;
   padding: 1rem;
   background-color: ${rgba(palette.stone, 0.24)};
-
-  .vertical-layout,
-  .vertical-layout-item {
-    display: contents;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    background: ${rgba(palette.moon, 0.1)};
-  }
-`
-const SponsorFinance = styled.div`
-  grid-area: finance;
-  text-align: right;
 `
 
-const SponsorTitle = styled.div`
-  grid-area: title;
+const Title = styled.div`
   font-weight: 600;
   margin: 0;
   padding: 0;
   ${typography.title.l3}
+`
+
+const Subtitle = styled.div`
+  ${typography.body.l1}
 `
 
 const SponsorLogotype = styled.img`

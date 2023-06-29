@@ -1,9 +1,10 @@
 import { useEffect, useContext } from 'react'
 import { useQuery } from '@apollo/client'
+import { faq } from '@copy/admin'
 import { useRouter } from 'next/router'
 import { rgba, LayoutContext, useCloudinary } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck } from '@components'
+import { Button, Layout, Spinner, Table, TableCell, PagePadding, CuratorCheck, Faq, Breadcrumbs } from '@components'
 import { GET_SPONSORS } from '@gql'
 import { IProjectsQuery, ISponsorFragment } from '@types'
 import { palette, typography } from '@theme'
@@ -12,7 +13,7 @@ import { capitalCase } from 'capital-case'
 const Sponsors = () => {
   const { addParamsToLink } = useCloudinary()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const router = useRouter()
+  const { push } = useRouter()
   const {
     loading,
     data: loadedSponsorData,
@@ -28,19 +29,23 @@ const Sponsors = () => {
     return <div>Error loading sponsors</div>
   }
 
-  const openProject = (target: string) => () => {
-    router.push(`/admin/projects/${target}`)
-  }
-
-  const sideItem = (
-    <Button onClick={openProject('new')} level={2} outline>
-      Create new Project
-    </Button>
-  )
-
   return (
     <Layout>
       <StyledPagePadding>
+        <Breadcrumbs
+          schema={[
+            {
+              path: '/admin',
+              name: 'Admin',
+              isActive: false,
+            },
+            {
+              path: '/admin/sponsors',
+              name: 'Sponsors',
+              isActive: true,
+            },
+          ]}
+        />
         <CuratorCheck />
         {loading ? (
           <Spinner />
@@ -53,7 +58,7 @@ const Sponsors = () => {
                 setVisibleModalWithAttrs('sponsorModal', {})
               }}
             >
-              Add New Sponsor
+              Create New Sponsor
             </Button>
             <SponsorList className="doubleLeght">
               {loadedSponsorData?.Sponsors.map((sponsor: ISponsorFragment) => {
@@ -62,9 +67,12 @@ const Sponsors = () => {
                     <SponsorTitle>{capitalCase(sponsor.name)}</SponsorTitle>
                     <SponsorFinance>{sponsor.participation}</SponsorFinance>
                     <SponsorURL href={sponsor.url} target="_blank">
-                      {sponsor.url}
+                      Sponsor Url
                     </SponsorURL>
                     <SponsorLogotype src={addParamsToLink(sponsor.logotype, 'w_200,c_fill', 'image')} />
+                    <AddToMatchBT stretch outline level={2} onClick={() => push('/admin/matchfunds')}>
+                      Add Sponsor to Match Fund
+                    </AddToMatchBT>
                   </SponsorWrapper>
                 )
               })}
@@ -72,6 +80,9 @@ const Sponsors = () => {
           </Wrapper>
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }
@@ -88,7 +99,8 @@ const SponsorList = styled.div`
 const SponsorWrapper = styled.div`
   display: grid;
   gap: 10px;
-  grid-template-areas: 'title title finance' 'logotype logotype url';
+  grid-template-columns: 1fr 200px 200px;
+  grid-template-areas: 'title title finance' 'logotype url url' 'button button button';
   width: 100%;
   border-radius: 8px;
   margin: 1rem 0;
@@ -110,6 +122,11 @@ const SponsorFinance = styled.div`
   text-align: right;
 `
 
+const AddToMatchBT = styled(props => <Button {...props} />)`
+  grid-area: button;
+  text-align: right;
+`
+
 const SponsorTitle = styled.div`
   grid-area: title;
   font-weight: 600;
@@ -125,6 +142,7 @@ const SponsorLogotype = styled.img`
 const SponsorURL = styled.a`
   grid-area: url;
   text-align: right;
+  text-decoration: underline;
   ${typography.body.l1}
 `
 

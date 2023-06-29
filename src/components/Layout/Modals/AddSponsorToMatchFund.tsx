@@ -4,7 +4,7 @@ import { Button } from '@components'
 import { useRouter } from 'next/router'
 import { rgba, LayoutContext } from '@lib'
 import { palette, typography } from '@theme'
-import { useLazyQuery, useMutation } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import { InputWrapper } from '../../../components/Form/Controls/_Common'
 import { GET_SPONSORS, INSERT_SPONSOR_IN_MATCH } from '@gql'
 import { IGetSponsorsQuery, ISponsorFragment, Maybe } from '@types'
@@ -13,21 +13,16 @@ import { capitalCase } from 'capital-case'
 
 const AddSponsorToMatchFund = () => {
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
-  const { push } = useRouter()
+  const { push, reload } = useRouter()
   const [sponsorSelected, setSponsorSelection] = useState<ISponsorFragment | null>(null)
-  const [showNonUsers, setShowNonUsers] = useState<boolean>(false)
+  // const [showNonUsers, setShowNonUsers] = useState<boolean>(false)
   const [insertSponsorToMatch] = useMutation(INSERT_SPONSOR_IN_MATCH)
-  const [loadSponsors, { loading, data: loadedSponsors, error }] = useLazyQuery<IGetSponsorsQuery>(GET_SPONSORS, {
+  const {
+    loading,
+    data: loadedSponsors,
+    error,
+  } = useQuery<IGetSponsorsQuery>(GET_SPONSORS, {
     fetchPolicy: 'no-cache',
-    onCompleted: ({ Sponsors }) => {
-      console.log('loaded Sponsors  ', Sponsors)
-      if (Sponsors.length === 0) {
-        setSponsorSelection(null)
-        setShowNonUsers(true)
-      } else {
-        setShowNonUsers(false)
-      }
-    },
   })
 
   console.log('error  ', error)
@@ -37,7 +32,13 @@ const AddSponsorToMatchFund = () => {
   const { matchFund } = modalAttrs
 
   const sponsors =
-    !loading && loadedSponsors !== undefined && loadedSponsors?.Sponsors.length > 0 ? loadedSponsors?.Sponsors : null
+    !loading && loadedSponsors !== undefined && loadedSponsors?.Sponsors.length > 0
+      ? loadedSponsors?.Sponsors.filter(
+          sponsor =>
+            sponsor.sponsorInMatchFunds.filter(sponsorInMatchFund => sponsorInMatchFund.matchFundId === matchFund.id)
+              .length === 0,
+        )
+      : null
 
   const createNewUserCallBack = () => {
     toggleModal()
@@ -61,35 +62,26 @@ const AddSponsorToMatchFund = () => {
     })
 
     console.log('data   ', data)
-    toggleModal()
+    if (data) {
+      toggleModal()
+      reload()
+    }
   }
 
-  const searchSponsors = (value: string) => {
-    console.log('value  ', value)
-    setSearchDataData(value)
-    loadSponsors({
-      variables: {
-        where: {
-          name: { _eq: value },
-        },
-      },
-    })
-  }
+  console.log('sponsors  ', sponsors)
 
   return (
     <Wrapper>
       <Headline>Sponsors</Headline>
-      <Subtitle>Search sponsors to add to {capitalCase(matchFund.name)}:</Subtitle>
-      <InputSearchWrapper>
-        <input
-          placeholder={'Search sponsors by name'}
-          value={searchData}
-          onBlur={e => e.target.value === '' && !loading && setShowNonUsers(false)}
-          onChange={e => searchSponsors(e.target.value)}
-        />
-      </InputSearchWrapper>
-      {showNonUsers && <NonUser>...sponsor does not exists</NonUser>}
-      {sponsors && (
+      <Subtitle>Select a sponsor to be added to {capitalCase(matchFund.name)}:</Subtitle>
+      {loading && <div style={{ margin: '16px 0' }}>Loading...</div>}
+      {!sponsors ||
+        (sponsors.length === 0 && (
+          <div style={{ margin: '16px 0' }}>
+            There is not available sponsors, or all the sponsors are already added to this Match Fund
+          </div>
+        ))}
+      {sponsors && sponsors.length > 0 && (
         <SchoolItems>
           <DropDownBlocks<ISponsorFragment>
             itemSelected={sponsorSelected}

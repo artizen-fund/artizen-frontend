@@ -4,18 +4,13 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import { palette, typography } from '@theme'
-import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project } from '@components'
-import { GET_MATCH_FUNDS, LOAD_SEASONS } from '@gql'
+import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project, Faq, Breadcrumbs } from '@components'
+import { GET_MATCH_FUNDS } from '@gql'
 import { LayoutContext, rgba } from '@lib'
 import { capitalCase } from 'capital-case'
+import { faq } from '@copy/admin'
 
-import {
-  IGetMatchFundsQuery,
-  ISeasonFragment,
-  ISponsorInMatchFundFragment,
-  SponsorInMatchFundFragmentDoc,
-  ISubmissionInMatchFundFragment,
-} from '@types'
+import { IGetMatchFundsQuery, ISponsorInMatchFundFragment, ISubmissionInMatchFundFragment } from '@types'
 
 export default function MatchFundDetails(): JSX.Element {
   const { status } = useSession()
@@ -59,6 +54,27 @@ export default function MatchFundDetails(): JSX.Element {
     <Layout>
       <CuratorCheck />
       <StyledPagePadding>
+        {matchFund && (
+          <Breadcrumbs
+            schema={[
+              {
+                path: '/admin',
+                name: 'Admin',
+                isActive: false,
+              },
+              {
+                path: '/admin/matchfunds',
+                name: 'Match Funds',
+                isActive: false,
+              },
+              {
+                path: `/admin/matchfunds/${id}`,
+                name: `${capitalCase(matchFund?.name)}`,
+                isActive: true,
+              },
+            ]}
+          />
+        )}
         {status !== 'authenticated' || loading ? (
           <Spinner minHeight="75vh" />
         ) : (
@@ -69,18 +85,7 @@ export default function MatchFundDetails(): JSX.Element {
                 <Body>
                   URL: <a href={matchFund.url}>{matchFund.url}</a>
                 </Body>
-                <Button
-                  level={2}
-                  outline
-                  onClick={() => {
-                    console.log('matchFund  ', matchFund)
-                    setVisibleModalWithAttrs('addSponsorToMatchFund', {
-                      matchFund,
-                    })
-                  }}
-                >
-                  Add Sponsor
-                </Button>
+
                 <SponsorList>
                   Sponsors List:
                   {matchFund.sponsorInMatchFunds.map((sponsorInMatchFundFragment: ISponsorInMatchFundFragment) => {
@@ -95,27 +100,27 @@ export default function MatchFundDetails(): JSX.Element {
                     )
                   })}
                 </SponsorList>
+                <Button
+                  level={2}
+                  outline
+                  onClick={() => {
+                    console.log('matchFund  ', matchFund)
+                    setVisibleModalWithAttrs('addSponsorToMatchFund', {
+                      matchFund,
+                    })
+                  }}
+                >
+                  Add Sponsor
+                </Button>
                 <SupportedProjectList>
-                  Projects List:
-                  <Button
-                    level={2}
-                    outline
-                    onClick={() => {
-                      console.log('matchFund  ', matchFund)
-                      push(`/admin/projects`)
-                      // setVisibleModalWithAttrs('addProjectsToMatchFund', {
-                      //   matchFund,
-                      // })
-                    }}
-                  >
-                    Add Projects
-                  </Button>
+                  <span>Projects List:</span>
+
                   {matchFund.submissions.map((submission: ISubmissionInMatchFundFragment) => {
                     const project = submission.submission?.project
 
                     return (
                       <div
-                        key={project?.id}
+                        key={submission?.id}
                         style={{ background: 'white', padding: '16px', margin: '16px 0', cursor: 'pointer' }}
                         onClick={() => push(`/admin/projects/${project?.id}`)}
                       >
@@ -131,12 +136,28 @@ export default function MatchFundDetails(): JSX.Element {
                       </div>
                     )
                   })}
+                  <AddProjectBt
+                    level={2}
+                    outline
+                    onClick={() => {
+                      console.log('matchFund  ', matchFund)
+                      push(`/admin/projects`)
+                      // setVisibleModalWithAttrs('addProjectsToMatchFund', {
+                      //   matchFund,
+                      // })
+                    }}
+                  >
+                    Add Projects
+                  </AddProjectBt>
                 </SupportedProjectList>
               </MatchFundContainer>
             )}
           </MatchFundWrapper>
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }
@@ -175,6 +196,10 @@ const MatchFundWrapper = styled.div`
   @media (prefers-color-scheme: dark) {
     background: ${rgba(palette.moon, 0.1)};
   }
+`
+
+const AddProjectBt = styled(props => <Button {...props} />)`
+  width: 100%;
 `
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
