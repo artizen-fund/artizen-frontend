@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { faq } from '@copy/admin'
 import { rgba, LayoutContext } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, PagePadding, CuratorCheck, Faq } from '@components'
+import { Button, Layout, Spinner, PagePadding, CuratorCheck, Faq, Breadcrumbs } from '@components'
 import { GET_MATCH_FUNDS } from '@gql'
 import { IGetMatchFundsQuery, IMatchFundFragment } from '@types'
 import { palette, typography } from '@theme'
@@ -29,6 +29,20 @@ const MatchFunds = () => {
   return (
     <Layout>
       <StyledPagePadding>
+        <Breadcrumbs
+          schema={[
+            {
+              path: '/admin',
+              name: 'Admin',
+              isActive: false,
+            },
+            {
+              path: '/admin/matchfunds',
+              name: 'Match Funds',
+              isActive: true,
+            },
+          ]}
+        />
         <CuratorCheck />
         {loading ? (
           <Spinner />
@@ -41,7 +55,7 @@ const MatchFunds = () => {
                 setVisibleModalWithAttrs('matchFundsModal', {})
               }}
             >
-              Add New Match Fund
+              Create New Match Fund
             </Button>
             <MatchFundList className="doubleLeght">
               {loadedMatchFundsData?.MatchFunds.map((matchFund: IMatchFundFragment) => {
@@ -61,10 +75,10 @@ const MatchFunds = () => {
             </MatchFundList>
           </Wrapper>
         )}
-        <div className="doubleWith">
-          <Faq copy={faq} />
-        </div>
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

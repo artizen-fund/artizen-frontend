@@ -4,7 +4,18 @@ import { faq } from '@copy/admin'
 import { useEffect } from 'react'
 import { rgba } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck, Faq } from '@components'
+import {
+  Button,
+  Layout,
+  Spinner,
+  Table,
+  TableCell,
+  PagePadding,
+  Project,
+  CuratorCheck,
+  Faq,
+  Breadcrumbs,
+} from '@components'
 import { GET_PROJECTS } from '@gql'
 import { IProjectsQuery, IProjectFragment } from '@types'
 import { palette, typography } from '@theme'
@@ -32,6 +43,20 @@ const Projects = () => {
   return (
     <Layout>
       <StyledPagePadding>
+        <Breadcrumbs
+          schema={[
+            {
+              path: '/admin',
+              name: 'Admin',
+              isActive: false,
+            },
+            {
+              path: '/admin/projects',
+              name: 'Projects',
+              isActive: true,
+            },
+          ]}
+        />
         <CuratorCheck />
         {loading ? (
           <Spinner />

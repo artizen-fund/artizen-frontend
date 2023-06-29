@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import { palette, typography } from '@theme'
-import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project, Faq } from '@components'
+import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project, Faq, Breadcrumbs } from '@components'
 import { GET_MATCH_FUNDS } from '@gql'
 import { LayoutContext, rgba } from '@lib'
 import { capitalCase } from 'capital-case'
@@ -54,6 +54,27 @@ export default function MatchFundDetails(): JSX.Element {
     <Layout>
       <CuratorCheck />
       <StyledPagePadding>
+        {matchFund && (
+          <Breadcrumbs
+            schema={[
+              {
+                path: '/admin',
+                name: 'Admin',
+                isActive: false,
+              },
+              {
+                path: '/admin/matchfunds',
+                name: 'Match Funds',
+                isActive: false,
+              },
+              {
+                path: `/admin/matchfunds/${id}`,
+                name: `${capitalCase(matchFund?.name)}`,
+                isActive: true,
+              },
+            ]}
+          />
+        )}
         {status !== 'authenticated' || loading ? (
           <Spinner minHeight="75vh" />
         ) : (
@@ -133,10 +154,10 @@ export default function MatchFundDetails(): JSX.Element {
             )}
           </MatchFundWrapper>
         )}
-        <div className="doubleWith">
-          <Faq copy={faq} />
-        </div>
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

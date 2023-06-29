@@ -4,7 +4,7 @@ import { faq } from '@copy/admin'
 import { useRouter } from 'next/router'
 import { rgba, LayoutContext, useCloudinary } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell, PagePadding, CuratorCheck, Faq } from '@components'
+import { Button, Layout, Spinner, Table, TableCell, PagePadding, CuratorCheck, Faq, Breadcrumbs } from '@components'
 import { GET_SPONSORS } from '@gql'
 import { IProjectsQuery, ISponsorFragment } from '@types'
 import { palette, typography } from '@theme'
@@ -32,6 +32,20 @@ const Sponsors = () => {
   return (
     <Layout>
       <StyledPagePadding>
+        <Breadcrumbs
+          schema={[
+            {
+              path: '/admin',
+              name: 'Admin',
+              isActive: false,
+            },
+            {
+              path: '/admin/sponsors',
+              name: 'Sponsors',
+              isActive: true,
+            },
+          ]}
+        />
         <CuratorCheck />
         {loading ? (
           <Spinner />
@@ -44,7 +58,7 @@ const Sponsors = () => {
                 setVisibleModalWithAttrs('sponsorModal', {})
               }}
             >
-              Add New Sponsor
+              Create New Sponsor
             </Button>
             <SponsorList className="doubleLeght">
               {loadedSponsorData?.Sponsors.map((sponsor: ISponsorFragment) => {
@@ -53,7 +67,7 @@ const Sponsors = () => {
                     <SponsorTitle>{capitalCase(sponsor.name)}</SponsorTitle>
                     <SponsorFinance>{sponsor.participation}</SponsorFinance>
                     <SponsorURL href={sponsor.url} target="_blank">
-                      {sponsor.url}
+                      Sponsor Url
                     </SponsorURL>
                     <SponsorLogotype src={addParamsToLink(sponsor.logotype, 'w_200,c_fill', 'image')} />
                     <AddToMatchBT stretch outline level={2} onClick={() => push('/admin/matchfunds')}>
@@ -85,7 +99,8 @@ const SponsorList = styled.div`
 const SponsorWrapper = styled.div`
   display: grid;
   gap: 10px;
-  grid-template-areas: 'title title finance' 'logotype logotype url' 'button button button';
+  grid-template-columns: 1fr 200px 200px;
+  grid-template-areas: 'title title finance' 'logotype url url' 'button button button';
   width: 100%;
   border-radius: 8px;
   margin: 1rem 0;
@@ -127,6 +142,7 @@ const SponsorLogotype = styled.img`
 const SponsorURL = styled.a`
   grid-area: url;
   text-align: right;
+  text-decoration: underline;
   ${typography.body.l1}
 `
 

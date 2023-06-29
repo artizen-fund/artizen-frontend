@@ -56,6 +56,7 @@ export { default as MatchFundsModal } from './Layout/Modals/MatchFundsModal'
 export { default as AddSponsorToMatchFund } from './Layout/Modals/AddSponsorToMatchFund'
 export { default as AddProjectsToMatchFund } from './Layout/Modals/AddProjectsToMatchFund'
 export { default as UpdateMatchFundsSeasonAmount } from './Layout/Modals/UpdateMatchFundsSeasonAmount'
+export { default as Breadcrumbs } from './Breadcrumbs'
 
 export { default as CheckboxControl } from './Form/Controls/BooleanControl/CheckboxControl'
 export { default as SwitchControl } from './Form/Controls/BooleanControl/SwitchControl'
