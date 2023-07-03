@@ -81,7 +81,7 @@ const useWalletAuthFlow = () => {
       new WalletConnectConnector({
         chains,
         options: {
-          qrcode: true,
+          showQrModal: true,
           projectId: assert(process.env.NEXT_PUBLIC_WALLET_CONNECTOR_ID, 'NEXT_PUBLIC_WALLET_CONNECTOR_ID'),
         },
       }),
