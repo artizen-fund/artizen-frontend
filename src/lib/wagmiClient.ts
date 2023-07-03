@@ -17,7 +17,7 @@ export const getWagmiChains = () => {
 export const getWagmiClient = () => {
   const { chains, provider, webSocketProvider } = getWagmiChains()
   const client = createClient({
-    autoConnect: true,
+    // autoConnect: true,
     provider,
     connectors: [
       new InjectedConnector({ chains }),
