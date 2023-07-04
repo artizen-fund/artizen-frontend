@@ -1,9 +1,11 @@
 import { useContext, useState } from 'react'
-import { useConnect, useSignMessage, Connector, useDisconnect, useAccount } from 'wagmi'
+import { useConnect, useSignMessage, Connector, useAccount } from 'wagmi'
 import { useRouter } from 'next/router'
+// import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { useAuthRequestChallengeEvm } from '@moralisweb3/next'
-import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+// import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 import { assertInt, getWagmiClient, LayoutContext, assert } from '@lib'
 import { signIn, useSession } from 'next-auth/react'
 
@@ -11,13 +13,20 @@ const useWalletAuthFlow = () => {
   const { toggleModal } = useContext(LayoutContext)
   const [messageToSign, setMessageToSign] = useState<string | null>(null)
   const [connecting, setConnecting] = useState(false)
-  const { connectAsync } = useConnect()
-  const { isConnected } = useAccount()
+  const { connectAsync, error, connect, connectors } = useConnect()
+
+  console.log('connectors     ', connectors)
+
+  console.log('useConnect  error  ', error)
+  const { connector, isConnected } = useAccount()
+
+  console.log('connector here ', connector)
+
+  console.log('isConnected here ', isConnected)
 
   const { signMessage } = useSignMessage({
     onSuccess(data, variables) {
-      // Verify signature when sign message succeeds
-      // recoveredAddress.current = address;
+      console.log('signMessage  onSuccess  data  ', data)
 
       signIn('moralis-auth', {
         message: variables.message,
@@ -35,6 +44,7 @@ const useWalletAuthFlow = () => {
   const router = useRouter()
 
   const signEnMessage = () => {
+    console.log('signEnMessage  ', messageToSign)
     if (!messageToSign) {
       throw new Error('no message to sign')
     }
@@ -72,20 +82,26 @@ const useWalletAuthFlow = () => {
 
   const connectMetamask = () => {
     // toggleModal('connecting')
-    connectWallet(new MetaMaskConnector({ chains }))
+    const Metamaks = connectors.filter(connector => connector.name === 'MetaMask')[0]
+    console.log('Metamaks connector  ', Metamaks)
+    // connectWallet(Metamaks)
+
+    connect({ connector: Metamaks })
+
+    // connect()
   }
 
   const connectOtherWallet = () => {
     // toggleModal('connecting')
-    connectWallet(
-      new WalletConnectConnector({
-        chains,
-        options: {
-          showQrModal: true,
-          projectId: assert(process.env.NEXT_PUBLIC_WALLET_CONNECTOR_ID, 'NEXT_PUBLIC_WALLET_CONNECTOR_ID'),
-        },
-      }),
-    )
+    // connectWallet(
+    //   new WalletConnectConnector({
+    //     chains,
+    //     options: {
+    //       showQrModal: true,
+    //       projectId: assert(process.env.NEXT_PUBLIC_WALLET_CONNECTOR_ID, 'NEXT_PUBLIC_WALLET_CONNECTOR_ID'),
+    //     },
+    //   }),
+    // )
   }
 
   const isAuthenticated = () => status === 'authenticated'
