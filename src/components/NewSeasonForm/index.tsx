@@ -6,7 +6,7 @@ import { ErrorObject } from 'ajv'
 import { useRouter } from 'next/router'
 import { Form, Button } from '@components'
 import { schema, uischema, initialState, FormState } from '@forms/createSeason'
-import { LayoutContext, ARTIZEN_TIMEZONE, useSeasons } from '@lib'
+import { LayoutContext, ARTIZEN_TIMEZONE, useSeasons, useContracts, useDateHelpers } from '@lib'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -16,6 +16,7 @@ export default function NewSeasonForm(): JSX.Element {
   dayjs.extend(timezone)
   dayjs.extend(utc)
   dayjs.extend(isSameOrBefore)
+  const { getTimeUnix } = useDateHelpers()
 
   const { push } = useRouter()
   const { toggleModal } = useContext(LayoutContext)
@@ -27,7 +28,17 @@ export default function NewSeasonForm(): JSX.Element {
   const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const { publishSeason } = useSeasons()
+  console.log('startingDate', data.startingDate)
+
+  const startingDate = `${data.startingDate}T09:01:00`
+  const endingDate = `${data.endingDate}T09:00:00`
+
+  // const { publishSeason } = useSeasons()
+  const { execute: publishSeason } = useContracts({
+    args: [getTimeUnix(startingDate), getTimeUnix(endingDate)],
+    functionName: 'createSeason',
+    eventName: 'SeasonCreated',
+  })
 
   const checkIfEndingDateIsAfterStartingDate = (from: string, to: string) => {
     const fromTime = dayjs.tz(from, ARTIZEN_TIMEZONE)
@@ -81,6 +92,10 @@ export default function NewSeasonForm(): JSX.Element {
     }
   }
 
+  interface IOutcomeReturn {
+    args: any
+  }
+
   const saveNewSeason = async () => {
     if (!data.startingDate || !data.endingDate) {
       return
@@ -88,18 +103,20 @@ export default function NewSeasonForm(): JSX.Element {
 
     setProcessing(true)
 
-    const startingDate = `${data.startingDate}T09:01:00`
-    const endingDate = `${data.endingDate}T09:00:00`
-
     // // //publish season to blockchain
-    const publishedSeason = await publishSeason(startingDate, endingDate)
+    const { error, outcome } = await publishSeason?.()
 
-    if (!publishedSeason) {
-      throw new Error('Error publishing season to blockchain')
+    if (error) {
+      console.log(`Error publishing season to blockchain ${error}`)
+      throw new Error(`Error publishing season to blockchain ${error}`)
     }
 
+    console.log('publishedSeason', outcome?.[0].args.seasonID.toString())
+
+    const newSeasonId = outcome?.[0].args.seasonID.toString()
+
     //get the new season id from blockchain and save it into the database
-    const newSeasonId = publishedSeason.events[0].args[0].toString()
+    // const newSeasonId = publishedSeason.events[0].args[0].toString()
 
     const dateFronMutation = await insertSeason({
       variables: {
