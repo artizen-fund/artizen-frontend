@@ -55,8 +55,7 @@ export async function storeNFTFromUrl(imageUrl: string, name: string) {
     maxContentLength: 100000000,
     maxBodyLength: 1000000000,
     headers: {
-      // @ts-ignore
-      'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+      // 'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
       Authorization: `Bearer ${pinataJWTKey}`,
     },
   })
