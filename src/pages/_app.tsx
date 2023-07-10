@@ -21,7 +21,7 @@ import '@public/styles/globals.css'
 import { WagmiConfig } from 'wagmi'
 import { SessionProvider } from 'next-auth/react'
 
-const { client } = getWagmiClient()
+const { config } = getWagmiClient()
 
 const App = ({
   Component,
@@ -35,7 +35,7 @@ const App = ({
 
   const apolloClient = initializeApollo(pageProps?.apolloData || {})
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <SessionProvider session={session}>
         <ApolloProvider client={apolloClient}>
           <CourierNotification>

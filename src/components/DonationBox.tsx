@@ -47,13 +47,14 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       tokenId,
     })
 
-    const writeContract = await writeAsync?.()
+    const hash = await writeAsync?.()
 
     toggleModal()
+    //TODO: review if hash is return as plain string or as an object
+    //https://wagmi.sh/react/hooks/useContractWrite#return-value
+    // const result = await writeContract?.wait()
 
-    const result = await writeContract?.wait()
-
-    if (result?.blockHash) {
+    if (hash) {
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
         tokenId,

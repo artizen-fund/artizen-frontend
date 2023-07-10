@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { SeasonsAbi } from '@contracts'
-import { ethers } from 'ethers'
 import { assertFloat, assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND } from '@lib'
 
 interface useMintArtifactsProps {
@@ -29,9 +28,7 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     functionName: 'mintArtifact',
     args: [[tokenId], [artifactQuantity]],
     chainId,
-    overrides: {
-      value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
-    },
+    value: BigInt(BASE_ARTIFACT_PRICE * artifactQuantity * 1e18),
     onError: e => {
       console.log('error usePrepareContractWrite here', e.message)
 
