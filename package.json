@@ -98,7 +98,7 @@
     "@graphql-typed-document-node/core": "^3.1.1",
     "@playwright/test": "^1.31.1",
     "@synthetixio/synpress": "^2.4.1-beta.2",
-    "@tenkeylabs/dappwright": "^2.2.6",
+    "@tenkeylabs/dappwright": "^2.3.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@types/bignumber.js": "^5.0.0",

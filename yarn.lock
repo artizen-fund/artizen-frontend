@@ -3315,10 +3315,10 @@
     "@tanstack/query-core" "4.29.19"
     use-sync-external-store "^1.2.0"
 
-"@tenkeylabs/dappwright@^2.2.6":
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/@tenkeylabs/dappwright/-/dappwright-2.2.7.tgz#17440e167868b3951aaa0e92a6b0f5355c60e930"
-  integrity sha512-+NF/DvXQGVgZyT4Dh6tFOl01vK/Z8Z9VWwVoXTO+u7u4JnAXuLwPVIzp5MWyb48QMb3qrpi2D2PZhc2JQ2ApBA==
+"@tenkeylabs/dappwright@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@tenkeylabs/dappwright/-/dappwright-2.3.3.tgz#d84f5d7908c7daad82caba6b33d59010cc329295"
+  integrity sha512-u7kQE4dIQR/0HAyJRWxlp7FWlwH4w9NNoBxzO8kdzCZFBP3XPdF4u3qUdyMBYMTmp6ESFsD2mHQo9u92c1ZdPg==
   dependencies:
     node-stream-zip "^1.13.0"
 
