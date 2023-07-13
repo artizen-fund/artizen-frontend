@@ -185,7 +185,7 @@ const SubmitProjectModal = () => {
     setProcessing(false)
     toggleModal()
 
-    // reload()
+    reload()
   }
 
   return (
