@@ -135,7 +135,7 @@ export const useWalletAuthFlow = () => {
     // )
   }
 
-  const isAuthenticated = () => status === 'authenticated'
+  const isAuthenticated = (): Boolean => status === 'authenticated'
 
   return { connectMetamask, connectOtherWallet, connecting, signEnMessage, currentFlow, isAuthenticated }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { usePrepareContractWrite, useContractWrite, useContractEvent } from 'wagmi'
 import { watchContractEvent } from '@wagmi/core'
 import { SeasonsAbi } from '@contracts'
@@ -12,6 +12,10 @@ interface useMintArtifactsProps {
 }
 
 export const useContracts = ({ args, value, functionName, eventName }: useMintArtifactsProps) => {
+  console.log('useContracts initial args', args)
+
+  const [writeNow, setWriteNow] = useState(false)
+
   const [errorState, setErrorState] = useState<string | null>(null)
   const SEASON_CONTRACT = assert(
     process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
@@ -48,7 +52,7 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     },
   })
 
-  const { writeAsync, isLoading, isSuccess, isError } = useContractWrite({
+  const { isLoading, isSuccess, isError, write } = useContractWrite({
     ...config,
     onSettled(data, error) {
       console.log('Settled', { data, error })
@@ -88,20 +92,32 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     }
   }, [status])
 
+  // useEffect(() => {
+  //   console.log('useEffect args', args)
+  //   setArgsState(args)
+  // }, [args])
+
   interface IOutcomeReturn {
     args: any
   }
 
+  useEffect(() => {
+    if (!isLoading && writeNow) {
+      console.log('useEffect writeNow', writeNow)
+      setWriteNow(false)
+      write?.()
+    }
+  }, [isLoading, write, writeNow])
+
   const execute = async (): Promise<{ error?: string; outcome?: IOutcomeReturn[] }> => {
     console.log('execute starts')
-    const result = await writeAsync?.()
+    console.log('useContracts args in execute', args)
+    setWriteNow(true)
 
     if (errorState) {
       console.log('execute error', errorState)
       return { error: errorState }
     }
-
-    console.log('result', result)
 
     const eventResult = await contractEventListener()
 
@@ -110,5 +126,5 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     return { outcome: eventResult as IOutcomeReturn[] }
   }
 
-  return { execute }
+  return { execute, isLoading }
 }
