@@ -5,19 +5,15 @@ import { rgba } from '@lib'
 
 // note that rank comes from an array with starting index 0
 
-const RankAndArtifactCount = ({
-  rank,
-  count,
-  seasonIsActive,
-  totalSales,
-  matchFundPooled,
-}: {
+interface IRankAndArtifactCount {
   rank: number
   count: number
   seasonIsActive?: boolean
   totalSales: number
   matchFundPooled: number
-}) => (
+}
+
+const RankAndArtifactCount = ({ rank, count, seasonIsActive, totalSales, matchFundPooled }: IRankAndArtifactCount) => (
   <Wrapper>
     <Rank value={rank + 1} />
     <ArtifactRaised isWinner={rank === 0} count={count} totalSales={totalSales} matchFundPooled={matchFundPooled} />

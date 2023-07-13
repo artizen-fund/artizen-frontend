@@ -105,7 +105,14 @@ const ProjectPage = ({ project }: any) => {
                 <Topline>
                   <div>
                     {!loadingSeason && (
-                      <RankAndArtifactCount rank={rank} count={count} seasonIsActive={isSeasonActive} />
+                      //TODO: Update the total sales and match fund pooled vars
+                      <RankAndArtifactCount
+                        totalSales={0}
+                        matchFundPooled={0}
+                        rank={rank}
+                        count={count}
+                        seasonIsActive={isSeasonActive}
+                      />
                     )}
                   </div>
 
