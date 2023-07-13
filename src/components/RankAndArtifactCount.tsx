@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ArtifactCount, Rank } from '@components'
+import { ArtifactRaised, Rank } from '@components'
 import { typography, palette, breakpoint } from '@theme'
 import { rgba } from '@lib'
 
@@ -9,14 +9,18 @@ const RankAndArtifactCount = ({
   rank,
   count,
   seasonIsActive,
+  totalSales,
+  matchFundPooled,
 }: {
   rank: number
   count: number
   seasonIsActive?: boolean
+  totalSales: number
+  matchFundPooled: number
 }) => (
   <Wrapper>
     <Rank value={rank + 1} />
-    <ArtifactCount count={count} />
+    <ArtifactRaised isWinner={rank === 0} count={count} totalSales={totalSales} matchFundPooled={matchFundPooled} />
     {!seasonIsActive && (
       <SubmissionEnded>
         <span>Season 2 ended</span>
