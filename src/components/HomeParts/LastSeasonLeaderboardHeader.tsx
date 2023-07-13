@@ -32,6 +32,8 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
 
   const season = latestSeason.Seasons[0]
 
+  if (!season) return <></>
+
   return (
     <StyledPagePadding>
       <Content>
