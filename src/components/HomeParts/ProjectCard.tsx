@@ -24,7 +24,9 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
             rank={index}
             count={latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0}
           />
-          <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
+          <ArtifactNumber>
+            {latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0} Minted
+          </ArtifactNumber>
         </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>
