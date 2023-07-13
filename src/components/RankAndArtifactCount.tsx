@@ -1,22 +1,22 @@
 import styled from 'styled-components'
-import { ArtifactCount, Rank } from '@components'
+import { ArtifactRaised, Rank } from '@components'
 import { typography, palette, breakpoint } from '@theme'
 import { rgba } from '@lib'
 
 // note that rank comes from an array with starting index 0
 
-const RankAndArtifactCount = ({
-  rank,
-  count,
-  seasonIsActive,
-}: {
+interface IRankAndArtifactCount {
   rank: number
   count: number
   seasonIsActive?: boolean
-}) => (
+  totalSales: number
+  matchFundPooled: number
+}
+
+const RankAndArtifactCount = ({ rank, count, seasonIsActive, totalSales, matchFundPooled }: IRankAndArtifactCount) => (
   <Wrapper>
     <Rank value={rank + 1} />
-    <ArtifactCount count={count} />
+    <ArtifactRaised isWinner={rank === 0} count={count} totalSales={totalSales} matchFundPooled={matchFundPooled} />
     {!seasonIsActive && (
       <SubmissionEnded>
         <span>Season 2 ended</span>
