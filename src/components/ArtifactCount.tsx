@@ -1,13 +1,29 @@
 import styled from 'styled-components'
 import { Glyph } from '@components'
-import { rgba } from '@lib'
+import { rgba, assertFloat } from '@lib'
 import { palette, typography } from '@theme'
 
-const ArtifactCount = ({ count }: { count: number }) => (
-  <Wrapper>
-    <span>{count} minted</span> <Glyph glyph="trend" level={2} color="barracuda" darkColor="barracuda" />
-  </Wrapper>
-)
+//NEXT_PUBLIC_BASE_ARTIFACT_PRICE
+
+const ArtifactCount = ({ count }: { count: number }) => {
+  const BASE_ARTIFACT_PRICE = assertFloat(
+    process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
+    'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
+  )
+  //TODO: move this to a env variable
+  const MachtfundToUp = 0.1 * count
+
+  const totalSales = BASE_ARTIFACT_PRICE * count
+
+  return (
+    <Wrapper>
+      <span>
+        <AmountText>{MachtfundToUp + totalSales}</AmountText> raised
+      </span>
+      <Glyph glyph="trend" level={2} color="barracuda" darkColor="barracuda" />
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.div`
   position: relative;
@@ -28,4 +44,9 @@ const Wrapper = styled.div`
     background-color: ${rgba(palette.stone)};
   }
 `
+
+const AmountText = styled.span`
+  color: ${rgba(palette.algae)};
+`
+
 export default ArtifactCount
