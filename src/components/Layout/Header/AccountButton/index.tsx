@@ -6,19 +6,39 @@ import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGetUserQuery, Maybe } from '@types'
-import { rgba, loggedInUserVar, LayoutContext, textCrop } from '@lib'
+import { rgba, loggedInUserVar, LayoutContext, textCrop, useWalletAuthFlow } from '@lib'
 import { GET_USER } from '@gql'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
+  const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
+
+  console.log('currentFlow from accountButton  ', currentFlow)
+
   const { isConnected } = useAccount()
   const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
   const { data: session, status } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
+  const [startAuth, setStartAuth] = useState(false)
 
   if (!isConnected && !!session) {
     console.warn('user session is not connected to the wallet')
     signOut()
   }
+
+  useEffect(() => {
+    if (currentFlow !== 'allDoneConnected' && startAuth) {
+      setVisibleModalWithAttrs('login', {
+        connectMetamask,
+        connectOtherWallet,
+        signEnMessage,
+        currentFlow,
+      })
+    }
+
+    if (currentFlow === 'allDoneConnected') {
+      setStartAuth(false)
+    }
+  }, [currentFlow, startAuth])
 
   useQuery<IGetUserQuery>(GET_USER, {
     skip: !isConnected || !session || !session?.user?.publicAddress,
@@ -39,7 +59,17 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     if (status === 'loading') {
       return
     } else if (!loggedInUser) {
-      setVisibleModal('login')
+      // setVisibleModal('login')
+
+      console.log('current flow from account button', currentFlow)
+      setStartAuth(true)
+
+      // setVisibleModalWithAttrs('login', {
+      //   connectMetamask,
+      //   connectOtherWallet,
+      //   signEnMessage,
+      //   currentFlow,
+      // })
     } else {
       toggleShelf('session')
     }
