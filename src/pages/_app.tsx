@@ -9,6 +9,7 @@ import {
   CourierNotification,
   LayoutContextProvider,
   SeasonContextProvider,
+  SeasonSubcriptionProvider,
   getWagmiClient,
   initializeApollo,
   isProd,
@@ -40,10 +41,13 @@ const App = ({
         <ApolloProvider client={apolloClient}>
           <CourierNotification>
             <Toast theme={StyledToast} position="top-right" />
+
             <SeasonContextProvider>
-              <LayoutContextProvider>
-                <Component {...pageProps} />
-              </LayoutContextProvider>
+              <SeasonSubcriptionProvider>
+                <LayoutContextProvider>
+                  <Component {...pageProps} />
+                </LayoutContextProvider>
+              </SeasonSubcriptionProvider>
             </SeasonContextProvider>
           </CourierNotification>
         </ApolloProvider>

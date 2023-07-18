@@ -84,13 +84,13 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     })
   }
 
-  useEffect(() => {
-    console.log('useEffect status', status)
+  // useEffect(() => {
+  //   console.log('useEffect status', status)
 
-    if (status === 'success' && errorState !== null) {
-      setErrorState(null)
-    }
-  }, [status])
+  //   if (status === 'success' && errorState !== null) {
+  //     setErrorState(null)
+  //   }
+  // }, [status])
 
   // useEffect(() => {
   //   console.log('useEffect args', args)
@@ -102,7 +102,9 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
   }
 
   useEffect(() => {
-    if (!isLoading && writeNow) {
+    console.log('useEffect writeNow outside', writeNow)
+    console.log('useEffect isLoading outside', isLoading)
+    if (writeNow) {
       console.log('useEffect writeNow', writeNow)
       setWriteNow(false)
       write?.()

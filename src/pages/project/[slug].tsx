@@ -15,7 +15,7 @@ import {
   ProjectDescriptionShimmer,
   ProjectLeaderboardShimmer,
 } from '@components'
-import { LayoutContext, SeasonContext, useDateHelpers, createApolloClient } from '@lib'
+import { LayoutContext, createApolloClient, SeasonSubcriptionContext } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
@@ -29,12 +29,17 @@ import {
 
 const ProjectPage = ({ project }: any) => {
   console.log('project  ', project)
-  const { seasonId, isSeasonActive } = useContext(SeasonContext)
+  const {
+    season: seasonData,
+    arrangedSeasonList,
+    seasonIsActive,
+    loading: loadingSeason,
+  } = useContext(SeasonSubcriptionContext)
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   //this should be only done when the season is active otherwise we should use the season from the project
   const { data: openEditionsSub } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
-    skip: isSeasonActive,
+    skip: seasonIsActive,
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -44,7 +49,7 @@ const ProjectPage = ({ project }: any) => {
   })
 
   const { data: openEditionsQuery } = useQuery(LOAD_OPEN_EDITIONS, {
-    skip: !isSeasonActive,
+    skip: !seasonIsActive,
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -61,25 +66,25 @@ const ProjectPage = ({ project }: any) => {
   } = useRouter()
 
   //TODO: this code does assume that the project has been submitted to the active season which will not be the case when the season ends
-  const { loading: loadingSeason, data: seasonData } = useSubscription<ISubscribeSeasonsSubscription>(
-    SUBSCRIBE_SEASONS,
-    {
-      fetchPolicy: 'no-cache',
-      skip: !isSeasonActive,
-      variables: {
-        where: {
-          id: { _eq: seasonId },
-        },
-      },
-    },
-  )
+  // const { loading: loadingSeason, data: seasonData } = useSubscription<ISubscribeSeasonsSubscription>(
+  //   SUBSCRIBE_SEASONS,
+  //   {
+  //     fetchPolicy: 'no-cache',
+  //     skip: !seasonIsActive,
+  //     variables: {
+  //       where: {
+  //         id: { _eq: seasonId },
+  //       },
+  //     },
+  //   },
+  // )
 
   console.log('seasonData', seasonData)
 
   const lead = project.members?.find((m: any) => m.type === 'lead')?.user
 
   const rank =
-    seasonData?.Seasons[0].submissions
+    seasonData?.submissions
       ?.sort(
         (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
           s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
@@ -111,7 +116,7 @@ const ProjectPage = ({ project }: any) => {
                         matchFundPooled={0}
                         rank={rank}
                         count={count}
-                        seasonIsActive={isSeasonActive}
+                        seasonIsActive={seasonIsActive}
                       />
                     )}
                   </div>
@@ -156,7 +161,7 @@ const ProjectPage = ({ project }: any) => {
           <Side>
             {/* TODO: Artifacts should be an object instead of an array  */}
             {/* This is wrong, we need to use the artifact from the submission */}
-            <ArtifactCard artifact={project.artifacts[0]} project={project} seasonIsActive={isSeasonActive || false} />
+            <ArtifactCard artifact={project.artifacts[0]} project={project} seasonIsActive={seasonIsActive || false} />
           </Side>
         </Wrapper>
       </PagePadding>
@@ -165,7 +170,7 @@ const ProjectPage = ({ project }: any) => {
 }
 
 // const ProjectPage = () => {
-//   const { seasonId } = useContext(SeasonContext)
+
 //   const { isSeasonActive } = useDateHelpers()
 
 //   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
