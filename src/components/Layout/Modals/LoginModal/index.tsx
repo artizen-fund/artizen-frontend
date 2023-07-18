@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { CheckboxControl, Icon, Button } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
-import { rgba, assetPath, LayoutContext, textCrop, assert } from '@lib'
+import { rgba, assetPath, LayoutContext, textCrop, assert, useWalletAuthFlow } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { connectWallet, signInWalletMessage } from '@copy/common'
 import { ConnectingComp } from './lib/'
@@ -11,8 +11,9 @@ import { signIn, useSession } from 'next-auth/react'
 
 const LoginModal = ({ ...props }) => {
   const { status } = useSession()
-  const { toggleModal, modalAttrs } = useContext(LayoutContext)
-  const { connectMetamask, connectOtherWallet, currentFlow, signEnMessage } = modalAttrs as any
+  const { toggleModal } = useContext(LayoutContext)
+  // const { connectMetamask, connectOtherWallet, currentFlow, signEnMessage } = modalAttrs as any
+  const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
   // const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
   const [enabled, setEnabled] = useState(true)
 
