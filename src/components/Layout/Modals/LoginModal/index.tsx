@@ -11,7 +11,7 @@ import { signIn, useSession } from 'next-auth/react'
 
 const LoginModal = ({ ...props }) => {
   const { status } = useSession()
-  const { toggleModal, modalAttrs } = useContext(LayoutContext)
+  const { toggleModal } = useContext(LayoutContext)
   // const { connectMetamask, connectOtherWallet, currentFlow, signEnMessage } = modalAttrs as any
   const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
   // const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()

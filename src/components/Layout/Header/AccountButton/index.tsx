@@ -27,12 +27,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
 
   useEffect(() => {
     if (currentFlow !== 'allDoneConnected' && startAuth) {
-      setVisibleModalWithAttrs('login', {
-        connectMetamask,
-        connectOtherWallet,
-        signEnMessage,
-        currentFlow,
-      })
+      setVisibleModalWithAttrs('login', {})
     }
 
     if (currentFlow === 'allDoneConnected') {
