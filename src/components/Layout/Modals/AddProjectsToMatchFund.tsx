@@ -9,7 +9,7 @@ import { InputWrapper } from '../../Form/Controls/_Common'
 import { INSERT_SUBMISSION_IN_MATCH_FUND, GET_MATCH_FUNDS } from '@gql'
 import { IGetSponsorsQuery, ISubmissionFragment, Maybe, IMatchFundFragment } from '@types'
 import { DropDownBlocks } from './lib/DropDownBlocks'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 const AddProjectsToMatchFund = () => {
   const { reload } = useRouter()
@@ -107,7 +107,7 @@ const AddProjectsToMatchFund = () => {
   return (
     <Wrapper>
       <Headline>Add project submission to match fund</Headline>
-      <Subtitle>Add match funds name to add {capitalCase(projectSubmission.project.title)}:</Subtitle>
+      <Subtitle>Add match funds name to add {startCase(projectSubmission.project.title)}:</Subtitle>
       {matchFund && (
         <SchoolItems>
           <DropDownBlocks<IMatchFundFragment>
@@ -117,7 +117,7 @@ const AddProjectsToMatchFund = () => {
             align="left"
             structure={[
               {
-                renderer: (item: IMatchFundFragment) => <ItemText>{capitalCase(item.name)}</ItemText>,
+                renderer: (item: IMatchFundFragment) => <ItemText>{startCase(item.name)}</ItemText>,
                 classNames: 'doubleHeight',
               },
             ]}

@@ -8,7 +8,7 @@ import { Button, Layout, Spinner, PagePadding, CuratorCheck, Faq, Breadcrumbs } 
 import { GET_MATCH_FUNDS } from '@gql'
 import { IGetMatchFundsQuery, IMatchFundFragment } from '@types'
 import { palette, typography } from '@theme'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 const MatchFunds = () => {
   const { query, push } = useRouter()
@@ -61,12 +61,12 @@ const MatchFunds = () => {
               {loadedMatchFundsData?.MatchFunds.map((matchFund: IMatchFundFragment) => {
                 console.log('matchFund  ', matchFund)
                 const sponsors = matchFund.sponsorInMatchFunds.map(
-                  sponsorInMatchFund => sponsorInMatchFund.sponsor && capitalCase(sponsorInMatchFund.sponsor.name),
+                  sponsorInMatchFund => sponsorInMatchFund.sponsor && startCase(sponsorInMatchFund.sponsor.name),
                 )
                 console.log('sponsors  ', sponsors)
                 return (
                   <MatchFundWrapper key={matchFund.id} onClick={() => push(`/admin/matchfunds/${matchFund.id}`)}>
-                    <Title>{capitalCase(matchFund.name)}</Title>
+                    <Title>{startCase(matchFund.name)}</Title>
                     <Subtitle>{sponsors.toString()}</Subtitle>
                     {/* <SponsorLogotype src="sdasdasd" /> */}
                   </MatchFundWrapper>

@@ -36,7 +36,6 @@ export * from './useDateHelpers'
 export * from './useGnosis'
 export * from './useMintArtifacts'
 export * from './useWalletAuthFlow'
-export * from './useSmartContracts'
 export * from './useContracts'
 export * from './useSeasonSubscriptionData'
 

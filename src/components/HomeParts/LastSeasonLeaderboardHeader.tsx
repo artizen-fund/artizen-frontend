@@ -9,7 +9,7 @@ interface LeaderboardHeaderProps {
 }
 
 const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => {
-  const { season, arrangedSeasonList, seasonIsActive } = useContext(SeasonSubcriptionContext)
+  const { season } = useContext(SeasonSubcriptionContext)
 
   const { USDtoETH } = useGnosis()
 

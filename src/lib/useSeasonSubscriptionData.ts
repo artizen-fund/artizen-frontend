@@ -23,10 +23,10 @@ const countTotalSales = (submissions: ISubmissionFragment[]): number => {
 }
 
 export function useSeasonSubscriptionData() {
-  const { seasonId } = useContext(SeasonContext)
+  const { seasonId, isSeasonActive: seasonIsActive } = useContext(SeasonContext)
   const [arrangedSeasonList, setArrangedSeasonList] = useState<ISubmissionFragment[] | null>(null)
   const [totalSales, setTotalSales] = useState<number>(0)
-  const { isSeasonActive } = useDateHelpers()
+  // const { isSeasonActive } = useDateHelpers()
 
   const { data, loading } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     skip: !seasonId,
@@ -51,7 +51,7 @@ export function useSeasonSubscriptionData() {
 
   console.log('data from subscription::::: ', data)
 
-  const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
+  // const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
 
   return { arrangedSeasonList, totalSales, season: data?.Seasons[0], loading, seasonIsActive }
 }

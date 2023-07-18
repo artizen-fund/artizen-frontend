@@ -38,7 +38,8 @@ const SubHeader = ({ visible }: ISubHeader) => {
           <Stats>
             <Stat>
               <Label>Prize funds</Label>
-              <Data>
+              {/* TODO: Review this */}
+              {/* <Data>
                 Ξ {artizenPrizeAmountETH}
                 <CashTrend>
                   {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
@@ -46,7 +47,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
                   )}
                   <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
                 </CashTrend>
-              </Data>
+              </Data> */}
             </Stat>
             <Stat>
               <Label>Cycle</Label>
@@ -54,9 +55,8 @@ const SubHeader = ({ visible }: ISubHeader) => {
             </Stat>
             <Stat>
               <Label>Ends in</Label>
-              <Data>
-                <Countdown date={season?.endingDate} />
-              </Data>
+              {/* TODO: Count down does not work */}
+              <Data>{/* <Countdown date={season?.endingDate} /> */}</Data>
             </Stat>
             <Stat>
               <Label>Current leader</Label>

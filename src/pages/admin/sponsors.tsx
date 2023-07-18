@@ -8,7 +8,7 @@ import { Button, Layout, Spinner, Table, TableCell, PagePadding, CuratorCheck, F
 import { GET_SPONSORS } from '@gql'
 import { IProjectsQuery, ISponsorFragment } from '@types'
 import { palette, typography } from '@theme'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 const Sponsors = () => {
   const { addParamsToLink } = useCloudinary()
@@ -64,7 +64,7 @@ const Sponsors = () => {
               {loadedSponsorData?.Sponsors.map((sponsor: ISponsorFragment) => {
                 return (
                   <SponsorWrapper key={sponsor.id}>
-                    <SponsorTitle>{capitalCase(sponsor.name)}</SponsorTitle>
+                    <SponsorTitle>{startCase(sponsor.name)}</SponsorTitle>
                     <SponsorFinance>{sponsor.participation}</SponsorFinance>
                     <SponsorURL href={sponsor.url} target="_blank">
                       Sponsor Url

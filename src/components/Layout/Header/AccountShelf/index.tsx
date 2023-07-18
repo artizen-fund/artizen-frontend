@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { breakpoint, typography, palette } from '@theme'
 import { rgba, assetPath, useFullSignOut } from '@lib'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 import { IUsers } from '@types'
 
 interface IAccountShelf {
@@ -24,7 +24,7 @@ const AccountShelf = ({ user, hideShelf }: IAccountShelf) => {
     <Wrapper>
       <Commands>
         <Top>
-          {user.artizenHandle && <Welcome>Hi {capitalCase(user.artizenHandle)}</Welcome>}
+          {user.artizenHandle && <Welcome>Hi {startCase(user.artizenHandle)}</Welcome>}
           <Message>Thanks for supporting the future of public goods.</Message>
           <Buttons>
             <Button onClick={() => goToSettings('profile')} stretch outline level={1} glyph="face">

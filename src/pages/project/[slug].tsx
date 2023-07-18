@@ -65,20 +65,6 @@ const ProjectPage = ({ project }: any) => {
     asPath,
   } = useRouter()
 
-  //TODO: this code does assume that the project has been submitted to the active season which will not be the case when the season ends
-  // const { loading: loadingSeason, data: seasonData } = useSubscription<ISubscribeSeasonsSubscription>(
-  //   SUBSCRIBE_SEASONS,
-  //   {
-  //     fetchPolicy: 'no-cache',
-  //     skip: !seasonIsActive,
-  //     variables: {
-  //       where: {
-  //         id: { _eq: seasonId },
-  //       },
-  //     },
-  //   },
-  // )
-
   console.log('seasonData', seasonData)
 
   const lead = project.members?.find((m: any) => m.type === 'lead')?.user

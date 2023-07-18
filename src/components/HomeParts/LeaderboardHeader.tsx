@@ -21,7 +21,7 @@ const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProp
           <Stat>
             <Label>Prize Funds</Label>
             {!!loading && <Data>…</Data>}
-            {!loading && (
+            {/* {!loading && (
               <Data>
                 {artizenPrizeAmountETH} ETH
                 <CashTrend>
@@ -31,7 +31,7 @@ const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProp
                   <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
                 </CashTrend>
               </Data>
-            )}
+            )} */}
           </Stat>
           <Stat>
             <Label>Cycle</Label>

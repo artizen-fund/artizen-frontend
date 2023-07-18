@@ -7,7 +7,7 @@ import { palette, typography } from '@theme'
 import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project, Faq, Breadcrumbs } from '@components'
 import { GET_MATCH_FUNDS } from '@gql'
 import { LayoutContext, rgba } from '@lib'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 import { faq } from '@copy/admin'
 
 import { IGetMatchFundsQuery, ISponsorInMatchFundFragment, ISubmissionInMatchFundFragment } from '@types'
@@ -69,7 +69,7 @@ export default function MatchFundDetails(): JSX.Element {
               },
               {
                 path: `/admin/matchfunds/${id}`,
-                name: `${capitalCase(matchFund?.name)}`,
+                name: `${startCase(matchFund?.name)}`,
                 isActive: true,
               },
             ]}
@@ -81,7 +81,7 @@ export default function MatchFundDetails(): JSX.Element {
           <MatchFundWrapper>
             {matchFund && (
               <MatchFundContainer>
-                <Title>{capitalCase(matchFund.name)}</Title>
+                <Title>{startCase(matchFund.name)}</Title>
                 <Body>
                   URL: <a href={matchFund.url}>{matchFund.url}</a>
                 </Body>
@@ -94,7 +94,7 @@ export default function MatchFundDetails(): JSX.Element {
                     return (
                       <SponsorItem key={id}>
                         <img style={{ width: 200 }} src={sponsor?.logotype} />
-                        <div>{sponsor?.name && capitalCase(sponsor?.name)}</div>
+                        <div>{sponsor?.name && startCase(sponsor?.name)}</div>
                         <div>{sponsor?.participation}</div>
                       </SponsorItem>
                     )

@@ -22,13 +22,14 @@ const ArtifactCount = ({
   )
   //TODO: move this to a env variable
 
-  console.log('count:::', count > 0)
-
   const spli80 = (80 * matchFundPooled) / 100
   //only winners get 20% of the match fund on top of their sales
   const split20 = (20 * matchFundPooled) / 100
 
-  const split = (count * 100) / totalSales
+  console.log('count', count)
+  console.log('totalSales:::', totalSales)
+
+  const split = totalSales > 0 ? (count * 100) / totalSales : 0
 
   const matchFundMoney = (spli80 * split) / 100
 

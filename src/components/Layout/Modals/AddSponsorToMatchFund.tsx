@@ -9,7 +9,7 @@ import { InputWrapper } from '../../../components/Form/Controls/_Common'
 import { GET_SPONSORS, INSERT_SPONSOR_IN_MATCH } from '@gql'
 import { IGetSponsorsQuery, ISponsorFragment, Maybe } from '@types'
 import { DropDownBlocks } from './lib/DropDownBlocks'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 const AddSponsorToMatchFund = () => {
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
@@ -73,7 +73,7 @@ const AddSponsorToMatchFund = () => {
   return (
     <Wrapper>
       <Headline>Sponsors</Headline>
-      <Subtitle>Select a sponsor to be added to {capitalCase(matchFund.name)}:</Subtitle>
+      <Subtitle>Select a sponsor to be added to {startCase(matchFund.name)}:</Subtitle>
       {loading && <div style={{ margin: '16px 0' }}>Loading...</div>}
       {!sponsors ||
         (sponsors.length === 0 && (

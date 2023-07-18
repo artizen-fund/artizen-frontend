@@ -3,6 +3,7 @@ import { usePrepareContractWrite, useContractWrite, useContractEvent } from 'wag
 import { watchContractEvent } from '@wagmi/core'
 import { SeasonsAbi } from '@contracts'
 import { assertFloat, assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND } from '@lib'
+import { isEqual } from 'lodash'
 
 interface useMintArtifactsProps {
   args: any[]
@@ -15,7 +16,7 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
   console.log('useContracts initial args', args)
 
   const [writeNow, setWriteNow] = useState(false)
-
+  const [argsState, setArgsState] = useState<any[]>([])
   const [errorState, setErrorState] = useState<string | null>(null)
   const SEASON_CONTRACT = assert(
     process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
@@ -24,16 +25,11 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
 
   const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
-  const BASE_ARTIFACT_PRICE = assertFloat(
-    process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
-    'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
-  )
-
   const { config, status } = usePrepareContractWrite({
     address: SEASON_CONTRACT as `0x${string}`,
     abi: SeasonsAbi,
     functionName,
-    args,
+    args: argsState,
     chainId,
     onError: e => {
       console.log('error usePrepareContractWrite here', e.message)
@@ -65,6 +61,10 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
 
       setErrorState(null)
     },
+    onError(error) {
+      console.log('error useContractWrite', error)
+      setErrorState(error.message as string)
+    },
   })
 
   const contractEventListener = async () => {
@@ -84,36 +84,39 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     })
   }
 
-  // useEffect(() => {
-  //   console.log('useEffect status', status)
+  useEffect(() => {
+    console.log('useEffect status', status)
 
-  //   if (status === 'success' && errorState !== null) {
-  //     setErrorState(null)
-  //   }
-  // }, [status])
+    if (status === 'success' && errorState !== null) {
+      setErrorState(null)
+    }
+  }, [status])
 
-  // useEffect(() => {
-  //   console.log('useEffect args', args)
-  //   setArgsState(args)
-  // }, [args])
+  useEffect(() => {
+    console.log('useEffect args', args)
+
+    !isEqual(args, argsState) && setArgsState(args)
+  }, [args])
 
   interface IOutcomeReturn {
     args: any
   }
 
   useEffect(() => {
-    console.log('useEffect writeNow outside', writeNow)
-    console.log('useEffect isLoading outside', isLoading)
+    console.log('useEffect write', args)
+    console.log('isLoading', isLoading)
     if (writeNow) {
-      console.log('useEffect writeNow', writeNow)
       setWriteNow(false)
       write?.()
     }
   }, [isLoading, write, writeNow])
 
-  const execute = async (): Promise<{ error?: string; outcome?: IOutcomeReturn[] }> => {
-    console.log('execute starts')
-    console.log('useContracts args in execute', args)
+  const execute = async (args?: any[]): Promise<{ error?: string; outcome?: IOutcomeReturn[] }> => {
+    console.log('execute starts', args)
+    if (args) {
+      setArgsState(args)
+    }
+
     setWriteNow(true)
 
     if (errorState) {

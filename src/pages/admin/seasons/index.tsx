@@ -4,12 +4,12 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import { faq } from '@copy/admin'
-import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding, Faq } from '@components'
+import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding, Faq, Breadcrumbs } from '@components'
 import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { rgba, LayoutContext, useDateHelpers } from '@lib'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 import { useAccount } from 'wagmi'
 
 const Seasons = () => {
@@ -60,6 +60,20 @@ const Seasons = () => {
         <Spinner />
       ) : (
         <StyledPagePadding>
+          <Breadcrumbs
+            schema={[
+              {
+                path: '/admin',
+                name: 'Admin',
+                isActive: false,
+              },
+              {
+                path: '/admin/seasons',
+                name: 'Seasons',
+                isActive: true,
+              },
+            ]}
+          />
           <Table title="Season List" {...{ sideItem }}>
             {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
               const startingDate = formatDate(season.startingDate)
@@ -68,7 +82,7 @@ const Seasons = () => {
 
               return (
                 <StyledTableCell onClick={openSeason(season.id)} key={season.id} highlight>
-                  <Title>{season.title && capitalCase(season.title)}</Title>
+                  <Title>{season.title && startCase(season.title)}</Title>
                   <Status>{seasonStatus}</Status>
                   <DateLine>
                     Runs from {startingDate} to {endingDate}

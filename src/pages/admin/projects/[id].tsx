@@ -8,7 +8,7 @@ import { palette, typography } from '@theme'
 import { PagePadding, CuratorCheck, Layout, Spinner, Button, Project, Faq, Breadcrumbs } from '@components'
 import { GET_PROJECTS, LOAD_SEASONS, UPDATE_SUBMISSION_IN_MATCH_FUND } from '@gql'
 import { LayoutContext, rgba, useDateHelpers } from '@lib'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 import { IProjectsQuery, ISeasonFragment } from '@types'
 
@@ -119,7 +119,7 @@ export default function ProjectDetails(): JSX.Element {
               },
               {
                 path: `/admin/projects/${id}`,
-                name: `${capitalCase(project?.title ? project?.title : '')}`,
+                name: `${startCase(project?.title ? project?.title : '')}`,
                 isActive: true,
               },
             ]}
@@ -131,7 +131,7 @@ export default function ProjectDetails(): JSX.Element {
           <>
             <ProjectContainer>
               <div>
-                <Title>{project?.title && capitalCase(project?.title)}</Title>
+                <Title>{project?.title && startCase(project?.title)}</Title>
                 <Button
                   glyph="external"
                   glyphOnly
@@ -173,7 +173,7 @@ export default function ProjectDetails(): JSX.Element {
                       <SeasonItem key={season.id}>
                         <div style={{ cursor: 'pointer' }} onClick={() => push(`/admin/seasons/${season.id}`)}>
                           <Label>Project is part of: </Label>
-                          <b>{season.title && capitalCase(season.title)}</b>
+                          <b>{season.title && startCase(season.title)}</b>
                         </div>
                         <div style={{ textAlign: 'right' }}>
                           <Label>Season Status: </Label>
@@ -192,7 +192,7 @@ export default function ProjectDetails(): JSX.Element {
                                       onClick={() => push(`/admin/matchfunds/${submissionInMatchFund.matchFund.id}`)}
                                       key={submissionInMatchFund.id}
                                     >
-                                      {capitalCase(submissionInMatchFund.matchFund.name)}
+                                      {startCase(submissionInMatchFund.matchFund.name)}
                                     </a>
                                     {isSeasonOpen && (
                                       <Button

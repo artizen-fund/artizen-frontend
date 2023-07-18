@@ -73,7 +73,7 @@ export default function NewSeasonForm(): JSX.Element {
     })
 
     if (error) {
-      throw new Error('Error loading season in checkIfThereIsSeasonDate')
+      alert('Error loading season in checkIfThereIsSeasonDate')
     }
 
     if (seasonInDB.Seasons.length > 0) {
@@ -108,7 +108,8 @@ export default function NewSeasonForm(): JSX.Element {
 
     if (error) {
       console.log(`Error publishing season to blockchain ${error}`)
-      throw new Error(`Error publishing season to blockchain ${error}`)
+      alert(`Error publishing season to blockchain ${error}`)
+      toggleModal('createSeasonModal')
     }
 
     console.log('publishedSeason', outcome?.[0].args.seasonID.toString())

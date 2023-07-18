@@ -8,7 +8,7 @@ import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { Spinner, Layout, Submissions, Button, PagePadding, CuratorCheck, Faq } from '@components'
 import { typography } from '@theme'
 import { useDateHelpers, LayoutContext } from '@lib'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 import { useSeasons } from 'src/lib/useSeasons'
 import { size } from 'lodash'
 
@@ -63,7 +63,7 @@ export default function SeasonPage(): JSX.Element {
 
             return (
               <Wrapper key={id} id={id}>
-                <Title id={`submission-title-${season.title}`}>{season.title && capitalCase(season.title)}</Title>
+                <Title id={`submission-title-${season.title}`}>{season.title && startCase(season.title)}</Title>
 
                 {isSeasonEndedV && !season.isClosed && (
                   <span
@@ -77,7 +77,7 @@ export default function SeasonPage(): JSX.Element {
 
                 <Subtitle id={`submission-status-${seasonStatus}`}>
                   Status:
-                  <span style={{ fontWeight: 'bold' }}>{capitalCase(seasonStatus)}</span>
+                  <span style={{ fontWeight: 'bold' }}>{startCase(seasonStatus)}</span>
                 </Subtitle>
 
                 <Subtitle className={isOpenForSubmissionsV ? '' : 'right-align'}>

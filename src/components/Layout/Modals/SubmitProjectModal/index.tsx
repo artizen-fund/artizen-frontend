@@ -24,7 +24,7 @@ import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useRouter } from 'next/router'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 const SubmitProjectModal = () => {
   dayjs.extend(utc)
@@ -121,7 +121,7 @@ const SubmitProjectModal = () => {
     //TODO: This is a hack to wait for the ipfs use state is updated in the usePrepertContract hook
     // await sleep(3000)
 
-    const { error, outcome } = await publishSubmission?.()
+    const { error, outcome } = await publishSubmission?.([seasonSelected.index, ipfsHash, project.walletAddress])
 
     // const { error, outcome } = await publishSeason?.()
 
@@ -211,11 +211,11 @@ const SubmitProjectModal = () => {
                   align="right"
                   structure={[
                     {
-                      renderer: (item: ISeasonFragment) => `${item.title && capitalCase(item.title)}`,
+                      renderer: (item: ISeasonFragment) => `${item.title && startCase(item.title)}`,
                     },
                     {
                       renderer: (item: ISeasonFragment) =>
-                        `${capitalCase(getSeasonStatus(item.startingDate, item.endingDate))}`,
+                        `${startCase(getSeasonStatus(item.startingDate, item.endingDate))}`,
                     },
                     {
                       renderer: (item: ISeasonFragment) =>

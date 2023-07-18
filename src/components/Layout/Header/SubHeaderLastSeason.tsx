@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { rgba, SeasonSubcriptionContext, formatDate } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Glyph, Icon } from '@components'
+import { capitalCase } from 'capital-case'
+import { capitalize } from 'lodash'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
 import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
@@ -75,7 +77,10 @@ const SubHeader = ({ visible }: ISubHeader) => {
             <Stat>
               <Label>Winner</Label>
               <Data>
-                {arrangedSeasonList && arrangedSeasonList.length > 0 && arrangedSeasonList[0]?.project?.title}
+                {arrangedSeasonList &&
+                  arrangedSeasonList.length > 0 &&
+                  arrangedSeasonList[0]?.project?.title &&
+                  capitalize(arrangedSeasonList[0].project.title)}
               </Data>
             </Stat>
           </Stats>
