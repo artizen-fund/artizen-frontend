@@ -1,6 +1,6 @@
 {
   "name": "artizen-frontend",
-  "version": "0.1.43",
+  "version": "0.1.46",
   "private": true,
   "scripts": {
     "clean": "rm -rf .next",
@@ -46,14 +46,18 @@
     "@trycourier/react-inbox": "^1.55.2",
     "@trycourier/react-provider": "^1.52.2",
     "@trycourier/react-toast": "^1.55.2",
+    "@wagmi/core": "^1.3.4",
     "ajv": "^8.11.2",
     "api": "^5.0.1",
     "async_hooks": "^1.0.0",
+    "axios": "^1.4.0",
+    "axios-retry": "^3.5.1",
     "capital-case": "^1.0.4",
     "cookie": "^0.5.0",
     "crypto-address-validator-ts": "^0.5.12",
     "dayjs": "^1.11.7",
-    "ethers": "^5.6.9",
+    "ethers": "^5",
+    "got": "^13.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
@@ -63,6 +67,7 @@
     "next-auth": "^4.10.3",
     "next-intercom": "^0.1.4",
     "next-plugin-graphql": "^0.0.2",
+    "node-fetch": "^3.3.1",
     "numeral": "^2.0.6",
     "react": "18.2.0",
     "react-cloudinary-upload-widget": "^1.6.0",
@@ -82,7 +87,8 @@
     "truncate-eth-address": "^1.0.2",
     "use-debounce": "^8.0.4",
     "uuid": "^9.0.0",
-    "wagmi": "^0.10.10",
+    "viem": "^1.2.9",
+    "wagmi": "^1.3.4",
     "wallet-address-validator": "^0.2.4"
   },
   "devDependencies": {
@@ -96,7 +102,7 @@
     "@graphql-typed-document-node/core": "^3.1.1",
     "@playwright/test": "^1.31.1",
     "@synthetixio/synpress": "^2.4.1-beta.2",
-    "@tenkeylabs/dappwright": "^2.2.6",
+    "@tenkeylabs/dappwright": "^2.3.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@types/bignumber.js": "^5.0.0",
@@ -138,7 +144,7 @@
     "react-test-renderer": "^18.1.0",
     "start-server-and-test": "^1.14.0",
     "tsconfig-paths-jest": "^0.0.1",
-    "typescript": "4.9.3",
+    "typescript": "^5.0.4",
     "webpack": "5.75.0"
   }
 }

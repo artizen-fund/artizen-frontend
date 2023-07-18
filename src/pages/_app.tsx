@@ -9,6 +9,7 @@ import {
   CourierNotification,
   LayoutContextProvider,
   SeasonContextProvider,
+  SeasonSubcriptionProvider,
   getWagmiClient,
   initializeApollo,
   isProd,
@@ -21,7 +22,7 @@ import '@public/styles/globals.css'
 import { WagmiConfig } from 'wagmi'
 import { SessionProvider } from 'next-auth/react'
 
-const { client } = getWagmiClient()
+const { config } = getWagmiClient()
 
 const App = ({
   Component,
@@ -35,15 +36,18 @@ const App = ({
 
   const apolloClient = initializeApollo(pageProps?.apolloData || {})
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <SessionProvider session={session}>
         <ApolloProvider client={apolloClient}>
           <CourierNotification>
             <Toast theme={StyledToast} position="top-right" />
+
             <SeasonContextProvider>
-              <LayoutContextProvider>
-                <Component {...pageProps} />
-              </LayoutContextProvider>
+              <SeasonSubcriptionProvider>
+                <LayoutContextProvider>
+                  <Component {...pageProps} />
+                </LayoutContextProvider>
+              </SeasonSubcriptionProvider>
             </SeasonContextProvider>
           </CourierNotification>
         </ApolloProvider>

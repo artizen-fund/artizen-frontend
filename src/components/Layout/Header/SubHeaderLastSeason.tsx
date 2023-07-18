@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, SeasonContext, formatDate } from '@lib'
+import { rgba, SeasonSubcriptionContext, formatDate } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Glyph, Icon } from '@components'
 import { useSubscription } from '@apollo/client'
@@ -18,24 +18,26 @@ interface ISubHeader {
 */
 
 const SubHeader = ({ visible }: ISubHeader) => {
-  const { seasonId } = useContext(SeasonContext)
+  const { season, arrangedSeasonList } = useContext(SeasonSubcriptionContext)
 
-  const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      where: {
-        id: { _eq: seasonId },
-        // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
-        // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
-      },
-    },
-  })
+  // const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+  //   fetchPolicy: 'no-cache',
+  //   variables: {
+  //     where: {
+  //       id: { _eq: seasonId },
+  //       // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
+  //       // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
+  //     },
+  //   },
+  // })
 
-  const leader = data?.Seasons[0].submissions?.sort(
-    (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-      s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-      s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-  )[0]
+  // const leader = data?.Seasons[0].submissions?.sort(
+  //   (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
+  //     s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+  //     s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
+  // )[0]
+
+  console.log('arrangedSeasonList', arrangedSeasonList)
 
   return (
     <>
@@ -50,7 +52,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
             <Stat>
               <Label>Funds Awarded</Label>
               <Data>
-                Ξ {data?.Seasons[0].amountRaised}
+                Ξ {season?.amountRaised}
                 <CashTrend>
                   {/*
                     TODO: convert amountRaised to USD
@@ -64,15 +66,17 @@ const SubHeader = ({ visible }: ISubHeader) => {
             </Stat>
             <Stat>
               <Label>Cycle</Label>
-              <Data>Season {data?.Seasons[0].index}</Data>
+              <Data>Season {season?.index}</Data>
             </Stat>
             <Stat>
               <Label>Ended</Label>
-              <Data>{formatDate(data?.Seasons[0]?.endingDate)}</Data>
+              <Data>{formatDate(season?.endingDate)}</Data>
             </Stat>
             <Stat>
               <Label>Winner</Label>
-              <Data>{leader?.project?.title}</Data>
+              <Data>
+                {arrangedSeasonList && arrangedSeasonList.length > 0 && arrangedSeasonList[0]?.project?.title}
+              </Data>
             </Stat>
           </Stats>
         </Content>

@@ -1,7 +1,16 @@
 import { useContext, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, Icon } from '@components'
-import { rgba, LayoutContext, useDateHelpers, useSeasons } from '@lib'
+import {
+  rgba,
+  LayoutContext,
+  useDateHelpers,
+  useSeasons,
+  useContracts,
+  readContract,
+  sendArtifactToIPFS,
+  sleep,
+} from '@lib'
 
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
@@ -24,13 +33,12 @@ const SubmitProjectModal = () => {
   dayjs.extend(isSameOrAfter)
   dayjs.extend(isSameOrBefore)
   const { getSeasonStatus, formatDate, isOpenForSubmissions } = useDateHelpers()
-  const { publishSubmissions } = useSeasons()
 
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
   const { project } = modalAttrs
 
   const inputRef = useRef<ISeasonFragment[]>([])
-
+  const [ipfs, setIpfs] = useState<string>('')
   const [processing, setProcessing] = useState(false)
   const [processTxt, setProcessTxt] = useState<string>('Submit')
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
@@ -38,6 +46,12 @@ const SubmitProjectModal = () => {
   const [insertSubmissionMutaton] = useMutation(INSERT_SUBMISSION)
   const [updateArtifactMutaton] = useMutation<IUpdate_Artifacts_ManyMutation>(UPDATE_ARTIFACTS)
   const { reload } = useRouter()
+  //createSubmission(season.index, ipfsHash, project.walletAddress)
+  const { execute: publishSubmission } = useContracts({
+    args: [seasonSelected ? seasonSelected.index : 1, ipfs, project.walletAddress],
+    functionName: 'createSubmission',
+    eventName: 'SubmissionCreated',
+  })
 
   const loadActiveSeasons = () => {
     loadSeasons({
@@ -90,12 +104,36 @@ const SubmitProjectModal = () => {
     setProcessTxt('Submitting...')
 
     //publish submissition to blockchain
-    const returnData = await publishSubmissions(seasonSelected, project)
+    // const returnData = await publishSubmissions(seasonSelected, project)
 
-    if (!returnData?.artifactID) {
+    const { data } = await readContract('submissionCount')
+    const submissionCount = data?.toString()
+
+    const newSubmissionCount = parseInt(submissionCount) + 1
+    // //TODO: add ipfs hash to artifact record in Hasura
+    setProcessTxt('Uploading Files to IPFS...')
+    const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, seasonSelected, project)
+
+    console.log('submitProject ipfsHash', ipfsHash)
+
+    ipfsHash && setIpfs(ipfsHash)
+
+    //TODO: This is a hack to wait for the ipfs use state is updated in the usePrepertContract hook
+    // await sleep(3000)
+
+    const { error, outcome } = await publishSubmission?.()
+
+    // const { error, outcome } = await publishSeason?.()
+
+    if (error) {
+      console.log(`Error publishing season to blockchain ${error}`)
       setProcessTxt('Error publishing submission to blockchain, start again')
       return
     }
+
+    const artifactID = outcome?.[0].args.submissionID.toString()
+
+    console.log('publishedSeason', outcome?.[0].args.submissionID.toString())
 
     setProcessTxt(
       `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
@@ -106,7 +144,7 @@ const SubmitProjectModal = () => {
         updates: [
           {
             where: { id: { _eq: project.artifacts[0].id } },
-            _set: { token: returnData.artifactID.toString() },
+            _set: { token: `${newSubmissionCount}` },
           },
         ],
       },
@@ -114,7 +152,7 @@ const SubmitProjectModal = () => {
 
     if (updateArtifactError) {
       setProcessTxt(
-        `Error updateing the Artifact in DB, Note Artifact is minted in blockchain with tokenId: ${returnData.artifactID}, Artifact ID in DB is ${project.artifacts[0].id}, add tokenId manually to DB record`,
+        `Error updateing the Artifact in DB, Note Artifact is minted in blockchain with tokenId: ${newSubmissionCount}, Artifact ID in DB is ${project.artifacts[0].id}, add tokenId manually to DB record`,
       )
       return
     }

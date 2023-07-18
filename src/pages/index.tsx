@@ -1,9 +1,9 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useSubscription } from '@apollo/client'
 import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
+import { ISubscribeSeasonsSubscription, ISubmissionFragment, ISeasonFragment, ISubmissions } from '@types'
 import {
   HomeHeader,
   Layout,
@@ -22,26 +22,58 @@ import {
   ProjectCardPreviousSeason,
   HomeLoadingShimmer,
 } from '@components'
-import { rgba, SeasonContext, useDateHelpers } from '@lib'
+import { rgba, useDateHelpers, SeasonSubcriptionContext } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
   const { asPath } = useRouter()
   const { isSeasonActive } = useDateHelpers()
+  // const [arrangedSeasonList, setArrangedSeasonList] = useState<ISubmissionFragment[] | null>(null)
+  const [totalSales, setTotalSales] = useState<number>(0)
 
-  const { seasonId } = useContext(SeasonContext)
+  const { season, loading, arrangedSeasonList, seasonIsActive } = useContext(SeasonSubcriptionContext)
 
-  const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
-    skip: !seasonId,
-    fetchPolicy: 'no-cache',
-    variables: {
-      where: {
-        id: { _eq: seasonId },
-      },
-      order_by: { submissions_aggregate: { count: 'asc' } },
-    },
-  })
+  console.log('season in homepage  ', season)
+  console.log('loading homepage ::::: ', loading)
+
+  // const arrangeSubmissions = (submissions: ISubmissionFragment[]) =>
+  //   submissions.sort((s1: ISubmissionFragment, s2: ISubmissionFragment) => {
+  //     return (
+  //       s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
+  //       s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!
+  //     )
+  //   })
+
+  // const countTotalSales = (submissions: ISubmissionFragment[]): number => {
+  //   let total = 0
+
+  //   submissions.forEach(submission => {
+  //     total += submission.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!
+  //   })
+
+  //   return total
+  // }
+
+  // const { data, loading } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
+  //   skip: !seasonId,
+  //   fetchPolicy: 'no-cache',
+  //   variables: {
+  //     where: {
+  //       id: { _eq: seasonId },
+  //     },
+  //     order_by: { submissions_aggregate: { count: 'asc' } },
+  //   },
+  //   onData: ({ data: { data, loading, error } }) => {
+  //     if (!loading && !error && data?.Seasons[0]) {
+  //       const arrangedSeasonList = arrangeSubmissions(data?.Seasons[0].submissions)
+  //       const totalSales = countTotalSales(data?.Seasons[0].submissions)
+  //       setArrangedSeasonList(arrangedSeasonList.splice(0, 2))
+  //       setTotalSales(totalSales)
+  //     }
+  //     console.log('Seasons from subscription ', data)
+  //   },
+  // })
 
   useEffect(() => {
     const hash = asPath.split('#')[1]
@@ -51,13 +83,15 @@ const IndexPage = () => {
     }
   }, [])
 
-  const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
+  console.log('season in homepage  ', season)
 
-  console.log('data?.Seasons[0]  ', data?.Seasons[0])
+  // const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
+
+  console.log('totalSales homepage ::::: ', totalSales)
 
   return (
     <Layout>
-      <HomeHeader season={data?.Seasons[0]} {...{ loading }} />
+      <HomeHeader season={season} {...{ loading }} />
       <PartnersRibbon />
       <HomeRibbon />
       {loading && <HomeLoadingShimmer />}
@@ -67,34 +101,34 @@ const IndexPage = () => {
           <SubmissionsMarker id="submissionsMarker" />
           <StyledPagePadding>
             <Grid>
-              {data?.Seasons[0].submissions
-                ?.sort(
-                  (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-                    s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-                    s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-                )
-                .map((submission, index) => (
-                  <ProjectCardPreviousSeason project={submission.project} {...{ index }} key={submission.id} />
-                ))}
+              {arrangedSeasonList?.map((submission, index) => (
+                <ProjectCardPreviousSeason
+                  matchFundPooled={50}
+                  totalSales={totalSales}
+                  project={submission.project}
+                  {...{ index }}
+                  key={submission.id}
+                />
+              ))}
             </Grid>
           </StyledPagePadding>
         </>
       )}
-      {!loading && seasonIsActive && data?.Seasons[0] && (
+      {!loading && seasonIsActive && seasonIsActive && (
         <>
-          <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
+          <LeaderboardHeader index={season?.index} endingDate={season?.endingDate} />
           <StyledPagePadding>
             <SubmissionsMarker id="submissionsMarker" />
             <Grid>
-              {data?.Seasons[0].submissions
-                ?.sort(
-                  (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-                    s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-                    s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-                )
-                .map((submission, index) => (
-                  <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
-                ))}
+              {arrangedSeasonList?.map((submission, index) => (
+                <ProjectCard
+                  matchFundPooled={season?.matchFundPooled}
+                  totalSales={totalSales}
+                  project={submission.project}
+                  {...{ index }}
+                  key={submission.id}
+                />
+              ))}
             </Grid>
           </StyledPagePadding>
         </>

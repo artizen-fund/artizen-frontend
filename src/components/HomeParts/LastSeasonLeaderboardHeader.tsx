@@ -1,50 +1,51 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, assetPath, formatDate, useGnosis, SeasonContext } from '@lib'
+import { rgba, assetPath, formatDate, useGnosis, SeasonSubcriptionContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding, Glyph } from '@components'
-import { useQuery } from '@apollo/client'
-import { GET_SEASON_FOR_TIME } from '@gql'
-import { ISeasonForTimeQuery } from '@types'
 
 interface LeaderboardHeaderProps {
   loading?: boolean
 }
 
 const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => {
-  const { seasonId } = useContext(SeasonContext)
+  const { season, arrangedSeasonList, seasonIsActive } = useContext(SeasonSubcriptionContext)
+
   const { USDtoETH } = useGnosis()
 
-  const { data: latestSeason, error } = useQuery<ISeasonForTimeQuery>(GET_SEASON_FOR_TIME, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      where: {
-        id: { _eq: seasonId },
-      },
-      order_by: { startingDate: 'asc' },
-    },
-  })
-  if (error) {
-    console.warn('error  in here ', error)
-  }
+  // const { data: latestSeason, error } = useQuery<ISeasonForTimeQuery>(GET_SEASON_FOR_TIME, {
+  //   fetchPolicy: 'no-cache',
+  //   variables: {
+  //     where: {
+  //       id: { _eq: seasonId },
+  //     },
+  //   },
+  // })
+  // if (error) {
+  //   console.warn('error  in here ', error)
+  // }
 
-  if (!latestSeason || !!loading) return <></>
+  // if (!latestSeason || !!loading) return <></>
 
-  const season = latestSeason.Seasons[0]
+  // const season = latestSeason.Seasons[0]
+
+  // console.log('season  ', season)
+
+  // if (!season) return <></>
 
   return (
     <StyledPagePadding>
       <Content>
-        <Title>Season {season.index} ended</Title>
+        <Title>Season {season?.index} ended</Title>
 
         <Stats>
           <Stat>
             <Label>Funds Awarded</Label>
             <Data>
-              {season.amountRaised} ETH
+              {season?.amountRaised} ETH
               <CashTrend>
                 {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                  season.amountRaised / USDtoETH!,
+                  season?.amountRaised / USDtoETH!,
                 )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
               </CashTrend>
@@ -52,11 +53,11 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
           </Stat>
           <Stat>
             <Label>Cycle</Label>
-            <Data>Season {season.index}</Data>
+            <Data>Season {season?.index}</Data>
           </Stat>
           <Stat>
             <Label>Ended on</Label>
-            <Data>{formatDate(season.endingDate)}</Data>
+            <Data>{formatDate(season?.endingDate)}</Data>
           </Stat>
         </Stats>
 

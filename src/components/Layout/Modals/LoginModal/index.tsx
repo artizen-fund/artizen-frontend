@@ -3,23 +3,29 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { CheckboxControl, Icon, Button } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
-import { rgba, assetPath, LayoutContext, textCrop, assert } from '@lib'
+import { rgba, assetPath, LayoutContext, textCrop, assert, useWalletAuthFlow } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { connectWallet, signInWalletMessage } from '@copy/common'
-import { useWalletAuthFlow, ConnectingComp } from './lib/'
+import { ConnectingComp } from './lib/'
+import { signIn, useSession } from 'next-auth/react'
 
 const LoginModal = ({ ...props }) => {
+  const { status } = useSession()
   const { toggleModal } = useContext(LayoutContext)
+  // const { connectMetamask, connectOtherWallet, currentFlow, signEnMessage } = modalAttrs as any
   const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
+  // const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
   const [enabled, setEnabled] = useState(true)
+
+  // console.log('currentFlow', currentFlow)
 
   const isMobile = navigator.maxTouchPoints > 1
 
   useEffect(() => {
-    if (isAuthenticated()) {
+    if (status === 'authenticated') {
       toggleModal()
     }
-  }, [isAuthenticated])
+  }, [status])
 
   //TODO: Write a wrapper component with tiles
   //and abstract the connect to wallet and the sign message components
@@ -37,6 +43,7 @@ const LoginModal = ({ ...props }) => {
                 id="btMetamask"
                 onClick={() => {
                   connectMetamask()
+                  toggleModal()
                 }}
                 {...{ enabled }}
               >
@@ -45,7 +52,13 @@ const LoginModal = ({ ...props }) => {
               </Tile>
             )}
 
-            <Tile onClick={() => connectOtherWallet()} {...{ enabled }}>
+            <Tile
+              onClick={() => {
+                connectOtherWallet()
+                toggleModal()
+              }}
+              {...{ enabled }}
+            >
               <img src={assetPath('/assets/walletConnect.svg')} alt="WalletConnect" />
               WalletConnect
             </Tile>

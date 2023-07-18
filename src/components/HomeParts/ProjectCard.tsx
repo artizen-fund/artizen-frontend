@@ -9,9 +9,11 @@ import Link from 'next/link'
 interface IProjectCard {
   project?: IProjectFragment
   index: number
+  totalSales: number
+  matchFundPooled: number
 }
 
-const ProjectCard = ({ project, index }: IProjectCard) => {
+const ProjectCard = ({ project, index, totalSales, matchFundPooled }: IProjectCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
@@ -22,9 +24,13 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
         <Header>
           <RankAndArtifactCount
             rank={index}
+            totalSales={totalSales}
+            matchFundPooled={matchFundPooled}
             count={latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0}
           />
-          <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
+          <ArtifactNumber>
+            {latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0} Minted
+          </ArtifactNumber>
         </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>

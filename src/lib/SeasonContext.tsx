@@ -74,6 +74,9 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     },
   })
 
+  console.log('SeasonContext loading season', loading)
+  console.log('SeasonContext data season', data)
+
   if (error) {
     console.error('error retrieving season', error)
   }
@@ -116,7 +119,10 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
         seasonId,
         seasonIndex,
         loadingSeasonId: loading,
-        isSeasonActive: isSeasonActive(data?.Seasons[0].startingDate, data?.Seasons[0].endingDate),
+        isSeasonActive:
+          data?.Seasons &&
+          data?.Seasons.length > 0 &&
+          isSeasonActive(data?.Seasons[0].startingDate, data?.Seasons[0].endingDate),
       }}
     >
       {children}
