@@ -22,6 +22,8 @@ const ArtifactCount = ({
   )
   //TODO: move this to a env variable
 
+  console.log('count:::', count > 0)
+
   const spli80 = (80 * matchFundPooled) / 100
   //only winners get 20% of the match fund on top of their sales
   const split20 = (20 * matchFundPooled) / 100
@@ -42,12 +44,24 @@ const ArtifactCount = ({
   console.log('the project matchFundMoney  ', matchFundMoney)
   console.log('the project salesArtifacts  ', salesArtifacts)
 
+  const showRaisedMoney: boolean = count > 0
+
   return (
     <Wrapper>
-      <span>
-        <AmountText>{(salesArtifacts + matchFundMoney + split20).toFixed(2)}</AmountText> raised
-      </span>
-      <Glyph glyph="trend" level={2} color="barracuda" darkColor="barracuda" />
+      {showRaisedMoney ? (
+        <>
+          <span>
+            <AmountText>Ξ {(salesArtifacts + matchFundMoney + (isWinner ? split20 : 0)).toFixed(2)}</AmountText> raised
+          </span>
+          <Glyph glyph="trend" level={2} color="barracuda" darkColor="barracuda" />
+        </>
+      ) : (
+        <>
+          <span>
+            <AmountText>Ξ 0</AmountText> raised
+          </span>
+        </>
+      )}
     </Wrapper>
   )
 }
