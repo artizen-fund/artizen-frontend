@@ -11,14 +11,16 @@ import { signIn, useSession } from 'next-auth/react'
 //NOTES: Using const { status } = useSession() create many wallet connect sessions and html widget
 // <wcm-modal></wcm-modal>
 export const useWalletAuthFlow = () => {
+  const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
   const { toggleModal } = useContext(LayoutContext)
   const [messageToSign, setMessageToSign] = useState<string | null>(null)
   const [connecting, setConnecting] = useState(false)
   const { connectAsync, error, connect, connectors } = useConnect()
-  const { connector, isConnected } = useAccount()
+  const { connector, address, isConnected } = useAccount()
+  console.log('useWalletAuthFlow  isConnected  ', isConnected)
   const [currentFlow, setCurrentFlow] = useState(isConnected ? 'toSignMessage' : 'toConnect')
 
-  console.log('currentFlow in useWalletAuth ', currentFlow)
+  console.log('get here currentFlow in useWalletAuth ', currentFlow)
   const { requestChallengeAsync } = useAuthRequestChallengeEvm()
 
   const router = useRouter()
@@ -49,17 +51,36 @@ export const useWalletAuthFlow = () => {
     },
   })
 
-  const signEnMessage = () => {
+  const signEnMessage = async () => {
     console.log('signEnMessage  ', messageToSign)
-    if (!messageToSign) {
-      throw new Error('no message to sign')
+
+    let message = messageToSign
+    console.log('signEnMessage  no messageToSign address  ', address)
+    if (!messageToSign && address) {
+      console.log('signEnMessage  no messageToSign  ', messageToSign)
+
+      message = await createChallenge(address)
     }
-    signMessage({ message: messageToSign })
+    message && signMessage({ message })
+  }
+
+  const createChallenge = async (address: `0x${string}`) => {
+    const challenge = await requestChallengeAsync({ address, chainId })
+
+    if (!challenge) {
+      throw new Error('failed walletconnect challenge')
+    }
+    const { message } = challenge
+
+    setMessageToSign(message)
+
+    console.log('message here ends:: ', message)
+
+    return message
   }
 
   const connectWallet = async (connector: Connector) => {
     // setConnecting(true)
-    const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
     try {
       const { account: publicAddress, chain } = await connectAsync({
@@ -69,43 +90,14 @@ export const useWalletAuthFlow = () => {
 
       setConnecting(true)
 
-      const challenge = await requestChallengeAsync({ address: publicAddress, chainId: chain.id })
-
-      if (!challenge) {
-        throw new Error('failed walletconnect challenge')
-      }
-      const { message } = challenge
-
-      console.log('message here ', message)
-
-      setMessageToSign(message)
+      await createChallenge(publicAddress)
 
       setConnecting(false)
 
       console.log('after the call, connecting     ', connecting)
 
-      // const connectWalletFlow = status !== 'authenticated' && !message
-
-      // const connectWalletFlowHappening = connectWalletFlow && connecting
-
-      // const signMessageFlow = !connectWalletFlow && messageToSign
-
-      // const currentFlowLocal = connectWalletFlowHappening
-      //   ? 'connecting'
-      //   : signMessageFlow
-      //   ? 'toSignMessage'
-      //   : 'toConnect'
-
       setCurrentFlow('toSignMessage')
-
-      // console.log('from connectWallet, currentFlowLocal  ', currentFlowLocal)
-
-      // return message
-
-      // Force reload due to JWT is not available or is still linked to old session when first created. Wagmi renders an error when the smart contracts are called.
-      // router.reload()
     } catch (e) {
-      // setConnecting(false)
       console.error('error connecting user', e)
     }
   }
