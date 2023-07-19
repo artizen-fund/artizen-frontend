@@ -9,7 +9,7 @@ interface LeaderboardHeaderProps {
 }
 
 const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => {
-  const { season } = useContext(SeasonSubcriptionContext)
+  const { season, totalPrizePooled } = useContext(SeasonSubcriptionContext)
 
   // const { USDtoETH } = useGnosis()
 
@@ -42,7 +42,7 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
           <Stat>
             <Label>Funds Awarded</Label>
             <Data>
-              {season?.amountRaised} ETH
+              {totalPrizePooled} ETH
               {/* <CashTrend>
                 {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
                   season?.amountRaised / USDtoETH!,

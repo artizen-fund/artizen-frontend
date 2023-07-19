@@ -32,9 +32,6 @@ const IndexPage = () => {
   const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
     useContext(SeasonSubcriptionContext)
 
-  console.log('season in homepage  ', season)
-  console.log('loading homepage ::::: ', loading)
-
   useEffect(() => {
     const hash = asPath.split('#')[1]
     if (!!hash && hash === 'submissions') {
