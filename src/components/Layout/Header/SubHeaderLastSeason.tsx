@@ -3,18 +3,16 @@ import styled from 'styled-components'
 import { rgba, SeasonSubcriptionContext, formatDate } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Glyph, Icon } from '@components'
-import { capitalCase } from 'capital-case'
 import { capitalize } from 'lodash'
-import { useSubscription } from '@apollo/client'
-import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 
 interface ISubHeader {
   visible: boolean
 }
 
 const SubHeader = ({ visible }: ISubHeader) => {
-  const { season, arrangedSeasonList } = useContext(SeasonSubcriptionContext)
+  const { season, arrangedSeasonList, totalPrizePooled } = useContext(SeasonSubcriptionContext)
+
+  console.log('season  ', season)
 
   return (
     <>
@@ -29,7 +27,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
             <Stat>
               <Label>Funds Awarded</Label>
               <Data>
-                Ξ {season?.amountRaised}
+                Ξ {totalPrizePooled}
                 <CashTrend>
                   {/*
                     TODO: convert amountRaised to USD

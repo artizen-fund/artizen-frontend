@@ -33,6 +33,7 @@ const ProjectPage = ({ project }: any) => {
     season: seasonData,
     arrangedSeasonList,
     seasonIsActive,
+    totalSales,
     loading: loadingSeason,
   } = useContext(SeasonSubcriptionContext)
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
@@ -98,11 +99,11 @@ const ProjectPage = ({ project }: any) => {
                     {!loadingSeason && (
                       //TODO: Update the total sales and match fund pooled vars
                       <RankAndArtifactCount
-                        totalSales={0}
-                        matchFundPooled={0}
                         rank={rank}
                         count={count}
                         seasonIsActive={seasonIsActive}
+                        totalSales={totalSales ? totalSales : 0}
+                        matchFundPooled={seasonData?.matchFundPooled}
                       />
                     )}
                   </div>
@@ -132,7 +133,15 @@ const ProjectPage = ({ project }: any) => {
             </Header>
 
             {/* {loading && <ProjectLeaderboardShimmer />} */}
-            {openEditions && <Leaderboard openEditions={openEditions} />}
+            {openEditions && seasonData && (
+              <Leaderboard
+                openEditions={openEditions}
+                isWinner={rank === 0}
+                count={count}
+                totalSales={totalSales ? totalSales : 0}
+                matchFundPooled={seasonData?.matchFundPooled}
+              />
+            )}
 
             <LongDescription>
               {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (

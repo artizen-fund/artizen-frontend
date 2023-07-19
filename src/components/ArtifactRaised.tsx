@@ -32,16 +32,6 @@ const ArtifactCount = ({
 
   const salesArtifacts = BASE_ARTIFACT_PRICE * count
 
-  console.log('totalSales  ', totalSales)
-  console.log('matchFundPooled  ', matchFundPooled)
-
-  console.log('isWinner  ', isWinner)
-  console.log('split20  ', split20)
-  console.log('spli80  ', spli80)
-  console.log('the project split  ', split)
-  console.log('the project matchFundMoney  ', matchFundMoney)
-  console.log('the project salesArtifacts  ', salesArtifacts)
-
   const showRaisedMoney: boolean = count > 0
 
   return (
