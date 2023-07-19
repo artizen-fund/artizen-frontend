@@ -30,8 +30,6 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
     chainId,
     value: BigInt(BASE_ARTIFACT_PRICE * artifactQuantity * 1e18),
     onError: e => {
-      console.log('error usePrepareContractWrite here', e.message)
-
       let error = e.message
 
       if (error.includes(WALLET_CHAIN_MISMATCH)) {

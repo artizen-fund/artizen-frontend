@@ -25,8 +25,6 @@ const AddSponsorToMatchFund = () => {
     fetchPolicy: 'no-cache',
   })
 
-  console.log('error  ', error)
-
   const [searchData, setSearchDataData] = useState<string>('')
 
   const { matchFund } = modalAttrs
@@ -46,8 +44,6 @@ const AddSponsorToMatchFund = () => {
   }
 
   const addSponsorToMatchFund = async (sponsorSelected: ISponsorFragment) => {
-    console.log('sponsorSelected  ', sponsorSelected)
-    console.log('matchFund  ', matchFund)
     const data = await insertSponsorToMatch({
       onError: error => console.error('INSERT_SPONSOR_IN_MATCH error ', error),
       variables: {
@@ -61,14 +57,11 @@ const AddSponsorToMatchFund = () => {
       },
     })
 
-    console.log('data   ', data)
     if (data) {
       toggleModal()
       reload()
     }
   }
-
-  console.log('sponsors  ', sponsors)
 
   return (
     <Wrapper>

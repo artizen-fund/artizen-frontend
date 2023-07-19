@@ -1,26 +1,35 @@
 import styled from 'styled-components'
+import { useContext } from 'react'
 import { Shimmer, LeaderboardHeader, PagePadding } from '@components'
 import { range } from 'lodash'
 import { breakpoint, palette } from '@theme'
-import { rgba } from '@lib'
+import { rgba, SeasonSubcriptionContext } from '@lib'
 
-const HomeLoadingShimmer = () => (
-  <>
-    <LeaderboardHeader loading={true} />
-    <StyledPagePadding>
-      <FauxGrid>
-        {range(0, 6).map((_, i) => (
-          <FauxProjectCard key={`faux-cell-${i}`}>
-            <Shimmer height="30px" />
-            <Shimmer height="70px" />
-            <Image />
-            <Shimmer height="70px" />
-          </FauxProjectCard>
-        ))}
-      </FauxGrid>
-    </StyledPagePadding>
-  </>
-)
+const HomeLoadingShimmer = () => {
+  const { loading, season, totalPrizePooled } = useContext(SeasonSubcriptionContext)
+  return (
+    <>
+      <LeaderboardHeader
+        loading={loading}
+        index={season?.index}
+        endingDate={season?.endingDate}
+        totalPrizePooled={totalPrizePooled}
+      />
+      <StyledPagePadding>
+        <FauxGrid>
+          {range(0, 6).map((_, i) => (
+            <FauxProjectCard key={`faux-cell-${i}`}>
+              <Shimmer height="30px" />
+              <Shimmer height="70px" />
+              <Image />
+              <Shimmer height="70px" />
+            </FauxProjectCard>
+          ))}
+        </FauxGrid>
+      </StyledPagePadding>
+    </>
+  )
+}
 
 const StyledPagePadding = styled(props => <PagePadding {...props} />)`
   position: relative;

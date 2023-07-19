@@ -20,7 +20,7 @@ interface ISubHeader {
 
 const SubHeader = ({ visible }: ISubHeader) => {
   const { loading, season, arrangedSeasonList, seasonIsActive, totalPrizePooled } = useContext(SeasonSubcriptionContext)
-  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
+  // const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
   if (!seasonIsActive) {
     return <SubHeaderLastSeason visible={visible} />
@@ -56,7 +56,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
               <Stat>
                 <Label>Ends in</Label>
                 {/* TODO: Count down does not work */}
-                {!loading && (
+                {!loading && season?.endingDate && (
                   <Data>
                     <Countdown date={season?.endingDate} />
                   </Data>

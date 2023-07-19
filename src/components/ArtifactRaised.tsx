@@ -26,9 +26,6 @@ const ArtifactCount = ({
   //only winners get 20% of the match fund on top of their sales
   const split20 = (20 * matchFundPooled) / 100
 
-  console.log('count', count)
-  console.log('totalSales:::', totalSales)
-
   const split = totalSales > 0 ? (count * 100) / totalSales : 0
 
   const matchFundMoney = (spli80 * split) / 100

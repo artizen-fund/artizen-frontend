@@ -64,8 +64,6 @@ const SubmitProjectModal = () => {
     const Seasons =
       loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0 ? loadedSeasonsData?.Seasons : []
 
-    console.log('loadedSeasonsData  ', loadedSeasonsData)
-
     return Seasons.filter(
       ({ startingDate, endingDate, submissions }: ISeasonFragment): boolean =>
         isOpenForSubmissions(startingDate, endingDate) &&
@@ -77,8 +75,6 @@ const SubmitProjectModal = () => {
     if (inputRef.current.length > 0) return
 
     const Seasons = loadActiveSeasons()
-
-    console.log('Seasons  ', Seasons)
 
     const arrayWithoutSubmitedProjects = Seasons.filter(({ submissions }: ISeasonFragment) => {
       const projectSubmited = submissions.find(
@@ -114,8 +110,6 @@ const SubmitProjectModal = () => {
     setProcessTxt('Uploading Files to IPFS...')
     const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, seasonSelected, project)
 
-    console.log('submitProject ipfsHash', ipfsHash)
-
     ipfsHash && setIpfs(ipfsHash)
 
     const { error, outcome } = await publishSubmission?.([seasonSelected.index, ipfsHash, project.walletAddress])
@@ -127,8 +121,6 @@ const SubmitProjectModal = () => {
     }
 
     const artifactID = outcome?.[0].args.submissionID.toString()
-
-    console.log('publishedSeason', outcome?.[0].args.submissionID.toString())
 
     setProcessTxt(
       `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
@@ -170,7 +162,6 @@ const SubmitProjectModal = () => {
     })
 
     if (insertSubmissionError) {
-      console.log('insertSubmissionError  ', insertSubmissionError)
       setProcessTxt(`Error adding the submission to DB with this error: ${insertSubmissionError[0].message}`)
       return
     }

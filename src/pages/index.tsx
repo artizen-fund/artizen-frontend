@@ -71,6 +71,7 @@ const IndexPage = () => {
       {!loading && seasonIsActive && seasonIsActive && (
         <>
           <LeaderboardHeader
+            loading={loading}
             index={season?.index}
             endingDate={season?.endingDate}
             totalPrizePooled={totalPrizePooled}

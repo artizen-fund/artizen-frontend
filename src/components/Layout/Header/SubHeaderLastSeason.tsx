@@ -13,33 +13,8 @@ interface ISubHeader {
   visible: boolean
 }
 
-/* NOTE: 
-    This lists the top donator to _all_ projects.
-    ex. if @andy buys five artifacts each in five submission, they're marked as buying 25.
-    If we want to change that to "largest contributor to any single submission," change the map/reducer below.
-*/
-
 const SubHeader = ({ visible }: ISubHeader) => {
   const { season, arrangedSeasonList } = useContext(SeasonSubcriptionContext)
-
-  // const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
-  //   fetchPolicy: 'no-cache',
-  //   variables: {
-  //     where: {
-  //       id: { _eq: seasonId },
-  //       // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
-  //       // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
-  //     },
-  //   },
-  // })
-
-  // const leader = data?.Seasons[0].submissions?.sort(
-  //   (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-  //     s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-  //     s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-  // )[0]
-
-  console.log('arrangedSeasonList', arrangedSeasonList)
 
   return (
     <>

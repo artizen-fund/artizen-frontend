@@ -34,7 +34,6 @@ const Share = () => {
     parsedShareCopy,
   )}`
 
-  console.log('facebookLink  ', facebookLink)
   const redditLink = `http://www.reddit.com/submit?url=${encodeURIComponent(
     parsedShareCopy,
   )}&title=${encodeURIComponent('Artizen Fund')}`

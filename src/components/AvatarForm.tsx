@@ -9,7 +9,6 @@ interface IAvatarForm {
 }
 
 const AvatarForm = ({ setFile, initialState }: IAvatarForm) => {
-  console.log('AvatarForm initialState  ', initialState)
   const IMAGE_UPLOAD_BUTTON_ID = 'avatarUploadImage'
   return (
     <Wrapper>

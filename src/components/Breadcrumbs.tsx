@@ -25,8 +25,6 @@ const Breadcrumbs = ({ schema }: IBreadcrumbArray) => {
   return (
     <Wrapper>
       {schema.map((item: IBreadcrumb, index) => {
-        console.log('item  ', item.name)
-
         return (
           <BreamCrumb key={item.name} className={item.isActive ? 'active' : ''} onClick={() => push(item.path)}>
             {`${index > 0 ? ' / ' : ''}${item.name}`}

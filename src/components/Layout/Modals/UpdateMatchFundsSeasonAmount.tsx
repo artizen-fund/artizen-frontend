@@ -20,10 +20,6 @@ const UpdateMatchFundsSeasonAmount = () => {
   })
 
   const saveNewMatchFund = async (newMatchFund: number) => {
-    console.log('saveNewSponsor', tempValue)
-
-    console.log('season', season)
-
     const { data } = await updateSeasons({
       variables: {
         // objects: [

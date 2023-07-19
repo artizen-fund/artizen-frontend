@@ -17,8 +17,6 @@ export const SeasonSubcriptionProvider = ({ children }: SimpleComponentProps) =>
   const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
     useSeasonSubscriptionData()
 
-  console.log('totalPrizePooled  ', totalPrizePooled)
-
   return (
     <SeasonSubcriptionContext.Provider
       value={{

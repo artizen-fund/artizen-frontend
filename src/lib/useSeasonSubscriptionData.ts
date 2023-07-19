@@ -41,7 +41,6 @@ export function useSeasonSubscriptionData() {
       order_by: { submissions_aggregate: { count: 'asc' } },
     },
     onData: ({ data: { data, loading, error } }) => {
-      console.log('Seasons from subscription onData::::: ', data)
       if (!loading && !error && data?.Seasons[0]) {
         const arrangedSeasonList = arrangeSubmissions(data?.Seasons[0].submissions)
         const totalSales = countTotalSales(data?.Seasons[0].submissions)
@@ -49,11 +48,8 @@ export function useSeasonSubscriptionData() {
         setTotalSales(totalSales)
         setTotalPrizePooled(data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE)
       }
-      console.log('Seasons from subscription ', data)
     },
   })
-
-  console.log('data from subscription::::: ', data)
 
   // const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
 

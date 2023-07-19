@@ -74,19 +74,14 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     },
   })
 
-  console.log('SeasonContext loading season', loading)
-  console.log('SeasonContext data season', data)
-
   if (error) {
     console.error('error retrieving season', error)
   }
 
-  console.log('data  ISeasonForTimeQuery ', data)
-
   // 3. use the season ID for the subscription
   useEffect(() => {
     let checkAgainIfNotFound: NodeJS.Timeout
-    console.log('data', data)
+
     if (!data || !data.Seasons[0] || loading) {
       checkAgainIfNotFound = setTimeout(() => {
         refreshTimestamp()

@@ -18,6 +18,7 @@ const ProjectCard = ({ project, index, totalSales, matchFundPooled }: IProjectCa
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
   const artist = project.members.find(m => m.type === 'lead')?.user
+
   return (
     <Wrapper>
       <AllCopy>

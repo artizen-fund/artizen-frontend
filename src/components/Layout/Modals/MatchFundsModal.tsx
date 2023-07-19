@@ -24,8 +24,6 @@ const MatchFundsModal = () => {
   }
 
   const saveNewMatchFund = async () => {
-    console.log('saveNewSponsor', tempValue)
-
     const { data } = await createMatchFund({
       variables: {
         objects: [tempValue],

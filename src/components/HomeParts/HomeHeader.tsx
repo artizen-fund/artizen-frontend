@@ -19,12 +19,12 @@ const HomeHeader = ({ season, loading }: IHomeHeader) => {
     submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const { safeBalanceUSD } = useGnosis()
+  // const { safeBalanceUSD } = useGnosis()
 
-  const title = header.title.replace(
-    /SAFE_BALANCE_USD/,
-    Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(parseFloat(safeBalanceUSD || '0')),
-  )
+  // const title = header.title.replace(
+  //   /SAFE_BALANCE_USD/,
+  //   Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(parseFloat(safeBalanceUSD || '0')),
+  // )
 
   return (
     <StyledPagePadding>
@@ -32,7 +32,7 @@ const HomeHeader = ({ season, loading }: IHomeHeader) => {
         <HomeAnimation />
         <Copy>
           <div>
-            <h1>{title}</h1>
+            <h1>{header.title}</h1>
             <h2>{header.subtitle}</h2>
           </div>
           {!loading && !!isSeasonActive && (
