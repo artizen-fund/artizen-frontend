@@ -10,7 +10,6 @@ import { typography } from '@theme'
 import { useDateHelpers, LayoutContext } from '@lib'
 import { startCase } from 'lodash'
 import { useSeasons } from 'src/lib/useSeasons'
-import { size } from 'lodash'
 
 export default function SeasonPage(): JSX.Element {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
