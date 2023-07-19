@@ -7,14 +7,17 @@ interface ISeasonSubcriptionContext {
   loading?: boolean
   arrangedSeasonList?: ISubmissionFragment[] | null
   seasonIsActive?: boolean
+  totalSales?: number
+  totalPrizePooled?: number
 }
 
 export const SeasonSubcriptionContext = createContext<ISeasonSubcriptionContext>({})
 
 export const SeasonSubcriptionProvider = ({ children }: SimpleComponentProps) => {
-  const { season, loading, arrangedSeasonList, seasonIsActive } = useSeasonSubscriptionData()
+  const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
+    useSeasonSubscriptionData()
 
-  console.log('SeasonSubcriptionProvider season', season)
+  console.log('totalPrizePooled  ', totalPrizePooled)
 
   return (
     <SeasonSubcriptionContext.Provider
@@ -23,6 +26,8 @@ export const SeasonSubcriptionProvider = ({ children }: SimpleComponentProps) =>
         loading,
         arrangedSeasonList,
         seasonIsActive,
+        totalSales,
+        totalPrizePooled,
       }}
     >
       {children}

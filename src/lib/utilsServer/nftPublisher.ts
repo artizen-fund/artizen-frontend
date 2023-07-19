@@ -18,44 +18,19 @@ export async function storeNFTFromUrl(imageUrl: string, name: string) {
 
   const pinataJWTKey = assert(assert(process.env.PINATA_JWT_KEY, 'PINATA_JWT_KEY'))
 
-  // const options = {
-  //   pinataMetadata: {
-  //     name,
-  //   },
-  // }
-
   const response = await axiosInstance(imageUrl, {
     method: 'GET',
     responseType: 'stream',
   })
   formData.append(`file`, response.data)
 
-  formData.append('pinataMetadata', JSON.stringify({ name: 'test' }))
+  formData.append('pinataMetadata', JSON.stringify({ name }))
 
-  // const response = await fetch(imageUrl)
-
-  // console.log('response', response)
-
-  // const data = await response.json()
-
-  // console.log('data:::', data)
-
-  // const response = await axios.get<Readable>(imageUrl, {
-  //   responseType: 'stream',
-  // })
-
-  // // console.log('data in here ', data)
-
-  // const result = await pinata.pinFileToIPFS(response, options)
-
-  // console.log('storeNFTFromUrl result', result)
   console.log('new:::::::::')
   const res = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS ', formData, {
-    // maxBodyLength: 'Infinity',
     maxContentLength: 100000000,
     maxBodyLength: 1000000000,
     headers: {
-      // 'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
       Authorization: `Bearer ${pinataJWTKey}`,
     },
   })

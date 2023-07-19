@@ -118,12 +118,7 @@ const SubmitProjectModal = () => {
 
     ipfsHash && setIpfs(ipfsHash)
 
-    //TODO: This is a hack to wait for the ipfs use state is updated in the usePrepertContract hook
-    // await sleep(3000)
-
     const { error, outcome } = await publishSubmission?.([seasonSelected.index, ipfsHash, project.walletAddress])
-
-    // const { error, outcome } = await publishSeason?.()
 
     if (error) {
       console.log(`Error publishing season to blockchain ${error}`)

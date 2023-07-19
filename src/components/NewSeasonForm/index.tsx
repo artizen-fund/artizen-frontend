@@ -103,7 +103,6 @@ export default function NewSeasonForm(): JSX.Element {
 
     setProcessing(true)
 
-    // // //publish season to blockchain
     const { error, outcome } = await publishSeason?.()
 
     if (error) {

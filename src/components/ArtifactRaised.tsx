@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Glyph } from '@components'
+import { Glyph, Button } from '@components'
 import { rgba, assertFloat } from '@lib'
 import { palette, typography } from '@theme'
 
@@ -54,7 +54,9 @@ const ArtifactCount = ({
           <span>
             <AmountText>Ξ {(salesArtifacts + matchFundMoney + (isWinner ? split20 : 0)).toFixed(2)}</AmountText> raised
           </span>
-          <Glyph glyph="trend" level={2} color="barracuda" darkColor="barracuda" />
+          {/* <StyledButton glyph="info" glyphOnly onClick={() => {}} href={`https://twitter.com`} level={3} outline>
+            info
+          </StyledButton> */}
         </>
       ) : (
         <>
@@ -66,6 +68,10 @@ const ArtifactCount = ({
     </Wrapper>
   )
 }
+
+const StyledButton = styled(props => <Button {...props} />)`
+  color: ${rgba(palette.algae)};
+`
 
 const Wrapper = styled.div`
   position: relative;
@@ -88,7 +94,8 @@ const Wrapper = styled.div`
 `
 
 const AmountText = styled.span`
-  color: ${rgba(palette.algae)};
+  bordercolor: ${rgba(palette.barracuda)};
+  //color="barracuda" darkColor="barracuda"
 `
 
 export default ArtifactCount

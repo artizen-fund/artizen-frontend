@@ -1,8 +1,10 @@
 import { useContext, useState } from 'react'
 import { ISubscribeSeasonsSubscription, ISubmissionFragment, ISeasonFragment, ISubmissions } from '@types'
 import { useSubscription } from '@apollo/client'
-import { SeasonContext, useDateHelpers } from '@lib'
+import { SeasonContext, assertFloat } from '@lib'
 import { SUBSCRIBE_SEASONS } from '@gql'
+
+const BASE_ARTIFACT_PRICE = assertFloat(process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE, 'NEXT_PUBLIC_BASE_ARTIFACT_PRICE')
 
 const arrangeSubmissions = (submissions: ISubmissionFragment[]) =>
   submissions.sort((s1: ISubmissionFragment, s2: ISubmissionFragment) => {
@@ -26,6 +28,7 @@ export function useSeasonSubscriptionData() {
   const { seasonId, isSeasonActive: seasonIsActive } = useContext(SeasonContext)
   const [arrangedSeasonList, setArrangedSeasonList] = useState<ISubmissionFragment[] | null>(null)
   const [totalSales, setTotalSales] = useState<number>(0)
+  const [totalPrizePooled, setTotalPrizePooled] = useState<number>(0)
   // const { isSeasonActive } = useDateHelpers()
 
   const { data, loading } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
@@ -42,8 +45,9 @@ export function useSeasonSubscriptionData() {
       if (!loading && !error && data?.Seasons[0]) {
         const arrangedSeasonList = arrangeSubmissions(data?.Seasons[0].submissions)
         const totalSales = countTotalSales(data?.Seasons[0].submissions)
-        setArrangedSeasonList(arrangedSeasonList.splice(0, 2))
+        setArrangedSeasonList(arrangedSeasonList)
         setTotalSales(totalSales)
+        setTotalPrizePooled(data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE)
       }
       console.log('Seasons from subscription ', data)
     },
@@ -53,5 +57,5 @@ export function useSeasonSubscriptionData() {
 
   // const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
 
-  return { arrangedSeasonList, totalSales, season: data?.Seasons[0], loading, seasonIsActive }
+  return { arrangedSeasonList, totalSales, season: data?.Seasons[0], loading, seasonIsActive, totalPrizePooled }
 }
