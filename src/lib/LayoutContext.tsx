@@ -34,7 +34,6 @@ export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const [modalAttrs, setModalAttrs] = useState<any>()
   const toggleModal = (modal?: ModalType) => setVisibleModal(modal === visibleModal ? undefined : modal)
   const setVisibleModalWithAttrs = (modalType: ModalType, options: any) => {
-    console.log('setVisibleModalWithAttrs  ', modalType, '  ', options)
     setVisibleModal(modalType)
     setModalAttrs(options)
   }

@@ -15,7 +15,7 @@ const FIXED_PRECISION = 2
 const Leaderboard = ({ openEditions }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
-  const { USDtoETH } = useGnosis()
+  // const { USDtoETH } = useGnosis()
 
   if (!openEditions) return <Spinner minHeight="65px" />
 
@@ -38,13 +38,13 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
   const title = (
     <div>
       Ξ{(count * BASE_ARTIFACT_PRICE).toFixed(FIXED_PRECISION)}
-      <Grey>
+      {/* <Grey>
         {' '}
         {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
           (count * BASE_ARTIFACT_PRICE) / USDtoETH!,
         )}{' '}
         in Artifact sales
-      </Grey>
+      </Grey> */}
     </div>
   )
 

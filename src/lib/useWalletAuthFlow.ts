@@ -17,27 +17,16 @@ export const useWalletAuthFlow = () => {
   const [connecting, setConnecting] = useState(false)
   const { connectAsync, error, connect, connectors } = useConnect()
   const { connector, address, isConnected } = useAccount()
-  console.log('useWalletAuthFlow  isConnected  ', isConnected)
+
   const [currentFlow, setCurrentFlow] = useState(isConnected ? 'toSignMessage' : 'toConnect')
 
-  console.log('get here currentFlow in useWalletAuth ', currentFlow)
   const { requestChallengeAsync } = useAuthRequestChallengeEvm()
 
   const router = useRouter()
   const { status } = useSession()
 
-  // console.log('connectors     ', connectors)
-
-  // console.log('useConnect  error  ', error)
-
-  // console.log('connector here ', connector)
-
-  // console.log('isConnected here ', isConnected)
-
   const { signMessage } = useSignMessage({
     onSuccess(data, variables) {
-      console.log('signMessage  onSuccess  data  ', data)
-
       signIn('moralis-auth', {
         message: variables.message,
         signature: data,
@@ -52,13 +41,9 @@ export const useWalletAuthFlow = () => {
   })
 
   const signEnMessage = async () => {
-    console.log('signEnMessage  ', messageToSign)
-
     let message = messageToSign
-    console.log('signEnMessage  no messageToSign address  ', address)
-    if (!messageToSign && address) {
-      console.log('signEnMessage  no messageToSign  ', messageToSign)
 
+    if (!messageToSign && address) {
       message = await createChallenge(address)
     }
     message && signMessage({ message })
@@ -73,8 +58,6 @@ export const useWalletAuthFlow = () => {
     const { message } = challenge
 
     setMessageToSign(message)
-
-    console.log('message here ends:: ', message)
 
     return message
   }
@@ -94,8 +77,6 @@ export const useWalletAuthFlow = () => {
 
       setConnecting(false)
 
-      console.log('after the call, connecting     ', connecting)
-
       setCurrentFlow('toSignMessage')
     } catch (e) {
       console.error('error connecting user', e)
@@ -103,28 +84,15 @@ export const useWalletAuthFlow = () => {
   }
 
   const connectMetamask = () => {
-    // toggleModal('connecting')
     const Metamaks = connectors.filter(connector => connector.name === 'MetaMask')[0]
-    console.log('Metamaks connector  ', Metamaks)
+
     connectWallet(Metamaks)
-    // connect({ connector: Metamaks })
-    // connect()
   }
 
   const connectOtherWallet = () => {
     const WalletConnect = connectors.filter(connector => connector.name === 'WalletConnect')[0]
-    console.log('Metamaks connector  ', WalletConnect)
+
     connectWallet(WalletConnect)
-    // toggleModal('connecting')
-    // connectWallet(
-    //   new WalletConnectConnector({
-    //     chains,
-    //     options: {
-    //       showQrModal: true,
-    //       projectId: assert(process.env.NEXT_PUBLIC_WALLET_CONNECTOR_ID, 'NEXT_PUBLIC_WALLET_CONNECTOR_ID'),
-    //     },
-    //   }),
-    // )
   }
 
   const isAuthenticated = (): boolean => status === 'authenticated'

@@ -13,8 +13,6 @@ interface useMintArtifactsProps {
 }
 
 export const useContracts = ({ args, value, functionName, eventName }: useMintArtifactsProps) => {
-  console.log('useContracts initial args', args)
-
   const [writeNow, setWriteNow] = useState(false)
   const [argsState, setArgsState] = useState<any[]>([])
   const [errorState, setErrorState] = useState<string | null>(null)
@@ -48,7 +46,7 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     },
   })
 
-  const { isLoading, isSuccess, isError, write } = useContractWrite({
+  const { isLoading, writeAsync } = useContractWrite({
     ...config,
     onSettled(data, error) {
       console.log('Settled', { data, error })
@@ -61,8 +59,8 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
 
       setErrorState(null)
     },
+
     onError(error) {
-      console.log('error useContractWrite', error)
       setErrorState(error.message as string)
     },
   })
@@ -76,7 +74,6 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
           eventName,
         },
         (log: any) => {
-          console.log('log from watchContractEvent   ', log)
           unwatch?.()
           resolve(log)
         },
@@ -85,16 +82,12 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
   }
 
   useEffect(() => {
-    console.log('useEffect status', status)
-
     if (status === 'success' && errorState !== null) {
       setErrorState(null)
     }
   }, [status])
 
   useEffect(() => {
-    console.log('useEffect args', args)
-
     !isEqual(args, argsState) && setArgsState(args)
   }, [args])
 
@@ -102,31 +95,20 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     args: any
   }
 
-  useEffect(() => {
-    console.log('useEffect write', args)
-    console.log('isLoading', isLoading)
-    if (writeNow) {
-      setWriteNow(false)
-      write?.()
-    }
-  }, [isLoading, write, writeNow])
-
   const execute = async (args?: any[]): Promise<{ error?: string; outcome?: IOutcomeReturn[] }> => {
-    console.log('execute starts', args)
     if (args) {
       setArgsState(args)
     }
 
-    setWriteNow(true)
+    // setWriteNow(true)
+    // write?.()
+    await writeAsync?.()
 
     if (errorState) {
-      console.log('execute error', errorState)
       return { error: errorState }
     }
 
     const eventResult = await contractEventListener()
-
-    console.log('eventResult', eventResult)
 
     return { outcome: eventResult as IOutcomeReturn[] }
   }

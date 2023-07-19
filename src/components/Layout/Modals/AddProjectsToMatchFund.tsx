@@ -19,7 +19,6 @@ const AddProjectsToMatchFund = () => {
   const [insertSubmissionInMatchFund] = useMutation(INSERT_SUBMISSION_IN_MATCH_FUND)
   const { projectSubmission } = modalAttrs
 
-  console.log('projectSubmission  id', projectSubmission.id)
   const {
     loading,
     data: loadedMatchFund,
@@ -37,7 +36,6 @@ const AddProjectsToMatchFund = () => {
       // },
     },
     onCompleted: ({ MatchFunds }) => {
-      console.log('loaded loadSubmissions  ', MatchFunds)
       if (MatchFunds.length === 0) {
         setSponsorSelection(null)
         setShowNonUsers(true)
@@ -47,28 +45,13 @@ const AddProjectsToMatchFund = () => {
     },
   })
 
-  console.log('error  ', error)
-
   const [searchData, setSearchDataData] = useState<string>('')
-
-  console.log('loadedSponsors  ', loadedMatchFund)
 
   const matchFund =
     !loading && loadedMatchFund !== undefined && loadedMatchFund?.MatchFunds.length > 0
       ? loadedMatchFund?.MatchFunds.filter(
           (matchFund: IMatchFundFragment) =>
             matchFund.submissions.filter(submission => {
-              console.log('submission in the loop ', submission)
-              console.log('projectSubmission in the loop ', projectSubmission)
-              console.log(
-                'submission.submission.id !== projectSubmission.id  ',
-                submission.submissionId === projectSubmission.id,
-                '--- ',
-                submission.submission.id,
-                'projectSubmission.id:',
-                projectSubmission.id,
-              )
-              console.log('------------------')
               return submission.status === 'active' && submission.submission.id === projectSubmission.id
             }).length === 0,
         )
@@ -78,11 +61,7 @@ const AddProjectsToMatchFund = () => {
     toggleModal()
   }
 
-  // console.log('submissions  ', submissions)
-
   const addSponsorToMatchFund = async (matchFundSelected: IMatchFundFragment) => {
-    console.log('sponsorSelected  ', sponsorSelected)
-    console.log('matchFund  ', matchFund)
     const data = await insertSubmissionInMatchFund({
       onError: error => console.error('INSERT_SPONSOR_IN_MATCH error ', error),
       variables: {
@@ -95,14 +74,11 @@ const AddProjectsToMatchFund = () => {
       },
     })
 
-    console.log('data   ', data)
     if (data) {
       toggleModal()
       reload()
     }
   }
-
-  console.log('projectSubmission  ', projectSubmission)
 
   return (
     <Wrapper>

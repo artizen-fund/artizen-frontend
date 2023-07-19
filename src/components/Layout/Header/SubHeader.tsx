@@ -19,8 +19,8 @@ interface ISubHeader {
 */
 
 const SubHeader = ({ visible }: ISubHeader) => {
-  const { season, arrangedSeasonList, seasonIsActive } = useContext(SeasonSubcriptionContext)
-  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
+  const { loading, season, arrangedSeasonList, seasonIsActive, totalPrizePooled } = useContext(SeasonSubcriptionContext)
+  // const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
   if (!seasonIsActive) {
     return <SubHeaderLastSeason visible={visible} />
@@ -35,34 +35,41 @@ const SubHeader = ({ visible }: ISubHeader) => {
             <div>Buy Artifacts to fund projects</div>
           </Title>
 
-          <Stats>
-            <Stat>
-              <Label>Prize funds</Label>
-              {/* TODO: Review this */}
-              {/* <Data>
-                Ξ {artizenPrizeAmountETH}
-                <CashTrend>
-                  {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                    parseFloat(artizenPrizeAmountUSD || '0'),
-                  )}
-                  <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
-                </CashTrend>
-              </Data> */}
-            </Stat>
-            <Stat>
-              <Label>Cycle</Label>
-              <Data>Season {season?.index}</Data>
-            </Stat>
-            <Stat>
-              <Label>Ends in</Label>
-              {/* TODO: Count down does not work */}
-              <Data>{/* <Countdown date={season?.endingDate} /> */}</Data>
-            </Stat>
-            <Stat>
-              <Label>Current leader</Label>
-              <Data>{arrangedSeasonList && arrangedSeasonList.length > 0 && arrangedSeasonList[0].project?.title}</Data>
-            </Stat>
-          </Stats>
+          {!loading && (
+            <Stats>
+              <Stat>
+                <Label>Prize funds</Label>
+                <Data>
+                  Ξ {totalPrizePooled}
+                  {/* <CashTrend>
+                    {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                      totalPrizePooled ? totalPrizePooled : 0,
+                    )}
+                    <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
+                  </CashTrend> */}
+                </Data>
+              </Stat>
+              <Stat>
+                <Label>Cycle</Label>
+                <Data>Season {season?.index}</Data>
+              </Stat>
+              <Stat>
+                <Label>Ends in</Label>
+                {/* TODO: Count down does not work */}
+                {!loading && season?.endingDate && (
+                  <Data>
+                    <Countdown date={season?.endingDate} />
+                  </Data>
+                )}
+              </Stat>
+              <Stat>
+                <Label>Current leader</Label>
+                <Data>
+                  {arrangedSeasonList && arrangedSeasonList.length > 0 && arrangedSeasonList[0].project?.title}
+                </Data>
+              </Stat>
+            </Stats>
+          )}
         </Content>
       </Wrapper>
     </>

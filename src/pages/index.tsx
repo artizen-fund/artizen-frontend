@@ -29,51 +29,11 @@ import { alternatingPanels, faq } from '@copy/home'
 const IndexPage = () => {
   const { asPath } = useRouter()
   const { isSeasonActive } = useDateHelpers()
-  // const [arrangedSeasonList, setArrangedSeasonList] = useState<ISubmissionFragment[] | null>(null)
-  const [totalSales, setTotalSales] = useState<number>(0)
-
-  const { season, loading, arrangedSeasonList, seasonIsActive } = useContext(SeasonSubcriptionContext)
+  const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
+    useContext(SeasonSubcriptionContext)
 
   console.log('season in homepage  ', season)
   console.log('loading homepage ::::: ', loading)
-
-  // const arrangeSubmissions = (submissions: ISubmissionFragment[]) =>
-  //   submissions.sort((s1: ISubmissionFragment, s2: ISubmissionFragment) => {
-  //     return (
-  //       s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-  //       s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!
-  //     )
-  //   })
-
-  // const countTotalSales = (submissions: ISubmissionFragment[]): number => {
-  //   let total = 0
-
-  //   submissions.forEach(submission => {
-  //     total += submission.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!
-  //   })
-
-  //   return total
-  // }
-
-  // const { data, loading } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
-  //   skip: !seasonId,
-  //   fetchPolicy: 'no-cache',
-  //   variables: {
-  //     where: {
-  //       id: { _eq: seasonId },
-  //     },
-  //     order_by: { submissions_aggregate: { count: 'asc' } },
-  //   },
-  //   onData: ({ data: { data, loading, error } }) => {
-  //     if (!loading && !error && data?.Seasons[0]) {
-  //       const arrangedSeasonList = arrangeSubmissions(data?.Seasons[0].submissions)
-  //       const totalSales = countTotalSales(data?.Seasons[0].submissions)
-  //       setArrangedSeasonList(arrangedSeasonList.splice(0, 2))
-  //       setTotalSales(totalSales)
-  //     }
-  //     console.log('Seasons from subscription ', data)
-  //   },
-  // })
 
   useEffect(() => {
     const hash = asPath.split('#')[1]
@@ -82,12 +42,6 @@ const IndexPage = () => {
       submissionsMarker?.scrollIntoView({ behavior: 'smooth' })
     }
   }, [])
-
-  console.log('season in homepage  ', season)
-
-  // const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
-
-  console.log('totalSales homepage ::::: ', totalSales)
 
   return (
     <Layout>
@@ -103,8 +57,8 @@ const IndexPage = () => {
             <Grid>
               {arrangedSeasonList?.map((submission, index) => (
                 <ProjectCardPreviousSeason
-                  matchFundPooled={50}
-                  totalSales={totalSales}
+                  matchFundPooled={season?.matchFundPooled}
+                  totalSales={totalSales ? totalSales : 0}
                   project={submission.project}
                   {...{ index }}
                   key={submission.id}
@@ -116,14 +70,19 @@ const IndexPage = () => {
       )}
       {!loading && seasonIsActive && seasonIsActive && (
         <>
-          <LeaderboardHeader index={season?.index} endingDate={season?.endingDate} />
+          <LeaderboardHeader
+            loading={loading}
+            index={season?.index}
+            endingDate={season?.endingDate}
+            totalPrizePooled={totalPrizePooled}
+          />
           <StyledPagePadding>
             <SubmissionsMarker id="submissionsMarker" />
             <Grid>
               {arrangedSeasonList?.map((submission, index) => (
                 <ProjectCard
                   matchFundPooled={season?.matchFundPooled}
-                  totalSales={totalSales}
+                  totalSales={totalSales ? totalSales : 0}
                   project={submission.project}
                   {...{ index }}
                   key={submission.id}

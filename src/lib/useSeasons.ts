@@ -14,11 +14,12 @@ import { IProjectFragment, ISeasonFragment } from '@types'
 import { BigNumber, ethers } from 'ethers'
 import { useMutation } from '@apollo/client'
 
+//TODO: Legacy component, left here for reference
 export const useSeasons = () => {
   // const { writeAsync: publishSeasonAsync } = useContracts()
   const { getTimeUnix } = useDateHelpers()
   const { disconnectAndSignout } = useFullSignOut()
-  const { artizenPrizeAmountETH } = useGnosis()
+  // const { artizenPrizeAmountETH } = useGnosis()
 
   const [updateSeason] = useMutation(UPDATE_SEASONS, {
     onError: error => console.error('UPDATE_SEASONS error ', error),

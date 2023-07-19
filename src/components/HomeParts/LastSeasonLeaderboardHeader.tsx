@@ -11,7 +11,7 @@ interface LeaderboardHeaderProps {
 const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => {
   const { season } = useContext(SeasonSubcriptionContext)
 
-  const { USDtoETH } = useGnosis()
+  // const { USDtoETH } = useGnosis()
 
   // const { data: latestSeason, error } = useQuery<ISeasonForTimeQuery>(GET_SEASON_FOR_TIME, {
   //   fetchPolicy: 'no-cache',
@@ -43,12 +43,12 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
             <Label>Funds Awarded</Label>
             <Data>
               {season?.amountRaised} ETH
-              <CashTrend>
+              {/* <CashTrend>
                 {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
                   season?.amountRaised / USDtoETH!,
                 )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
-              </CashTrend>
+              </CashTrend> */}
             </Data>
           </Stat>
           <Stat>

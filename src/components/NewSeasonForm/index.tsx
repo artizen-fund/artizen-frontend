@@ -28,8 +28,6 @@ export default function NewSeasonForm(): JSX.Element {
   const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  console.log('startingDate', data.startingDate)
-
   const startingDate = `${data.startingDate}T09:01:00`
   const endingDate = `${data.endingDate}T09:00:00`
 
@@ -60,7 +58,6 @@ export default function NewSeasonForm(): JSX.Element {
   }
 
   const checkIfThereIsSeasonDate = async (from: string, to: string) => {
-    console.log('checkIfThereIsSeasonDate  ', from, to)
     const { data: seasonInDB, error } = await loadSeason({
       variables: {
         where: {
@@ -87,7 +84,6 @@ export default function NewSeasonForm(): JSX.Element {
         },
       ])
     } else {
-      console.log('gets here')
       setAdditionalErrors([])
     }
   }
@@ -103,7 +99,6 @@ export default function NewSeasonForm(): JSX.Element {
 
     setProcessing(true)
 
-    // // //publish season to blockchain
     const { error, outcome } = await publishSeason?.()
 
     if (error) {
@@ -111,8 +106,6 @@ export default function NewSeasonForm(): JSX.Element {
       alert(`Error publishing season to blockchain ${error}`)
       toggleModal('createSeasonModal')
     }
-
-    console.log('publishedSeason', outcome?.[0].args.seasonID.toString())
 
     const newSeasonId = outcome?.[0].args.seasonID.toString()
 

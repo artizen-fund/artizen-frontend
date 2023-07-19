@@ -26,8 +26,6 @@ const SponsorModal = () => {
   }
 
   const saveNewSponsor = async () => {
-    console.log('saveNewSponsor', tempValue)
-
     const { data } = await createSponsor({
       variables: {
         objects: [tempValue],
@@ -37,8 +35,6 @@ const SponsorModal = () => {
     if (data) {
       reload()
     }
-
-    console.log('data   ', data)
   }
 
   return (

@@ -7,10 +7,11 @@ interface LeaderboardHeaderProps {
   index?: number
   endingDate?: Partial<any>
   loading?: boolean
+  totalPrizePooled?: number
 }
 
-const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProps): JSX.Element => {
-  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
+const LeaderboardHeader = ({ loading, index, endingDate, totalPrizePooled }: LeaderboardHeaderProps): JSX.Element => {
+  // const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
   return (
     <StyledPagePadding>
@@ -21,6 +22,7 @@ const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProp
           <Stat>
             <Label>Prize Funds</Label>
             {!!loading && <Data>…</Data>}
+            {!loading && <Data>{totalPrizePooled} ETH</Data>}
             {/* {!loading && (
               <Data>
                 {artizenPrizeAmountETH} ETH

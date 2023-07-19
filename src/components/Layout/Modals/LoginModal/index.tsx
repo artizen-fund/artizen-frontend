@@ -14,10 +14,7 @@ const LoginModal = ({ ...props }) => {
   const { toggleModal, modalAttrs } = useContext(LayoutContext)
   const { connectMetamask, connectOtherWallet, currentFlow, signEnMessage } = modalAttrs as any
   // const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
-  // const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
   const [enabled, setEnabled] = useState(true)
-
-  console.log('currentFlow LoginModal', currentFlow)
 
   const isMobile = navigator.maxTouchPoints > 1
 

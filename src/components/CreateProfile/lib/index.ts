@@ -60,8 +60,6 @@ const useCreateProfile = (initialFormState: FormState | FormStateAdmin) => {
 
       setAdditionalErrors(additionalErrors)
     } else {
-      console.log('gets here')
-
       const newArray = additionalErrors.filter(error => error.instancePath !== '/publicAddress')
       setAdditionalErrors(newArray)
     }

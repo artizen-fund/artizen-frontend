@@ -11,9 +11,6 @@ import { GET_USER } from '@gql'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
   const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
-
-  console.log('currentFlow from accountButton  ', currentFlow)
-
   const { isConnected } = useAccount()
   const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
   const { data: session, status } = useSession()
@@ -59,9 +56,6 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     if (status === 'loading') {
       return
     } else if (!loggedInUser) {
-      // setVisibleModal('login')
-
-      console.log('current flow from account button', currentFlow)
       setStartAuth(true)
 
       // setVisibleModalWithAttrs('login', {
