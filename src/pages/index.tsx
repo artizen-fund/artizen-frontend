@@ -17,7 +17,6 @@ import {
   PartnersRibbon,
   HomeRibbon,
   LeaderboardHeader,
-  LastSeasonLeaderboardHeader,
   ProjectCard,
   ProjectCardPreviousSeason,
   HomeLoadingShimmer,
@@ -28,7 +27,6 @@ import { alternatingPanels, faq } from '@copy/home'
 
 const IndexPage = () => {
   const { asPath } = useRouter()
-  const { isSeasonActive } = useDateHelpers()
   const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
     useContext(SeasonSubcriptionContext)
 
@@ -46,32 +44,14 @@ const IndexPage = () => {
       <PartnersRibbon />
       <HomeRibbon />
       {loading && <HomeLoadingShimmer />}
-      {!loading && !seasonIsActive && (
-        <>
-          <LastSeasonLeaderboardHeader />
-          <SubmissionsMarker id="submissionsMarker" />
-          <StyledPagePadding>
-            <Grid>
-              {arrangedSeasonList?.map((submission, index) => (
-                <ProjectCardPreviousSeason
-                  matchFundPooled={season?.matchFundPooled}
-                  totalSales={totalSales ? totalSales : 0}
-                  project={submission.project}
-                  {...{ index }}
-                  key={submission.id}
-                />
-              ))}
-            </Grid>
-          </StyledPagePadding>
-        </>
-      )}
-      {!loading && seasonIsActive && seasonIsActive && (
+      {!loading && (
         <>
           <LeaderboardHeader
             loading={loading}
             index={season?.index}
             endingDate={season?.endingDate}
             totalPrizePooled={totalPrizePooled}
+            seasonIsActive={seasonIsActive}
           />
           <StyledPagePadding>
             <SubmissionsMarker id="submissionsMarker" />
@@ -83,6 +63,7 @@ const IndexPage = () => {
                   project={submission.project}
                   {...{ index }}
                   key={submission.id}
+                  seasonIsActive={seasonIsActive}
                 />
               ))}
             </Grid>

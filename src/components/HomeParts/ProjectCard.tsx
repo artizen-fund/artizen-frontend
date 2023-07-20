@@ -4,6 +4,7 @@ import { rgba, LayoutContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { RankAndArtifactCount, DonationBox } from '@components'
 import { IProjectFragment } from '@types'
+import { capitalize } from 'lodash'
 import Link from 'next/link'
 
 interface IProjectCard {
@@ -11,9 +12,10 @@ interface IProjectCard {
   index: number
   totalSales: number
   matchFundPooled: number
+  seasonIsActive?: boolean
 }
 
-const ProjectCard = ({ project, index, totalSales, matchFundPooled }: IProjectCard) => {
+const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPooled }: IProjectCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
@@ -35,7 +37,7 @@ const ProjectCard = ({ project, index, totalSales, matchFundPooled }: IProjectCa
         </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>
-            <h2>{project.title}</h2>
+            <h2>{project.title && capitalize(project.title)}</h2>
           </Link>
           <p>{project.logline}</p>
         </Copy>
@@ -57,7 +59,9 @@ const ProjectCard = ({ project, index, totalSales, matchFundPooled }: IProjectCa
           }
         />
       </ImageWrapper>
-      <Footer>{latestArtifact.token && <DonationBox tokenId={latestArtifact.token} {...{ project }} />}</Footer>
+      {seasonIsActive && (
+        <Footer>{latestArtifact.token && <DonationBox tokenId={latestArtifact.token} {...{ project }} />}</Footer>
+      )}
     </Wrapper>
   )
 }
