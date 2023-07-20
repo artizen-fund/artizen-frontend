@@ -28,7 +28,6 @@ import {
 } from '@types'
 
 const ProjectPage = ({ project }: any) => {
-  console.log('project  ', project)
   const {
     season: seasonData,
     arrangedSeasonList,
@@ -37,8 +36,6 @@ const ProjectPage = ({ project }: any) => {
     loading: loadingSeason,
   } = useContext(SeasonSubcriptionContext)
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-
-  console.log('seasonIsActive    ', seasonIsActive)
 
   //this should be only done when the season is active otherwise we should use the season from the project
   const { data: openEditionsSub } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
@@ -51,8 +48,6 @@ const ProjectPage = ({ project }: any) => {
     },
   })
 
-  console.log('openEditionsSub    ', openEditionsSub)
-
   const { data: openEditionsQuery } = useQuery(LOAD_OPEN_EDITIONS, {
     skip: seasonIsActive,
     fetchPolicy: 'no-cache',
@@ -62,8 +57,6 @@ const ProjectPage = ({ project }: any) => {
       },
     },
   })
-
-  console.log('openEditionsQuery    ', openEditionsQuery)
 
   const openEditions = openEditionsSub || openEditionsQuery
 
