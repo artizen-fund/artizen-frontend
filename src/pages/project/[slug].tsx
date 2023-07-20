@@ -28,7 +28,6 @@ import {
 } from '@types'
 
 const ProjectPage = ({ project }: any) => {
-  console.log('project  ', project)
   const {
     season: seasonData,
     arrangedSeasonList,
@@ -40,7 +39,7 @@ const ProjectPage = ({ project }: any) => {
 
   //this should be only done when the season is active otherwise we should use the season from the project
   const { data: openEditionsSub } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
-    skip: seasonIsActive,
+    skip: !seasonIsActive,
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -50,7 +49,7 @@ const ProjectPage = ({ project }: any) => {
   })
 
   const { data: openEditionsQuery } = useQuery(LOAD_OPEN_EDITIONS, {
-    skip: !seasonIsActive,
+    skip: seasonIsActive,
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -163,142 +162,6 @@ const ProjectPage = ({ project }: any) => {
     </Layout>
   )
 }
-
-// const ProjectPage = () => {
-
-//   const { isSeasonActive } = useDateHelpers()
-
-//   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-
-//   const {
-//     query: { slug },
-//     asPath,
-//   } = useRouter()
-
-//   const { loading, data } = useQuery<IProjectsQuery>(GET_PROJECTS, {
-//     skip: !slug,
-//     variables: {
-//       limit: 1,
-//       where: {
-//         titleURL: {
-//           _eq: slug,
-//         },
-//       },
-//     },
-//   })
-
-//   //TODO: this code does assume that the project has been submitted to the active season which will not be the case when the season ends
-//   const { loading: loadingSeason, data: seasonData } = useSubscription<ISubscribeSeasonsSubscription>(
-//     SUBSCRIBE_SEASONS,
-//     {
-//       fetchPolicy: 'no-cache',
-//       variables: {
-//         where: {
-//           id: { _eq: seasonId },
-//         },
-//       },
-//     },
-//   )
-
-//   const project = data?.Projects[0]
-
-// const { data: openEditions } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
-//   fetchPolicy: 'no-cache',
-//   variables: {
-//     where: {
-//       artifactId: { _eq: project?.artifacts[0].id },
-//     },
-//   },
-// })
-
-//   if (!!loadingSeason || !seasonData || !project) {
-//     // todo: we have a loading placeholder somewhere
-//     return <></>
-//   }
-
-//   const seasonIsActive = isSeasonActive(seasonData.Seasons[0].startingDate, seasonData.Seasons[0]?.endingDate)
-
-//   const lead = project.members?.find(m => m.type === 'lead')?.user
-
-//   const rank = seasonData.Seasons[0].submissions
-//     ?.sort(
-//       (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-//         s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-//         s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-//     )
-//     .findIndex(submission => submission.project?.id === project.id)
-
-//   //TODO: This make this to refresh
-//   // const projectSubmissions = seasonData.Seasons[0].submissions?.filter(
-//   //   submission => submission.project?.id === project.id,
-//   // )
-
-//   console.log('seasonIsActive', seasonIsActive)
-
-// const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
-
-//   return (
-//     <Layout>
-//       <PagePadding>
-//         <Wrapper>
-//           <Side>
-//             <Header>
-//               {loading && <ProjectDescriptionShimmer />}
-//               {!loading && (
-//                 <>
-//                   <Topline>
-//                     <div>
-//                       <RankAndArtifactCount rank={rank} count={count} seasonIsActive={seasonIsActive} />
-//                     </div>
-
-//                     <Button
-//                       level={2}
-//                       outline
-//                       onClick={() =>
-//                         setVisibleModalWithAttrs('share', {
-//                           mode: 'project',
-//                           destination: asPath,
-//                           projectTitle: project.title,
-//                           artizenHandle: project?.members?.find(m => m.type === 'lead')?.user?.artizenHandle,
-//                           twitterHandle: project?.members?.find(m => m.type === 'lead')?.user?.twitterHandle,
-//                         })
-//                       }
-//                     >
-//                       Share
-//                     </Button>
-//                   </Topline>
-//                   <h1>{project.title}</h1>
-//                   <p>{project.logline}</p>
-//                   <Tags tags={project.impactTags?.split(',') || []} />
-
-//                   {lead && <CreatorBox user={lead} />}
-//                 </>
-//               )}
-//             </Header>
-
-//             {loading && <ProjectLeaderboardShimmer />}
-//             {!loading && <Leaderboard openEditions={openEditions} />}
-
-//             <LongDescription>
-//               {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
-//                 <div key={`metadatum-${index}`}>
-//                   <h2>{metadatum.title}</h2>
-//                   <p>{metadatum.value}</p>
-//                 </div>
-//               ))}
-//             </LongDescription>
-//           </Side>
-
-//           <Side>
-//             {/* TODO: Artifacts should be an object instead of an array  */}
-//             {/* This is wrong, we need to use the artifact from the submission */}
-//             <ArtifactCard artifact={project.artifacts[0]} project={project} {...{ seasonIsActive }} />
-//           </Side>
-//         </Wrapper>
-//       </PagePadding>
-//     </Layout>
-//   )
-// }
 
 export async function getStaticPaths() {
   const apolloClient = createApolloClient()
