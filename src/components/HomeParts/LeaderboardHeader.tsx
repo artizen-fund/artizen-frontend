@@ -20,7 +20,7 @@ const LeaderboardHeader = ({ loading, index, endingDate, totalPrizePooled }: Lea
 
         <Stats>
           <Stat>
-            <Label>Prize Funds</Label>
+            <Label>Match Funds</Label>
             {!!loading && <Data>…</Data>}
             {!loading && <Data>{totalPrizePooled} ETH</Data>}
             {/* {!loading && (

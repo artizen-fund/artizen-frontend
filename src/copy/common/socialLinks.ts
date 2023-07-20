@@ -1,6 +1,6 @@
 export const socialLinks: Record<string, string> = {
   twitter: 'https://twitter.com/artizenfund',
-  discord: 'https://artizen.link/discord',
+  console: 'https://app.console.xyz/c/artizen',
   github: 'https://github.com/artizen-fund',
   telegram: 'https://t.me/artizenfund',
 }

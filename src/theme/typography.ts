@@ -6,20 +6,20 @@ export const typography = {
     l1: css`
       font-family: ${typeface.rocGrotesk}, helvetica, arial;
       font-weight: 700;
-      font-size: 34px;
-      line-height: 34px;
+      font-size: 30px;
+      line-height: 30px;
       letter-spacing: -1px;
       @media only screen and (min-width: ${breakpoint.tablet}px) {
-        font-size: 44px;
-        line-height: 44px;
+        font-size: 38.5px;
+        line-height: 3.5px;
       }
       @media only screen and (min-width: ${breakpoint.laptop}px) {
-        font-size: 64px;
-        line-height: 64px;
+        font-size: 56px;
+        line-height: 56px;
       }
       @media only screen and (min-width: ${breakpoint.desktop}px) {
-        font-size: 80px;
-        line-height: 80px;
+        font-size: 70px;
+        line-height: 70px;
       }
     `,
     l2: css`
