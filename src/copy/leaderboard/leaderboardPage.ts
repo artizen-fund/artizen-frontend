@@ -14,7 +14,7 @@ export const leaderboardPage = {
     imageDark: '/assets/illustrations/home/how-it-works-dark.png',
     title: 'Join our thriving community and help bring some fresh ideas to life',
     copy: 'We’re a member–owned, decentralized organization invested in promoting ownership and transparency in the fundraising process. Want to come along? Connect with us, read up on what we’re doing, and let’s chat about how you can get involved.',
-    buttonLabel: 'Join Discord',
-    destination: 'https://discord.com',
+    buttonLabel: 'Join Console',
+    destination: 'https://app.console.xyz/c/artizen',
   },
 }
