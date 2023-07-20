@@ -1,8 +1,8 @@
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect, useContext, use } from 'react'
 import { usePrepareContractWrite, useContractWrite, useContractEvent } from 'wagmi'
 import { watchContractEvent } from '@wagmi/core'
 import { SeasonsAbi } from '@contracts'
-import { assertFloat, assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND } from '@lib'
+import { assertFloat, assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND, LayoutContext } from '@lib'
 import { isEqual } from 'lodash'
 
 interface useMintArtifactsProps {
@@ -15,6 +15,7 @@ interface useMintArtifactsProps {
 export const useContracts = ({ args, value, functionName, eventName }: useMintArtifactsProps) => {
   const [writeNow, setWriteNow] = useState(false)
   const [argsState, setArgsState] = useState<any[]>([])
+  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
   const [errorState, setErrorState] = useState<string | null>(null)
   const SEASON_CONTRACT = assert(
     process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
@@ -32,17 +33,21 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     onError: e => {
       console.log('error usePrepareContractWrite here', e.message)
 
+      let error = e.message as string
+
       setErrorState(e.message as string)
 
-      //   if (error.includes(WALLET_CHAIN_MISMATCH)) {
-      //     const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
-      //     error = `You're logged on wrong change, please logout and login again using: ${chainName}`
-      //     setErrorState(error)
-      //   }
-      //   if (error.includes(WALLET_NO_FOUND)) {
-      //     error = `You do not have enough funds in your wallet to mint this open edition`
-      //     setErrorState(error)
-      //   }
+      console.log('error usePrepareContractWrite::::', error)
+
+      if (error.includes(WALLET_CHAIN_MISMATCH)) {
+        const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
+        error = `You're logged on wrong change, please logout and login again using: ${chainName}`
+        setErrorState(error)
+      }
+      if (error.includes(WALLET_NO_FOUND)) {
+        error = `You do not have enough funds in your wallet to mint this open edition`
+        setErrorState(error)
+      }
     },
   })
 
@@ -80,6 +85,12 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
       )
     })
   }
+
+  useEffect(() => {
+    setVisibleModalWithAttrs('errorModal', {
+      errorState,
+    })
+  }, [errorState])
 
   useEffect(() => {
     if (status === 'success' && errorState !== null) {

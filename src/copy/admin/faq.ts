@@ -18,11 +18,6 @@ const faq = [
       'Go to the [Match Funds Page](/admin/matchfunds) and click on the match fund to edit. Once from the match fund page, click on the **Add Sponsor** button to add a new sponsor to the match fund.',
   },
   {
-    question: 'How to add a sponsor to a match fund?',
-    answer:
-      'Go to the [Match Funds Page](/admin/matchfunds) and click on the match fund to edit. Once from the match fund page, click on the **Add Sponsor** button to add a new sponsor to the match fund.',
-  },
-  {
     question: 'How to create a new match fund',
     answer:
       'Go to the [Match Funds Page](/admin/matchfunds) and click on the **Create New Match** button to create a new one.',

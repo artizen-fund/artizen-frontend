@@ -21,8 +21,6 @@ const FIXED_PRECISION = 2
 const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPooled }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
-  // const { USDtoETH } = useGnosis()
-
   if (!openEditions) return <Spinner minHeight="65px" />
 
   const sideItem =
@@ -43,11 +41,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
   //only winners get 20% of the match fund on top of their sales
   const split20 = (20 * matchFundPooled) / 100
 
-  // const split = totalSales > 0 ? (count * 100) / totalSales : 0
-
-  // const matchFundMoney = (spli80 * split) / 100
-
-  const getMatchFundMoney = (countH: number) => {
+  const getMatchFundMoney = (countH: number): number => {
     const split = totalSales > 0 ? (countH * 100) / totalSales : 0
     return (spli80 * split) / 100
   }
@@ -61,7 +55,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
       <BiggerText>Ξ{sells} raised:</BiggerText>
       <Grey>&nbsp; Ξ{salesArtifacts} sales </Grey>
       <Green>+ Ξ{getMatchFundMoney(count).toFixed(FIXED_PRECISION)} match</Green>
-      <Green>+ Ξ{split20.toFixed(FIXED_PRECISION)} prize</Green>
+      <Green> + Ξ{split20.toFixed(FIXED_PRECISION)} prize</Green>
     </div>
   )
 
@@ -77,7 +71,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
           </div>
           <div>
             <Grey>Ξ&nbsp;{BASE_ARTIFACT_PRICE * count}</Grey>
-            <Green>+&nbsp; Ξ&nbsp;{getMatchFundMoney(user.copies)}</Green>{' '}
+            <Green>+&nbsp; Ξ&nbsp;{getMatchFundMoney(user.copies).toFixed(FIXED_PRECISION)}</Green>{' '}
             <Amount>
               <span> | minted</span> {user.copies}
             </Amount>

@@ -25,16 +25,7 @@ const AddProjectsToMatchFund = () => {
     error,
   } = useQuery(GET_MATCH_FUNDS, {
     fetchPolicy: 'no-cache',
-    variables: {
-      // where: {
-      //   submissions: {
-      //     // submissionId: {
-      //     //   _eq: projectSubmission.id,
-      //     // },
-      //     _or: [{ submissionId: { _neq: projectSubmission.id } }, { submissionId: { _is_null: true } }],
-      //   },
-      // },
-    },
+    variables: {},
     onCompleted: ({ MatchFunds }) => {
       if (MatchFunds.length === 0) {
         setSponsorSelection(null)
@@ -44,8 +35,6 @@ const AddProjectsToMatchFund = () => {
       }
     },
   })
-
-  const [searchData, setSearchDataData] = useState<string>('')
 
   const matchFund =
     !loading && loadedMatchFund !== undefined && loadedMatchFund?.MatchFunds.length > 0

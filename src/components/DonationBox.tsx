@@ -38,6 +38,14 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     artifactQuantity,
   })
 
+  useEffect(() => {
+    if (error) {
+      setVisibleModalWithAttrs('errorModal', {
+        error,
+      })
+    }
+  }, [error])
+
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
     toggleModal('confirmTransaction')
@@ -46,6 +54,8 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       amount: artifactQuantity,
       tokenId,
     })
+
+    console.log('gets to here: ')
 
     const hash = await writeAsync?.()
 
@@ -87,6 +97,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         <StyledButton
           level={1}
           onClick={() => {
+            console.log('error: ', error)
             if (error) {
               setVisibleModalWithAttrs('errorModal', {
                 error,
