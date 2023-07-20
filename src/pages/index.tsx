@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useSubscription } from '@apollo/client'
-import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription, ISubmissionFragment, ISeasonFragment, ISubmissions } from '@types'
 import {
   HomeHeader,
   Layout,
@@ -17,20 +14,24 @@ import {
   PartnersRibbon,
   HomeRibbon,
   LeaderboardHeader,
-  LastSeasonLeaderboardHeader,
   ProjectCard,
-  ProjectCardPreviousSeason,
   HomeLoadingShimmer,
 } from '@components'
-import { rgba, useDateHelpers, SeasonSubcriptionContext } from '@lib'
+import { rgba, SeasonSubcriptionContext } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
+const MAXIMUN_NUMBER_OF_LOADING = 3
+
 const IndexPage = () => {
   const { asPath } = useRouter()
-  const { isSeasonActive } = useDateHelpers()
+  const [numberOfLoading, setNumberOfLoading] = useState<number>(MAXIMUN_NUMBER_OF_LOADING)
   const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
     useContext(SeasonSubcriptionContext)
+
+  const arrangedSeasonListCapped = arrangedSeasonList?.slice(0, numberOfLoading)
+
+  const length = arrangedSeasonList?.length
 
   useEffect(() => {
     const hash = asPath.split('#')[1]
@@ -46,46 +47,40 @@ const IndexPage = () => {
       <PartnersRibbon />
       <HomeRibbon />
       {loading && <HomeLoadingShimmer />}
-      {!loading && !seasonIsActive && (
-        <>
-          <LastSeasonLeaderboardHeader />
-          <SubmissionsMarker id="submissionsMarker" />
-          <StyledPagePadding>
-            <Grid>
-              {arrangedSeasonList?.map((submission, index) => (
-                <ProjectCardPreviousSeason
-                  matchFundPooled={season?.matchFundPooled}
-                  totalSales={totalSales ? totalSales : 0}
-                  project={submission.project}
-                  {...{ index }}
-                  key={submission.id}
-                />
-              ))}
-            </Grid>
-          </StyledPagePadding>
-        </>
-      )}
-      {!loading && seasonIsActive && seasonIsActive && (
+      {!loading && (
         <>
           <LeaderboardHeader
             loading={loading}
             index={season?.index}
             endingDate={season?.endingDate}
             totalPrizePooled={totalPrizePooled}
+            seasonIsActive={seasonIsActive}
           />
           <StyledPagePadding>
             <SubmissionsMarker id="submissionsMarker" />
             <Grid>
-              {arrangedSeasonList?.map((submission, index) => (
+              {arrangedSeasonListCapped?.map((submission, index) => (
                 <ProjectCard
                   matchFundPooled={season?.matchFundPooled}
                   totalSales={totalSales ? totalSales : 0}
                   project={submission.project}
                   {...{ index }}
                   key={submission.id}
+                  seasonIsActive={seasonIsActive}
                 />
               ))}
             </Grid>
+            {length && length > numberOfLoading && (
+              <StyledButton
+                outline
+                level={1}
+                onClick={() => {
+                  setNumberOfLoading(length)
+                }}
+              >
+                See All Artifacts
+              </StyledButton>
+            )}
           </StyledPagePadding>
         </>
       )}
@@ -122,6 +117,10 @@ const SubmissionsMarker = styled.div`
   top: -260px;
   width: 1px;
   height: 1px;
+`
+
+const StyledButton = styled(props => <Button {...props} />)`
+  margin: 32px auto 0;
 `
 
 const Grid = styled.div`
