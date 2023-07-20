@@ -1,15 +1,11 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, assetPath, formatDate, useGnosis, SeasonSubcriptionContext } from '@lib'
+import { rgba, assetPath, formatDate, SeasonSubcriptionContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding, Glyph } from '@components'
 
-interface LeaderboardHeaderProps {
-  loading?: boolean
-}
-
-const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => {
-  const { season, totalPrizePooled } = useContext(SeasonSubcriptionContext)
+const LeaderboardHeader = (): JSX.Element => {
+  const { season, totalPrizePooled, loading } = useContext(SeasonSubcriptionContext)
 
   // const { USDtoETH } = useGnosis()
 
@@ -35,36 +31,38 @@ const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => 
 
   return (
     <StyledPagePadding>
-      <Content>
-        <Title>Season {season?.index} ended</Title>
+      {!loading && (
+        <Content>
+          <Title>Season {season?.index} ended</Title>
 
-        <Stats>
-          <Stat>
-            <Label>Funds Awarded</Label>
-            <Data>
-              {totalPrizePooled} ETH
-              {/* <CashTrend>
+          <Stats>
+            <Stat>
+              <Label>Funds Awarded</Label>
+              <Data>
+                {totalPrizePooled} ETH
+                {/* <CashTrend>
                 {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
                   season?.amountRaised / USDtoETH!,
                 )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
               </CashTrend> */}
-            </Data>
-          </Stat>
-          <Stat>
-            <Label>Cycle</Label>
-            <Data>Season {season?.index}</Data>
-          </Stat>
-          <Stat>
-            <Label>Ended on</Label>
-            <Data>{formatDate(season?.endingDate)}</Data>
-          </Stat>
-        </Stats>
+              </Data>
+            </Stat>
+            <Stat>
+              <Label>Cycle</Label>
+              <Data>Season {season?.index}</Data>
+            </Stat>
+            <Stat>
+              <Label>Ended on</Label>
+              <Data>{formatDate(season?.endingDate)}</Data>
+            </Stat>
+          </Stats>
 
-        <OfficialSelection>
-          <img src={assetPath('/assets/officialSelection.svg')} />
-        </OfficialSelection>
-      </Content>
+          <OfficialSelection>
+            <img src={assetPath('/assets/officialSelection.svg')} />
+          </OfficialSelection>
+        </Content>
+      )}
     </StyledPagePadding>
   )
 }

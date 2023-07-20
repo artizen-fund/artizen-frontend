@@ -6,7 +6,7 @@ import { breakpoint, palette } from '@theme'
 import { rgba, SeasonSubcriptionContext } from '@lib'
 
 const HomeLoadingShimmer = () => {
-  const { loading, season, totalPrizePooled } = useContext(SeasonSubcriptionContext)
+  const { loading, season, totalPrizePooled, seasonIsActive } = useContext(SeasonSubcriptionContext)
   return (
     <>
       <LeaderboardHeader
@@ -14,6 +14,7 @@ const HomeLoadingShimmer = () => {
         index={season?.index}
         endingDate={season?.endingDate}
         totalPrizePooled={totalPrizePooled}
+        seasonIsActive={seasonIsActive}
       />
       <StyledPagePadding>
         <FauxGrid>
