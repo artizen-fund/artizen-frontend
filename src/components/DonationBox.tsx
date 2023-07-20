@@ -38,6 +38,14 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     artifactQuantity,
   })
 
+  useEffect(() => {
+    if (error) {
+      setVisibleModalWithAttrs('errorModal', {
+        error,
+      })
+    }
+  }, [error])
+
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
     toggleModal('confirmTransaction')
