@@ -9,9 +9,10 @@ interface IArtifactCard {
   artifact: IArtifactFragment
   project: IProjectFragment
   seasonIsActive: boolean
+  count: number
 }
 
-const ArtifactCard = ({ artifact, project, seasonIsActive }: IArtifactCard) => {
+const ArtifactCard = ({ artifact, project, seasonIsActive, count }: IArtifactCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   return (
     <Wrapper>
@@ -27,6 +28,7 @@ const ArtifactCard = ({ artifact, project, seasonIsActive }: IArtifactCard) => {
       <AllCopy>
         <Copy>
           <h2>Artifact #{artifact.token}</h2>
+          <OpenEdition>{count} Minted</OpenEdition>
           <OpenEdition>Open Edition</OpenEdition>
         </Copy>
         {seasonIsActive && (

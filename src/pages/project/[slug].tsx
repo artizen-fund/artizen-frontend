@@ -19,19 +19,12 @@ import { LayoutContext, createApolloClient, SeasonSubcriptionContext } from '@li
 import { typography, breakpoint, palette } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
-import {
-  IProjectsQuery,
-  IProjectFragment,
-  ISubscribeSeasonsSubscription,
-  IOpenEditionsSubscription,
-  ISubmissionFragment,
-} from '@types'
+import { IProjectFragment, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = ({ project }: any) => {
   console.log('project  ', project)
   const {
     season: seasonData,
-    arrangedSeasonList,
     seasonIsActive,
     totalSales,
     loading: loadingSeason,
@@ -89,21 +82,17 @@ const ProjectPage = ({ project }: any) => {
 
   const count = openEditions?.OpenEditionCopies.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
 
-  console.log('lead', lead)
-
   return (
     <Layout>
       <PagePadding>
         <Wrapper>
           <Side>
             <Header>
-              {/* {loading && <ProjectDescriptionShimmer />} */}
-
+              {loadingSeason && <ProjectDescriptionShimmer />}
               <>
                 <Topline>
                   <div>
                     {!loadingSeason && (
-                      //TODO: Update the total sales and match fund pooled vars
                       <RankAndArtifactCount
                         rank={rank}
                         count={count}
@@ -138,7 +127,7 @@ const ProjectPage = ({ project }: any) => {
               </>
             </Header>
 
-            {/* {loading && <ProjectLeaderboardShimmer />} */}
+            {loadingSeason && <ProjectLeaderboardShimmer />}
             {openEditions && seasonData && (
               <Leaderboard
                 openEditions={openEditions}
@@ -160,9 +149,12 @@ const ProjectPage = ({ project }: any) => {
           </Side>
 
           <Side>
-            {/* TODO: Artifacts should be an object instead of an array  */}
-            {/* This is wrong, we need to use the artifact from the submission */}
-            <ArtifactCard artifact={project.artifacts[0]} project={project} seasonIsActive={seasonIsActive || false} />
+            <ArtifactCard
+              count={count}
+              artifact={project.artifacts[0]}
+              project={project}
+              seasonIsActive={seasonIsActive || false}
+            />
           </Side>
         </Wrapper>
       </PagePadding>
