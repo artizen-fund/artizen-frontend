@@ -105,6 +105,7 @@ const StyledLink = styled(props => <Link {...props} />)`
 
 const Wrapper = styled.article`
   display: grid;
+  align-items: flex-end;
   grid-template-columns: 1fr;
   grid-template-areas: 'art' 'copy' 'footer';
   gap: 20px;
@@ -179,6 +180,7 @@ const Footer = styled.footer`
   justify-content: space-between;
   gap: 15px;
   padding: 0 20px 20px 20px;
+  align-self: end;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     padding: 0;
     gap: 20px;
