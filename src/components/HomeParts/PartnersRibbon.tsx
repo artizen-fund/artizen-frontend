@@ -3,21 +3,40 @@ import { assetPath } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { partners as copy } from '@copy/home'
 import { PagePadding } from '@components'
+import { useQuery } from '@apollo/client'
+import { IGetSponsorsQuery } from '@types'
+import { GET_SPONSORS } from '@gql'
 
-const PartnersRibbon = () => (
-  <PagePadding>
-    <Wrapper>
-      <Label>{copy.label}</Label>
-      <Partners>
-        {copy.partners.map(partner => (
-          <Partner key={`partner-${partner}`}>
-            <img src={assetPath(`/assets/partners/${partner}.svg`)} alt={partner} />
-          </Partner>
-        ))}
-      </Partners>
-    </Wrapper>
-  </PagePadding>
-)
+const PartnersRibbon = () => {
+  const {
+    loading,
+    data: loadedSponsors,
+    error,
+  } = useQuery<IGetSponsorsQuery>(GET_SPONSORS, {
+    fetchPolicy: 'no-cache',
+  })
+
+  console.log('loadedSponsors', loadedSponsors)
+
+  return (
+    <PagePadding>
+      <Wrapper>
+        <Label>{copy.label}</Label>
+        {!loading && (
+          <Partners>
+            {loadedSponsors?.Sponsors.map(({ name, logotype }) => {
+              return (
+                <Partner key={`partner-${name}`}>
+                  <img src={logotype} alt={name} />
+                </Partner>
+              )
+            })}
+          </Partners>
+        )}
+      </Wrapper>
+    </PagePadding>
+  )
+}
 
 const Wrapper = styled.div`
   display: flex;
