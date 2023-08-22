@@ -25,7 +25,7 @@ const LeaderboardHeader = ({
 
         <Stats>
           <Stat>
-            <Label>{seasonIsActive ? 'Match funds' : 'Funds Awarded'}</Label>
+            <Label>{seasonIsActive ? 'Match Funds' : 'Funds Awarded'}</Label>
             {!!loading && <Data>…</Data>}
             {!loading && <Data>{totalPrizePooled} ETH</Data>}
             {/* {!loading && (
