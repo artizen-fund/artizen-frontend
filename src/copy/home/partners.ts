@@ -7,7 +7,7 @@ i.e. festival-de-cannes == /public/assets/partners/festival-de-cannes.svg
 */
 
 const partners = {
-  label: 'Partners',
+  label: 'Sponsors',
   partners: ['microsoft', 'festival-de-cannes', 'hp', 'tribeca-film-festival', 'unity'],
 }
 
