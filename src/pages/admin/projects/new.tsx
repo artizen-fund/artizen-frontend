@@ -107,8 +107,6 @@ const ProjectDetails = () => {
     }
   }
 
-  console.log('additionalErrors   ', additionalErrors)
-
   return (
     <Layout>
       <CuratorCheck />

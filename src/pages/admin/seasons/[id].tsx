@@ -40,9 +40,6 @@ export default function SeasonPage(): JSX.Element {
 
   const { closeSeason } = useSeasons()
 
-  console.log('error  ', error)
-  console.log('loadedSeasonsData  ', loadedSeasonsData)
-
   return (
     <Layout>
       <CuratorCheck />
@@ -57,8 +54,6 @@ export default function SeasonPage(): JSX.Element {
             const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
             const isSeasonEndedV: boolean = season.isClosed || isSeasonEnded(season.startingDate, season.endingDate)
             const isOpenForSubmissionsV: boolean = isOpenForSubmissions(season.startingDate, season.endingDate)
-
-            console.log('isOpenForSubmissionsV    ', isOpenForSubmissionsV)
 
             return (
               <Wrapper key={id} id={id}>

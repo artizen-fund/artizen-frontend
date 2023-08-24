@@ -16,8 +16,6 @@ const PartnersRibbon = () => {
     fetchPolicy: 'no-cache',
   })
 
-  console.log('loadedSponsors', loadedSponsors)
-
   return (
     <PagePadding>
       <Wrapper>

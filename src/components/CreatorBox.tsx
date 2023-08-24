@@ -9,7 +9,6 @@ interface ICreatorBox {
 }
 
 const CreatorBox = ({ user }: ICreatorBox) => {
-  console.log('member', user)
   return (
     <Wrapper>
       <div>

@@ -37,8 +37,6 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
 
       setErrorState(e.message as string)
 
-      console.log('error usePrepareContractWrite::::', error)
-
       if (error.includes(WALLET_CHAIN_MISMATCH)) {
         const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
         error = `You're logged on wrong change, please logout and login again using: ${chainName}`
@@ -57,7 +55,6 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
       console.log('Settled', { data, error })
 
       if (error) {
-        console.log('error useContractWrite', error)
         setErrorState(error.message as string)
         return
       }

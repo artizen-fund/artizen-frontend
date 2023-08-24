@@ -19,9 +19,6 @@ const Seasons = () => {
   const { formatDate, getSeasonStatus } = useDateHelpers()
   const { isConnected } = useAccount()
 
-  console.log('status  ', status)
-  console.log('isConnected ', isConnected)
-
   const { data: loadedSeasonsData, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {

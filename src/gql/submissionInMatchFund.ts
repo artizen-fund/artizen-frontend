@@ -25,3 +25,12 @@ export const UPDATE_SUBMISSION_IN_MATCH_FUND = gql`
     }
   }
 `
+
+export const GET_SUBMISSION_IN_MATCH_FUND = gql`
+  ${SUBMISSION_IN_MATCH_FUND}
+  query getSubmissionInMatchFund($where: SubmissionInMatchFunds_bool_exp!) {
+    SubmissionInMatchFunds(where: $where) {
+      ...SubmissionInMatchFund
+    }
+  }
+`

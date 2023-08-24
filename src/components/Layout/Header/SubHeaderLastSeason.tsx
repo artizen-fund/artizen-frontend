@@ -12,8 +12,6 @@ interface ISubHeader {
 const SubHeader = ({ visible }: ISubHeader) => {
   const { season, arrangedSeasonList, totalPrizePooled } = useContext(SeasonSubcriptionContext)
 
-  console.log('season  ', season)
-
   return (
     <>
       <Wrapper visible={visible}>

@@ -55,8 +55,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       tokenId,
     })
 
-    console.log('gets to here: ')
-
     const hash = await writeAsync?.()
 
     toggleModal()
@@ -97,7 +95,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         <StyledButton
           level={1}
           onClick={() => {
-            console.log('error: ', error)
             if (error) {
               setVisibleModalWithAttrs('errorModal', {
                 error,

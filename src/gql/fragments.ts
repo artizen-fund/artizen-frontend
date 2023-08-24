@@ -135,6 +135,14 @@ export const SUBMISSION_IN_MATCH_FUND = gql`
     matchFund {
       id
       name
+      sponsorInMatchFunds {
+        id
+        sponsor {
+          id
+          logotype
+          name
+        }
+      }
     }
     submission {
       id

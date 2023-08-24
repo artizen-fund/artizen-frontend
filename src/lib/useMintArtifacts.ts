@@ -33,7 +33,6 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
       let error = e.message
 
       if (error.includes(WALLET_CHAIN_MISMATCH)) {
-        console.log('error usePrepareContractWrite here', e.message)
         const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
         error = `You're logged on wrong change, please logout and login again using: ${chainName}`
         setErrorState(error)
@@ -48,10 +47,7 @@ export const useMintArtifacts = ({ tokenId, artifactQuantity }: useMintArtifacts
   const { writeAsync, isLoading, isSuccess, isError } = useContractWrite({
     ...config,
     onSettled(data, error) {
-      console.log('Settled', { data, error })
-
       if (error) {
-        console.log('error useContractWrite', error)
         setErrorState(error.message)
       }
     },
