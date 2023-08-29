@@ -29,13 +29,6 @@ export const schema: JsonSchema = {
 	All values must be optional, as an unfilled form will conform to this state.
 */
 
-/* This is our local initialState. */
-export const initialState: FormState = {
-  startingDate: '2023-01-01',
-  endingDate: '2023-01-01',
-  title: '',
-}
-
 export interface FormState extends Record<string, unknown> {
   startingDate?: string
   endingDate?: string

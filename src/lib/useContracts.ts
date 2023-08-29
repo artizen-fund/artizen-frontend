@@ -10,9 +10,10 @@ interface useMintArtifactsProps {
   functionName: string
   value?: bigint
   eventName: string
+  warming?: boolean
 }
 
-export const useContracts = ({ args, value, functionName, eventName }: useMintArtifactsProps) => {
+export const useContracts = ({ args, value, functionName, eventName, warming }: useMintArtifactsProps) => {
   const [writeNow, setWriteNow] = useState(false)
   const [argsState, setArgsState] = useState<any[]>([])
   const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
@@ -31,9 +32,9 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
     args: argsState,
     chainId,
     onError: e => {
-      console.log('error usePrepareContractWrite here', e.message)
-
       let error = e.message as string
+
+      console.log('error usePrepareContractWrite here', error)
 
       setErrorState(e.message as string)
 
@@ -84,12 +85,16 @@ export const useContracts = ({ args, value, functionName, eventName }: useMintAr
   }
 
   useEffect(() => {
-    setVisibleModalWithAttrs('errorModal', {
-      errorState,
-    })
+    console.log('errorState   ', errorState)
+    errorState !== null &&
+      !warming &&
+      setVisibleModalWithAttrs('errorModal', {
+        error: errorState,
+      })
   }, [errorState])
 
   useEffect(() => {
+    console.log('status', status)
     if (status === 'success' && errorState !== null) {
       setErrorState(null)
     }

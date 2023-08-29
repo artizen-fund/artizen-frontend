@@ -5,7 +5,7 @@ import { INSERT_SEASONS, LOAD_SEASONS } from '@gql'
 import { ErrorObject } from 'ajv'
 import { useRouter } from 'next/router'
 import { Form, Button } from '@components'
-import { schema, uischema, initialState, FormState } from '@forms/createSeason'
+import { schema, uischema, FormState } from '@forms/createSeason'
 import { LayoutContext, ARTIZEN_TIMEZONE, useSeasons, useContracts, useDateHelpers } from '@lib'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
@@ -24,7 +24,11 @@ export default function NewSeasonForm(): JSX.Element {
   const [loadSeason, { loading }] = useLazyQuery(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
   })
-  const [data, setData] = useState<FormState>(initialState)
+  const [data, setData] = useState<FormState>({
+    title: 'Your Season Title',
+    startingDate: dayjs().tz(ARTIZEN_TIMEZONE).format('YYYY-MM-DD'),
+    endingDate: dayjs().tz(ARTIZEN_TIMEZONE).add(1, 'day').format('YYYY-MM-DD'),
+  })
   const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
@@ -135,18 +139,21 @@ export default function NewSeasonForm(): JSX.Element {
 
     push(`/admin/seasons/${newSeasonData.id}`)
   }
+
+  console.log('Im here in new season form', schema)
+  console.log('Im here in new season form uischema', uischema)
+  console.log('Im here in new season form data', data)
   return (
     <Form
       schema={schema}
       uischema={uischema}
       data={data}
       setData={async temData => {
-        if (temData.startingDate && temData.endingDate) {
-          await checkIfThereIsSeasonDate(temData.startingDate, temData.endingDate)
-          checkIfEndingDateIsAfterStartingDate(temData.startingDate, temData.endingDate)
-        }
-
-        setData(temData)
+        // if (temData.startingDate && temData.endingDate) {
+        //   await checkIfThereIsSeasonDate(temData.startingDate, temData.endingDate)
+        //   checkIfEndingDateIsAfterStartingDate(temData.startingDate, temData.endingDate)
+        // }
+        // setData(temData)
       }}
       additionalErrors={additionalErrors}
       readonly={processing}

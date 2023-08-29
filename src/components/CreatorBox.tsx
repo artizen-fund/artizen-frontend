@@ -8,6 +8,15 @@ interface ICreatorBox {
   user: IUserPublicFragment
 }
 
+const getTwitterHandler = (twitterLink: string) => {
+  const myRe = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/(?:#!\/)?@?([^\/\?\s]*)/
+  const myArray = myRe.exec('http://www.twitter.com/codeschool')
+
+  console.log(myArray)
+
+  return myArray && myArray[1]
+}
+
 const CreatorBox = ({ user }: ICreatorBox) => {
   return (
     <Wrapper>
@@ -22,7 +31,13 @@ const CreatorBox = ({ user }: ICreatorBox) => {
           <Links>
             {user.twitterHandle && (
               <li>
-                <Button glyph="twitter" glyphOnly href={`https://twitter.com/${user.twitterHandle}`} level={2} outline>
+                <Button
+                  glyph="twitter"
+                  glyphOnly
+                  href={`https://twitter.com/${getTwitterHandler(user.twitterHandle)}`}
+                  level={2}
+                  outline
+                >
                   Twitter
                 </Button>
               </li>

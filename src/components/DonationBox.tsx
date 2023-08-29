@@ -28,9 +28,8 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
   const { status } = useSession()
 
-  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs, toggleModal, setVisibleModal } = useContext(LayoutContext)
   const [sending, setSending] = useState<boolean>(false)
-  const { setVisibleModal } = useContext(LayoutContext)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
 
   const { writeAsync, error } = useMintArtifacts({

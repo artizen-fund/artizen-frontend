@@ -9,7 +9,6 @@ import { IGetSubmissionInMatchFundQuery } from '@types'
 //getSubmissionInMatchFund
 
 const ProjectSponsors = ({ projectId }: { projectId: string }) => {
-  console.log('projectId  ', projectId)
   const [sponsorsFilter, setSponsor] = useState<Array<any>>()
   const { loading, data, error } = useQuery<IGetSubmissionInMatchFundQuery>(GET_SUBMISSION_IN_MATCH_FUND, {
     variables: {
@@ -53,7 +52,6 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
         {sponsorsFilter && (
           <SponsorList>
             {sponsorsFilter?.map(sponsor => {
-              console.log('sponsor  ', sponsor)
               return (
                 <Link key={sponsor.id} href={sponsor.url} passHref={true}>
                   <Sponsor>
