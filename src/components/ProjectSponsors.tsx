@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { Glyph } from '@components'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_SUBMISSION_IN_MATCH_FUND } from '@gql'
+import { typography } from '@theme'
+import Link from 'next/link'
 import { IGetSubmissionInMatchFundQuery } from '@types'
 //getSubmissionInMatchFund
 
@@ -37,39 +39,28 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
             return
           }
 
-          if (sponsors.length === 0 && sponsor !== undefined) {
-            sponsors.push(sponsor)
-          }
-
-          console.log('sponsors inside loop  ', sponsors)
-
-          for (var i = 0, l = sponsors.length; i < l; i++) {
-            if (sponsors[i].id === sponsor?.id) {
-              return
-            }
-            sponsors.push(sponsor)
-          }
+          sponsors.push(sponsor)
         })
       })
-      console.log('sponsors in here ', sponsors)
       setSponsor(sponsors)
     },
   })
 
-  console.log('props here ', data?.SubmissionInMatchFunds)
-
   return (
     <Wapper>
-      <Title>sds</Title>
+      <Title>Sponsored by:</Title>
       <SponsorsWrapper>
         {sponsorsFilter && (
           <SponsorList>
             {sponsorsFilter?.map(sponsor => {
+              console.log('sponsor  ', sponsor)
               return (
-                <Sponsor key={sponsor.id}>
-                  <SponsorLogo src={sponsor.logo} />
-                  <SponsorName>{sponsor.name}</SponsorName>
-                </Sponsor>
+                <Link key={sponsor.id} href={sponsor.url} passHref={true}>
+                  <Sponsor>
+                    <SponsorLogo alt={sponsor.name} src={sponsor.logotype} />
+                    {/* <SponsorName>{sponsor.name}</SponsorName> */}
+                  </Sponsor>
+                </Link>
               )
             })}
           </SponsorList>
@@ -79,27 +70,28 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
   )
 }
 
-const SponsorList = styled.div``
+const SponsorList = styled.div`
+  display: flex;
+`
 
 const Sponsor = styled.div``
 
-const SponsorLogo = styled.img``
+const SponsorLogo = styled.img`
+  height: 70px;
+`
 
 const SponsorName = styled.div``
 
 const SponsorsWrapper = styled.div``
 
 const Wapper = styled.div`
-  display: grid;
   grid-template-areas: 'title laurels' 'stats stats';
   grid-template-rows: repeat(2, 1fr);
   gap: 30px;
 `
 
-const Title = styled.h2`
-  grid-area: title;
-  display: flex;
-  flex-direction: row;
+const Title = styled.h4`
+  ${typography.title.l4}
 `
 
 export default ProjectSponsors

@@ -141,6 +141,7 @@ export const SUBMISSION_IN_MATCH_FUND = gql`
           id
           logotype
           name
+          url
         }
       }
     }
