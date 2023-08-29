@@ -16,7 +16,7 @@ interface IBreadcrumb {
 
 const Breadcrumbs = ({ schema }: IBreadcrumbArray) => {
   const { push } = useRouter()
-  const { visibleShelf, toggleShelf, visibleModal, toggleModal, locked } = useContext(LayoutContext)
+  const { toggleShelf, toggleModal, locked } = useContext(LayoutContext)
   const onClick = () => {
     if (locked) return
     toggleShelf()

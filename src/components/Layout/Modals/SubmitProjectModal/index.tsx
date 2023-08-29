@@ -40,17 +40,19 @@ const SubmitProjectModal = () => {
   const inputRef = useRef<ISeasonFragment[]>([])
   const [ipfs, setIpfs] = useState<string>('')
   const [processing, setProcessing] = useState(false)
+  const [isWarming, setIsWarming] = useState<boolean>(true)
   const [processTxt, setProcessTxt] = useState<string>('Submit')
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
   const [loadSeasons, { data: loadedSeasonsData, error }] = useLazyQuery(LOAD_SEASONS)
   const [insertSubmissionMutaton] = useMutation(INSERT_SUBMISSION)
   const [updateArtifactMutaton] = useMutation<IUpdate_Artifacts_ManyMutation>(UPDATE_ARTIFACTS)
   const { reload } = useRouter()
-  //createSubmission(season.index, ipfsHash, project.walletAddress)
+
   const { execute: publishSubmission } = useContracts({
     args: [seasonSelected ? seasonSelected.index : 1, ipfs, project.walletAddress],
     functionName: 'createSubmission',
     eventName: 'SubmissionCreated',
+    warming: isWarming,
   })
 
   const loadActiveSeasons = () => {
@@ -89,6 +91,7 @@ const SubmitProjectModal = () => {
   }, [inputRef.current, loadedSeasonsData, loadSeasons, project.id])
 
   const submitProject = async () => {
+    setIsWarming(false)
     // create a new project submission
     // submit the submission to the season with useMutation
 
