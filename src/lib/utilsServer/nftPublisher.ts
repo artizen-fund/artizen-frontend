@@ -26,7 +26,6 @@ export async function storeNFTFromUrl(imageUrl: string, name: string) {
 
   formData.append('pinataMetadata', JSON.stringify({ name }))
 
-  console.log('new:::::::::')
   const res = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS ', formData, {
     maxContentLength: 100000000,
     maxBodyLength: 1000000000,
@@ -34,8 +33,6 @@ export async function storeNFTFromUrl(imageUrl: string, name: string) {
       Authorization: `Bearer ${pinataJWTKey}`,
     },
   })
-
-  console.log('res::::::::', res.data)
 
   return res.data
 }

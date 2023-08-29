@@ -22,10 +22,6 @@ const MatchFunds = () => {
     fetchPolicy: 'no-cache',
   })
 
-  console.log('errorMatchFundsData  ', errorMatchFundsData)
-
-  console.log('loadedMatchFundsData   ', loadedMatchFundsData)
-
   return (
     <Layout>
       <StyledPagePadding>
@@ -59,11 +55,9 @@ const MatchFunds = () => {
             </Button>
             <MatchFundList className="doubleLeght">
               {loadedMatchFundsData?.MatchFunds.map((matchFund: IMatchFundFragment) => {
-                console.log('matchFund  ', matchFund)
                 const sponsors = matchFund.sponsorInMatchFunds.map(
                   sponsorInMatchFund => sponsorInMatchFund.sponsor && startCase(sponsorInMatchFund.sponsor.name),
                 )
-                console.log('sponsors  ', sponsors)
                 return (
                   <MatchFundWrapper key={matchFund.id} onClick={() => push(`/admin/matchfunds/${matchFund.id}`)}>
                     <Title>{startCase(matchFund.name)}</Title>

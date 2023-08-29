@@ -81,8 +81,6 @@ export default function ProjectDetails(): JSX.Element {
       },
     })
 
-    console.log('data  ', data)
-
     if (data) {
       reload()
     }
@@ -97,8 +95,6 @@ export default function ProjectDetails(): JSX.Element {
   }
 
   const project = loadedProjectData?.Projects[0]
-
-  console.log('loadedSeasons  ', loadedSeasons)
 
   return (
     <Layout>

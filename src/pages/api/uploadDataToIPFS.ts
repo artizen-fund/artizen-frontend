@@ -11,8 +11,6 @@ const uploadDataToIPFS = async (req: NextApiRequest, res: NextApiResponse) => {
     } else if (imagePath) {
       const result = await storeNFTFromUrl(imagePath, name)
 
-      console.log('result from storeNFTFromUrl :::: ', result)
-
       return res.json(result)
     }
 

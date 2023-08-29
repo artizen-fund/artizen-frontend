@@ -14,15 +14,15 @@ import {
   Leaderboard,
   ProjectDescriptionShimmer,
   ProjectLeaderboardShimmer,
+  ProjectSponsors,
 } from '@components'
 import { LayoutContext, createApolloClient, SeasonSubcriptionContext } from '@lib'
-import { typography, breakpoint, palette } from '@theme'
+import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
-import { GET_PROJECTS, SUBSCRIBE_SEASONS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
+import { GET_PROJECTS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
 import { IProjectFragment, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = ({ project }: any) => {
-  console.log('project  ', project)
   const {
     season: seasonData,
     seasonIsActive,
@@ -30,8 +30,6 @@ const ProjectPage = ({ project }: any) => {
     loading: loadingSeason,
   } = useContext(SeasonSubcriptionContext)
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
-
-  console.log('seasonIsActive    ', seasonIsActive)
 
   //this should be only done when the season is active otherwise we should use the season from the project
   const { data: openEditionsSub } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
@@ -44,8 +42,6 @@ const ProjectPage = ({ project }: any) => {
     },
   })
 
-  console.log('openEditionsSub    ', openEditionsSub)
-
   const { data: openEditionsQuery } = useQuery(LOAD_OPEN_EDITIONS, {
     skip: seasonIsActive,
     fetchPolicy: 'no-cache',
@@ -56,16 +52,12 @@ const ProjectPage = ({ project }: any) => {
     },
   })
 
-  console.log('openEditionsQuery    ', openEditionsQuery)
-
   const openEditions = openEditionsSub || openEditionsQuery
 
   const {
     query: { slug },
     asPath,
   } = useRouter()
-
-  console.log('seasonData', seasonData)
 
   const lead = project.members?.find((m: any) => m.type === 'lead')?.user
 
@@ -77,8 +69,6 @@ const ProjectPage = ({ project }: any) => {
           s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
       )
       .findIndex(submission => submission.project?.id === project.id) || 0
-
-  console.log('openEditions?.OpenEditionCopies', openEditions?.OpenEditionCopies)
 
   const count = openEditions?.OpenEditionCopies.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
 
@@ -129,13 +119,16 @@ const ProjectPage = ({ project }: any) => {
 
             {loadingSeason && <ProjectLeaderboardShimmer />}
             {openEditions && seasonData && (
-              <Leaderboard
-                openEditions={openEditions}
-                isWinner={rank === 0}
-                count={count}
-                totalSales={totalSales ? totalSales : 0}
-                matchFundPooled={seasonData?.matchFundPooled}
-              />
+              <>
+                <Leaderboard
+                  openEditions={openEditions}
+                  isWinner={rank === 0}
+                  count={count}
+                  totalSales={totalSales ? totalSales : 0}
+                  matchFundPooled={seasonData?.matchFundPooled}
+                />
+                <ProjectSponsors projectId={project.id} />
+              </>
             )}
 
             <LongDescription>
@@ -172,8 +165,6 @@ export async function getStaticPaths() {
     params: { slug: project.titleURL },
   }))
 
-  console.log('path hereeee  ', paths[0])
-
   return { paths, fallback: false }
 }
 
@@ -196,8 +187,6 @@ export async function getStaticProps({ params: { slug } }: { params: IGetStaticP
   //     },
   //   },
   // })
-
-  console.log('tags here  ', GET_PROJECTS)
 
   const fethcall = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL as string, {
     method: 'POST',

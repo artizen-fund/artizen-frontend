@@ -38,7 +38,6 @@ export default function MatchFundDetails(): JSX.Element {
   })
 
   if (!loading && errorMatchFund) {
-    console.log('errorMatchFund  ', errorMatchFund)
     throw new Error('error loading match fund details', errorMatchFund)
   }
 
@@ -47,8 +46,6 @@ export default function MatchFundDetails(): JSX.Element {
   }
 
   const matchFund = loadedMatchFundData?.MatchFunds[0]
-
-  console.log('matchFund  ', matchFund)
 
   return (
     <Layout>
@@ -104,7 +101,6 @@ export default function MatchFundDetails(): JSX.Element {
                   level={2}
                   outline
                   onClick={() => {
-                    console.log('matchFund  ', matchFund)
                     setVisibleModalWithAttrs('addSponsorToMatchFund', {
                       matchFund,
                     })
@@ -140,7 +136,6 @@ export default function MatchFundDetails(): JSX.Element {
                     level={2}
                     outline
                     onClick={() => {
-                      console.log('matchFund  ', matchFund)
                       push(`/admin/projects`)
                       // setVisibleModalWithAttrs('addProjectsToMatchFund', {
                       //   matchFund,

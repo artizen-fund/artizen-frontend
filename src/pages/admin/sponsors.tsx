@@ -22,8 +22,6 @@ const Sponsors = () => {
     fetchPolicy: 'no-cache',
   })
 
-  console.log('loadedSponsorData', loadedSponsorData)
-
   if (errorSponsorData) {
     console.error('errorSponsorData', errorSponsorData)
     return <div>Error loading sponsors</div>
