@@ -11,6 +11,7 @@ import {
   rgba,
   useSeasons,
   useMintArtifacts,
+  useContracts,
 } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { IProjectFragment } from '@types'
@@ -25,6 +26,15 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
+
+  /*
+    const { execute: donate } = useContracts({
+    args: [tokenId, artifactQuantity],
+    functionName: 'mintArtifact',
+    eventName: 'SubmissionCreated',
+    warming: isWarming,
+  })
+  */
 
   const { status } = useSession()
 
@@ -56,7 +66,8 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
     const hash = await writeAsync?.()
 
-    toggleModal()
+    toggleModal('processTransaction')
+
     //TODO: review if hash is return as plain string or as an object
     //https://wagmi.sh/react/hooks/useContractWrite#return-value
     // const result = await writeContract?.wait()

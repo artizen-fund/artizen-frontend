@@ -31,6 +31,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     functionName,
     args: argsState,
     chainId,
+    value: value,
     onError: e => {
       let error = e.message as string
 
@@ -113,8 +114,6 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
       setArgsState(args)
     }
 
-    // setWriteNow(true)
-    // write?.()
     await writeAsync?.()
 
     if (errorState) {
