@@ -14,7 +14,7 @@ interface useMintArtifactsProps {
 }
 
 export const useContracts = ({ args, value, functionName, eventName, warming }: useMintArtifactsProps) => {
-  const [writeNow, setWriteNow] = useState(false)
+  const [processing, setProcessing] = useState(false)
   const [argsState, setArgsState] = useState<any[]>([])
   const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
   const [errorState, setErrorState] = useState<string | null>(null)
@@ -51,7 +51,12 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     },
   })
 
-  const { isLoading, writeAsync } = useContractWrite({
+  const {
+    isLoading,
+    writeAsync,
+    write,
+    status: writeContractStatus,
+  } = useContractWrite({
     ...config,
     onSettled(data, error) {
       console.log('Settled', { data, error })
@@ -114,6 +119,10 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
       setArgsState(args)
     }
 
+    setProcessing(true)
+
+    console.log('from execute.....   ', argsState)
+
     await writeAsync?.()
 
     if (errorState) {
@@ -122,8 +131,10 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
 
     const eventResult = await contractEventListener()
 
+    setProcessing(false)
+
     return { outcome: eventResult as IOutcomeReturn[] }
   }
 
-  return { execute, isLoading }
+  return { status: writeContractStatus, execute, isLoading, write, errorState, contractEventListener, processing }
 }

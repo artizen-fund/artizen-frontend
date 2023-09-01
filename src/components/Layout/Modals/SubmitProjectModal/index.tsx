@@ -10,6 +10,7 @@ import {
   readContract,
   sendArtifactToIPFS,
   sleep,
+  writeContractUtil,
 } from '@lib'
 
 import { palette, typography } from '@theme'
@@ -48,12 +49,14 @@ const SubmitProjectModal = () => {
   const [updateArtifactMutaton] = useMutation<IUpdate_Artifacts_ManyMutation>(UPDATE_ARTIFACTS)
   const { reload } = useRouter()
 
-  const { execute: publishSubmission } = useContracts({
-    args: [seasonSelected ? seasonSelected.index : 1, ipfs, project.walletAddress],
-    functionName: 'createSubmission',
-    eventName: 'SubmissionCreated',
-    warming: isWarming,
-  })
+  console.log('seasonSelected: ', seasonSelected)
+
+  // const { execute: publishSubmission } = useContracts({
+  //   args: [seasonSelected ? seasonSelected.index : 1, ipfs, project.walletAddress],
+  //   functionName: 'createSubmission',
+  //   eventName: 'SubmissionCreated',
+  //   warming: isWarming,
+  // })
 
   const loadActiveSeasons = () => {
     loadSeasons({
@@ -113,9 +116,17 @@ const SubmitProjectModal = () => {
     setProcessTxt('Uploading Files to IPFS...')
     const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, seasonSelected, project)
 
+    console.log('ipfsHash in here ', ipfsHash)
+
     ipfsHash && setIpfs(ipfsHash)
 
-    const { error, outcome } = await publishSubmission?.([seasonSelected.index, ipfsHash, project.walletAddress])
+    //TODO: this is not publishing data
+    // const { error, outcome } = await publishSubmission?.([seasonSelected.index, ipfsHash, project.walletAddress])
+
+    const { error, hash } = await writeContractUtil({
+      args: [seasonSelected.index, ipfsHash, project.walletAddress],
+      functionName: 'createSubmission',
+    })
 
     if (error) {
       console.log(`Error publishing season to blockchain ${error}`)
@@ -123,7 +134,8 @@ const SubmitProjectModal = () => {
       return
     }
 
-    const artifactID = outcome?.[0].args.submissionID.toString()
+    // const artifactID = outcome?.[0].args.submissionID.toString()
+    const artifactID = newSubmissionCount
 
     setProcessTxt(
       `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
@@ -174,7 +186,7 @@ const SubmitProjectModal = () => {
     setProcessing(false)
     toggleModal()
 
-    reload()
+    // reload()
   }
 
   return (

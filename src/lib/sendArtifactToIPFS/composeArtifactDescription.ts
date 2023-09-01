@@ -1,11 +1,21 @@
 import { IArtifactFragment, IProjectFragment } from '@types'
 
-const composeArtifactDescription = (artifactName: string, project: IProjectFragment, allProjectMembersString: string) =>
-  `**${artifactName} minted by ${project.title}**
+const composeArtifactDescription = (
+  artifactName: string,
+  project: IProjectFragment,
+  allProjectMembersString: string,
+) => {
+  //"title": "How will your project impact the world?"
+
+  const impact = project.metadata.filter((item: any) => item.title === 'How will your project impact the world?')
+
+  console.log('impact', impact[0].value)
+
+  return `**${artifactName} minted by ${project.title}**
   
 **About**: ${project.logline}
   
-**Impact**: ${project.impactTags}
+**Impact**: ${impact[0].value}
   
 **Lead Creator**: ${allProjectMembersString}
   
@@ -13,5 +23,6 @@ This Artifact is in the [public domain](https://creativecommons.org/publicdomain
 
 **Supported by the [Artizen Prize](https://www.artizen.fund/) for human creativity**
 `
+}
 
 export default composeArtifactDescription

@@ -27,46 +27,66 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  /*
-    const { execute: donate } = useContracts({
-    args: [tokenId, artifactQuantity],
-    functionName: 'mintArtifact',
-    eventName: 'SubmissionCreated',
-    warming: isWarming,
-  })
-  */
-
   const { status } = useSession()
 
   const { setVisibleModalWithAttrs, toggleModal, setVisibleModal } = useContext(LayoutContext)
   const [sending, setSending] = useState<boolean>(false)
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
+  const [warming, setWarming] = useState<boolean>(true)
 
-  const { writeAsync, error } = useMintArtifacts({
-    tokenId,
-    artifactQuantity,
+  // const { writeAsync, error } = useMintArtifacts({
+  //   tokenId,
+  //   artifactQuantity,
+  // })
+
+  const {
+    execute: donate,
+    write,
+    contractEventListener,
+    status: contractStatus,
+    processing,
+  } = useContracts({
+    args: [[tokenId], [artifactQuantity]],
+    functionName: 'mintArtifact',
+    eventName: 'ArtifactMinted',
+    value: BigInt(BASE_ARTIFACT_PRICE * artifactQuantity * 1e18),
+    warming,
   })
 
+  // useEffect(() => {
+  //   if (error) {
+  //     setVisibleModalWithAttrs('errorModal', {
+  //       error,
+  //     })
+  //   }
+  // }, [error])
+
   useEffect(() => {
-    if (error) {
-      setVisibleModalWithAttrs('errorModal', {
-        error,
-      })
+    console.log('contractStatus: ', contractStatus)
+    if (processing) {
+      toggleModal()
+      toggleModal('processTransaction')
     }
-  }, [error])
+  }, [processing])
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
-    toggleModal('confirmTransaction')
+    setWarming(false)
+
     setSending(true)
+    console.log('contractStatus before clicking write ', contractStatus)
+    toggleModal('confirmTransaction')
+
     trackEventF(intercomEventEnum.DONATION_START, {
       amount: artifactQuantity,
       tokenId,
     })
 
-    const hash = await writeAsync?.()
+    const hash: any = await donate?.()
 
-    toggleModal('processTransaction')
+    console.log('hash: ', hash)
+
+    toggleModal()
 
     //TODO: review if hash is return as plain string or as an object
     //https://wagmi.sh/react/hooks/useContractWrite#return-value
@@ -105,12 +125,12 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         <StyledButton
           level={1}
           onClick={() => {
-            if (error) {
-              setVisibleModalWithAttrs('errorModal', {
-                error,
-              })
-              return
-            }
+            // if (error) {
+            //   setVisibleModalWithAttrs('errorModal', {
+            //     error,
+            //   })
+            //   return
+            // }
 
             donateFn()
           }}
