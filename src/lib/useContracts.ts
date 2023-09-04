@@ -16,7 +16,7 @@ interface useMintArtifactsProps {
 export const useContracts = ({ args, value, functionName, eventName, warming }: useMintArtifactsProps) => {
   const [processing, setProcessing] = useState(false)
   const [argsState, setArgsState] = useState<any[]>([])
-  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   const [errorState, setErrorState] = useState<string | null>(null)
   const SEASON_CONTRACT = assert(
     process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
@@ -31,7 +31,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     functionName,
     args: argsState,
     chainId,
-    value: value,
+    value,
     onError: e => {
       let error = e.message as string
 
@@ -75,7 +75,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   })
 
   const contractEventListener = async () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       const unwatch = watchContractEvent(
         {
           address: SEASON_CONTRACT as `0x${string}`,
@@ -123,7 +123,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
 
     console.log('from execute.....   ', argsState)
 
-    await writeAsync?.()
+    const writeText = await writeAsync?.()
 
     if (errorState) {
       return { error: errorState }
