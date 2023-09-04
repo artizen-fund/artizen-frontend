@@ -14,9 +14,9 @@ interface useMintArtifactsProps {
 }
 
 export const useContracts = ({ args, value, functionName, eventName, warming }: useMintArtifactsProps) => {
-  const [writeNow, setWriteNow] = useState(false)
+  const [processing, setProcessing] = useState(false)
   const [argsState, setArgsState] = useState<any[]>([])
-  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   const [errorState, setErrorState] = useState<string | null>(null)
   const SEASON_CONTRACT = assert(
     process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
@@ -31,6 +31,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     functionName,
     args: argsState,
     chainId,
+    value,
     onError: e => {
       let error = e.message as string
 
@@ -50,7 +51,12 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     },
   })
 
-  const { isLoading, writeAsync } = useContractWrite({
+  const {
+    isLoading,
+    writeAsync,
+    write,
+    status: writeContractStatus,
+  } = useContractWrite({
     ...config,
     onSettled(data, error) {
       console.log('Settled', { data, error })
@@ -69,7 +75,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   })
 
   const contractEventListener = async () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       const unwatch = watchContractEvent(
         {
           address: SEASON_CONTRACT as `0x${string}`,
@@ -113,9 +119,11 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
       setArgsState(args)
     }
 
-    // setWriteNow(true)
-    // write?.()
-    await writeAsync?.()
+    setProcessing(true)
+
+    console.log('from execute.....   ', argsState)
+
+    const writeText = await writeAsync?.()
 
     if (errorState) {
       return { error: errorState }
@@ -123,8 +131,10 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
 
     const eventResult = await contractEventListener()
 
+    setProcessing(false)
+
     return { outcome: eventResult as IOutcomeReturn[] }
   }
 
-  return { execute, isLoading }
+  return { status: writeContractStatus, execute, isLoading, write, errorState, contractEventListener, processing }
 }

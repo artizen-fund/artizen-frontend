@@ -39,7 +39,6 @@ export default (
         value: moment.tz(project.completionDate, ARTIZEN_TIMEZONE).unix(),
         display_type: 'date',
       },
-      // { trait_type: 'Limited Series', value: artifact.edition },
       { trait_type: 'Minted', value: `Season ${season}` },
       { trait_type: 'Project', value: project.title },
       { trait_type: 'Lead Creator', value: leadMemberTraitType },
