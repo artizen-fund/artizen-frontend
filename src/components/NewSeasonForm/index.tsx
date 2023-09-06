@@ -35,7 +35,8 @@ export default function NewSeasonForm(): JSX.Element {
   const startingDate = `${data.startingDate}T09:01:00`
   const endingDate = `${data.endingDate}T09:00:00`
 
-  // const { publishSeason } = useSeasons()
+  console.log('endingDate', endingDate)
+
   const { execute: publishSeason } = useContracts({
     args: [getTimeUnix(startingDate), getTimeUnix(endingDate)],
     functionName: 'createSeason',
@@ -62,6 +63,7 @@ export default function NewSeasonForm(): JSX.Element {
   }
 
   const checkIfThereIsSeasonDate = async (from: string, to: string) => {
+    console.log('checkIfThereIsSeasonDate', from, to)
     const { data: seasonInDB, error } = await loadSeason({
       variables: {
         where: {
@@ -72,6 +74,8 @@ export default function NewSeasonForm(): JSX.Element {
         },
       },
     })
+
+    console.log('seasonInDB', seasonInDB)
 
     if (error) {
       alert('Error loading season in checkIfThereIsSeasonDate')
@@ -90,6 +94,8 @@ export default function NewSeasonForm(): JSX.Element {
     } else {
       setAdditionalErrors([])
     }
+
+    return true
   }
 
   interface IOutcomeReturn {
@@ -97,13 +103,19 @@ export default function NewSeasonForm(): JSX.Element {
   }
 
   const saveNewSeason = async () => {
+    console.log('saveNewSeason', data)
+
     if (!data.startingDate || !data.endingDate) {
       return
     }
 
     setProcessing(true)
 
+    await checkIfThereIsSeasonDate(data.startingDate, data.endingDate)
+
     const { error, outcome } = await publishSeason?.()
+
+    console.log('error   ', error)
 
     if (error) {
       console.log(`Error publishing season to blockchain ${error}`)
@@ -140,26 +152,26 @@ export default function NewSeasonForm(): JSX.Element {
     push(`/admin/seasons/${newSeasonData.id}`)
   }
 
-  console.log('Im here in new season form', schema)
-  console.log('Im here in new season form uischema', uischema)
-  console.log('Im here in new season form data', data)
   return (
     <Form
       schema={schema}
       uischema={uischema}
       data={data}
       setData={async temData => {
-        // if (temData.startingDate && temData.endingDate) {
-        //   await checkIfThereIsSeasonDate(temData.startingDate, temData.endingDate)
-        //   checkIfEndingDateIsAfterStartingDate(temData.startingDate, temData.endingDate)
-        // }
-        // setData(temData)
+        console.log('temData  initial ', temData)
+        if (temData.startingDate && temData.endingDate) {
+          await checkIfThereIsSeasonDate(temData.startingDate, temData.endingDate)
+          console.log('gets here')
+          checkIfEndingDateIsAfterStartingDate(temData.startingDate, temData.endingDate)
+        }
+        console.log('temData', temData)
+        setData(temData)
       }}
       additionalErrors={additionalErrors}
       readonly={processing}
     >
       <StyledButton onClick={saveNewSeason} stretch level={2}>
-        {processing ? 'Publishing...' : 'Published'}
+        {processing ? 'Publishing...' : 'Publish'}
       </StyledButton>
     </Form>
   )

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, use } from 'react'
 import { usePrepareContractWrite, useContractWrite, useContractEvent } from 'wagmi'
 import { watchContractEvent } from '@wagmi/core'
 import { SeasonsAbi } from '@contracts'
-import { assertFloat, assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND, LayoutContext } from '@lib'
+import { assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND, LayoutContext } from '@lib'
 import { isEqual } from 'lodash'
 
 interface useMintArtifactsProps {
@@ -62,6 +62,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
       console.log('Settled', { data, error })
 
       if (error) {
+        console.log('error.message as string   ', error.message as string)
         setErrorState(error.message as string)
         return
       }
@@ -92,11 +93,11 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
 
   useEffect(() => {
     console.log('errorState   ', errorState)
-    errorState !== null &&
-      !warming &&
-      setVisibleModalWithAttrs('errorModal', {
-        error: errorState,
-      })
+    // errorState !== null &&
+    //   !warming &&
+    //   setVisibleModalWithAttrs('errorModal', {
+    //     error: errorState,
+    //   })
   }, [errorState])
 
   useEffect(() => {
