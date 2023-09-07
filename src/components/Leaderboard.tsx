@@ -55,7 +55,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
       <BiggerText>Ξ{sells} raised:</BiggerText>
       <Grey>&nbsp; Ξ{salesArtifacts} sales </Grey>
       <Green>+ Ξ{getMatchFundMoney(count).toFixed(FIXED_PRECISION)} match</Green>
-      <Green> + Ξ{split20.toFixed(FIXED_PRECISION)} prize</Green>
+      {isWinner && <Green> + Ξ{split20.toFixed(FIXED_PRECISION)} prize</Green>}
     </div>
   )
 
