@@ -70,7 +70,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
             {index === 0 && <StyledGlyph glyph="crown" level={1} color="black" darkColor="algae" />}
           </div>
           <div>
-            <Grey>Ξ&nbsp;{BASE_ARTIFACT_PRICE * count}</Grey>
+            <Grey>Ξ&nbsp;{BASE_ARTIFACT_PRICE * user.copies}</Grey>
             <Green>+&nbsp; Ξ&nbsp;{getMatchFundMoney(user.copies).toFixed(FIXED_PRECISION)}</Green>{' '}
             <Amount>
               <span> | minted</span> {user.copies}

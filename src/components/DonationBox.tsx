@@ -10,7 +10,6 @@ import {
   assert,
   rgba,
   useSeasons,
-  useMintArtifacts,
   useContracts,
 } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
@@ -34,10 +33,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
   const [warming, setWarming] = useState<boolean>(true)
 
-  // const { writeAsync, error } = useMintArtifacts({
-  //   tokenId,
-  //   artifactQuantity,
-  // })
+  console.log('artifactQuantity  ', artifactQuantity)
 
   const {
     execute: donate,
