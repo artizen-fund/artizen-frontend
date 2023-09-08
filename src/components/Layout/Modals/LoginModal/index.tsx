@@ -3,11 +3,11 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { CheckboxControl, Icon, Button } from '@components'
 import { CheckWrapper, Check, CheckMessage } from '../../Header/SessionShelf/_common'
-import { rgba, assetPath, LayoutContext, textCrop, assert, useWalletAuthFlow } from '@lib'
+import { rgba, assetPath, LayoutContext, textCrop } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { connectWallet, signInWalletMessage } from '@copy/common'
 import { ConnectingComp } from './lib/'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 
 const LoginModal = ({ ...props }) => {
   const { status } = useSession()

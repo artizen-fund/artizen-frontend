@@ -28,7 +28,6 @@ export const LayoutContext = createContext<ILayoutContext>({
 export const LayoutContextProvider = ({ children }: SimpleComponentProps) => {
   const [visibleShelf, setVisibleShelf] = useState<HeaderShelfType>()
   const toggleShelf = (shelf?: HeaderShelfType) => setVisibleShelf(shelf === visibleShelf ? undefined : shelf)
-
   const [locked, setLocked] = useState(false)
   const [visibleModal, setVisibleModal] = useState<ModalType | undefined>()
   const [modalAttrs, setModalAttrs] = useState<any>()

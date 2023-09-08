@@ -39,6 +39,7 @@ export * from './useWalletAuthFlow'
 export * from './useContracts'
 export * from './useSeasonSubscriptionData'
 export * from './writeContractUtil'
+export * from './utils'
 
 export { default as sendArtifactToIPFS } from './sendArtifactToIPFS'
 

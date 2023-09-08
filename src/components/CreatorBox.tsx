@@ -2,19 +2,10 @@ import styled from 'styled-components'
 import { Button, Glyph } from '@components'
 import { IUserPublicFragment } from '@types'
 import { breakpoint, palette } from '@theme'
-import { rgba, sizeForLevel } from '@lib'
+import { rgba, sizeForLevel, getTwitterHandler } from '@lib'
 
 interface ICreatorBox {
   user: IUserPublicFragment
-}
-
-const getTwitterHandler = (twitterLink: string) => {
-  const myRe = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/(?:#!\/)?@?([^\/\?\s]*)/
-  const myArray = myRe.exec('http://www.twitter.com/codeschool')
-
-  console.log(myArray)
-
-  return myArray && myArray[1]
 }
 
 const CreatorBox = ({ user }: ICreatorBox) => {
