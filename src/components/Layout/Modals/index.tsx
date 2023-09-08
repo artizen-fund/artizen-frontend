@@ -26,7 +26,7 @@ import { breakpoint } from '@theme'
 const ANIMATION_TIMING = 0.6 // seconds
 
 const Modals = () => {
-  const { visibleModal, toggleModal, setLocked, locked } = useContext(LayoutContext)
+  const { visibleModal, toggleModal, setLocked, locked, modalAttrs } = useContext(LayoutContext)
   /* In order for the modal to have any kind of fade-out effect, it needs
    *   to persist even when visibleModal is changed in the LayoutContext.
    *
@@ -98,7 +98,15 @@ const Modals = () => {
     <Wrapper {...{ visible }}>
       <Content>
         {renderSwitch(visibleModal)}
-        {!locked && <CloseButton onClick={() => toggleModal()} {...{ visible }} />}
+        {!locked && (
+          <CloseButton
+            onClick={() => {
+              modalAttrs?.callback && modalAttrs.callback()
+              toggleModal()
+            }}
+            {...{ visible }}
+          />
+        )}
       </Content>
     </Wrapper>
   )

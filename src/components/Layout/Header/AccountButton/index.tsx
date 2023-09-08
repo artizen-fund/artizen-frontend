@@ -22,13 +22,22 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     signOut()
   }
 
+  console.log('currentFlow is should be toConnect   currentFlow === ', currentFlow)
+  console.log('startAuth is should be true   startAuth === ', startAuth)
+
   useEffect(() => {
+    console.log('useEffect currentFlow  ', currentFlow)
+    console.log('useEffect startAuth  ', startAuth)
     if (currentFlow !== 'allDoneConnected' && startAuth) {
       setVisibleModalWithAttrs('login', {
         connectMetamask,
         connectOtherWallet,
         signEnMessage,
         currentFlow,
+        callback: () => {
+          console.log('callback')
+          setStartAuth(false)
+        },
       })
     }
 
@@ -53,9 +62,12 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   })
 
   const onClick = () => {
+    console.log('onClick   ', status)
+
     if (status === 'loading') {
       return
     } else if (!loggedInUser) {
+      console.log('start auth')
       setStartAuth(true)
 
       // setVisibleModalWithAttrs('login', {
@@ -64,7 +76,15 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       //   signEnMessage,
       //   currentFlow,
       // })
+
+      // setVisibleModalWithAttrs('login', {
+      //   connectMetamask,
+      //   connectOtherWallet,
+      //   signEnMessage,
+      //   currentFlow,
+      // })
     } else {
+      console.log('gets here')
       toggleShelf('session')
     }
   }
@@ -89,8 +109,20 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     }
   }, [loggedInUser])
 
+  console.log('status  ', status)
+  console.log('loggedInUser  ', loggedInUser)
+  console.log('active  ', active)
+
   return (
-    <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...{ onClick }} {...props}>
+    <Wrapper
+      loggedIn={!!loggedInUser}
+      visibleShelf={active}
+      onClick={() => {
+        console.log('onClick')
+        onClick()
+      }}
+      {...props}
+    >
       <TextLabel visible={status === 'loading'}>
         <Spinner />
       </TextLabel>

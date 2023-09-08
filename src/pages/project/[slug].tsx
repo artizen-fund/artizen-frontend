@@ -16,11 +16,12 @@ import {
   ProjectLeaderboardShimmer,
   ProjectSponsors,
 } from '@components'
-import { LayoutContext, createApolloClient, SeasonSubcriptionContext } from '@lib'
+import { LayoutContext, getTwitterHandler, createApolloClient, SeasonSubcriptionContext } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
 import { IProjectFragment, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
+import { capitalize } from 'lodash'
 
 const ProjectPage = ({ project }: any) => {
   const {
@@ -100,9 +101,9 @@ const ProjectPage = ({ project }: any) => {
                       setVisibleModalWithAttrs('share', {
                         mode: 'project',
                         destination: asPath,
-                        projectTitle: project.title,
+                        projectTitle: capitalize(project.title),
                         artizenHandle: lead?.artizenHandle,
-                        twitterHandle: lead?.twitterHandle,
+                        twitterHandle: getTwitterHandler(lead?.twitterHandle),
                       })
                     }
                   >
