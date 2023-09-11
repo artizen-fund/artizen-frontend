@@ -21,6 +21,9 @@ const FIXED_PRECISION = 2
 const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPooled }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
+  console.log('openEditions ', openEditions)
+  console.log('count ', count)
+
   if (!openEditions) return <Spinner minHeight="65px" />
 
   const sideItem =
@@ -43,10 +46,13 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
 
   const getMatchFundMoney = (countH: number): number => {
     const split = totalSales > 0 ? (countH * 100) / totalSales : 0
+    //split: 6*100/8 = 75%
+    //spli80: 80*10/100 = 8
     return (spli80 * split) / 100
   }
 
   const salesArtifacts = BASE_ARTIFACT_PRICE * count
+  const contributionOfSalesToMatchFund = count * 0.01
 
   const sells = (salesArtifacts + getMatchFundMoney(count) + (isWinner ? split20 : 0)).toFixed(2)
 

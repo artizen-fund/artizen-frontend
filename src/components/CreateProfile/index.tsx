@@ -43,6 +43,7 @@ const CreateProfile = () => {
 
   const updateProfileCallback = async () => {
     setProcessing(true)
+    console.log('updateProfileCallback initial')
     try {
       const updatedProfile = await updateProfile(modalAttrs?.initialState?.id, sendWelcomeEmail)
       const profileImage = updatedProfile?.profileImage || modalAttrs?.initialState?.profileImage
@@ -53,6 +54,7 @@ const CreateProfile = () => {
 
       setProcessing(false)
       toggleModal()
+      window.location.assign(`${window.location.protocol}//${window.location.host}/`)
     } catch (error) {
       setProcessing(false)
       console.error('Error update user profile', error)
@@ -62,11 +64,15 @@ const CreateProfile = () => {
   const createProfileC = async () => {
     setProcessing(true)
     try {
+      console.log('createProfileC:::: initial state')
       const newProfile = await createProfile()
       modalAttrs?.callback(newProfile)
 
       setProcessing(false)
       toggleModal()
+      console.log('createProfileC:::::: ', createProfileC)
+
+      window.location.assign(`${window.location.protocol}//${window.location.host}/`)
     } catch (error) {
       setProcessing(false)
       alert(`Error saving new user profile ${error}`)
