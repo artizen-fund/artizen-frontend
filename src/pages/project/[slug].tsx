@@ -24,6 +24,7 @@ import { IProjectFragment, IOpenEditionsSubscription, ISubmissionFragment } from
 import { capitalize } from 'lodash'
 
 const ProjectPage = ({ project }: any) => {
+  console.log('project  ::::::::::: ', project)
   const {
     season: seasonData,
     seasonIsActive,
@@ -166,7 +167,7 @@ export async function getStaticPaths() {
     params: { slug: project.titleURL },
   }))
 
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 interface IGetStaticPropsParams {
