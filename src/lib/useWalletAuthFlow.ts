@@ -16,11 +16,13 @@ export const useWalletAuthFlow = () => {
   const [messageToSign, setMessageToSign] = useState<string | null>(null)
   const [connecting, setConnecting] = useState(false)
   const { connectAsync, error, connect, connectors } = useConnect()
-  const { connector, address, isConnected } = useAccount()
+  const { address, isConnected } = useAccount()
 
   const [currentFlow, setCurrentFlow] = useState(isConnected ? 'toSignMessage' : 'toConnect')
 
   const { requestChallengeAsync } = useAuthRequestChallengeEvm()
+
+  console.log('error connecting user in main area', error)
 
   const router = useRouter()
   const { status } = useSession()
@@ -91,6 +93,8 @@ export const useWalletAuthFlow = () => {
 
   const connectOtherWallet = () => {
     const WalletConnect = connectors.filter(connector => connector.name === 'WalletConnect')[0]
+
+    console.log('WalletConnect ::::: ', WalletConnect)
 
     connectWallet(WalletConnect)
   }

@@ -20,6 +20,8 @@ export const getWagmiChains = () => {
 export const getWagmiClient = () => {
   const { chains, publicClient, webSocketPublicClient } = getWagmiChains()
 
+  console.log('process.env.NEXT_PUBLIC_WALLET_CONNECTOR_ID  ', process.env.NEXT_PUBLIC_WALLET_CONNECTOR_ID)
+
   const config = createConfig({
     autoConnect: true,
     publicClient,

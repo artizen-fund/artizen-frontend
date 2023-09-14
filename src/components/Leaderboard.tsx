@@ -40,9 +40,11 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const spli80 = (80 * matchFundPooled) / 100
+  const matchFundPooledAndProjectSales = matchFundPooled + count
+
+  const spli80 = (80 * matchFundPooledAndProjectSales) / 100
   //only winners get 20% of the match fund on top of their sales
-  const split20 = (20 * matchFundPooled) / 100
+  const split20 = (20 * matchFundPooledAndProjectSales) / 100
 
   const getMatchFundMoney = (countH: number): number => {
     const split = totalSales > 0 ? (countH * 100) / totalSales : 0
