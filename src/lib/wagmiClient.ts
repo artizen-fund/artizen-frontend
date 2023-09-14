@@ -26,17 +26,17 @@ export const getWagmiClient = () => {
     webSocketPublicClient,
     connectors: [
       new MetaMaskConnector({ chains }),
-      // new InjectedConnector({
-      //   chains,
-      //   options: {
-      //     name: 'Injected',
-      //     shimDisconnect: true,
-      //   },
-      // }),
+      new InjectedConnector({
+        chains,
+        options: {
+          name: 'Injected',
+          shimDisconnect: true,
+        },
+      }),
       new WalletConnectConnector({
         chains,
         options: {
-          // showQrModal: true,
+          showQrModal: true,
           projectId: assert(process.env.NEXT_PUBLIC_WALLET_CONNECTOR_ID, 'NEXT_PUBLIC_WALLET_CONNECTOR_ID'),
         },
       }),
