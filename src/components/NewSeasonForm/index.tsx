@@ -6,7 +6,7 @@ import { ErrorObject } from 'ajv'
 import { useRouter } from 'next/router'
 import { Form, Button } from '@components'
 import { schema, uischema, FormState } from '@forms/createSeason'
-import { LayoutContext, ARTIZEN_TIMEZONE, useSeasons, useContracts, useDateHelpers } from '@lib'
+import { LayoutContext, ARTIZEN_TIMEZONE, useSeasons, useDateHelpers } from '@lib'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -37,11 +37,11 @@ export default function NewSeasonForm(): JSX.Element {
 
   console.log('endingDate', endingDate)
 
-  const { execute: publishSeason } = useContracts({
-    args: [getTimeUnix(startingDate), getTimeUnix(endingDate)],
-    functionName: 'createSeason',
-    eventName: 'SeasonCreated',
-  })
+  // const { execute: publishSeason } = useContracts({
+  //   args: [getTimeUnix(startingDate), getTimeUnix(endingDate)],
+  //   functionName: 'createSeason',
+  //   eventName: 'SeasonCreated',
+  // })
 
   const checkIfEndingDateIsAfterStartingDate = (from: string, to: string) => {
     const fromTime = dayjs.tz(from, ARTIZEN_TIMEZONE)
@@ -113,43 +113,43 @@ export default function NewSeasonForm(): JSX.Element {
 
     await checkIfThereIsSeasonDate(data.startingDate, data.endingDate)
 
-    const { error, outcome } = await publishSeason?.()
+    // const { error, outcome } = await publishSeason?.()
 
-    console.log('error   ', error)
+    // console.log('error   ', error)
 
-    if (error) {
-      console.log(`Error publishing season to blockchain ${error}`)
-      alert(`Error publishing season to blockchain ${error}`)
-      toggleModal('createSeasonModal')
-    }
+    // if (error) {
+    //   console.log(`Error publishing season to blockchain ${error}`)
+    //   alert(`Error publishing season to blockchain ${error}`)
+    //   toggleModal('createSeasonModal')
+    // }
 
-    const newSeasonId = outcome?.[0].args.seasonID.toString()
+    // const newSeasonId = outcome?.[0].args.seasonID.toString()
 
     //get the new season id from blockchain and save it into the database
     // const newSeasonId = publishedSeason.events[0].args[0].toString()
 
-    const dateFronMutation = await insertSeason({
-      variables: {
-        objects: [
-          {
-            title: data.title,
-            startingDate,
-            endingDate,
-            index: Number(newSeasonId),
-          },
-        ],
-      },
-    })
+    // const dateFronMutation = await insertSeason({
+    //   variables: {
+    //     objects: [
+    //       {
+    //         title: data.title,
+    //         startingDate,
+    //         endingDate,
+    //         index: Number(newSeasonId),
+    //       },
+    //     ],
+    //   },
+    // })
 
-    const newSeasonData = dateFronMutation.data.insert_Seasons.returning[0]
+    // const newSeasonData = dateFronMutation.data.insert_Seasons.returning[0]
 
-    if (!newSeasonData && newSeasonData.length === 0) {
-      throw new Error('Error saving new season')
-    }
+    // if (!newSeasonData && newSeasonData.length === 0) {
+    //   throw new Error('Error saving new season')
+    // }
 
-    toggleModal('createSeasonModal')
+    // toggleModal('createSeasonModal')
 
-    push(`/admin/seasons/${newSeasonData.id}`)
+    // push(`/admin/seasons/${newSeasonData.id}`)
   }
 
   return (

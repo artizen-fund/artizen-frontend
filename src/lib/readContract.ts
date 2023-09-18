@@ -1,6 +1,6 @@
 import { SeasonsAbi } from '@contracts'
 import { assert, assertInt } from '@lib'
-import { readContract as readContractM } from '@wagmi/core'
+// import { readContract as readContractM } from '@wagmi/core'
 
 export const readContract = async (functionName: string): Promise<{ data: any }> => {
   const SEASON_CONTRACT = assert(
@@ -10,12 +10,12 @@ export const readContract = async (functionName: string): Promise<{ data: any }>
 
   const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
-  const data = await readContractM({
-    address: SEASON_CONTRACT as `0x${string}`,
-    abi: SeasonsAbi,
-    functionName,
-    chainId,
-  })
+  // const data = await readContractM({
+  //   address: SEASON_CONTRACT as `0x${string}`,
+  //   abi: SeasonsAbi,
+  //   functionName,
+  //   chainId,
+  // })
 
-  return { data }
+  return { data: null }
 }

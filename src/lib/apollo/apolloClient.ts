@@ -7,10 +7,15 @@ import { getSession } from 'next-auth/react'
 import isEqual from 'lodash/isEqual'
 import { assert, isServer, isClient } from '@lib'
 import { cache } from './'
+import { getCookie } from 'cookies-next'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-export const createApolloClient = (didToken?: string) => {
+export const createApolloClient = () => {
+  const didToken = getCookie('didToken')
+
+  console.log('didToken :::::::  ', didToken)
+
   const httpLink = createHttpLink({
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
     headers: {},
@@ -81,7 +86,7 @@ export const createApolloClient = (didToken?: string) => {
 }
 
 export function initializeApollo(initialState?: unknown, didToken?: string): ApolloClient<NormalizedCacheObject> {
-  const newApolloClient = createApolloClient(didToken)
+  const newApolloClient = createApolloClient()
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state gets hydrated here.
   if (initialState) {
     // Get existing cache, loaded during client side data fetching

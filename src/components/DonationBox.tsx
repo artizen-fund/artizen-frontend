@@ -35,19 +35,19 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
   console.log('artifactQuantity  ', artifactQuantity)
 
-  const {
-    execute: donate,
-    write,
-    contractEventListener,
-    status: contractStatus,
-    processing,
-  } = useContracts({
-    args: [[tokenId], [artifactQuantity]],
-    functionName: 'mintArtifact',
-    eventName: 'ArtifactMinted',
-    value: BigInt(BASE_ARTIFACT_PRICE * artifactQuantity * 1e18),
-    warming,
-  })
+  // const {
+  //   execute: donate,
+  //   write,
+  //   contractEventListener,
+  //   status: contractStatus,
+  //   processing,
+  // } = useContracts({
+  //   args: [[tokenId], [artifactQuantity]],
+  //   functionName: 'mintArtifact',
+  //   eventName: 'ArtifactMinted',
+  //   value: BigInt(BASE_ARTIFACT_PRICE * artifactQuantity * 1e18),
+  //   warming,
+  // })
 
   // useEffect(() => {
   //   if (error) {
@@ -57,20 +57,20 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   //   }
   // }, [error])
 
-  useEffect(() => {
-    console.log('contractStatus: ', contractStatus)
-    if (processing) {
-      toggleModal()
-      toggleModal('processTransaction')
-    }
-  }, [processing])
+  // useEffect(() => {
+  //   console.log('contractStatus: ', contractStatus)
+  //   if (processing) {
+  //     toggleModal()
+  //     toggleModal('processTransaction')
+  //   }
+  // }, [processing])
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
     setWarming(false)
 
     setSending(true)
-    console.log('contractStatus before clicking write ', contractStatus)
+    // console.log('contractStatus before clicking write ', contractStatus)
     toggleModal('confirmTransaction')
 
     trackEventF(intercomEventEnum.DONATION_START, {
@@ -78,9 +78,9 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       tokenId,
     })
 
-    const hash: any = await donate?.()
+    // const hash: any = await donate?.()
 
-    console.log('hash: ', hash)
+    // console.log('hash: ', hash)
 
     toggleModal()
 
@@ -88,18 +88,18 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     //https://wagmi.sh/react/hooks/useContractWrite#return-value
     // const result = await writeContract?.wait()
 
-    if (hash) {
-      trackEventF(intercomEventEnum.DONATION_FINISHED, {
-        amount: artifactQuantity.toString(),
-        tokenId,
-      })
+    // if (hash) {
+    //   trackEventF(intercomEventEnum.DONATION_FINISHED, {
+    //     amount: artifactQuantity.toString(),
+    //     tokenId,
+    //   })
 
-      setVisibleModalWithAttrs('shareTransaction', {
-        mode: 'postTransaction',
-        destination: `/projects/${project.titleURL}`,
-        projecTitle: project.title,
-      })
-    }
+    //   setVisibleModalWithAttrs('shareTransaction', {
+    //     mode: 'postTransaction',
+    //     destination: `/projects/${project.titleURL}`,
+    //     projecTitle: project.title,
+    //   })
+    // }
 
     setSending(false)
   }

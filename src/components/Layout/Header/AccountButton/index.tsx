@@ -1,95 +1,98 @@
 import { useContext, useEffect, useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
-import { useAccount } from 'wagmi'
+import { useAuthRequestChallengeEvm } from '@moralisweb3/next'
 import { useQuery, useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGetUserQuery, Maybe } from '@types'
-import { rgba, loggedInUserVar, LayoutContext, textCrop, useWalletAuthFlow } from '@lib'
+import { rgba, textCrop } from '@lib'
+import { loggedInUserVar, useCloudinary, LayoutContext } from '@lib'
+import { usePrivy, useLogin } from '@privy-io/react-auth'
 import { GET_USER } from '@gql'
+import { getCookie } from 'cookies-next'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
-  const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
-  const { isConnected } = useAccount()
+  const [messageToSign, setMessageToSign] = useState<string | null>(null)
   const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const { data: session, status } = useSession()
+  const didToken = getCookie('didToken')
+  const { authenticated, user } = usePrivy()
+  const [loading, setLoading] = useState(false)
+  // const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
+  // const { isConnected } = useAccount()
+
+  // const { data: session, status } = useSession()
   const loggedInUser = useReactiveVar(loggedInUserVar)
   const [startAuth, setStartAuth] = useState(false)
+  const { requestChallengeAsync } = useAuthRequestChallengeEvm()
+  const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
-  if (!isConnected && !!session) {
-    console.warn('user session is not connected to the wallet')
-    signOut()
-  }
+  // const createChallenge = async (address: `0x${string}`, chainId: string) => {
+  //   const challenge = await requestChallengeAsync({ address, chainId })
 
-  console.log('currentFlow is should be toConnect   currentFlow === ', currentFlow)
+  //   if (!challenge) {
+  //     throw new Error('failed walletconnect challenge')
+  //   }
+  //   const { message } = challenge
+
+  //   setMessageToSign(message)
+
+  //   return message
+  // }
+
+  const { login } = useLogin({
+    onComplete: async (user, isNewUser, wasAlreadyAuthenticated) => {
+      console.log('wasAlreadyAuthenticated', wasAlreadyAuthenticated)
+      console.log('user   ', user)
+      console.log('isNewUser     ', isNewUser)
+      // Any logic you'd like to execute if the user is/becomes authenticated while this
+      // component is mounted
+
+      setLoading(false)
+    },
+    onError: error => {
+      console.log(' error login  ', error)
+      // Any logic you'd like to execute after a user exits the login flow or there is an error
+    },
+  })
+
+  // console.log('user ', user)
+  // console.log('authenticated', authenticated)
+  // console.log('didToken in account', didToken)
+  // console.log('loggedInUser   ', loggedInUser)
+
+  // if (!isConnected && !!session) {
+  //   console.warn('user session is not connected to the wallet')
+  //   signOut()
+  // }
+
+  // console.log('currentFlow is should be toConnect   currentFlow === ', currentFlow)
   console.log('startAuth is should be true   startAuth === ', startAuth)
 
-  useEffect(() => {
-    console.log('useEffect currentFlow  ', currentFlow)
-    console.log('useEffect startAuth  ', startAuth)
-    if (currentFlow !== 'allDoneConnected' && startAuth) {
-      setVisibleModalWithAttrs('login', {
-        connectMetamask,
-        connectOtherWallet,
-        signEnMessage,
-        currentFlow,
-        callback: () => {
-          console.log('callback')
-          setStartAuth(false)
-        },
-      })
-    }
-
-    if (currentFlow === 'allDoneConnected') {
-      setStartAuth(false)
-    }
-  }, [currentFlow, startAuth])
-
   useQuery<IGetUserQuery>(GET_USER, {
-    skip: !isConnected || !session || !session?.user?.publicAddress,
-    variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
+    skip: !authenticated || !didToken || loggedInUser !== undefined,
+    variables: { publicAddress: user?.wallet?.address.toLowerCase() },
     onCompleted: data => {
-      if (!loggedInUser || loggedInUser.id !== data.Users[0].id) {
-        //TODO: there is really not need to use useReactiveVar. We can move this query function to a hook and use it everywhere the user data is needed
-        // useReactiveVar forces rerender the whole website, bad stuff
-        loggedInUserVar(data.Users[0])
-      }
+      console.log('goes oncompleted   ', data)
+      //TODO: there is really not need to use useReactiveVar. We can move this query function to a hook and use it everywhere the user data is needed
+      // useReactiveVar forces rerender the whole website, bad stuff
+      loggedInUserVar(data.Users[0])
+
+      setLoading(false)
     },
     onError: error => {
       console.log('onError ', error)
+
+      setLoading(false)
     },
   })
 
   const onClick = () => {
-    console.log('onClick   ', status)
+    console.log('onClick   ')
 
-    if (status === 'loading') {
-      return
-    } else if (!loggedInUser) {
-      console.log('start auth')
-      setStartAuth(true)
-
-      // setVisibleModalWithAttrs('login', {
-      //   connectMetamask,
-      //   connectOtherWallet,
-      //   signEnMessage,
-      //   currentFlow,
-      // })
-
-      // setVisibleModalWithAttrs('login', {
-      //   connectMetamask,
-      //   connectOtherWallet,
-      //   signEnMessage,
-      //   currentFlow,
-      // })
-    } else {
-      console.log('gets here')
-      toggleShelf('session')
-    }
+    setLoading(true)
+    login()
   }
-
-  const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
   useEffect(() => {
     setAvatarDisplay(
@@ -101,7 +104,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         ? 'initials'
         : 'placeholder',
     )
-    if (status === 'authenticated' && !!loggedInUser && (!loggedInUser.email || !loggedInUser.artizenHandle)) {
+    if (authenticated && !!loggedInUser && (!loggedInUser.email || !loggedInUser.artizenHandle)) {
       setVisibleModalWithAttrs('createProfile', {
         action: 'update',
         sendWelcomeEmail: true,
@@ -109,31 +112,38 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     }
   }, [loggedInUser])
 
-  console.log('status  ', status)
-  console.log('loggedInUser  ', loggedInUser)
-  console.log('active  ', active)
+  // console.log('status  ', status)
+  // console.log('loggedInUser  ', loggedInUser)
+  // console.log('active  ', active)
 
   return (
     <Wrapper
-      loggedIn={!!loggedInUser}
+      loggedIn={false}
       visibleShelf={active}
       onClick={() => {
-        console.log('onClick')
-        onClick()
+        if (loading) {
+          return
+        } else if (!loggedInUser) {
+          console.log('onClick')
+          onClick()
+        } else {
+          console.log('toggleShelf')
+          toggleShelf('session')
+        }
       }}
       {...props}
     >
-      <TextLabel visible={status === 'loading'}>
+      <TextLabel visible={loading}>
         <Spinner />
       </TextLabel>
-      <TextLabel visible={status !== 'loading' && active}>
+      <TextLabel visible={!loading && active}>
         <SizedType>Close</SizedType>
       </TextLabel>
-      <TextLabel visible={status !== 'loading' && !loggedInUser && !active}>
+      <TextLabel visible={!loading && !loggedInUser}>
         <SizedType>Connect</SizedType>
       </TextLabel>
       <HamburgerGlyph
-        visible={status !== 'loading' && !!loggedInUser && !active}
+        visible={!loading && !!loggedInUser && !active}
         color="night"
         darkColor="moon"
         glyph="hamburger"

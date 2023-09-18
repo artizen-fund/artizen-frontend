@@ -10,14 +10,14 @@ import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { rgba, LayoutContext, useDateHelpers } from '@lib'
 import { startCase } from 'lodash'
-import { useAccount } from 'wagmi'
+// import { useAccount } from 'wagmi'
 
 const Seasons = () => {
   const router = useRouter()
   const { status } = useSession()
   const { toggleModal } = useContext(LayoutContext)
   const { formatDate, getSeasonStatus } = useDateHelpers()
-  const { isConnected } = useAccount()
+  // const { isConnected } = useAccount()
 
   const { data: loadedSeasonsData, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
