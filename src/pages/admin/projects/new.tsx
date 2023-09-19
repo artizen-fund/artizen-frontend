@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { useSession } from 'next-auth/react'
+
 import { IUsers, Maybe } from '@types'
 import { faq } from '@copy/admin'
 import styled from 'styled-components'
@@ -17,7 +17,7 @@ import slugify from 'slugify'
 
 const ProjectDetails = () => {
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
-  const { status } = useSession()
+
   const { push } = useRouter()
   const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
 
@@ -112,35 +112,49 @@ const ProjectDetails = () => {
       <CuratorCheck />
 
       <PagePadding>
-        {status !== 'authenticated' ? (
-          <Spinner />
-        ) : (
-          <Wrapper>
-            <Breadcrumbs
-              schema={[
-                {
-                  path: '/admin',
-                  name: 'Admin',
-                  isActive: false,
-                },
-                {
-                  path: '/admin/projects',
-                  name: 'Projects',
-                  isActive: false,
-                },
-                {
-                  path: '/admin/projects',
-                  name: 'New Project Form',
-                  isActive: true,
-                },
-              ]}
-            />
-            <Title className="extent">New Project Form: </Title>
-            <ProjectLeadMemberWrapper>
-              <Subtitle>Project Lead *</Subtitle>
-              {!tempLeadMember && (
+        <Wrapper>
+          <Breadcrumbs
+            schema={[
+              {
+                path: '/admin',
+                name: 'Admin',
+                isActive: false,
+              },
+              {
+                path: '/admin/projects',
+                name: 'Projects',
+                isActive: false,
+              },
+              {
+                path: '/admin/projects',
+                name: 'New Project Form',
+                isActive: true,
+              },
+            ]}
+          />
+          <Title className="extent">New Project Form: </Title>
+          <ProjectLeadMemberWrapper>
+            <Subtitle>Project Lead *</Subtitle>
+            {!tempLeadMember && (
+              <AddProjectLeadBt
+                onClick={() => {
+                  setVisibleModalWithAttrs('newProjectMemberModal', {
+                    callback: (data: any) => {
+                      setTempLeadMember(data)
+                      toggleModal()
+                    },
+                  })
+                }}
+              >
+                Add Project Lead
+              </AddProjectLeadBt>
+            )}
+
+            {tempLeadMember && (
+              <>
                 <AddProjectLeadBt
                   onClick={() => {
+                    setTempLeadMember(undefined)
                     setVisibleModalWithAttrs('newProjectMemberModal', {
                       callback: (data: any) => {
                         setTempLeadMember(data)
@@ -149,56 +163,38 @@ const ProjectDetails = () => {
                     })
                   }}
                 >
-                  Add Project Lead
+                  Replace
                 </AddProjectLeadBt>
-              )}
 
-              {tempLeadMember && (
-                <>
-                  <AddProjectLeadBt
-                    onClick={() => {
-                      setTempLeadMember(undefined)
-                      setVisibleModalWithAttrs('newProjectMemberModal', {
-                        callback: (data: any) => {
-                          setTempLeadMember(data)
-                          toggleModal()
-                        },
-                      })
-                    }}
-                  >
-                    Replace
-                  </AddProjectLeadBt>
+                <LeadUserWrapper>
+                  <AvatarImage profileImage={tempLeadMember.profileImage}></AvatarImage>
+                  <Subtitle>{`Nickname: ${tempLeadMember.artizenHandle}`}</Subtitle>
+                  <Subtitle>{`Wallet: ${tempLeadMember.publicAddress}`}</Subtitle>
+                  <Subtitle>{`Email: ${tempLeadMember.email}`}</Subtitle>
+                  <Subtitle>{`Twitter: ${tempLeadMember.twitterHandle}`}</Subtitle>
+                  <Subtitle>{`External Link: ${tempLeadMember.externalLink}`}</Subtitle>
+                </LeadUserWrapper>
+              </>
+            )}
+          </ProjectLeadMemberWrapper>
+          <NewProjectForm
+            additionalErrors={additionalErrors}
+            saveNewProject={saveProject}
+            addData={data => {
+              if (data.walletAddress && data.walletAddress?.length > 4) {
+                const error = testWallet(data.walletAddress)
 
-                  <LeadUserWrapper>
-                    <AvatarImage profileImage={tempLeadMember.profileImage}></AvatarImage>
-                    <Subtitle>{`Nickname: ${tempLeadMember.artizenHandle}`}</Subtitle>
-                    <Subtitle>{`Wallet: ${tempLeadMember.publicAddress}`}</Subtitle>
-                    <Subtitle>{`Email: ${tempLeadMember.email}`}</Subtitle>
-                    <Subtitle>{`Twitter: ${tempLeadMember.twitterHandle}`}</Subtitle>
-                    <Subtitle>{`External Link: ${tempLeadMember.externalLink}`}</Subtitle>
-                  </LeadUserWrapper>
-                </>
-              )}
-            </ProjectLeadMemberWrapper>
-            <NewProjectForm
-              additionalErrors={additionalErrors}
-              saveNewProject={saveProject}
-              addData={data => {
-                if (data.walletAddress && data.walletAddress?.length > 4) {
-                  const error = testWallet(data.walletAddress)
+                setAdditionalErrors(error)
 
-                  setAdditionalErrors(error)
-
-                  setTempGenericProject(data)
-                } else {
-                  setTempGenericProject(data)
-                }
-              }}
-              tempValue={tempGenericProject}
-              processing={loading}
-            />
-          </Wrapper>
-        )}
+                setTempGenericProject(data)
+              } else {
+                setTempGenericProject(data)
+              }
+            }}
+            tempValue={tempGenericProject}
+            processing={loading}
+          />
+        </Wrapper>
       </PagePadding>
       <div className="doubleWith">
         <Faq copy={faq} />

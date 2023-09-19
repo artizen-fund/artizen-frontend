@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { Layout, SettingsHeader, EditProfile, EditSettings, Spinner } from '@components'
 import { rgba, useTabbedInfo, Tabs, TabbedContent } from '@lib'
 import { palette, breakpoint } from '@theme'
+import { usePrivy } from '@privy-io/react-auth'
 
 const Settings = () => {
   const router = useRouter()
-  const { status } = useSession()
+  const { authenticated } = usePrivy()
+
   useEffect(() => {
-    if (status === 'unauthenticated') router.push('/')
-  }, [status])
+    if (!authenticated) router.push('/')
+  }, [authenticated])
 
   const tabs = [
     <Tab label="Profile" key="tab-profile">
@@ -26,7 +27,7 @@ const Settings = () => {
 
   return (
     <Layout>
-      {status !== 'authenticated' ? (
+      {authenticated ? (
         <Spinner />
       ) : (
         <>

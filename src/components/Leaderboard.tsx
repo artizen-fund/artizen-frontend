@@ -2,10 +2,9 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Button, Table, TableCell, TableAvatar, Spinner, Glyph } from '@components'
-import { aggregateDonators, rgba, assertFloat, useGnosis } from '@lib'
+import { aggregateDonators, rgba, assertFloat, useGnosis, titleCase } from '@lib'
 import { IOpenEditionsSubscription } from '@types'
 import { palette, typography } from '@theme'
-import { capitalize } from 'lodash'
 
 interface ILeaderboard {
   openEditions?: IOpenEditionsSubscription
@@ -72,7 +71,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
         <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
           <div>
             <TableAvatar profileImage={user.profileImage} />
-            <Name>{capitalize(user?.artizenHandle)}</Name>
+            <Name>{titleCase(user?.artizenHandle)}</Name>
             {index === 0 && <StyledGlyph glyph="crown" level={1} color="black" darkColor="algae" />}
           </div>
           <div>

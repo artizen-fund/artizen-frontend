@@ -1,5 +1,4 @@
-import { unstable_getServerSession } from 'next-auth/next'
-import { authOptions } from './auth/[...nextauth]'
+import { getCookie } from 'cookies-next'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { syncCourierUser } from '@lib'
 
@@ -13,11 +12,8 @@ const syncCourier = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(405).send({ message: 'Only POST requests allowed' })
       return
     }
-    const session = await unstable_getServerSession(req, res, authOptions)
-    if (!session) {
-      res.status(401).send({ message: 'Unauthorized' })
-      return
-    }
+    const didToken = getCookie('didToken', { req, res })
+    console.log('didToken   ', didToken)
 
     await syncCourierUser(req.body)
     res.status(200).end()

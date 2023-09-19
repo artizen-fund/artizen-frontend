@@ -16,12 +16,11 @@ import {
   ProjectLeaderboardShimmer,
   ProjectSponsors,
 } from '@components'
-import { LayoutContext, getTwitterHandler, createApolloClient, SeasonSubcriptionContext } from '@lib'
+import { LayoutContext, getTwitterHandler, createApolloClient, SeasonSubcriptionContext, titleCase } from '@lib'
 import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
 import { IProjectFragment, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
-import { capitalize } from 'lodash'
 
 const ProjectPage = ({ project }: any) => {
   console.log('project  ::::::::::: ', project)
@@ -102,7 +101,7 @@ const ProjectPage = ({ project }: any) => {
                       setVisibleModalWithAttrs('share', {
                         mode: 'project',
                         destination: asPath,
-                        projectTitle: capitalize(project.title),
+                        projectTitle: titleCase(project.title),
                         artizenHandle: lead?.artizenHandle,
                         twitterHandle: getTwitterHandler(lead?.twitterHandle),
                       })
@@ -175,20 +174,7 @@ interface IGetStaticPropsParams {
 }
 
 export async function getStaticProps({ params: { slug } }: { params: IGetStaticPropsParams }) {
-  //{ paths: { slug } }: { paths: IGetStaticPropsParams }
   console.log('params  in getStaticProps', slug)
-  // const apolloClient = createApolloClient()
-  // const queryProject = await apolloClient.query({
-  //   query: GET_PROJECTS,
-  //   variables: {
-  //     limit: 1,
-  //     where: {
-  //       titleURL: {
-  //         _eq: slug,
-  //       },
-  //     },
-  //   },
-  // })
 
   const fethcall = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL as string, {
     method: 'POST',

@@ -35,10 +35,10 @@ export const createApolloClient = () => {
 
   // This sets up a middleware that circumstantially uses the correct query token.
   // https://www.apollographql.com/docs/react/networking/authentication/#header
-  const authLink = setContext(async (_, { headers }) => {
-    const session = await getSession()
+  const authLink = setContext((_, { headers }) => {
+    const didToken = getCookie('didToken')
 
-    const token = session ? session.token : undefined
+    console.log('authLink didToken :::::::  ', didToken)
 
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
@@ -47,12 +47,14 @@ export const createApolloClient = () => {
         process.env.HASURA_GRAPHQL_ADMIN_SECRET,
         'HASURA_GRAPHQL_ADMIN_SECRET',
       )
-    } else if (isServer() && didToken) {
-      // server request on behalf of user via MagicLink DecentralizedID token
-      newHeaders['Authorization'] = `Bearer ${didToken}`
-    } else if (!isServer() && token) {
+    }
+    // else if (isServer() && didToken) {
+    //   // server request on behalf of user via MagicLink DecentralizedID token
+    //   newHeaders['Authorization'] = `Bearer ${didToken}`
+    // }
+    else if (!isServer() && didToken) {
       // client request
-      newHeaders['Authorization'] = `Bearer ${token}`
+      newHeaders['Authorization'] = `Bearer ${didToken}`
     } else {
       // Public access
       newHeaders['x-hasura-unauthorized-role'] = 'public'

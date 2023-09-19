@@ -51,13 +51,6 @@ const SubmitProjectModal = () => {
 
   console.log('seasonSelected: ', seasonSelected)
 
-  // const { execute: publishSubmission } = useContracts({
-  //   args: [seasonSelected ? seasonSelected.index : 1, ipfs, project.walletAddress],
-  //   functionName: 'createSubmission',
-  //   eventName: 'SubmissionCreated',
-  //   warming: isWarming,
-  // })
-
   const loadActiveSeasons = () => {
     loadSeasons({
       // variables: {
@@ -186,7 +179,7 @@ const SubmitProjectModal = () => {
     setProcessing(false)
     toggleModal()
 
-    reload()
+    // reload()
   }
 
   return (

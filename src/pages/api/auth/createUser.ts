@@ -25,7 +25,6 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     iat: 0,
     exp: 0,
     ['https://hasura.io/jwt/claims']: {},
-    user: {},
   }
 
   const userInDatabase = await apolloClient.query<IGetUsersAndCuratorsQuery>({
@@ -86,7 +85,7 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  token.user = candidateUser
+  // token.user = candidateUser
 
   const secret = assert(process.env.JWT_SECRET, 'JWT_SECRET')
   const encodedToken = jsonwebtoken.sign(token, secret, { algorithm: 'HS256' })

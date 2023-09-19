@@ -1,7 +1,6 @@
 import { useState, useContext, useRef } from 'react'
 import Link from 'next/link'
-import { useSession } from 'next-auth/react'
-// import { useAccount } from 'wagmi'
+import { useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import { Button, Logo, Modals, CuratorCheck } from '@components'
@@ -11,21 +10,21 @@ import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette } from '@theme'
-import { rgba, LayoutContext, isProd } from '@lib'
+import { rgba, LayoutContext, isProd, loggedInUserVar } from '@lib'
 import { useRouter } from 'next/router'
 
 const Header = () => {
   const { pathname, push } = useRouter()
   const trigger = useRef<HTMLDivElement>(null)
-  const { status, data } = useSession()
-  // const { isConnected } = useAccount()
+
+  const loggedInUser = useReactiveVar(loggedInUserVar)
+
+  console.log('loggedInUser   ', loggedInUser)
 
   const { visibleShelf, toggleShelf } = useContext(LayoutContext)
   const [visible, setVisible] = useState(true)
   const headerFlipPoint = pathname === '/' && typeof window !== 'undefined' ? window.innerHeight : 10
   useScrollPosition(({ currPos }) => setVisible(currPos.y < headerFlipPoint), [], undefined, true, 50)
-
-  console.log('visibleShelf ............  ', visibleShelf)
 
   return (
     <>
@@ -42,9 +41,9 @@ const Header = () => {
         <Items>
           <Nav>
             <ul>
-              {/* {isConnected && status !== 'unauthenticated' && data && data.user?.isCurator && (
+              {loggedInUser?.curators && loggedInUser.curators.length > 0 && (
                 <li onClick={() => push('/admin/')}>Admin</li>
-              )} */}
+              )}
 
               <li onClick={() => toggleShelf('howItWorks')}>How It Works</li>
             </ul>

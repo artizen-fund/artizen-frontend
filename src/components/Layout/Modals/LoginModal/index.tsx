@@ -7,11 +7,11 @@ import { rgba, assetPath, LayoutContext, textCrop } from '@lib'
 import { palette, typography, breakpoint } from '@theme'
 import { connectWallet, signInWalletMessage } from '@copy/common'
 import { ConnectingComp } from './lib/'
-import { useSession } from 'next-auth/react'
+import { usePrivy } from '@privy-io/react-auth'
 
 const LoginModal = ({ ...props }) => {
-  const { status } = useSession()
   const { toggleModal, modalAttrs } = useContext(LayoutContext)
+  const { authenticated } = usePrivy()
   const { connectMetamask, connectOtherWallet, currentFlow, signEnMessage } = modalAttrs as any
   // const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
   const [enabled, setEnabled] = useState(true)
@@ -19,10 +19,10 @@ const LoginModal = ({ ...props }) => {
   const isMobile = navigator.maxTouchPoints > 1
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (authenticated) {
       toggleModal()
     }
-  }, [status])
+  }, [authenticated])
 
   //TODO: Write a wrapper component with tiles
   //and abstract the connect to wallet and the sign message components

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { assert } from '@lib'
 import { ApolloProvider } from '@apollo/client'
 import { Toast } from '@trycourier/react-toast'
@@ -24,8 +25,6 @@ import packageJson from '../../package.json'
 import '@public/styles/reset.css'
 import '@public/styles/globals.css'
 
-import { SessionProvider } from 'next-auth/react'
-
 const App = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -35,6 +34,7 @@ const App = ({
   // eslint-disable-next-line
   console.log(`--- version: ${packageJson.version} ----`)
   initIntercom()
+  const router = useRouter()
 
   let apolloClient = initializeApollo(pageProps?.apolloData || {})
 
@@ -63,7 +63,11 @@ const App = ({
 
         setCookie('didToken', tokenJson.token, { secure: true, sameSite: 'strict' })
 
-        apolloClient = initializeApollo(pageProps?.apolloData || {})
+        console.log('calls initializeApollo')
+
+        router.reload()
+
+        // apolloClient = initializeApollo(pageProps?.apolloData || {})
       }}
       config={{
         loginMethods: ['email', 'wallet'],
@@ -75,21 +79,19 @@ const App = ({
       }}
     >
       <PrivyWagmiConnector wagmiChainsConfig={getWagmiChains()}>
-        <SessionProvider session={session}>
-          <ApolloProvider client={apolloClient}>
-            <CourierNotification>
-              <Toast theme={StyledToast} position="top-right" />
+        <ApolloProvider client={apolloClient}>
+          <CourierNotification>
+            <Toast theme={StyledToast} position="top-right" />
 
-              <SeasonContextProvider>
-                <SeasonSubcriptionProvider>
-                  <LayoutContextProvider>
-                    <Component {...pageProps} />
-                  </LayoutContextProvider>
-                </SeasonSubcriptionProvider>
-              </SeasonContextProvider>
-            </CourierNotification>
-          </ApolloProvider>
-        </SessionProvider>
+            <SeasonContextProvider>
+              <SeasonSubcriptionProvider>
+                <LayoutContextProvider>
+                  <Component {...pageProps} />
+                </LayoutContextProvider>
+              </SeasonSubcriptionProvider>
+            </SeasonContextProvider>
+          </CourierNotification>
+        </ApolloProvider>
       </PrivyWagmiConnector>
     </PrivyProvider>
   )

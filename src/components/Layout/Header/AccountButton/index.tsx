@@ -1,73 +1,37 @@
 import { useContext, useEffect, useState } from 'react'
-import { useSession, signOut } from 'next-auth/react'
-import { useAuthRequestChallengeEvm } from '@moralisweb3/next'
-import { useQuery, useApolloClient, useReactiveVar } from '@apollo/client'
+import { useQuery, useReactiveVar } from '@apollo/client'
+import { useAccount } from 'wagmi'
 import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGetUserQuery, Maybe } from '@types'
 import { rgba, textCrop } from '@lib'
-import { loggedInUserVar, useCloudinary, LayoutContext } from '@lib'
-import { usePrivy, useLogin } from '@privy-io/react-auth'
+import { loggedInUserVar, LayoutContext, useFullSignOut } from '@lib'
+import { usePrivy } from '@privy-io/react-auth'
 import { GET_USER } from '@gql'
 import { getCookie } from 'cookies-next'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
   const [messageToSign, setMessageToSign] = useState<string | null>(null)
+  const { isConnected } = useAccount()
+  const { disconnectAndSignout } = useFullSignOut()
   const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
   const didToken = getCookie('didToken')
-  const { authenticated, user } = usePrivy()
-  const [loading, setLoading] = useState(false)
-  // const { connectMetamask, connectOtherWallet, signEnMessage, currentFlow, isAuthenticated } = useWalletAuthFlow()
-  // const { isConnected } = useAccount()
 
-  // const { data: session, status } = useSession()
+  console.log('isConnected in account button ', isConnected)
+
+  const { authenticated, user, login } = usePrivy()
+  const [loading, setLoading] = useState(false)
   const loggedInUser = useReactiveVar(loggedInUserVar)
-  const [startAuth, setStartAuth] = useState(false)
-  const { requestChallengeAsync } = useAuthRequestChallengeEvm()
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
-  // const createChallenge = async (address: `0x${string}`, chainId: string) => {
-  //   const challenge = await requestChallengeAsync({ address, chainId })
+  console.log('authenticated  ', authenticated)
+  console.log('didToken  ', didToken)
+  console.log('isConnected  ', isConnected)
 
-  //   if (!challenge) {
-  //     throw new Error('failed walletconnect challenge')
-  //   }
-  //   const { message } = challenge
-
-  //   setMessageToSign(message)
-
-  //   return message
+  // if (authenticated && didToken && !isConnected) {
+  //   disconnectAndSignout()
   // }
-
-  const { login } = useLogin({
-    onComplete: async (user, isNewUser, wasAlreadyAuthenticated) => {
-      console.log('wasAlreadyAuthenticated', wasAlreadyAuthenticated)
-      console.log('user   ', user)
-      console.log('isNewUser     ', isNewUser)
-      // Any logic you'd like to execute if the user is/becomes authenticated while this
-      // component is mounted
-
-      setLoading(false)
-    },
-    onError: error => {
-      console.log(' error login  ', error)
-      // Any logic you'd like to execute after a user exits the login flow or there is an error
-    },
-  })
-
-  // console.log('user ', user)
-  // console.log('authenticated', authenticated)
-  // console.log('didToken in account', didToken)
-  // console.log('loggedInUser   ', loggedInUser)
-
-  // if (!isConnected && !!session) {
-  //   console.warn('user session is not connected to the wallet')
-  //   signOut()
-  // }
-
-  // console.log('currentFlow is should be toConnect   currentFlow === ', currentFlow)
-  console.log('startAuth is should be true   startAuth === ', startAuth)
 
   useQuery<IGetUserQuery>(GET_USER, {
     skip: !authenticated || !didToken || loggedInUser !== undefined,
@@ -111,10 +75,6 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       })
     }
   }, [loggedInUser])
-
-  // console.log('status  ', status)
-  // console.log('loggedInUser  ', loggedInUser)
-  // console.log('active  ', active)
 
   return (
     <Wrapper

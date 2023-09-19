@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { useContext } from 'react'
-import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import { palette, typography } from '@theme'
@@ -13,7 +12,6 @@ import { faq } from '@copy/admin'
 import { IGetMatchFundsQuery, ISponsorInMatchFundFragment, ISubmissionInMatchFundFragment } from '@types'
 
 export default function MatchFundDetails(): JSX.Element {
-  const { status } = useSession()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
   const {
@@ -72,7 +70,7 @@ export default function MatchFundDetails(): JSX.Element {
             ]}
           />
         )}
-        {status !== 'authenticated' || loading ? (
+        {loading ? (
           <Spinner minHeight="75vh" />
         ) : (
           <MatchFundWrapper>

@@ -1,18 +1,10 @@
 import { useState, useContext, useEffect } from 'react'
-import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { Button, Counter } from '@components'
-import {
-  LayoutContext,
-  trackEventF,
-  intercomEventEnum,
-  assertFloat,
-  assert,
-  rgba,
-  useSeasons,
-  useContracts,
-} from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useContracts } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
+import { usePrivy } from '@privy-io/react-auth'
+import { ethers } from 'ethers'
 import { IProjectFragment } from '@types'
 
 interface IDonationBox {
@@ -26,28 +18,29 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const { status } = useSession()
+  const { authenticated } = usePrivy()
+
+  console.log('authenticated  ', authenticated)
 
   const { setVisibleModalWithAttrs, toggleModal, setVisibleModal } = useContext(LayoutContext)
   const [sending, setSending] = useState<boolean>(false)
-  const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
+  const [artifactQuantity, setArtifactQuantity] = useState(1)
   const [warming, setWarming] = useState<boolean>(true)
 
-  console.log('artifactQuantity  ', artifactQuantity)
+  console.log('artifactQuantity :::::::::: ', artifactQuantity)
 
-  // const {
-  //   execute: donate,
-  //   write,
-  //   contractEventListener,
-  //   status: contractStatus,
-  //   processing,
-  // } = useContracts({
-  //   args: [[tokenId], [artifactQuantity]],
-  //   functionName: 'mintArtifact',
-  //   eventName: 'ArtifactMinted',
-  //   value: BigInt(BASE_ARTIFACT_PRICE * artifactQuantity * 1e18),
-  //   warming,
-  // })
+  const {
+    execute: donate,
+    status: contractStatus,
+    processing,
+    // errorState: error,
+  } = useContracts({
+    args: [[tokenId], [artifactQuantity]],
+    functionName: 'mintArtifact',
+    eventName: 'ArtifactMinted',
+    value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
+    warming,
+  })
 
   // useEffect(() => {
   //   if (error) {
@@ -57,49 +50,49 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   //   }
   // }, [error])
 
-  // useEffect(() => {
-  //   console.log('contractStatus: ', contractStatus)
-  //   if (processing) {
-  //     toggleModal()
-  //     toggleModal('processTransaction')
-  //   }
-  // }, [processing])
+  useEffect(() => {
+    console.log('contractStatus: ', processing)
+    if (processing) {
+      toggleModal('processTransaction')
+    }
+  }, [processing])
 
   const donateFn = async () => {
+    console.log('tokenId: ', tokenId)
+    console.log('artifactQuantity: ', artifactQuantity)
     if (!tokenId || !artifactQuantity) return
+
     setWarming(false)
 
     setSending(true)
     // console.log('contractStatus before clicking write ', contractStatus)
-    toggleModal('confirmTransaction')
+    // toggleModal('confirmTransaction')
 
     trackEventF(intercomEventEnum.DONATION_START, {
       amount: artifactQuantity,
       tokenId,
     })
 
-    // const hash: any = await donate?.()
+    const hash: any = await donate?.()
 
-    // console.log('hash: ', hash)
+    console.log('hash: ', hash)
 
-    toggleModal()
+    if (hash) {
+      console.log('gets here')
+      trackEventF(intercomEventEnum.DONATION_FINISHED, {
+        amount: artifactQuantity.toString(),
+        tokenId,
+      })
 
-    //TODO: review if hash is return as plain string or as an object
-    //https://wagmi.sh/react/hooks/useContractWrite#return-value
-    // const result = await writeContract?.wait()
+      console.log('project.title    ', project)
 
-    // if (hash) {
-    //   trackEventF(intercomEventEnum.DONATION_FINISHED, {
-    //     amount: artifactQuantity.toString(),
-    //     tokenId,
-    //   })
-
-    //   setVisibleModalWithAttrs('shareTransaction', {
-    //     mode: 'postTransaction',
-    //     destination: `/projects/${project.titleURL}`,
-    //     projecTitle: project.title,
-    //   })
-    // }
+      setVisibleModalWithAttrs('shareTransaction', {
+        mode: 'postTransaction',
+        destination: `/projects/${project.titleURL}`,
+        projectTitle: project.title,
+        projectMember: project?.members[0]?.user?.artizenHandle,
+      })
+    }
 
     setSending(false)
   }
@@ -107,7 +100,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   return (
     <Wrapper>
       <ScrollPoint id="donation-box" />
-      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
+      {!authenticated && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
         <MobileBreak>
           <Cost>
