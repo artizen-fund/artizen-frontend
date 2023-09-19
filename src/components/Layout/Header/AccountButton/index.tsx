@@ -20,18 +20,20 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
 
   console.log('isConnected in account button ', isConnected)
 
-  const { authenticated, user, login } = usePrivy()
+  const { authenticated, user, login, ready } = usePrivy()
   const [loading, setLoading] = useState(false)
   const loggedInUser = useReactiveVar(loggedInUserVar)
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
-  console.log('authenticated  ', authenticated)
+  console.log('ready  ', ready)
+  console.log('authenticated in here:::::  ', authenticated)
+  console.log('isReally Authentificado  ', ready && authenticated)
   console.log('didToken  ', didToken)
   console.log('isConnected  ', isConnected)
 
-  // if (authenticated && didToken && !isConnected) {
-  //   disconnectAndSignout()
-  // }
+  if (ready && authenticated && !isConnected) {
+    // disconnectAndSignout()
+  }
 
   useQuery<IGetUserQuery>(GET_USER, {
     skip: !authenticated || !didToken || loggedInUser !== undefined,

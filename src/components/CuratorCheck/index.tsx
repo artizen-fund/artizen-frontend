@@ -4,10 +4,10 @@ import { useReactiveVar } from '@apollo/client'
 import { loggedInUserVar } from '@lib'
 
 const CuratorCheck = () => {
-  const { authenticated } = usePrivy()
+  const { authenticated, ready } = usePrivy()
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  if (!authenticated || (loggedInUser?.curators && loggedInUser.curators.length === 0)) {
+  if ((ready && !authenticated) || (loggedInUser?.curators && loggedInUser.curators.length === 0)) {
     return <Error statusCode={400} />
   }
   return <></>

@@ -12,10 +12,8 @@ import { startCase } from 'lodash'
 
 const Seasons = () => {
   const router = useRouter()
-
   const { toggleModal } = useContext(LayoutContext)
   const { formatDate, getSeasonStatus } = useDateHelpers()
-  // const { isConnected } = useAccount()
 
   const { data: loadedSeasonsData, error } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',

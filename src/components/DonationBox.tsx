@@ -18,16 +18,12 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const { authenticated } = usePrivy()
-
-  console.log('authenticated  ', authenticated)
-
   const { setVisibleModalWithAttrs, toggleModal, setVisibleModal } = useContext(LayoutContext)
   const [sending, setSending] = useState<boolean>(false)
   const [artifactQuantity, setArtifactQuantity] = useState(1)
   const [warming, setWarming] = useState<boolean>(true)
 
-  console.log('artifactQuantity :::::::::: ', artifactQuantity)
+  console.log('artifactQuantity in here  ::::::::::', artifactQuantity)
 
   const {
     execute: donate,
@@ -100,7 +96,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   return (
     <Wrapper>
       <ScrollPoint id="donation-box" />
-      {!authenticated && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
         <MobileBreak>
           <Cost>

@@ -121,6 +121,8 @@ const SubmitProjectModal = () => {
       functionName: 'createSubmission',
     })
 
+    console.log('hash ', hash)
+
     if (error) {
       console.log(`Error publishing season to blockchain ${error}`)
       setProcessTxt('Error publishing submission to blockchain, start again')
@@ -129,6 +131,8 @@ const SubmitProjectModal = () => {
 
     // const artifactID = outcome?.[0].args.submissionID.toString()
     const artifactID = newSubmissionCount
+
+    console.log('artifactID  ', artifactID)
 
     setProcessTxt(
       `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
@@ -179,7 +183,7 @@ const SubmitProjectModal = () => {
     setProcessing(false)
     toggleModal()
 
-    // reload()
+    reload()
   }
 
   return (

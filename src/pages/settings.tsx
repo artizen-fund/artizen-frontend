@@ -8,11 +8,11 @@ import { usePrivy } from '@privy-io/react-auth'
 
 const Settings = () => {
   const router = useRouter()
-  const { authenticated } = usePrivy()
+  const { authenticated, ready } = usePrivy()
 
   useEffect(() => {
-    if (!authenticated) router.push('/')
-  }, [authenticated])
+    if (ready && !authenticated) router.push('/')
+  }, [authenticated, ready])
 
   const tabs = [
     <Tab label="Profile" key="tab-profile">
@@ -27,7 +27,7 @@ const Settings = () => {
 
   return (
     <Layout>
-      {authenticated ? (
+      {!ready ? (
         <Spinner />
       ) : (
         <>

@@ -30,7 +30,6 @@ declare global {
     | 'share'
     | 'alert'
     | 'media'
-    | 'login'
     | 'confirmTransaction'
     | 'processTransaction'
     | 'shareTransaction'
