@@ -85,8 +85,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         tokenId,
       })
 
-      console.log('project?.members[0]?.user    ', project?.members[0]?.user)
-
       setVisibleModalWithAttrs('share', {
         mode: 'postTransaction',
         destination: `/projects/${project.titleURL}`,
