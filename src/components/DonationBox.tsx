@@ -29,12 +29,11 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     execute: donate,
     status: contractStatus,
     processing,
-    // errorState: error,
   } = useContracts({
-    args: [[tokenId], [artifactQuantity]],
+    args: [[Number(tokenId || 1)], [Number(artifactQuantity || 1)]],
     functionName: 'mintArtifact',
     eventName: 'ArtifactMinted',
-    value: ethers.utils.parseEther((BASE_ARTIFACT_PRICE * artifactQuantity).toString()),
+    value: BigInt(BASE_ARTIFACT_PRICE * artifactQuantity * 1e18),
     warming,
   })
 
@@ -69,7 +68,13 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       tokenId,
     })
 
-    const hash: any = await donate?.()
+    let hash: any
+
+    try {
+      hash = await donate?.()
+    } catch (e) {
+      console.log('error in here  ', e)
+    }
 
     console.log('hash: ', hash)
 
@@ -82,11 +87,11 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
       console.log('project.title    ', project)
 
-      setVisibleModalWithAttrs('shareTransaction', {
+      setVisibleModalWithAttrs('share', {
         mode: 'postTransaction',
         destination: `/projects/${project.titleURL}`,
         projectTitle: project.title,
-        projectMember: project?.members[0]?.user?.artizenHandle,
+        twitterHandle: project?.members[0]?.user?.twitterHandle,
       })
     }
 

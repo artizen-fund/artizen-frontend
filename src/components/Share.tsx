@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Button } from '@components'
-import { rgba, LayoutContext } from '@lib'
+import { Button, CloseButton, Icon } from '@components'
+import { rgba, LayoutContext, titleCase } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
 import { sharing } from '@copy/common'
 
@@ -10,30 +10,34 @@ interface ShareModalAttrs {
   mode?: 'home' | 'project' | 'postTransaction'
   destination?: string
   projectTitle?: string
-  artizenHandle?: string
+  projectMember?: string
   twitterHandle?: string
+  artizenHandle?: string
 }
 
-const Share = () => {
+const ShareTransactionModal = () => {
+  const { toggleModal } = useContext(LayoutContext)
+
+  // note: this all shared with Share.tsx
+  // we should DRY and abstract it
   const { modalAttrs } = useContext(LayoutContext)
   const { mode, destination, projectTitle, artizenHandle, twitterHandle } = modalAttrs as ShareModalAttrs
 
   const { modalTitle, modalDescription, shareCopy } = sharing[mode || 'home']
 
-  const link = `https://artizen.fund${!!destination ? destination : ''}`
-
   const projectCreator = !!twitterHandle ? `@${twitterHandle}` : !!artizenHandle ? artizenHandle : 'the creator'
+
+  const link = `https://artizen.fund${!!destination ? destination : ''}`
 
   const parsedShareCopy = shareCopy
     .replace('SHARE_LINK', link)
-    .replace('PROJECT_TITLE', projectTitle || '')
-    .replace('PROJECT_CREATOR', projectCreator)
+    .replace('PROJECT_TITLE', titleCase(projectTitle))
+    .replace('PROJECT_CREATOR', titleCase(projectCreator) || 'Member')
   const title = 'Artizen'
   const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(parsedShareCopy)}`
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&t=${encodeURIComponent(
     parsedShareCopy,
   )}`
-
   const redditLink = `http://www.reddit.com/submit?url=${encodeURIComponent(
     parsedShareCopy,
   )}&title=${encodeURIComponent('Artizen Fund')}`
@@ -43,6 +47,21 @@ const Share = () => {
 
   return (
     <Wrapper>
+      {mode === 'postTransaction' && (
+        <>
+          <Icon
+            glyph="tick"
+            outline
+            level={2}
+            color="algae"
+            label="Thank you for supporting this project. A receipt will be sent to your e-mail."
+          />
+          <Row>
+            <Rule />
+          </Row>
+        </>
+      )}
+
       <Copy>
         <Header>{modalTitle}</Header>
         <Subheader>{modalDescription}</Subheader>
@@ -91,6 +110,7 @@ const Share = () => {
           </Button>
         </CopyToClipboard>
       </Buttons>
+      <CloseButton onClick={() => toggleModal()} />
     </Wrapper>
   )
 }
@@ -192,4 +212,4 @@ const Rule = styled.hr`
   }
 `
 
-export default Share
+export default ShareTransactionModal
