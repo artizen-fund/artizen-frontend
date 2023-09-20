@@ -1,5 +1,5 @@
 import { IArtifactFragment, IProjectFragment } from '@types'
-import { capitalize } from 'lodash'
+import { titleCase } from '@lib'
 
 const composeArtifactDescription = (
   artifactName: string,
@@ -14,7 +14,7 @@ const composeArtifactDescription = (
 
   return `**${artifactName}**
 
-**Project**: ${capitalize(project.title)}
+**Project**: ${titleCase(project.title)}
   
 **About**: ${project.logline}
   

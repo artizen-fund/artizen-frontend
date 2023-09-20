@@ -6,7 +6,7 @@ import { ErrorObject } from 'ajv'
 import { useRouter } from 'next/router'
 import { Form, Button } from '@components'
 import { schema, uischema, FormState } from '@forms/createSeason'
-import { LayoutContext, ARTIZEN_TIMEZONE, useSeasons, useContracts, useDateHelpers } from '@lib'
+import { LayoutContext, ARTIZEN_TIMEZONE, useContracts, useDateHelpers } from '@lib'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -125,7 +125,7 @@ export default function NewSeasonForm(): JSX.Element {
 
     const newSeasonId = outcome?.[0].args.seasonID.toString()
 
-    //get the new season id from blockchain and save it into the database
+    // get the new season id from blockchain and save it into the database
     // const newSeasonId = publishedSeason.events[0].args[0].toString()
 
     const dateFronMutation = await insertSeason({

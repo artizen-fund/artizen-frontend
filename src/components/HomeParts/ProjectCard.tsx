@@ -1,10 +1,9 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, LayoutContext } from '@lib'
+import { rgba, LayoutContext, titleCase } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { RankAndArtifactCount, DonationBox } from '@components'
 import { IProjectFragment } from '@types'
-import { capitalize } from 'lodash'
 import Link from 'next/link'
 
 interface IProjectCard {
@@ -37,7 +36,7 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
         </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>
-            <h2>{project.title && capitalize(project.title)}</h2>
+            <h2>{project.title && titleCase(project.title)}</h2>
           </Link>
           <p>{project.logline}</p>
         </Copy>

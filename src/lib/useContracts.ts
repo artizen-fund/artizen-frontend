@@ -1,19 +1,20 @@
 import { useState, useEffect, useContext, use } from 'react'
-import { usePrepareContractWrite, useContractWrite, useContractEvent } from 'wagmi'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { watchContractEvent } from '@wagmi/core'
 import { SeasonsAbi } from '@contracts'
 import { assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND, LayoutContext } from '@lib'
 import { isEqual } from 'lodash'
+import { usePrivy } from '@privy-io/react-auth'
 
-interface useMintArtifactsProps {
+interface useContractsProps {
   args: any[]
   functionName: string
-  value?: bigint
+  value?: any
   eventName: string
   warming?: boolean
 }
 
-export const useContracts = ({ args, value, functionName, eventName, warming }: useMintArtifactsProps) => {
+export const useContracts = ({ args, value, functionName, eventName, warming }: useContractsProps) => {
   const [processing, setProcessing] = useState(false)
   const [argsState, setArgsState] = useState<any[]>([])
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
@@ -22,6 +23,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     process.env.NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS,
     'NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS',
   )
+  const { login, authenticated, ready } = usePrivy()
 
   const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
 
@@ -116,6 +118,10 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   }
 
   const execute = async (args?: any[]): Promise<{ error?: string; outcome?: IOutcomeReturn[] }> => {
+    if (ready && !authenticated) {
+      // login()
+      return { outcome: {} as IOutcomeReturn[] }
+    }
     if (args) {
       setArgsState(args)
     }

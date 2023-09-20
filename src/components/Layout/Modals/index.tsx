@@ -6,7 +6,6 @@ import {
   Share,
   AlertModal,
   MediaModal,
-  LoginModal,
   ConfirmTransactionModal,
   ProcessTransactionModal,
   ShareTransactionModal,
@@ -60,8 +59,6 @@ const Modals = () => {
       case 'shareTransaction':
         setLocked(false)
         return <ShareTransactionModal />
-      case 'login':
-        return <LoginModal />
       case 'createProfile':
         return <CreateProfile />
       case 'share':

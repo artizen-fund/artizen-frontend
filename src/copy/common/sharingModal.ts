@@ -2,7 +2,7 @@ export const sharing = {
   home: {
     modalTitle: 'Sharing is caring',
     modalDescription: 'Help give back to our community by sharing Artizen with your friends.',
-    shareCopy: `🤯 @artizenfund awards cash prizes for for art, science, technology, and design. Apply for funding or buy cultural Artifacts from the winning projects.
+    shareCopy: `🤯 @artizenfund awards cash prizes for art, science, technology, and design. Apply for funding or buy cultural Artifacts from the winning projects.
 
 → SHARE_LINK`,
   },

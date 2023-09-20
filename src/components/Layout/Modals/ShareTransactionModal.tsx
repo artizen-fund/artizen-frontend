@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Button, CloseButton, Icon } from '@components'
-import { rgba, LayoutContext } from '@lib'
+import { rgba, LayoutContext, titleCase } from '@lib'
 import { palette, breakpoint, typography } from '@theme'
 import { sharing } from '@copy/common'
 
@@ -10,6 +10,7 @@ interface ShareModalAttrs {
   mode?: 'home' | 'project' | 'postTransaction'
   destination?: string
   projectTitle?: string
+  projectMember?: string
 }
 
 const ShareTransactionModal = () => {
@@ -18,12 +19,15 @@ const ShareTransactionModal = () => {
   // note: this all shared with Share.tsx
   // we should DRY and abstract it
   const { modalAttrs } = useContext(LayoutContext)
-  const { mode, destination, projectTitle } = modalAttrs as ShareModalAttrs
+  const { mode, destination, projectTitle, projectMember } = modalAttrs as ShareModalAttrs
 
   const { modalTitle, modalDescription, shareCopy } = sharing[mode || 'home']
 
   const link = `https://artizen.fund${!!destination ? destination : ''}`
-  const parsedShareCopy = shareCopy.replace('SHARE_LINK', link).replace('PROJECT_TITLE', projectTitle || '')
+  const parsedShareCopy = shareCopy
+    .replace('SHARE_LINK', titleCase(link))
+    .replace('PROJECT_TITLE', titleCase(projectTitle))
+    .replace('PROJECT_CREATOR', titleCase(projectMember) || 'Member')
   const title = 'Artizen'
   const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(parsedShareCopy)}`
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&t=${encodeURIComponent(

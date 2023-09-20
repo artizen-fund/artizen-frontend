@@ -51,13 +51,6 @@ const SubmitProjectModal = () => {
 
   console.log('seasonSelected: ', seasonSelected)
 
-  // const { execute: publishSubmission } = useContracts({
-  //   args: [seasonSelected ? seasonSelected.index : 1, ipfs, project.walletAddress],
-  //   functionName: 'createSubmission',
-  //   eventName: 'SubmissionCreated',
-  //   warming: isWarming,
-  // })
-
   const loadActiveSeasons = () => {
     loadSeasons({
       // variables: {
@@ -128,6 +121,8 @@ const SubmitProjectModal = () => {
       functionName: 'createSubmission',
     })
 
+    console.log('hash ', hash)
+
     if (error) {
       console.log(`Error publishing season to blockchain ${error}`)
       setProcessTxt('Error publishing submission to blockchain, start again')
@@ -136,6 +131,8 @@ const SubmitProjectModal = () => {
 
     // const artifactID = outcome?.[0].args.submissionID.toString()
     const artifactID = newSubmissionCount
+
+    console.log('artifactID  ', artifactID)
 
     setProcessTxt(
       `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,

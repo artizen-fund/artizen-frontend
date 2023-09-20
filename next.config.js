@@ -1,6 +1,13 @@
 const { withSentryConfig } = require('@sentry/nextjs')
 const withGraphql = require('next-plugin-graphql')
 
+const securityHeaders = [
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN'
+  },
+]
+
 const moduleExports = {
   reactStrictMode: true,
   compiler: { styledComponents: true },
@@ -9,6 +16,15 @@ const moduleExports = {
 
     return config
   },
+  async headers() {
+    return [
+      {
+        // Apply these headers to all routes in your application.
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ]
+  }
 }
 
 const sentryWebpackPluginOptions = {

@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { use, useContext } from 'react'
-import { useSession } from 'next-auth/react'
+import { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { faq } from '@copy/admin'
 import { useQuery, useMutation } from '@apollo/client'
@@ -13,7 +12,6 @@ import { startCase } from 'lodash'
 import { IProjectsQuery, ISeasonFragment } from '@types'
 
 export default function ProjectDetails(): JSX.Element {
-  const { status } = useSession()
   const { isOpenForSubmissions, getSeasonStatus } = useDateHelpers()
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
@@ -121,7 +119,7 @@ export default function ProjectDetails(): JSX.Element {
             ]}
           />
         )}
-        {status !== 'authenticated' || loading ? (
+        {loading ? (
           <Spinner minHeight="75vh" />
         ) : (
           <>

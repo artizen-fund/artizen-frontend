@@ -7,3 +7,16 @@ export const getTwitterHandler = (twitterLink: string) => {
 
   return myArray && myArray[1]
 }
+
+export const titleCase = (str?: string) => {
+  if (!str) {
+    return ''
+  }
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1)
+    })
+    .join(' ')
+}

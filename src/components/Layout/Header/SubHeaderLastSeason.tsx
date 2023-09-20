@@ -1,9 +1,8 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, SeasonSubcriptionContext, formatDate } from '@lib'
+import { rgba, SeasonSubcriptionContext, formatDate, titleCase } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Glyph, Icon } from '@components'
-import { capitalize } from 'lodash'
 
 interface ISubHeader {
   visible: boolean
@@ -51,7 +50,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
                 {arrangedSeasonList &&
                   arrangedSeasonList.length > 0 &&
                   arrangedSeasonList[0]?.project?.title &&
-                  capitalize(arrangedSeasonList[0].project.title)}
+                  titleCase(arrangedSeasonList[0].project.title)}
               </Data>
             </Stat>
           </Stats>

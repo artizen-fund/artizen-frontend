@@ -44,6 +44,9 @@ export const USER_PUBLIC = gql`
     bio
     externalLink
     claimed
+    curators {
+      id
+    }
   }
 `
 

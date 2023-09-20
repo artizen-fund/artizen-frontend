@@ -1,5 +1,6 @@
 import { createConfig, configureChains } from 'wagmi'
-import { goerli, mainnet } from 'wagmi/chains'
+import { PrivyWagmiConnector } from '@privy-io/wagmi-connector'
+import { mainnet, goerli } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -10,11 +11,7 @@ import { assert } from '@lib'
 export const getWagmiChains = () => {
   const alchemyApiKey = assert(process.env.NEXT_PUBLIC_ALCHEMY_API, 'NEXT_PUBLIC_ALCHEMY_API')
   const supportedChains = [mainnet, goerli]
-  const { chains, publicClient, webSocketPublicClient } = configureChains(supportedChains, [
-    alchemyProvider({ apiKey: alchemyApiKey }),
-    publicProvider(),
-  ])
-  return { chains, publicClient, webSocketPublicClient }
+  return configureChains(supportedChains, [alchemyProvider({ apiKey: alchemyApiKey }), publicProvider()])
 }
 
 export const getWagmiClient = () => {
