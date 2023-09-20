@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useContracts } from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useContracts, getTwitterHandler } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { usePrivy } from '@privy-io/react-auth'
 import { ethers } from 'ethers'
@@ -85,13 +85,12 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         tokenId,
       })
 
-      console.log('project.title    ', project)
-
       setVisibleModalWithAttrs('share', {
         mode: 'postTransaction',
         destination: `/projects/${project.titleURL}`,
         projectTitle: project.title,
-        twitterHandle: project?.members[0]?.user?.twitterHandle,
+        twitterHandle: getTwitterHandler(project?.members[0]?.user?.twitterHandle || ''),
+        artizenHandle: project?.members[0]?.user?.artizenHandle,
       })
     }
 
