@@ -35,7 +35,6 @@ export * from './useFullSignOut'
 export * from './useSeasons'
 export * from './useDateHelpers'
 export * from './useGnosis'
-export * from './useMintArtifacts'
 
 export * from './useContracts'
 export * from './useSeasonSubscriptionData'

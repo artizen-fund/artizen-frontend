@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { assert } from '@lib'
+
 import { ApolloProvider } from '@apollo/client'
 import { Toast } from '@trycourier/react-toast'
 import { StyledToast } from '@components'
@@ -19,6 +19,7 @@ import {
   getWagmiChains,
   initializeApollo,
   isProd,
+  assert,
 } from '@lib'
 import packageJson from '../../package.json'
 
@@ -36,7 +37,7 @@ const App = ({
   initIntercom()
   const router = useRouter()
 
-  let apolloClient = initializeApollo(pageProps?.apolloData || {})
+  const apolloClient = initializeApollo(pageProps?.apolloData || {})
 
   const NEXT_PUBLIC_PRIVY_APP_ID = assert(process.env.NEXT_PUBLIC_PRIVY_APP_ID, 'NEXT_PUBLIC_PRIVY_APP_ID')
 
