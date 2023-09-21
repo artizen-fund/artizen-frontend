@@ -264,8 +264,6 @@ export async function getStaticProps({ params: { slug } }: { params: IGetStaticP
 
   const project = await fethcall.json()
 
-  console.log('project getStaticProps  ', project.data.Projects[0])
-
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
