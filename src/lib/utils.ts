@@ -1,11 +1,10 @@
 export const getTwitterHandler = (twitterLink: string) => {
   console.log('twitterLink', twitterLink)
-  const myRe = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/(?:#!\/)?@?([^\/\?\s]*)/
+
+  const myRe = /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^\/]+)(\/\w+)*$/
   const myArray = myRe.exec(twitterLink)
 
-  console.log('twitterLink formated', myArray)
-
-  return myArray && myArray[1]
+  return (myArray && myArray[3]) || twitterLink
 }
 
 export const titleCase = (str?: string) => {

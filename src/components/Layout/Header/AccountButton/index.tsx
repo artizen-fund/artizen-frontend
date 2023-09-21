@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { use, useContext, useEffect, useState } from 'react'
 import { useQuery, useReactiveVar } from '@apollo/client'
 import { useAccount } from 'wagmi'
 import styled from 'styled-components'
@@ -13,6 +13,7 @@ import { getCookie } from 'cookies-next'
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
   const [messageToSign, setMessageToSign] = useState<string | null>(null)
   const { isConnected } = useAccount()
+
   const { disconnectAndSignout } = useFullSignOut()
   const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
   const didToken = getCookie('didToken')
