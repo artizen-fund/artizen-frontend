@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery, useSubscription } from '@apollo/client'
 import { GET_SUBMISSION_IN_MATCH_FUND } from '@gql'
 import { typography } from '@theme'
 import Link from 'next/link'
@@ -54,7 +54,7 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
             <SponsorList width={width}>
               {sponsorsFilter?.map(sponsor => {
                 return (
-                  <SponsorItem>
+                  <SponsorItem key={sponsor.id}>
                     <Link key={sponsor.id} href={sponsor.url} passHref={true}>
                       <Sponsor>
                         <SponsorLogo alt={sponsor.name} src={sponsor.logotype} />
