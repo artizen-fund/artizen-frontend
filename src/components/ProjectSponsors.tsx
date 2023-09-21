@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import { useState } from 'react'
-import { Glyph } from '@components'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_SUBMISSION_IN_MATCH_FUND } from '@gql'
 import { typography } from '@theme'
 import Link from 'next/link'
 import { IGetSubmissionInMatchFundQuery } from '@types'
+import ContainerDimensions from 'react-container-dimensions'
 //getSubmissionInMatchFund
 
 const ProjectSponsors = ({ projectId }: { projectId: string }) => {
@@ -49,27 +49,39 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
     <Wapper>
       <Title>Sponsored by:</Title>
       <SponsorsWrapper>
-        {sponsorsFilter && (
-          <SponsorList>
-            {sponsorsFilter?.map(sponsor => {
-              return (
-                <Link key={sponsor.id} href={sponsor.url} passHref={true}>
-                  <Sponsor>
-                    <SponsorLogo alt={sponsor.name} src={sponsor.logotype} />
-                    {/* <SponsorName>{sponsor.name}</SponsorName> */}
-                  </Sponsor>
-                </Link>
-              )
-            })}
-          </SponsorList>
-        )}
+        <ContainerDimensions>
+          {({ width }) => (
+            <SponsorList width={width}>
+              {sponsorsFilter?.map(sponsor => {
+                return (
+                  <SponsorItem key={sponsor.id}>
+                    <Link key={sponsor.id} href={sponsor.url} passHref={true}>
+                      <Sponsor>
+                        <SponsorLogo alt={sponsor.name} src={sponsor.logotype} />
+                        {/* <SponsorName>{sponsor.name}</SponsorName> */}
+                      </Sponsor>
+                    </Link>
+                  </SponsorItem>
+                )
+              })}
+            </SponsorList>
+          )}
+        </ContainerDimensions>
       </SponsorsWrapper>
     </Wapper>
   )
 }
 
-const SponsorList = styled.div`
-  display: flex;
+const SponsorsWrapper = styled.div`
+  // display: flex;
+  // width: 300px;
+  text-align: center;
+  overflow: hidden;
+  max-width: 100%;
+`
+
+const SponsorItem = styled.div`
+  margin: 0 8px 0 0;
 `
 
 const Sponsor = styled.div``
@@ -80,12 +92,16 @@ const SponsorLogo = styled.img`
 
 const SponsorName = styled.div``
 
-const SponsorsWrapper = styled.div``
+// const SponsorsWrapper = styled.div``
 
 const Wapper = styled.div`
-  grid-template-areas: 'title laurels' 'stats stats';
-  grid-template-rows: repeat(2, 1fr);
-  gap: 30px;
+  max-width: 100%;
+`
+
+const SponsorList = styled.div<{ width: number }>`
+  width: ${props => props.width}px;
+  overflow: scroll;
+  display: flex;
 `
 
 const Title = styled.h4`
