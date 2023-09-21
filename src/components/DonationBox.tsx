@@ -53,15 +53,11 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   }, [processing])
 
   const donateFn = async () => {
-    console.log('tokenId: ', tokenId)
-    console.log('artifactQuantity: ', artifactQuantity)
     if (!tokenId || !artifactQuantity) return
 
     setWarming(false)
 
     setSending(true)
-    // console.log('contractStatus before clicking write ', contractStatus)
-    // toggleModal('confirmTransaction')
 
     trackEventF(intercomEventEnum.DONATION_START, {
       amount: artifactQuantity,

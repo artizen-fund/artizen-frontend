@@ -24,8 +24,10 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     'NEXT_PUBLIC_SEASONS_CONTRACT_ADDRESS',
   )
   const { login, authenticated, ready } = usePrivy()
-
   const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
+  const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
+  const ERRORNETWORK = `You have logged onto wrong network, please logout and login again using: ${chainName}`
+  const NON_ENOUGH_FUNDS = `You do not have enough funds in your wallet to mint this open edition`
 
   const { config, status } = usePrepareContractWrite({
     address: SEASON_CONTRACT as `0x${string}`,
@@ -39,15 +41,14 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
 
       console.log('error usePrepareContractWrite here', error)
 
-      setErrorState(e.message as string)
+      // setErrorState(e.message as string)
 
       if (error.includes(WALLET_CHAIN_MISMATCH)) {
-        const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
-        error = `You're logged on wrong change, please logout and login again using: ${chainName}`
+        error = ERRORNETWORK
         setErrorState(error)
       }
       if (error.includes(WALLET_NO_FOUND)) {
-        error = `You do not have enough funds in your wallet to mint this open edition`
+        error = NON_ENOUGH_FUNDS
         setErrorState(error)
       }
     },
@@ -96,9 +97,10 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   useEffect(() => {
     console.log('errorState   ', errorState)
     const errorStateChain =
-      errorState === "You're logged on wrong change, please logout and login again using: Goerli Testnet"
-
-    const showError = errorStateChain ? true : errorState !== null && !warming
+      errorState === 'You have logged onto the wrong network, please logout and login again using: Goerli Testnet'
+    console.log('warming   ', warming)
+    console.log('errorStateChain', errorStateChain)
+    const showError = errorState === ERRORNETWORK || (errorState !== null && !warming)
 
     showError &&
       setVisibleModalWithAttrs('errorModal', {

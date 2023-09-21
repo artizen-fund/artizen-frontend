@@ -25,6 +25,9 @@ const ShareTransactionModal = () => {
 
   const { modalTitle, modalDescription, shareCopy } = sharing[mode || 'home']
 
+  console.log('twitterHandle  ', twitterHandle)
+  console.log('artizenHandle  ', artizenHandle)
+
   const projectCreator = !!twitterHandle ? `@${twitterHandle}` : !!artizenHandle ? artizenHandle : 'the creator'
 
   console.log('projectCreator  ', projectCreator)
@@ -34,7 +37,7 @@ const ShareTransactionModal = () => {
   const parsedShareCopy = shareCopy
     .replace('SHARE_LINK', link)
     .replace('PROJECT_TITLE', titleCase(projectTitle))
-    .replace('PROJECT_CREATOR', titleCase(projectCreator) || 'Member')
+    .replace('PROJECT_CREATOR', projectCreator || 'Member')
   const title = 'Artizen'
   const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(parsedShareCopy)}`
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&t=${encodeURIComponent(
