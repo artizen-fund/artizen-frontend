@@ -95,11 +95,15 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
 
   useEffect(() => {
     console.log('errorState   ', errorState)
-    // errorState !== null &&
-    //   !warming &&
-    //   setVisibleModalWithAttrs('errorModal', {
-    //     error: errorState,
-    //   })
+    const errorStateChain =
+      errorState === "You're logged on wrong change, please logout and login again using: Goerli Testnet"
+
+    const showError = errorStateChain ? true : errorState !== null && !warming
+
+    showError &&
+      setVisibleModalWithAttrs('errorModal', {
+        error: errorState,
+      })
   }, [errorState])
 
   useEffect(() => {
