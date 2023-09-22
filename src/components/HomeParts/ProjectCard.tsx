@@ -162,7 +162,7 @@ const Img = styled.img`
     height: 382px;
   }
   @media only screen and (min-width: ${breakpoint.laptopXL}px) {
-    width: 300px;
+    width: 306px;
     height: 300px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
