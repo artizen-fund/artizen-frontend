@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Button, Table, TableCell, TableAvatar, Spinner, Glyph } from '@components'
 import { aggregateDonators, rgba, assertFloat, useGnosis, titleCase } from '@lib'
 import { IOpenEditionsSubscription } from '@types'
-import { palette, typography } from '@theme'
+import { palette, typography, breakpoint } from '@theme'
 
 interface ILeaderboard {
   openEditions?: IOpenEditionsSubscription
@@ -78,7 +78,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
             <Grey>Ξ&nbsp;{BASE_ARTIFACT_PRICE * user.copies}</Grey>
             <Green>+&nbsp; Ξ&nbsp;{getMatchFundMoney(user.copies).toFixed(FIXED_PRECISION)}</Green>{' '}
             <Amount>
-              <span> | minted</span> {user.copies}
+              | <span> minted</span> {user.copies}
             </Amount>
           </div>
         </StyledTableCell>
@@ -137,6 +137,12 @@ const Amount = styled.div`
   white-space: nowrap;
   span {
     color: ${rgba(palette.barracuda)};
+  }
+
+  @media only screen and (max-width: ${breakpoint.phablet}px) {
+    span {
+      display: none;
+    }
   }
 `
 
