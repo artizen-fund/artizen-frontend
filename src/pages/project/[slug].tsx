@@ -23,7 +23,10 @@ import { GET_PROJECTS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
 import { IProjectFragment, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
 
 const ProjectPage = ({ project }: any) => {
-  console.log('project  ::::::::::: ', project)
+  if (!project) {
+    return null
+  }
+
   const {
     season: seasonData,
     seasonIsActive,
@@ -60,7 +63,7 @@ const ProjectPage = ({ project }: any) => {
     asPath,
   } = useRouter()
 
-  const lead = project.members?.find((m: any) => m.type === 'lead')?.user
+  const lead = project?.members?.find((m: any) => m.type === 'lead')?.user
 
   const rank =
     seasonData?.submissions
@@ -131,29 +134,114 @@ const ProjectPage = ({ project }: any) => {
                 <ProjectSponsors projectId={project.id} />
               </>
             )}
-
-            <LongDescription>
-              {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
-                <div key={`metadatum-${index}`}>
-                  <h2>{metadatum.title}</h2>
-                  <p>{metadatum.value}</p>
-                </div>
-              ))}
-            </LongDescription>
+            {project?.metadata && project?.metadata.length > 0 && (
+              <LongDescription>
+                {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
+                  <div key={`metadatum-${index}`}>
+                    <h2>{metadatum.title}</h2>
+                    <p>{metadatum.value}</p>
+                  </div>
+                ))}
+              </LongDescription>
+            )}
           </Side>
-
-          <Side>
-            <ArtifactCard
-              count={count}
-              artifact={project.artifacts[0]}
-              project={project}
-              seasonIsActive={seasonIsActive || false}
-            />
-          </Side>
+          {project.artifacts && project.artifacts.length > 0 && (
+            <Side>
+              <ArtifactCard
+                count={count}
+                artifact={project.artifacts[0]}
+                project={project}
+                seasonIsActive={seasonIsActive || false}
+              />
+            </Side>
+          )}
         </Wrapper>
       </PagePadding>
     </Layout>
   )
+
+  // return (
+  //   <Layout>
+  //     <PagePadding>
+  //       <Wrapper>
+  //         <Side>
+  //           <Header>
+  //             {loadingSeason && <ProjectDescriptionShimmer />}
+  //             <>
+  //               <Topline>
+  //                 <div>
+  //                   {/* {!loadingSeason && (
+  //                     <RankAndArtifactCount
+  //                       rank={rank}
+  //                       count={count}
+  //                       seasonIsActive={seasonIsActive}
+  //                       totalSales={totalSales ? totalSales : 0}
+  //                       matchFundPooled={seasonData?.matchFundPooled}
+  //                     />
+  //                   )} */}
+  //                 </div>
+
+  //                 <Button
+  //                   level={2}
+  //                   outline
+  //                   onClick={() =>
+  //                     setVisibleModalWithAttrs('share', {
+  //                       mode: 'project',
+  //                       destination: asPath,
+  //                       projectTitle: titleCase(project.title),
+  //                       artizenHandle: lead?.artizenHandle,
+  //                       twitterHandle: getTwitterHandler(lead?.twitterHandle),
+  //                     })
+  //                   }
+  //                 >
+  //                   Share
+  //                 </Button>
+  //               {/* </Topline> */}
+  //               <h1>{project.title}</h1>
+  //               <p>{project.logline}</p>
+  //               <Tags tags={project.impactTags?.split(',') || []} />
+
+  //                {lead && <CreatorBox user={lead} />}
+  //             </>
+  //           </Header>
+
+  //           {loadingSeason && <ProjectLeaderboardShimmer />}
+  //           {openEditions && seasonData && (
+  //             <>
+  //               <Leaderboard
+  //                 openEditions={openEditions}
+  //                 isWinner={rank === 0}
+  //                 count={count}
+  //                 totalSales={totalSales ? totalSales : 0}
+  //                 matchFundPooled={seasonData?.matchFundPooled}
+  //               />
+  //               <ProjectSponsors projectId={project.id} />
+  //             </>
+  //           )}
+  //           {project?.metadata && project?.metadata.length > 0 && (
+  //             <LongDescription>
+  //               {(project?.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
+  //                 <div key={`metadatum-${index}`}>
+  //                   <h2>{metadatum.title}</h2>
+  //                   <p>{metadatum.value}</p>
+  //                 </div>
+  //               ))}
+  //             </LongDescription>
+  //           )}
+  //         </Side>
+
+  //         <Side>
+  //           {/* <ArtifactCard
+  //             count={count}
+  //             artifact={project.artifacts[0]}
+  //             project={project}
+  //             seasonIsActive={seasonIsActive || false}
+  //           /> */}
+  //         </Side>
+  //       </Wrapper>
+  //     </PagePadding>
+  //   </Layout>
+  // )
 }
 
 export async function getStaticPaths() {
@@ -176,99 +264,105 @@ interface IGetStaticPropsParams {
 export async function getStaticProps({ params: { slug } }: { params: IGetStaticPropsParams }) {
   console.log('params  in getStaticProps', slug)
 
-  const fethcall = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL as string, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET as string,
-    },
-    body: JSON.stringify({
-      query: `query projects($limit: Int, $where: Projects_bool_exp) {
-        Projects(limit: $limit, where: $where) {
-          id
-          title
-          titleURL
-          logline
-          description
-          creationDate
-          completionDate
-          walletAddress
-          metadata
-          impactTags
-          impact
-          titleURL
-          submissions {
-            id
-          }
-          members {
-            id
-            type
-            user {
-              id
-              publicAddress
-              profileImage
-              createdAt
-              twitterHandle
-              discordHandle
-              artizenHandle
-              hideFromLeaderboard
-              website
-              instagramHandle
-              bannerImage
-              bio
-              externalLink
-              claimed
-            }
-          }
-          artifacts {
-            id
-            name
-            description
-            artwork
-            video
-            edition
-            blockchainAddress
-            dateMinting
-            token
-            createdAt
-            openEditionCopies {
-              value
-              copies
-              user {
-                id
-                artizenHandle
-                profileImage
-              }
-              
-              
-            }
-            openEditionCopies_aggregate {
-              aggregate {
-                sum {
-                  copies
-                }
-              }
-            }
-          }
-        }
-      }`,
-      variables: {
-        where: {
-          titleURL: {
-            _eq: slug,
-          },
-        },
-      },
-    }),
-  })
+  // const fethcall = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL as string, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET as string,
+  //   },
+  //   body: JSON.stringify({
+  //     query: `query projects($limit: Int, $where: Projects_bool_exp) {
+  //       Projects(limit: $limit, where: $where) {
+  //         id
+  //         title
+  //         titleURL
+  //         logline
+  //         description
+  //         creationDate
+  //         completionDate
+  //         walletAddress
+  //         metadata
+  //         impactTags
+  //         impact
+  //         titleURL
+  //         submissions {
+  //           id
+  //         }
+  //         members {
+  //           id
+  //           type
+  //           user{
+  //             id
+  //             publicAddress
+  //             profileImage
+  //             createdAt
+  //             twitterHandle
+  //             discordHandle
+  //             artizenHandle
+  //             hideFromLeaderboard
+  //             website
+  //             instagramHandle
+  //             bannerImage
+  //             bio
+  //             externalLink
+  //             claimed
+  //           }
+  //         }
+  //         artifacts {
+  //           id
+  //           name
+  //           description
+  //           artwork
+  //           video
+  //           edition
+  //           blockchainAddress
+  //           dateMinting
+  //           token
+  //           createdAt
+  //           openEditionCopies {
+  //             value
+  //             copies
+  //             user {
+  //               id
+  //               artizenHandle
+  //               profileImage
+  //             }
 
-  const project = await fethcall.json()
+  //           }
+  //           openEditionCopies_aggregate {
+  //             aggregate {
+  //               sum {
+  //                 copies
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }`,
+  //     variables: {
+  //       where: {
+  //         titleURL: {
+  //           _eq: slug,
+  //         },
+  //       },
+  //     },
+  //   }),
+  // })
+
+  // const project = await fethcall.json()
+
+  // console.log('fethcall  ')
+
+  const apolloClient = createApolloClient()
+  const projects = await apolloClient.query({
+    query: GET_PROJECTS,
+  })
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
     props: {
-      project: project.data.Projects[0],
+      project: projects.data.Projects[0],
     },
   }
 }

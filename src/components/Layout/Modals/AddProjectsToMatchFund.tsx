@@ -41,7 +41,7 @@ const AddProjectsToMatchFund = () => {
       ? loadedMatchFund?.MatchFunds.filter(
           (matchFund: IMatchFundFragment) =>
             matchFund.submissions.filter(submission => {
-              return submission.status === 'active' && submission.submission.id === projectSubmission.id
+              return submission.status === 'active' && submission?.submission?.id === projectSubmission.id
             }).length === 0,
         )
       : null

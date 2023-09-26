@@ -24,6 +24,7 @@ const ShareTransactionModal = () => {
   const { modalTitle, modalDescription, shareCopy } = sharing[mode || 'home']
 
   const link = `https://artizen.fund${!!destination ? destination : ''}`
+
   const parsedShareCopy = shareCopy
     .replace('SHARE_LINK', titleCase(link))
     .replace('PROJECT_TITLE', titleCase(projectTitle))
