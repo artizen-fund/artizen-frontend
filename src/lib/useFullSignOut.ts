@@ -9,6 +9,7 @@ export const useFullSignOut = () => {
     console.log('clicked on disconnectAndSignout')
 
     logout()
+    await disconnect()
 
     deleteCookie('privy-token')
     deleteCookie('didToken')
@@ -18,8 +19,6 @@ export const useFullSignOut = () => {
     })
 
     localStorage.clear()
-
-    await disconnect()
 
     window.location.reload()
   }

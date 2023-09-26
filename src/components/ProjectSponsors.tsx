@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useState } from 'react'
-import { useQuery, useSubscription } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { GET_SUBMISSION_IN_MATCH_FUND } from '@gql'
 import { typography } from '@theme'
 import Link from 'next/link'
@@ -28,7 +28,7 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
       const sponsors: any[] = []
 
       data?.SubmissionInMatchFunds.forEach(({ submission, matchFund }) => {
-        if (submission.project?.id !== projectId) {
+        if (submission?.project?.id !== projectId) {
           return []
         }
         console.log('matchFund  ', matchFund)

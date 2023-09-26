@@ -17,22 +17,25 @@ const PartnersRibbon = () => {
   })
 
   return (
-    <PagePadding>
-      <Wrapper>
-        <Label>{copy.label}</Label>
-        {!loading && (
-          <Partners>
-            {loadedSponsors?.Sponsors.map(({ name, logotype }) => {
-              return (
-                <Partner key={`partner-${name}`}>
-                  <img src={logotype} alt={name} />
-                </Partner>
-              )
-            })}
-          </Partners>
-        )}
-      </Wrapper>
-    </PagePadding>
+    <>
+      {!loading && loadedSponsors && loadedSponsors.Sponsors.length > 0 && (
+        <PagePadding>
+          <Wrapper>
+            <Label>{copy.label}</Label>
+
+            <Partners>
+              {loadedSponsors?.Sponsors.map(({ name, logotype }) => {
+                return (
+                  <Partner key={`partner-${name}`}>
+                    <img src={logotype} alt={name} />
+                  </Partner>
+                )
+              })}
+            </Partners>
+          </Wrapper>
+        </PagePadding>
+      )}
+    </>
   )
 }
 
