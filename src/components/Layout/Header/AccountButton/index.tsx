@@ -28,9 +28,9 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   //   // disconnectAndSignout()
   // }
 
-  console.log('!authenticated  ', !authenticated)
-  console.log('didToken === undefined  ', !didToken)
-  console.log('!loggedInUser  ', !!loggedInUser)
+  console.log('authenticated  ', authenticated)
+  console.log('didToken === undefined  ', didToken)
+  console.log('!loggedInUser  ', loggedInUser)
   console.log('skip::  ', !authenticated || !didToken || !!loggedInUser)
   console.log('user?.wallet?.address.toLowerCase()  ', user?.wallet?.address.toLowerCase())
 
