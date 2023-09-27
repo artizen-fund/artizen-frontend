@@ -15,18 +15,17 @@ export async function clickMetamaskIcon(page: Page) {
 
 export async function clickAccountButton(page: Page, waitForText?: string) {
   if (waitForText) {
-    await page.locator('#accountButton').getByText(waitForText, {exact: true}).waitFor()
+    await page.locator('#accountButton').getByText(waitForText, { exact: true }).waitFor()
   }
   await page.locator('#accountButton').click()
 }
 
 export async function clickSignInButtonWithRetry(page: Page) {
-  console.log('Clicking "Connect" button...')
-  await page.locator('#accountButton').getByText('CloseConnect', {exact: true}).waitFor()
+  await page.locator('#accountButton').getByText('CloseConnect', { exact: true }).waitFor()
 
   for (let n of [...Array(10).keys()]) {
     try {
-      await page.locator('#accountButton').getByText('CloseConnect', {exact: true}).click()
+      await page.locator('#accountButton').getByText('CloseConnect', { exact: true }).click()
       await page.getByRole('img', { name: 'Metamask' }).waitFor({ timeout: 2000 })
       break
     } catch {
@@ -37,14 +36,12 @@ export async function clickSignInButtonWithRetry(page: Page) {
 }
 
 async function getMetamaskPopupAfterClick(page: Page) {
-  console.log('connectAndSignWithMetamask: Connecting with metamask...')
-  console.log('connectAndSignWithMetamask: clicking metamask icon')
   const popupPromise = page.context().waitForEvent('page')
   await page.getByRole('img', { name: 'Metamask' }).click()
 
   // might need to click "Send Message" button
   try {
-    await page.locator('#signMessage').getByRole("button").click({timeout: 5000})
+    await page.locator('#signMessage').getByRole('button').click({ timeout: 5000 })
   } catch (e) {
     console.log(e)
   }
@@ -109,7 +106,7 @@ export async function connectAndSignWithMetamask(page: Page, clickMetamaskButton
 
   // click "Send Message" button on Artizen page
   try {
-    await page.locator('#signMessage').getByRole("button").click()
+    await page.locator('#signMessage').getByRole('button').click()
   } catch (e) {
     console.log(e)
   }

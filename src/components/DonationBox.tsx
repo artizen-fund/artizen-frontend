@@ -23,8 +23,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   const [artifactQuantity, setArtifactQuantity] = useState(1)
   const [warming, setWarming] = useState<boolean>(true)
 
-  console.log('artifactQuantity in here  ::::::::::', artifactQuantity)
-
   const {
     execute: donate,
     status: contractStatus,
@@ -46,7 +44,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   // }, [error])
 
   useEffect(() => {
-    console.log('contractStatus: ', processing)
     if (processing) {
       toggleModal('processTransaction')
     }
@@ -72,10 +69,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       console.log('error in here  ', e)
     }
 
-    console.log('hash: ', hash)
-
     if (hash) {
-      console.log('gets here')
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
         tokenId,

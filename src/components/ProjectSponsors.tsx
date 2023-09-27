@@ -31,7 +31,6 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
         if (submission?.project?.id !== projectId) {
           return []
         }
-        console.log('matchFund  ', matchFund)
 
         matchFund?.sponsorInMatchFunds.forEach(({ sponsor }) => {
           if (sponsors.filter(({ id }) => id === sponsor?.id).length > 0) {

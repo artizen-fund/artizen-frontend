@@ -10,8 +10,6 @@ const composeArtifactDescription = (
 
   const impact = project.metadata.filter((item: any) => item.title === 'How will your project impact the world?')
 
-  console.log('impact', impact[0].value)
-
   return `**${artifactName}**
 
 **Project**: ${titleCase(project.title)}

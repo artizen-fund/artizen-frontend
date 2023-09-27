@@ -35,8 +35,6 @@ export default function NewSeasonForm(): JSX.Element {
   const startingDate = `${data.startingDate}T09:01:00`
   const endingDate = `${data.endingDate}T09:00:00`
 
-  console.log('endingDate', endingDate)
-
   const { execute: publishSeason } = useContracts({
     args: [getTimeUnix(startingDate), getTimeUnix(endingDate)],
     functionName: 'createSeason',
@@ -63,7 +61,6 @@ export default function NewSeasonForm(): JSX.Element {
   }
 
   const checkIfThereIsSeasonDate = async (from: string, to: string) => {
-    console.log('checkIfThereIsSeasonDate', from, to)
     const { data: seasonInDB, error } = await loadSeason({
       variables: {
         where: {
@@ -74,8 +71,6 @@ export default function NewSeasonForm(): JSX.Element {
         },
       },
     })
-
-    console.log('seasonInDB', seasonInDB)
 
     if (error) {
       alert('Error loading season in checkIfThereIsSeasonDate')
@@ -103,8 +98,6 @@ export default function NewSeasonForm(): JSX.Element {
   }
 
   const saveNewSeason = async () => {
-    console.log('saveNewSeason', data)
-
     if (!data.startingDate || !data.endingDate) {
       return
     }
@@ -114,8 +107,6 @@ export default function NewSeasonForm(): JSX.Element {
     await checkIfThereIsSeasonDate(data.startingDate, data.endingDate)
 
     const { error, outcome } = await publishSeason?.()
-
-    console.log('error   ', error)
 
     if (error) {
       console.log(`Error publishing season to blockchain ${error}`)
@@ -158,13 +149,11 @@ export default function NewSeasonForm(): JSX.Element {
       uischema={uischema}
       data={data}
       setData={async temData => {
-        console.log('temData  initial ', temData)
         if (temData.startingDate && temData.endingDate) {
           await checkIfThereIsSeasonDate(temData.startingDate, temData.endingDate)
-          console.log('gets here')
           checkIfEndingDateIsAfterStartingDate(temData.startingDate, temData.endingDate)
         }
-        console.log('temData', temData)
+
         setData(temData)
       }}
       additionalErrors={additionalErrors}

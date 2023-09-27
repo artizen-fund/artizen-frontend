@@ -62,10 +62,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   } = useContractWrite({
     ...config,
     onSettled(data, error) {
-      console.log('Settled', { data, error })
-
       if (error) {
-        console.log('error.message as string   ', error.message as string)
         setErrorState(error.message as string)
         return
       }
@@ -109,7 +106,6 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   }, [errorState])
 
   useEffect(() => {
-    console.log('status', status)
     if (status === 'success' && errorState !== null) {
       setErrorState(null)
     }
@@ -133,8 +129,6 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     }
 
     setProcessing(true)
-
-    console.log('from execute.....   ', argsState)
 
     const writeText = await writeAsync?.()
 

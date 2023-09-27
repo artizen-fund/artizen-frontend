@@ -24,10 +24,6 @@ const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragmen
 
   const artifactDescription = composeArtifactDescription(artifactName, project, allProjectMembersString || '')
 
-  console.log('artifactName::::: ', artifactName)
-
-  console.log('artifactDescription', artifactDescription)
-
   const image = await sendDataToAPI(
     JSON.stringify({
       imagePath: artifactToUpload.artwork,
@@ -60,8 +56,6 @@ const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragmen
       name: `${artifactName}-metadata`,
     }),
   )
-
-  console.log('metadata:::: ', metadata)
 
   return `ipfs://${metadata.IpfsHash}`
 }
