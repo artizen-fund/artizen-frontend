@@ -41,8 +41,6 @@ const App = ({
 
   const NEXT_PUBLIC_PRIVY_APP_ID = assert(process.env.NEXT_PUBLIC_PRIVY_APP_ID, 'NEXT_PUBLIC_PRIVY_APP_ID')
 
-  console.log('NEXT_PUBLIC_PRIVY_APP_ID', NEXT_PUBLIC_PRIVY_APP_ID)
-
   return (
     <PrivyProvider
       appId={NEXT_PUBLIC_PRIVY_APP_ID}
