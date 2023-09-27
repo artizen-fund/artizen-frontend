@@ -13,8 +13,6 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 export const createApolloClient = () => {
   const didToken = getCookie('didToken')
 
-  console.log('didToken :::::::  ', didToken)
-
   const httpLink = createHttpLink({
     uri: assert(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL, 'NEXT_PUBLIC_HASURA_GRAPHQL_URL'),
     headers: {},
