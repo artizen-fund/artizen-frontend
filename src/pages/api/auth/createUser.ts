@@ -45,10 +45,11 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   })
 
-  console.log('userInDatabase   ', userInDatabase)
+  console.log('userInDatabase   ', userInDatabase?.data?.Users[0])
 
   if (userInDatabase.data?.Users.length === 0) {
     //Add user
+    console.log('gets to create user')
 
     const newUserFromDB = await apolloClient.mutate<ICreateUserMutation>({
       mutation: CREATE_USER,
@@ -61,6 +62,7 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
     candidateUser.id = newUserFromDB.data?.insert_Users_one?.id
   } else {
+    console.log('gets to user already in db')
     candidateUser.id = userInDatabase.data?.Users[0].id
     candidateUser.isCurator = userInDatabase.data?.Users[0].curators.length > 0
   }
