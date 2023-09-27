@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, LayoutContext } from '@lib'
+import { rgba, LayoutContext, titleCase } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { RankAndArtifactCount, DonationBox } from '@components'
 import { IProjectFragment } from '@types'
@@ -9,26 +9,34 @@ import Link from 'next/link'
 interface IProjectCard {
   project?: IProjectFragment
   index: number
+  totalSales: number
+  matchFundPooled: number
+  seasonIsActive?: boolean
 }
 
-const ProjectCard = ({ project, index }: IProjectCard) => {
+const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPooled }: IProjectCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
   const artist = project.members.find(m => m.type === 'lead')?.user
+
   return (
     <Wrapper>
       <AllCopy>
         <Header>
           <RankAndArtifactCount
             rank={index}
+            totalSales={totalSales}
+            matchFundPooled={matchFundPooled}
             count={latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0}
           />
-          <ArtifactNumber>Artifact #{latestArtifact.token}</ArtifactNumber>
+          <ArtifactNumber>
+            {latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0} Minted
+          </ArtifactNumber>
         </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>
-            <h2>{project.title}</h2>
+            <h2>{project.title && titleCase(project.title)}</h2>
           </Link>
           <p>{project.logline}</p>
         </Copy>
@@ -50,7 +58,9 @@ const ProjectCard = ({ project, index }: IProjectCard) => {
           }
         />
       </ImageWrapper>
-      <Footer>{latestArtifact.token && <DonationBox tokenId={latestArtifact.token} {...{ project }} />}</Footer>
+      {seasonIsActive && (
+        <Footer>{latestArtifact.token && <DonationBox tokenId={latestArtifact.token} {...{ project }} />}</Footer>
+      )}
     </Wrapper>
   )
 }
@@ -94,6 +104,7 @@ const StyledLink = styled(props => <Link {...props} />)`
 
 const Wrapper = styled.article`
   display: grid;
+  align-items: flex-end;
   grid-template-columns: 1fr;
   grid-template-areas: 'art' 'copy' 'footer';
   gap: 20px;
@@ -151,7 +162,7 @@ const Img = styled.img`
     height: 382px;
   }
   @media only screen and (min-width: ${breakpoint.laptopXL}px) {
-    width: 300px;
+    width: 306px;
     height: 300px;
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
@@ -168,6 +179,7 @@ const Footer = styled.footer`
   justify-content: space-between;
   gap: 15px;
   padding: 0 20px 20px 20px;
+  align-self: end;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
     padding: 0;
     gap: 20px;

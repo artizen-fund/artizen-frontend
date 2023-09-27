@@ -2,14 +2,13 @@ import styled from 'styled-components'
 import { Button, Glyph } from '@components'
 import { IUserPublicFragment } from '@types'
 import { breakpoint, palette } from '@theme'
-import { rgba, sizeForLevel } from '@lib'
+import { rgba, sizeForLevel, getTwitterHandler } from '@lib'
 
 interface ICreatorBox {
   user: IUserPublicFragment
 }
 
 const CreatorBox = ({ user }: ICreatorBox) => {
-  console.log('member', user)
   return (
     <Wrapper>
       <div>
@@ -23,7 +22,13 @@ const CreatorBox = ({ user }: ICreatorBox) => {
           <Links>
             {user.twitterHandle && (
               <li>
-                <Button glyph="twitter" glyphOnly href={`https://twitter.com/${user.twitterHandle}`} level={2} outline>
+                <Button
+                  glyph="twitter"
+                  glyphOnly
+                  href={`https://twitter.com/${getTwitterHandler(user.twitterHandle)}`}
+                  level={2}
+                  outline
+                >
                   Twitter
                 </Button>
               </li>

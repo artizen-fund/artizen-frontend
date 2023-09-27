@@ -56,6 +56,7 @@ const sendArtifactToIPFS = async (artifactNumber: number, season: ISeasonFragmen
       name: `${artifactName}-metadata`,
     }),
   )
+
   return `ipfs://${metadata.IpfsHash}`
 }
 

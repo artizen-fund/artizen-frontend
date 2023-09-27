@@ -78,12 +78,10 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     console.error('error retrieving season', error)
   }
 
-  console.log('data  ISeasonForTimeQuery ', data)
-
   // 3. use the season ID for the subscription
   useEffect(() => {
     let checkAgainIfNotFound: NodeJS.Timeout
-    console.log('data', data)
+
     if (!data || !data.Seasons[0] || loading) {
       checkAgainIfNotFound = setTimeout(() => {
         refreshTimestamp()
@@ -116,7 +114,10 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
         seasonId,
         seasonIndex,
         loadingSeasonId: loading,
-        isSeasonActive: isSeasonActive(data?.Seasons[0].startingDate, data?.Seasons[0].endingDate),
+        isSeasonActive:
+          data?.Seasons &&
+          data?.Seasons.length > 0 &&
+          isSeasonActive(data?.Seasons[0].startingDate, data?.Seasons[0].endingDate),
       }}
     >
       {children}

@@ -1,18 +1,17 @@
 import { useContext } from 'react'
-import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
-import { Layout, Button, Spinner, CuratorCheck, Table, TableCell, PagePadding } from '@components'
+import { faq } from '@copy/admin'
+import { Layout, Button, CuratorCheck, Table, TableCell, PagePadding, Faq, Breadcrumbs } from '@components'
 import { LOAD_SEASONS } from '@gql'
 import { typography, palette } from '@theme'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
 import { rgba, LayoutContext, useDateHelpers } from '@lib'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 const Seasons = () => {
   const router = useRouter()
-  const { status } = useSession()
   const { toggleModal } = useContext(LayoutContext)
   const { formatDate, getSeasonStatus } = useDateHelpers()
 
@@ -28,7 +27,7 @@ const Seasons = () => {
   })
 
   if (error) {
-    console.error(error)
+    console.error('error', error)
   }
 
   const openSeason = (target: string) => () => {
@@ -50,29 +49,42 @@ const Seasons = () => {
   return (
     <Layout>
       <CuratorCheck />
-      {status !== 'authenticated' ? (
-        <Spinner />
-      ) : (
-        <StyledPagePadding>
-          <Table title="Season List" {...{ sideItem }}>
-            {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
-              const startingDate = formatDate(season.startingDate)
-              const endingDate = formatDate(season.endingDate)
-              const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
+      <StyledPagePadding>
+        <Breadcrumbs
+          schema={[
+            {
+              path: '/admin',
+              name: 'Admin',
+              isActive: false,
+            },
+            {
+              path: '/admin/seasons',
+              name: 'Seasons',
+              isActive: true,
+            },
+          ]}
+        />
+        <Table title="Season List" {...{ sideItem }}>
+          {loadedSeasonsData?.Seasons.map((season: ISeasonFragment) => {
+            const startingDate = formatDate(season.startingDate)
+            const endingDate = formatDate(season.endingDate)
+            const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
 
-              return (
-                <StyledTableCell onClick={openSeason(season.id)} key={season.id} highlight>
-                  <Title>{season.title && capitalCase(season.title)}</Title>
-                  <Status>{seasonStatus}</Status>
-                  <DateLine>
-                    Runs from {startingDate} to {endingDate}
-                  </DateLine>
-                </StyledTableCell>
-              )
-            })}
-          </Table>
-        </StyledPagePadding>
-      )}
+            return (
+              <StyledTableCell onClick={openSeason(season.id)} key={season.id} highlight>
+                <Title>{season.title && startCase(season.title)}</Title>
+                <Status>{seasonStatus}</Status>
+                <DateLine>
+                  Runs from {startingDate} to {endingDate}
+                </DateLine>
+              </StyledTableCell>
+            )
+          })}
+        </Table>
+      </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

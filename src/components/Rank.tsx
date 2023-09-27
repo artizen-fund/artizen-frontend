@@ -18,7 +18,7 @@ const StyledGlyph = styled(props => <Glyph {...props} />)`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
   color: ${rgba(palette.algae)};
   ${typography.title.l4}

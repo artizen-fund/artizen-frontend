@@ -1,0 +1,28 @@
+name: Trigger CI
+on:
+  push:
+    branches-ignore:    
+      - 'main'
+      - 'staging'
+
+jobs:
+  triggerCI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Preview deploy via repository dispatch
+        if: ${{ github.ref_name != 'main' }}
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GH_FRONTEND_CI_REPO_PAT }}
+          repository: artizen-fund/artizen-frontend-ci
+          event-type: preview
+          client-payload: '{"env": "preview", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "branchname": "${{ github.ref_name }}", "dry_run":false}'
+
+      - name: Production deploy via repository dispatch
+        if: ${{ github.ref_name == 'main' }}
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GH_FRONTEND_CI_REPO_PAT }}
+          repository: artizen-fund/artizen-frontend-ci
+          event-type: production
+          client-payload: '{"env": "production", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "branchname": "${{ github.ref_name }}", "dry_run":false}'

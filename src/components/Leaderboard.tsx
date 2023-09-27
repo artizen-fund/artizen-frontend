@@ -1,25 +1,26 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { Button, Table, TableCell, TableAvatar, Spinner } from '@components'
-import { aggregateDonators, rgba, assertFloat, useGnosis } from '@lib'
+
+import { Button, Table, TableCell, TableAvatar, Spinner, Glyph } from '@components'
+import { aggregateDonators, rgba, assertFloat, useGnosis, titleCase } from '@lib'
 import { IOpenEditionsSubscription } from '@types'
-import { palette } from '@theme'
+import { palette, typography, breakpoint } from '@theme'
 
 interface ILeaderboard {
   openEditions?: IOpenEditionsSubscription
+  isWinner: boolean
+  count: number
+  totalSales: number
+  matchFundPooled: number
 }
 
 const DEFAULT_LIMIT = 3
 const FIXED_PRECISION = 2
 
-const Leaderboard = ({ openEditions }: ILeaderboard) => {
+const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPooled }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
-  const { USDtoETH } = useGnosis()
-
   if (!openEditions) return <Spinner minHeight="65px" />
-
-  const count = openEditions?.OpenEditionCopies.reduce((x, edition) => x + edition.copies!, 0) || 0
 
   const sideItem =
     aggregateDonators(openEditions).length < DEFAULT_LIMIT ? (
@@ -35,16 +36,28 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
+  const spli80 = (80 * matchFundPooled) / 100
+  //only winners get 20% of the match fund on top of their sales
+  const split20 = (20 * matchFundPooled) / 100
+
+  const getMatchFundMoney = (countH: number): number => {
+    const split = totalSales > 0 ? (countH * 100) / totalSales : 0
+    //split: 6*100/8 = 75%
+    //spli80: 80*10/100 = 8
+    return (spli80 * split) / 100
+  }
+
+  const salesArtifacts = BASE_ARTIFACT_PRICE * count
+  const contributionOfSalesToMatchFund = count * 0.01
+
+  const sells = (salesArtifacts + getMatchFundMoney(count) + (isWinner ? split20 : 0)).toFixed(2)
+
   const title = (
     <div>
-      Ξ{(count * BASE_ARTIFACT_PRICE).toFixed(FIXED_PRECISION)}
-      <Grey>
-        {' '}
-        {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-          (count * BASE_ARTIFACT_PRICE) / USDtoETH!,
-        )}{' '}
-        in Artifact sales
-      </Grey>
+      <BiggerText>Ξ{sells} raised:</BiggerText>
+      <Grey>&nbsp; Ξ{salesArtifacts} sales </Grey>
+      <Green>+ Ξ{getMatchFundMoney(count).toFixed(FIXED_PRECISION)} match</Green>
+      {isWinner && <Green> + Ξ{split20.toFixed(FIXED_PRECISION)} prize</Green>}
     </div>
   )
 
@@ -55,16 +68,25 @@ const Leaderboard = ({ openEditions }: ILeaderboard) => {
         <StyledTableCell key={`donating-user-${index}`} highlight hidden={index > limit - 1}>
           <div>
             <TableAvatar profileImage={user.profileImage} />
-            <Name>{user?.artizenHandle}</Name>
+            <Name>{titleCase(user?.artizenHandle)}</Name>
+            {index === 0 && <StyledGlyph glyph="crown" level={1} color="black" darkColor="algae" />}
           </div>
-          <Amount>
-            <span>owns</span> {user.copies}
-          </Amount>
+          <div>
+            <Grey>Ξ&nbsp;{BASE_ARTIFACT_PRICE * user.copies}</Grey>
+            <Green>+&nbsp; Ξ&nbsp;{getMatchFundMoney(user.copies).toFixed(FIXED_PRECISION)}</Green>{' '}
+            <Amount>
+              | <span> minted</span> {user.copies}
+            </Amount>
+          </div>
         </StyledTableCell>
       ))}
     </StyledTable>
   )
 }
+
+const StyledGlyph = styled(props => <Glyph {...props} />)`
+  --iconSize: 11px;
+`
 
 const SubmissionsMarker = styled.div`
   position: absolute;
@@ -74,7 +96,17 @@ const SubmissionsMarker = styled.div`
 `
 
 const Grey = styled.span`
+  ${typography.label.l1}
   color: ${rgba(palette.barracuda)};
+`
+
+const BiggerText = styled.span`
+  ${typography.label.l0}
+`
+
+const Green = styled.span`
+  ${typography.label.l1}
+  color: ${rgba(palette.algae)};
 `
 
 const StyledTable = styled(props => <Table {...props} />)`
@@ -102,6 +134,12 @@ const Amount = styled.div`
   white-space: nowrap;
   span {
     color: ${rgba(palette.barracuda)};
+  }
+
+  @media only screen and (max-width: ${breakpoint.phablet}px) {
+    span {
+      display: none;
+    }
   }
 `
 

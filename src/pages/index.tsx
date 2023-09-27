@@ -1,9 +1,6 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useSubscription } from '@apollo/client'
-import { SUBSCRIBE_SEASONS } from '@gql'
-import { ISubscribeSeasonsSubscription, ISubmissionFragment } from '@types'
 import {
   HomeHeader,
   Layout,
@@ -17,31 +14,24 @@ import {
   PartnersRibbon,
   HomeRibbon,
   LeaderboardHeader,
-  LastSeasonLeaderboardHeader,
   ProjectCard,
-  ProjectCardPreviousSeason,
   HomeLoadingShimmer,
 } from '@components'
-import { rgba, SeasonContext, useDateHelpers } from '@lib'
+import { rgba, SeasonSubcriptionContext } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
+const MAXIMUN_NUMBER_OF_LOADING = 3
+
 const IndexPage = () => {
   const { asPath } = useRouter()
-  const { isSeasonActive } = useDateHelpers()
+  const [numberOfLoading, setNumberOfLoading] = useState<number>(MAXIMUN_NUMBER_OF_LOADING)
+  const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
+    useContext(SeasonSubcriptionContext)
 
-  const { seasonId } = useContext(SeasonContext)
+  const arrangedSeasonListCapped = arrangedSeasonList?.slice(0, numberOfLoading)
 
-  const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
-    skip: !seasonId,
-    fetchPolicy: 'no-cache',
-    variables: {
-      where: {
-        id: { _eq: seasonId },
-      },
-      order_by: { submissions_aggregate: { count: 'asc' } },
-    },
-  })
+  const length = arrangedSeasonList?.length
 
   useEffect(() => {
     const hash = asPath.split('#')[1]
@@ -51,51 +41,46 @@ const IndexPage = () => {
     }
   }, [])
 
-  const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
-
-  console.log('data?.Seasons[0]  ', data?.Seasons[0])
-
   return (
     <Layout>
-      <HomeHeader season={data?.Seasons[0]} {...{ loading }} />
+      <HomeHeader season={season} {...{ loading }} />
       <PartnersRibbon />
       <HomeRibbon />
       {loading && <HomeLoadingShimmer />}
-      {!loading && !seasonIsActive && (
+      {!loading && (
         <>
-          <LastSeasonLeaderboardHeader />
-          <SubmissionsMarker id="submissionsMarker" />
-          <StyledPagePadding>
-            <Grid>
-              {data?.Seasons[0].submissions
-                ?.sort(
-                  (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-                    s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-                    s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-                )
-                .map((submission, index) => (
-                  <ProjectCardPreviousSeason project={submission.project} {...{ index }} key={submission.id} />
-                ))}
-            </Grid>
-          </StyledPagePadding>
-        </>
-      )}
-      {!loading && seasonIsActive && data?.Seasons[0] && (
-        <>
-          <LeaderboardHeader index={data.Seasons[0].index} endingDate={data.Seasons[0].endingDate} />
+          <LeaderboardHeader
+            loading={loading}
+            index={season?.index}
+            endingDate={season?.endingDate}
+            totalPrizePooled={totalPrizePooled}
+            seasonIsActive={seasonIsActive}
+          />
           <StyledPagePadding>
             <SubmissionsMarker id="submissionsMarker" />
             <Grid>
-              {data?.Seasons[0].submissions
-                ?.sort(
-                  (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-                    s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-                    s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-                )
-                .map((submission, index) => (
-                  <ProjectCard project={submission.project} {...{ index }} key={submission.id} />
-                ))}
+              {arrangedSeasonListCapped?.map((submission, index) => (
+                <ProjectCard
+                  matchFundPooled={season?.matchFundPooled}
+                  totalSales={totalSales ? totalSales : 0}
+                  project={submission.project}
+                  {...{ index }}
+                  key={submission.id}
+                  seasonIsActive={seasonIsActive}
+                />
+              ))}
             </Grid>
+            {length && length > numberOfLoading && (
+              <StyledButton
+                outline
+                level={1}
+                onClick={() => {
+                  setNumberOfLoading(length)
+                }}
+              >
+                See All Artifacts
+              </StyledButton>
+            )}
           </StyledPagePadding>
         </>
       )}
@@ -132,6 +117,10 @@ const SubmissionsMarker = styled.div`
   top: -260px;
   width: 1px;
   height: 1px;
+`
+
+const StyledButton = styled(props => <Button {...props} />)`
+  margin: 32px auto 0;
 `
 
 const Grid = styled.div`

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { rgba, assetPath, useGnosis } from '@lib'
+import { rgba, assetPath, formatDate } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding, Countdown, Glyph } from '@components'
 
@@ -7,11 +7,17 @@ interface LeaderboardHeaderProps {
   index?: number
   endingDate?: Partial<any>
   loading?: boolean
+  totalPrizePooled?: number
+  seasonIsActive?: boolean
 }
 
-const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProps): JSX.Element => {
-  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
-
+const LeaderboardHeader = ({
+  seasonIsActive,
+  loading,
+  index,
+  endingDate,
+  totalPrizePooled,
+}: LeaderboardHeaderProps): JSX.Element => {
   return (
     <StyledPagePadding>
       <Content>
@@ -19,9 +25,10 @@ const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProp
 
         <Stats>
           <Stat>
-            <Label>Prize Funds</Label>
+            <Label>{seasonIsActive ? 'Match Funds' : 'Funds Awarded'}</Label>
             {!!loading && <Data>…</Data>}
-            {!loading && (
+            {!loading && <Data>{totalPrizePooled} ETH</Data>}
+            {/* {!loading && (
               <Data>
                 {artizenPrizeAmountETH} ETH
                 <CashTrend>
@@ -31,22 +38,30 @@ const LeaderboardHeader = ({ loading, index, endingDate }: LeaderboardHeaderProp
                   <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
                 </CashTrend>
               </Data>
-            )}
+            )} */}
           </Stat>
           <Stat>
             <Label>Cycle</Label>
             {!!loading && <Data>…</Data>}
             {!loading && <Data>Season {index}</Data>}
           </Stat>
-          <Stat>
-            <Label>Ends in</Label>
-            {!!loading && <Data>…</Data>}
-            {!loading && !!endingDate && (
-              <Data>
-                <Countdown date={endingDate} />
-              </Data>
-            )}
-          </Stat>
+          {seasonIsActive && (
+            <Stat>
+              <Label>Ends in</Label>
+              {!!loading && <Data>…</Data>}
+              {!loading && !!endingDate && (
+                <Data>
+                  <Countdown date={endingDate} />
+                </Data>
+              )}
+            </Stat>
+          )}
+          {!seasonIsActive && endingDate && (
+            <Stat>
+              <Label>Ended on</Label>
+              <Data>{formatDate(new Date(endingDate as any))}</Data>
+            </Stat>
+          )}
         </Stats>
 
         <OfficialSelection>

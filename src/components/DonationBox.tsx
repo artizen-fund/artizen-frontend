@@ -1,18 +1,10 @@
 import { useState, useContext, useEffect } from 'react'
-import { useSession } from 'next-auth/react'
 import styled from 'styled-components'
 import { Button, Counter } from '@components'
-import {
-  LayoutContext,
-  trackEventF,
-  intercomEventEnum,
-  assertFloat,
-  assert,
-  rgba,
-  useSeasons,
-  useMintArtifacts,
-} from '@lib'
+import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useContracts, getTwitterHandler } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
+import { usePrivy } from '@privy-io/react-auth'
+import { ethers } from 'ethers'
 import { IProjectFragment } from '@types'
 
 interface IDonationBox {
@@ -26,43 +18,69 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const { status } = useSession()
-
-  const { setVisibleModalWithAttrs, toggleModal } = useContext(LayoutContext)
+  const { setVisibleModalWithAttrs, toggleModal, setVisibleModal } = useContext(LayoutContext)
   const [sending, setSending] = useState<boolean>(false)
-  const { setVisibleModal } = useContext(LayoutContext)
-  const [artifactQuantity, setArtifactQuantity] = useState<number>(1)
+  const [artifactQuantity, setArtifactQuantity] = useState(1)
+  const [warming, setWarming] = useState<boolean>(true)
 
-  const { writeAsync, error } = useMintArtifacts({
-    tokenId,
-    artifactQuantity,
+  const {
+    execute: donate,
+    status: contractStatus,
+    processing,
+  } = useContracts({
+    args: [[Number(tokenId || 1)], [Number(artifactQuantity || 1)]],
+    functionName: 'mintArtifact',
+    eventName: 'ArtifactMinted',
+    value: BigInt(BASE_ARTIFACT_PRICE * artifactQuantity * 1e18),
+    warming,
   })
+
+  // useEffect(() => {
+  //   if (error) {
+  //     setVisibleModalWithAttrs('errorModal', {
+  //       error,
+  //     })
+  //   }
+  // }, [error])
+
+  useEffect(() => {
+    if (processing) {
+      toggleModal('processTransaction')
+    }
+  }, [processing])
 
   const donateFn = async () => {
     if (!tokenId || !artifactQuantity) return
-    toggleModal('confirmTransaction')
+
+    setWarming(false)
+
     setSending(true)
+
     trackEventF(intercomEventEnum.DONATION_START, {
       amount: artifactQuantity,
       tokenId,
     })
 
-    const writeContract = await writeAsync?.()
+    let hash: any
 
-    toggleModal()
+    try {
+      hash = await donate?.()
+    } catch (e) {
+      console.log('error in here  ', e)
+    }
 
-    const result = await writeContract?.wait()
-
-    if (result?.blockHash) {
+    if (hash) {
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
         tokenId,
       })
 
-      setVisibleModalWithAttrs('shareTransaction', {
+      setVisibleModalWithAttrs('share', {
         mode: 'postTransaction',
         destination: `/projects/${project.titleURL}`,
-        projecTitle: project.title,
+        projectTitle: project.title,
+        twitterHandle: getTwitterHandler(project?.members[0]?.user?.twitterHandle || ''),
+        artizenHandle: project?.members[0]?.user?.artizenHandle,
       })
     }
 
@@ -72,7 +90,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   return (
     <Wrapper>
       <ScrollPoint id="donation-box" />
-      {status !== 'authenticated' && <SessionMask onClick={() => setVisibleModal('login')} />}
       <>
         <MobileBreak>
           <Cost>
@@ -86,12 +103,12 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         <StyledButton
           level={1}
           onClick={() => {
-            if (error) {
-              setVisibleModalWithAttrs('errorModal', {
-                error,
-              })
-              return
-            }
+            // if (error) {
+            //   setVisibleModalWithAttrs('errorModal', {
+            //     error,
+            //   })
+            //   return
+            // }
 
             donateFn()
           }}

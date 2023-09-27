@@ -33,7 +33,6 @@ const StyledButton = styled(props => <Button {...props} />)`
   margin-top: 20px;
 `
 
-//'title', 'logline', 'impactTags', 'walletAddress', 'info1', 'info2', 'info3', 'info4'
 const WrapperForm = styled.div`
   display: grid;
   gap: 10px;

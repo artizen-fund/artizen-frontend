@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { palette, typography, breakpoint } from '@theme'
 import { rgba } from '@lib'
 import { IProjectFragment, Maybe } from '@types'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 interface ProjectProps {
   projectData: IProjectFragment
@@ -17,12 +17,12 @@ export default function Project({ projectData, displayType }: ProjectProps): JSX
   return (
     <Wrapper displayType={displayType}>
       <ArtifactImage artwork={artifacts[0].artwork} displayType={displayType} />
-      {displayType === 'brief' && <Headline>{title && capitalCase(title)}</Headline>}
+      {displayType === 'brief' && <Headline>{title && startCase(title)}</Headline>}
       <Item>
         <b>Logline:</b> {logline}
       </Item>
       <Item>
-        <b>By:</b> {capitalCase(`${leadMember?.artizenHandle}`)}
+        <b>By:</b> {startCase(`${leadMember?.artizenHandle}`)}
       </Item>
       <Item>
         <b>Impact Tags:</b> {impactTags}

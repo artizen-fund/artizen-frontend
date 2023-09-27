@@ -1,9 +1,21 @@
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
+import { faq } from '@copy/admin'
 import { useEffect } from 'react'
 import { rgba } from '@lib'
 import styled from 'styled-components'
-import { Button, Layout, Spinner, Table, TableCell, PagePadding, Project, CuratorCheck } from '@components'
+import {
+  Button,
+  Layout,
+  Spinner,
+  Table,
+  TableCell,
+  PagePadding,
+  Project,
+  CuratorCheck,
+  Faq,
+  Breadcrumbs,
+} from '@components'
 import { GET_PROJECTS } from '@gql'
 import { IProjectsQuery, IProjectFragment } from '@types'
 import { palette, typography } from '@theme'
@@ -18,10 +30,6 @@ const Projects = () => {
     fetchPolicy: 'no-cache',
   })
 
-  useEffect(() => {
-    if (!errorLoadingProject) return
-  }, [errorLoadingProject])
-
   const openProject = (target: string) => () => {
     router.push(`/admin/projects/${target}`)
   }
@@ -35,6 +43,20 @@ const Projects = () => {
   return (
     <Layout>
       <StyledPagePadding>
+        <Breadcrumbs
+          schema={[
+            {
+              path: '/admin',
+              name: 'Admin',
+              isActive: false,
+            },
+            {
+              path: '/admin/projects',
+              name: 'Projects',
+              isActive: true,
+            },
+          ]}
+        />
         <CuratorCheck />
         {loading ? (
           <Spinner />
@@ -42,7 +64,7 @@ const Projects = () => {
           <Wrapper>
             <Header>Project List</Header>
             <Button level={2} onClick={openProject('new')}>
-              Add New Project
+              New Project
             </Button>
             <ProjectList className="doubleLeght">
               {loadedProjectData?.Projects.map((project: IProjectFragment) => {
@@ -56,6 +78,9 @@ const Projects = () => {
           </Wrapper>
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }

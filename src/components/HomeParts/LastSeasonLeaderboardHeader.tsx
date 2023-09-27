@@ -1,68 +1,68 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, assetPath, formatDate, useGnosis, SeasonContext } from '@lib'
+import { rgba, assetPath, formatDate, SeasonSubcriptionContext } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { PagePadding, Glyph } from '@components'
-import { useQuery } from '@apollo/client'
-import { GET_SEASON_FOR_TIME } from '@gql'
-import { ISeasonForTimeQuery } from '@types'
 
-interface LeaderboardHeaderProps {
-  loading?: boolean
-}
+const LeaderboardHeader = (): JSX.Element => {
+  const { season, totalPrizePooled, loading } = useContext(SeasonSubcriptionContext)
 
-const LeaderboardHeader = ({ loading }: LeaderboardHeaderProps): JSX.Element => {
-  const { seasonId } = useContext(SeasonContext)
-  const { USDtoETH } = useGnosis()
+  // const { USDtoETH } = useGnosis()
 
-  const { data: latestSeason, error } = useQuery<ISeasonForTimeQuery>(GET_SEASON_FOR_TIME, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      where: {
-        id: { _eq: seasonId },
-      },
-      order_by: { startingDate: 'asc' },
-    },
-  })
+  // const { data: latestSeason, error } = useQuery<ISeasonForTimeQuery>(GET_SEASON_FOR_TIME, {
+  //   fetchPolicy: 'no-cache',
+  //   variables: {
+  //     where: {
+  //       id: { _eq: seasonId },
+  //     },
+  //   },
+  // })
+  // if (error) {
+  //   console.warn('error  in here ', error)
+  // }
 
-  console.warn('error  in here ', error)
+  // if (!latestSeason || !!loading) return <></>
 
-  if (!latestSeason || !!loading) return <></>
+  // const season = latestSeason.Seasons[0]
 
-  const season = latestSeason.Seasons[0]
+  // console.log('season  ', season)
+
+  // if (!season) return <></>
 
   return (
     <StyledPagePadding>
-      <Content>
-        <Title>Season {season.index} ended</Title>
+      {!loading && (
+        <Content>
+          <Title>Season {season?.index} ended</Title>
 
-        <Stats>
-          <Stat>
-            <Label>Funds Awarded</Label>
-            <Data>
-              {season.amountRaised} ETH
-              <CashTrend>
+          <Stats>
+            <Stat>
+              <Label>Funds Awarded</Label>
+              <Data>
+                {totalPrizePooled} ETH
+                {/* <CashTrend>
                 {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                  season.amountRaised / USDtoETH!,
+                  season?.amountRaised / USDtoETH!,
                 )}
                 <Glyph glyph="trend" level={2} color="barracuda" darkColor="stone" />
-              </CashTrend>
-            </Data>
-          </Stat>
-          <Stat>
-            <Label>Cycle</Label>
-            <Data>Season {season.index}</Data>
-          </Stat>
-          <Stat>
-            <Label>Ended on</Label>
-            <Data>{formatDate(season.endingDate)}</Data>
-          </Stat>
-        </Stats>
+              </CashTrend> */}
+              </Data>
+            </Stat>
+            <Stat>
+              <Label>Cycle</Label>
+              <Data>Season {season?.index}</Data>
+            </Stat>
+            <Stat>
+              <Label>Ended on</Label>
+              <Data>{formatDate(season?.endingDate)}</Data>
+            </Stat>
+          </Stats>
 
-        <OfficialSelection>
-          <img src={assetPath('/assets/officialSelection.svg')} />
-        </OfficialSelection>
-      </Content>
+          <OfficialSelection>
+            <img src={assetPath('/assets/officialSelection.svg')} />
+          </OfficialSelection>
+        </Content>
+      )}
     </StyledPagePadding>
   )
 }

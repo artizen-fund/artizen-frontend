@@ -1,21 +1,28 @@
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
+import { useContext } from 'react'
+import { faq } from '@copy/admin'
 import styled from 'styled-components'
 import { LOAD_SEASONS } from '@gql'
 import { ILoadSeasonsQuery, ISeasonFragment } from '@types'
-import { Spinner, Layout, Submissions, Button, PagePadding, CuratorCheck } from '@components'
+import { Spinner, Layout, Submissions, Button, PagePadding, CuratorCheck, Faq } from '@components'
 import { typography } from '@theme'
-import { useDateHelpers } from '@lib'
-import { capitalCase } from 'capital-case'
+import { useDateHelpers, LayoutContext } from '@lib'
+import { startCase } from 'lodash'
 import { useSeasons } from 'src/lib/useSeasons'
 
 export default function SeasonPage(): JSX.Element {
-  const { formatDate, getSeasonStatus, isOpenForSubmissions } = useDateHelpers()
+  const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+  const { formatDate, getSeasonStatus, isOpenForSubmissions, isSeasonEnded } = useDateHelpers()
   const {
     query: { id },
     push,
   } = useRouter()
-  const { loading, data: loadedSeasonsData } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
+  const {
+    loading,
+    data: loadedSeasonsData,
+    error,
+  } = useQuery<ILoadSeasonsQuery>(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
     variables: {
       where: {
@@ -45,28 +52,62 @@ export default function SeasonPage(): JSX.Element {
             const startingDate = formatDate(season.startingDate)
             const endingDate = formatDate(season.endingDate)
             const seasonStatus = getSeasonStatus(season.startingDate, season.endingDate)?.toLocaleUpperCase()
+            const isSeasonEndedV: boolean = season.isClosed || isSeasonEnded(season.startingDate, season.endingDate)
+            const isOpenForSubmissionsV: boolean = isOpenForSubmissions(season.startingDate, season.endingDate)
+
             return (
               <Wrapper key={id} id={id}>
-                <Title id={`submission-title-${season.title}`}>{season.title && capitalCase(season.title)}</Title>
-                <Title className="right-align" id={`submission-status-${seasonStatus}`}>
-                  <span style={{ fontWeight: 10 }}>status: </span>
-                  {capitalCase(seasonStatus)}
-                </Title>
-                <Subtitle
-                  className="expand"
-                  id={`submission-startingDate-${season.startingDate}`}
-                >{`This Season runs from ${startingDate} to ${endingDate}`}</Subtitle>
-                {!isOpenForSubmissions(season.startingDate, season.endingDate) && (
-                  <CloseButton level={1} onClick={() => closeSeason(season.index)}>
+                <Title id={`submission-title-${season.title}`}>{season.title && startCase(season.title)}</Title>
+
+                {isSeasonEndedV && !season.isClosed && (
+                  <span
+                    style={{ fontWeight: 10, fontSize: 18, textDecoration: 'underline' }}
+                    className="right-align"
+                    onClick={() => closeSeason(season.index)}
+                  >
                     Close Season
-                  </CloseButton>
+                  </span>
                 )}
-                <Subtitle>Projects submitted to this Season:</Subtitle>
-                {isOpenForSubmissions(season.startingDate, season.endingDate) && (
-                  <Button level={2} onClick={() => push('/admin/projects')}>
-                    Submit a project
-                  </Button>
-                )}
+
+                <Subtitle id={`submission-status-${seasonStatus}`}>
+                  Status:
+                  <span style={{ fontWeight: 'bold' }}>{startCase(seasonStatus)}</span>
+                </Subtitle>
+
+                <Subtitle className={isOpenForSubmissionsV ? '' : 'right-align'}>
+                  <span style={{ fontWeight: 10 }}>Match Fund: </span> {season.matchFundPooled}{' '}
+                  {isOpenForSubmissionsV && (
+                    <a
+                      style={{ fontWeight: 10, fontSize: 18, textDecoration: 'underline' }}
+                      onClick={() => {
+                        setVisibleModalWithAttrs('updateMatchFundsSeasonAmount', {
+                          season,
+                        })
+                      }}
+                    >
+                      edit
+                    </a>
+                  )}
+                </Subtitle>
+
+                <div className="expand">
+                  <Subtitle
+                    style={{ float: 'left' }}
+                  >{`This season runs from ${startingDate} to ${endingDate}`}</Subtitle>
+
+                  <div className="right-align" style={{ float: 'right' }}>
+                    {isOpenForSubmissionsV && (
+                      <Button level={2} onClick={() => push('/admin/projects')}>
+                        Submit a project
+                      </Button>
+                    )}
+                  </div>
+                </div>
+
+                <Title style={{ margin: '32px 0 0 0' }} className="expand">
+                  Projects submitted to this Season:
+                </Title>
+
                 <SubmissionsWrapper>
                   <Submissions submissions={season.submissions.length > 0 ? season.submissions : []} />
                 </SubmissionsWrapper>
@@ -75,6 +116,9 @@ export default function SeasonPage(): JSX.Element {
           })
         )}
       </StyledPagePadding>
+      <div className="doubleWith">
+        <Faq copy={faq} />
+      </div>
     </Layout>
   )
 }
@@ -90,6 +134,7 @@ const SubmissionsWrapper = styled.div`
 
 const Wrapper = styled.div`
   display: grid;
+  gap: 10px;
   grid-template-rows: 50px 50px;
   grid-template-columns: 2fr 1fr;
   .expand {
@@ -108,8 +153,6 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)`
 `
 
 const Subtitle = styled.h3`
-  font-size: 1rem;
-  font-weight: 100;
   margin: 0;
   padding: 0;
   ${typography.body.l1}
@@ -123,5 +166,5 @@ const Title = styled.h1`
   ${typography.title.l3}
 `
 const CloseButton = styled(props => <Button {...props} />)`
-  width: 200px;
+  width: 160px;
 `

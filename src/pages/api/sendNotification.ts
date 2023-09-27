@@ -1,5 +1,3 @@
-import { unstable_getServerSession } from 'next-auth/next'
-import { authOptions } from './auth/[...nextauth]'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { sendNotification } from '@lib'
 
@@ -13,11 +11,11 @@ const sendNotificationAPI = async (req: NextApiRequest, res: NextApiResponse) =>
       res.status(405).send({ message: 'Only POST requests allowed' })
       return
     }
-    const session = await unstable_getServerSession(req, res, authOptions)
-    if (!session) {
-      res.status(401).send({ message: 'Unauthorized' })
-      return
-    }
+    // const session = await unstable_getServerSession(req, res, authOptions)
+    // if (!session) {
+    //   res.status(401).send({ message: 'Unauthorized' })
+    //   return
+    // }
     const { data, template, email } = req.body
 
     if (!data || !template || !email) {

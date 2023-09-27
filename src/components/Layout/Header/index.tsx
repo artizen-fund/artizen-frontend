@@ -1,20 +1,23 @@
 import { useState, useContext, useRef } from 'react'
 import Link from 'next/link'
+import { useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import { Button, Logo, Modals } from '@components'
+import { Button, Logo, Modals, CuratorCheck } from '@components'
 import AccountButton from './AccountButton'
 import SubHeader from './SubHeader'
 import SessionShelf from './SessionShelf'
 import HowItWorks from './HowItWorks'
 import Shelf from './Shelf'
 import { breakpoint, palette } from '@theme'
-import { rgba, LayoutContext, isProd } from '@lib'
+import { rgba, LayoutContext, isProd, loggedInUserVar } from '@lib'
 import { useRouter } from 'next/router'
 
 const Header = () => {
-  const { pathname } = useRouter()
+  const { pathname, push } = useRouter()
   const trigger = useRef<HTMLDivElement>(null)
+
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
   const { visibleShelf, toggleShelf } = useContext(LayoutContext)
   const [visible, setVisible] = useState(true)
@@ -36,6 +39,10 @@ const Header = () => {
         <Items>
           <Nav>
             <ul>
+              {loggedInUser?.curators && loggedInUser.curators.length > 0 && (
+                <li onClick={() => push('/admin/')}>Admin</li>
+              )}
+
               <li onClick={() => toggleShelf('howItWorks')}>How It Works</li>
             </ul>
           </Nav>

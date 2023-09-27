@@ -61,7 +61,7 @@ const UploadFileControl = ({
 
   useEffect(() => {
     if (!selectedFile || !data) return
-    showModal()
+    // showModal()
   }, [selectedFile, data])
 
   return (

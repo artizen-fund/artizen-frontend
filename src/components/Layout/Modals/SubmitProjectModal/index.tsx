@@ -1,7 +1,17 @@
 import { useContext, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, Icon } from '@components'
-import { rgba, LayoutContext, useDateHelpers, useSeasons } from '@lib'
+import {
+  rgba,
+  LayoutContext,
+  useDateHelpers,
+  useSeasons,
+  useContracts,
+  readContract,
+  sendArtifactToIPFS,
+  sleep,
+  writeContractUtil,
+} from '@lib'
 
 import { palette, typography } from '@theme'
 import { useLazyQuery, useMutation } from '@apollo/client'
@@ -15,7 +25,7 @@ import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useRouter } from 'next/router'
-import { capitalCase } from 'capital-case'
+import { startCase } from 'lodash'
 
 const SubmitProjectModal = () => {
   dayjs.extend(utc)
@@ -24,14 +34,14 @@ const SubmitProjectModal = () => {
   dayjs.extend(isSameOrAfter)
   dayjs.extend(isSameOrBefore)
   const { getSeasonStatus, formatDate, isOpenForSubmissions } = useDateHelpers()
-  const { publishSubmissions } = useSeasons()
 
   const { modalAttrs, toggleModal } = useContext(LayoutContext)
   const { project } = modalAttrs
 
   const inputRef = useRef<ISeasonFragment[]>([])
-
+  const [ipfs, setIpfs] = useState<string>('')
   const [processing, setProcessing] = useState(false)
+  const [isWarming, setIsWarming] = useState<boolean>(true)
   const [processTxt, setProcessTxt] = useState<string>('Submit')
   const [seasonSelected, setSeasonSelection] = useState<ISeasonFragment | null>(null)
   const [loadSeasons, { data: loadedSeasonsData, error }] = useLazyQuery(LOAD_SEASONS)
@@ -50,8 +60,6 @@ const SubmitProjectModal = () => {
     const Seasons =
       loadedSeasonsData !== undefined && loadedSeasonsData?.Seasons.length > 0 ? loadedSeasonsData?.Seasons : []
 
-    console.log('loadedSeasonsData  ', loadedSeasonsData)
-
     return Seasons.filter(
       ({ startingDate, endingDate, submissions }: ISeasonFragment): boolean =>
         isOpenForSubmissions(startingDate, endingDate) &&
@@ -63,8 +71,6 @@ const SubmitProjectModal = () => {
     if (inputRef.current.length > 0) return
 
     const Seasons = loadActiveSeasons()
-
-    console.log('Seasons  ', Seasons)
 
     const arrayWithoutSubmitedProjects = Seasons.filter(({ submissions }: ISeasonFragment) => {
       const projectSubmited = submissions.find(
@@ -79,6 +85,7 @@ const SubmitProjectModal = () => {
   }, [inputRef.current, loadedSeasonsData, loadSeasons, project.id])
 
   const submitProject = async () => {
+    setIsWarming(false)
     // create a new project submission
     // submit the submission to the season with useMutation
 
@@ -90,12 +97,38 @@ const SubmitProjectModal = () => {
     setProcessTxt('Submitting...')
 
     //publish submissition to blockchain
-    const returnData = await publishSubmissions(seasonSelected, project)
+    // const returnData = await publishSubmissions(seasonSelected, project)
 
-    if (!returnData?.artifactID) {
+    const { data } = await readContract('submissionCount')
+    const submissionCount = data?.toString()
+
+    const newSubmissionCount = parseInt(submissionCount) + 1
+    // //TODO: add ipfs hash to artifact record in Hasura
+    setProcessTxt('Uploading Files to IPFS...')
+    const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, seasonSelected, project)
+
+    ipfsHash && setIpfs(ipfsHash)
+
+    //TODO: this is not publishing data
+    // const { error, outcome } = await publishSubmission?.([seasonSelected.index, ipfsHash, project.walletAddress])
+
+    const { error, hash } = await writeContractUtil({
+      args: [seasonSelected.index, ipfsHash, project.walletAddress],
+      functionName: 'createSubmission',
+    })
+
+    console.log('hash ', hash)
+
+    if (error) {
+      console.log(`Error publishing season to blockchain ${error}`)
       setProcessTxt('Error publishing submission to blockchain, start again')
       return
     }
+
+    // const artifactID = outcome?.[0].args.submissionID.toString()
+    const artifactID = newSubmissionCount
+
+    console.log('artifactID  ', artifactID)
 
     setProcessTxt(
       `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
@@ -106,7 +139,7 @@ const SubmitProjectModal = () => {
         updates: [
           {
             where: { id: { _eq: project.artifacts[0].id } },
-            _set: { token: returnData.artifactID.toString() },
+            _set: { token: `${newSubmissionCount}` },
           },
         ],
       },
@@ -114,7 +147,7 @@ const SubmitProjectModal = () => {
 
     if (updateArtifactError) {
       setProcessTxt(
-        `Error updateing the Artifact in DB, Note Artifact is minted in blockchain with tokenId: ${returnData.artifactID}, Artifact ID in DB is ${project.artifacts[0].id}, add tokenId manually to DB record`,
+        `Error updateing the Artifact in DB, Note Artifact is minted in blockchain with tokenId: ${newSubmissionCount}, Artifact ID in DB is ${project.artifacts[0].id}, add tokenId manually to DB record`,
       )
       return
     }
@@ -156,7 +189,7 @@ const SubmitProjectModal = () => {
         <>
           {inputRef.current.length === 0 && (
             <SchoolItems>
-              There are not active seasons, or has this project been submitted to all the available seasons
+              There are not active seasons, or has this project been submitted to all the available active seasons
             </SchoolItems>
           )}
 
@@ -172,11 +205,11 @@ const SubmitProjectModal = () => {
                   align="right"
                   structure={[
                     {
-                      renderer: (item: ISeasonFragment) => `${item.title && capitalCase(item.title)}`,
+                      renderer: (item: ISeasonFragment) => `${item.title && startCase(item.title)}`,
                     },
                     {
                       renderer: (item: ISeasonFragment) =>
-                        `${capitalCase(getSeasonStatus(item.startingDate, item.endingDate))}`,
+                        `${startCase(getSeasonStatus(item.startingDate, item.endingDate))}`,
                     },
                     {
                       renderer: (item: ISeasonFragment) =>

@@ -30,7 +30,6 @@ declare global {
     | 'share'
     | 'alert'
     | 'media'
-    | 'login'
     | 'confirmTransaction'
     | 'processTransaction'
     | 'shareTransaction'
@@ -38,6 +37,11 @@ declare global {
     | 'submitProjectModal'
     | 'newProjectMemberModal'
     | 'errorModal'
+    | 'sponsorModal'
+    | 'matchFundsModal'
+    | 'addSponsorToMatchFund'
+    | 'addProjectsToMatchFund'
+    | 'updateMatchFundsSeasonAmount'
 
   type DonationMethod = 'usd' | 'polygon' | 'ethereum'
 

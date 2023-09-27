@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, useGnosis, SeasonContext, useDateHelpers } from '@lib'
+import { rgba, useGnosis, SeasonSubcriptionContext, useDateHelpers } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { Glyph, Icon, Countdown } from '@components'
 import { useSubscription } from '@apollo/client'
@@ -19,28 +19,8 @@ interface ISubHeader {
 */
 
 const SubHeader = ({ visible }: ISubHeader) => {
-  const { seasonId } = useContext(SeasonContext)
-  const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
-
-  const { data } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      where: {
-        id: { _eq: seasonId },
-        // startingDate: { _lte: moment().tz(ARTIZEN_TIMEZONE).format() },
-        // endingDate: { _gt: moment().tz(ARTIZEN_TIMEZONE).format() },
-      },
-    },
-  })
-
-  const { isSeasonActive } = useDateHelpers()
-  const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
-
-  const leader = data?.Seasons[0].submissions?.sort(
-    (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-      s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-      s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-  )[0]
+  const { loading, season, arrangedSeasonList, seasonIsActive, totalPrizePooled } = useContext(SeasonSubcriptionContext)
+  // const { artizenPrizeAmountETH, artizenPrizeAmountUSD } = useGnosis()
 
   if (!seasonIsActive) {
     return <SubHeaderLastSeason visible={visible} />
@@ -52,37 +32,44 @@ const SubHeader = ({ visible }: ISubHeader) => {
         <Content>
           <Title>
             <Icon glyph="crown" level={2} />
-            <div>Buy Artifacts to fund projects</div>
+            <div>Buy Artifacts to Fund Creativity</div>
           </Title>
 
-          <Stats>
-            <Stat>
-              <Label>Prize funds</Label>
-              <Data>
-                Ξ {artizenPrizeAmountETH}
-                <CashTrend>
-                  {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-                    parseFloat(artizenPrizeAmountUSD || '0'),
-                  )}
-                  <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
-                </CashTrend>
-              </Data>
-            </Stat>
-            <Stat>
-              <Label>Cycle</Label>
-              <Data>Season {data?.Seasons[0].index}</Data>
-            </Stat>
-            <Stat>
-              <Label>Ends in</Label>
-              <Data>
-                <Countdown date={data?.Seasons[0].endingDate} />
-              </Data>
-            </Stat>
-            <Stat>
-              <Label>Current leader</Label>
-              <Data>{leader?.project?.title}</Data>
-            </Stat>
-          </Stats>
+          {!loading && (
+            <Stats>
+              <Stat>
+                <Label>Prize funds</Label>
+                <Data>
+                  Ξ {totalPrizePooled}
+                  {/* <CashTrend>
+                    {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+                      totalPrizePooled ? totalPrizePooled : 0,
+                    )}
+                    <Glyph glyph="trend" level={2} color="moss" darkColor="moss" />
+                  </CashTrend> */}
+                </Data>
+              </Stat>
+              <Stat>
+                <Label>Cycle</Label>
+                <Data>Season {season?.index}</Data>
+              </Stat>
+              <Stat>
+                <Label>Ends in</Label>
+                {/* TODO: Count down does not work */}
+                {!loading && season?.endingDate && (
+                  <Data>
+                    <Countdown date={season?.endingDate} />
+                  </Data>
+                )}
+              </Stat>
+              <Stat>
+                <Label>Current leader</Label>
+                <Data>
+                  {arrangedSeasonList && arrangedSeasonList.length > 0 && arrangedSeasonList[0].project?.title}
+                </Data>
+              </Stat>
+            </Stats>
+          )}
         </Content>
       </Wrapper>
     </>

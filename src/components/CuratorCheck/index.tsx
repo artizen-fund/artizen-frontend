@@ -1,18 +1,15 @@
-import { useEffect } from 'react'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
-// import { useAccount } from 'wagmi'
+import Error from 'next/error'
+import { usePrivy } from '@privy-io/react-auth'
+import { useReactiveVar } from '@apollo/client'
+import { loggedInUserVar } from '@lib'
 
 const CuratorCheck = () => {
-  const router = useRouter()
-  const { status, data } = useSession()
-  // const { isConnected } = useAccount()
+  const { authenticated, ready } = usePrivy()
+  const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  useEffect(() => {
-    if (status === 'unauthenticated' || (!!data && !data.user?.isCurator)) {
-      router.push('/')
-    }
-  }, [status, data])
+  if ((ready && !authenticated) || (loggedInUser?.curators && loggedInUser.curators.length === 0)) {
+    return <Error statusCode={400} />
+  }
   return <></>
 }
 

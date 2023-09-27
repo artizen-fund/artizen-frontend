@@ -5,8 +5,8 @@ import { INSERT_SEASONS, LOAD_SEASONS } from '@gql'
 import { ErrorObject } from 'ajv'
 import { useRouter } from 'next/router'
 import { Form, Button } from '@components'
-import { schema, uischema, initialState, FormState } from '@forms/createSeason'
-import { LayoutContext, ARTIZEN_TIMEZONE, useSeasons } from '@lib'
+import { schema, uischema, FormState } from '@forms/createSeason'
+import { LayoutContext, ARTIZEN_TIMEZONE, useContracts, useDateHelpers } from '@lib'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -16,6 +16,7 @@ export default function NewSeasonForm(): JSX.Element {
   dayjs.extend(timezone)
   dayjs.extend(utc)
   dayjs.extend(isSameOrBefore)
+  const { getTimeUnix } = useDateHelpers()
 
   const { push } = useRouter()
   const { toggleModal } = useContext(LayoutContext)
@@ -23,11 +24,22 @@ export default function NewSeasonForm(): JSX.Element {
   const [loadSeason, { loading }] = useLazyQuery(LOAD_SEASONS, {
     fetchPolicy: 'no-cache',
   })
-  const [data, setData] = useState<FormState>(initialState)
+  const [data, setData] = useState<FormState>({
+    title: 'Your Season Title',
+    startingDate: dayjs().tz(ARTIZEN_TIMEZONE).format('YYYY-MM-DD'),
+    endingDate: dayjs().tz(ARTIZEN_TIMEZONE).add(1, 'day').format('YYYY-MM-DD'),
+  })
   const [processing, setProcessing] = useState(false)
   const [additionalErrors, setAdditionalErrors] = useState<Array<ErrorObject>>([])
 
-  const { publishSeason } = useSeasons()
+  const startingDate = `${data.startingDate}T09:01:00`
+  const endingDate = `${data.endingDate}T09:00:00`
+
+  const { execute: publishSeason } = useContracts({
+    args: [getTimeUnix(startingDate), getTimeUnix(endingDate)],
+    functionName: 'createSeason',
+    eventName: 'SeasonCreated',
+  })
 
   const checkIfEndingDateIsAfterStartingDate = (from: string, to: string) => {
     const fromTime = dayjs.tz(from, ARTIZEN_TIMEZONE)
@@ -49,7 +61,6 @@ export default function NewSeasonForm(): JSX.Element {
   }
 
   const checkIfThereIsSeasonDate = async (from: string, to: string) => {
-    console.log('checkIfThereIsSeasonDate  ', from, to)
     const { data: seasonInDB, error } = await loadSeason({
       variables: {
         where: {
@@ -62,7 +73,7 @@ export default function NewSeasonForm(): JSX.Element {
     })
 
     if (error) {
-      throw new Error('Error loading season in checkIfThereIsSeasonDate')
+      alert('Error loading season in checkIfThereIsSeasonDate')
     }
 
     if (seasonInDB.Seasons.length > 0) {
@@ -76,9 +87,14 @@ export default function NewSeasonForm(): JSX.Element {
         },
       ])
     } else {
-      console.log('gets here')
       setAdditionalErrors([])
     }
+
+    return true
+  }
+
+  interface IOutcomeReturn {
+    args: any
   }
 
   const saveNewSeason = async () => {
@@ -88,18 +104,20 @@ export default function NewSeasonForm(): JSX.Element {
 
     setProcessing(true)
 
-    const startingDate = `${data.startingDate}T09:01:00`
-    const endingDate = `${data.endingDate}T09:00:00`
+    await checkIfThereIsSeasonDate(data.startingDate, data.endingDate)
 
-    // // //publish season to blockchain
-    const publishedSeason = await publishSeason(startingDate, endingDate)
+    const { error, outcome } = await publishSeason?.()
 
-    if (!publishedSeason) {
-      throw new Error('Error publishing season to blockchain')
+    if (error) {
+      console.log(`Error publishing season to blockchain ${error}`)
+      alert(`Error publishing season to blockchain ${error}`)
+      toggleModal('createSeasonModal')
     }
 
-    //get the new season id from blockchain and save it into the database
-    const newSeasonId = publishedSeason.events[0].args[0].toString()
+    const newSeasonId = outcome?.[0].args.seasonID.toString()
+
+    // get the new season id from blockchain and save it into the database
+    // const newSeasonId = publishedSeason.events[0].args[0].toString()
 
     const dateFronMutation = await insertSeason({
       variables: {
@@ -124,6 +142,7 @@ export default function NewSeasonForm(): JSX.Element {
 
     push(`/admin/seasons/${newSeasonData.id}`)
   }
+
   return (
     <Form
       schema={schema}
@@ -141,7 +160,7 @@ export default function NewSeasonForm(): JSX.Element {
       readonly={processing}
     >
       <StyledButton onClick={saveNewSeason} stretch level={2}>
-        {processing ? 'Publishing...' : 'Published'}
+        {processing ? 'Publishing...' : 'Publish'}
       </StyledButton>
     </Form>
   )

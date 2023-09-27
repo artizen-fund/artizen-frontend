@@ -58,7 +58,7 @@ const ItemWrapper = styled.div<{ align?: Maybe<string> }>`
   margin: 0.1rem 0;
   grid-auto-rows: 1fr;
   border-radius: 8px;
-  grid-template-columns: ${props => (props.align === 'left' ? '74px 1fr' : '1fr 74px')};
+  grid-template-columns: ${props => (props.align === 'left' ? '124px 1fr' : '1fr 124px')};
   cursor: pointer;
   .selected {
     color: ${rgba(palette.algae, 1)};

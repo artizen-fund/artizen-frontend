@@ -4,7 +4,6 @@ body {
   margin: 0;
   font-family: 'roc-grotesk', verdana, arial, sans-serif;
   font-weight: 600;
-  -webkit-text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
   background-color: rgb(250, 250, 250);
@@ -39,4 +38,11 @@ p {
 
 * {
   box-sizing: border-box;
+}
+
+
+#wcm-modal { z-index: 1000 !important; }
+
+wcm-modal {
+  z-index: 1000 !important;
 }

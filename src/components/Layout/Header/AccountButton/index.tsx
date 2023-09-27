@@ -1,51 +1,59 @@
-import { useContext, useEffect, useState } from 'react'
-import { useSession, signOut } from 'next-auth/react'
+import { use, useContext, useEffect, useState } from 'react'
+import { useQuery, useReactiveVar } from '@apollo/client'
 import { useAccount } from 'wagmi'
-import { useQuery, useApolloClient, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGetUserQuery, Maybe } from '@types'
-import { rgba, loggedInUserVar, LayoutContext, textCrop } from '@lib'
+import { loggedInUserVar, LayoutContext, useFullSignOut, rgba, textCrop } from '@lib'
+import { usePrivy, useWallets } from '@privy-io/react-auth'
 import { GET_USER } from '@gql'
+import { getCookie } from 'cookies-next'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
+  const [messageToSign, setMessageToSign] = useState<string | null>(null)
   const { isConnected } = useAccount()
-  const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
-  const { data: session, status } = useSession()
-  const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  if (!isConnected && !!session) {
-    console.warn('user session is not connected to the wallet')
-    signOut()
-  }
+  const { disconnectAndSignout } = useFullSignOut()
+  const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
+  const didToken = getCookie('didToken')
+
+  const { authenticated, user, login, ready } = usePrivy()
+  const { wallets } = useWallets()
+  const [loading, setLoading] = useState(false)
+  const loggedInUser = useReactiveVar(loggedInUserVar)
+  const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
+
+  // if (ready && authenticated && wallets.length === 0) {
+  //   // disconnectAndSignout()
+  // }
+
+  console.log('!authenticated  ', !authenticated)
+  console.log('didToken === undefined  ', !didToken)
+  console.log('!loggedInUser  ', !!loggedInUser)
+  console.log('skip::  ', !authenticated || !didToken || !!loggedInUser)
+  console.log('user?.wallet?.address.toLowerCase()  ', user?.wallet?.address.toLowerCase())
+
+  // console.log('authenticated  ', authenticated)
+  // console.log('didToken  ', didToken)
+  // console.log('loggedInUser  ', loggedInUser)
 
   useQuery<IGetUserQuery>(GET_USER, {
-    skip: !isConnected || !session || !session?.user?.publicAddress,
-    variables: { publicAddress: session?.user?.publicAddress.toLowerCase() },
+    skip: !authenticated || !didToken || !!loggedInUser,
+    variables: { publicAddress: user?.wallet?.address.toLowerCase() },
     onCompleted: data => {
-      if (!loggedInUser || loggedInUser.id !== data.Users[0].id) {
-        //TODO: there is really not need to use useReactiveVar. We can move this query function to a hook and use it everywhere the user data is needed
-        // useReactiveVar forces rerender the whole website, bad stuff
-        loggedInUserVar(data.Users[0])
-      }
+      //TODO: there is really not need to use useReactiveVar. We can move this query function to a hook and use it everywhere the user data is needed
+      // useReactiveVar forces rerender the whole website, bad stuff
+      loggedInUserVar(data.Users[0])
+
+      setLoading(false)
     },
     onError: error => {
       console.log('onError ', error)
+
+      setLoading(false)
     },
   })
-
-  const onClick = () => {
-    if (status === 'loading') {
-      return
-    } else if (!loggedInUser) {
-      setVisibleModal('login')
-    } else {
-      toggleShelf('session')
-    }
-  }
-
-  const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
   useEffect(() => {
     setAvatarDisplay(
@@ -57,7 +65,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         ? 'initials'
         : 'placeholder',
     )
-    if (status === 'authenticated' && !!loggedInUser && (!loggedInUser.email || !loggedInUser.artizenHandle)) {
+    if (authenticated && !!loggedInUser && (!loggedInUser.email || !loggedInUser.artizenHandle)) {
       setVisibleModalWithAttrs('createProfile', {
         action: 'update',
         sendWelcomeEmail: true,
@@ -65,19 +73,43 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     }
   }, [loggedInUser])
 
+  useEffect(() => {
+    console.log('ready  ::: ', ready)
+    console.log('authenticated   ::::  ', authenticated)
+    console.log('wallets   ::::  ', wallets)
+  }, [ready, authenticated, wallets])
+
+  const onClick = () => {
+    setLoading(true)
+    login()
+  }
+
   return (
-    <Wrapper loggedIn={!!loggedInUser} visibleShelf={active} {...{ onClick }} {...props}>
-      <TextLabel visible={status === 'loading'}>
+    <Wrapper
+      loggedIn={false}
+      visibleShelf={active}
+      onClick={() => {
+        if (loading) {
+          return
+        } else if (!loggedInUser) {
+          onClick()
+        } else {
+          toggleShelf('session')
+        }
+      }}
+      {...props}
+    >
+      <TextLabel visible={loading}>
         <Spinner />
       </TextLabel>
-      <TextLabel visible={status !== 'loading' && active}>
+      <TextLabel visible={!loading && active}>
         <SizedType>Close</SizedType>
       </TextLabel>
-      <TextLabel visible={status !== 'loading' && !loggedInUser && !active}>
+      <TextLabel visible={!loading && !loggedInUser}>
         <SizedType>Connect</SizedType>
       </TextLabel>
       <HamburgerGlyph
-        visible={status !== 'loading' && !!loggedInUser && !active}
+        visible={!loading && !!loggedInUser && !active}
         color="night"
         darkColor="moon"
         glyph="hamburger"
