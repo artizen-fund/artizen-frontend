@@ -37,8 +37,6 @@ export const createApolloClient = () => {
   const authLink = setContext((_, { headers }) => {
     const didToken = getCookie('didToken')
 
-    console.log('authLink didToken :::::::  ', didToken)
-
     const newHeaders: Record<string, string> = {}
     if (isServer() && !didToken) {
       // server request (usually for SSR)

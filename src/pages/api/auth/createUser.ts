@@ -11,7 +11,7 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const publicAddress = user?.wallet?.address.toLowerCase()
 
-  //   console.log('user::::::::::::     ', user)
+  console.log('publicAddress::::::::::::     ', publicAddress)
 
   //User is only defined on server render, but the callback runs with client session calls
 
@@ -44,6 +44,8 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     },
   })
+
+  console.log('userInDatabase   ', userInDatabase)
 
   if (userInDatabase.data?.Users.length === 0) {
     //Add user

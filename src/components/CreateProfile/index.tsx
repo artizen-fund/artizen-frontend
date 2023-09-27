@@ -43,7 +43,7 @@ const CreateProfile = () => {
 
   const updateProfileCallback = async () => {
     setProcessing(true)
-    console.log('updateProfileCallback initial')
+
     try {
       const updatedProfile = await updateProfile(modalAttrs?.initialState?.id, sendWelcomeEmail)
       const profileImage = updatedProfile?.profileImage || modalAttrs?.initialState?.profileImage
@@ -64,13 +64,11 @@ const CreateProfile = () => {
   const createProfileC = async () => {
     setProcessing(true)
     try {
-      console.log('createProfileC:::: initial state')
       const newProfile = await createProfile()
       modalAttrs?.callback(newProfile)
 
       setProcessing(false)
       toggleModal()
-      console.log('createProfileC:::::: ', createProfileC)
 
       window.location.assign(`${window.location.protocol}//${window.location.host}/`)
     } catch (error) {

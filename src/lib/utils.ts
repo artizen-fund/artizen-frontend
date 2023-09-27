@@ -1,6 +1,4 @@
 export const getTwitterHandler = (twitterLink: string) => {
-  console.log('twitterLink', twitterLink)
-
   const myRe = /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^\/]+)(\/\w+)*$/
   const myArray = myRe.exec(twitterLink)
 

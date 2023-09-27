@@ -6,7 +6,7 @@ import { Glyph, Spinner } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { IGetUserQuery, Maybe } from '@types'
 import { loggedInUserVar, LayoutContext, useFullSignOut, rgba, textCrop } from '@lib'
-import { usePrivy } from '@privy-io/react-auth'
+import { usePrivy, useWallets } from '@privy-io/react-auth'
 import { GET_USER } from '@gql'
 import { getCookie } from 'cookies-next'
 
@@ -18,28 +18,30 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   const { setVisibleModal, toggleShelf, setVisibleModalWithAttrs } = useContext(LayoutContext)
   const didToken = getCookie('didToken')
 
-  console.log('isConnected in account button ', isConnected)
-
   const { authenticated, user, login, ready } = usePrivy()
+  const { wallets } = useWallets()
   const [loading, setLoading] = useState(false)
   const loggedInUser = useReactiveVar(loggedInUserVar)
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
-  console.log('ready  ', ready)
-  console.log('authenticated in here:::::  ', authenticated)
-  console.log('isReally Authentificado  ', ready && authenticated)
-  console.log('didToken  ', didToken)
-  console.log('isConnected  ', isConnected)
+  // if (ready && authenticated && wallets.length === 0) {
+  //   // disconnectAndSignout()
+  // }
 
-  if (ready && authenticated && !isConnected) {
-    // disconnectAndSignout()
-  }
+  console.log('!authenticated  ', !authenticated)
+  console.log('didToken === undefined  ', !didToken)
+  console.log('!loggedInUser  ', !!loggedInUser)
+  console.log('skip::  ', !authenticated || !didToken || !!loggedInUser)
+  console.log('user?.wallet?.address.toLowerCase()  ', user?.wallet?.address.toLowerCase())
+
+  // console.log('authenticated  ', authenticated)
+  // console.log('didToken  ', didToken)
+  // console.log('loggedInUser  ', loggedInUser)
 
   useQuery<IGetUserQuery>(GET_USER, {
-    skip: !authenticated || !didToken || loggedInUser !== undefined,
+    skip: !authenticated || !didToken || !!loggedInUser,
     variables: { publicAddress: user?.wallet?.address.toLowerCase() },
     onCompleted: data => {
-      console.log('goes oncompleted   ', data)
       //TODO: there is really not need to use useReactiveVar. We can move this query function to a hook and use it everywhere the user data is needed
       // useReactiveVar forces rerender the whole website, bad stuff
       loggedInUserVar(data.Users[0])
@@ -52,13 +54,6 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       setLoading(false)
     },
   })
-
-  const onClick = () => {
-    console.log('onClick   ')
-
-    setLoading(true)
-    login()
-  }
 
   useEffect(() => {
     setAvatarDisplay(
@@ -78,6 +73,17 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     }
   }, [loggedInUser])
 
+  useEffect(() => {
+    console.log('ready  ::: ', ready)
+    console.log('authenticated   ::::  ', authenticated)
+    console.log('wallets   ::::  ', wallets)
+  }, [ready, authenticated, wallets])
+
+  const onClick = () => {
+    setLoading(true)
+    login()
+  }
+
   return (
     <Wrapper
       loggedIn={false}
@@ -86,10 +92,8 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
         if (loading) {
           return
         } else if (!loggedInUser) {
-          console.log('onClick')
           onClick()
         } else {
-          console.log('toggleShelf')
           toggleShelf('session')
         }
       }}

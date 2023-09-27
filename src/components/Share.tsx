@@ -25,12 +25,7 @@ const ShareTransactionModal = () => {
 
   const { modalTitle, modalDescription, shareCopy } = sharing[mode || 'home']
 
-  console.log('twitterHandle  ', twitterHandle)
-  console.log('artizenHandle  ', artizenHandle)
-
   const projectCreator = !!twitterHandle ? `@${twitterHandle}` : !!artizenHandle ? artizenHandle : 'the creator'
-
-  console.log('projectCreator  ', projectCreator)
 
   const link = `https://artizen.fund${!!destination ? destination : ''}`
 

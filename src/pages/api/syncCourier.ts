@@ -13,7 +13,6 @@ const syncCourier = async (req: NextApiRequest, res: NextApiResponse) => {
       return
     }
     const didToken = getCookie('didToken', { req, res })
-    console.log('didToken   ', didToken)
 
     await syncCourierUser(req.body)
     res.status(200).end()

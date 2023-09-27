@@ -49,8 +49,6 @@ const SubmitProjectModal = () => {
   const [updateArtifactMutaton] = useMutation<IUpdate_Artifacts_ManyMutation>(UPDATE_ARTIFACTS)
   const { reload } = useRouter()
 
-  console.log('seasonSelected: ', seasonSelected)
-
   const loadActiveSeasons = () => {
     loadSeasons({
       // variables: {
@@ -108,8 +106,6 @@ const SubmitProjectModal = () => {
     // //TODO: add ipfs hash to artifact record in Hasura
     setProcessTxt('Uploading Files to IPFS...')
     const ipfsHash = await sendArtifactToIPFS(newSubmissionCount, seasonSelected, project)
-
-    console.log('ipfsHash in here ', ipfsHash)
 
     ipfsHash && setIpfs(ipfsHash)
 

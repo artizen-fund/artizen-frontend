@@ -47,8 +47,6 @@ const App = ({
     <PrivyProvider
       appId={NEXT_PUBLIC_PRIVY_APP_ID}
       onSuccess={async data => {
-        console.log('user is logged', data)
-
         const token = await fetch('/api/auth/createUser', {
           method: 'POST',
           headers: {
@@ -60,11 +58,7 @@ const App = ({
 
         const tokenJson = await token.json()
 
-        console.log('tokenJson', tokenJson)
-
         setCookie('didToken', tokenJson.token, { secure: true, sameSite: 'strict' })
-
-        console.log('calls initializeApollo')
 
         router.reload()
 
@@ -75,7 +69,7 @@ const App = ({
         appearance: {
           theme: 'light',
           accentColor: '#676FFF',
-          logo: 'https://your-logo-url',
+          logo: 'https://res.cloudinary.com/kaleidoscope/image/upload/v1695741004/logotype.png',
         },
       }}
     >

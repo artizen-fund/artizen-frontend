@@ -19,8 +19,6 @@ const Header = () => {
 
   const loggedInUser = useReactiveVar(loggedInUserVar)
 
-  console.log('loggedInUser   ', loggedInUser)
-
   const { visibleShelf, toggleShelf } = useContext(LayoutContext)
   const [visible, setVisible] = useState(true)
   const headerFlipPoint = pathname === '/' && typeof window !== 'undefined' ? window.innerHeight : 10

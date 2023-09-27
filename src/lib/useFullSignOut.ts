@@ -6,8 +6,6 @@ export const useFullSignOut = () => {
   const { logout } = usePrivy()
 
   const disconnectAndSignout = async () => {
-    console.log('clicked on disconnectAndSignout')
-
     logout()
     await disconnect()
 
