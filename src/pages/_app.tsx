@@ -63,7 +63,7 @@ const App = ({
         // apolloClient = initializeApollo(pageProps?.apolloData || {})
       }}
       config={{
-        loginMethods: ['email', 'wallet'],
+        loginMethods: ['wallet'],
         appearance: {
           theme: 'light',
           accentColor: '#676FFF',
