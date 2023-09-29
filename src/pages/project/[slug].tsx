@@ -58,10 +58,7 @@ const ProjectPage = ({ project }: any) => {
 
   const openEditions = openEditionsSub || openEditionsQuery
 
-  const {
-    query: { slug },
-    asPath,
-  } = useRouter()
+  const { asPath } = useRouter()
 
   const lead = project?.members?.find((m: any) => m.type === 'lead')?.user
 
@@ -159,89 +156,6 @@ const ProjectPage = ({ project }: any) => {
       </PagePadding>
     </Layout>
   )
-
-  // return (
-  //   <Layout>
-  //     <PagePadding>
-  //       <Wrapper>
-  //         <Side>
-  //           <Header>
-  //             {loadingSeason && <ProjectDescriptionShimmer />}
-  //             <>
-  //               <Topline>
-  //                 <div>
-  //                   {/* {!loadingSeason && (
-  //                     <RankAndArtifactCount
-  //                       rank={rank}
-  //                       count={count}
-  //                       seasonIsActive={seasonIsActive}
-  //                       totalSales={totalSales ? totalSales : 0}
-  //                       matchFundPooled={seasonData?.matchFundPooled}
-  //                     />
-  //                   )} */}
-  //                 </div>
-
-  //                 <Button
-  //                   level={2}
-  //                   outline
-  //                   onClick={() =>
-  //                     setVisibleModalWithAttrs('share', {
-  //                       mode: 'project',
-  //                       destination: asPath,
-  //                       projectTitle: titleCase(project.title),
-  //                       artizenHandle: lead?.artizenHandle,
-  //                       twitterHandle: getTwitterHandler(lead?.twitterHandle),
-  //                     })
-  //                   }
-  //                 >
-  //                   Share
-  //                 </Button>
-  //               {/* </Topline> */}
-  //               <h1>{project.title}</h1>
-  //               <p>{project.logline}</p>
-  //               <Tags tags={project.impactTags?.split(',') || []} />
-
-  //                {lead && <CreatorBox user={lead} />}
-  //             </>
-  //           </Header>
-
-  //           {loadingSeason && <ProjectLeaderboardShimmer />}
-  //           {openEditions && seasonData && (
-  //             <>
-  //               <Leaderboard
-  //                 openEditions={openEditions}
-  //                 isWinner={rank === 0}
-  //                 count={count}
-  //                 totalSales={totalSales ? totalSales : 0}
-  //                 matchFundPooled={seasonData?.matchFundPooled}
-  //               />
-  //               <ProjectSponsors projectId={project.id} />
-  //             </>
-  //           )}
-  //           {project?.metadata && project?.metadata.length > 0 && (
-  //             <LongDescription>
-  //               {(project?.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
-  //                 <div key={`metadatum-${index}`}>
-  //                   <h2>{metadatum.title}</h2>
-  //                   <p>{metadatum.value}</p>
-  //                 </div>
-  //               ))}
-  //             </LongDescription>
-  //           )}
-  //         </Side>
-
-  //         <Side>
-  //           {/* <ArtifactCard
-  //             count={count}
-  //             artifact={project.artifacts[0]}
-  //             project={project}
-  //             seasonIsActive={seasonIsActive || false}
-  //           /> */}
-  //         </Side>
-  //       </Wrapper>
-  //     </PagePadding>
-  //   </Layout>
-  // )
 }
 
 export async function getStaticPaths() {
@@ -250,9 +164,11 @@ export async function getStaticPaths() {
     query: GET_PROJECTS,
   })
 
-  const paths = projects.data.Projects.map((project: IProjectFragment) => ({
-    params: { slug: project.titleURL },
-  }))
+  const paths = projects.data.Projects.map((project: IProjectFragment) => {
+    return {
+      params: { slug: project.titleURL },
+    }
+  })
 
   return { paths, fallback: true }
 }
