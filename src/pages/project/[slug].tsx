@@ -27,6 +27,8 @@ const ProjectPage = ({ project }: any) => {
     return null
   }
 
+  console.log('project  ', project)
+
   const {
     season: seasonData,
     seasonIsActive,
@@ -272,6 +274,13 @@ export async function getStaticProps({ params: { slug } }: { params: IGetStaticP
   const apolloClient = createApolloClient()
   const projects = await apolloClient.query({
     query: GET_PROJECTS,
+    variables: {
+      where: {
+        titleURL: {
+          _eq: slug,
+        },
+      },
+    },
   })
 
   // By returning { props: { posts } }, the Blog component
