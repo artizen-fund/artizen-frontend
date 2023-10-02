@@ -7,6 +7,8 @@ const MediaModal = () => {
   const { addParamsToLink } = useCloudinary()
   const { visibleModal, modalAttrs } = useContext(LayoutContext)
 
+  console.log('modalAttrs  ', modalAttrs)
+
   useEffect(() => setLoaded(visibleModal === 'media'), [visibleModal])
   return (
     <Wrapper className={visibleModal === 'media' ? 'visible' : ''}>

@@ -1,4 +1,4 @@
-import { assert } from '@lib'
+import { assert, isProd } from '@lib'
 import { useState } from 'react'
 
 const useCloudinary = () => {
@@ -10,7 +10,10 @@ const useCloudinary = () => {
       process.env.NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET,
       'NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET',
     )
+
     const CLOUDINARY_NAME = assert(process.env.NEXT_PUBLIC_CLOUDINARY_NAME, 'NEXT_PUBLIC_CLOUDINARY_NAME')
+    console.log('CLOUDINARY_NAME   ', CLOUDINARY_NAME)
+
     const data = new FormData()
     data.append('file', file)
     data.append('max_width', '5000')
@@ -38,8 +41,11 @@ const useCloudinary = () => {
   /*TODO: Add Pixel density*/
   const addParamsToLink = (url: string, attrs: string, type: string): string => {
     const prefixUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/${type}/upload`
-    const secondPart = url.substr(prefixUrl.length + 1, url.length)
+    const secondPart = url.substr(prefixUrl.length, url.length)
 
+    console.log('secondPart   ', secondPart)
+
+    // return `${prefixUrl}/${attrs}/${secondPart}`
     return `${prefixUrl}/${attrs}/${secondPart}`
   }
 
