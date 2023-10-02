@@ -42,6 +42,7 @@ const UploadCloudinaryFileControl = ({
     'NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET',
   )
   const cloudName = assert(process.env.NEXT_PUBLIC_CLOUDINARY_NAME, 'NEXT_PUBLIC_CLOUDINARY_NAME')
+  console.log('CLOUDINARY_NAME   ', cloudName)
 
   const onSuccess = ({ event, info }: { event: string; info: any }) => {
     if (event !== 'success') return
