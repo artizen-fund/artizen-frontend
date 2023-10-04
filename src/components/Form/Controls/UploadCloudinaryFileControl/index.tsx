@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { rgba, LayoutContext, assert } from '@lib'
+import { rgba, LayoutContext, assert, isProd } from '@lib'
 import { StringControlProps } from '../StringControl'
 import { breakpoint, palette } from '@theme'
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
@@ -41,8 +41,8 @@ const UploadCloudinaryFileControl = ({
     process.env.NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET,
     'NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET',
   )
+  console.log('uploadPreset   ', uploadPreset)
   const cloudName = assert(process.env.NEXT_PUBLIC_CLOUDINARY_NAME, 'NEXT_PUBLIC_CLOUDINARY_NAME')
-  console.log('CLOUDINARY_NAME   ', cloudName)
 
   const onSuccess = ({ event, info }: { event: string; info: any }) => {
     if (event !== 'success') return
@@ -58,7 +58,11 @@ const UploadCloudinaryFileControl = ({
     <>
       <WidgetLoader />
       <CloudinaryButtonWrapper visible={!data}>
-        <Widget sources={['local']} {...{ cloudName, uploadPreset, onSuccess }} />
+        <Widget
+          folder={isProd() ? 'production' : 'development'}
+          sources={['local']}
+          {...{ cloudName, uploadPreset, onSuccess }}
+        />
       </CloudinaryButtonWrapper>
       <input
         {...{ required, onBlur }}
