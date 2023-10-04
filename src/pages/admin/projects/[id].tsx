@@ -296,6 +296,7 @@ const SeasonItem = styled.div`
   .button {
     cursor: pointer;
     padding: 5px;
+    max-height: 50px;
     font-size: 0.8rem;
     border-radius: 10px;
     border: 1px dotted ${rgba(palette.uiWarning, 1)};

@@ -11,12 +11,15 @@ const useCloudinary = () => {
       'NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET',
     )
 
+    console.log('UPLOAD_PRESET   ', UPLOAD_PRESET)
+
     const CLOUDINARY_NAME = assert(process.env.NEXT_PUBLIC_CLOUDINARY_NAME, 'NEXT_PUBLIC_CLOUDINARY_NAME')
-    console.log('CLOUDINARY_NAME   ', CLOUDINARY_NAME)
+    console.log('CLOUDINARY_NAME useCloudinary:  ', CLOUDINARY_NAME)
 
     const data = new FormData()
     data.append('file', file)
     data.append('max_width', '5000')
+    data.append('folder', isProd() ? 'production' : 'development')
     data.append('upload_preset', UPLOAD_PRESET)
     setUploading(true)
     setError(undefined)
@@ -28,6 +31,7 @@ const useCloudinary = () => {
       })
       const json = await response.json()
       if (json.error) {
+        console.log('uploadFile   ', json)
         setError(json.error.message)
         throw new Error(json.error)
       }
