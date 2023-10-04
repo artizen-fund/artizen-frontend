@@ -98,7 +98,14 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
               <span>Ξ {BASE_ARTIFACT_PRICE}</span>
             </Amount>
           </Cost>
-          <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
+          <Counter
+            value={artifactQuantity}
+            onChange={newNumber => {
+              !isNaN(newNumber) && setArtifactQuantity(newNumber)
+            }}
+            min={1}
+            max={99}
+          />
         </MobileBreak>
         <StyledButton
           level={1}

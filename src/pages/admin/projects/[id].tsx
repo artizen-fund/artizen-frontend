@@ -139,7 +139,7 @@ export default function ProjectDetails(): JSX.Element {
                 </Button>
               </div>
 
-              <Button
+              <StyledButton
                 level={2}
                 stretch
                 onClick={() => {
@@ -149,7 +149,7 @@ export default function ProjectDetails(): JSX.Element {
                 }}
               >
                 Submit to a Season
-              </Button>
+              </StyledButton>
 
               <SeasonSubmissionsContainer>
                 Submissions List:
@@ -238,6 +238,10 @@ export default function ProjectDetails(): JSX.Element {
     </Layout>
   )
 }
+
+const StyledButton = styled(props => <Button {...props} />)`
+  max-height: 50px;
+`
 
 const Label = styled.span`
   ${typography.label.l3}
