@@ -121,8 +121,8 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
 
   const execute = async (args?: any[]): Promise<{ error?: string; outcome?: IOutcomeReturn[] }> => {
     if (ready && !authenticated) {
-      // login()
-      return { outcome: {} as IOutcomeReturn[] }
+      login()
+      return { outcome: {} as IOutcomeReturn[], error: 'login' }
     }
     if (args) {
       setArgsState(args)
