@@ -35,6 +35,8 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     warming,
   })
 
+  console.log('contractStatus', contractStatus)
+
   // useEffect(() => {
   //   if (error) {
   //     setVisibleModalWithAttrs('errorModal', {
@@ -61,15 +63,16 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       tokenId,
     })
 
-    let hash: any
+    let returnData: any
 
     try {
-      hash = await donate?.()
+      returnData = await donate?.()
+      console.log('hash   ', returnData)
     } catch (e) {
       console.log('error in here  ', e)
     }
 
-    if (hash) {
+    if (!returnData.error) {
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
         tokenId,
