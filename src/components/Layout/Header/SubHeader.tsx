@@ -38,7 +38,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
           {!loading && (
             <Stats>
               <Stat>
-                <Label>Prize funds</Label>
+                <Label>Total Raised</Label>
                 <Data>
                   Ξ {totalPrizePooled}
                   {/* <CashTrend>

@@ -20,17 +20,25 @@ const ArtifactCount = ({
     process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
+  const salesArtifacts = BASE_ARTIFACT_PRICE * count
   //TODO: move this to a env variable
+  const matchFundPooledAndSales = matchFundPooled + totalSales * BASE_ARTIFACT_PRICE
 
-  const spli80 = (80 * matchFundPooled) / 100
+  console.log('matchFundPooledAndSales', matchFundPooledAndSales)
+  console.log('totalSales  ', totalSales)
+
+  const spli80 = (80 * matchFundPooledAndSales) / 100
   //only winners get 20% of the match fund on top of their sales
-  const split20 = (20 * matchFundPooled) / 100
+  const split20 = (20 * matchFundPooledAndSales) / 100
+
+  console.log('split20', split20)
 
   const split = totalSales > 0 ? (count * 100) / totalSales : 0
 
   const matchFundMoney = (spli80 * split) / 100
 
-  const salesArtifacts = BASE_ARTIFACT_PRICE * count
+  console.log('split  ', split)
+  console.log('matchFundMoney', matchFundMoney)
 
   const showRaisedMoney: boolean = count > 0
 
