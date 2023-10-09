@@ -5,7 +5,7 @@ import { palette, typography } from '@theme'
 
 //NEXT_PUBLIC_BASE_ARTIFACT_PRICE
 
-const ArtifactCount = ({
+const ArtifactRaised = ({
   count,
   totalSales,
   matchFundPooled,
@@ -93,4 +93,4 @@ const AmountText = styled.span`
   //color="barracuda" darkColor="barracuda"
 `
 
-export default ArtifactCount
+export default ArtifactRaised
