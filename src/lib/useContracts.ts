@@ -75,6 +75,9 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     },
   })
 
+  console.log('status   ', status)
+  console.log('writeContractStatus  ', writeContractStatus)
+
   const contractEventListener = async () => {
     return new Promise(resolve => {
       const unwatch = watchContractEvent(
