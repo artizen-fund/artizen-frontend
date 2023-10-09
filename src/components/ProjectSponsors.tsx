@@ -44,28 +44,51 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
     },
   })
 
+  // return (
+  //   <Wapper>
+  //     <Title>Sponsored by:</Title>
+  //     <SponsorsWrapper>
+  //       <ContainerDimensions>
+  //         {({ width }) => (
+  //           <SponsorList width={width}>
+  //             {sponsorsFilter?.map(sponsor => {
+  //               return (
+  //                 <SponsorItem key={sponsor.id}>
+  //                   <Link key={sponsor.id} href={sponsor.url} passHref={true}>
+  //                     <Sponsor>
+  //                       <SponsorLogo alt={sponsor.name} src={sponsor.logotype} />
+  //                       {/* <SponsorName>{sponsor.name}</SponsorName> */}
+  //                     </Sponsor>
+  //                   </Link>
+  //                 </SponsorItem>
+  //               )
+  //             })}
+  //           </SponsorList>
+  //         )}
+  //       </ContainerDimensions>
+
+  //     </SponsorsWrapper>
+  //   </Wapper>
+  // )
+
   return (
     <Wapper>
       <Title>Sponsored by:</Title>
       <SponsorsWrapper>
-        <ContainerDimensions>
-          {({ width }) => (
-            <SponsorList width={width}>
-              {sponsorsFilter?.map(sponsor => {
-                return (
-                  <SponsorItem key={sponsor.id}>
-                    <Link key={sponsor.id} href={sponsor.url} passHref={true}>
-                      <Sponsor>
-                        <SponsorLogo alt={sponsor.name} src={sponsor.logotype} />
-                        {/* <SponsorName>{sponsor.name}</SponsorName> */}
-                      </Sponsor>
-                    </Link>
-                  </SponsorItem>
-                )
-              })}
-            </SponsorList>
-          )}
-        </ContainerDimensions>
+        <SponsorList width={200}>
+          {sponsorsFilter?.map(sponsor => {
+            return (
+              <SponsorItem key={sponsor.id}>
+                <Link key={sponsor.id} href={sponsor.url} passHref={true}>
+                  <Sponsor>
+                    <SponsorLogo alt={sponsor.name} src={sponsor.logotype} />
+                    {/* <SponsorName>{sponsor.name}</SponsorName> */}
+                  </Sponsor>
+                </Link>
+              </SponsorItem>
+            )
+          })}
+        </SponsorList>
       </SponsorsWrapper>
     </Wapper>
   )

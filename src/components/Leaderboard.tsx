@@ -20,6 +20,8 @@ const FIXED_PRECISION = 2
 const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPooled }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
 
+  console.log('Leaderboard   ')
+
   if (!openEditions) return <Spinner minHeight="65px" />
 
   const sideItem =
