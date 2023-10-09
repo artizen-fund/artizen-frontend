@@ -37,6 +37,8 @@ const ProjectPage = ({ project }: any) => {
   } = useContext(SeasonSubcriptionContext)
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
+  console.log('seasonData   ', seasonData)
+
   //this should be only done when the season is active otherwise we should use the season from the project
   const { data: openEditionsSub } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
     skip: !seasonIsActive,
