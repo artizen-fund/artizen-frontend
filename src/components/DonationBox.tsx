@@ -31,6 +31,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   const [sending, setSending] = useState<boolean>(false)
   const [artifactQuantity, setArtifactQuantity] = useState(1)
   const [warming, setWarming] = useState<boolean>(true)
+  const { disconnectAndSignout } = useFullSignOut()
 
   const {
     execute: donate,
@@ -56,7 +57,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
   useEffect(() => {
     if (contractStatus === 'idle') {
-      useFullSignOut()
+      disconnectAndSignout()
     }
   }, [contractStatus])
 
