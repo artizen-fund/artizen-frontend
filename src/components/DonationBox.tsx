@@ -1,7 +1,16 @@
 import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useContracts, getTwitterHandler } from '@lib'
+import {
+  LayoutContext,
+  trackEventF,
+  intercomEventEnum,
+  assertFloat,
+  rgba,
+  useContracts,
+  getTwitterHandler,
+  useFullSignOut,
+} from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { usePrivy } from '@privy-io/react-auth'
 import { ethers } from 'ethers'
@@ -44,6 +53,12 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   //     })
   //   }
   // }, [error])
+
+  useEffect(() => {
+    if (contractStatus === 'idle') {
+      useFullSignOut()
+    }
+  }, [contractStatus])
 
   useEffect(() => {
     if (processing) {
