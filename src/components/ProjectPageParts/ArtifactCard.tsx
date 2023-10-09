@@ -14,6 +14,7 @@ interface IArtifactCard {
 
 const ArtifactCard = ({ artifact, project, seasonIsActive, count }: IArtifactCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
+  console.log('ArtifactCard  ', ArtifactCard)
   return (
     <Wrapper>
       <Img
@@ -31,9 +32,7 @@ const ArtifactCard = ({ artifact, project, seasonIsActive, count }: IArtifactCar
           <OpenEdition>{count} Minted</OpenEdition>
           <OpenEdition>Open Edition</OpenEdition>
         </Copy>
-        {seasonIsActive && (
-          <Footer>{artifact.token && <DonationBox tokenId={artifact.token} project={project} />}</Footer>
-        )}
+        {seasonIsActive && <Footer>{<DonationBox tokenId={artifact.token} project={project} />}</Footer>}
       </AllCopy>
     </Wrapper>
   )

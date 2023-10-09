@@ -58,9 +58,7 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
           }
         />
       </ImageWrapper>
-      {seasonIsActive && (
-        <Footer>{latestArtifact.token && <DonationBox tokenId={latestArtifact.token} {...{ project }} />}</Footer>
-      )}
+      {seasonIsActive && <Footer>{<DonationBox tokenId={latestArtifact.token} {...{ project }} />}</Footer>}
     </Wrapper>
   )
 }
