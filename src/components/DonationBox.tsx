@@ -17,7 +17,7 @@ import { ethers } from 'ethers'
 import { IProjectFragment } from '@types'
 
 interface IDonationBox {
-  tokenId: string
+  tokenId?: string
   project: IProjectFragment
 }
 
