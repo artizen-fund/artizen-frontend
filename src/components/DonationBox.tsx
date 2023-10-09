@@ -55,11 +55,11 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   //   }
   // }, [error])
 
-  useEffect(() => {
-    if (contractStatus === 'idle') {
-      disconnectAndSignout()
-    }
-  }, [contractStatus])
+  // useEffect(() => {
+  //   if (contractStatus === 'idle') {
+  //     disconnectAndSignout()
+  //   }
+  // }, [contractStatus])
 
   useEffect(() => {
     if (processing) {
