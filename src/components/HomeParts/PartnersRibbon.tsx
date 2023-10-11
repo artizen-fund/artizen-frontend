@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { assetPath } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { partners as copy } from '@copy/home'
