@@ -32,7 +32,7 @@ const SubHeader = ({ visible }: ISubHeader) => {
         <Content>
           <Title>
             <Icon glyph="crown" level={2} />
-            <div>Buy Artifacts to Fund Creativity</div>
+            <div>Buy Artifacts to Fund Human Creativity</div>
           </Title>
 
           {!loading && (
