@@ -21,7 +21,7 @@ import { rgba, SeasonSubcriptionContext } from '@lib'
 import { breakpoint, palette } from '@theme'
 import { alternatingPanels, faq } from '@copy/home'
 
-const MAXIMUN_NUMBER_OF_LOADING = 3
+const MAXIMUN_NUMBER_OF_LOADING = 9
 
 const IndexPage = () => {
   const { asPath } = useRouter()
@@ -75,10 +75,10 @@ const IndexPage = () => {
                 outline
                 level={1}
                 onClick={() => {
-                  setNumberOfLoading(length)
+                  setNumberOfLoading(numberOfLoading + MAXIMUN_NUMBER_OF_LOADING)
                 }}
               >
-                See All Artifacts
+                Load More
               </StyledButton>
             )}
           </StyledPagePadding>
