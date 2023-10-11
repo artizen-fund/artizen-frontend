@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { assetPath } from '@lib'
+import { useCloudinary } from '@lib'
 import { breakpoint, typography } from '@theme'
 import { partners as copy } from '@copy/home'
 import { PagePadding } from '@components'
@@ -17,6 +17,8 @@ const PartnersRibbon = () => {
     fetchPolicy: 'no-cache',
   })
 
+  const { addParamsToLink } = useCloudinary()
+
   return (
     <>
       {!loading && loadedSponsors && loadedSponsors.Sponsors.length > 0 && (
@@ -29,7 +31,7 @@ const PartnersRibbon = () => {
                   return (
                     <Partner key={`partner-${name}-${index}`}>
                       <Link href={url} passHref={true}>
-                        <img src={logotype} alt={name} />
+                        <img src={addParamsToLink(logotype, 'w_200,c_fill', 'image')} alt={name} />
                       </Link>
                     </Partner>
                   )
@@ -51,14 +53,6 @@ const Inner = styled.div`
 `
 
 const Wrapper = styled.div`
-  // display: flex;
-  // gap: 15px;
-  // flex-direction: row;
-  // @media only screen and (min-width: ${breakpoint.tablet}px) {
-  //   flex-direction: row;
-  //   justify-content: space-around;
-  //   align-items: center;
-  // }
   position: absolute;
   display: flex;
 `
