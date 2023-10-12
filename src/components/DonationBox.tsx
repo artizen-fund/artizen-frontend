@@ -1,14 +1,23 @@
 import { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Counter } from '@components'
-import { LayoutContext, trackEventF, intercomEventEnum, assertFloat, rgba, useContracts, getTwitterHandler } from '@lib'
+import {
+  LayoutContext,
+  trackEventF,
+  intercomEventEnum,
+  assertFloat,
+  rgba,
+  useContracts,
+  getTwitterHandler,
+  useFullSignOut,
+} from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { usePrivy } from '@privy-io/react-auth'
 import { ethers } from 'ethers'
 import { IProjectFragment } from '@types'
 
 interface IDonationBox {
-  tokenId: string
+  tokenId?: string
   project: IProjectFragment
 }
 
@@ -22,6 +31,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   const [sending, setSending] = useState<boolean>(false)
   const [artifactQuantity, setArtifactQuantity] = useState(1)
   const [warming, setWarming] = useState<boolean>(true)
+  const { disconnectAndSignout } = useFullSignOut()
 
   const {
     execute: donate,
@@ -35,6 +45,8 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     warming,
   })
 
+  console.log('contractStatus', contractStatus)
+
   // useEffect(() => {
   //   if (error) {
   //     setVisibleModalWithAttrs('errorModal', {
@@ -42,6 +54,12 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
   //     })
   //   }
   // }, [error])
+
+  // useEffect(() => {
+  //   if (contractStatus === 'idle') {
+  //     disconnectAndSignout()
+  //   }
+  // }, [contractStatus])
 
   useEffect(() => {
     if (processing) {
@@ -61,15 +79,16 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       tokenId,
     })
 
-    let hash: any
+    let returnData: any
 
     try {
-      hash = await donate?.()
+      returnData = await donate?.()
+      console.log('hash   ', returnData)
     } catch (e) {
       console.log('error in here  ', e)
     }
 
-    if (hash) {
+    if (!returnData.error) {
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
         tokenId,
@@ -98,7 +117,14 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
               <span>Ξ {BASE_ARTIFACT_PRICE}</span>
             </Amount>
           </Cost>
-          <Counter value={artifactQuantity} onChange={setArtifactQuantity} min={1} max={99} />
+          <Counter
+            value={artifactQuantity}
+            onChange={newNumber => {
+              !isNaN(newNumber) && setArtifactQuantity(newNumber)
+            }}
+            min={1}
+            max={99}
+          />
         </MobileBreak>
         <StyledButton
           level={1}

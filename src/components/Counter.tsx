@@ -27,7 +27,10 @@ const Counter = ({ value, onChange, step = 1, min = 1, max }: ICounter) => {
         type="number"
         {...{ step, min, max, value }}
         pattern="\d+"
-        onChange={e => onChange(parseInt(e.target.value))}
+        readOnly={true}
+        onChange={e => {
+          onChange(parseInt(e.target.value))
+        }}
       />
       <Button onClick={() => increment(1)}>
         <Glyph glyph="mathPlus" color="night" darkColor="white" level={2} />

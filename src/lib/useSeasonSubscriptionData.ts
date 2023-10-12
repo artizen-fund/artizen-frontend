@@ -41,12 +41,15 @@ export function useSeasonSubscriptionData() {
       order_by: { submissions_aggregate: { count: 'asc' } },
     },
     onData: ({ data: { data, loading, error } }) => {
+      console.log('useSubscription data in ondata', data)
+      console.log('useSubscription loading in ondata', loading)
+      console.log('useSubscription error in ondata', error)
       if (!loading && !error && data?.Seasons[0]) {
         const arrangedSeasonList = arrangeSubmissions(data?.Seasons[0].submissions)
         const totalSales = countTotalSales(data?.Seasons[0].submissions)
         setArrangedSeasonList(arrangedSeasonList)
         setTotalSales(totalSales)
-        setTotalPrizePooled(data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE)
+        setTotalPrizePooled(data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE * 2)
       }
     },
   })

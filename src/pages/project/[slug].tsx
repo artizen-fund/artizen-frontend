@@ -21,11 +21,28 @@ import { typography, breakpoint } from '@theme'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GET_PROJECTS, SUBSCRIBE_OPEN_EDITIONS, LOAD_OPEN_EDITIONS } from '@gql'
 import { IProjectFragment, IOpenEditionsSubscription, ISubmissionFragment } from '@types'
+import Projects from '../admin'
 
-const ProjectPage = ({ project }: any) => {
-  if (!project) {
-    return null
-  }
+const ProjectPage = () => {
+  const {
+    asPath,
+    query: { slug },
+  } = useRouter()
+
+  // console.log('project  ', project)
+
+  const { data, loading } = useQuery(GET_PROJECTS, {
+    skip: !slug,
+    variables: {
+      where: {
+        titleURL: {
+          _eq: slug,
+        },
+      },
+    },
+  })
+
+  const project: any = data?.Projects?.length > 0 && data?.Projects[0]
 
   console.log('project  ', project)
 
@@ -39,28 +56,26 @@ const ProjectPage = ({ project }: any) => {
 
   //this should be only done when the season is active otherwise we should use the season from the project
   const { data: openEditionsSub } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
-    skip: !seasonIsActive,
+    skip: !project || !seasonIsActive,
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        artifactId: { _eq: project?.artifacts[0].id },
+        artifactId: { _eq: project && project.artifacts[0].id },
       },
     },
   })
 
   const { data: openEditionsQuery } = useQuery(LOAD_OPEN_EDITIONS, {
-    skip: seasonIsActive,
+    skip: !project || seasonIsActive,
     fetchPolicy: 'no-cache',
     variables: {
       where: {
-        artifactId: { _eq: project?.artifacts[0].id },
+        artifactId: { _eq: project && project?.artifacts[0].id },
       },
     },
   })
 
   const openEditions = openEditionsSub || openEditionsQuery
-
-  const { asPath } = useRouter()
 
   const lead = project?.members?.find((m: any) => m.type === 'lead')?.user
 
@@ -78,219 +93,156 @@ const ProjectPage = ({ project }: any) => {
   return (
     <Layout>
       <PagePadding>
-        <Wrapper>
-          <Side>
-            <Header>
-              {loadingSeason && <ProjectDescriptionShimmer />}
-              <>
-                <Topline>
-                  <div>
-                    {!loadingSeason && (
-                      <RankAndArtifactCount
-                        rank={rank}
-                        count={count}
-                        seasonIsActive={seasonIsActive}
-                        totalSales={totalSales ? totalSales : 0}
-                        matchFundPooled={seasonData?.matchFundPooled}
-                      />
-                    )}
-                  </div>
-
-                  <Button
-                    level={2}
-                    outline
-                    onClick={() =>
-                      setVisibleModalWithAttrs('share', {
-                        mode: 'project',
-                        destination: asPath,
-                        projectTitle: titleCase(project.title),
-                        artizenHandle: lead?.artizenHandle,
-                        twitterHandle: getTwitterHandler(lead?.twitterHandle),
-                      })
-                    }
-                  >
-                    Share
-                  </Button>
-                </Topline>
-                <h1>{project.title}</h1>
-                <p>{project.logline}</p>
-                <Tags tags={project.impactTags?.split(',') || []} />
-
-                {lead && <CreatorBox user={lead} />}
-              </>
-            </Header>
-
-            {loadingSeason && <ProjectLeaderboardShimmer />}
-            {openEditions && seasonData && (
-              <>
-                <Leaderboard
-                  openEditions={openEditions}
-                  isWinner={rank === 0}
-                  count={count}
-                  totalSales={totalSales ? totalSales : 0}
-                  matchFundPooled={seasonData?.matchFundPooled}
-                />
-                <ProjectSponsors projectId={project.id} />
-              </>
-            )}
-            {project?.metadata && project?.metadata.length > 0 && (
-              <LongDescription>
-                {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
-                  <div key={`metadatum-${index}`}>
-                    <h2>{metadatum.title}</h2>
-                    <p>{metadatum.value}</p>
-                  </div>
-                ))}
-              </LongDescription>
-            )}
-          </Side>
-          {project.artifacts && project.artifacts.length > 0 && (
+        {loading && <ProjectDescriptionShimmer />}
+        {project && (
+          <Wrapper>
             <Side>
-              <ArtifactCard
-                count={count}
-                artifact={project.artifacts[0]}
-                project={project}
-                seasonIsActive={seasonIsActive || false}
-              />
+              <Header>
+                {loadingSeason && <ProjectDescriptionShimmer />}
+                <>
+                  <Topline>
+                    <div>
+                      {!loadingSeason && (
+                        <RankAndArtifactCount
+                          rank={rank}
+                          count={count}
+                          seasonIsActive={seasonIsActive}
+                          totalSales={totalSales ? totalSales : 0}
+                          matchFundPooled={seasonData?.matchFundPooled}
+                        />
+                      )}
+                    </div>
+
+                    <Button
+                      level={2}
+                      outline
+                      onClick={() =>
+                        setVisibleModalWithAttrs('share', {
+                          mode: 'project',
+                          destination: asPath,
+                          projectTitle: titleCase(project.title),
+                          artizenHandle: lead?.artizenHandle,
+                          twitterHandle: getTwitterHandler(lead?.twitterHandle),
+                        })
+                      }
+                    >
+                      Share
+                    </Button>
+                  </Topline>
+                  <>
+                    <h1>{project.title}</h1>
+                    <p>{project.logline}</p>
+                    <Tags tags={project.impactTags?.split(',') || []} />
+                    {lead && <CreatorBox user={lead} />}
+                  </>
+                </>
+              </Header>
+
+              {loadingSeason && <ProjectLeaderboardShimmer />}
+              {openEditions && seasonData && (
+                <>
+                  <Leaderboard
+                    openEditions={openEditions}
+                    isWinner={rank === 0}
+                    count={count}
+                    totalSales={totalSales ? totalSales : 0}
+                    matchFundPooled={seasonData?.matchFundPooled}
+                  />
+                  <ProjectSponsors projectId={project.id} />
+                </>
+              )}
+              {project?.metadata && project?.metadata.length > 0 && (
+                <LongDescription>
+                  {(project.metadata as Array<{ title: string; value: string }>).map((metadatum, index) => (
+                    <div key={`metadatum-${index}`}>
+                      <h2>{metadatum.title}</h2>
+                      <p>{metadatum.value}</p>
+                    </div>
+                  ))}
+                </LongDescription>
+              )}
             </Side>
-          )}
-        </Wrapper>
+            {project.artifacts && project.artifacts.length > 0 && (
+              <Side>
+                <ArtifactCard
+                  count={count}
+                  artifact={project.artifacts[0]}
+                  project={project}
+                  seasonIsActive={seasonIsActive || false}
+                />
+              </Side>
+            )}
+          </Wrapper>
+        )}
       </PagePadding>
     </Layout>
   )
 }
 
-export async function getStaticPaths() {
-  const apolloClient = createApolloClient()
-  const projects = await apolloClient.query({
-    query: GET_PROJECTS,
-  })
+// export const getServerSideProps = async (context: any) => {
+//   const { slug } = context.params
 
-  const paths = projects.data.Projects.map((project: IProjectFragment) => {
-    return {
-      params: { slug: project.titleURL },
-    }
-  })
+//   console.log('slug     ', slug)
 
-  return { paths, fallback: true }
-}
+//   const apolloClient = createApolloClient()
+//   const projects = await apolloClient.query({
+//     query: GET_PROJECTS,
+//     variables: {
+//       where: {
+//         titleURL: {
+//           _eq: slug,
+//         },
+//       },
+//     },
+//   })
 
-interface IGetStaticPropsParams {
-  slug: string
-}
+//   return {
+//     props: {
+//       project: projects.data.Projects[0],
+//     },
+//   }
+// }
 
-export async function getStaticProps({ params: { slug } }: { params: IGetStaticPropsParams }) {
-  console.log('params  in getStaticProps', slug)
+// export async function getStaticPaths() {
+//   const apolloClient = createApolloClient()
+//   const projects = await apolloClient.query({
+//     query: GET_PROJECTS,
+//   })
 
-  // const fethcall = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL as string, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET as string,
-  //   },
-  //   body: JSON.stringify({
-  //     query: `query projects($limit: Int, $where: Projects_bool_exp) {
-  //       Projects(limit: $limit, where: $where) {
-  //         id
-  //         title
-  //         titleURL
-  //         logline
-  //         description
-  //         creationDate
-  //         completionDate
-  //         walletAddress
-  //         metadata
-  //         impactTags
-  //         impact
-  //         titleURL
-  //         submissions {
-  //           id
-  //         }
-  //         members {
-  //           id
-  //           type
-  //           user{
-  //             id
-  //             publicAddress
-  //             profileImage
-  //             createdAt
-  //             twitterHandle
-  //             discordHandle
-  //             artizenHandle
-  //             hideFromLeaderboard
-  //             website
-  //             instagramHandle
-  //             bannerImage
-  //             bio
-  //             externalLink
-  //             claimed
-  //           }
-  //         }
-  //         artifacts {
-  //           id
-  //           name
-  //           description
-  //           artwork
-  //           video
-  //           edition
-  //           blockchainAddress
-  //           dateMinting
-  //           token
-  //           createdAt
-  //           openEditionCopies {
-  //             value
-  //             copies
-  //             user {
-  //               id
-  //               artizenHandle
-  //               profileImage
-  //             }
+//   const paths = projects.data.Projects.map((project: IProjectFragment) => {
+//     return {
+//       params: { slug: project.titleURL },
+//     }
+//   })
 
-  //           }
-  //           openEditionCopies_aggregate {
-  //             aggregate {
-  //               sum {
-  //                 copies
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }`,
-  //     variables: {
-  //       where: {
-  //         titleURL: {
-  //           _eq: slug,
-  //         },
-  //       },
-  //     },
-  //   }),
-  // })
+//   return { paths, fallback: true }
+// }
 
-  // const project = await fethcall.json()
+// interface IGetStaticPropsParams {
+//   slug: string
+// }
 
-  // console.log('fethcall  ')
+// export async function getStaticProps({ params: { slug } }: { params: IGetStaticPropsParams }) {
+//   console.log('params  in getStaticProps', slug)
 
-  const apolloClient = createApolloClient()
-  const projects = await apolloClient.query({
-    query: GET_PROJECTS,
-    variables: {
-      where: {
-        titleURL: {
-          _eq: slug,
-        },
-      },
-    },
-  })
+//   const apolloClient = createApolloClient()
+//   const projects = await apolloClient.query({
+//     query: GET_PROJECTS,
+//     variables: {
+//       where: {
+//         titleURL: {
+//           _eq: slug,
+//         },
+//       },
+//     },
+//   })
 
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      project: projects.data.Projects[0],
-    },
-  }
-}
+//   return {
+//     props: {
+//       project: projects.data.Projects[0],
+//     },
+//   }
+// }
 
 const Wrapper = styled.div`
   display: grid;
