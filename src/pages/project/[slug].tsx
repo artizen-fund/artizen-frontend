@@ -163,116 +163,10 @@ const ProjectPage = ({ project }: any) => {
   )
 }
 
-export async function getStaticPaths() {
-  const apolloClient = createApolloClient()
-  const projects = await apolloClient.query({
-    query: GET_PROJECTS,
-  })
+export const getServerSideProps = async (context: any) => {
+  const { slug } = context.params
 
-  const paths = projects.data.Projects.map((project: IProjectFragment) => {
-    return {
-      params: { slug: project.titleURL },
-    }
-  })
-
-  return { paths, fallback: true }
-}
-
-interface IGetStaticPropsParams {
-  slug: string
-}
-
-export async function getStaticProps({ params: { slug } }: { params: IGetStaticPropsParams }) {
-  console.log('params  in getStaticProps', slug)
-
-  // const fethcall = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_URL as string, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET as string,
-  //   },
-  //   body: JSON.stringify({
-  //     query: `query projects($limit: Int, $where: Projects_bool_exp) {
-  //       Projects(limit: $limit, where: $where) {
-  //         id
-  //         title
-  //         titleURL
-  //         logline
-  //         description
-  //         creationDate
-  //         completionDate
-  //         walletAddress
-  //         metadata
-  //         impactTags
-  //         impact
-  //         titleURL
-  //         submissions {
-  //           id
-  //         }
-  //         members {
-  //           id
-  //           type
-  //           user{
-  //             id
-  //             publicAddress
-  //             profileImage
-  //             createdAt
-  //             twitterHandle
-  //             discordHandle
-  //             artizenHandle
-  //             hideFromLeaderboard
-  //             website
-  //             instagramHandle
-  //             bannerImage
-  //             bio
-  //             externalLink
-  //             claimed
-  //           }
-  //         }
-  //         artifacts {
-  //           id
-  //           name
-  //           description
-  //           artwork
-  //           video
-  //           edition
-  //           blockchainAddress
-  //           dateMinting
-  //           token
-  //           createdAt
-  //           openEditionCopies {
-  //             value
-  //             copies
-  //             user {
-  //               id
-  //               artizenHandle
-  //               profileImage
-  //             }
-
-  //           }
-  //           openEditionCopies_aggregate {
-  //             aggregate {
-  //               sum {
-  //                 copies
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }`,
-  //     variables: {
-  //       where: {
-  //         titleURL: {
-  //           _eq: slug,
-  //         },
-  //       },
-  //     },
-  //   }),
-  // })
-
-  // const project = await fethcall.json()
-
-  // console.log('fethcall  ')
+  console.log('slug     ', slug)
 
   const apolloClient = createApolloClient()
   const projects = await apolloClient.query({
@@ -286,14 +180,53 @@ export async function getStaticProps({ params: { slug } }: { params: IGetStaticP
     },
   })
 
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
   return {
     props: {
       project: projects.data.Projects[0],
     },
   }
 }
+
+// export async function getStaticPaths() {
+//   const apolloClient = createApolloClient()
+//   const projects = await apolloClient.query({
+//     query: GET_PROJECTS,
+//   })
+
+//   const paths = projects.data.Projects.map((project: IProjectFragment) => {
+//     return {
+//       params: { slug: project.titleURL },
+//     }
+//   })
+
+//   return { paths, fallback: true }
+// }
+
+// interface IGetStaticPropsParams {
+//   slug: string
+// }
+
+// export async function getStaticProps({ params: { slug } }: { params: IGetStaticPropsParams }) {
+//   console.log('params  in getStaticProps', slug)
+
+//   const apolloClient = createApolloClient()
+//   const projects = await apolloClient.query({
+//     query: GET_PROJECTS,
+//     variables: {
+//       where: {
+//         titleURL: {
+//           _eq: slug,
+//         },
+//       },
+//     },
+//   })
+
+//   return {
+//     props: {
+//       project: projects.data.Projects[0],
+//     },
+//   }
+// }
 
 const Wrapper = styled.div`
   display: grid;
