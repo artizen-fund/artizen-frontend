@@ -19,7 +19,7 @@ const CreatorBox = ({ user }: ICreatorBox) => {
       </div>
       <Copy>
         <Name>{user.artizenHandle}</Name>
-        {(user.twitterHandle || user.website) && (
+        {(user.twitterHandle || externalLink) && (
           <Links>
             {user.twitterHandle && (
               <li>
