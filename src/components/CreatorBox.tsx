@@ -9,6 +9,7 @@ interface ICreatorBox {
 }
 
 const CreatorBox = ({ user }: ICreatorBox) => {
+  const externalLink = user.externalLink || user.website
   return (
     <Wrapper>
       <div>
@@ -33,10 +34,10 @@ const CreatorBox = ({ user }: ICreatorBox) => {
                 </Button>
               </li>
             )}
-            {user.website && (
+            {externalLink && (
               <li>
-                <Button glyph="globe" glyphOnly href={user.website} level={2} outline>
-                  {user.website}
+                <Button glyph="globe" glyphOnly href={externalLink} level={2} outline>
+                  {externalLink}
                 </Button>
               </li>
             )}
