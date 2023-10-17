@@ -68,7 +68,8 @@ export function useSeasonSubscriptionData() {
         console.log('totalSales of open edition calls', totalSales)
         setArrangedSeasonList(arrangedSeasonListHere)
         setTotalSales(totalSales)
-        setTotalPrizePooled(data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE * 2)
+        const totalPrizePooledL = data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE * 2
+        setTotalPrizePooled(totalPrizePooledL ? totalPrizePooledL.toFixed(2) : 0)
       }
     },
   })
@@ -83,6 +84,6 @@ export function useSeasonSubscriptionData() {
     season: data?.Seasons[0],
     loading,
     seasonIsActive,
-    totalPrizePooled: totalPrizePooled.toFixed(2),
+    totalPrizePooled,
   }
 }
