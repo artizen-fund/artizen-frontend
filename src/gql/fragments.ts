@@ -18,6 +18,11 @@ export const ARTIFACT = gql`
     dateMinting
     token
     createdAt
+    openEditionCopies {
+      Id
+      copies
+      status
+    }
     openEditionCopies_aggregate {
       aggregate {
         sum {
@@ -92,6 +97,7 @@ export const OPEN_EDITIONS_COPIES = gql`
   fragment OpenEditionCopy on OpenEditionCopies {
     value
     copies
+    status
     user {
       id
       artizenHandle

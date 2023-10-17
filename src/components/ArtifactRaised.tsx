@@ -20,7 +20,10 @@ const ArtifactRaised = ({
     process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
+
   const salesArtifacts = BASE_ARTIFACT_PRICE * count
+
+  console.log('salesArtifacts', salesArtifacts)
   //TODO: move this to a env variable
   const matchFundPooledAndSales = matchFundPooled + totalSales * BASE_ARTIFACT_PRICE
 
