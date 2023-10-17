@@ -41,6 +41,8 @@ export * from './useSeasonSubscriptionData'
 export * from './writeContractUtil'
 export * from './utils'
 
+export * from './calculateSales'
+
 export { default as sendArtifactToIPFS } from './sendArtifactToIPFS'
 
 /* TODO: We cannot include useDonation in the @lib alias because it crashes out Storybook.
