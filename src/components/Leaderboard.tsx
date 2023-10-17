@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Button, Table, TableCell, TableAvatar, Spinner, Glyph } from '@components'
-import { aggregateDonators, rgba, assertFloat, useGnosis, titleCase } from '@lib'
+import { aggregateDonators, rgba, assertFloat, titleCase, calculateSales } from '@lib'
 import { IOpenEditionsSubscription } from '@types'
 import { palette, typography, breakpoint } from '@theme'
 
@@ -38,29 +38,32 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const salesArtifacts = BASE_ARTIFACT_PRICE * count
+  const { salesArtifacts, spli80, prize, totalAward, projectMatchFund, calculateMatchFundContribution } =
+    calculateSales(isWinner, matchFundPooled, count, totalSales)
 
-  //add match to matchFundPooled
-  const spli80 = (80 * matchFundPooled) / 100
-  //only winners get 20% of the match fund on top of their sales
-  const split20 = (20 * matchFundPooled) / 100
+  // const salesArtifacts = BASE_ARTIFACT_PRICE * count
 
-  const getMatchFundMoney = (countH: number): number => {
-    const split = totalSales > 0 ? (countH * 100) / totalSales : 0
-    console.log('this project split is: ', split)
-    //split: 6*100/8 = 75%
-    //spli80: 80*10/100 = 8
-    return (spli80 * split) / 100
-  }
+  // //add match to matchFundPooled
+  // const spli80 = (80 * matchFundPooled) / 100
+  // //only winners get 20% of the match fund on top of their sales
+  // const split20 = (20 * matchFundPooled) / 100
 
-  const sells = (salesArtifacts + getMatchFundMoney(count) + salesArtifacts + (isWinner ? split20 : 0)).toFixed(2)
+  // const getMatchFundMoney = (countH: number): number => {
+  //   const split = totalSales > 0 ? (countH * 100) / totalSales : 0
+  //   console.log('this project split is: ', split)
+  //   //split: 6*100/8 = 75%
+  //   //spli80: 80*10/100 = 8
+  //   return (spli80 * split) / 100
+  // }
+
+  // const sells = (salesArtifacts + getMatchFundMoney(count) + salesArtifacts + (isWinner ? split20 : 0)).toFixed(2)
 
   const title = (
     <div>
-      <BiggerText>Ξ{sells} raised:</BiggerText>
+      <BiggerText>Ξ{totalAward} raised:</BiggerText>
       <Grey>&nbsp; Ξ{salesArtifacts} sales </Grey>
-      <Green>+ Ξ{(getMatchFundMoney(count) + salesArtifacts).toFixed(FIXED_PRECISION)} match</Green>
-      {isWinner && <Green> + Ξ{split20.toFixed(FIXED_PRECISION)} prize</Green>}
+      <Green>+ Ξ{projectMatchFund} match</Green>
+      {isWinner && <Green> + Ξ{prize} prize</Green>}
     </div>
   )
 
@@ -76,7 +79,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
           </div>
           <div>
             <Grey>Ξ&nbsp;{BASE_ARTIFACT_PRICE * user.copies}</Grey>
-            <Green>+&nbsp; Ξ&nbsp;{getMatchFundMoney(user.copies).toFixed(FIXED_PRECISION)}</Green>{' '}
+            <Green>+&nbsp; Ξ&nbsp;{calculateMatchFundContribution(user.copies)}</Green>{' '}
             <Amount>
               | <span> minted</span> {user.copies}
             </Amount>
