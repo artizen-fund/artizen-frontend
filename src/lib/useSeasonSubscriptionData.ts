@@ -77,5 +77,12 @@ export function useSeasonSubscriptionData() {
 
   // const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
 
-  return { arrangedSeasonList, totalSales, season: data?.Seasons[0], loading, seasonIsActive, totalPrizePooled }
+  return {
+    arrangedSeasonList,
+    totalSales,
+    season: data?.Seasons[0],
+    loading,
+    seasonIsActive,
+    totalPrizePooled: totalPrizePooled.toFixed(2),
+  }
 }
