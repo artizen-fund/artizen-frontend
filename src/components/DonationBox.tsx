@@ -12,8 +12,6 @@ import {
   useFullSignOut,
 } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
-import { usePrivy } from '@privy-io/react-auth'
-import { ethers } from 'ethers'
 import { IProjectFragment } from '@types'
 
 interface IDonationBox {
@@ -47,20 +45,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
   console.log('contractStatus', contractStatus)
 
-  // useEffect(() => {
-  //   if (error) {
-  //     setVisibleModalWithAttrs('errorModal', {
-  //       error,
-  //     })
-  //   }
-  // }, [error])
-
-  // useEffect(() => {
-  //   if (contractStatus === 'idle') {
-  //     disconnectAndSignout()
-  //   }
-  // }, [contractStatus])
-
   useEffect(() => {
     if (processing) {
       toggleModal('processTransaction')
@@ -84,11 +68,15 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     try {
       returnData = await donate?.()
       console.log('hash   ', returnData)
-    } catch (e) {
-      console.log('error in here  ', e)
-    }
 
-    if (!returnData.error) {
+      if (returnData.error || returnData.outcome[0].eventName !== 'ArtifactMinted') {
+        setVisibleModalWithAttrs('errorModal', {
+          error: 'Something went wrong, try again',
+        })
+        setSending(false)
+        return
+      }
+
       trackEventF(intercomEventEnum.DONATION_FINISHED, {
         amount: artifactQuantity.toString(),
         tokenId,
@@ -101,9 +89,15 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         twitterHandle: getTwitterHandler(project?.members[0]?.user?.twitterHandle || ''),
         artizenHandle: project?.members[0]?.user?.artizenHandle,
       })
-    }
 
-    setSending(false)
+      setSending(false)
+    } catch (e) {
+      console.log('error in here  ', e)
+      setVisibleModalWithAttrs('errorModal', {
+        error: 'Something went wrong, try again',
+      })
+      setSending(false)
+    }
   }
 
   return (

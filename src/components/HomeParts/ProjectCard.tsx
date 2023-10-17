@@ -19,20 +19,21 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
   const artist = project.members.find(m => m.type === 'lead')?.user
+  const arrayOfOpenEdtionClean =
+    latestArtifact.openEditionCopies.filter(({ status }: any) => status === 'confirmed') || []
+
+  console.log('arrayOfOpenEdtionClean  ', arrayOfOpenEdtionClean)
+
+  const count = arrayOfOpenEdtionClean.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
+
+  console.log('count', count)
 
   return (
     <Wrapper>
       <AllCopy>
         <Header>
-          <RankAndArtifactCount
-            rank={index}
-            totalSales={totalSales}
-            matchFundPooled={matchFundPooled}
-            count={latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0}
-          />
-          <ArtifactNumber>
-            {latestArtifact.openEditionCopies_aggregate.aggregate?.sum?.copies || 0} Minted
-          </ArtifactNumber>
+          <RankAndArtifactCount rank={index} totalSales={totalSales} matchFundPooled={matchFundPooled} count={count} />
+          <ArtifactNumber>{count} Minted</ArtifactNumber>
         </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>
