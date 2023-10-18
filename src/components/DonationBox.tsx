@@ -43,8 +43,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     warming,
   })
 
-  console.log('contractStatus', contractStatus)
-
   useEffect(() => {
     if (processing) {
       toggleModal('processTransaction')
@@ -67,7 +65,6 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
     try {
       returnData = await donate?.()
-      console.log('hash   ', returnData)
 
       if (returnData.error || returnData.outcome[0].eventName !== 'ArtifactMinted') {
         setVisibleModalWithAttrs('errorModal', {
