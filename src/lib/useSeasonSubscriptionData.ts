@@ -47,8 +47,6 @@ export function useSeasonSubscriptionData() {
   const [totalPrizePooled, setTotalPrizePooled] = useState<number>(0)
   // const { isSeasonActive } = useDateHelpers()
 
-  console.log('seasonId  ', seasonId)
-
   const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     skip: !seasonId,
     fetchPolicy: 'no-cache',
@@ -59,13 +57,10 @@ export function useSeasonSubscriptionData() {
       order_by: { submissions_aggregate: { count: 'asc' } },
     },
     onData: ({ data: { data, loading, error } }) => {
-      console.log('useSubscription data in ondata', data)
-      console.log('useSubscription loading in ondata', loading)
-      console.log('useSubscription error in ondata', error)
       if (!loading && !error && data?.Seasons[0]) {
         const arrangedSeasonListHere = arrangeSubmissions(data?.Seasons[0].submissions)
         const totalSales = countTotalSales(data?.Seasons[0].submissions)
-        console.log('totalSales of open edition calls', totalSales)
+
         setArrangedSeasonList(arrangedSeasonListHere)
         setTotalSales(totalSales)
         const totalPrizePooledL = data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE * 2
@@ -73,10 +68,6 @@ export function useSeasonSubscriptionData() {
       }
     },
   })
-
-  console.log('error in useSeasonSubscriptionData', error)
-
-  // const seasonIsActive = isSeasonActive(data?.Seasons[0]?.startingDate, data?.Seasons[0]?.endingDate)
 
   return {
     arrangedSeasonList,

@@ -11,10 +11,7 @@ const useCloudinary = () => {
       'NEXT_PUBLIC_CLOUDINARY_UNSIGNED_PRESET',
     )
 
-    console.log('UPLOAD_PRESET   ', UPLOAD_PRESET)
-
     const CLOUDINARY_NAME = assert(process.env.NEXT_PUBLIC_CLOUDINARY_NAME, 'NEXT_PUBLIC_CLOUDINARY_NAME')
-    console.log('CLOUDINARY_NAME useCloudinary:  ', CLOUDINARY_NAME)
 
     const data = new FormData()
     data.append('file', file)
@@ -31,7 +28,6 @@ const useCloudinary = () => {
       })
       const json = await response.json()
       if (json.error) {
-        console.log('uploadFile   ', json)
         setError(json.error.message)
         throw new Error(json.error)
       }
@@ -46,8 +42,6 @@ const useCloudinary = () => {
   const addParamsToLink = (url: string, attrs: string, type: string): string => {
     const prefixUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/${type}/upload`
     const secondPart = url.substr(prefixUrl.length, url.length)
-
-    console.log('secondPart   ', secondPart)
 
     // return `${prefixUrl}/${attrs}/${secondPart}`
     return `${prefixUrl}/${attrs}/${secondPart}`

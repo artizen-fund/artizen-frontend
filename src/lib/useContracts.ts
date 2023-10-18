@@ -39,8 +39,6 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     onError: e => {
       let error = e.message as string
 
-      console.log('error usePrepareContractWrite here', error)
-
       // setErrorState(e.message as string)
 
       if (error.includes(WALLET_CHAIN_MISMATCH)) {
@@ -71,13 +69,9 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     },
 
     onError(error) {
-      console.log('error useContractWrite here', error)
       setErrorState(error.message as string)
     },
   })
-
-  console.log('status   ', status)
-  console.log('writeContractStatus  ', writeContractStatus)
 
   const contractEventListener = async () => {
     return new Promise(resolve => {
@@ -96,7 +90,6 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   }
 
   useEffect(() => {
-    console.log('errorState   ', errorState)
     const errorStateChain =
       errorState === 'You have logged onto the wrong network, please logout and login again using: Goerli Testnet'
     console.log('warming   ', warming)

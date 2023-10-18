@@ -4,7 +4,7 @@ const BASE_ARTIFACT_PRICE = assertFloat(process.env.NEXT_PUBLIC_BASE_ARTIFACT_PR
 
 const getMatchFundMoney = (totalSales: number, countH: number, spli80: number): number => {
   const split = totalSales > 0 ? (countH * 100) / totalSales : 0
-  console.log('this project split is: ', split)
+
   //split: 6*100/8 = 75%
   //spli80: 80*10/100 = 8
   return (spli80 * split) / 100

@@ -22,11 +22,7 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
   const arrayOfOpenEdtionClean =
     latestArtifact.openEditionCopies.filter(({ status }: any) => status === 'confirmed') || []
 
-  console.log('arrayOfOpenEdtionClean  ', arrayOfOpenEdtionClean)
-
   const count = arrayOfOpenEdtionClean.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
-
-  console.log('count', count)
 
   return (
     <Wrapper>

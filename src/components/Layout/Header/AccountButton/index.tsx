@@ -28,12 +28,6 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   //   // disconnectAndSignout()
   // }
 
-  console.log('!authenticated  ', !authenticated)
-  console.log('didToken === undefined  ', !didToken)
-  console.log('!loggedInUser  ', !!loggedInUser)
-  console.log('skip::  ', !authenticated || !didToken || !!loggedInUser)
-  console.log('user?.wallet?.address.toLowerCase()  ', user?.wallet?.address.toLowerCase())
-
   // console.log('authenticated  ', authenticated)
   // console.log('didToken  ', didToken)
   // console.log('loggedInUser  ', loggedInUser)
@@ -73,11 +67,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     }
   }, [loggedInUser])
 
-  useEffect(() => {
-    console.log('ready  ::: ', ready)
-    console.log('authenticated   ::::  ', authenticated)
-    console.log('wallets   ::::  ', wallets)
-  }, [ready, authenticated, wallets])
+  useEffect(() => {}, [ready, authenticated, wallets])
 
   const onClick = () => {
     setLoading(true)
