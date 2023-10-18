@@ -67,8 +67,6 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     }
   }, [loggedInUser])
 
-  useEffect(() => {}, [ready, authenticated, wallets])
-
   const onClick = () => {
     setLoading(true)
     login()
