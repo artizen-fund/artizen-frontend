@@ -22,10 +22,7 @@ const MediaModal = () => {
             onCanPlay={() => setLoaded(true)}
             className={loaded ? 'visible' : ''}
           >
-            <source
-              src={addParamsToLink(modalAttrs.videoFile, 'c_fill,h_1000,w_1000,q_auto', 'video')}
-              type="video/mp4"
-            />
+            <source src={addParamsToLink(modalAttrs.videoFile, 'q_auto', 'video')} type="video/mp4" />
           </Video>
         )}
         {!modalAttrs.videoFile && <Image className={loaded ? 'visible' : ''} src={modalAttrs.imageFile} />}
