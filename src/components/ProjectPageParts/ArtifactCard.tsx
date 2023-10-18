@@ -22,7 +22,7 @@ const ArtifactCard = ({ artifact, project, seasonIsActive, count }: IArtifactCar
         onClick={() =>
           setVisibleModalWithAttrs('media', {
             videoFile: artifact.video,
-            imageFile: artifact.artwork?.replace('/upload', '/upload/c_limit,w_1000').replace('.png', '.jpg'),
+            imageFile: artifact.artwork?.replace('/upload', '/upload/c_scale,w_1000').replace('.png', '.jpg'),
           })
         }
       />
