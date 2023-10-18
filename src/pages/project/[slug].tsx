@@ -44,13 +44,12 @@ const ProjectPage = () => {
 
   const project: any = data?.Projects?.length > 0 && data?.Projects[0]
 
-  console.log('project  ', project)
-
   const {
     season: seasonData,
     seasonIsActive,
     totalSales,
     loading: loadingSeason,
+    arrangedSeasonList,
   } = useContext(SeasonSubcriptionContext)
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
@@ -79,16 +78,19 @@ const ProjectPage = () => {
 
   const lead = project?.members?.find((m: any) => m.type === 'lead')?.user
 
-  const rank =
-    seasonData?.submissions
-      ?.sort(
-        (s1: ISubmissionFragment, s2: ISubmissionFragment) =>
-          s2.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies! -
-          s1.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!,
-      )
-      .findIndex(submission => submission.project?.id === project.id) || 0
+  const rank = arrangedSeasonList?.findIndex(submission => submission.project?.id === project.id) || 0
 
-  const count = openEditions?.OpenEditionCopies.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
+  console.log('project rank::::      ', rank)
+
+  const arrayOfOpenEdtionClean =
+    openEditions?.OpenEditionCopies.filter(({ status }: any) => {
+      console.log('data in here::::', status)
+      return status === 'confirmed'
+    }) || []
+  console.log('arrayOfOpenEdtionClean:::::::: ', arrayOfOpenEdtionClean)
+  const count = arrayOfOpenEdtionClean.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
+
+  console.log('count in here::::::  ', count)
 
   return (
     <Layout>
@@ -142,7 +144,7 @@ const ProjectPage = () => {
               {openEditions && seasonData && (
                 <>
                   <Leaderboard
-                    openEditions={openEditions}
+                    openEditions={{ OpenEditionCopies: arrayOfOpenEdtionClean }}
                     isWinner={rank === 0}
                     count={count}
                     totalSales={totalSales ? totalSales : 0}

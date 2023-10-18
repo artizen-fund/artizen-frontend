@@ -71,6 +71,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     },
 
     onError(error) {
+      console.log('error useContractWrite here', error)
       setErrorState(error.message as string)
     },
   })
