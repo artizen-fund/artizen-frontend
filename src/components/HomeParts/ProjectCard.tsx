@@ -50,11 +50,11 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
           </Artist>
         )}
         <Img
-          src={`${latestArtifact.artwork?.replace('.png', '.jpg')}`}
+          src={`${latestArtifact.artwork?.replace('/upload', '/upload/c_limit,w_1000').replace('.png', '.jpg')}`}
           onClick={() =>
             setVisibleModalWithAttrs('media', {
               videoFile: latestArtifact.video,
-              imageFile: latestArtifact.artwork?.replace('.png', '.jpg'),
+              imageFile: latestArtifact.artwork?.replace('/upload', '/upload/c_limit,w_1000').replace('.png', '.jpg'),
             })
           }
         />
