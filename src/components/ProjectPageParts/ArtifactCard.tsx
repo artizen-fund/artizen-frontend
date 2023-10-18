@@ -18,7 +18,7 @@ const ArtifactCard = ({ artifact, project, seasonIsActive, count }: IArtifactCar
   return (
     <Wrapper>
       <Img
-        src={artifact.artwork}
+        src={artifact.artwork?.replace('/upload', '/upload/c_scale,w_1000').replace('.png', '.jpg')}
         onClick={() =>
           setVisibleModalWithAttrs('media', {
             videoFile: artifact.video,
