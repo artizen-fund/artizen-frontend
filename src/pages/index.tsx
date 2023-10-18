@@ -31,6 +31,7 @@ const IndexPage = () => {
 
   const arrangedSeasonListCapped = arrangedSeasonList?.slice(0, numberOfLoading)
 
+  console.log('numberOfLoading  ', numberOfLoading)
   console.log('arrangedSeasonListCapped  ', arrangedSeasonListCapped)
 
   const length = arrangedSeasonList?.length
