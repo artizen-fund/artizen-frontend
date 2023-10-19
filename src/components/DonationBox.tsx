@@ -81,7 +81,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
 
       setVisibleModalWithAttrs('share', {
         mode: 'postTransaction',
-        destination: `/projects/${project.titleURL}`,
+        destination: `/project/${project.titleURL}`,
         projectTitle: project.title,
         twitterHandle: getTwitterHandler(project?.members[0]?.user?.twitterHandle || ''),
         artizenHandle: project?.members[0]?.user?.artizenHandle,
