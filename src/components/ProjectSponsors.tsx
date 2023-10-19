@@ -93,7 +93,11 @@ const SponsorItem = styled.div`
   margin: 0 8px 0 0;
 `
 
-const Sponsor = styled.div``
+const Sponsor = styled.div`
+  @media (prefers-color-scheme: dark) {
+    filter: invert(1);
+  }
+`
 
 const SponsorLogo = styled.img`
   height: 70px;

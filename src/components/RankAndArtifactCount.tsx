@@ -19,11 +19,11 @@ const RankAndArtifactCount = ({ rank, count, seasonIsActive, totalSales, matchFu
     <Wrapper>
       <Rank value={rank + 1} />
       <ArtifactRaised isWinner={rank === 0} count={count} totalSales={totalSales} matchFundPooled={matchFundPooled} />
-      {!seasonIsActive && (
+      {/* {!seasonIsActive && (
         <SubmissionEnded>
           <span>Season 2 ended</span>
         </SubmissionEnded>
-      )}
+      )} */}
     </Wrapper>
   )
 }
