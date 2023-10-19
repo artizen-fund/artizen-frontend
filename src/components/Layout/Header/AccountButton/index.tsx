@@ -44,6 +44,9 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
     },
     onError: error => {
       console.log('onError ', error)
+      if (error.message === 'Error: Could not verify JWT: JWTExpired') {
+        disconnectAndSignout()
+      }
 
       setLoading(false)
     },
