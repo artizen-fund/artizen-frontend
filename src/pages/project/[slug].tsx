@@ -29,8 +29,6 @@ const ProjectPage = () => {
     query: { slug },
   } = useRouter()
 
-  // console.log('project  ', project)
-
   const { data, loading } = useQuery(GET_PROJECTS, {
     skip: !slug,
     variables: {
@@ -80,17 +78,12 @@ const ProjectPage = () => {
 
   const rank = arrangedSeasonList?.findIndex(submission => submission.project?.id === project.id) || 0
 
-  console.log('project rank::::      ', rank)
-
   const arrayOfOpenEdtionClean =
     openEditions?.OpenEditionCopies.filter(({ status }: any) => {
-      console.log('data in here::::', status)
       return status === 'confirmed'
     }) || []
-  console.log('arrayOfOpenEdtionClean:::::::: ', arrayOfOpenEdtionClean)
-  const count = arrayOfOpenEdtionClean.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
 
-  console.log('count in here::::::  ', count)
+  const count = arrayOfOpenEdtionClean.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
 
   return (
     <Layout>

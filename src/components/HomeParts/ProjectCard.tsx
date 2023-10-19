@@ -22,11 +22,7 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
   const arrayOfOpenEdtionClean =
     latestArtifact.openEditionCopies.filter(({ status }: any) => status === 'confirmed') || []
 
-  console.log('arrayOfOpenEdtionClean  ', arrayOfOpenEdtionClean)
-
   const count = arrayOfOpenEdtionClean.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
-
-  console.log('count', count)
 
   return (
     <Wrapper>
@@ -50,11 +46,11 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
           </Artist>
         )}
         <Img
-          src={`${latestArtifact.artwork?.replace('/upload', '/upload/c_limit,w_1000').replace('.png', '.jpg')}`}
+          src={`${latestArtifact.artwork?.replace('.png', '.jpg')}`}
           onClick={() =>
             setVisibleModalWithAttrs('media', {
               videoFile: latestArtifact.video,
-              imageFile: latestArtifact.artwork?.replace('/upload', '/upload/c_limit,w_1000').replace('.png', '.jpg'),
+              imageFile: latestArtifact.artwork?.replace('.png', '.jpg'),
             })
           }
         />

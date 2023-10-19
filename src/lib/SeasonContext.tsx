@@ -108,8 +108,6 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     setLocalTimestamp(getNowWithFormat())
   }
 
-  console.log('data in season context  ', data)
-
   return (
     <SeasonContext.Provider
       value={{

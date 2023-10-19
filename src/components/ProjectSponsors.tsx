@@ -5,11 +5,13 @@ import { GET_SUBMISSION_IN_MATCH_FUND } from '@gql'
 import { typography } from '@theme'
 import Link from 'next/link'
 import { IGetSubmissionInMatchFundQuery } from '@types'
-import ContainerDimensions from 'react-container-dimensions'
+// import ContainerDimensions from 'react-container-dimensions'
+import { useElementSize } from 'usehooks-ts'
 //getSubmissionInMatchFund
 
 const ProjectSponsors = ({ projectId }: { projectId: string }) => {
   const [sponsorsFilter, setSponsor] = useState<Array<any>>()
+  const [squareRef, { width, height }] = useElementSize()
   const { loading, data, error } = useQuery<IGetSubmissionInMatchFundQuery>(GET_SUBMISSION_IN_MATCH_FUND, {
     variables: {
       where: {
@@ -25,6 +27,8 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
       },
     },
     onCompleted: data => {
+      console.log('data :::::: ', data)
+      console.log('projectId   ', projectId)
       const sponsors: any[] = []
 
       data?.SubmissionInMatchFunds.forEach(({ submission, matchFund }) => {
@@ -37,6 +41,8 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
             return
           }
 
+          console.log('here  sponsorInMatchFunds  :::::')
+
           sponsors.push(sponsor)
         })
       })
@@ -44,12 +50,16 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
     },
   })
 
+  console.log('width  :::', width)
+
+  console.log('sponsorsFilter  ', sponsorsFilter)
+
   return (
     <Wapper>
-      <Title>Sponsored by:</Title>
-      <SponsorsWrapper>
-        <ContainerDimensions>
-          {({ width }) => (
+      {sponsorsFilter && sponsorsFilter.length > 0 && (
+        <>
+          <Title>Sponsored by:</Title>
+          <SponsorsWrapper ref={squareRef}>
             <SponsorList width={width}>
               {sponsorsFilter?.map(sponsor => {
                 return (
@@ -64,9 +74,9 @@ const ProjectSponsors = ({ projectId }: { projectId: string }) => {
                 )
               })}
             </SponsorList>
-          )}
-        </ContainerDimensions>
-      </SponsorsWrapper>
+          </SponsorsWrapper>
+        </>
+      )}
     </Wapper>
   )
 }
