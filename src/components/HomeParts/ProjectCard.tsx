@@ -28,7 +28,13 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
     <Wrapper>
       <AllCopy>
         <Header>
-          <RankAndArtifactCount rank={index} totalSales={totalSales} matchFundPooled={matchFundPooled} count={count} />
+          <RankAndArtifactCount
+            rank={index}
+            count={count}
+            seasonIsActive={seasonIsActive}
+            totalSales={totalSales ? totalSales : 0}
+            matchFundPooled={matchFundPooled}
+          />
           <ArtifactNumber>{count} Minted</ArtifactNumber>
         </Header>
         <Copy>
