@@ -141,9 +141,7 @@ const Amount = styled.div`
   }
 
   @media only screen and (max-width: ${breakpoint.phablet}px) {
-    span {
-      display: none;
-    }
+    display: none;
   }
 `
 
