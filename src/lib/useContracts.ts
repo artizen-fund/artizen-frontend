@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, use } from 'react'
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { watchContractEvent } from '@wagmi/core'
 import { SeasonsAbi } from '@contracts'
-import { assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND, LayoutContext } from '@lib'
+import { assert, assertInt, WALLET_CHAIN_MISMATCH, WALLET_NO_FOUND, USER_CLOSE_WALLET, LayoutContext } from '@lib'
 import { isEqual } from 'lodash'
 import { usePrivy } from '@privy-io/react-auth'
 
@@ -17,6 +17,7 @@ interface useContractsProps {
 export const useContracts = ({ args, value, functionName, eventName, warming }: useContractsProps) => {
   const [processing, setProcessing] = useState(false)
   const [argsState, setArgsState] = useState<any[]>([])
+
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   const [errorState, setErrorState] = useState<string | null>(null)
   const SEASON_CONTRACT = assert(
@@ -60,15 +61,16 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   } = useContractWrite({
     ...config,
     onSettled(data, error) {
-      if (error) {
-        setErrorState(error.message as string)
-        return
+      if (!error) {
+        setErrorState(null)
       }
-
-      setErrorState(null)
     },
 
     onError(error) {
+      if (error.message.includes(USER_CLOSE_WALLET)) {
+        return
+      }
+
       setErrorState(error.message as string)
     },
   })
@@ -93,6 +95,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     const errorStateChain =
       errorState === 'You have logged onto the wrong network, please logout and login again using: Goerli Testnet'
     console.log('warming   ', warming)
+
     console.log('errorStateChain', errorStateChain)
     const showError = errorState === ERRORNETWORK || (errorState !== null && !warming)
 
@@ -128,6 +131,8 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
     setProcessing(true)
 
     const writeText = await writeAsync?.()
+
+    console.log('errorState execute   ', errorState)
 
     if (errorState) {
       return { error: errorState }

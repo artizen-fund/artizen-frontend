@@ -10,6 +10,7 @@ import {
   useContracts,
   getTwitterHandler,
   useFullSignOut,
+  USER_CLOSE_WALLET,
 } from '@lib'
 import { breakpoint, typography, palette } from '@theme'
 import { IProjectFragment } from '@types'
@@ -88,8 +89,15 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
       })
 
       setSending(false)
-    } catch (e) {
+    } catch (e: any) {
       console.log('error in here  ', e)
+      const error = e?.message || e?.error?.message || e?.error || e
+      if (error.includes(USER_CLOSE_WALLET)) {
+        setWarming(true)
+        setSending(false)
+        toggleModal()
+        return
+      }
       setVisibleModalWithAttrs('errorModal', {
         error: 'Something went wrong, try again',
       })

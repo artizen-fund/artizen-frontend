@@ -11,5 +11,6 @@ export const WALLET_ERROR_UNPREDICTABLE_GAS_LIMIT = 'UNPREDICTABLE_GAS_LIMIT'
 export const WALLET_ERROR_ACTION_REJECTED = 'ACTION_REJECTED'
 export const WALLET_CHAIN_MISMATCH = 'Chain mismatch:'
 export const WALLET_NO_FOUND = 'err: insufficient funds'
+export const USER_CLOSE_WALLET = 'User rejected the request'
 
 export const PROJECT_LEAD_NOTIFICATION_TEMPLATE_ID = 'RCJRQKDAC04HDVND1HB7B1YMN7PA'
