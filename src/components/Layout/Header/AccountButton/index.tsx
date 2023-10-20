@@ -27,7 +27,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   console.log('ready && authenticated  ', ready && authenticated)
 
   useEffect(() => {
-    let timer1 = setTimeout(() => {
+    const timer1 = setTimeout(() => {
       if (ready && authenticated && !isConnected) {
         console.log('it goes in here here')
         disconnectAndSignout()
