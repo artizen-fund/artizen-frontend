@@ -11,7 +11,6 @@ import { GET_USER } from '@gql'
 import { getCookie } from 'cookies-next'
 
 const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: boolean }) => {
-  const [messageToSign, setMessageToSign] = useState<string | null>(null)
   const { isConnected } = useAccount()
 
   const { disconnectAndSignout } = useFullSignOut()
@@ -24,13 +23,22 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   const loggedInUser = useReactiveVar(loggedInUserVar)
   const [avatarDisplay, setAvatarDisplay] = useState<'avatar' | 'initials' | 'placeholder' | undefined>()
 
-  // if (ready && authenticated && wallets.length === 0) {
-  //   // disconnectAndSignout()
-  // }
+  console.log('isConnected  ', isConnected)
+  console.log('ready && authenticated  ', ready && authenticated)
 
-  // console.log('authenticated  ', authenticated)
-  // console.log('didToken  ', didToken)
-  // console.log('loggedInUser  ', loggedInUser)
+  useEffect(() => {
+    let timer1 = setTimeout(() => {
+      if (ready && authenticated && !isConnected) {
+        console.log('it goes in here here')
+        disconnectAndSignout()
+      }
+    }, 3000)
+
+    // this will clear Timeout
+    return () => {
+      clearTimeout(timer1)
+    }
+  }, [])
 
   useQuery<IGetUserQuery>(GET_USER, {
     skip: !authenticated || !didToken || !!loggedInUser,
@@ -53,6 +61,9 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   })
 
   useEffect(() => {
+    console.log('useEffect authenticated  ', authenticated)
+    console.log('useEffect loggedInUser  ', loggedInUser)
+    console.log('useEffect isConnected  ', isConnected)
     setAvatarDisplay(
       !loggedInUser
         ? undefined
