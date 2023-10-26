@@ -26,7 +26,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   )
   const { login, authenticated, ready } = usePrivy()
   const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
-  const chainName = chainId === 1 ? 'Etherium' : 'Goerli Testnet'
+  const chainName = chainId === 1 ? 'Ethereum' : 'Goerli Testnet'
   const ERRORNETWORK = `You have logged onto wrong network, please logout and login again using: ${chainName}`
   const NON_ENOUGH_FUNDS = `You do not have enough funds in your wallet to mint this open edition`
 
