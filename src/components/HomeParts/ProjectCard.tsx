@@ -89,7 +89,6 @@ const Avatar = styled.img`
 `
 
 const AllCopy = styled.div`
-  height: 120px;
   grid-area: copy;
   display: flex;
   align-self: start;
@@ -97,7 +96,8 @@ const AllCopy = styled.div`
   gap: 20px;
   padding: 0px 20px 0 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    padding: 0;
+    height: 120px;
+    padding: 0px;
   }
 `
 
@@ -124,7 +124,10 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-self: start;
-  // align-items: center;
+  padding: 0px 20px 0 20px;
+  @media only screen and (min-width: ${breakpoint.tablet}px) {
+    padding: 0px;
+  }
 `
 
 const ArtifactNumber = styled.div`
