@@ -6,8 +6,12 @@ export const useFullSignOut = () => {
   const { logout } = usePrivy()
 
   const disconnectAndSignout = async () => {
-    logout()
     await disconnect()
+    try {
+      logout()
+    } catch (e) {
+      console.log(e)
+    }
 
     deleteCookie('privy-token')
     deleteCookie('didToken')
