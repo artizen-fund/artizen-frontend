@@ -71,6 +71,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
         setVisibleModalWithAttrs('errorModal', {
           error: 'Something went wrong, try again',
         })
+
         setSending(false)
         return
       }

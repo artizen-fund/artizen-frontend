@@ -26,17 +26,17 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
 
   return (
     <Wrapper>
+      <Header>
+        <RankAndArtifactCount
+          rank={index}
+          count={count}
+          seasonIsActive={seasonIsActive}
+          totalSales={totalSales ? totalSales : 0}
+          matchFundPooled={matchFundPooled}
+        />
+        <ArtifactNumber>{count} Minted</ArtifactNumber>
+      </Header>
       <AllCopy>
-        <Header>
-          <RankAndArtifactCount
-            rank={index}
-            count={count}
-            seasonIsActive={seasonIsActive}
-            totalSales={totalSales ? totalSales : 0}
-            matchFundPooled={matchFundPooled}
-          />
-          <ArtifactNumber>{count} Minted</ArtifactNumber>
-        </Header>
         <Copy>
           <Link href={`/project/${project.titleURL!}`}>
             <h2>{project.title && titleCase(project.title)}</h2>
@@ -89,8 +89,10 @@ const Avatar = styled.img`
 `
 
 const AllCopy = styled.div`
+  height: 120px;
   grid-area: copy;
   display: flex;
+  align-self: start;
   flex-direction: column;
   gap: 20px;
   padding: 0px 20px 0 20px;
@@ -99,18 +101,14 @@ const AllCopy = styled.div`
   }
 `
 
-const StyledLink = styled(props => <Link {...props} />)`
-  grid-area: art;
-`
-
 const Wrapper = styled.article`
   display: grid;
   align-items: flex-end;
   grid-template-columns: 1fr;
-  grid-template-areas: 'art' 'copy' 'footer';
+  grid-template-areas: 'art' 'header' 'copy' 'footer';
   gap: 20px;
   @media only screen and (min-width: ${breakpoint.tablet}px) {
-    grid-template-areas: 'copy' 'art' 'footer';
+    grid-template-areas: 'header' 'copy' 'art' 'footer';
     padding: 40px;
   }
   background-color: ${rgba(palette.white)};
@@ -122,9 +120,11 @@ const Wrapper = styled.article`
 `
 
 const Header = styled.header`
+  grid-area: header;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-self: start;
+  // align-items: center;
 `
 
 const ArtifactNumber = styled.div`
@@ -133,6 +133,7 @@ const ArtifactNumber = styled.div`
 `
 
 const Copy = styled.div`
+  align-self: start;
   h2 {
     ${typography.title.l3}
   }
@@ -148,6 +149,7 @@ const Copy = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
+  grid-area: art;
 `
 
 const Img = styled.img`
