@@ -67,9 +67,11 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     try {
       returnData = await donate?.()
 
+      console.log('returnData:::', returnData)
+
       if (returnData.error || returnData.outcome[0].eventName !== 'ArtifactMinted') {
         setVisibleModalWithAttrs('errorModal', {
-          error: 'Something went wrong, try again',
+          error: returnData.error,
         })
 
         setSending(false)
