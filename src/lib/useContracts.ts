@@ -28,7 +28,7 @@ export const useContracts = ({ args, value, functionName, eventName, warming }: 
   const chainId = assertInt(process.env.NEXT_PUBLIC_CHAIN_ID, 'NEXT_PUBLIC_CHAIN_ID')
   const chainName = chainId === 1 ? 'Ethereum' : 'Goerli Testnet'
   const ERRORNETWORK = `You have logged onto wrong network, please logout and login again using: ${chainName}`
-  const NON_ENOUGH_FUNDS = `You do not have enough funds in your wallet to mint this open edition`
+  const NON_ENOUGH_FUNDS = `You do not have enough funds in your wallet`
 
   const { config, status } = usePrepareContractWrite({
     address: SEASON_CONTRACT as `0x${string}`,
