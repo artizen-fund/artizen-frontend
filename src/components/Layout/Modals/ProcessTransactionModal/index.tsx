@@ -1,13 +1,18 @@
 import styled from 'styled-components'
 import { rgba } from '@lib'
 import { typography, breakpoint, palette } from '@theme'
+import confirmTxAni from './processTransactionAnimation.json'
+import Lottie from 'lottie-react'
 
 const ProcessTransactionModal = () => {
   // todo: it would be good if we could automatically detect when
   //   user turns down Metamask or WalletConnect
   return (
     <Wrapper>
-      <Image light="/assets/illustrations/guide/14.png" dark="/assets/illustrations/guide/14-dark.png" />
+      <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Lottie animationData={confirmTxAni} style={{ width: '300px' }} />;
+      </div>
+      {/* <Image light="/assets/illustrations/guide/14.png" dark="/assets/illustrations/guide/14-dark.png" /> */}
       <h1>Processing the transaction</h1>
       <p>Hang tight, this should only take a few seconds!</p>
     </Wrapper>
