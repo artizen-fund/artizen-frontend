@@ -41,9 +41,9 @@ export * from './NoGrant'
 
 export * from './Layout/Modals/AlertModal'
 export { default as CreateSeasonModal } from './Layout/Modals/CreateSeasonModal'
-export { default as ConfirmTransactionModal } from './Layout/Modals/ConfirmTransactionModal'
+export { default as ConfirmTransactionModal } from './Layout/Modals/ConfirmTransactionModal/index'
 export { default as MediaModal } from './Layout/Modals/MediaModal'
-export { default as ProcessTransactionModal } from './Layout/Modals/ProcessTransactionModal'
+export { default as ProcessTransactionModal } from './Layout/Modals/ProcessTransactionModal/index'
 export { default as ShareTransactionModal } from './Layout/Modals/ShareTransactionModal'
 
 export { default as ErrorModal } from './Layout/Modals/ErrorModal'
