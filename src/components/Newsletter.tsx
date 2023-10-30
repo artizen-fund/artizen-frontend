@@ -1,64 +1,25 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import MailchimpSubscribe, { FormHooks, NameFormFields } from 'react-mailchimp-subscribe'
-import { rgba, assert, useFormLocalStorage } from '@lib'
-import { Form, Button, PagePadding, Icon } from '@components'
+import { rgba } from '@lib'
+import Link from 'next/link'
+import { Button, PagePadding, Icon } from '@components'
 import { breakpoint, palette, typography } from '@theme'
-import { schema, uischema, initialState, FormState } from '@forms/newsletter'
 import { newsletter } from '@copy/common'
 
-const Newsletter = ({ subscribe, status, message }: FormHooks<NameFormFields>) => {
-  const LOCALSTORAGE_KEY = 'newsletter'
-  const [data, setData] = useFormLocalStorage<FormState>(LOCALSTORAGE_KEY, initialState)
-
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState<string>()
-  const [readonly, setReadonly] = useState(false)
-
-  const [buttonLabel, setButtonLabel] = useState<string | undefined>(newsletter.buttonLabel)
-
-  useEffect(() => {
-    switch (status) {
-      case 'sending':
-        setButtonLabel(newsletter.buttonSending)
-        setReadonly(true)
-        setError(undefined)
-        break
-      case 'success':
-        setButtonLabel(undefined)
-        setSubmitted(true)
-        break
-      case 'error':
-        setButtonLabel('try again')
-        setError(error)
-      default:
-        setButtonLabel(newsletter.buttonLabel)
-        setReadonly(false)
-    }
-  }, [status, error])
-
+const Newsletter = ({ subscribe }: FormHooks<NameFormFields>) => {
   return (
     <StyledPagePadding black>
-      <Wrapper className={submitted ? 'submitted' : ''}>
+      <Wrapper>
         <Copy>
           <Header>{newsletter.headline}</Header>
           <Subhead>{newsletter.subhead}</Subhead>
         </Copy>
-        <Form localStorageKey={LOCALSTORAGE_KEY} {...{ schema, uischema, initialState, data, setData, readonly }}>
-          <StyledButton
-            onClick={() => subscribe(data as NameFormFields)}
-            inverted
-            level={0}
-            disabled={!data.EMAIL || !data.OPTIN}
-          >
-            {buttonLabel}
+        <Link href="https://artizenfund.substack.com/">
+          <StyledButton onClick={() => {}} inverted level={0}>
+            {newsletter.buttonLabel}
           </StyledButton>
-          <Confirmation>
-            <Icon glyph="tick" level={1} outline color="uiSuccess" />
-            <div>{newsletter.responseHeadline}</div>
-            <p>{newsletter.responseSubhead}</p>
-          </Confirmation>
-        </Form>
+        </Link>
       </Wrapper>
     </StyledPagePadding>
   )
@@ -68,94 +29,23 @@ const StyledPagePadding = styled(props => <PagePadding {...props} />)``
 
 const StyledButton = styled(props => <Button {...props} />)`
   grid-area: submit;
-  margin-top: 14px;
-  @media only screen and (min-width: ${breakpoint.laptop}px) {
-    margin-top: 25px;
-  }
-  @media only screen and (min-width: ${breakpoint.desktop}px) {
-    margin-top: 29px;
-  }
-`
-
-const Confirmation = styled.div`
-  display: none;
-  grid-area: confirmation;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  > div {
-    ${typography.title.l4}
-    color: ${rgba(palette.moon)};
-    margin-bottom: 0.25em;
-  }
-  p {
-    max-width: 300px;
-    ${typography.label.l1}
-    color: ${rgba(palette.barracuda)};
-  }
-  text-align: center;
+  height: 24px;
 `
 
 const Wrapper = styled.div`
   display: grid;
+  align-items: center;
   gap: 10px;
   grid-template-areas:
     'copy copy'
-    'email email'
-    'submit submit'
-    'optIn optIn';
-  &.submitted {
-    grid-template-areas:
-      'copy'
-      'optIn'
-      'confirmation';
-  }
+    'submit submit';
+
   @media only screen and (min-width: ${breakpoint.laptop}px) {
     gap: 12px;
-    grid-template-areas:
-      'copy copy email email'
-      'optIn optIn submit submit';
-    &.submitted {
-      grid-template-areas:
-        'copy copy confirmation confirmation'
-        'optIn optIn confirmation confirmation';
-    }
+    grid-template-areas: 'copy copy submit submit';
   }
   @media only screen and (min-width: ${breakpoint.desktop}px) {
     gap: 16px;
-  }
-
-  .vertical-layout,
-  .vertical-layout-item {
-    display: contents;
-  }
-
-  *[id='#/properties/EMAIL'] {
-    grid-area: email;
-  }
-
-  *[id='#/properties/OPTIN'] {
-    grid-area: optIn;
-    text-align: center;
-    margin: 1em auto 0 auto;
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      margin: 0;
-      padding-top: 28px;
-    }
-    @media only screen and (min-width: ${breakpoint.laptop}px) {
-      padding-top: 32px;
-    }
-  }
-
-  &.submitted {
-    *[id='#/properties/EMAIL'],
-    ${StyledButton} {
-      display: none;
-    }
-    ${Confirmation} {
-      display: flex;
-    }
   }
 `
 
@@ -175,19 +65,7 @@ const Subhead = styled.div`
 `
 
 const MailChimpForm = () => {
-  const NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL = assert(
-    process.env.NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL,
-    'NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL',
-  )
-  // return <MailchimpSubscribe url={NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL} render={props => <Newsletter {...props} />} />
-  return (
-    <iframe
-      src="https://artizenfund.substack.com/embed"
-      width="100%"
-      height="320"
-      // Style="border:1px solid #EEE; background:white;"
-    ></iframe>
-  )
+  return <MailchimpSubscribe render={props => <Newsletter {...props} />} />
 }
 
 export default MailChimpForm
