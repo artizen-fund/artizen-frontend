@@ -25,6 +25,8 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
 
   console.log('isConnected  ', isConnected)
   console.log('ready && authenticated  ', ready && authenticated)
+  console.log('privy user  ', user)
+  console.log('loggedInUser', loggedInUser)
 
   useEffect(() => {
     const timer1 = setTimeout(() => {
@@ -51,7 +53,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
       setLoading(false)
     },
     onError: error => {
-      console.log('onError ', error)
+      console.log('onError loading user:::', error)
       if (error.message === 'Error: Could not verify JWT: JWTExpired') {
         disconnectAndSignout()
       }

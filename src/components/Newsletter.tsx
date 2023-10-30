@@ -179,7 +179,15 @@ const MailChimpForm = () => {
     process.env.NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL,
     'NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL',
   )
-  return <MailchimpSubscribe url={NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL} render={props => <Newsletter {...props} />} />
+  // return <MailchimpSubscribe url={NEXT_PUBLIC_MAILCHIMP_SUBCRIPTION_URL} render={props => <Newsletter {...props} />} />
+  return (
+    <iframe
+      src="https://artizenfund.substack.com/embed"
+      width="100%"
+      height="320"
+      // Style="border:1px solid #EEE; background:white;"
+    ></iframe>
+  )
 }
 
 export default MailChimpForm
