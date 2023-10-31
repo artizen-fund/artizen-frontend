@@ -38,7 +38,12 @@ const ProjectPage = () => {
         },
       },
     },
+    onError: error => {
+      console.log('error loading project', error)
+    },
   })
+
+  console.log('data', data)
 
   const project: any = data?.Projects?.length > 0 && data?.Projects[0]
 
@@ -51,6 +56,10 @@ const ProjectPage = () => {
   } = useContext(SeasonSubcriptionContext)
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
+  console.log('seasonData  ', seasonData)
+  console.log('seasonIsActive  ', seasonIsActive)
+  console.log('project  ', project)
+
   //this should be only done when the season is active otherwise we should use the season from the project
   const { data: openEditionsSub } = useSubscription<IOpenEditionsSubscription>(SUBSCRIBE_OPEN_EDITIONS, {
     skip: !project || !seasonIsActive,
@@ -59,6 +68,9 @@ const ProjectPage = () => {
       where: {
         artifactId: { _eq: project && project.artifacts[0].id },
       },
+    },
+    onError: error => {
+      console.log('error loading openEditionsSub', error)
     },
   })
 
@@ -70,9 +82,14 @@ const ProjectPage = () => {
         artifactId: { _eq: project && project?.artifacts[0].id },
       },
     },
+    onError: error => {
+      console.log('error loading openEditionsQuery', error)
+    },
   })
 
   const openEditions = openEditionsSub || openEditionsQuery
+
+  console.log('openEditions', openEditions)
 
   const lead = project?.members?.find((m: any) => m.type === 'lead')?.user
 
