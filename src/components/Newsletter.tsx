@@ -1,13 +1,10 @@
-import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import MailchimpSubscribe, { FormHooks, NameFormFields } from 'react-mailchimp-subscribe'
 import { rgba } from '@lib'
-import Link from 'next/link'
 import { Button, PagePadding, Icon } from '@components'
 import { breakpoint, palette, typography } from '@theme'
 import { newsletter } from '@copy/common'
 
-const Newsletter = ({ subscribe }: FormHooks<NameFormFields>) => {
+const Newsletter = () => {
   return (
     <StyledPagePadding black>
       <Wrapper>
@@ -15,11 +12,10 @@ const Newsletter = ({ subscribe }: FormHooks<NameFormFields>) => {
           <Header>{newsletter.headline}</Header>
           <Subhead>{newsletter.subhead}</Subhead>
         </Copy>
-        <Link href="https://artizenfund.substack.com/">
-          <StyledButton onClick={() => {}} inverted level={0}>
-            {newsletter.buttonLabel}
-          </StyledButton>
-        </Link>
+
+        <StyledButton href="https://artizenfund.substack.com/" inverted level={0}>
+          {newsletter.buttonLabel}
+        </StyledButton>
       </Wrapper>
     </StyledPagePadding>
   )
@@ -64,8 +60,4 @@ const Subhead = styled.div`
   color: ${rgba(palette.barracuda)};
 `
 
-const MailChimpForm = () => {
-  return <MailchimpSubscribe render={props => <Newsletter {...props} />} />
-}
-
-export default MailChimpForm
+export default Newsletter
