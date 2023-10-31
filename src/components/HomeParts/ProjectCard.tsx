@@ -4,6 +4,7 @@ import { rgba, LayoutContext, titleCase } from '@lib'
 import { typography, palette, breakpoint } from '@theme'
 import { RankAndArtifactCount, DonationBox } from '@components'
 import { IProjectFragment } from '@types'
+import { truncate } from 'lodash'
 import Link from 'next/link'
 
 interface IProjectCard {
@@ -24,6 +25,12 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
 
   const count = arrayOfOpenEdtionClean.reduce((x: any, edition: any) => x + edition.copies!, 0) || 0
 
+  const logLineTruncated =
+    project.title && project.title?.length > 39 ? truncate(project.logline, { length: 92 }) : project.logline
+
+  //> 39
+  // cut second line to 92 characters
+
   return (
     <Wrapper>
       <Header>
@@ -41,7 +48,7 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
           <Link href={`/project/${project.titleURL!}`}>
             <h2>{project.title && titleCase(project.title)}</h2>
           </Link>
-          <p>{project.logline}</p>
+          <p>{logLineTruncated}</p>
         </Copy>
       </AllCopy>
       <ImageWrapper>
