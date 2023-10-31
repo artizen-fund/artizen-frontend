@@ -11,22 +11,24 @@ const getMatchFundMoney = (totalSales: number, countH: number, spli80: number): 
 }
 
 export const calculateSales = (isWinner: boolean, matchFundPooled: number, count: number, totalSales: number) => {
-  const salesArtifacts = BASE_ARTIFACT_PRICE * count
+  const getSalesArtifacts = (artifactCount: number) => BASE_ARTIFACT_PRICE * artifactCount
+
+  const totalProjectSales = getSalesArtifacts(count)
 
   const spli80 = (80 * matchFundPooled) / 100
   const split20 = (20 * matchFundPooled) / 100
-  const projectMatchFund = getMatchFundMoney(totalSales, count, spli80) + salesArtifacts
+  const projectMatchFund = getMatchFundMoney(totalSales, count, spli80) + totalProjectSales
 
-  const totalAward = (salesArtifacts + projectMatchFund + (isWinner ? split20 : 0)).toFixed(2)
+  const totalAward = (totalProjectSales + projectMatchFund + (isWinner ? split20 : 0)).toFixed(2)
 
   return {
-    salesArtifacts,
+    salesArtifacts: totalProjectSales,
     projectMatchFund: projectMatchFund.toFixed(2),
     spli80: spli80.toFixed(2),
     prize: split20.toFixed(2),
     totalAward,
     calculateMatchFundContribution: (newCount: any) => {
-      return (salesArtifacts + getMatchFundMoney(totalSales, newCount, spli80)).toFixed(2)
+      return (getSalesArtifacts(newCount) + getMatchFundMoney(totalSales, newCount, spli80)).toFixed(2)
     },
   }
 }
