@@ -125,7 +125,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
               !isNaN(newNumber) && setArtifactQuantity(newNumber)
             }}
             min={1}
-            max={99}
+            max={9999}
           />
         </MobileBreak>
         <StyledButton
