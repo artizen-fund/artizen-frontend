@@ -63,7 +63,7 @@ export function useSeasonSubscriptionData() {
 
         setArrangedSeasonList(arrangedSeasonListHere)
         setTotalSales(totalSales)
-        const totalPrizePooledL = data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE * 2
+        const totalPrizePooledL = data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE
         setTotalPrizePooled(totalPrizePooledL ? totalPrizePooledL.toFixed(2) : 0)
       }
     },
