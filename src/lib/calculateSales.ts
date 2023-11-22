@@ -17,7 +17,7 @@ export const calculateSales = (isWinner: boolean, matchFundPooled: number, count
 
   const spli80 = (80 * matchFundPooled) / 100
   const split20 = (20 * matchFundPooled) / 100
-  const projectMatchFund = getMatchFundMoney(totalSales, count, spli80) + totalProjectSales
+  const projectMatchFund = getMatchFundMoney(totalSales, count, spli80)
 
   const totalAward = (totalProjectSales + projectMatchFund + (isWinner ? split20 : 0)).toFixed(2)
 
