@@ -39,22 +39,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
   const { salesArtifacts, spli80, prize, totalAward, projectMatchFund, calculateMatchFundContribution } =
     calculateSales(isWinner, matchFundPooled, count, totalSales)
 
-  // const salesArtifacts = BASE_ARTIFACT_PRICE * count
-
-  // //add match to matchFundPooled
-  // const spli80 = (80 * matchFundPooled) / 100
-  // //only winners get 20% of the match fund on top of their sales
-  // const split20 = (20 * matchFundPooled) / 100
-
-  // const getMatchFundMoney = (countH: number): number => {
-  //   const split = totalSales > 0 ? (countH * 100) / totalSales : 0
-  //   console.log('this project split is: ', split)
-  //   //split: 6*100/8 = 75%
-  //   //spli80: 80*10/100 = 8
-  //   return (spli80 * split) / 100
-  // }
-
-  // const sells = (salesArtifacts + getMatchFundMoney(count) + salesArtifacts + (isWinner ? split20 : 0)).toFixed(2)
+ 
 
   const title = (
     <div>
