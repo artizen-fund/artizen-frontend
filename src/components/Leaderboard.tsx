@@ -36,7 +36,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
 
-  const { salesArtifacts, spli80, prize, totalAward, projectMatchFund, calculateMatchFundContribution } =
+  const { salesArtifacts, prize, totalAward, projectMatchFund, calculateMatchFundContribution, getSalesArtifacts } =
     calculateSales(isWinner, matchFundPooled, count, totalSales)
 
   const title = (
@@ -59,7 +59,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
             {index === 0 && <StyledGlyph glyph="crown" level={1} color="black" darkColor="algae" />}
           </div>
           <div>
-            <Grey>Ξ&nbsp;{BASE_ARTIFACT_PRICE * user.copies}</Grey>
+            <Grey>Ξ&nbsp;{getSalesArtifacts(user.copies)}</Grey>
             <Green>+&nbsp; Ξ&nbsp;{calculateMatchFundContribution(user.copies)}</Green>{' '}
             <Amount>
               | <span> minted</span> {user.copies}
