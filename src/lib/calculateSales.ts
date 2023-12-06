@@ -28,8 +28,8 @@ export const calculateSales = (isWinner: boolean, matchFundPooled: number, count
     prize: split10.toFixed(2),
     totalAward,
     calculateMatchFundContribution: (newCount: any) => {
-      return (getMatchFundMoney(totalSales, newCount, spli90)).toFixed(2)
-     // return (getSalesArtifacts(newCount) + getMatchFundMoney(totalSales, newCount, spli90)).toFixed(2)
+      return getMatchFundMoney(totalSales, newCount, spli90).toFixed(2)
+      // return (getSalesArtifacts(newCount) + getMatchFundMoney(totalSales, newCount, spli90)).toFixed(2)
     },
   }
 }

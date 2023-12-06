@@ -39,8 +39,6 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
   const { salesArtifacts, spli80, prize, totalAward, projectMatchFund, calculateMatchFundContribution } =
     calculateSales(isWinner, matchFundPooled, count, totalSales)
 
- 
-
   const title = (
     <div>
       <BiggerText>Ξ{totalAward} raised:</BiggerText>
