@@ -11,6 +11,7 @@ interface IRankAndArtifactCount {
   seasonIsActive?: boolean
   totalSales: number
   matchFundPooled: number
+  totalBase?: number
 }
 
 const RankAndArtifactCount = ({ rank, count, seasonIsActive, totalSales, matchFundPooled }: IRankAndArtifactCount) => {

@@ -9,12 +9,13 @@ interface ISeasonSubcriptionContext {
   seasonIsActive?: boolean
   totalSales?: number
   totalPrizePooled?: number
+  totalBase?: number
 }
 
 export const SeasonSubcriptionContext = createContext<ISeasonSubcriptionContext>({})
 
 export const SeasonSubcriptionProvider = ({ children }: SimpleComponentProps) => {
-  const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
+  const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled, totalBase } =
     useSeasonSubscriptionData()
 
   return (
@@ -26,6 +27,7 @@ export const SeasonSubcriptionProvider = ({ children }: SimpleComponentProps) =>
         seasonIsActive,
         totalSales,
         totalPrizePooled,
+        totalBase
       }}
     >
       {children}

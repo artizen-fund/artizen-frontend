@@ -12,13 +12,16 @@ interface ILeaderboard {
   count: number
   totalSales: number
   matchFundPooled: number
+  totalBase: number
 }
 
 const DEFAULT_LIMIT = 3
 const FIXED_PRECISION = 2
 
-const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPooled }: ILeaderboard) => {
+const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPooled, totalBase }: ILeaderboard) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
+
+  console.log('Leaderboard totalBase', totalBase)
 
   if (!openEditions) return <Spinner minHeight="65px" />
 
@@ -37,7 +40,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
   )
 
   const { salesArtifacts, prize, totalAward, projectMatchFund, calculateMatchFundContribution, getSalesArtifacts } =
-    calculateSales(isWinner, matchFundPooled, count, totalSales)
+    calculateSales(isWinner, matchFundPooled, count, totalSales, totalBase)
 
   const title = (
     <div>

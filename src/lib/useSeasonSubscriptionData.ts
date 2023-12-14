@@ -40,12 +40,43 @@ const countTotalSales = (submissions: ISubmissionFragment[]): number => {
   return total
 }
 
+function getBaseLog(x:number, y:number) {
+  return  Math.log(x)/Math.log(y);
+}
+
+const getBaseAllSales = (submissions: ISubmissionFragment[]): number => {
+  let baseTotal = 0
+  const BaseLog = 1.0001;
+
+  
+
+  submissions.forEach(submission => {
+    // total += submission.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!
+    const filteredOpenEditionCopiesTotal = filteredOpenEditionCopies(submission.project!.artifacts[0].openEditionCopies)
+
+    console.log('filteredOpenEditionCopiesTotal    ', filteredOpenEditionCopiesTotal)
+
+    const submissionsCount = count(filteredOpenEditionCopiesTotal)
+    console.log('submissionsCount    ', submissionsCount + 1)
+
+    const LogB2 = submissionsCount > 0 ? getBaseLog(submissionsCount + 1, BaseLog) : 0
+
+    console.log('LogB2    ', LogB2)
+    baseTotal += LogB2
+  })
+
+  console.log('getBaseAllSales  baseTotal:::  ', baseTotal)
+
+  return baseTotal
+}
+
+
 export function useSeasonSubscriptionData() {
   const { seasonId, isSeasonActive: seasonIsActive } = useContext(SeasonContext)
   const [arrangedSeasonList, setArrangedSeasonList] = useState<ISubmissionFragment[] | null>(null)
   const [totalSales, setTotalSales] = useState<number>(0)
   const [totalPrizePooled, setTotalPrizePooled] = useState<number>(0)
-  // const { isSeasonActive } = useDateHelpers()
+  const [totalBase, setTotalBase] = useState<number>(0)
 
   const { data, loading, error } = useSubscription<ISubscribeSeasonsSubscription>(SUBSCRIBE_SEASONS, {
     skip: !seasonId,
@@ -61,6 +92,10 @@ export function useSeasonSubscriptionData() {
         const arrangedSeasonListHere = arrangeSubmissions(data?.Seasons[0].submissions)
         const totalSales = countTotalSales(data?.Seasons[0].submissions)
 
+        //getBaseAllSales
+
+        setTotalBase(getBaseAllSales(data?.Seasons[0].submissions))
+
         setArrangedSeasonList(arrangedSeasonListHere)
         setTotalSales(totalSales)
         const totalPrizePooledL = data?.Seasons[0].matchFundPooled + totalSales * BASE_ARTIFACT_PRICE
@@ -72,6 +107,7 @@ export function useSeasonSubscriptionData() {
   return {
     arrangedSeasonList,
     totalSales,
+    totalBase,
     season: data?.Seasons[0],
     loading,
     seasonIsActive,
