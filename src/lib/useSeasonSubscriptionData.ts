@@ -40,15 +40,13 @@ const countTotalSales = (submissions: ISubmissionFragment[]): number => {
   return total
 }
 
-function getBaseLog(x:number, y:number) {
-  return  Math.log(x)/Math.log(y);
+function getBaseLog(x: number, y: number) {
+  return Math.log(x) / Math.log(y)
 }
 
 const getBaseAllSales = (submissions: ISubmissionFragment[]): number => {
   let baseTotal = 0
-  const BaseLog = 1.0001;
-
-  
+  const BaseLog = 1.0001
 
   submissions.forEach(submission => {
     // total += submission.project!.artifacts[0].openEditionCopies_aggregate.aggregate!.sum!.copies!
@@ -69,7 +67,6 @@ const getBaseAllSales = (submissions: ISubmissionFragment[]): number => {
 
   return baseTotal
 }
-
 
 export function useSeasonSubscriptionData() {
   const { seasonId, isSeasonActive: seasonIsActive } = useContext(SeasonContext)

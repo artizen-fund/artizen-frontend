@@ -27,7 +27,7 @@ export const SeasonSubcriptionProvider = ({ children }: SimpleComponentProps) =>
         seasonIsActive,
         totalSales,
         totalPrizePooled,
-        totalBase
+        totalBase,
       }}
     >
       {children}
