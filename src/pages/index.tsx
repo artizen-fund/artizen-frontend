@@ -26,7 +26,7 @@ const MAXIMUN_NUMBER_OF_LOADING = 9
 const IndexPage = () => {
   const { asPath } = useRouter()
   const [numberOfLoading, setNumberOfLoading] = useState<number>(MAXIMUN_NUMBER_OF_LOADING)
-  const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled } =
+  const { season, loading, arrangedSeasonList, seasonIsActive, totalSales, totalPrizePooled, totalBase } =
     useContext(SeasonSubcriptionContext)
 
   const arrangedSeasonListCapped = arrangedSeasonList?.slice(0, numberOfLoading)
@@ -66,6 +66,7 @@ const IndexPage = () => {
                   project={submission.project}
                   {...{ index }}
                   key={submission.id}
+                  totalBase={totalBase}
                   seasonIsActive={seasonIsActive}
                 />
               ))}

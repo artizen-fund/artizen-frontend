@@ -13,9 +13,10 @@ interface IProjectCard {
   totalSales: number
   matchFundPooled: number
   seasonIsActive?: boolean
+  totalBase?: number
 }
 
-const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPooled }: IProjectCard) => {
+const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPooled, totalBase }: IProjectCard) => {
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
   if (!project) return <></>
   const latestArtifact = project.artifacts[0]
@@ -40,6 +41,7 @@ const ProjectCard = ({ seasonIsActive, project, index, totalSales, matchFundPool
           seasonIsActive={seasonIsActive}
           totalSales={totalSales ? totalSales : 0}
           matchFundPooled={matchFundPooled}
+          totalBase={totalBase}
         />
         <ArtifactNumber>{count} Minted</ArtifactNumber>
       </Header>

@@ -63,7 +63,7 @@ const Leaderboard = ({ openEditions, isWinner, count, totalSales, matchFundPoole
           </div>
           <div>
             <Grey>Ξ&nbsp;{getSalesArtifacts(user.copies)}</Grey>
-            <Green>+&nbsp; Ξ&nbsp;{calculateMatchFundContribution(user.copies)}</Green>{' '}
+            {/* <Green>+&nbsp; Ξ&nbsp;{calculateMatchFundContribution(user.copies)}</Green>{' '} */}
             <Amount>
               | <span> minted</span> {user.copies}
             </Amount>
