@@ -11,7 +11,7 @@ const ArtifactRaised = ({
   totalSales,
   matchFundPooled,
   isWinner,
-  totalBase
+  totalBase,
 }: {
   count: number
   totalSales: number

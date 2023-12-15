@@ -10,12 +10,11 @@ const getMatchFundMoney = (totalSales: number, countH: number, spli80: number): 
   return (spli80 * split) / 100
 }
 
-function getBaseLog(x:number, y:number) {
-  return Math.log(x)/Math.log(y);
+function getBaseLog(x: number, y: number) {
+  return Math.log(x) / Math.log(y)
 }
 
-
-const getMatchFundMoneyAlgor = (totalSales: number, countH: number, spli90: number, totalBase:number):number => {
+const getMatchFundMoneyAlgor = (totalSales: number, countH: number, spli90: number, totalBase: number): number => {
   // const split = totalSales > 0 ? (countH * 100) / totalSales : 0
 
   // //split: 6*100/8 = 75%
@@ -24,16 +23,15 @@ const getMatchFundMoneyAlgor = (totalSales: number, countH: number, spli90: numb
 
   console.log('totalBase    ', totalBase)
 
-  const BaseLog = 1.0001;
+  const BaseLog = 1.0001
 
   console.log('countH    ', countH)
 
-  
-  const LogB2 = getBaseLog(countH + 1, BaseLog) 
+  const LogB2 = getBaseLog(countH + 1, BaseLog)
 
   console.log('LogB2    ', LogB2)
 
-  const projectBasedPercent = LogB2 * 100 / totalBase
+  const projectBasedPercent = (LogB2 * 100) / totalBase
 
   console.log('getPercent    ', projectBasedPercent)
 
@@ -44,9 +42,13 @@ const getMatchFundMoneyAlgor = (totalSales: number, countH: number, spli90: numb
   return getCOntribution
 }
 
-
-
-export const calculateSales = (isWinner: boolean, matchFundPooled: number, count: number, totalSales: number, totalBase:number) => {
+export const calculateSales = (
+  isWinner: boolean,
+  matchFundPooled: number,
+  count: number,
+  totalSales: number,
+  totalBase: number,
+) => {
   const getSalesArtifacts = (artifactCount: number) => BASE_ARTIFACT_PRICE * artifactCount
 
   const totalProjectSales = getSalesArtifacts(count)
