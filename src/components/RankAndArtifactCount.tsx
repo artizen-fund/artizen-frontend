@@ -11,14 +11,28 @@ interface IRankAndArtifactCount {
   seasonIsActive?: boolean
   totalSales: number
   matchFundPooled: number
+  totalBase?: number
 }
 
-const RankAndArtifactCount = ({ rank, count, seasonIsActive, totalSales, matchFundPooled }: IRankAndArtifactCount) => {
+const RankAndArtifactCount = ({
+  rank,
+  count,
+  seasonIsActive,
+  totalSales,
+  matchFundPooled,
+  totalBase,
+}: IRankAndArtifactCount) => {
   console.log('seasonIsActive  ::: ', seasonIsActive)
   return (
     <Wrapper>
       <Rank value={rank + 1} />
-      <ArtifactRaised isWinner={rank === 0} count={count} totalSales={totalSales} matchFundPooled={matchFundPooled} />
+      <ArtifactRaised
+        isWinner={rank === 0}
+        count={count}
+        totalSales={totalSales}
+        matchFundPooled={matchFundPooled}
+        totalBase={totalBase}
+      />
       {!seasonIsActive && (
         <SubmissionEnded>
           <span>Season 2 ended</span>

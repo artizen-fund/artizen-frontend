@@ -11,11 +11,13 @@ const ArtifactRaised = ({
   totalSales,
   matchFundPooled,
   isWinner,
+  totalBase,
 }: {
   count: number
   totalSales: number
   matchFundPooled: number
   isWinner: boolean
+  totalBase?: number
 }) => {
   // const BASE_ARTIFACT_PRICE = assertFloat(
   //   process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
@@ -44,7 +46,7 @@ const ArtifactRaised = ({
   // console.log('split  ', split)
   // console.log('matchFundMoney', matchFundMoney)
 
-  const { totalAward } = calculateSales(isWinner, matchFundPooled, count, totalSales)
+  const { totalAward } = calculateSales(isWinner, matchFundPooled, count, totalSales, totalBase || 0)
 
   const showRaisedMoney: boolean = count > 0
 
