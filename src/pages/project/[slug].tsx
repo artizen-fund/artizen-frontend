@@ -53,6 +53,7 @@ const ProjectPage = () => {
     totalSales,
     loading: loadingSeason,
     arrangedSeasonList,
+    totalBase,
   } = useContext(SeasonSubcriptionContext)
   const { setVisibleModalWithAttrs } = useContext(LayoutContext)
 
@@ -89,11 +90,12 @@ const ProjectPage = () => {
 
   const openEditions = openEditionsSub || openEditionsQuery
 
-  console.log('openEditions', openEditions)
-
   const lead = project?.members?.find((m: any) => m.type === 'lead')?.user
 
   const rank = arrangedSeasonList?.findIndex(submission => submission.project?.id === project.id) || 0
+
+  // I can take arrangedSeasonList and work out the tatio
+  console.log('arrangedSeasonList2', arrangedSeasonList)
 
   const arrayOfOpenEdtionClean =
     openEditions?.OpenEditionCopies.filter(({ status }: any) => {
@@ -121,6 +123,7 @@ const ProjectPage = () => {
                           seasonIsActive={seasonIsActive}
                           totalSales={totalSales ? totalSales : 0}
                           matchFundPooled={seasonData?.matchFundPooled}
+                          totalBase={totalBase}
                         />
                       )}
                     </div>
@@ -159,6 +162,7 @@ const ProjectPage = () => {
                     count={count}
                     totalSales={totalSales ? totalSales : 0}
                     matchFundPooled={seasonData?.matchFundPooled}
+                    totalBase={totalBase ? totalBase : 0}
                   />
                   <ProjectSponsors projectId={project.id} />
                 </>
