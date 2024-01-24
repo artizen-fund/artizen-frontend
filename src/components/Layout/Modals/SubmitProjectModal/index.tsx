@@ -123,9 +123,6 @@ const SubmitProjectModal = () => {
       return
     }
 
-    // const artifactID = outcome?.[0].args.submissionID.toString()
-    const artifactID = newSubmissionCount
-
     setProcessTxt(
       `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
     )
