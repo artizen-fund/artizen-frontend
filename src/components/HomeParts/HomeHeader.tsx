@@ -11,6 +11,8 @@ interface IHomeHeader {
   loading?: boolean
 }
 
+//test
+
 const HomeHeader = ({ season, loading }: IHomeHeader) => {
   const { isSeasonActive } = useContext(SeasonContext)
 
@@ -43,7 +45,7 @@ const HomeHeader = ({ season, loading }: IHomeHeader) => {
           {!loading && !isSeasonActive && (
             <Row>
               <Button level={0} href="https://vote.artizen.fund/submit">
-                Submit to Season 3
+                Submit Artifacts
               </Button>
               {/* !!season && (
                 <Col>
