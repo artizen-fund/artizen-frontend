@@ -28,6 +28,7 @@ const AccountButton = ({ active, ...props }: SimpleComponentProps & { active: bo
   console.log('privy user  ', user)
   console.log('loggedInUser', loggedInUser)
 
+  
   useEffect(() => {
     const timer1 = setTimeout(() => {
       if (ready && authenticated && !isConnected) {

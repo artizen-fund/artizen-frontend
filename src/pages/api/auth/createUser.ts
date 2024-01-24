@@ -4,6 +4,7 @@ import { CREATE_USER, GET_USERS_AND_CURATORS } from '@gql'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { ICreateUserMutation, IGetUsersAndCuratorsQuery } from '@types'
 
+
 const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
   //review the token here
   const { user } = req.body

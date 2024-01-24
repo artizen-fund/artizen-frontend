@@ -25,6 +25,7 @@ const DonationBox = ({ tokenId, project }: IDonationBox) => {
     process.env.NEXT_PUBLIC_BASE_ARTIFACT_PRICE,
     'NEXT_PUBLIC_BASE_ARTIFACT_PRICE',
   )
+  
 
   const { setVisibleModalWithAttrs, toggleModal, setVisibleModal } = useContext(LayoutContext)
   const [sending, setSending] = useState<boolean>(false)
