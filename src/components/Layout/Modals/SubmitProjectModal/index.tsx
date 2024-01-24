@@ -123,8 +123,6 @@ const SubmitProjectModal = () => {
       return
     }
 
-    
-
     setProcessTxt(
       `Submission published to blockchain, adding TokenID to Artifact in DB with ID: ${project.artifacts[0].id} `,
     )
