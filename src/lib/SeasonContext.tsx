@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_SEASON_FOR_TIME } from '@gql'
 import { ISeasonForTimeQuery } from '@types'
-import { useDateHelpers } from '@lib'
+import { useDateHelpers, useFullSignOut } from '@lib'
 
 /* 
 
@@ -54,6 +54,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
   const [localTimestamp, setLocalTimestamp] = useState<string>()
   const [seasonId, setSeasonId] = useState<string>() // current or next season
   const [seasonIndex, setSeasonIndex] = useState<number>() // current or next season
+  const { disconnectAndSignout } = useFullSignOut()
 
   // 1. cache a timestamp upon site load
   useEffect(() => {
@@ -76,6 +77,9 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
 
   if (error) {
     console.error('error retrieving season', error)
+    console.log('refreshing')
+    disconnectAndSignout()
+    console.log('disconnectAndSignout')
   }
 
   // 3. use the season ID for the subscription
