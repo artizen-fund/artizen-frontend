@@ -79,8 +79,7 @@ export const SeasonContextProvider = ({ children }: SimpleComponentProps) => {
     console.error('error retrieving season', error)
     console.log('refreshing')
     disconnectAndSignout()
-    console.log('disconnectAndSignout called')
-
+    console.log('disconnectAndSignout')
   }
 
   // 3. use the season ID for the subscription
