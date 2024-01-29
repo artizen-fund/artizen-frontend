@@ -45,7 +45,7 @@ const HomeHeader = ({ season, loading }: IHomeHeader) => {
           {!loading && !isSeasonActive && (
             <Row>
               <Button level={0} href="https://vote.artizen.fund/submit">
-                Submit Artifacts
+                Submit Projects
               </Button>
               {/* !!season && (
                 <Col>
