@@ -113,6 +113,8 @@ export const useSeasons = () => {
     // return
   }
 
+  
+
   const closeSeason = async (seasonIndex: number) => {
     // console.log('season ID', typeof seasonIndex, seasonIndex)
     // const tx = await seasonsContract?.closeSeason(seasonIndex)
