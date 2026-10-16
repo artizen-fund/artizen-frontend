@@ -146,3 +146,7 @@ git push --no-verify
 ## Licence
 
 This code is published under [MIT licence](https://github.com/artizen-fund/artizen-frontend/blob/main/LICENSE.md)
+
+## Ecosystem
+
+- [Commons Protocol](https://github.com/TerexitariusStomp/commons-protocol) — open-source continuation of the Artizen ecosystem: the project/fund archive (3,375 projects, 258 funds) is seeded and claimable, and artifact sales route configurable proceeds to each project.
